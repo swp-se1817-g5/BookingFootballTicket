@@ -7,7 +7,7 @@
             <minimum-ant-version>1.6.5</minimum-ant-version>
             <web-module-libraries>
                 <library dirs="200">
-                    <file>${file.reference.prj301-lib}</file>
+                    <file>${file.reference.BookingFootballTicket-lib}</file>
                     <path-in-war>WEB-INF/classes</path-in-war>
                 </library>
             </web-module-libraries>
