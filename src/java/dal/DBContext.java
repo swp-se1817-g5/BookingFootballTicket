@@ -11,7 +11,7 @@ public class DBContext {
 
     protected Connection connect;
     private final String serverName = "localhost";
-    private final String dbName = "swp_football_ticket_online";
+    private final String dbName = "BookingFootballTicket";
     private final String portNumber = "1433";
     private final String userID = "sa";
     private final String password = "123";
@@ -28,6 +28,8 @@ public class DBContext {
         }
     }
     
-    
+    public static void main(String[] args) {
+        System.out.println(new DBContext());
+    }
 
 }
