@@ -18,8 +18,7 @@ public class DBContext {
 
     public DBContext() {
         try {
-            String url = "jdbc:sqlserver://" + serverName + ":" + portNumber
-                    + ";databaseName=" + dbName;
+            String url = "jdbc:sqlserver://" + serverName + ":" + portNumber + ";databaseName=" + dbName;
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             connect = DriverManager.getConnection(url, userID, password);
         } catch (Exception ex) {
@@ -29,7 +28,14 @@ public class DBContext {
     }
     
     public static void main(String[] args) {
+<<<<<<< HEAD
         System.out.println(new DBContext());
     }
+=======
+        System.out.println(new DBContext().connect);
+    }
+    
+    
+>>>>>>> 7261ac8cc36ab74163ed0891be948cfee675e139
 
 }
