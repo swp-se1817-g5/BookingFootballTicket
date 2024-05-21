@@ -6,71 +6,71 @@ GO
 
 -- Table Role
 CREATE TABLE Role (
-    roleId INT PRIMARY KEY,
-    roleName VARCHAR(255) NOT NULL,
+    roleId INT PRIMARY KEY IDENTITY (1,1),
+    roleName NVARCHAR(255) NOT NULL,
     createdBy VARCHAR(255),
-    createDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
-    isDelete BIT DEFAULT 0
+    isDeleted BIT DEFAULT 0
 );
 GO
 
 -- Table User
 CREATE TABLE [User] (
-    userId VARCHAR(255) PRIMARY KEY,
+    userId INT PRIMARY KEY IDENTITY (1,1) ,
     roleId INT,
-    username VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
+    userName VARCHAR(255) NOT NULL UNIQUE,
+    [password] VARCHAR(255),
     email VARCHAR(255) NOT NULL UNIQUE,
-    sdt VARCHAR(50),
-    image VARCHAR(255),
-    name VARCHAR(255),
+    phoneNumber VARCHAR(50) UNIQUE,
+    avatar VARCHAR(255),
+    [name] NVARCHAR(255),
     createdBy VARCHAR(255),
-    createDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
-    isDelete BIT DEFAULT 0,
+    isDeleted BIT DEFAULT 0,
     FOREIGN KEY (roleId) REFERENCES Role(roleId)
 );
 GO
 
 -- Table FootballClub
 CREATE TABLE FootballClub (
-    clubId INT PRIMARY KEY,
-    clubName VARCHAR(255) NOT NULL,
+    clubId INT PRIMARY KEY IDENTITY (1,1),
+    clubName NVARCHAR(255) NOT NULL,
     createdBy VARCHAR(255),
-    createDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
-    isDelete BIT DEFAULT 0
+    isDeleted BIT DEFAULT 0
 );
 GO
 
 -- Table MatchStatus
 CREATE TABLE MatchStatus (
-    statusId INT PRIMARY KEY,
-    statusName VARCHAR(255) NOT NULL
+    statusId INT PRIMARY KEY IDENTITY (1,1),
+    statusName NVARCHAR(255) NOT NULL
 );
 GO
 
 -- Table MatchType
 CREATE TABLE MatchType (
-    id INT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
+    id INT PRIMARY KEY IDENTITY (1,1),
+    name NVARCHAR(255) NOT NULL
 );
 GO
 
 -- Table Match
 CREATE TABLE Match (
-    matchId INT PRIMARY KEY,
+    matchId INT PRIMARY KEY IDENTITY (1,1),
     team1 INT,
     team2 INT,
     stadiumImg VARCHAR(255),
-    time DATETIME2,
+    [time] DATETIME2,
     statusId INT,
     matchTypeId INT,
     createdBy VARCHAR(255),
-    createDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
-    isDelete BIT DEFAULT 0,
+    isDeleted BIT DEFAULT 0,
     FOREIGN KEY (team1) REFERENCES FootballClub(clubId),
     FOREIGN KEY (team2) REFERENCES FootballClub(clubId),
     FOREIGN KEY (statusId) REFERENCES MatchStatus(statusId),
@@ -79,25 +79,25 @@ CREATE TABLE Match (
 GO
 
 -- Table Class
-CREATE TABLE Class (
-    id INT PRIMARY KEY,
-    className VARCHAR(255) NOT NULL
+CREATE TABLE StandClass (
+    classId INT PRIMARY KEY IDENTITY (1,1),
+    className NVARCHAR(255) NOT NULL
 );
 GO
 
 -- Table Stand
 CREATE TABLE Stand (
-    standId INT PRIMARY KEY,
+    standId INT PRIMARY KEY IDENTITY (1,1),
     standName VARCHAR(255) NOT NULL,
     typeId INT,
     price DECIMAL(18, 2),
     classId INT,
     createdBy VARCHAR(255),
-    createDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
-    isDelete BIT DEFAULT 0,
+    isDeleted BIT DEFAULT 0,
     number INT,
-    FOREIGN KEY (classId) REFERENCES Class(id)
+    FOREIGN KEY (classId) REFERENCES StandClass(classId)
 );
 GO
 
@@ -114,11 +114,11 @@ GO
 
 -- Table HistoryPurchasedTicket
 CREATE TABLE HistoryPurchasedTicket (
-    ticketId INT PRIMARY KEY,
+    ticketId INT PRIMARY KEY IDENTITY (1,1),
     matchId INT,
     standId INT,
     qr VARCHAR(255),
-    createDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     price DECIMAL(18, 2),
     section VARCHAR(255),
     number INT,
@@ -130,8 +130,8 @@ GO
 
 -- Table Payment
 CREATE TABLE Payment (
-    paymentId INT PRIMARY KEY,
-    userId VARCHAR(255),
+    paymentId INT PRIMARY KEY IDENTITY (1,1),
+    userId INT,
     createdBy VARCHAR(255),
     ticketId INT,
     price DECIMAL(18, 2),
@@ -143,14 +143,16 @@ GO
 
 -- Table News
 CREATE TABLE News (
-    title VARCHAR(255) PRIMARY KEY,
-    content TEXT NOT NULL,
+	newsId INT PRIMARY KEY IDENTITY (1,1),
+    title NVARCHAR(255),
+    content NVARCHAR(MAX) NOT NULL,
     postTime DATETIME2,
     createdBy VARCHAR(255),
-    createDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
-    isDelete BIT DEFAULT 0
+    isDeleted BIT DEFAULT 0
 );
 GO
+
 
 --Drop database Sell_Football_Ticket
