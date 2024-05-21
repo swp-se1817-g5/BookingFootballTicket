@@ -1,3 +1,11 @@
 
 /nbproject/private/
-/build/
+/nbproject/nbproject.xml
+/nbbuild/
+/dist/
+/nbdist/
+/.build-impl.xml
+/build
+/logs
+*.log
+/tmp
