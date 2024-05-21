@@ -1,4 +1,15 @@
+<<<<<<< HEAD
 /build/
 /nbproject/private/
 /nbbuild/
 
+=======
+<<<<<<< HEAD
+/nbproject/private/
+/build/
+=======
+build/
+nbproject/private/
+nbbuild/
+>>>>>>> 7261ac8cc36ab74163ed0891be948cfee675e139
+>>>>>>> fbf0db3015a422255dc467e2b90f8fc7120ad84e
