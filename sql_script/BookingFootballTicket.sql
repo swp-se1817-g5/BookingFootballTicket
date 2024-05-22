@@ -40,6 +40,7 @@ GO
 CREATE TABLE FootballClub (
     clubId INT PRIMARY KEY IDENTITY (1,1),
     clubName NVARCHAR(255) NOT NULL,
+	img VARCHAR(255),
     createdBy VARCHAR(255),
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
