@@ -14,6 +14,7 @@ public class FootballClub {
 
     private int clubId;
     private String clubName;
+    private String img;
     private String createdBy;
     private LocalDate createdDate;
     private String updatedBy;
@@ -23,9 +24,10 @@ public class FootballClub {
     public FootballClub() {
     }
 
-    public FootballClub(int clubId, String clubName, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
+    public FootballClub(int clubId, String clubName, String img, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
         this.clubId = clubId;
         this.clubName = clubName;
+        this.img = img;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
         this.updatedBy = updatedBy;
@@ -47,6 +49,14 @@ public class FootballClub {
 
     public void setClubName(String clubName) {
         this.clubName = clubName;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
     }
 
     public String getCreatedBy() {
@@ -91,8 +101,10 @@ public class FootballClub {
 
     @Override
     public String toString() {
-        return "FootballClub{" + "clubId=" + clubId + ", clubName=" + clubName + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
+        return "FootballClub{" + "clubId=" + clubId + ", clubName=" + clubName + ", img=" + img + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
     }
+
+    
     
 
    
