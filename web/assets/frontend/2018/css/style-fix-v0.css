@@ -3945,7 +3945,7 @@ button[disabled], button[disabled]:hover {background: grey;}
 		  padding-bottom: 10px;
 		  margin-bottom: 10px;
 
-		  @media (max-width: 1149px) {
+		  @media(max-width: 1149px) {
 			  border: unset;
 			  margin-bottom: unset;
 		  }
