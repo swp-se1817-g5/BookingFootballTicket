@@ -133,7 +133,7 @@ public class HistoryPurchasedTicket {
         return "HistoryPurchasedTicket{" + "ticketId=" + ticketId + ", matchStandId=" + matchStandId + ", qrCode=" + qrCode + ", createdDate=" + createdDate + ", price=" + price + ", number=" + number + ", status=" + status + ", createdBy=" + createdBy + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
     }
     
-    
+//
     
     
 }
