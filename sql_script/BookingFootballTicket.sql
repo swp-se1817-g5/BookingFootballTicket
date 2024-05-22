@@ -1,3 +1,4 @@
+use master
 CREATE DATABASE BookingFootballTicket;
 GO
 
@@ -61,8 +62,8 @@ GO
 
 -- Table MatchType
 CREATE TABLE MatchType (
-    id INT PRIMARY KEY IDENTITY (1,1),
-    name NVARCHAR(255) NOT NULL,
+    TypeId INT PRIMARY KEY IDENTITY (1,1),
+    [name] NVARCHAR(255) NOT NULL,
     createdBy VARCHAR(255),
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
@@ -103,7 +104,7 @@ CREATE TABLE Match (
     FOREIGN KEY (team1) REFERENCES FootballClub(clubId),
     FOREIGN KEY (team2) REFERENCES FootballClub(clubId),
     FOREIGN KEY (statusId) REFERENCES MatchStatus(statusId),
-    FOREIGN KEY (matchTypeId) REFERENCES MatchType(id),
+    FOREIGN KEY (matchTypeId) REFERENCES MatchType(TypeId),
     FOREIGN KEY (seasonId) REFERENCES Season(seasonId)
 );
 GO
@@ -139,37 +140,34 @@ GO
 
 -- Table MatchStand
 CREATE TABLE MatchStand (
+	matchStandId INT PRIMARY KEY IDENTITY (1,1),
     matchId INT,
     standId INT,
-    availability INT,
+    [availability] INT,
     createdBy VARCHAR(255),
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
     lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     isDeleted BIT DEFAULT 0,
-    PRIMARY KEY (matchId, standId),
-    FOREIGN KEY (matchId) REFERENCES Match(matchId),
-    FOREIGN KEY (standId) REFERENCES Stand(standId)
+	FOREIGN KEY (matchId) REFERENCES Match(matchId),
+	FOREIGN KEY (standId) REFERENCES Stand(standId)
 );
 GO
 
 -- Table HistoryPurchasedTicket
 CREATE TABLE HistoryPurchasedTicket (
     ticketId INT PRIMARY KEY IDENTITY (1,1),
-    matchId INT,
-    standId INT,
-    qr VARCHAR(255),
+    matchStandId INT,
+    qrCode VARCHAR(255),
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     price DECIMAL(18, 2),
-    section VARCHAR(255),
     number INT,
-    status VARCHAR(255),
+    [status] VARCHAR(255),
     createdBy VARCHAR(255),
     updatedBy VARCHAR(255),
     lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     isDeleted BIT DEFAULT 0,
-    FOREIGN KEY (matchId) REFERENCES Match(matchId),
-    FOREIGN KEY (standId) REFERENCES Stand(standId)
+	FOREIGN KEY (matchStandId) REFERENCES MatchStand(matchStandId)
 );
 GO
 
@@ -177,10 +175,7 @@ GO
 CREATE TABLE Payment (
     paymentId INT PRIMARY KEY IDENTITY (1,1),
     userId INT,
-    createdBy VARCHAR(255),
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-    updatedBy VARCHAR(255),
-    lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     isDeleted BIT DEFAULT 0,
     ticketId INT,
     price DECIMAL(18, 2),
@@ -193,13 +188,16 @@ GO
 -- Table News
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
-    title NVARCHAR(255),
+	userId INT,
+    title VARCHAR(255),
     content NVARCHAR(MAX) NOT NULL,
     postTime DATETIME2,
     createdBy VARCHAR(255),
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-    updatedBy VARCHAR(255),
+    updatedBy NVARCHAR(255),
     lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-    isDeleted BIT DEFAULT 0
-);
+    isDeleted BIT DEFAULT 0,
+	FOREIGN KEY (userId) REFERENCES [User](userId)
+	);
 GO
+
