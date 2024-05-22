@@ -3,9 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/E:/sum24/swp/BookingFootballTicket/src/java/models/Role.java</file>
             <file>file:/E:/sum24/swp/BookingFootballTicket/src/java/dal/DAO.java</file>
             <file>file:/E:/sum24/swp/BookingFootballTicket/src/java/dal/DBContext.java</file>
+=======
+            <file>file:/D:/FPT/5_SWP391/Project/BookingFootballTicket/src/java/dal/DAO.java</file>
+            <file>file:/D:/FPT/5_SWP391/Project/BookingFootballTicket/src/java/dal/FootballClubDAO.java</file>
+>>>>>>> 44c802880eb7a4ca97398b4fa3a54acd1a0dccd9
         </group>
     </open-files>
 </project-private>

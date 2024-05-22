@@ -110,23 +110,10 @@ CREATE TABLE Match (
 );
 GO
 
--- Table StandClass
-CREATE TABLE StandClass (
-    classId INT PRIMARY KEY IDENTITY (1,1),
-    className NVARCHAR(255) NOT NULL,
-    createdBy VARCHAR(255),
-    createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-    updatedBy VARCHAR(255),
-    lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-    isDeleted BIT DEFAULT 0
-);
-GO
-
 -- Table Stand
 CREATE TABLE Stand (
     standId INT PRIMARY KEY IDENTITY (1,1),
     standName VARCHAR(255) NOT NULL,
-    typeId INT,
     price DECIMAL(18, 2),
     classId INT,
     quantity INT,

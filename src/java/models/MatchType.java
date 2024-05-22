@@ -14,22 +14,22 @@ public class MatchType {
 
     private int typeId;
     private String name;
-    private String createBy;
+    private String createdBy;
     private LocalDate createdDate;
-    private String updateBy;
-    private LocalDate lastUpdateDate;
+    private String updatedBy;
+    private LocalDate lastUpdatedDate;
     private boolean isDeleted;
 
     public MatchType() {
     }
 
-    public MatchType(int typeId, String name, String createBy, LocalDate createdDate, String updateBy, LocalDate lastUpdateDate, boolean isDeleted) {
+    public MatchType(int typeId, String name, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
         this.typeId = typeId;
         this.name = name;
-        this.createBy = createBy;
+        this.createdBy = createdBy;
         this.createdDate = createdDate;
-        this.updateBy = updateBy;
-        this.lastUpdateDate = lastUpdateDate;
+        this.updatedBy = updatedBy;
+        this.lastUpdatedDate = lastUpdatedDate;
         this.isDeleted = isDeleted;
     }
 
@@ -49,12 +49,12 @@ public class MatchType {
         this.name = name;
     }
 
-    public String getCreateBy() {
-        return createBy;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public LocalDate getCreatedDate() {
@@ -65,20 +65,20 @@ public class MatchType {
         this.createdDate = createdDate;
     }
 
-    public String getUpdateBy() {
-        return updateBy;
+    public String getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdateDate() {
-        return lastUpdateDate;
+    public LocalDate getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setLastUpdateDate(LocalDate lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
+    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 
     public boolean isIsDeleted() {
@@ -88,5 +88,14 @@ public class MatchType {
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+
+    @Override
+    public String toString() {
+        return "MatchType{" + "typeId=" + typeId + ", name=" + name + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
+    }
+    
+    
+
+   
 
 }
