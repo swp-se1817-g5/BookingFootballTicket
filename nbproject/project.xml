@@ -8,8 +8,9 @@
             <web-module-libraries>
                 <library dirs="200">
                     <file>${&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD}</file>
-<<<<<<< HEAD
-=======
+                </library>
+                <library dirs="200">
+                    <file>${&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD}</file>
                 </library>
                 <library dirs="200">
                     <file>${file.reference.jakarta.servlet.jsp.jstl-2.0.0.jar}</file>
@@ -22,7 +23,6 @@
                 <library dirs="200">
                     <file>${file.reference.sqljdbc4.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
->>>>>>> f46da070b1157e80301765c1edf959db2c1e237c
                 </library>
             </web-module-libraries>
             <web-module-additional-libraries/>
