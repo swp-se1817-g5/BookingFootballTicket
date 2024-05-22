@@ -3742,7 +3742,6 @@ button[disabled], button[disabled]:hover {background: grey;}
 	line-height: 21px;
 	margin: 11px;
   }
-  /* on 24-01-2020 */
   .bookFeePaymentConfirmationModal {
 	position: fixed;
 	top: 0;
@@ -3847,7 +3846,6 @@ button[disabled], button[disabled]:hover {background: grey;}
   right: 20px;
   }
 
-  /* modified on 27-01-2020 starts */
   .pickup-notice {
 	font-size: 16px;
   }
@@ -3856,9 +3854,6 @@ button[disabled], button[disabled]:hover {background: grey;}
 	  width: 100%;
 	  max-width: 100%;
 	  border: unset;
-		  /* border-bottom-color: unset; */
-		  /* border-bottom-style: unset; */
-		  /* border-bottom-width: unset; */
 	  border-radius: unset;
 	  margin: 0;
 	  padding: 3% 15%;
@@ -3870,18 +3865,14 @@ button[disabled], button[disabled]:hover {background: grey;}
   @media (max-width: 1114px) and (min-width: 601px) {
 	.contain-del-options {
 	  -webkit-box-pack: unset;
-	  /* -ms-flex-pack: unset; */
 	  justify-content: unset;
 	}
 	.checkout .checkout-steps .step .form .radio-holder .radio-btn {
 	  margin: 0 4px;
 	}
   }
-	/* modified on 27-01-2020 ends */
 
-	/******* CHECKOUT CHANGES ***/
-
-	/* 02_03_20 */
+  
 	.step-form-next {
 		text-align: center;
 	  }
@@ -4082,18 +4073,13 @@ button[disabled], button[disabled]:hover {background: grey;}
 		text-align: center;
     	margin: 0 10px 0 0;
 	}
-	/* 04-03-30 */
-
-	/* 24-03-30 */
 	.pay_now {
 		width: 70%;
 		margin: 20px 0 0 0;
 		box-shadow: 0px 0px 20px#dcdcdc;
 		font-weight: 500;
 	}
-	/* 24-03-30 */
-
-/*css on 13-07-20  starts*/
+        
 .hotelRecheckModal {
 	position: fixed;
 	top: 0;
@@ -4197,9 +4183,7 @@ button[disabled], button[disabled]:hover {background: grey;}
   top: 20px;
   right: 20px;
   }
-/*css on 13-07-20  ends*/
-
-/* css on 18-03-2021 starts */
+  
 .check-ticket-availability-modal {
 	position: fixed;
 	top: 0;
@@ -4270,4 +4254,3 @@ button[disabled], button[disabled]:hover {background: grey;}
 	-webkit-transform: translateY(-50%) scale(1);
 	transform: translateY(-50%) scale(1);
 }
-/* css on 18-03-2021 ends */

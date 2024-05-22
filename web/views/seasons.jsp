@@ -1,3 +1,10 @@
+<%-- 
+    Document   : seasons
+    Created on : May 22, 2024, 11:51:25 PM
+    Author     : thuat
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="en-GB">
     <head>
@@ -1032,12 +1039,12 @@
                         <div class="grid tour">
                             <div class="item">
                                 <div class="block team league">
-                                    <div class="favourite league_44 type=" league" uid="44">
+                                    <div class="favourite league_44" type="league" uid="44">
                                         <button type="button" class="favourite-toggle ">
                                             <div class="heart"><div>
                                                     </button>
                                                 </div>
-                                                <div class="badge" style="background-image: url(/uploads/champ-le.jpg">
+                                                <div class="badge" style="background-image: url('/uploads/champ-le.jpg');">
                                                     <a href="/group/league/champions-league-tickets" class="image">
                                                         <img src="https://www.footballticketpad.com/uploads/UCL-logo.png" alt="Champions League" />
                                                     </a>
@@ -1055,12 +1062,12 @@
                                     </div>
                                     <div class="item">
                                         <div class="block team league">
-                                            <div class="favourite league_836 type=" league" uid="836">
+                                            <div class="favourite league_836" type="league" uid="836">
                                                 <button type="button" class="favourite-toggle ">
                                                     <div class="heart"><div>
                                                             </button>
                                                         </div>
-                                                        <div class="badge" style="background-image: url(/assets/frontend/2018/images/leagues/backgrounds/1.jpg">
+                                                        <div class="badge" style="background-image: url('/assets/frontend/2018/images/leagues/backgrounds/1.jpg')">
                                                             <a href="/group/league/championship" class="image">
                                                                 <img src="https://www.footballticketpad.com/uploads/efl_championship.png" alt="Championship" />
                                                             </a>
@@ -1078,12 +1085,12 @@
                                             </div>
                                             <div class="item">
                                                 <div class="block team league">
-                                                    <div class="favourite league_835 type=" league" uid="835">
+                                                    <div class="favourite league_835" type="league" uid="835">
                                                         <button type="button" class="favourite-toggle ">
                                                             <div class="heart"><div>
                                                                     </button>
                                                                 </div>
-                                                                <div class="badge" style="background-image: url(/assets/frontend/2018/images/leagues/backgrounds/1.jpg">
+                                                                <div class="badge" style="background-image: url('/assets/frontend/2018/images/leagues/backgrounds/1.jpg')">
                                                                     <a href="/group/league/copa-america" class="image">
                                                                         <img src="https://www.footballticketpad.com/uploads/copaamerica.jpg" alt="Copa America" />
                                                                     </a>
@@ -1104,12 +1111,12 @@
                                                 <div class="grid tour">
                                                     <div class="item">
                                                         <div class="block team league">
-                                                            <div class="favourite league_45 type=" league" uid="45">
+                                                            <div class="favourite league_45" type="league" uid="45">
                                                                 <button type="button" class="favourite-toggle ">
                                                                     <div class="heart"><div>
                                                                             </button>
                                                                         </div>
-                                                                        <div class="badge" style="background-image: url(/uploads/Europa.jpg">
+                                                                        <div class="badge" style="background-image: url('/uploads/Europa.jpg')">
                                                                             <a href="/group/league/europa-league" class="image">
                                                                                 <img src="https://www.footballticketpad.com/uploads/europa-league-logo-hd-125825.png" alt="Europa League" />
                                                                             </a>
@@ -1127,12 +1134,12 @@
                                                             </div>
                                                             <div class="item">
                                                                 <div class="block team league">
-                                                                    <div class="favourite league_778 type=" league" uid="778">
+                                                                    <div class="favourite league_778" type="league" uid="778">
                                                                         <button type="button" class="favourite-toggle ">
                                                                             <div class="heart"><div>
                                                                                     </button>
                                                                                 </div>
-                                                                                <div class="badge" style="background-image: url(/assets/frontend/2018/images/leagues/backgrounds/1.jpg">
+                                                                                <div class="badge" style="background-image: url('/assets/frontend/2018/images/leagues/backgrounds/1.jpg')">
                                                                                     <a href="/group/league/events-other-test" class="image">
                                                                                         <img src="https://www.footballticketpad.com/" alt="Events Other test" />
                                                                                     </a>
@@ -1150,12 +1157,12 @@
                                                                     </div>
                                                                     <div class="item">
                                                                         <div class="block team league">
-                                                                            <div class="favourite league_46 type=" league" uid="46">
+                                                                            <div class="favourite league_46" type=" league" uid="46">
                                                                                 <button type="button" class="favourite-toggle ">
                                                                                     <div class="heart"><div>
                                                                                             </button>
                                                                                         </div>
-                                                                                        <div class="badge" style="background-image: url(/uploads/fa-cup.jpg">
+                                                                                        <div class="badge" style="background-image: url('/uploads/fa-cup.jpg')">
                                                                                             <a href="/group/league/fa-cup" class="image">
                                                                                                 <img src="https://www.footballticketpad.com/uploads/FA-Cup-Logo.png" alt="FA Cup " />
                                                                                             </a>
@@ -1173,12 +1180,12 @@
                                                                             </div>
                                                                             <div class="item">
                                                                                 <div class="block team league">
-                                                                                    <div class="favourite league_577 type=" league" uid="577">
+                                                                                    <div class="favourite league_577" type="league" uid="577">
                                                                                         <button type="button" class="favourite-toggle ">
                                                                                             <div class="heart"><div>
                                                                                                     </button>
                                                                                                 </div>
-                                                                                                <div class="badge" style="background-image: url(/assets/frontend/2018/images/leagues/backgrounds/1.jpg">
+                                                                                                <div class="badge" style="background-image: url('/assets/frontend/2018/images/leagues/backgrounds/1.jpg')">
                                                                                                     <a href="/group/league/friendly" class="image">
                                                                                                         <img src="https://www.footballticketpad.com/" alt="Friendly" />
                                                                                                     </a>
@@ -1208,12 +1215,12 @@
                                                                                 <div class="grid tour">
                                                                                     <div class="item">
                                                                                         <div class="block team league">
-                                                                                            <div class="favourite league_41 type=" league" uid="41">
+                                                                                            <div class="favourite league_41" type="league" uid="41">
                                                                                                 <button type="button" class="favourite-toggle ">
                                                                                                     <div class="heart"><div>
                                                                                                             </button>
                                                                                                         </div>
-                                                                                                        <div class="badge" style="background-image: url(/uploads/la-liga-.jpg">
+                                                                                                        <div class="badge" style="background-image: url('/uploads/la-liga-.jpg')">
                                                                                                             <a href="/group/league/la-liga" class="image">
                                                                                                                 <img src="https://www.footballticketpad.com/uploads/La-Liga_logo.png" alt="La Liga" />
                                                                                                             </a>
@@ -1240,12 +1247,12 @@
                                                                                         <div class="grid tour">
                                                                                             <div class="item">
                                                                                                 <div class="block team league">
-                                                                                                    <div class="favourite league_840 type=" league" uid="840">
+                                                                                                    <div class="favourite league_840" type="league" uid="840">
                                                                                                         <button type="button" class="favourite-toggle ">
                                                                                                             <div class="heart"><div>
                                                                                                                     </button>
                                                                                                                 </div>
-                                                                                                                <div class="badge" style="background-image: url(/assets/frontend/2018/images/leagues/backgrounds/1.jpg">
+                                                                                                                <div class="badge" style="background-image: url('/assets/frontend/2018/images/leagues/backgrounds/1.jpg')">
                                                                                                                     <a href="/group/league/olympic-game" class="image">
                                                                                                                         <img src="https://www.footballticketpad.com/uploads/olympics.jpg" alt="Olympic Game" />
                                                                                                                     </a>
@@ -1272,12 +1279,12 @@
                                                                                                 <div class="grid tour">
                                                                                                     <div class="item">
                                                                                                         <div class="block team league">
-                                                                                                            <div class="favourite league_513 type=" league" uid="513">
+                                                                                                            <div class="favourite league_513" type="league" uid="513">
                                                                                                                 <button type="button" class="favourite-toggle ">
                                                                                                                     <div class="heart"><div>
                                                                                                                             </button>
                                                                                                                         </div>
-                                                                                                                        <div class="badge" style="background-image: url(/assets/frontend/2018/images/leagues/backgrounds/1.jpg">
+                                                                                                                        <div class="badge" style="background-image: url('/assets/frontend/2018/images/leagues/backgrounds/1.jpg')">
                                                                                                                             <a href="/group/league/scottish-cup" class="image">
                                                                                                                                 <img src="https://www.footballticketpad.com/uploads/ScottishCup.png" alt="Scottish Cup" />
                                                                                                                             </a>
@@ -1295,12 +1302,12 @@
                                                                                                             </div>
                                                                                                             <div class="item">
                                                                                                                 <div class="block team league">
-                                                                                                                    <div class="favourite league_113 type=" league" uid="113">
+                                                                                                                    <div class="favourite league_113" type="league" uid="113">
                                                                                                                         <button type="button" class="favourite-toggle ">
                                                                                                                             <div class="heart"><div>
                                                                                                                                     </button>
                                                                                                                                 </div>
-                                                                                                                                <div class="badge" style="background-image: url(/uploads/Juvstad.png">
+                                                                                                                                <div class="badge" style="background-image: url('/uploads/Juvstad.png')">
                                                                                                                                     <a href="/group/league/serie-a" class="image">
                                                                                                                                         <img src="https://www.footballticketpad.com/uploads/Serie_A_unsized.png" alt="Serie A" />
                                                                                                                                     </a>
@@ -1321,12 +1328,12 @@
                                                                                                                 <div class="grid tour">
                                                                                                                     <div class="item">
                                                                                                                         <div class="block team league">
-                                                                                                                            <div class="favourite league_757 type=" league" uid="757">
+                                                                                                                            <div class="favourite league_757" type="league" uid="757">
                                                                                                                                 <button type="button" class="favourite-toggle ">
                                                                                                                                     <div class="heart"><div>
                                                                                                                                             </button>
                                                                                                                                         </div>
-                                                                                                                                        <div class="badge" style="background-image: url(/assets/frontend/2018/images/leagues/backgrounds/1.jpg">
+                                                                                                                                        <div class="badge" style="background-image: url('/assets/frontend/2018/images/leagues/backgrounds/1.jpg')">
                                                                                                                                             <a href="/group/league/uefa-euro-2024" class="image">
                                                                                                                                                 <img src="https://www.footballticketpad.com/uploads/UEFA_Euro_2024.png" alt="UEFA EURO 2024" />
                                                                                                                                             </a>
@@ -1584,3 +1591,4 @@
 
                                                                                                     <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="88d3a4dd31d3f53926b891dc-|49" defer></script></body>
                                                                                                     </html>
+
