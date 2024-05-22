@@ -22,4 +22,6 @@ public class Stand {
     private boolean isDeleted;
     
     
+    
+    
 }
