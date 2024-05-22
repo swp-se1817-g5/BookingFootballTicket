@@ -1,3 +1,4 @@
+use master
 CREATE DATABASE BookingFootballTicket;
 GO
 
@@ -103,7 +104,7 @@ CREATE TABLE Match (
     FOREIGN KEY (team1) REFERENCES FootballClub(clubId),
     FOREIGN KEY (team2) REFERENCES FootballClub(clubId),
     FOREIGN KEY (statusId) REFERENCES MatchStatus(statusId),
-    FOREIGN KEY (matchTypeId) REFERENCES MatchType(id),
+    FOREIGN KEY (matchTypeId) REFERENCES MatchType(TypeId),
     FOREIGN KEY (seasonId) REFERENCES Season(seasonId)
 );
 GO
