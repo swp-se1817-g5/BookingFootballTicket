@@ -19,16 +19,16 @@ public class User {
     private String phoneNumber;
     private String avatar;
     private String name;
-    private String createBy;
+    private String createdBy;
     private LocalDate createdDate;
-    private String updateBy;
-    private LocalDate lastUpdateDate;
+    private String updatedBy;
+    private LocalDate lastUpdatedDate;
     private boolean isDeleted;
 
     public User() {
     }
 
-    public User(int userId, int roleId, String userName, String password, String email, String phoneNumber, String avatar, String name, String createBy, LocalDate createdDate, String updateBy, LocalDate lastUpdateDate, boolean isDeleted) {
+    public User(int userId, int roleId, String userName, String password, String email, String phoneNumber, String avatar, String name, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
         this.userId = userId;
         this.roleId = roleId;
         this.userName = userName;
@@ -37,10 +37,10 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.avatar = avatar;
         this.name = name;
-        this.createBy = createBy;
+        this.createdBy = createdBy;
         this.createdDate = createdDate;
-        this.updateBy = updateBy;
-        this.lastUpdateDate = lastUpdateDate;
+        this.updatedBy = updatedBy;
+        this.lastUpdatedDate = lastUpdatedDate;
         this.isDeleted = isDeleted;
     }
 
@@ -108,12 +108,12 @@ public class User {
         this.name = name;
     }
 
-    public String getCreateBy() {
-        return createBy;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public LocalDate getCreatedDate() {
@@ -124,20 +124,20 @@ public class User {
         this.createdDate = createdDate;
     }
 
-    public String getUpdateBy() {
-        return updateBy;
+    public String getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdateDate() {
-        return lastUpdateDate;
+    public LocalDate getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setLastUpdateDate(LocalDate lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
+    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 
     public boolean isIsDeleted() {
@@ -147,6 +147,15 @@ public class User {
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "userId=" + userId + ", roleId=" + roleId + ", userName=" + userName + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", avatar=" + avatar + ", name=" + name + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
+    }
+    
+    
+
+    
     
     
 }

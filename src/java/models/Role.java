@@ -16,20 +16,20 @@ public class Role {
     private String roleName;
     private String createBy;
     private LocalDate createdDate;
-    private String updateBy;
-    private LocalDate lastUpdateDate;
+    private String updatedBy;
+    private LocalDate lastUpdatedDate;
     private boolean isDeleted;
 
     public Role() {
     }
 
-    public Role(int roleId, String roleName, String createBy, LocalDate createdDate, String updateBy, LocalDate lastUpdateDate, boolean isDeleted) {
+    public Role(int roleId, String roleName, String createBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
         this.roleId = roleId;
         this.roleName = roleName;
         this.createBy = createBy;
         this.createdDate = createdDate;
-        this.updateBy = updateBy;
-        this.lastUpdateDate = lastUpdateDate;
+        this.updatedBy = updatedBy;
+        this.lastUpdatedDate = lastUpdatedDate;
         this.isDeleted = isDeleted;
     }
 
@@ -65,20 +65,20 @@ public class Role {
         this.createdDate = createdDate;
     }
 
-    public String getUpdateBy() {
-        return updateBy;
+    public String getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdateDate() {
-        return lastUpdateDate;
+    public LocalDate getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setLastUpdateDate(LocalDate lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
+    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 
     public boolean isIsDeleted() {
@@ -88,5 +88,14 @@ public class Role {
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+
+    @Override
+    public String toString() {
+        return "Role{" + "roleId=" + roleId + ", roleName=" + roleName + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
+    }
+    
+    
+
+   
 
 }

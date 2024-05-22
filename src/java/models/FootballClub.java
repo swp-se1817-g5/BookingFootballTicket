@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -14,22 +14,22 @@ public class FootballClub {
 
     private int clubId;
     private String clubName;
-    private String createBy;
+    private String createdBy;
     private LocalDate createdDate;
-    private String updateBy;
-    private LocalDate lastUpdateDate;
+    private String updatedBy;
+    private LocalDate lastUpdatedDate;
     private boolean isDeleted;
 
     public FootballClub() {
     }
 
-    public FootballClub(int clubId, String clubName, String createBy, LocalDate createdDate, String updateBy, LocalDate lastUpdateDate, boolean isDeleted) {
+    public FootballClub(int clubId, String clubName, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
         this.clubId = clubId;
         this.clubName = clubName;
-        this.createBy = createBy;
+        this.createdBy = createdBy;
         this.createdDate = createdDate;
-        this.updateBy = updateBy;
-        this.lastUpdateDate = lastUpdateDate;
+        this.updatedBy = updatedBy;
+        this.lastUpdatedDate = lastUpdatedDate;
         this.isDeleted = isDeleted;
     }
 
@@ -49,12 +49,12 @@ public class FootballClub {
         this.clubName = clubName;
     }
 
-    public String getCreateBy() {
-        return createBy;
+    public String getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public LocalDate getCreatedDate() {
@@ -65,20 +65,20 @@ public class FootballClub {
         this.createdDate = createdDate;
     }
 
-    public String getUpdateBy() {
-        return updateBy;
+    public String getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdateDate() {
-        return lastUpdateDate;
+    public LocalDate getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setLastUpdateDate(LocalDate lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
+    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 
     public boolean isIsDeleted() {
@@ -88,5 +88,13 @@ public class FootballClub {
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+
+    @Override
+    public String toString() {
+        return "FootballClub{" + "clubId=" + clubId + ", clubName=" + clubName + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
+    }
+    
+
+   
 
 }
