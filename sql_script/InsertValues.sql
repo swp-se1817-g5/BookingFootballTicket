@@ -58,6 +58,7 @@ VALUES (2, 1, 100.00, '2024-09-14 12:00:00'),
        (2, 2, 200.00, '2024-10-19 10:30:00');
 
 -- Inserting values into the News table
-INSERT INTO News (userId, title, content, postTime, createdBy, updatedBy)
-VALUES (1, 'Exciting Match Ahead!', 'Dont miss the upcoming match between Manchester United and Real Madrid!', '2024-09-10 09:00:00', 'System', 'System'),
-       (2, 'Latest Transfer News', 'FC Barcelona signs a promising young talent. Read more here!', '2024-10-15 11:45:00', 'System', 'System');
+INSERT INTO News (userId, title, content, createdBy, updatedBy,isDeleted)
+VALUES (1, 'Exciting Match Ahead!', 'Dont miss the upcoming match between Manchester United and Real Madrid!', 'System', 'System',0),
+       (2, 'Latest Transfer News', 'FC Barcelona signs a promising young talent. Read more here!', 'System', 'System',0),
+	   (2, 'Latest Transfer News', 'FC Barcelona signs a promising young talent. Read more here!', 'System', 'System',0);
