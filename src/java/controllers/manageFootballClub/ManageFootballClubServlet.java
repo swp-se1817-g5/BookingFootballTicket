@@ -5,6 +5,7 @@
 
 package controllers.manageFootballClub;
 
+import dal.FootballClubDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -55,6 +56,7 @@ public class ManageFootballClubServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        request.setAttribute("footballClubs", FootballClubDAO.INSTANCE.getFootballClubs());
         request.getRequestDispatcher("views/manageFootballClub.jsp").forward(request, response);
     } 
 
