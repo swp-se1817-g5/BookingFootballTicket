@@ -9,65 +9,33 @@ import java.util.Date;
 
 /**
  *
- * @author admin
+ * @author thuat
  */
-public class Match {
+public class Season {
 
-    private int matchId;
-    private int team1;
-    private int team2;
     private int seasonId;
-    private String stadiumImg;
-    private Date time;
-    private int statusId;
-    private int typeId;
+    private String seasonName;
+    private Date startDate;
+    private Date endDate;
     private String createdBy;
     private LocalDate createdDate;
     private String updatedBy;
     private LocalDate lastUpdatedDate;
     private boolean isDeleted;
 
-    public Match() {
+    public Season() {
     }
 
-    public Match(int matchId, int team1, int team2, int seasonId, String stadiumImg, Date time, int statusId, int typeId, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
-        this.matchId = matchId;
-        this.team1 = team1;
-        this.team2 = team2;
+    public Season(int seasonId, String seasonName, Date startDate, Date endDate, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
         this.seasonId = seasonId;
-        this.stadiumImg = stadiumImg;
-        this.time = time;
-        this.statusId = statusId;
-        this.typeId = typeId;
+        this.seasonName = seasonName;
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
         this.updatedBy = updatedBy;
         this.lastUpdatedDate = lastUpdatedDate;
         this.isDeleted = isDeleted;
-    }
-
-    public int getMatchId() {
-        return matchId;
-    }
-
-    public void setMatchId(int matchId) {
-        this.matchId = matchId;
-    }
-
-    public int getTeam1() {
-        return team1;
-    }
-
-    public void setTeam1(int team1) {
-        this.team1 = team1;
-    }
-
-    public int getTeam2() {
-        return team2;
-    }
-
-    public void setTeam2(int team2) {
-        this.team2 = team2;
     }
 
     public int getSeasonId() {
@@ -78,36 +46,28 @@ public class Match {
         this.seasonId = seasonId;
     }
 
-    public String getStadiumImg() {
-        return stadiumImg;
+    public String getSeasonName() {
+        return seasonName;
     }
 
-    public void setStadiumImg(String stadiumImg) {
-        this.stadiumImg = stadiumImg;
+    public void setSeasonName(String seasonName) {
+        this.seasonName = seasonName;
     }
 
-    public Date getTime() {
-        return time;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
-
-    public int getTypeId() {
-        return typeId;
-    }
-
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public String getCreatedBy() {

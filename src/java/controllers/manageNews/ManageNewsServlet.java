@@ -3,9 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.manageFootballClub;
+package controllers.manageNews;
 
-import dal.FootballClubDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,10 +15,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author admin
+ * @author nguye
  */
-@WebServlet(name="ManageFootballClubServlet", urlPatterns={"/manageFootballClub"})
-public class ManageFootballClubServlet extends HttpServlet {
+@WebServlet(name="ManageNewsServlet", urlPatterns={"/manageNews"})
+public class ManageNewsServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -36,10 +35,10 @@ public class ManageFootballClubServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageFootballClubServlet</title>");  
+            out.println("<title>Servlet ManageNewsServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageFootballClubServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ManageNewsServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,8 +55,7 @@ public class ManageFootballClubServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.setAttribute("footballClubs", FootballClubDAO.INSTANCE.getFootballClubs());
-        request.getRequestDispatcher("views/manageFootballClub.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 

@@ -28,7 +28,7 @@ CREATE TABLE [User] (
     avatar VARCHAR(255),
     [name] NVARCHAR(255),
     createdBy VARCHAR(255),
-    createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    createdDate DATETIME2(0) DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
     lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     isDeleted BIT DEFAULT 0,
