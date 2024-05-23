@@ -3,23 +3,21 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.manageFootballClub;
+package controllers.Auth;
 
-import dal.FootballClubDAO;
+import entity.GoogleAccount;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author admin
+ * @author AD
+ * 
  */
-@WebServlet(name="ManageFootballClubServlet", urlPatterns={"/manageFootballClub"})
-public class ManageFootballClubServlet extends HttpServlet {
+public class Google extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,18 +29,11 @@ public class ManageFootballClubServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ManageFootballClubServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ManageFootballClubServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        String code = request.getParameter("code");
+        GoogleLogin gg = new GoogleLogin();
+        String accessToken = gg.getToken(code);
+        GoogleAccount acc= gg.getUserInfo(accessToken);
+        System.out.println(acc);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,8 +47,7 @@ public class ManageFootballClubServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.setAttribute("footballClubs", FootballClubDAO.INSTANCE.getFootballClubs());
-        request.getRequestDispatcher("views/manageFootballClub.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
