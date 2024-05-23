@@ -28,7 +28,7 @@ public class FootballClubDAO {
 
     public ArrayList<FootballClub> getFootballClubs() {
         ArrayList<FootballClub> fcs = new ArrayList<>();
-        String sql = "select * from FootballClub";
+        String sql = "select * from FootballClub where isDeleted = 0";
         try {
             ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -72,6 +72,9 @@ public class FootballClubDAO {
             e.printStackTrace(); // Proper exception handling
         }
         return created;
+    }
+    public static void main(String[] args) {
+        System.out.println(FootballClubDAO.INSTANCE.getFootballClubs().toString());
     }
 
 }

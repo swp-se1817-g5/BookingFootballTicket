@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Manage Football Club</title>
+        <title>Bootstrap Simple Data Table</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -134,6 +134,14 @@
                 margin-top: 6px;
                 font-size: 95%;
             }
+            .searchh {
+                display: flex;
+                justify-content: center;
+            }
+            .createe {
+                display: flex;
+                justify-content: right;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -147,12 +155,16 @@
                 <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
-                            <div class="col-sm-8"><h2>Manage <b>Football Club</b></h2></div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4"><h2>Customer <b>Details</b></h2></div>
+
+                            <div class="col-sm-4 searchh">
                                 <div class="search-box">
                                     <i class="material-icons">&#xE8B6;</i>
                                     <input type="text" class="form-control" placeholder="Search&hellip;">
                                 </div>
+                            </div>
+                            <div class="col-sm-4 createe">
+                                <a href="#addActorModall" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Actor</span></a>
                             </div>
                         </div>
                     </div>
@@ -160,46 +172,32 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Image<i class="fa"></i></th>
-                                <th>Name</th>
-                                <th>Create By<i class="fa fa"></i></th>
+                                <th>Image<i class="fa "></i></th>
+                                <th>Club</th>
+                                <th>Create By<i class="fa "></i></th>
                                 <th>Create Date</th>
-                                <th>Update By<i class="fa fa"></i></th>
-                                <th>Last Update Date<i class="fa"></i></th>
-                                <th>Action<i class="fa"></i></th>
-                               
+                                <th>Last Update By <i class="fa "></i></th>
+                                <th>Last Update Date <i class="fa "></i></th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Thomas Hardy</td>
-                                <td>89 Chiaroscuro Rd.</td>
-                                <td>Portland</td>
-                                <td>97219</td>
-                                <td>USA</td>
-                                <td></td>
+                            <c:forEach items="${requestScope.footballClubs}" var="o">
+                                <tr>
+                                <td>${o.clubId}</td>
+                                <td><a href="${o.img}"></a></td>
+                                <td>${o.clubName}</td>
+                                <td>${o.createdBy}</td>
+                                <td>${o.createdDate}</td>
+                                <td>${o.updatedBy}</td>
+                                <td>${o.lastUpdatedDate}</td>
                                 <td>
-<!--                                    <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>-->
                                     <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
                                     <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                 </td>
                             </tr>
-                            <c:forEach items="${requestScope.footballClubs}" var="o">
-                                <tr>
-                                    <td><img src="${o.img}" alt="${o.clubName}"/><td>
-                                    <td>${o.clubId}</td>
-                                    <td>${o.clubName}</td>
-                                    <td>${o.createdBy}</td>
-                                    <td>${o.createdDate}</td>
-                                    <td>${o.updatedBy}</td>
-                                    <td>${o.lastUpdatedDate}</td>
-                                </tr>
                             </c:forEach>
-                           
-                            
-                            
-                                 
+                                    
                         </tbody>
                     </table>
                     <div class="clearfix">
