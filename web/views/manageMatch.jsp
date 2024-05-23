@@ -1,3 +1,10 @@
+<%-- 
+    Document   : manageMatch
+    Created on : May 23, 2024, 1:08:23 PM
+    Author     : thuat
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
