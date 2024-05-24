@@ -4,8 +4,7 @@
  */
 package models;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -14,29 +13,24 @@ import java.util.Date;
 public class News {
 
     private int newsId;
-    private int userId;
+    private User userId;
     private String title;
     private String content;
-    private Date postTime;
     private String createBy;
-    private LocalDate createdDate;
-    private String updateBy;
-    private LocalDate lastUpdateDate;
+    private LocalDateTime createdDate;
+    private User updateBy;
+    private LocalDateTime lastUpdateDate;
     private boolean isDeleted;
 
     public News() {
     }
 
-    public News(int newsId, int userId, String title, String content, Date postTime, String createBy, LocalDate createdDate, String updateBy, LocalDate lastUpdateDate, boolean isDeleted) {
-        this.newsId = newsId;
+    public News(User userId, String title, String content, String createBy, User updateBy, boolean isDeleted) {
         this.userId = userId;
         this.title = title;
         this.content = content;
-        this.postTime = postTime;
         this.createBy = createBy;
-        this.createdDate = createdDate;
         this.updateBy = updateBy;
-        this.lastUpdateDate = lastUpdateDate;
         this.isDeleted = isDeleted;
     }
 
@@ -48,11 +42,11 @@ public class News {
         this.newsId = newsId;
     }
 
-    public int getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 
@@ -72,14 +66,6 @@ public class News {
         this.content = content;
     }
 
-    public Date getPostTime() {
-        return postTime;
-    }
-
-    public void setPostTime(Date postTime) {
-        this.postTime = postTime;
-    }
-
     public String getCreateBy() {
         return createBy;
     }
@@ -88,27 +74,27 @@ public class News {
         this.createBy = createBy;
     }
 
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public String getUpdateBy() {
+    public User getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(String updateBy) {
+    public void setUpdateBy(User updateBy) {
         this.updateBy = updateBy;
     }
 
-    public LocalDate getLastUpdateDate() {
+    public LocalDateTime getLastUpdateDate() {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(LocalDate lastUpdateDate) {
+    public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 
@@ -118,6 +104,11 @@ public class News {
 
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    @Override
+    public String toString() {
+        return "News{" + "newsId=" + newsId + ", userId=" + userId + ", title=" + title + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", isDeleted=" + isDeleted + '}';
     }
 
 }
