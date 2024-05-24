@@ -109,16 +109,19 @@ public class NewsDAO {
         }
         return m;
     }
+
 //     
-//    public static void main(String[] args) {
-//        ArrayList<News> list = NewsDAO.INSTANCE.getlistNews();
-//        System.out.println(list.toString());
-//        User u = new User();
-//        u.setUserId(2);
-//        u.setUserName("Duong");
-//        News n = new News(u, "title", "content", "Duong1", u, false);
-//        n.setNewsId(11);
-//        System.out.println(NewsDAO.INSTANCE.createNews(n, u));
-//        System.out.println(NewsDAO.INSTANCE.updateNews(n));
-//    }
+    public static void main(String[] args) {
+        ArrayList<News> list = NewsDAO.INSTANCE.getlistNews();
+        System.out.println(list.toString());
+        User u = new User();
+        u.setUserId(2);
+        u.setUserName("Duong");
+        News n = new News(u, "title", "content", "Duong1", u, false);
+        n.setNewsId(11);
+        System.out.println(NewsDAO.INSTANCE.createNews(n, u));
+        System.out.println(NewsDAO.INSTANCE.updateNews(n));
+    }
+
+
 }
