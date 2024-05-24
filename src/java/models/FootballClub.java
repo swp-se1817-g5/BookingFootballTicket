@@ -5,6 +5,7 @@
 package models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -16,15 +17,15 @@ public class FootballClub {
     private String clubName;
     private String img;
     private String createdBy;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     private String updatedBy;
-    private LocalDate lastUpdatedDate;
+    private LocalDateTime lastUpdatedDate;
     private boolean isDeleted;
 
     public FootballClub() {
     }
 
-    public FootballClub(int clubId, String clubName, String img, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
+    public FootballClub(int clubId, String clubName, String img, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.clubId = clubId;
         this.clubName = clubName;
         this.img = img;
@@ -67,11 +68,11 @@ public class FootballClub {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -83,11 +84,11 @@ public class FootballClub {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdatedDate() {
+    public LocalDateTime getLastUpdatedDate() {
         return lastUpdatedDate;
     }
 
-    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
+    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
@@ -103,6 +104,8 @@ public class FootballClub {
     public String toString() {
         return "FootballClub{" + "clubId=" + clubId + ", clubName=" + clubName + ", img=" + img + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
     }
+    
+    
 
     
     

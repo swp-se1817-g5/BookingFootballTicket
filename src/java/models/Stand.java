@@ -6,6 +6,7 @@ package models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -19,15 +20,15 @@ public class Stand {
     private BigDecimal price;
     private int quantity;
     private String createdBy;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     private String updatedBy;
-    private LocalDate lastUpdatedDate;
+    private LocalDateTime lastUpdatedDate;
     private boolean isDeleted;
 
     public Stand() {
     }
 
-    public Stand(int standId, String standName, int classId, BigDecimal price, int quantity, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
+    public Stand(int standId, String standName, int classId, BigDecimal price, int quantity, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.standId = standId;
         this.standName = standName;
         this.classId = classId;
@@ -88,11 +89,11 @@ public class Stand {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -104,11 +105,11 @@ public class Stand {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdatedDate() {
+    public LocalDateTime getLastUpdatedDate() {
         return lastUpdatedDate;
     }
 
-    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
+    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
@@ -124,6 +125,7 @@ public class Stand {
     public String toString() {
         return "Stand{" + "standId=" + standId + ", standName=" + standName + ", classId=" + classId + ", price=" + price + ", quantity=" + quantity + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
     }
+    
     
     
     

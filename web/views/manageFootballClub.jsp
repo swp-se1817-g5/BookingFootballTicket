@@ -155,7 +155,7 @@
                 <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
-                            <div class="col-sm-4"><h2>Customer <b>Details</b></h2></div>
+                            <div class="col-sm-4"><h2>Manage <b>Football Club</b></h2></div>
 
                             <div class="col-sm-4 searchh">
                                 <div class="search-box">
@@ -164,7 +164,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-4 createe">
-                                <a href="#addActorModall" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Actor</span></a>
+                                <a href="createFootballClub" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Club</span></a>
                             </div>
                         </div>
                     </div>
@@ -200,7 +200,7 @@
                                     
                         </tbody>
                     </table>
-                    <div class="clearfix">
+<!--                    <div class="clearfix">
                         <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                         <ul class="pagination">
                             <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
@@ -211,7 +211,7 @@
                             <li class="page-item"><a href="#" class="page-link">5</a></li>
                             <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
                         </ul>
-                    </div>
+                    </div>-->
                 </div>
             </div>  
         </div>   
