@@ -1,4 +1,4 @@
-<%-- 
+    <%-- 
     Document   : manageFootballClub
     Created on : May 23, 2024, 12:20:34 PM
     Author     : admin
@@ -150,7 +150,7 @@
         </script>
     </head>
     <body>
-        <div class="container-xl">
+        <div class="container-fluid">
             <div class="table-responsive">
                 <div class="table-wrapper">
                     <div class="table-title">
@@ -160,7 +160,7 @@
                             <div class="col-sm-4 searchh">
                                 <div class="search-box">
                                     <i class="material-icons">&#xE8B6;</i>
-                                    <input type="text" class="form-control" placeholder="Search&hellip;">
+                                    <input type="text" class="form-control" placeholder="Search by name&hellip;">
                                 </div>
                             </div>
                             <div class="col-sm-4 createe">
@@ -176,8 +176,8 @@
                                 <th>Club</th>
                                 <th>Create By<i class="fa "></i></th>
                                 <th>Create Date</th>
-                                <th>Last Update By <i class="fa "></i></th>
-                                <th>Last Update Date <i class="fa "></i></th>
+                                <th>Last Update By<i class="fa "></i></th>
+                                <th>Last Update Date<i class="fa "></i></th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
