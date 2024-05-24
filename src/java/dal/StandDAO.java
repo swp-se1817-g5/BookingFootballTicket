@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -37,9 +37,9 @@ public class StandDAO {
             stand.setClassId(rs.getInt("classId"));
             stand.setQuantity(rs.getInt("quantity"));
             stand.setCreatedBy(rs.getString("createdBy"));
-            stand.setCreatedDate(rs.getDate("createdDate").toLocalDate());
+            stand.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
             stand.setUpdatedBy(rs.getString("updatedBy"));
-            stand.setLastUpdatedDate(rs.getDate("lastUpdatedDate").toLocalDate());
+            stand.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
             stand.setIsDeleted(rs.getBoolean("isDeleted"));
             stands.add(stand);
         }
