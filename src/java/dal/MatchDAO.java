@@ -99,7 +99,7 @@ public class MatchDAO {
 
                 m.setMatchId(rs.getInt("matchId"));
                 m.setStadiumImg(rs.getString("matchStadiumImg"));
-                m.setTime(rs.getDate("matchTime"));
+                m.setTime(rs.getTimestamp("matchTime").toLocalDateTime());
 
                 fc1.setClubId(rs.getInt("team1Id"));
                 fc1.setClubName(rs.getString("team1Name"));
@@ -126,9 +126,9 @@ public class MatchDAO {
                 m.setType(mt);
 
                 m.setCreatedBy(rs.getString("createdBy"));
-                m.setCreatedDate(rs.getDate("createdDate").toLocalDate());
+                m.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 m.setUpdatedBy(rs.getString("updatedBy"));
-                m.setLastUpdatedDate(rs.getDate("lastUpdatedDate").toLocalDate());
+                m.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
                 m.setIsDeleted(rs.getBoolean("isDeleted"));
                 matches.add(m);
             }
