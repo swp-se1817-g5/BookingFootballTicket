@@ -33,6 +33,12 @@ public class Role {
         this.isDeleted = isDeleted;
     }
 
+    public Role(String roleName, String createBy) {
+        this.roleName = roleName;
+        this.createBy = createBy;
+    }
+    
+
     public int getRoleId() {
         return roleId;
     }

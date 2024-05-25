@@ -11,6 +11,7 @@ import java.time.LocalDate;
  * @author thuat
  */
 public class User {
+
     private int userId;
     private int roleId;
     private String userName;
@@ -42,6 +43,16 @@ public class User {
         this.updatedBy = updatedBy;
         this.lastUpdatedDate = lastUpdatedDate;
         this.isDeleted = isDeleted;
+    }
+
+    public User(String userName, String password, String email, String phoneNumber, String avatar, String name) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.avatar = avatar;
+        this.name = name;
+
     }
 
     public int getUserId() {
@@ -152,10 +163,5 @@ public class User {
     public String toString() {
         return "User{" + "userId=" + userId + ", roleId=" + roleId + ", userName=" + userName + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", avatar=" + avatar + ", name=" + name + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
     }
-    
-    
 
-    
-    
-    
 }
