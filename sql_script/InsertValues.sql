@@ -62,3 +62,4 @@ INSERT INTO News (userId, title, content, createdBy, updatedBy,isDeleted)
 VALUES (1, 'Exciting Match Ahead!', 'Dont miss the upcoming match between Manchester United and Real Madrid!', 'System', 'System',0),
        (2, 'Latest Transfer News', 'FC Barcelona signs a promising young talent. Read more here!', 'System', 'System',0),
 	   (2, 'Latest Transfer News', 'FC Barcelona signs a promising young talent. Read more here!', 'System', 'System',0);
+	

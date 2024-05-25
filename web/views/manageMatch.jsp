@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -134,6 +135,14 @@
                 margin-top: 6px;
                 font-size: 95%;
             }
+            .searchh {
+                display: flex;
+                justify-content: center;
+            }
+            .createe {
+                display: flex;
+                justify-content: right;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -142,17 +151,21 @@
         </script>
     </head>
     <body>
-        <div class="container-xl">
+        <div class="container-xll">
             <div class="table-responsive">
                 <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
-                            <div class="col-sm-8"><h2>Customer <b>Details</b></h2></div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4"><h2>Match <b>Details</b></h2></div>
+
+                            <div class="col-sm-4 searchh">
                                 <div class="search-box">
                                     <i class="material-icons">&#xE8B6;</i>
                                     <input type="text" class="form-control" placeholder="Search&hellip;">
                                 </div>
+                            </div>
+                            <div class="col-sm-4 createe">
+                                <a href="#addActorModall" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Match</span></a>
                             </div>
                         </div>
                     </div>
@@ -160,80 +173,40 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name <i class="fa fa-sort"></i></th>
-                                <th>Address</th>
-                                <th>City <i class="fa fa-sort"></i></th>
-                                <th>Pin Code</th>
-                                <th>Country <i class="fa fa-sort"></i></th>
+                                <th>FC-1</th>
+                                <th>FC-2</th>
+                                <th>Season</th>
+                                <th>Status</th>
+                                <th>Type</th>
+                                <th>Stadium</th>
+                                <th>Create By</th>
+                                <th>Create Date</th>
+                                <th>Last Update By</th>
+                                <th>Last Update Date</th>
                                 <th>Actions</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Thomas Hardy</td>
-                                <td>89 Chiaroscuro Rd.</td>
-                                <td>Portland</td>
-                                <td>97219</td>
-                                <td>USA</td>
-                                <td>
-                                    <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Maria Anders</td>
-                                <td>Obere Str. 57</td>
-                                <td>Berlin</td>
-                                <td>12209</td>
-                                <td>Germany</td>
-                                <td>
-                                    <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Fran Wilson</td>
-                                <td>C/ Araquil, 67</td>
-                                <td>Madrid</td>
-                                <td>28023</td>
-                                <td>Spain</td>
-                                <td>
-                                    <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Dominique Perrier</td>
-                                <td>25, rue Lauriston</td>
-                                <td>Paris</td>
-                                <td>75016</td>
-                                <td>France</td>
-                                <td>
-                                    <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Martin Blank</td>
-                                <td>Via Monte Bianco 34</td>
-                                <td>Turin</td>
-                                <td>10100</td>
-                                <td>Italy</td>
-                                <td>
-                                    <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>        
+                            <c:forEach items="${requestScope.matches}" var="o">
+                                <tr>
+                                    <td>${o.matchId}</td>
+                                    <td>${o.team1.clubName}</td>
+                                    <td>${o.team2.clubName}</td>
+                                    <td>${o.season.seasonName}</td>
+                                    <td>${o.status.matchStatusName}</td>
+                                    <td>${o.type.name}</td>
+                                    <td>${o.stadiumImg}</td>
+                                    <td>${o.createdBy}</td>
+                                    <td>${o.createdDate}</td>
+                                    <td>${o.updatedBy}</td>
+                                    <td>${o.lastUpdatedDate}</td>
+                                    <td>
+                                        <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    </td>
+                                </tr>
+                            </c:forEach>       
                         </tbody>
                     </table>
                     <div class="clearfix">
