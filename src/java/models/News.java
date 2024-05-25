@@ -20,17 +20,19 @@ public class News {
     private LocalDateTime createdDate;
     private User updateBy;
     private LocalDateTime lastUpdateDate;
+    private String status;
     private boolean isDeleted;
 
     public News() {
     }
 
-    public News(User userId, String title, String content, String createBy, User updateBy, boolean isDeleted) {
+    public News(User userId, String title, String content, String createBy, User updateBy, String status, boolean isDeleted) {
         this.userId = userId;
         this.title = title;
         this.content = content;
         this.createBy = createBy;
         this.updateBy = updateBy;
+        this.status = status;
         this.isDeleted = isDeleted;
     }
 
@@ -98,6 +100,14 @@ public class News {
         this.lastUpdateDate = lastUpdateDate;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public boolean isIsDeleted() {
         return isDeleted;
     }
@@ -108,8 +118,7 @@ public class News {
 
     @Override
     public String toString() {
-        return "News{" + "newsId=" + newsId + ", userId=" + userId + ", title=" + title + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", isDeleted=" + isDeleted + '}';
+        return "News{" + "newsId=" + newsId + ", userId=" + userId + ", title=" + title + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", status=" + status + ", isDeleted=" + isDeleted + '}';
     }
-
 
 }
