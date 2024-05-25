@@ -5,6 +5,7 @@
 
 package controllers.manageStand;
 
+import dal.StandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -55,7 +56,9 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.setAttribute("stands", StandDAO.INSTANCE.getStands());
+        request.getRequestDispatcher("views/manageStand.jsp").forward(request, response);
+        
     } 
 
     /** 

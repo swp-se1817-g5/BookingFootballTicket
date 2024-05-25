@@ -16,7 +16,6 @@ public class Stand {
 
     private int standId;
     private String standName;
-    private int classId;
     private BigDecimal price;
     private int quantity;
     private String createdBy;
@@ -28,10 +27,10 @@ public class Stand {
     public Stand() {
     }
 
-    public Stand(int standId, String standName, int classId, BigDecimal price, int quantity, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
+    public Stand(int standId, String standName, BigDecimal price, int quantity, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.standId = standId;
         this.standName = standName;
-        this.classId = classId;
+        
         this.price = price;
         this.quantity = quantity;
         this.createdBy = createdBy;
@@ -55,14 +54,6 @@ public class Stand {
 
     public void setStandName(String standName) {
         this.standName = standName;
-    }
-
-    public int getClassId() {
-        return classId;
-    }
-
-    public void setClassId(int classId) {
-        this.classId = classId;
     }
 
     public BigDecimal getPrice() {
@@ -123,9 +114,10 @@ public class Stand {
 
     @Override
     public String toString() {
-        return "Stand{" + "standId=" + standId + ", standName=" + standName + ", classId=" + classId + ", price=" + price + ", quantity=" + quantity + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
+        return "Stand{" + "standId=" + standId + ", standName=" + standName + ", price=" + price + ", quantity=" + quantity + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
     }
-    
+
+   
     
     
     
