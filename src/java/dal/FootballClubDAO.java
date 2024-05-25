@@ -5,6 +5,7 @@
 package dal;
 
 import java.sql.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import models.FootballClub;
 
@@ -28,7 +29,8 @@ public class FootballClubDAO {
 
     public ArrayList<FootballClub> getFootballClubs() {
         ArrayList<FootballClub> fcs = new ArrayList<>();
-        String sql = "select * from FootballClub";
+        String sql = "select * from FootballClub where isDeleted = 0";
+       
         try {
             ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -38,9 +40,9 @@ public class FootballClubDAO {
                 fc.setClubName(rs.getString("clubName"));
                 fc.setImg(rs.getString("img"));
                 fc.setCreatedBy(rs.getString("createdBy"));
-                fc.setCreatedDate(rs.getDate("createdDate").toLocalDate());
+                fc.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 fc.setUpdatedBy(rs.getString("updatedBy"));
-                fc.setLastUpdatedDate(rs.getDate("lastUpdatedDate").toLocalDate());
+                fc.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
                 fc.setIsDeleted(rs.getBoolean("isDeleted"));
                 fcs.add(fc);
 
@@ -72,6 +74,9 @@ public class FootballClubDAO {
             e.printStackTrace(); // Proper exception handling
         }
         return created;
+    }
+    public static void main(String[] args) {
+        System.out.println(FootballClubDAO.INSTANCE.getFootballClubs().toString());
     }
 
 }

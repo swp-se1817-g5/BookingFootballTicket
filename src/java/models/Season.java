@@ -5,38 +5,69 @@
 package models;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 /**
  *
  * @author thuat
  */
-public class MatchStatus {
+public class Season {
 
-    private int matchStatusId;
-    private String matchStatusName;
+    private int seasonId;
+    private String seasonName;
+    private Date startDate;
+    private Date endDate;
     private String createdBy;
     private LocalDate createdDate;
     private String updatedBy;
     private LocalDate lastUpdatedDate;
     private boolean isDeleted;
 
-    public MatchStatus() {
+    public Season() {
     }
 
-    public int getMatchStatusId() {
-        return matchStatusId;
+    public Season(int seasonId, String seasonName, Date startDate, Date endDate, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
+        this.seasonId = seasonId;
+        this.seasonName = seasonName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
+        this.updatedBy = updatedBy;
+        this.lastUpdatedDate = lastUpdatedDate;
+        this.isDeleted = isDeleted;
     }
 
-    public void setMatchStatusId(int matchStatusId) {
-        this.matchStatusId = matchStatusId;
+    public int getSeasonId() {
+        return seasonId;
     }
 
-    public String getMatchStatusName() {
-        return matchStatusName;
+    public void setSeasonId(int seasonId) {
+        this.seasonId = seasonId;
     }
 
-    public void setMatchStatusName(String matchStatusName) {
-        this.matchStatusName = matchStatusName;
+    public String getSeasonName() {
+        return seasonName;
+    }
+
+    public void setSeasonName(String seasonName) {
+        this.seasonName = seasonName;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public String getCreatedBy() {
@@ -76,16 +107,6 @@ public class MatchStatus {
     }
 
     public void setIsDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
-    }
-
-    public MatchStatus(int matchStatusId, String matchStatusName, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
-        this.matchStatusId = matchStatusId;
-        this.matchStatusName = matchStatusName;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
-        this.updatedBy = updatedBy;
-        this.lastUpdatedDate = lastUpdatedDate;
         this.isDeleted = isDeleted;
     }
 

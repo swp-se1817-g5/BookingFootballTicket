@@ -111,4 +111,5 @@ public class News {
         return "News{" + "newsId=" + newsId + ", userId=" + userId + ", title=" + title + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", isDeleted=" + isDeleted + '}';
     }
 
+
 }

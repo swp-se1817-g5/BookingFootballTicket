@@ -28,7 +28,7 @@ CREATE TABLE [User] (
     avatar VARCHAR(255),
     [name] NVARCHAR(255),
     createdBy VARCHAR(255),
-    createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    createdDate DATETIME2(0) DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
     lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     isDeleted BIT DEFAULT 0,
@@ -177,13 +177,14 @@ CREATE TABLE News (
 	userId INT,
     title VARCHAR(255),
     content NVARCHAR(MAX) NOT NULL,
-    postTime DATETIME2,
-    createdBy VARCHAR(255),
+    createdBy VARCHAR(255), 
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-    updatedBy NVARCHAR(255),
+    updatedBy NVARCHAR(255) NOT NULL,
     lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     isDeleted BIT DEFAULT 0,
 	FOREIGN KEY (userId) REFERENCES [User](userId)
 	);
 GO
+
+select * from News  
 

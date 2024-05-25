@@ -1,15 +1,16 @@
-    <%-- 
-    Document   : manageFootballClub
-    Created on : May 23, 2024, 12:20:34 PM
-    Author     : admin
+<%-- 
+    Document   : manageMatch
+    Created on : May 23, 2024, 1:08:23 PM
+    Author     : thuat
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Bootstrap Simple Data Table</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
@@ -150,21 +151,21 @@
         </script>
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container-xll">
             <div class="table-responsive">
                 <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
-                            <div class="col-sm-4"><h2>Manage <b>Football Club</b></h2></div>
+                            <div class="col-sm-4"><h2>Match <b>Details</b></h2></div>
 
                             <div class="col-sm-4 searchh">
                                 <div class="search-box">
                                     <i class="material-icons">&#xE8B6;</i>
-                                    <input type="text" class="form-control" placeholder="Search by name&hellip;">
+                                    <input type="text" class="form-control" placeholder="Search&hellip;">
                                 </div>
                             </div>
                             <div class="col-sm-4 createe">
-                                <a href="createFootballClub" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Club</span></a>
+                                <a href="#addActorModall" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Match</span></a>
                             </div>
                         </div>
                     </div>
@@ -172,35 +173,43 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Image<i class="fa "></i></th>
-                                <th>Club</th>
-                                <th>Create By<i class="fa "></i></th>
+                                <th>FC-1</th>
+                                <th>FC-2</th>
+                                <th>Season</th>
+                                <th>Status</th>
+                                <th>Type</th>
+                                <th>Stadium</th>
+                                <th>Create By</th>
                                 <th>Create Date</th>
-                                <th>Last Update By<i class="fa "></i></th>
-                                <th>Last Update Date<i class="fa "></i></th>
+                                <th>Last Update By</th>
+                                <th>Last Update Date</th>
                                 <th>Actions</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${requestScope.footballClubs}" var="o">
+                            <c:forEach items="${requestScope.matches}" var="o">
                                 <tr>
-                                <td>${o.clubId}</td>
-                                <td><a href="${o.img}"></a></td>
-                                <td>${o.clubName}</td>
-                                <td>${o.createdBy}</td>
-                                <td>${o.createdDate}</td>
-                                <td>${o.updatedBy}</td>
-                                <td>${o.lastUpdatedDate}</td>
-                                <td>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                            </c:forEach>
-                                    
+                                    <td>${o.matchId}</td>
+                                    <td>${o.team1.clubName}</td>
+                                    <td>${o.team2.clubName}</td>
+                                    <td>${o.season.seasonName}</td>
+                                    <td>${o.status.matchStatusName}</td>
+                                    <td>${o.type.name}</td>
+                                    <td>${o.stadiumImg}</td>
+                                    <td>${o.createdBy}</td>
+                                    <td>${o.createdDate}</td>
+                                    <td>${o.updatedBy}</td>
+                                    <td>${o.lastUpdatedDate}</td>
+                                    <td>
+                                        <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    </td>
+                                </tr>
+                            </c:forEach>       
                         </tbody>
                     </table>
-<!--                    <div class="clearfix">
+                    <div class="clearfix">
                         <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                         <ul class="pagination">
                             <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
@@ -211,7 +220,7 @@
                             <li class="page-item"><a href="#" class="page-link">5</a></li>
                             <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
                         </ul>
-                    </div>-->
+                    </div>
                 </div>
             </div>  
         </div>   

@@ -172,8 +172,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Image<i class="fa "></i></th>
-                                <th>Club</th>
+                                <th>Stand Name</th>
                                 <th>Create By<i class="fa "></i></th>
                                 <th>Create Date</th>
                                 <th>Last Update By<i class="fa "></i></th>

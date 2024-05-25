@@ -6,6 +6,7 @@ package models;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  *
@@ -15,23 +16,27 @@ public class Stand {
 
     private int standId;
     private String standName;
-    private int classId;
     private BigDecimal price;
     private int quantity;
-    private LocalDate createdDate;
-    private String updateBy;
-    private LocalDate lastUpdateDate;
+    private String createdBy;
+    private LocalDateTime createdDate;
+    private String updatedBy;
+    private LocalDateTime lastUpdatedDate;
     private boolean isDeleted;
 
-    public Stand(int standId, String standName, int classId, BigDecimal price, int quantity, LocalDate createdDate, String updateBy, LocalDate lastUpdateDate, boolean isDeleted) {
+    public Stand() {
+    }
+
+    public Stand(int standId, String standName, BigDecimal price, int quantity, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.standId = standId;
         this.standName = standName;
-        this.classId = classId;
+        
         this.price = price;
         this.quantity = quantity;
+        this.createdBy = createdBy;
         this.createdDate = createdDate;
-        this.updateBy = updateBy;
-        this.lastUpdateDate = lastUpdateDate;
+        this.updatedBy = updatedBy;
+        this.lastUpdatedDate = lastUpdatedDate;
         this.isDeleted = isDeleted;
     }
 
@@ -51,14 +56,6 @@ public class Stand {
         this.standName = standName;
     }
 
-    public int getClassId() {
-        return classId;
-    }
-
-    public void setClassId(int classId) {
-        this.classId = classId;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
@@ -75,28 +72,36 @@ public class Stand {
         this.quantity = quantity;
     }
 
-    public LocalDate getCreatedDate() {
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public String getUpdateBy() {
-        return updateBy;
+    public String getUpdatedBy() {
+        return updatedBy;
     }
 
-    public void setUpdateBy(String updateBy) {
-        this.updateBy = updateBy;
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdateDate() {
-        return lastUpdateDate;
+    public LocalDateTime getLastUpdatedDate() {
+        return lastUpdatedDate;
     }
 
-    public void setLastUpdateDate(LocalDate lastUpdateDate) {
-        this.lastUpdateDate = lastUpdateDate;
+    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
+        this.lastUpdatedDate = lastUpdatedDate;
     }
 
     public boolean isIsDeleted() {
@@ -109,8 +114,13 @@ public class Stand {
 
     @Override
     public String toString() {
-        return "Stand{" + "standId=" + standId + ", standName=" + standName + ", classId=" + classId + ", price=" + price + ", quantity=" + quantity + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", isDeleted=" + isDeleted + '}';
+        return "Stand{" + "standId=" + standId + ", standName=" + standName + ", price=" + price + ", quantity=" + quantity + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
     }
+
+   
+    
+    
+    
     
     
     

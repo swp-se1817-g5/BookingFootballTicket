@@ -16,6 +16,7 @@ public class Match {
     private int matchId;
     private FootballClub team1;
     private FootballClub team2;
+    private Season season;
     private String stadiumImg;
     private Date time;
     private MatchStatus status;
@@ -29,10 +30,11 @@ public class Match {
     public Match() {
     }
 
-    public Match(int matchId, FootballClub team1, FootballClub team2, String stadiumImg, Date time, MatchStatus status, MatchType type, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
+    public Match(int matchId, FootballClub team1, FootballClub team2, Season season, String stadiumImg, Date time, MatchStatus status, MatchType type, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
         this.matchId = matchId;
         this.team1 = team1;
         this.team2 = team2;
+        this.season = season;
         this.stadiumImg = stadiumImg;
         this.time = time;
         this.status = status;
@@ -66,6 +68,14 @@ public class Match {
 
     public void setTeam2(FootballClub team2) {
         this.team2 = team2;
+    }
+
+    public Season getSeason() {
+        return season;
+    }
+
+    public void setSeason(Season season) {
+        this.season = season;
     }
 
     public String getStadiumImg() {
@@ -139,12 +149,5 @@ public class Match {
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
-
-    @Override
-    public String toString() {
-        return "Match{" + "matchId=" + matchId + ", team1=" + team1 + ", team2=" + team2 + ", stadiumImg=" + stadiumImg + ", time=" + time + ", status=" + status + ", type=" + type + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
-    }
-    
-    
 
 }
