@@ -5,6 +5,7 @@
 
 package controllers.manageStand;
 
+import dal.StandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import models.Stand;
 
 /**
  *
@@ -56,8 +58,8 @@ public class CreateStandServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        processRequest(request, response);
+    throws ServletException, IOException {  
+        request.getRequestDispatcher("manageStand").forward(request, response);
     } 
 
     /** 
@@ -71,15 +73,26 @@ public class CreateStandServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         HttpSession session = request.getSession();
+        boolean created = false;
         try {
             String createdBy = (String)session.getAttribute("userName");
             String standName = request.getParameter("standName");
             BigDecimal price  = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
             int quantity = Integer.parseInt(request.getParameter("quantity"));
+            Stand stand = new Stand();
+            stand.setCreatedBy(createdBy);
+            stand.setStandName(standName);
+            stand.setPrice(price);
+            stand.setQuantity(quantity);
+            created = StandDAO.INSTANCE.createStand(stand);
+            
             
         } catch (Exception e) {
             e.printStackTrace();
         }
+        request.setAttribute("created", created);
+        doGet(request, response);
+        
     }
 
     /** 
