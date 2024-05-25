@@ -5,7 +5,7 @@
 
 package controllers.manageMatch;
 
-import dal.*;
+import dal.MatchDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,22 +18,23 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author thuat
  */
-@WebServlet(name="ManageMatchServlet", urlPatterns={"/manageMatch"})
-public class ManageMatchServlet extends HttpServlet {
+@WebServlet(name="CreateNewMatchServlet", urlPatterns={"/createNewMatch"})
+public class CreateNewMatchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.setAttribute("matches", MatchDAO.INSTANCE.getMatches());
-        request.getRequestDispatcher("views/manageMatch.jsp").forward(request, response);
-    } 
-
+        request.setAttribute("seasons", MatchDAO.INSTANCE.getMatches());
+        request.setAttribute("status", MatchDAO.INSTANCE.getMatches());
+        request.setAttribute("types", MatchDAO.INSTANCE.getMatches());
+        request.getRequestDispatcher("manageactor").forward(request, response);
+    }
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         
     }
-
 
     @Override
     public String getServletInfo() {
