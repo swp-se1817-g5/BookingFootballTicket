@@ -108,6 +108,7 @@ public class NewsDAO {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return m;
+         
     }
      
     public static void main(String[] args) {
