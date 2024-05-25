@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package dal;
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import models.Stand;
@@ -47,6 +48,25 @@ public class StandDAO {
     }
     return stands;
 }
+    public boolean createStand(Stand stand) {
+        boolean created = false;
+        String sql = "insert into stand(standName, price, quantity, createdBy) values(?,?,?,?)";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, stand.getStandName());
+            ps.setBigDecimal(2, stand.getPrice());
+            ps.setInt(3, stand.getQuantity());
+            ps.setString(4, stand.getCreatedBy());
+            int rowsAffected = ps.executeUpdate();
+            if(rowsAffected > 0)
+                created = true;
+           
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return created;
+    }
 
     
 }
