@@ -154,4 +154,9 @@ public class Match {
         this.isDeleted = isDeleted;
     }
 
+    @Override
+    public String toString() {
+        return "Match{" + "matchId=" + matchId + ", team1=" + team1 + ", team2=" + team2 + ", season=" + season + ", stadiumImg=" + stadiumImg + ", time=" + time + ", status=" + status + ", type=" + type + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
+    }
+    
 }

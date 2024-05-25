@@ -175,16 +175,17 @@ GO
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
 	userId INT,
+	matchId INT,
     title VARCHAR(255),
     content NVARCHAR(MAX) NOT NULL,
     createdBy VARCHAR(255), 
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy NVARCHAR(255) NOT NULL,
     lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+	[status] NVARCHAR(20),
     isDeleted BIT DEFAULT 0,
-	FOREIGN KEY (userId) REFERENCES [User](userId)
+	FOREIGN KEY (userId) REFERENCES [User](userId),
+	FOREIGN KEY (matchId) REFERENCES [Match](matchId)
 	);
 GO
-
-select * from News  
 

@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Match;
 import models.News;
 import models.User;
 
@@ -32,19 +33,23 @@ public class NewsDAO {
     }
     PreparedStatement ps = null;
     ResultSet rs = null;
-// Get list all of news
 
+// Get list all of news
     public ArrayList<News> getlistNews() {
         ArrayList<News> list = new ArrayList<>();
         String sql = "SELECT *"
                 + "FROM News n\n"
-                + "JOIN [User] u on u.userId = n.userId";
+                + "JOIN [User] u on u.userId = n.userId\n"
+                + "JOIN [Match] m on m.matchId = n.matchId";
         try {
             ps = connect.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
                 News n = new News();
                 n.setNewsId(rs.getInt("newsId"));
+                Match m = new Match();
+                m.setMatchId(rs.getInt("matchId"));
+                n.setMatchId(m);
                 User u = new User();
                 u.setUserId(rs.getInt("userId"));
                 n.setUserId(u);
@@ -52,8 +57,7 @@ public class NewsDAO {
                 n.setContent(rs.getString("content"));
                 n.setCreateBy(rs.getString("createdBy"));
                 n.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
-                u.setUpdatedBy(rs.getString("updatedBy"));
-                n.setUpdateBy(u);
+                n.setUpdateBy(rs.getString("updatedBy"));
                 n.setLastUpdateDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
                 n.setStatus(rs.getString("status"));
                 n.setIsDeleted(rs.getBoolean("isDeleted"));
