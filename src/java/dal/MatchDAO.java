@@ -30,6 +30,7 @@ public class MatchDAO {
         }
     }
 
+    
     public ArrayList<MatchType> getMatchTypes() {
         ArrayList<MatchType> matchType = new ArrayList<>();
         try {
