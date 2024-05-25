@@ -14,7 +14,7 @@ import models.Stand;
 public class StandDAO {
     public static StandDAO INSTANCE = new StandDAO();
      private Connection con;
-    private PreparedStatement ps;
+  
 
     private StandDAO() {
         if (INSTANCE == null) {
@@ -34,7 +34,6 @@ public class StandDAO {
             stand.setStandId(rs.getInt("standId"));
             stand.setStandName(rs.getString("standName"));
             stand.setPrice(rs.getBigDecimal("price"));
-            stand.setClassId(rs.getInt("classId"));
             stand.setQuantity(rs.getInt("quantity"));
             stand.setCreatedBy(rs.getString("createdBy"));
             stand.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
