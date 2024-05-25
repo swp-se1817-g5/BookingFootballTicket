@@ -14,7 +14,7 @@ import models.Stand;
 public class StandDAO {
     public static StandDAO INSTANCE = new StandDAO();
      private Connection con;
-    private PreparedStatement ps;
+  
 
     private StandDAO() {
         if (INSTANCE == null) {

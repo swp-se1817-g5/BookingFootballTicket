@@ -1,7 +1,7 @@
-    <%-- 
-    Document   : manageFootballClub
-    Created on : May 23, 2024, 12:20:34 PM
-    Author     : admin
+<%-- 
+Document   : manageFootballClub
+Created on : May 23, 2024, 12:20:34 PM
+Author     : admin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -155,7 +155,7 @@
                 <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
-                            <div class="col-sm-4"><h2>Manage <b>Football Club</b></h2></div>
+                            <div class="col-sm-4"><h2>Manage <b>Stand</b></h2></div>
 
                             <div class="col-sm-4 searchh">
                                 <div class="search-box">
@@ -164,7 +164,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-4 createe">
-                                <a href="createFootballClub" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Club</span></a>
+                                <a href="createFootballClub" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Stand</span></a>
                             </div>
                         </div>
                     </div>
@@ -173,7 +173,9 @@
                             <tr>
                                 <th>#</th>
                                 <th>Stand Name</th>
-                                <th>Create By<i class="fa "></i></th>
+                                <th>Price<i class="fa "></i></th>
+                                <th>Quantity<i class="fa "></i></th>
+                                <th>Create By</th>
                                 <th>Create Date</th>
                                 <th>Last Update By<i class="fa "></i></th>
                                 <th>Last Update Date<i class="fa "></i></th>
@@ -181,36 +183,37 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${requestScope.footballClubs}" var="o">
+                            <c:forEach items="${requestScope.stands}" var="o">
                                 <tr>
-                                <td>${o.clubId}</td>
-                                <td><a href="${o.img}"></a></td>
-                                <td>${o.clubName}</td>
-                                <td>${o.createdBy}</td>
-                                <td>${o.createdDate}</td>
-                                <td>${o.updatedBy}</td>
-                                <td>${o.lastUpdatedDate}</td>
-                                <td>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
+                                    <td>${o.standId}</td>
+                                    <td>${o.standName}</td>
+                                    <td>${o.price}</td>
+                                    <td>${o.quantity}</td>
+                                    <td>${o.createdBy}</td>
+                                    <td>${o.createdDate}</td>
+                                    <td>${o.updatedBy}</td>
+                                    <td>${o.lastUpdatedDate}</td>
+                                    <td>
+                                        <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    </td>
+                                </tr>
                             </c:forEach>
-                                    
+
                         </tbody>
                     </table>
-<!--                    <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                        <ul class="pagination">
-                            <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul>
-                    </div>-->
+                    <!--                    <div class="clearfix">
+                                            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+                                            <ul class="pagination">
+                                                <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
+                                                <li class="page-item"><a href="#" class="page-link">1</a></li>
+                                                <li class="page-item"><a href="#" class="page-link">2</a></li>
+                                                <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                                                <li class="page-item"><a href="#" class="page-link">4</a></li>
+                                                <li class="page-item"><a href="#" class="page-link">5</a></li>
+                                                <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
+                                            </ul>
+                                        </div>-->
                 </div>
             </div>  
         </div>   
