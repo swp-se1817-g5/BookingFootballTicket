@@ -5,6 +5,7 @@
 package models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -13,24 +14,30 @@ import java.time.LocalDateTime;
 public class News {
 
     private int newsId;
+    private Match matchId;
     private User userId;
     private String title;
     private String content;
     private String createBy;
     private LocalDateTime createdDate;
-    private User updateBy;
+    private String updateBy;
     private LocalDateTime lastUpdateDate;
+    private String status;
     private boolean isDeleted;
+
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
 
     public News() {
     }
 
-    public News(User userId, String title, String content, String createBy, User updateBy, boolean isDeleted) {
+    public News(Match matchId, User userId, String title, String content, String createBy, String updateBy, String status, boolean isDeleted) {
+        this.matchId = matchId;
         this.userId = userId;
         this.title = title;
         this.content = content;
         this.createBy = createBy;
         this.updateBy = updateBy;
+        this.status = status;
         this.isDeleted = isDeleted;
     }
 
@@ -74,28 +81,36 @@ public class News {
         this.createBy = createBy;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    public String getCreatedDate() {
+        return createdDate != null ? createdDate.format(formatter) : null;
     }
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    public User getUpdateBy() {
+    public String getUpdateBy() {
         return updateBy;
     }
 
-    public void setUpdateBy(User updateBy) {
+    public void setUpdateBy(String updateBy) {
         this.updateBy = updateBy;
     }
 
-    public LocalDateTime getLastUpdateDate() {
-        return lastUpdateDate;
+    public String getLastUpdateDate() {
+        return lastUpdateDate != null ? lastUpdateDate.format(formatter) : null;
     }
 
     public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public boolean isIsDeleted() {
@@ -106,10 +121,17 @@ public class News {
         this.isDeleted = isDeleted;
     }
 
-    @Override
-    public String toString() {
-        return "News{" + "newsId=" + newsId + ", userId=" + userId + ", title=" + title + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", isDeleted=" + isDeleted + '}';
+    public Match getMatchId() {
+        return matchId;
     }
 
+    public void setMatchId(Match matchId) {
+        this.matchId = matchId;
+    }
+
+    @Override
+    public String toString() {
+        return "News{" + "newsId=" + newsId + ", matchId=" + matchId + ", userId=" + userId + ", title=" + title + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", status=" + status +", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
+    }
 
 }

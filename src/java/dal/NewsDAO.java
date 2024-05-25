@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.Match;
 import models.News;
 import models.User;
 
@@ -32,18 +33,23 @@ public class NewsDAO {
     }
     PreparedStatement ps = null;
     ResultSet rs = null;
+
 // Get list all of news
     public ArrayList<News> getlistNews() {
         ArrayList<News> list = new ArrayList<>();
         String sql = "SELECT *"
                 + "FROM News n\n"
-                + "JOIN [User] u on u.userId = n.userId";
+                + "JOIN [User] u on u.userId = n.userId\n"
+                + "JOIN [Match] m on m.matchId = n.matchId";
         try {
             ps = connect.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
                 News n = new News();
                 n.setNewsId(rs.getInt("newsId"));
+                Match m = new Match();
+                m.setMatchId(rs.getInt("matchId"));
+                n.setMatchId(m);
                 User u = new User();
                 u.setUserId(rs.getInt("userId"));
                 n.setUserId(u);
@@ -51,24 +57,23 @@ public class NewsDAO {
                 n.setContent(rs.getString("content"));
                 n.setCreateBy(rs.getString("createdBy"));
                 n.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
-                u.setUpdatedBy(rs.getString("updatedBy"));
-                n.setUpdateBy(u);
+                n.setUpdateBy(rs.getString("updatedBy"));
                 n.setLastUpdateDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
+                n.setStatus(rs.getString("status"));
                 n.setIsDeleted(rs.getBoolean("isDeleted"));
-
                 list.add(n);
             }
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return list;
     }
 //  Create a news
+
     public int createNews(News n, User u) {
         int m = 0;
-        String sql = "INSERT INTO News ([userId],[title],[content],[createdBy],[updatedBy],[isDeleted])"
-                + "     VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO News ([userId],[title],[content],[createdBy],[updatedBy],[status],[isDeleted])"
+                + "     VALUES (?,?,?,?,?,?,?)";
         try {
             ps = connect.prepareStatement(sql);
             ps.setInt(1, u.getUserId());
@@ -76,7 +81,8 @@ public class NewsDAO {
             ps.setString(3, n.getContent());
             ps.setString(4, n.getCreateBy());
             ps.setString(5, n.getUserId().getUserName());
-            ps.setBoolean(6, n.isIsDeleted());
+            ps.setString(6, n.getStatus());
+            ps.setBoolean(7, n.isIsDeleted());
             m = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,6 +90,7 @@ public class NewsDAO {
         return m;
     }
 // Update news
+
     public int updateNews(News n) {
         int m = 0;
         String sql = "UPDATE [News]"
@@ -91,6 +98,7 @@ public class NewsDAO {
                 + "      ,[content] = ?"
                 + "      ,[createdBy] = ?"
                 + "      ,[updatedBy] = ?"
+                + "      ,[status] = ?"
                 + "      ,[isDeleted] = ?"
                 + " WHERE newsId =? AND [userId] =?";
         try {
@@ -99,29 +107,27 @@ public class NewsDAO {
             ps.setString(2, n.getContent());
             ps.setString(3, n.getCreateBy());
             ps.setString(4, n.getUserId().getUserName());
-            System.out.println(n.getUserId().getUserName());
-            ps.setBoolean(5, n.isIsDeleted());
-            ps.setInt(6, n.getNewsId());
-            ps.setInt(7, n.getUserId().getUserId());
+            ps.setString(5, n.getStatus());
+            ps.setBoolean(6, n.isIsDeleted());
+            ps.setInt(7, n.getNewsId());
+            ps.setInt(8, n.getUserId().getUserId());
             m = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return m;
+
     }
 
-//     
     public static void main(String[] args) {
         ArrayList<News> list = NewsDAO.INSTANCE.getlistNews();
         System.out.println(list.toString());
-        User u = new User();
-        u.setUserId(2);
-        u.setUserName("Duong");
-        News n = new News(u, "title", "content", "Duong1", u, false);
-        n.setNewsId(11);
-        System.out.println(NewsDAO.INSTANCE.createNews(n, u));
-        System.out.println(NewsDAO.INSTANCE.updateNews(n));
+//        User u = new User();
+//        u.setUserId(2);
+//        u.setUserName("Duong");
+//        News n = new News(u, "title", "content", "Duong1", u, false);
+//        n.setNewsId(11);
+//        System.out.println(NewsDAO.INSTANCE.createNews(n, u));
+//        System.out.println(NewsDAO.INSTANCE.updateNews(n));
     }
-
-
 }

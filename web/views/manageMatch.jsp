@@ -175,6 +175,7 @@
                                 <th>#</th>
                                 <th>FC-1</th>
                                 <th>FC-2</th>
+                                <th>Start time</th>
                                 <th>Season</th>
                                 <th>Status</th>
                                 <th>Type</th>
@@ -193,6 +194,7 @@
                                     <td>${o.matchId}</td>
                                     <td>${o.team1.clubName}</td>
                                     <td>${o.team2.clubName}</td>
+                                    <td>${o.time}</td>
                                     <td>${o.season.seasonName}</td>
                                     <td>${o.status.matchStatusName}</td>
                                     <td>${o.type.name}</td>

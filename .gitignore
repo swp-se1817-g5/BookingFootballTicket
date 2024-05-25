@@ -7,5 +7,5 @@
 /nb-configuration.xml
 
 # Ignore NetBeans specific files
-/nbproject/private/
-/nbproject/privileges.xml   
+nbproject/private/
+nbproject/privileges.xml   
