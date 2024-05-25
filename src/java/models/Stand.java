@@ -1,17 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-/**
- *
- * @author admin
- */
 public class Stand {
 
     private int standId;
@@ -24,13 +16,14 @@ public class Stand {
     private LocalDateTime lastUpdatedDate;
     private boolean isDeleted;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
+
     public Stand() {
     }
 
     public Stand(int standId, String standName, BigDecimal price, int quantity, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.standId = standId;
         this.standName = standName;
-        
         this.price = price;
         this.quantity = quantity;
         this.createdBy = createdBy;
@@ -80,8 +73,8 @@ public class Stand {
         this.createdBy = createdBy;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    public String getCreatedDate() {
+        return createdDate != null ? createdDate.format(formatter) : null;
     }
 
     public void setCreatedDate(LocalDateTime createdDate) {
@@ -96,8 +89,8 @@ public class Stand {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDateTime getLastUpdatedDate() {
-        return lastUpdatedDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
     }
 
     public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
@@ -114,17 +107,6 @@ public class Stand {
 
     @Override
     public String toString() {
-        return "Stand{" + "standId=" + standId + ", standName=" + standName + ", price=" + price + ", quantity=" + quantity + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
+        return "Stand{" + "standId=" + standId + ", standName=" + standName + ", price=" + price + ", quantity=" + quantity + ", createdBy=" + createdBy + ", createdDate=" + getCreatedDate() + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + getLastUpdatedDate() + ", isDeleted=" + isDeleted + '}';
     }
-
-   
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

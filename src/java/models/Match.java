@@ -5,6 +5,8 @@
 package models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -18,19 +20,21 @@ public class Match {
     private FootballClub team2;
     private Season season;
     private String stadiumImg;
-    private Date time;
+    private LocalDateTime time;
     private MatchStatus status;
-    private MatchType type;
+    private MatchType type; 
     private String createdBy;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     private String updatedBy;
-    private LocalDate lastUpdatedDate;
+    private LocalDateTime lastUpdatedDate;
     private boolean isDeleted;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
+    
     public Match() {
     }
 
-    public Match(int matchId, FootballClub team1, FootballClub team2, Season season, String stadiumImg, Date time, MatchStatus status, MatchType type, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
+    public Match(int matchId, FootballClub team1, FootballClub team2, Season season, String stadiumImg, LocalDateTime time, MatchStatus status, MatchType type, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.matchId = matchId;
         this.team1 = team1;
         this.team2 = team2;
@@ -86,11 +90,11 @@ public class Match {
         this.stadiumImg = stadiumImg;
     }
 
-    public Date getTime() {
-        return time;
+    public String getTime() {
+        return time != null ? time.format(formatter) : null;
     }
 
-    public void setTime(Date time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
@@ -118,11 +122,11 @@ public class Match {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
+    public String getCreatedDate() {
+        return createdDate != null ? createdDate.format(formatter) : null;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -134,11 +138,11 @@ public class Match {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdatedDate() {
-        return lastUpdatedDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
     }
 
-    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
+    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
