@@ -20,7 +20,7 @@ public class Match {
     private String stadiumImg;
     private Date time;
     private MatchStatus status;
-    private MatchType type;
+    private MatchType type; 
     private String createdBy;
     private LocalDate createdDate;
     private String updatedBy;

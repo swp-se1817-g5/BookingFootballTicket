@@ -164,7 +164,7 @@ Author     : admin
                                 </div>
                             </div>
                             <div class="col-sm-4 createe">
-                                <a href="createFootballClub" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Stand</span></a>
+                                <a href="#createStandModal" class="btn btn-success"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Stand</span></a>
                             </div>
                         </div>
                     </div>
@@ -214,6 +214,38 @@ Author     : admin
                                                 <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
                                             </ul>
                                         </div>-->
+                </div>
+
+                <div id="createStandModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="createStand" method="post">
+                                <div class="modal-header">						
+                                    <h4 class="modal-title">Create Stand</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">					
+                                    <div class="form-group">
+                                        <label>Stand Name</label>
+                                        <input name="standName" type="text" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input name="price" type="number" min="0" step="any" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Quantity</label>
+                                        <input name="quantity" type="number" class="form-control" min="0" step="1" required>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                    <input type="submit" class="btn btn-success" value="Add">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>  
         </div>   
