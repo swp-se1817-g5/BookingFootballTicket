@@ -8,6 +8,7 @@ import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -55,9 +56,9 @@ public class UserDAO {
                 u.setAvatar(rs.getString(7));
                 u.setName(rs.getString(8));
                 u.setCreatedBy(rs.getString(9));
-                u.setCreatedDate(rs.getDate(10).toLocalDate());
+                u.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
                 u.setUpdatedBy(rs.getString(11));
-                u.setLastUpdatedDate(rs.getDate(12).toLocalDate());
+                u.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
                 users.add(u);
             }
         } catch (SQLException e) {
@@ -65,15 +66,14 @@ public class UserDAO {
         return users;
     }
 
-    public ArrayList<User> getUserbyID(String userID) {
-        ArrayList<User> users = new ArrayList<>();
+    public User getUserbyID(String userID) {
+        User u = new User();
         try {
             String sql = "select * from [dbo].[User] where userId = ? and isDeleted = 0";
             ps = con.prepareStatement(sql);
             ps.setString(1, userID);
             rs = ps.executeQuery();
             while (rs.next()) {
-                User u = new User();
                 u.setUserId(rs.getInt(1));
                 u.setRoleId(rs.getInt(2));
                 u.setUserName(rs.getString(3));
@@ -83,14 +83,13 @@ public class UserDAO {
                 u.setAvatar(rs.getString(7));
                 u.setName(rs.getString(8));
                 u.setCreatedBy(rs.getString(9));
-                u.setCreatedDate(rs.getDate(10).toLocalDate());
+                u.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
                 u.setUpdatedBy(rs.getString(11));
-                u.setLastUpdatedDate(rs.getDate(12).toLocalDate());
-                users.add(u);
+                u.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
             }
         } catch (SQLException e) {
         }
-        return users;
+        return u;
     }
 
     public ArrayList<User> getUserbyName(String keyword) {
@@ -112,9 +111,9 @@ public class UserDAO {
                 u.setAvatar(rs.getString(7));
                 u.setName(rs.getString(8));
                 u.setCreatedBy(rs.getString(9));
-                u.setCreatedDate(rs.getDate(10).toLocalDate());
+                u.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
                 u.setUpdatedBy(rs.getString(11));
-                u.setLastUpdatedDate(rs.getDate(12).toLocalDate());
+                u.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
                 users.add(u);
             }
         } catch (SQLException e) {
@@ -122,7 +121,7 @@ public class UserDAO {
         return users;
     }
 
-    public void insertUser(User user) throws SQLException {
+    public void createUser(User user) throws SQLException {
         String sql = "INSERT INTO [dbo].[User] (roleId, userName, password, email, phoneNumber, avatar, name, "
                 + "createdBy,isDeleted) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -146,7 +145,8 @@ public class UserDAO {
 
     public void updateUser(User user) throws SQLException {
         String sql = "UPDATE [dbo].[User] SET roleId = ?, userName = ?, password = ?, email = ?, phoneNumber = ?, "
-                + "avatar = ?, name = ?, updatedBy = ?, lastUpdatedDate = ? WHERE userId = ? and isDeleted = 0";
+                + "avatar = ?, name = ?, updatedBy = ? WHERE userId = ? and isDeleted = 0";
+        user.setLastUpdatedDate(LocalDateTime.now());
         ps = con.prepareStatement(sql);
 
         ps.setInt(1, user.getRoleId());
@@ -157,8 +157,7 @@ public class UserDAO {
         ps.setString(6, user.getAvatar());
         ps.setString(7, user.getName());
         ps.setString(8, "admin");
-        ps.setDate(9, java.sql.Date.valueOf(LocalDate.now()));
-        ps.setInt(10, user.getUserId());
+        ps.setInt(9, user.getUserId());
         ps.executeUpdate();
 
     }
@@ -170,12 +169,17 @@ public class UserDAO {
     }
 
     public static void main(String[] args) {
-        User u = new User("VINH", "123", "vinh123@gmail.com", "012345678910", "", "Vin");
-        try {
-            UserDAO.INSTANCE.insertUser(u);
-        } catch (SQLException ex) {
-            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+//        User u = new User("VINH", "123", "vinh123@gmail.com", "012345678910", "", "Vin");
+//        try {
+//            UserDAO.INSTANCE.insertUser(u);
+//        } catch (SQLException ex) {
+//            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//          ArrayList<User> users = UserDAO.INSTANCE.getallUser();
+//          System.out.println(users.toString());
+//        User u = UserDAO.INSTANCE.getUserbyID("1");
+//        System.out.println(u);
+//        UserDAO.INSTANCE.updateUser(u);
     }
+
 }
