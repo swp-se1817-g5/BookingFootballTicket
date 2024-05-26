@@ -42,6 +42,13 @@ public class Season {
         this.isDeleted = isDeleted;
     }
 
+    public Season(String seasonName, Date startDate, Date endDate) {
+        this.seasonName = seasonName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+    
+
     public int getSeasonId() {
         return seasonId;
     }
@@ -113,5 +120,11 @@ public class Season {
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+
+    @Override
+    public String toString() {
+        return "Season{" + "seasonId=" + seasonId + ", seasonName=" + seasonName + ", startDate=" + startDate + ", endDate=" + endDate + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
+    }
+    
 
 }

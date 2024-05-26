@@ -3,26 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.manageStand;
+package controllers.manageUser;
 
-import dal.StandDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import models.Stand;
+import java.util.ArrayList;
+import models.User;
 
 /**
  *
- * @author admin
+ * @author Vinh
  */
-@WebServlet(name="UpdateStandServlet", urlPatterns={"/updateStand"})
-public class UpdateStandServlet extends HttpServlet {
+public class ManageUserServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +36,10 @@ public class UpdateStandServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateStandServlet</title>");  
+            out.println("<title>Servlet ManageUserServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateStandServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ManageUserServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,8 +56,14 @@ public class UpdateStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.sendRedirect("manageStand");
-    } 
+        ArrayList<User> users = UserDAO.getINSTANCE().getallUser();
+        if (users.isEmpty()) {
+            request.setAttribute("message", "The user is empty, please create a user!");
+        } else {
+            request.setAttribute("users", users);
+        }
+        request.getRequestDispatcher("views/manageUser.jsp").forward(request, response);
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -72,25 +75,6 @@ public class UpdateStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        boolean updated = false;
-        try {
-            int standId = Integer.parseInt(request.getParameter("standId"));
-            String upDatedBy = (String)session.getAttribute("userName");
-            String standName = request.getParameter("standName");
-            BigDecimal price  = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            Stand stand = new Stand();
-            stand.setStandId(standId);
-            stand.setUpdatedBy(upDatedBy);
-            stand.setStandName(standName);
-            stand.setPrice(price);
-            stand.setQuantity(quantity);
-            updated = StandDAO.INSTANCE.updateStand(stand);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        session.setAttribute("updated", updated);
         doGet(request, response);
     }
 

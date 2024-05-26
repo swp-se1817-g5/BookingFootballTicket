@@ -59,7 +59,7 @@ public class CreateStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {  
-        request.getRequestDispatcher("manageStand").forward(request, response);
+        response.sendRedirect("manageStand");
     } 
 
     /** 
@@ -90,7 +90,7 @@ public class CreateStandServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        request.setAttribute("created", created);
+        session.setAttribute("created", created);
         doGet(request, response);
         
     }

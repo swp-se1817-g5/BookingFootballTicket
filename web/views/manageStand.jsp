@@ -142,6 +142,22 @@ Author     : admin
                 display: flex;
                 justify-content: right;
             }
+
+            .toast {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                min-width: 200px;
+                z-index: 10000;
+            }
+            .toast.success .toast-header {
+                background-color: #28a745;
+                color: white;
+            }
+            .toast.error .toast-header {
+                background-color: #dc3545;
+                color: white;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -151,6 +167,9 @@ Author     : admin
     </head>
     <body>
         <div class="container-fluid">
+
+
+
             <div class="table-responsive">
                 <div class="table-wrapper">
                     <div class="table-title">
@@ -256,7 +275,7 @@ Author     : admin
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 </div>
                                 <div class="modal-body">
-                                     <div class="form-group">
+                                    <div class="form-group">
                                         <label>Stand ID</label>
                                         <input id="standId" name="standId" readonly type="number" class="form-control" required>
                                     </div>
@@ -284,16 +303,61 @@ Author     : admin
                 </div>
             </div>  
         </div>   
+
+        <div class="toast" id="updateToast" data-delay="3000">
+            <div class="toast-header">
+                <strong class="mr-auto" id="toastTitle"></strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                var updated = '<%= request.getAttribute("updated") %>';
+                if (updated !== 'null' && updated !== '') {
+                    var toast = $('#updateToast');
+                    if (updated === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('Stand updated successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (updated === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to update stand.');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
+                }
+            });
+            
+                $(document).ready(function () {
+                var created = '<%= request.getAttribute("created") %>';
+                if (created !== 'null' && created !== '') {
+                    var toast = $('#updateToast');
+                    if (updated === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('Stand updated successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (updated === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to update stand.');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
+                }
+            });
+
+        </script>
         <script type="text/javascript">
             function doDelete(standId) {
                 if (confirm("Do you want to delete stand with id = " + standId))
                     location.href = 'deleteStand?standId=' + standId;
             }
             function update(standId, standName, price, quantity) {
-              document.getElementById('standId').value = standId;  
-              document.getElementById('standName').value = standName;  
-              document.getElementById('price').value = price;  
-              document.getElementById('quantity').value = quantity;  
+                document.getElementById('standId').value = standId;
+                document.getElementById('standName').value = standName;
+                document.getElementById('price').value = price;
+                document.getElementById('quantity').value = quantity;
             }
         </script>
     </body>

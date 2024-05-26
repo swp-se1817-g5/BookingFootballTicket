@@ -2,55 +2,56 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+package controllers.manageUser;
 
-package controllers.manageStand;
-
-import dal.StandDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import models.Stand;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.User;
 
 /**
  *
- * @author admin
+ * @author Vinh
  */
-@WebServlet(name="UpdateStandServlet", urlPatterns={"/updateStand"})
-public class UpdateStandServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+public class CreateUserServlet extends HttpServlet {
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateStandServlet</title>");  
+            out.println("<title>Servlet CreateUserServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateStandServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet CreateUserServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -58,12 +59,12 @@ public class UpdateStandServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.sendRedirect("manageStand");
-    } 
+            throws ServletException, IOException {
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -71,31 +72,29 @@ public class UpdateStandServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        boolean updated = false;
-        try {
-            int standId = Integer.parseInt(request.getParameter("standId"));
-            String upDatedBy = (String)session.getAttribute("userName");
-            String standName = request.getParameter("standName");
-            BigDecimal price  = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            Stand stand = new Stand();
-            stand.setStandId(standId);
-            stand.setUpdatedBy(upDatedBy);
-            stand.setStandName(standName);
-            stand.setPrice(price);
-            stand.setQuantity(quantity);
-            updated = StandDAO.INSTANCE.updateStand(stand);
-        } catch (Exception e) {
-            e.printStackTrace();
+            throws ServletException, IOException {
+        String userName = request.getParameter("userName");
+        String password = request.getParameter("password");
+        String email = request.getParameter("email");
+        String phoneNumber = request.getParameter("phoneNumber");
+        String avatar = request.getParameter("avatar");
+        String name = request.getParameter("name");
+
+        if (!userName.isBlank() && !password.isBlank() && !email.isBlank() && !phoneNumber.isBlank() && !name.isBlank()) {
+            try {
+                User user = new User(userName, password, email, phoneNumber, avatar, name);
+                UserDAO.INSTANCE.createUser(user);
+                request.setAttribute("message", "User created successfully!");
+            } catch (SQLException ex) {
+                Logger.getLogger(CreateUserServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        session.setAttribute("updated", updated);
-        doGet(request, response);
+        request.getRequestDispatcher("/manageuser").forward(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

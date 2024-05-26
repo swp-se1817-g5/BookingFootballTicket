@@ -49,8 +49,7 @@ public class SeasonDAO {
                     + "      ,[createdDate]\n"
                     + "      ,[updatedBy]\n"
                     + "      ,[lastUpdatedDate]\n"
-                    + "      ,[isDeleted]\n"
-                    + "  FROM [dbo].[Season]";
+                    + "  FROM [dbo].[Season] WHERE [isDeleted] = 0";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -87,13 +86,50 @@ public class SeasonDAO {
             ps.setString(1, season.getSeasonName());
             ps.setDate(2, new java.sql.Date(season.getStartDate().getTime()));
             ps.setDate(3, new java.sql.Date(season.getEndDate().getTime()));
-            ps.setString(4, season.getCreatedBy());
-            ps.setString(5, season.getUpdatedBy());
-            ps.setTimestamp(6, Timestamp.valueOf(season.getLastUpdatedDate()));
+            ps.setString(4, "admin");
+            ps.setString(5, "");
+            ps.setString(6, "");
             ps.setBoolean(7, false);
             rs = ps.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
-        }   
+        }
     }
+
+    public Season getSeasonbyID(String seasonID) {
+        Season s = new Season();
+        String sql = " SELECT [seasonId]\n"
+                + "      ,[seasonName]\n"
+                + "      ,[startDate]\n"
+                + "      ,[endDate]\n"
+                + "      ,[createdBy]\n"
+                + "      ,[createdDate]\n"
+                + "      ,[updatedBy]\n"
+                + "      ,[lastUpdatedDate]\n"
+                + "  FROM [dbo].[Season] WHERE seasonId = ? AND isDeleted =0 ";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(seasonID));
+            rs = ps.executeQuery();
+            s.setSeasonId(Integer.parseInt(seasonID));
+            s.setSeasonName(rs.getString(2));
+            s.setStartDate(rs.getDate(3));
+            s.setEndDate((rs.getDate(4)));
+            s.setCreatedBy(rs.getString(5));
+            s.setCreatedDate(rs.getTimestamp(6).toLocalDateTime());
+            s.setUpdatedBy(rs.getString(7));
+            s.setLastUpdatedDate(rs.getTimestamp(8).toLocalDateTime());
+        } catch (SQLException ex) {
+            Logger.getLogger(SeasonDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return s;
+    }
+
+    public static void main(String[] args) {
+//        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getAllseason();
+//        for (Season season : seasons) {
+//            System.out.println(season.toString());
+//        }
+    }
+
 }

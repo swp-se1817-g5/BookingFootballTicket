@@ -123,8 +123,9 @@ public class UserDAO {
 
     public void createUser(User user) throws SQLException {
         String sql = "INSERT INTO [dbo].[User] (roleId, userName, password, email, phoneNumber, avatar, name, "
-                + "createdBy,isDeleted) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "createdBy,updatedBy\n"
+                + "      ,lastUpdatedDate,isDeleted) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? ,? , ? )";
         ps = con.prepareStatement(sql);
 
         int userRoleId = 2;
@@ -136,16 +137,16 @@ public class UserDAO {
         ps.setString(5, user.getPhoneNumber());
         ps.setString(6, user.getAvatar());
         ps.setString(7, user.getName());
-
-        // Automatically fill these fields
         ps.setString(8, "admin");
-        ps.setBoolean(9, false);
+        ps.setString(9, "");
+        ps.setString(10, "");
+        ps.setBoolean(11, false);
         ps.executeUpdate();
     }
 
     public void updateUser(User user) throws SQLException {
         String sql = "UPDATE [dbo].[User] SET roleId = ?, userName = ?, password = ?, email = ?, phoneNumber = ?, "
-                + "avatar = ?, name = ?, updatedBy = ? WHERE userId = ? and isDeleted = 0";
+                + "avatar = ?, name = ?, updatedBy = ? ,lastUpdatedDate = ? WHERE userId = ? and isDeleted = 0";
         user.setLastUpdatedDate(LocalDateTime.now());
         ps = con.prepareStatement(sql);
 
@@ -157,7 +158,10 @@ public class UserDAO {
         ps.setString(6, user.getAvatar());
         ps.setString(7, user.getName());
         ps.setString(8, "admin");
-        ps.setInt(9, user.getUserId());
+        LocalDateTime currentTime = LocalDateTime.now();
+        user.setLastUpdatedDate(currentTime);
+        ps.setTimestamp(9, Timestamp.valueOf(currentTime));
+        ps.setInt(10, user.getUserId());
         ps.executeUpdate();
 
     }
