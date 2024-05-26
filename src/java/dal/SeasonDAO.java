@@ -96,4 +96,11 @@ public class SeasonDAO {
             e.printStackTrace();
         }   
     }
+    public static void main(String[] args) {
+//        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getAllseason();
+//        for (Season season : seasons) {
+//            System.out.println(season.toString());
+//        }
+    }
+    
 }

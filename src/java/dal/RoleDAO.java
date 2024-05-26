@@ -64,16 +64,43 @@ public class RoleDAO {
         return roles;
     }
 
+    public Role getRolebyID(int ID) {
+        Role role = new Role();
+        String sql = "SELECT [roleId]\n"
+                + "      ,[roleName]\n"
+                + "      ,[createdBy]\n"
+                + "      ,[createdDate]\n"
+                + "      ,[updatedBy]\n"
+                + "      ,[lastUpdatedDate]\n"
+                + "  FROM [dbo].[Role] WHERE [roleId] = ? AND [isDeleted] = 0";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, ID);
+            rs = ps.executeQuery();
+            role.setRoleId(ID);
+            role.setRoleName(rs.getString(2));
+            role.setCreateBy(rs.getString(3));
+            role.setCreatedDate(rs.getTimestamp(4).toLocalDateTime());
+            role.setUpdatedBy(rs.getString(5));
+            role.setLastUpdatedDate(rs.getTimestamp(6).toLocalDateTime());
+        } catch (SQLException e) {
+        }
+        return role;
+    }
+
     public void createRole(Role role) {
         String sql = "INSERT INTO [dbo].[Role] "
-                + "([roleName], [createdBy],[isDeleted]) "
-                + "VALUES (?, ?, ?)";
+                + "([roleName], [createdBy],[updatedBy]\n"
+                + "      ,[lastUpdatedDate],[isDeleted]) "
+                + "VALUES (?, ?, ? , ? , ? )";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, role.getRoleName());
             ps.setString(2, role.getCreateBy());
-            ps.setBoolean(3, false);
-            ps.executeUpdate(); // Execute the insert statement
+            ps.setString(3, "");
+            ps.setString(4, "");
+            ps.setBoolean(5, false);
+            ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -90,7 +117,7 @@ public class RoleDAO {
             ps.setString(1, role.getRoleName());
             ps.setString(2, "admin");
             ps.setDate(3, java.sql.Date.valueOf(role.getLastUpdatedDate()));
-            
+
         } catch (SQLException e) {
         }
     }
