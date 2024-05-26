@@ -4,7 +4,8 @@
  */
 package models;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -15,15 +16,17 @@ public class MatchType {
     private int typeId;
     private String name;
     private String createdBy;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     private String updatedBy;
-    private LocalDate lastUpdatedDate;
+    private LocalDateTime lastUpdatedDate;
     private boolean isDeleted;
+
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
 
     public MatchType() {
     }
 
-    public MatchType(int typeId, String name, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
+    public MatchType(int typeId, String name, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.typeId = typeId;
         this.name = name;
         this.createdBy = createdBy;
@@ -57,11 +60,11 @@ public class MatchType {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
+    public String getCreatedDate() {
+        return createdDate != null ? createdDate.format(formatter) : null;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -73,11 +76,11 @@ public class MatchType {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdatedDate() {
-        return lastUpdatedDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
     }
 
-    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
+    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
@@ -93,9 +96,5 @@ public class MatchType {
     public String toString() {
         return "MatchType{" + "typeId=" + typeId + ", name=" + name + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
     }
-    
-    
-
-   
 
 }

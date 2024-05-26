@@ -4,13 +4,14 @@
  */
 package dal;
 
-import java.security.Timestamp;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Timestamp;
 import models.*;
 
 /**
@@ -30,21 +31,103 @@ public class MatchDAO {
         }
     }
 
-    
+    public MatchStatus getMatchStatusById(String statusId) {
+        MatchStatus status = new MatchStatus();
+        try {
+            System.out.println("Loading data...");
+            String sql = "select * from MatchStatus "
+                    + "where statusId = ? and isDeleted = 0";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(statusId));
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                status.setMatchStatusId(rs.getInt("statusId"));
+                status.setMatchStatusName(rs.getString("statusName"));
+                status.setCreatedBy(rs.getString("createdBy"));
+                status.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                status.setUpdatedBy(rs.getString("updatedBy"));
+                status.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
+                status.setIsDeleted(rs.getBoolean("isDeleted"));
+            }
+
+        } catch (SQLException e) {
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid TypeId format: " + statusId);
+        }
+        return status;
+    }
+
+    public MatchType getMatchTypeById(String typeId) {
+        MatchType type = new MatchType();
+        try {
+            System.out.println("Loading data...");
+            String sql = "select * from MatchType "
+                    + "where TypeId = ? and isDeleted = 0";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, Integer.parseInt(typeId));
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                type.setTypeId(rs.getInt("TypeId"));
+                type.setName(rs.getString("name"));
+                type.setCreatedBy(rs.getString("createdBy"));
+                type.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                type.setUpdatedBy(rs.getString("updatedBy"));
+                type.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
+                type.setIsDeleted(rs.getBoolean("isDeleted"));
+            } else {
+                System.out.println("No match type found for TypeId: " + typeId);
+            }
+
+        } catch (SQLException e) {
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid TypeId format: " + typeId);
+        }
+        return type;
+    }
+
+    public ArrayList<MatchStatus> getMatchStatus() {
+        ArrayList<MatchStatus> matchStatus = new ArrayList<>();
+        try {
+            System.out.println("Loading data...");
+            String sql = "select * from MatchStatus "
+                    + "where isDeleted = 0";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                MatchStatus h = new MatchStatus();
+                h.setMatchStatusId(rs.getInt("statusId"));
+                h.setMatchStatusName(rs.getString("statusName"));
+                h.setCreatedBy(rs.getString("createdBy"));
+                h.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                h.setUpdatedBy(rs.getString("updatedBy"));
+                h.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
+                h.setIsDeleted(rs.getBoolean("isDeleted"));
+                matchStatus.add(h);
+            }
+        } catch (SQLException e) {
+        }
+        return matchStatus;
+    }
+
     public ArrayList<MatchType> getMatchTypes() {
         ArrayList<MatchType> matchType = new ArrayList<>();
         try {
             System.out.println("Loading data...");
-            String sql = "select * from MatchType";
+            String sql = "select * from MatchType "
+                    + "where isDeleted = 0";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 MatchType h = new MatchType();
+                h.setTypeId(rs.getInt("TypeId"));
                 h.setName(rs.getString("name"));
                 h.setCreatedBy(rs.getString("createdBy"));
-                h.setCreatedDate(rs.getDate("createdDate").toLocalDate());
+                h.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 h.setUpdatedBy(rs.getString("updatedBy"));
-                h.setLastUpdatedDate(rs.getDate("lastUpdatedDate").toLocalDate());
+                h.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
                 h.setIsDeleted(rs.getBoolean("isDeleted"));
                 matchType.add(h);
             }
@@ -137,36 +220,55 @@ public class MatchDAO {
         return matches;
     }
 
-    public boolean createFootballClub(int fc1Id, int fc2Id, int seasonId, String stadiumImg, Date time, int statusId, int matchTypeId, String createdBy, String updateBy) {
+    public boolean createMatch(Match match) {
         boolean created = false;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime localDateTime = LocalDateTime.parse(match.getTime(), formatter);
+        Timestamp timestamp = Timestamp.valueOf(localDateTime);
         String sql = "INSERT INTO Match (team1, team2, seasonId, stadiumImg, [time], statusId, matchTypeId, createdBy, updatedBy) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, fc1Id); // team1
-            ps.setInt(2, fc2Id); // team2
-            ps.setInt(3, seasonId); // seasonId
-            ps.setString(4, stadiumImg); // stadiumImg
-            ps.setDate(5, (java.sql.Date) time); // time
-            ps.setInt(6, statusId); // statusId
-            ps.setInt(7, matchTypeId); // matchTypeId
-            ps.setString(8, createdBy); // createdBy
-            ps.setString(10, updateBy); // updatedBy
-            
+            ps.setInt(1, match.getTeam1().getClubId()); // team1
+            ps.setInt(2, match.getTeam2().getClubId()); // team2
+            ps.setInt(3, match.getSeason().getSeasonId()); // seasonId
+            ps.setString(4, ""); // stadiumImg
+            ps.setTimestamp(5, timestamp); // time
+            ps.setInt(6, match.getStatus().getMatchStatusId()); // statusId
+            ps.setInt(7, match.getType().getTypeId()); // matchTypeId
+            ps.setString(8, match.getCreatedBy()); // createdBy
+            ps.setString(9, match.getUpdatedBy()); // updatedBy
+
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 created = true;
             }
 
         } catch (SQLException e) {
+            // Proper exception handling
 
-            e.printStackTrace(); // Proper exception handling
         }
         return created;
     }
 
+    public boolean deleteMatch(int matchId) {
+        boolean deleted = false;
+        String sql = "update Match set isDeleted = 1 where matchId = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, matchId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                deleted = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
+
     public static void main(String[] args) {
-        System.out.println(MatchDAO.INSTANCE.getMatches().toString());
+        System.out.println(MatchDAO.INSTANCE.getMatchTypeById("2").getName());
     }
 
 }

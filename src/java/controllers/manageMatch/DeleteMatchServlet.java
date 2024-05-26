@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controllers.manageMatch;
 
 import dal.MatchDAO;
@@ -18,22 +17,25 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author thuat
  */
-@WebServlet(name="CreateNewMatchServlet", urlPatterns={"/createNewMatch"})
-public class CreateNewMatchServlet extends HttpServlet {
+@WebServlet(name = "DeleteMatchServlet", urlPatterns = {"/deleteMatch"})
+public class DeleteMatchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        request.setAttribute("seasons", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("status", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("types", MatchDAO.INSTANCE.getMatches());
-        request.getRequestDispatcher("manageactor").forward(request, response);
+            throws ServletException, IOException {
+                boolean deleted = false;
+        try {
+            int matchId = Integer.parseInt(request.getParameter("matchId"));
+            deleted = MatchDAO.INSTANCE.deleteMatch(matchId);
+        } catch (NumberFormatException e) {
+        }
+        request.setAttribute("deleted", deleted);
+        request.getRequestDispatcher("manageMatch").forward(request, response);
     }
-    
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        
+            throws ServletException, IOException {
     }
 
     @Override
