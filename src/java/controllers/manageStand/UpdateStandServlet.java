@@ -59,7 +59,7 @@ public class UpdateStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("manageStand").forward(request, response);
+        response.sendRedirect("manageStand");
     } 
 
     /** 
@@ -72,7 +72,7 @@ public class UpdateStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         boolean updated = false;
         try {
             int standId = Integer.parseInt(request.getParameter("standId"));
@@ -90,7 +90,7 @@ public class UpdateStandServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        request.setAttribute("updated", updated);
+        session.setAttribute("updated", updated);
         doGet(request, response);
     }
 
