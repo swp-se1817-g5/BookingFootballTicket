@@ -26,7 +26,7 @@ public class StandDAO {
     }
     public ArrayList<Stand> getStands() {
     ArrayList<Stand> stands = new ArrayList<>();
-    String sql = "SELECT * FROM Stand";
+    String sql = "SELECT * FROM Stand where isDeleted = 0";
     try {
         PreparedStatement ps = con.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
@@ -66,6 +66,21 @@ public class StandDAO {
         }
         
         return created;
+    }
+    
+    public boolean deleteStand(int standId) {
+        boolean deleted = false;
+        String sql = "update stand set isDeleted = 1 where standId = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, standId);
+            int rowsAffected = ps.executeUpdate();
+            if(rowsAffected > 0)
+                deleted = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
     }
 
     
