@@ -4,8 +4,6 @@
  */
 package controllers.manageNews;
 
-import dal.FootballClubDAO;
-import dal.MatchDAO;
 import dal.NewsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,18 +13,20 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashSet;
-import models.FootballClub;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import models.Match;
 import models.News;
+import models.User;
 
 /**
  *
  * @author nguye
  */
-@WebServlet(name = "ManageNewsServlet", urlPatterns = {"/manageNews"})
-public class ManageNewsServlet extends HttpServlet {
+@WebServlet(name = "CreateNewNewsServlet", urlPatterns = {"/createNewNews"})
+public class CreateNewNewsServlet extends HttpServlet {
+    
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +45,10 @@ public class ManageNewsServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageNewsServlet</title>");
+            out.println("<title>Servlet CreateNewNewsServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageNewsServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateNewNewsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,35 +66,7 @@ public class ManageNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
-        ArrayList<News> listNews = NewsDAO.INSTANCE.getlistNews();
-        ArrayList<Match> listMatch = MatchDAO.INSTANCE.getMatches();
-        HashSet<Integer> MatchIdInNews = new HashSet<>();
-        for (News listNew : listNews) {
-            MatchIdInNews.add(listNew.getMatchId().getMatchId());
-        }
-//        out.println(MatchIdInNews.toString());
-        ArrayList<Match> MatchIdNotInNews = new ArrayList<>();
-        for (Match match : listMatch) {
-            if (!MatchIdInNews.contains(match.getMatchId())) {
-                MatchIdNotInNews.add(match);
-            }
-        }
-//        out.println(MatchIdNotInNews.toString());
-        session.setAttribute("MatchIdNotInNews", MatchIdNotInNews);
-        if (!listNews.isEmpty()) {
-            session.setAttribute("getListNews", listNews);
-        } else {
-            request.setAttribute("err", "listNews Empty!!!");
-        }
-        if (!listMatch.isEmpty()) {
-            session.setAttribute("getListMatch", listMatch);
-        } else {
-            request.setAttribute("err", "listMatch Empty!!!");
-        }
-
-        request.getRequestDispatcher("views/manageNews.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -108,7 +80,31 @@ public class ManageNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        PrintWriter out = response.getWriter();
+        int i = 0;
+//        HttpSession session = request.getSession();
+//        int userID = Integer.parseInt((String) session.getAttribute("userName"));
+        int matchId = Integer.parseInt(request.getParameter("matchId") != null ? request.getParameter("matchId") : "");
+//        out.println(matchId);
+        String title = request.getParameter("title");
+        String content = request.getParameter("content");
+        int status = Integer.parseInt(request.getParameter("status"));
+        Match m = new Match();
+        m.setMatchId(matchId);
+//        out.print(m.toString());
+        User u = new User();
+        int userID = 1;
+        u.setUserId(userID);
+        News n = new News(m, u, title, content, u.getUserName(), status);
+        i = NewsDAO.INSTANCE.createNews(n, u, m);
+        if (i != 0) {
+            request.setAttribute("ms", "Create News Successfully!!!");
+        } else {
+            request.setAttribute("err", "Create News Unsuccessfully!!!");
+        }
+//        request.getRequestDispatcher("manageNews").forward(request, response);
+        response.sendRedirect("manageNews");
+        
     }
 
     /**
@@ -121,12 +117,4 @@ public class ManageNewsServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public static void main(String[] args) {
-        ArrayList<News> listNews = NewsDAO.INSTANCE.getlistNews();
-        System.out.println(listNews.toString());
-//        ArrayList<Match> listMatch = MatchDAO.INSTANCE.getMatches();
-//        System.out.println(listMatch.toString());
-//        ArrayList<FootballClub> listFootballClub = FootballClubDAO.INSTANCE.getFootballClubs();
-//        System.out.println(listFootballClub.toString());
-    }
 }
