@@ -172,7 +172,7 @@
                                 <th>Team 2</th>
                                 <th>Title</th>
                                 <th>Content</th>
-                                <th>Time</th>
+                                <th>Time Start</th>
                                 <th>Status</th>
                                 <th>Action</th>
 
@@ -210,7 +210,7 @@
                                     <td>
                                         <a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
                                         <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
-                                        <a onclick="return confirmDelete(${n.newsId})"class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                        <a onclick="return confirmDelete(${n.newsId})" href = "deleteNews?newsId=${n.newsId}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                     </td>
                                 </tr>
                             </c:if>
@@ -219,8 +219,7 @@
                     </table>
                     <script>
                         function confirmDelete(newsId) {
-                            confirm("Are you sure you want to delete newsId = " + newsId);
-                            location.href = "deleteNews?newsId=" + newsId;
+                            return confirm("Are you sure you want to delete newsId = " + newsId);
                         }
                     </script>
 
@@ -251,7 +250,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Time</label>
+                                            <label>Time Start</label>
                                             <c:forEach items="${sessionScope.MatchIdNotInNews}" var="mni">
                                                 <input name="matchId" class="form-control" value="${mni.time}" readonly>
                                             </c:forEach>
