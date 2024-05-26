@@ -194,7 +194,7 @@ Author     : admin
                                     <td>${o.updatedBy}</td>
                                     <td>${o.lastUpdatedDate}</td>
                                     <td>
-                                        <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
+                                        <a onclick="update('${o.standId}', '${o.standName}', '${o.price}', '${o.quantity}')"     href="#updateStandModal" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
                                         <a onclick="doDelete(${o.standId})" href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                     </td>
                                 </tr>
@@ -224,7 +224,7 @@ Author     : admin
                                     <h4 class="modal-title">Create Stand</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 </div>
-                                <div class="modal-body">					
+                                <div class="modal-body">	
                                     <div class="form-group">
                                         <label>Stand Name</label>
                                         <input name="standName" type="text" class="form-control" required>
@@ -247,12 +247,53 @@ Author     : admin
                         </div>
                     </div>
                 </div>
+                <div id="updateStandModal" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <form action="updateStand" method="post">
+                                <div class="modal-header">						
+                                    <h4 class="modal-title">Update Stand</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                     <div class="form-group">
+                                        <label>Stand ID</label>
+                                        <input id="standId" name="standId" readonly type="number" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Stand Name</label>
+                                        <input id="standName" name="standName" type="text" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Price</label>
+                                        <input id="price" name="price" type="number" min="0" step="any" class="form-control" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Quantity</label>
+                                        <input id="quantity" name="quantity" type="number" class="form-control" min="0" step="1" required>
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                    <input type="submit" class="btn btn-success" value="Update">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>  
         </div>   
         <script type="text/javascript">
             function doDelete(standId) {
                 if (confirm("Do you want to delete stand with id = " + standId))
                     location.href = 'deleteStand?standId=' + standId;
+            }
+            function update(standId, standName, price, quantity) {
+              document.getElementById('standId').value = standId;  
+              document.getElementById('standName').value = standName;  
+              document.getElementById('price').value = price;  
+              document.getElementById('quantity').value = quantity;  
             }
         </script>
     </body>

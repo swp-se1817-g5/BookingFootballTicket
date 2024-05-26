@@ -22,7 +22,7 @@ public class News {
     private LocalDateTime createdDate;
     private String updateBy;
     private LocalDateTime lastUpdateDate;
-    private String status;
+    private int status;
     private boolean isDeleted;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
@@ -30,15 +30,13 @@ public class News {
     public News() {
     }
 
-    public News(Match matchId, User userId, String title, String content, String createBy, String updateBy, String status, boolean isDeleted) {
+    public News(Match matchId, User userId, String title, String content, String createBy, int status) {
         this.matchId = matchId;
         this.userId = userId;
         this.title = title;
         this.content = content;
         this.createBy = createBy;
-        this.updateBy = updateBy;
         this.status = status;
-        this.isDeleted = isDeleted;
     }
 
     public int getNewsId() {
@@ -105,11 +103,11 @@ public class News {
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 

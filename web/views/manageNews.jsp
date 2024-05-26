@@ -158,6 +158,7 @@
                                     <input type="text" class="form-control" placeholder="Search&hellip;">
                                 </div>
                             </div>
+
                             <div class="col-sm-4 createe">
                                 <a href="#createNewsModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New News</span></a>
                             </div>
@@ -166,7 +167,7 @@
                     <table class="table table-striped table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th>News Id</th>
+                                <th>News ID</th>
                                 <th>Team 1</th>
                                 <th>Team 2</th>
                                 <th>Title</th>
@@ -191,47 +192,83 @@
                             </div>
                         </c:if>
                         <c:forEach items="${sessionScope.getListNews}" var="n" varStatus="status">
-                            <c:set var="m" value="${sessionScope.getListMatch[status.index]}" />
-                            <tr>
-                                <td>${n.newsId}</td>
-                                <td>${m.team1.clubName}</td>
-                                <td>${m.team2.clubName}</td>
-                                <td>${n.title}</td>
-                                <td>${n.content}</td>
-                                <td>${m.time}</td>
-                                <td>${n.status}</td>
-                                <td>
-                                    <a href="#viewDetailsNews" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
+                            <c:if test="${n.status!=0}">
+                                <c:set var="m" value="${sessionScope.getListMatch[status.index]}" />
+                                <tr>
+                                    <td>${n.newsId}</td>
+                                    <td>${m.team1.clubName}</td>
+                                    <td>${m.team2.clubName}</td>
+                                    <td>${n.title}</td>
+                                    <td>${n.content}</td>
+                                    <td>${m.time}</td>
+                                    <c:if test="${n.status==1}">
+                                        <td>Hide</td>
+                                    </c:if>
+                                    <c:if test="${n.status==2}">
+                                        <td>Show</td>
+                                    </c:if>
+                                    <td>
+                                        <a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
+                                        <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
+                                        <a onclick="return confirmDelete(${n.newsId})"class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    </td>
+                                </tr>
+                            </c:if>
                         </c:forEach>
-
                         </tbody>
                     </table>
+                    <script>
+                        function confirmDelete(newsId) {
+                            confirm("Are you sure you want to delete newsId = " + newsId);
+                            location.href = "deleteNews?newsId=" + newsId;
+                        }
+                    </script>
+
+
+                    <!--------------------------------------------------------------------------------------------------------------------------------------------->
                     <div id="createNewsModal" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="createStand" method="post">
+                                <form action="createNewNews" method="post">
                                     <div class="modal-header">						
                                         <h4 class="modal-title">Create News</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
-                                    <div class="modal-body">					
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label>Select Match</label>
+                                            <select name="matchId" id="matchIdSelect" class="form-control" onchange="updateTime()">
+                                                <c:choose>
+                                                    <c:when test="${not empty sessionScope.MatchIdNotInNews}">
+                                                        <c:forEach items="${sessionScope.MatchIdNotInNews}" var="mni">
+                                                            <option  value="${mni.matchId}">${mni.team1.clubName} - ${mni.team2.clubName}</option>
+                                                        </c:forEach>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value="">Don't have any match</option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Time</label>
+                                            <c:forEach items="${sessionScope.MatchIdNotInNews}" var="mni">
+                                                <input name="matchId" class="form-control" value="${mni.time}" readonly>
+                                            </c:forEach>
+                                        </div>
                                         <div class="form-group">
                                             <label>Title</label>
-                                            <input name="standName" type="text" class="form-control" required>
+                                            <input name="title" type="text"  class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Content</label>
-                                            <input name="price" type="number" min="0" step="any" class="form-control" required>
+                                            <input name="content" type="text" class="form-control" required>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                                             <label>Status</label>
-                                            <input name="quantity" type="number" class="form-control" min="0" step="1" required>
+                                            <input name="status" type="radio" required checked value="2">Show
+                                            <input name="status" type="radio" required value="1">Hide
                                         </div>
-
                                     </div>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -241,37 +278,97 @@
                             </div>
                         </div>
                     </div>
-                    <div id="viewDetailsNews" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                            
+                    <script>
+                        function updateTime() {
+                            var matchId = document.getElementById("matchIdSelect").value;
+                            var time
+                        }
+
+                    </script>
+                    <!--------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+
+                    <c:forEach items="${sessionScope.getListNews}" var="n">
+                        <div id="viewDetailsNews${n.newsId}" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
                                     <div class="modal-header">						
-                                        <h4 class="modal-title">Create News</h4>
+                                        <h4 class="modal-title">View Details</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
                                     <div class="modal-body">					
                                         <div class="form-group">
-                                            <label>Title</label>
-                                            <input name="standName" type="text" class="form-control" required>
+                                            <label>User ID</label>
+                                            <input name="userId" class="form-control" value="${n.userId.userId}" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label>Content</label>
-                                            <input name="price" type="number" min="0" step="any" class="form-control" required>
+                                            <label>Match ID</label>
+                                            <input name="matchId" class="form-control" value="${n.matchId.matchId}" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label>Status</label>
-                                            <input name="quantity" type="number" class="form-control" min="0" step="1" required>
+                                            <label>Create Date</label>
+                                            <input name="createDate" class="form-control" value="${n.createdDate}" readonly>
                                         </div>
-
+                                        <div class="form-group">
+                                            <label>Create By</label>
+                                            <input name="createBy" class="form-control" value="${n.createBy}" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Last Update Date</label>
+                                            <input name="lastUpdateDate" class="form-control" value="${n.lastUpdateDate}" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Update By</label>
+                                            <input name="updateBy" class="form-control" value="${n.updateBy}" readonly>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                                         <input type="submit" class="btn btn-success" value="Add">
                                     </div>
-                            
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </c:forEach>
+                    <!--------------------------------------------------------------------------------------------------------------------------------------------->
+                    <c:forEach items="${sessionScope.getListNews}" var="n">
+                        <div id="updateNews${n.newsId}" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="updateNews" method="post">
+                                        <div class="modal-header">						
+                                            <h4 class="modal-title">Update News</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body">					
+                                            <div class="form-group">
+                                                <label>News ID</label>
+                                                <input name="newsId" class="form-control" value="${n.newsId}" readonly>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Title</label>
+                                                <input name="title" class="form-control" value="${n.title}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Content</label>
+                                                <input name="content" class="form-control" value="${n.content}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Status</label>
+                                                <input name="status" type="radio" required value="2" ${n.status == 2 ? 'checked' :''}>Show
+                                                <input name="status" type="radio" required value="1" ${n.status == 1 ? 'checked' :''}>Hide
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                            <input type="submit" class="btn btn-success" value="Add">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                     <!--                    <div class="clearfix">
                                             <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                                             <ul class="pagination">

@@ -56,13 +56,14 @@ public class NewsDAO {
                 n.setTitle(rs.getString("title"));
                 n.setContent(rs.getString("content"));
                 n.setCreateBy(rs.getString("createdBy"));
-                n.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                n.setCreatedDate(rs.getTimestamp("createdDate") != null ? rs.getTimestamp("createdDate").toLocalDateTime() : null);
                 n.setUpdateBy(rs.getString("updatedBy"));
-                n.setLastUpdateDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
-                n.setStatus(rs.getString("status"));
+                n.setLastUpdateDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
+                n.setStatus(rs.getInt("status"));
                 n.setIsDeleted(rs.getBoolean("isDeleted"));
                 list.add(n);
             }
+
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -70,24 +71,23 @@ public class NewsDAO {
     }
 //  Create a news
 
-    public int createNews(News n, User u) {
-        int m = 0;
-        String sql = "INSERT INTO News ([userId],[title],[content],[createdBy],[updatedBy],[status],[isDeleted])"
-                + "     VALUES (?,?,?,?,?,?,?)";
+    public int createNews(News n, User u, Match m) {
+        int i = 0;
+        String sql = "INSERT INTO News ([userId],[matchId],[title],[content],[createdBy],[status])"
+                + "     VALUES (?,?,?,?,?,?)";
         try {
             ps = connect.prepareStatement(sql);
             ps.setInt(1, u.getUserId());
-            ps.setString(2, n.getTitle());
-            ps.setString(3, n.getContent());
-            ps.setString(4, n.getCreateBy());
-            ps.setString(5, n.getUserId().getUserName());
-            ps.setString(6, n.getStatus());
-            ps.setBoolean(7, n.isIsDeleted());
-            m = ps.executeUpdate();
+            ps.setInt(2, m.getMatchId());
+            ps.setString(3, n.getTitle());
+            ps.setString(4, n.getContent());
+            ps.setString(5, n.getCreateBy());
+            ps.setInt(6, n.getStatus());
+            i = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return m;
+        return i;
     }
 // Update news
 
@@ -107,7 +107,7 @@ public class NewsDAO {
             ps.setString(2, n.getContent());
             ps.setString(3, n.getCreateBy());
             ps.setString(4, n.getUserId().getUserName());
-            ps.setString(5, n.getStatus());
+            ps.setInt(5, n.getStatus());
             ps.setBoolean(6, n.isIsDeleted());
             ps.setInt(7, n.getNewsId());
             ps.setInt(8, n.getUserId().getUserId());
@@ -118,16 +118,55 @@ public class NewsDAO {
         return m;
 
     }
+// Get list all of news
+
+    public News getNews(int newsId) {
+        String sql = "SELECT *"
+                + "FROM News n\n"
+                + "JOIN [User] u on u.userId = n.userId\n"
+                + "JOIN [Match] m on m.matchId = n.matchId\n"
+                + "WHERE n.newsId =?";
+        try {
+            ps = connect.prepareStatement(sql);
+            ps.setInt(1, newsId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                News n = new News();
+                n.setNewsId(rs.getInt("newsId"));
+                Match m = new Match();
+                m.setMatchId(rs.getInt("matchId"));
+                n.setMatchId(m);
+                User u = new User();
+                u.setUserId(rs.getInt("userId"));
+                n.setUserId(u);
+                n.setTitle(rs.getString("title"));
+                n.setContent(rs.getString("content"));
+                n.setCreateBy(rs.getString("createdBy"));
+                n.setCreatedDate(rs.getTimestamp("createdDate") != null ? rs.getTimestamp("createdDate").toLocalDateTime() : null);
+                n.setUpdateBy(rs.getString("updatedBy"));
+                n.setLastUpdateDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
+                n.setStatus(rs.getInt("status"));
+                n.setIsDeleted(rs.getBoolean("isDeleted"));
+                return n;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
-        ArrayList<News> list = NewsDAO.INSTANCE.getlistNews();
-        System.out.println(list.toString());
-//        User u = new User();
-//        u.setUserId(2);
-//        u.setUserName("Duong");
-//        News n = new News(u, "title", "content", "Duong1", u, false);
-//        n.setNewsId(11);
-//        System.out.println(NewsDAO.INSTANCE.createNews(n, u));
+//        ArrayList<News> list = NewsDAO.INSTANCE.getlistNews();
+//        System.out.println(list.toString());
+        User u = new User();
+        u.setUserId(2);
+        u.setUserName("Duong");
+        Match m = new Match();
+        m.setMatchId(4);
+        News n = new News(m, u, "4", "4", "null", 0);
+        n.setNewsId(11);
+        System.out.println(NewsDAO.INSTANCE.createNews(n, u, m));
 //        System.out.println(NewsDAO.INSTANCE.updateNews(n));
     }
 }
