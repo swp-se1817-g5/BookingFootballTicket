@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -56,6 +57,15 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        if(session.getAttribute("created") != null) {
+            request.setAttribute("created", (boolean)session.getAttribute("created"));
+            session.removeAttribute("created");
+        }
+        if(session.getAttribute("updated") != null) {
+            request.setAttribute("updated", (boolean)session.getAttribute("updated"));
+            session.removeAttribute("updated");
+        }
         request.setAttribute("stands", StandDAO.INSTANCE.getStands());
         request.getRequestDispatcher("views/manageStand.jsp").forward(request, response);
         
@@ -71,6 +81,8 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        
+        
         doGet(request, response);
     }
 
