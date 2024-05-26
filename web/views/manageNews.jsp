@@ -137,6 +137,21 @@
                 display: flex;
                 justify-content: right;
             }
+            .toast {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                min-width: 200px;
+                z-index: 10000;
+            }
+            .toast.success .toast-header {
+                background-color: #28a745;
+                color: white;
+            }
+            .toast.error .toast-header {
+                background-color: #dc3545;
+                color: white;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -368,6 +383,65 @@
                             </div>
                         </div>
                     </c:forEach>
+                    <div class="toast" id="updateToast" data-delay="3000">
+                        <div class="toast-header">
+                            <strong class="mr-auto" id="toastTitle"></strong>
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+                        </div>
+                        <div class="toast-body" id="toastMessage"></div>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            var updated = '<%= request.getAttribute("updated") %>';
+                            if (updated !== 'null' && updated !== '') {
+                                var toast = $('#updateToast');
+                                if (updated !== "0") {
+                                    toast.find('#toastTitle').text('Success');
+                                    toast.find('#toastMessage').text('News updated successfully.');
+                                    toast.addClass('success').removeClass('error');
+                                } else {
+                                    toast.find('#toastTitle').text('Error');
+                                    toast.find('#toastMessage').text('Failed to update news.');
+                                    toast.addClass('error').removeClass('success');
+                                }
+                                toast.toast('show');
+                            }
+                        });
+
+                        $(document).ready(function () {
+                            var created = '<%= request.getAttribute("created") %>';
+                            if (created !== 'null' && created !== '') {
+                                var toast = $('#updateToast');
+                                if (created !== "0") {
+                                    toast.find('#toastTitle').text('Success');
+                                    toast.find('#toastMessage').text('News created successfully.');
+                                    toast.addClass('success').removeClass('error');
+                                } else {
+                                    toast.find('#toastTitle').text('Error');
+                                    toast.find('#toastMessage').text('Failed to created news.');
+                                    toast.addClass('error').removeClass('success');
+                                }
+                                toast.toast('show');
+                            }
+                        });
+                        
+                        $(document).ready(function () {
+                            var deleted = '<%= request.getAttribute("deleted") %>';
+                            if (deleted !== 'null' && deleted !== '') {
+                                var toast = $('#updateToast');
+                                if (deleted !== "0") {
+                                    toast.find('#toastTitle').text('Success');
+                                    toast.find('#toastMessage').text('News deleted successfully.');
+                                    toast.addClass('success').removeClass('error');
+                                } else {
+                                    toast.find('#toastTitle').text('Error');
+                                    toast.find('#toastMessage').text('Failed to deleted news.');
+                                    toast.addClass('error').removeClass('success');
+                                }
+                                toast.toast('show');
+                            }
+                        });
+                    </script>
                     <!--                    <div class="clearfix">
                                             <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                                             <ul class="pagination">
