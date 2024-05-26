@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.News;
 
 /**
@@ -59,11 +60,12 @@ public class DeleteNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int i = 0;
+        HttpSession session = request.getSession();
         int newsId = Integer.parseInt(request.getParameter("newsId") != null ? request.getParameter("newsId") : "");
         News n = NewsDAO.INSTANCE.getNews(newsId);
         n.setStatus(0);
-        i = NewsDAO.INSTANCE.updateNews(n);
+        int deleted = NewsDAO.INSTANCE.updateNews(n);
+        session.setAttribute("deleted", deleted);
         response.sendRedirect("manageNews");
     }
 
