@@ -21,8 +21,8 @@ import models.Stand;
  *
  * @author admin
  */
-@WebServlet(name="CreateStandServlet", urlPatterns={"/createStand"})
-public class CreateStandServlet extends HttpServlet {
+@WebServlet(name="UpdateStandServlet", urlPatterns={"/updateStand"})
+public class UpdateStandServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +39,10 @@ public class CreateStandServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateStandServlet</title>");  
+            out.println("<title>Servlet UpdateStandServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateStandServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpdateStandServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +58,7 @@ public class CreateStandServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {  
+    throws ServletException, IOException {
         request.getRequestDispatcher("manageStand").forward(request, response);
     } 
 
@@ -72,27 +72,26 @@ public class CreateStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        boolean created = false;
+         HttpSession session = request.getSession();
+        boolean updated = false;
         try {
-            String createdBy = (String)session.getAttribute("userName");
+            int standId = Integer.parseInt(request.getParameter("standId"));
+            String upDatedBy = (String)session.getAttribute("userName");
             String standName = request.getParameter("standName");
             BigDecimal price  = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
             int quantity = Integer.parseInt(request.getParameter("quantity"));
             Stand stand = new Stand();
-            stand.setCreatedBy(createdBy);
+            stand.setStandId(standId);
+            stand.setUpdatedBy(upDatedBy);
             stand.setStandName(standName);
             stand.setPrice(price);
             stand.setQuantity(quantity);
-            created = StandDAO.INSTANCE.createStand(stand);
-            
-            
+            updated = StandDAO.INSTANCE.updateStand(stand);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        request.setAttribute("created", created);
+        request.setAttribute("updated", updated);
         doGet(request, response);
-        
     }
 
     /** 

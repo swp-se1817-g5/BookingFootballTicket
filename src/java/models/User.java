@@ -5,12 +5,15 @@
 package models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author thuat
  */
 public class User {
+
     private int userId;
     private int roleId;
     private String userName;
@@ -20,15 +23,17 @@ public class User {
     private String avatar;
     private String name;
     private String createdBy;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     private String updatedBy;
-    private LocalDate lastUpdatedDate;
+    private LocalDateTime lastUpdatedDate;
     private boolean isDeleted;
 
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
+    
     public User() {
     }
 
-    public User(int userId, int roleId, String userName, String password, String email, String phoneNumber, String avatar, String name, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
+    public User(int userId, int roleId, String userName, String password, String email, String phoneNumber, String avatar, String name, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.userId = userId;
         this.roleId = roleId;
         this.userName = userName;
@@ -42,6 +47,16 @@ public class User {
         this.updatedBy = updatedBy;
         this.lastUpdatedDate = lastUpdatedDate;
         this.isDeleted = isDeleted;
+    }
+
+    public User(String userName, String password, String email, String phoneNumber, String avatar, String name) {
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.avatar = avatar;
+        this.name = name;
+
     }
 
     public int getUserId() {
@@ -116,11 +131,11 @@ public class User {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
+    public String getCreatedDate() {
+        return createdDate != null ? createdDate.format(formatter) : null;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -132,11 +147,11 @@ public class User {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdatedDate() {
-        return lastUpdatedDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
     }
 
-    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
+    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
@@ -152,10 +167,5 @@ public class User {
     public String toString() {
         return "User{" + "userId=" + userId + ", roleId=" + roleId + ", userName=" + userName + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", avatar=" + avatar + ", name=" + name + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
     }
-    
-    
 
-    
-    
-    
 }
