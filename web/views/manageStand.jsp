@@ -195,7 +195,7 @@ Author     : admin
                                     <td>${o.lastUpdatedDate}</td>
                                     <td>
                                         <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                        <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                        <a onclick="doDelete(${o.standId})" href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                     </td>
                                 </tr>
                             </c:forEach>
@@ -249,5 +249,11 @@ Author     : admin
                 </div>
             </div>  
         </div>   
+        <script type="text/javascript">
+            function doDelete(standId) {
+                if (confirm("Do you want to delete stand with id = " + standId))
+                    location.href = 'deleteStand?standId=' + standId;
+            }
+        </script>
     </body>
 </html>
