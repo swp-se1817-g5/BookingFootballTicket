@@ -143,6 +143,10 @@
                 display: flex;
                 justify-content: right;
             }
+            .error {
+                color: red;
+                font-size: 0.7em;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -154,7 +158,7 @@
         <div id="createMatchModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="createMatch" method="post">
+                    <form action="createMatch" method="post" onsubmit="return validateForm()">
                         <div class="modal-header">
                             <h4 class="modal-title">Create Match</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -162,23 +166,23 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>FC-1</label>
-                                <select name="fc1Id" placeholder="Select 1 club" class="form-control" required>
+                                <select id="newFc1Id" name="fc1Id" placeholder="Select 1 club" class="form-control" required>
                                     <c:forEach items="${footballClubs}" var="fc">
                                         <option value="${fc.clubId}">${fc.clubName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>FC-2</label>
-                                <select name="fc2Id" placeholder="Select 1 club" class="form-control" required>
+                                <label>FC-2 <span id="errorFC" class="error"></span></label>
+                                <select id="newFc2Id" name="fc2Id" placeholder="Select 1 club" class="form-control" required>
                                     <c:forEach items="${footballClubs}" var="fc">
                                         <option value="${fc.clubId}">${fc.clubName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Start Time</label>
-                                <input type="datetime-local" class="form-control" name="startTime" required>
+                                <label>Start Time <span id="datetimeError" class="error"></span></label>
+                                <input id="datetimeInput" type="datetime-local" class="form-control" name="startTime" required>
                             </div>
                             <div class="form-group">
                                 <label>Season</label>
@@ -272,7 +276,7 @@
         <div id="updateMatchModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="updateStand" method="post">
+                    <form action="updateMatch" method="post">
                         <div class="modal-header">						
                             <h4 class="modal-title">Update Match</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -363,7 +367,7 @@
             });
 
             $(document).ready(function () {
-                var created = '<%= request.getAttribute("created_match") %>';
+                var created = '<%= request.getAttribute("created") %>';
                 if (created !== 'null' && created !== '') {
                     var toast = $('#updateToast');
                     if (updated === "true") {
@@ -405,7 +409,52 @@
                     }
                 }
             }
+
+            // Lấy ngày giờ hiện tại
+            const now = new Date().toISOString().slice(0, 16);
+            // Gán giá trị min cho input datetime-local
+            document.getElementById('datetimeInput').setAttribute('min', now);
+
+            var invalidDateTimes = [];
+            <c:forEach var="match" items="${matches}">
+            invalidDateTimes.push(new Date("<c:out value="${match.time}" />"));
+            </c:forEach>
+
+            function validateForm() {
+                // Clear previous error messages
+                document.getElementById("errorFC").innerText = "";
+                document.getElementById("datetimeError").innerText = "";
+
+                // Get form values
+                var fc1Id = document.getElementById("newFc1Id").value;
+                var fc2Id = document.getElementById("newFc2Id").value;
+                var datetimeValue = new Date(document.getElementById("datetimeInput").value);
+
+                var isValid = true;
+
+                // Validate football club IDs
+                if (fc1Id === fc2Id) {
+                    document.getElementById("errorFC").innerText = "Football club must be different";
+                    isValid = false;
+                }
+
+                // Validate datetime
+                for (var i = 0; i < invalidDateTimes.length; i++) {
+                    var startTimeList = invalidDateTimes[i];
+                    var endTimeList = new Date(startTimeList.getTime() + (300 * 60000)); // Thêm 300 phút
+
+                    if (datetimeValue >= startTimeList && datetimeValue <= endTimeList) {
+                        document.getElementById("datetimeError").innerText = "Invalid datetime";
+                        isValid = false;
+                        break; // Không hợp lệ, dừng việc submit form
+                    }
+                }
+
+                // Return the validity status
+                return isValid;
+            }
         </script>
+
 
     </body>
 </html>

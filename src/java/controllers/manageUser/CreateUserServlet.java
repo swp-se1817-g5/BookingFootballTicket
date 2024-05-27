@@ -8,6 +8,7 @@ import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -20,6 +21,7 @@ import models.User;
  *
  * @author Vinh
  */
+@WebServlet(name = "CreateUser", urlPatterns = {"/createuser"})
 public class CreateUserServlet extends HttpServlet {
 
     /**
@@ -84,12 +86,12 @@ public class CreateUserServlet extends HttpServlet {
             try {
                 User user = new User(userName, password, email, phoneNumber, avatar, name);
                 UserDAO.INSTANCE.createUser(user);
-                request.setAttribute("message", "User created successfully!");
+                response.sendRedirect(request.getContextPath() + "/manageuser?message=User+created+successfully!");
             } catch (SQLException ex) {
                 Logger.getLogger(CreateUserServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        request.getRequestDispatcher("/manageuser").forward(request, response);
+        response.sendRedirect(request.getContextPath() + "/manageuser");
     }
 
     /**

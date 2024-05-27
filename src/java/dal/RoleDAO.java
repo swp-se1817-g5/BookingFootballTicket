@@ -97,8 +97,8 @@ public class RoleDAO {
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, role.getRoleName());
             ps.setString(2, role.getCreateBy());
-            ps.setString(3, "");
-            ps.setString(4, "");
+            ps.setString(3, null);
+            ps.setString(4, null);
             ps.setBoolean(5, false);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -122,12 +122,50 @@ public class RoleDAO {
         }
     }
 
+    public ArrayList<Role> getRoles(int offset, int noOfRecords) {
+        ArrayList<Role> roles = new ArrayList<>();
+        String query = "SELECT * FROM [dbo].[Role] WHERE [isDeleted] = 0 ORDER BY roleId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, offset);
+            ps.setInt(2, noOfRecords);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Role r = new Role();
+                    r.setRoleId(rs.getInt(1));
+                    r.setRoleName(rs.getString(2));
+                    r.setCreateBy(rs.getString(3));
+                    r.setCreatedDate(rs.getTimestamp(4).toLocalDateTime());
+                    r.setUpdatedBy(rs.getString(5));
+                    Timestamp updatedTimestamp = rs.getTimestamp(6);
+                    r.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+                    roles.add(r);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roles;
+    }
+
+    public int getNoOfRecords() {
+        String query = "SELECT COUNT(*) FROM [Role]";
+        try (PreparedStatement ps = con.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
 //        Role role = new Role("customer","admin");
 //        RoleDAO.INSTANCE.insertRole(role);
-//        ArrayList<Role> roles = RoleDAO.INSTANCE.getAllRole();
-//        for (Role role : roles) {
-//            System.out.println(role.toString());
-//        }
+        ArrayList<Role> roles = RoleDAO.INSTANCE.getRoles(1, 5);
+        for (Role role : roles) {
+            System.out.println(role.toString());
+        }
     }
 }

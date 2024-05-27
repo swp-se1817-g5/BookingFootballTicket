@@ -170,6 +170,9 @@
                     <c:if test="${not empty requestScope.message}">
                         <div class="alert alert-warning">${requestScope.message}</div>
                     </c:if>
+                    <c:if test="${not empty param.message}">
+                        <div class="alert alert-warning">${param.message}</div>
+                    </c:if>
                     <table class="table table-striped table-hover table-bordered">
                         <thead>
                             <tr>
@@ -207,6 +210,16 @@
                             </c:forEach>
                         </tbody>
                     </table>
+                    <div class="clearfix">
+                        <div class="hint-text">Showing <strong>${requestScope.seasons.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>
+                        <ul class="pagination">
+                            <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
+                                <li class="page-item ${pageNumber eq currentPage ? 'active' : ''}">
+                                    <a href="manageuser?page=${pageNumber}" class="page-link">${pageNumber}</a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
                 </div>
             </div>
 

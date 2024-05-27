@@ -8,6 +8,7 @@ import dal.SeasonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,6 +23,7 @@ import models.Season;
  *
  * @author Vinh
  */
+@WebServlet(name = "CreateSeason", urlPatterns = {"/createseason"})
 public class CreateSeasonServlet extends HttpServlet {
 
     /**
@@ -83,19 +85,21 @@ public class CreateSeasonServlet extends HttpServlet {
             try {
                 Date start = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
                 Date end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
-                
+
                 if (end.after(start)) {
                     Season season = new Season(seasonName, start, end);
                     SeasonDAO.INSTANCE.createSeason(season);
-                    request.setAttribute("message", "Create season successfully!");
+                    response.sendRedirect(request.getContextPath() + "/manageseason?message=Season+created+successfully!");
+                    return;
                 } else {
-                    request.setAttribute("message", "End date must be after start date.");
+                    response.sendRedirect(request.getContextPath() + "/manageseason?message=End+date+must+be+after+start+date!");
+                    return;
                 }
             } catch (ParseException ex) {
                 Logger.getLogger(CreateSeasonServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } 
-        request.getRequestDispatcher("/manageSeason").forward(request, response);
+        }
+        request.getRequestDispatcher("/manageseason").forward(request, response);
     }
 
     /**

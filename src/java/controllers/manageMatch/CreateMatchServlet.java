@@ -61,8 +61,6 @@ public class CreateMatchServlet extends HttpServlet {
             } catch (DateTimeParseException e) {
                 throw new IllegalArgumentException("Invalid date time format", e);
             }
-
-            // Parse and validate integer parameters
             int fc1Id, fc2Id;
             try {
                 fc1Id = Integer.parseInt(fc1Id_string);
@@ -71,7 +69,6 @@ public class CreateMatchServlet extends HttpServlet {
                 throw new IllegalArgumentException("Invalid football club ID format", e);
             }
 
-            // Create and populate the Match object
             Match match = new Match();
             match.setCreatedBy(createdBy);
             match.setUpdatedBy(createdBy);
@@ -82,19 +79,12 @@ public class CreateMatchServlet extends HttpServlet {
             match.setTeam2(FootballClubDAO.INSTANCE.getFootballClubbyID(fc2Id));
             match.setTime(time);
 
-            // Attempt to create the match
             created = MatchDAO.INSTANCE.createMatch(match);
 
         } catch (IllegalArgumentException e) {
-            // Log the error for debugging
-            e.printStackTrace();
-            // Optionally, set an error attribute for the response
-            session.setAttribute("error", e.getMessage());
         }
 
-        // Set the created attribute and forward to doGet
-        session.setAttribute("created_match", created);
-        doGet(request, response);
+        response.sendRedirect("manageMatch?created=" + created);
     }
 
     @Override
