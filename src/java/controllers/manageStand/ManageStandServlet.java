@@ -57,14 +57,14 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if(session.getAttribute("created") != null) {
-            request.setAttribute("created", (boolean)session.getAttribute("created"));
-            session.removeAttribute("created");
+        if(request.getParameter("created") != null) {
+            request.setAttribute("created", "true".equals(request.getParameter("created")));
         }
-        if(session.getAttribute("updated") != null) {
-            request.setAttribute("updated", (boolean)session.getAttribute("updated"));
-            session.removeAttribute("updated");
+        if(request.getParameter("updated") != null) {
+            request.setAttribute("updated", "true".equals(request.getParameter("updated")));
+        }
+        if(request.getParameter("deleted") != null) {
+            request.setAttribute("deleted", "true".equals(request.getParameter("deleted")));
         }
         request.setAttribute("stands", StandDAO.INSTANCE.getStands());
         request.getRequestDispatcher("views/manageStand.jsp").forward(request, response);

@@ -81,8 +81,8 @@ public class CreateNewNewsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-        int i = 0;
-//        HttpSession session = request.getSession();
+       
+        HttpSession session = request.getSession();
 //        int userID = Integer.parseInt((String) session.getAttribute("userName"));
         int matchId = Integer.parseInt(request.getParameter("matchId") != null ? request.getParameter("matchId") : "");
 //        out.println(matchId);
@@ -96,13 +96,10 @@ public class CreateNewNewsServlet extends HttpServlet {
         int userID = 1;
         u.setUserId(userID);
         News n = new News(m, u, title, content, u.getUserName(), status);
-        i = NewsDAO.INSTANCE.createNews(n, u, m);
-        if (i != 0) {
-            request.setAttribute("ms", "Create News Successfully!!!");
-        } else {
-            request.setAttribute("err", "Create News Unsuccessfully!!!");
-        }
-//        request.getRequestDispatcher("manageNews").forward(request, response);
+        int created = NewsDAO.INSTANCE.createNews(n, u, m);
+        if (created != 0) {
+            session.setAttribute("created", created);
+        } 
         response.sendRedirect("manageNews");
         
     }

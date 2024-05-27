@@ -90,8 +90,8 @@ public class UpdateStandServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        session.setAttribute("updated", updated);
-        doGet(request, response);
+        response.sendRedirect("manageStand?updated="+updated);
+        
     }
 
     /** 

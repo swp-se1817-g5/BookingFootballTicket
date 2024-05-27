@@ -4,7 +4,8 @@
  */
 package models;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -15,12 +16,24 @@ public class MatchStatus {
     private int matchStatusId;
     private String matchStatusName;
     private String createdBy;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     private String updatedBy;
-    private LocalDate lastUpdatedDate;
+    private LocalDateTime lastUpdatedDate;
     private boolean isDeleted;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
+
     public MatchStatus() {
+    }
+
+    public MatchStatus(int matchStatusId, String matchStatusName, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
+        this.matchStatusId = matchStatusId;
+        this.matchStatusName = matchStatusName;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
+        this.updatedBy = updatedBy;
+        this.lastUpdatedDate = lastUpdatedDate;
+        this.isDeleted = isDeleted;
     }
 
     public int getMatchStatusId() {
@@ -47,11 +60,11 @@ public class MatchStatus {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
+    public String getCreatedDate() {
+        return createdDate != null ? createdDate.format(formatter) : null;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -63,11 +76,11 @@ public class MatchStatus {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdatedDate() {
-        return lastUpdatedDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
     }
 
-    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
+    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
@@ -79,14 +92,9 @@ public class MatchStatus {
         this.isDeleted = isDeleted;
     }
 
-    public MatchStatus(int matchStatusId, String matchStatusName, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
-        this.matchStatusId = matchStatusId;
-        this.matchStatusName = matchStatusName;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
-        this.updatedBy = updatedBy;
-        this.lastUpdatedDate = lastUpdatedDate;
-        this.isDeleted = isDeleted;
+    @Override
+    public String toString() {
+        return "MatchStatus{" + "matchStatusId=" + matchStatusId + ", matchStatusName=" + matchStatusName + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
     }
-
+    
 }

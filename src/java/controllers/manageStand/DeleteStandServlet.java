@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -63,8 +64,8 @@ public class DeleteStandServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        request.setAttribute("deleted", deleted);
-        request.getRequestDispatcher("manageStand").forward(request, response);
+        
+        response.sendRedirect("manageStand?deleted=" + deleted);
         
         
     } 

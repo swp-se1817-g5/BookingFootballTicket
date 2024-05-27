@@ -6,9 +6,9 @@ package controllers.Auth;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import constant.Iconstant;
-import entity.GoogleAccount;
+import constant.IconstantGmail;
 import java.io.IOException;
+import models.User;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
@@ -17,18 +17,17 @@ import org.apache.http.client.fluent.Request;
  *
  * @author AD
  */
-public class GoogleLogin {
+public class getGmail {
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
 
-        String response = Request.Post(Iconstant.GOOGLE_LINK_GET_TOKEN)
-                .bodyForm(
-                        Form.form()
-                                .add("client_id", Iconstant.GOOGLE_CLIENT_ID)
-                                .add("client_secret", Iconstant.GOOGLE_CLIENT_SECRET)
-                                .add("redirect_uri", Iconstant.GOOGLE_REDIRECT_URI)
+        String response = Request.Post(IconstantGmail.GMAIL_LINK_GET_TOKEN)
+                .bodyForm(Form.form()
+                                .add("client_id", IconstantGmail.GMAIL_CLIENT_ID)
+                                .add("client_secret", IconstantGmail.GMAIL_CLIENT_SECRET)
+                                .add("redirect_uri", IconstantGmail.GMAIL_REDIRECT_URI)
                                 .add("code", code)
-                                .add("grant_type", Iconstant.GOOGLE_GRANT_TYPE)
+                                .add("grant_type", IconstantGmail.GMAIL_GRANT_TYPE)
                                 .build()
                 )
                 .execute().returnContent().asString();
@@ -41,15 +40,15 @@ public class GoogleLogin {
 
     }
 
-    public static GoogleAccount getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+    public static User getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
 
-        String link = Iconstant.GOOGLE_LINK_GET_USER_INFO + accessToken;
+        String link = IconstantGmail.GMAIL_LINK_GET_USER_INFO + accessToken;
 
         String response = Request.Get(link).execute().returnContent().asString();
 
-        GoogleAccount googlePojo = new Gson().fromJson(response, GoogleAccount.class);
+        User UPojo = new Gson().fromJson(response, User.class);
 
-        return googlePojo;
+        return UPojo;
 
     }
 }

@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @author AD
  */
 @WebServlet(name="FacebookLogin", urlPatterns={"/loginFB"})
-public class FacebookLogin extends HttpServlet {
+public class FacebookLoginServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -31,7 +31,7 @@ public class FacebookLogin extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String code = request.getParameter("code");
         System.out.println(code);
-        Facebook FB = new Facebook();
+        getFacebook FB = new getFacebook();
         String accessToken = FB.getToken(code);
         System.out.println(accessToken);
     } 

@@ -90,8 +90,7 @@ public class CreateStandServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        session.setAttribute("created", created);
-        doGet(request, response);
+        response.sendRedirect("manageStand?created=" + created);
         
     }
 
