@@ -44,7 +44,7 @@ public class FootballClubDAO {
                 fc.setCreatedBy(rs.getString("createdBy"));
                 fc.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 fc.setUpdatedBy(rs.getString("updatedBy"));
-                fc.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
+                fc.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") == null ? null : rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
                 fc.setIsDeleted(rs.getBoolean("isDeleted"));
                 fcs.add(fc);
 

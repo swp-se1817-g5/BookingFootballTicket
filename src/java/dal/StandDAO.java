@@ -41,7 +41,7 @@ public class StandDAO {
                 stand.setCreatedBy(rs.getString("createdBy"));
                 stand.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 stand.setUpdatedBy(rs.getString("updatedBy"));
-                stand.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
+                stand.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") == null ? null : rs.getTimestamp("lastUpdatedDate").toLocalDateTime() );
                 stand.setIsDeleted(rs.getBoolean("isDeleted"));
                 stands.add(stand);
             }
