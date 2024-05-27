@@ -57,7 +57,6 @@ public class DeleteStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session  = request.getSession();
         boolean deleted = false;
         try {
             int standId = Integer.parseInt(request.getParameter("standId"));
@@ -65,8 +64,8 @@ public class DeleteStandServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        session.setAttribute("deleted", deleted);
-        response.sendRedirect("manageStand");
+        
+        response.sendRedirect("manageStand?deleted=" + deleted);
         
         
     } 
