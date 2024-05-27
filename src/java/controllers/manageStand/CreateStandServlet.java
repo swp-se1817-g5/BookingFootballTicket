@@ -14,13 +14,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
+import models.Stand;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name="ManageStandServlet", urlPatterns={"/manageStand"})
-public class ManageStandServlet extends HttpServlet {
+@WebServlet(name="CreateStandServlet", urlPatterns={"/createStand"})
+public class CreateStandServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +39,10 @@ public class ManageStandServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageStandServlet</title>");  
+            out.println("<title>Servlet CreateStandServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageStandServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet CreateStandServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,19 +58,8 @@ public class ManageStandServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        if(request.getParameter("created") != null) {
-            request.setAttribute("created", "true".equals(request.getParameter("created")));
-        }
-        if(request.getParameter("updated") != null) {
-            request.setAttribute("updated", "true".equals(request.getParameter("updated")));
-        }
-        if(request.getParameter("deleted") != null) {
-            request.setAttribute("deleted", "true".equals(request.getParameter("deleted")));
-        }
-        request.setAttribute("stands", StandDAO.INSTANCE.getStands());
-        request.getRequestDispatcher("views/manageStand.jsp").forward(request, response);
-        
+    throws ServletException, IOException {  
+        response.sendRedirect("manageStand");
     } 
 
     /** 
@@ -81,9 +72,26 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        boolean created = false;
+        try {
+            String createdBy = (String)session.getAttribute("userName");
+            String standName = request.getParameter("standName");
+            BigDecimal price  = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
+            int quantity = Integer.parseInt(request.getParameter("quantity"));
+            Stand stand = new Stand();
+            stand.setCreatedBy(createdBy);
+            stand.setStandName(standName);
+            stand.setPrice(price);
+            stand.setQuantity(quantity);
+            created = StandDAO.INSTANCE.createStand(stand);
+            
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        response.sendRedirect("manageStand?created=" + created);
         
-        
-        doGet(request, response);
     }
 
     /** 

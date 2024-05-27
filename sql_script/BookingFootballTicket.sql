@@ -150,8 +150,8 @@ CREATE TABLE HistoryPurchasedTicket (
     number INT,
     [status] VARCHAR(255),
     createdBy VARCHAR(255),
-    updatedBy VARCHAR(255),
-    lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    updatedBy VARCHAR(255) NULL,
+    lastUpdatedDate DATETIME2 NULL,
     isDeleted BIT DEFAULT 0,
 	FOREIGN KEY (matchStandId) REFERENCES MatchStand(matchStandId)
 );
@@ -175,15 +175,17 @@ GO
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
 	userId INT,
+	matchId INT,
     title VARCHAR(255),
     content NVARCHAR(MAX) NOT NULL,
- --   postTime DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     createdBy VARCHAR(255), 
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-    updatedBy NVARCHAR(255),
-    lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    updatedBy NVARCHAR(255) NULL,
+    lastUpdatedDate DATETIME2 NULL,
+	[status] INT,
     isDeleted BIT DEFAULT 0,
-	FOREIGN KEY (userId) REFERENCES [User](userId)
+	FOREIGN KEY (userId) REFERENCES [User](userId),
+	FOREIGN KEY (matchId) REFERENCES [Match](matchId)
 	);
 GO
 

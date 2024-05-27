@@ -4,8 +4,8 @@
  */
 package models;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -14,31 +14,33 @@ import java.util.Date;
 public class Match {
 
     private int matchId;
-    private int team1;
-    private int team2;
-    private int seasonId;
+    private FootballClub team1;
+    private FootballClub team2;
+    private Season season;
     private String stadiumImg;
-    private Date time;
-    private int statusId;
-    private int typeId;
+    private LocalDateTime time;
+    private MatchStatus status;
+    private MatchType type; 
     private String createdBy;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     private String updatedBy;
-    private LocalDate lastUpdatedDate;
+    private LocalDateTime lastUpdatedDate;
     private boolean isDeleted;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    
     public Match() {
     }
 
-    public Match(int matchId, int team1, int team2, int seasonId, String stadiumImg, Date time, int statusId, int typeId, String createdBy, LocalDate createdDate, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
+    public Match(int matchId, FootballClub team1, FootballClub team2, Season season, String stadiumImg, LocalDateTime time, MatchStatus status, MatchType type, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.matchId = matchId;
         this.team1 = team1;
         this.team2 = team2;
-        this.seasonId = seasonId;
+        this.season = season;
         this.stadiumImg = stadiumImg;
         this.time = time;
-        this.statusId = statusId;
-        this.typeId = typeId;
+        this.status = status;
+        this.type = type;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
         this.updatedBy = updatedBy;
@@ -54,28 +56,28 @@ public class Match {
         this.matchId = matchId;
     }
 
-    public int getTeam1() {
+    public FootballClub getTeam1() {
         return team1;
     }
 
-    public void setTeam1(int team1) {
+    public void setTeam1(FootballClub team1) {
         this.team1 = team1;
     }
 
-    public int getTeam2() {
+    public FootballClub getTeam2() {
         return team2;
     }
 
-    public void setTeam2(int team2) {
+    public void setTeam2(FootballClub team2) {
         this.team2 = team2;
     }
 
-    public int getSeasonId() {
-        return seasonId;
+    public Season getSeason() {
+        return season;
     }
 
-    public void setSeasonId(int seasonId) {
-        this.seasonId = seasonId;
+    public void setSeason(Season season) {
+        this.season = season;
     }
 
     public String getStadiumImg() {
@@ -86,28 +88,28 @@ public class Match {
         this.stadiumImg = stadiumImg;
     }
 
-    public Date getTime() {
-        return time;
+    public String getTime() {
+        return time != null ? time.format(formatter) : null;
     }
 
-    public void setTime(Date time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 
-    public int getStatusId() {
-        return statusId;
+    public MatchStatus getStatus() {
+        return status;
     }
 
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
+    public void setStatus(MatchStatus status) {
+        this.status = status;
     }
 
-    public int getTypeId() {
-        return typeId;
+    public MatchType getType() {
+        return type;
     }
 
-    public void setTypeId(int typeId) {
-        this.typeId = typeId;
+    public void setType(MatchType type) {
+        this.type = type;
     }
 
     public String getCreatedBy() {
@@ -118,11 +120,11 @@ public class Match {
         this.createdBy = createdBy;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
+    public String getCreatedDate() {
+        return createdDate != null ? createdDate.format(formatter) : null;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -134,11 +136,11 @@ public class Match {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDate getLastUpdatedDate() {
-        return lastUpdatedDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
     }
 
-    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
+    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
@@ -150,4 +152,9 @@ public class Match {
         this.isDeleted = isDeleted;
     }
 
+    @Override
+    public String toString() {
+        return "Match{" + "matchId=" + matchId + ", team1=" + team1 + ", team2=" + team2 + ", season=" + season + ", stadiumImg=" + stadiumImg + ", time=" + time + ", status=" + status + ", type=" + type + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
+    }
+    
 }

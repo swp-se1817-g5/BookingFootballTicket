@@ -1,16 +1,8 @@
-    /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
-/**
- *
- * @author admin
- */
 public class FootballClub {
 
     private int clubId;
@@ -21,6 +13,8 @@ public class FootballClub {
     private String updatedBy;
     private LocalDateTime lastUpdatedDate;
     private boolean isDeleted;
+
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
 
     public FootballClub() {
     }
@@ -68,8 +62,8 @@ public class FootballClub {
         this.createdBy = createdBy;
     }
 
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
+    public String getCreatedDate() {
+        return createdDate != null ? createdDate.format(formatter) : null;
     }
 
     public void setCreatedDate(LocalDateTime createdDate) {
@@ -84,8 +78,8 @@ public class FootballClub {
         this.updatedBy = updatedBy;
     }
 
-    public LocalDateTime getLastUpdatedDate() {
-        return lastUpdatedDate;
+    public String getLastUpdatedDate() {
+        return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
     }
 
     public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
@@ -102,14 +96,6 @@ public class FootballClub {
 
     @Override
     public String toString() {
-        return "FootballClub{" + "clubId=" + clubId + ", clubName=" + clubName + ", img=" + img + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
+        return "FootballClub{" + "clubId=" + clubId + ", clubName=" + clubName + ", img=" + img + ", createdBy=" + createdBy + ", createdDate=" + getCreatedDate() + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + getLastUpdatedDate() + ", isDeleted=" + isDeleted + '}';
     }
-    
-    
-
-    
-    
-
-   
-
 }

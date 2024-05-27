@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -134,6 +135,14 @@
                 margin-top: 6px;
                 font-size: 95%;
             }
+            .searchh {
+                display: flex;
+                justify-content: center;
+            }
+            .createe {
+                display: flex;
+                justify-content: right;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -142,17 +151,75 @@
         </script>
     </head>
     <body>
-        <div class="container-xl">
+        <div id="createMatchModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="createMatch" method="post">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Create Match</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>FC-1</label>
+                                <select name="fc1Id" placeholder="Select 1 club" class="form-control" required>
+                                    <c:forEach items="${footballClubs}" var="fc">
+                                        <option value="${fc.clubId}">${fc.clubName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>FC-2</label>
+                                <select name="fc2Id" placeholder="Select 1 club" class="form-control" required>
+                                    <c:forEach items="${footballClubs}" var="fc">
+                                        <option value="${fc.clubId}">${fc.clubName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <input type="datetime-local" class="form-control" name="startTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Season</label>
+                                <select name="season" placeholder="Select 1 season" class="form-control" required>
+                                    <c:forEach items="${seasons}" var="season">
+                                        <option value="${season.seasonId}">${season.seasonName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Match type</label>
+                                <select name="type" placeholder="Select 1 type" class="form-control" required>
+                                    <c:forEach items="${types}" var="type">
+                                        <option value="${type.typeId}">${type.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" class="btn btn-success" value="Add">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="container-xll">
             <div class="table-responsive">
                 <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
-                            <div class="col-sm-8"><h2>Customer <b>Details</b></h2></div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-4"><h2>Match <b>Details</b></h2></div>
+
+                            <div class="col-sm-4 searchh">
                                 <div class="search-box">
                                     <i class="material-icons">&#xE8B6;</i>
                                     <input type="text" class="form-control" placeholder="Search&hellip;">
                                 </div>
+                            </div>
+                            <div class="col-sm-4 createe">
+                                <a href="#createMatchModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Match</span></a>
                             </div>
                         </div>
                     </div>
@@ -160,96 +227,185 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Name <i class="fa fa-sort"></i></th>
-                                <th>Address</th>
-                                <th>City <i class="fa fa-sort"></i></th>
-                                <th>Pin Code</th>
-                                <th>Country <i class="fa fa-sort"></i></th>
+                                <th>FC-1</th>
+                                <th>FC-2</th>
+                                <th>Start time</th>
+                                <th>Season</th>
+                                <th>Status</th>
+                                <th>Type</th>
+                                <th>Stadium</th>
+                                <th>Create By</th>
+                                <th>Create Date</th>
+                                <th>Last Update By</th>
+                                <th>Last Update Date</th>
                                 <th>Actions</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Thomas Hardy</td>
-                                <td>89 Chiaroscuro Rd.</td>
-                                <td>Portland</td>
-                                <td>97219</td>
-                                <td>USA</td>
-                                <td>
-                                    <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Maria Anders</td>
-                                <td>Obere Str. 57</td>
-                                <td>Berlin</td>
-                                <td>12209</td>
-                                <td>Germany</td>
-                                <td>
-                                    <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Fran Wilson</td>
-                                <td>C/ Araquil, 67</td>
-                                <td>Madrid</td>
-                                <td>28023</td>
-                                <td>Spain</td>
-                                <td>
-                                    <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Dominique Perrier</td>
-                                <td>25, rue Lauriston</td>
-                                <td>Paris</td>
-                                <td>75016</td>
-                                <td>France</td>
-                                <td>
-                                    <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Martin Blank</td>
-                                <td>Via Monte Bianco 34</td>
-                                <td>Turin</td>
-                                <td>10100</td>
-                                <td>Italy</td>
-                                <td>
-                                    <a href="#" class="view" title="View" data-toggle="tooltip"><i class="material-icons">&#xE417;</i></a>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>        
+                            <c:forEach items="${requestScope.matches}" var="o">
+                                <tr>
+                                    <td>${o.matchId}</td>
+                                    <td>${o.team1.clubName}</td>
+                                    <td>${o.team2.clubName}</td>
+                                    <td>${o.time}</td>
+                                    <td>${o.season.seasonName}</td>
+                                    <td>${o.status.matchStatusName}</td>
+                                    <td>${o.type.name}</td>
+                                    <td>${o.stadiumImg}</td>
+                                    <td>${o.createdBy}</td>
+                                    <td>${o.createdDate}</td>
+                                    <td>${o.updatedBy}</td>
+                                    <td>${o.lastUpdatedDate}</td>
+                                    <td>
+                                        <a onclick="update('${o.matchId}', '${o.team1.clubId}', '${o.team2.clubId}', '${o.time}', '${o.season.seasonId}', '${o.status.matchStatusId}', '${o.type.typeId}')" href="#updateMatchModal" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
+                                        <a onclick="doDelete(${o.matchId})" href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                    </td>
+                                </tr>
+                            </c:forEach>  
                         </tbody>
                     </table>
-                    <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                        <ul class="pagination">
-                            <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul>
-                    </div>
                 </div>
-            </div>  
-        </div>   
+            </div>
+        </div>
+
+        <div id="updateMatchModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="updateStand" method="post">
+                        <div class="modal-header">						
+                            <h4 class="modal-title">Update Match</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Match ID</label>
+                                <input id="matchId" name="matchId" readonly type="number" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>FC-1</label>
+                                <select id="fc1Id" name="fc1Id" placeholder="Select 1 club" class="form-control" required>
+                                    <c:forEach items="${footballClubs}" var="fc">
+                                        <option value="${fc.clubId}">${fc.clubName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>FC-2</label>
+                                <select id="fc2Id" name="fc2Id" placeholder="Select 1 club" class="form-control" required>
+                                    <c:forEach items="${footballClubs}" var="fc">
+                                        <option value="${fc.clubId}">${fc.clubName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Start Time</label>
+                                <input id="startTime" type="datetime-local" class="form-control" name="startTime" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Season</label>
+                                <select id="seasonId" name="season" placeholder="Select 1 season" class="form-control" required>
+                                    <c:forEach items="${seasons}" var="season">
+                                        <option value="${season.seasonId}">${season.seasonName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Match type</label>
+                                <select id="typeId" name="type" placeholder="Select 1 type" class="form-control" required>
+                                    <c:forEach items="${types}" var="type">
+                                        <option value="${type.typeId}">${type.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Match Status</label>
+                                <select id="statusId" name="status" placeholder="Select 1 status" class="form-control" required>
+                                    <c:forEach items="${statusList}" var="status">
+                                        <option value="${status.matchStatusId}">${status.matchStatusName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" class="btn btn-success" value="Update">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="toast" id="updateToast" data-delay="3000">
+            <div class="toast-header">
+                <strong class="mr-auto" id="toastTitle"></strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                var updated = '<%= request.getAttribute("updated") %>';
+                if (updated !== 'null' && updated !== '') {
+                    var toast = $('#updateToast');
+                    if (updated === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('Stand updated successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (updated === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to update stand.');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
+                }
+            });
+
+            $(document).ready(function () {
+                var created = '<%= request.getAttribute("created_match") %>';
+                if (created !== 'null' && created !== '') {
+                    var toast = $('#updateToast');
+                    if (updated === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('Stand updated successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (updated === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to update stand.');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
+                }
+            });
+
+        </script>
+        <script type="text/javascript">
+            function doDelete(matchId) {
+                if (confirm("Do you want to delete Match with id = " + matchId))
+                    location.href = 'deleteMatch?matchId=' + matchId;
+            }
+            function update(matchId, fc1Id, fc2Id, time, seasonId, statusId, typeId) {
+                document.getElementById('matchId').value = matchId;
+                setSelectedOption('fc1Id', fc1Id);
+                setSelectedOption('fc2Id', fc2Id);
+                setSelectedOption('seasonId', seasonId);
+                setSelectedOption('statusId', statusId);
+                setSelectedOption('typeId', typeId);
+                document.getElementById('startTime').value = time;
+            }
+
+            function setSelectedOption(selectId, valueToSelect) {
+                var selectElement = document.getElementById(selectId);
+                var options = selectElement.options;
+                for (var i = 0; i < options.length; i++) {
+                    if (options[i].value === valueToSelect) {
+                        options[i].selected = true;
+                        break;
+                    }
+                }
+            }
+        </script>
+
     </body>
 </html>

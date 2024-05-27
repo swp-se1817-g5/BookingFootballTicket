@@ -3,24 +3,23 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.manageStand;
+package controllers.manageUser;
 
-import dal.StandDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import models.User;
 
 /**
  *
- * @author admin
+ * @author Vinh
  */
-@WebServlet(name="ManageStandServlet", urlPatterns={"/manageStand"})
-public class ManageStandServlet extends HttpServlet {
+public class ManageUserServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +36,10 @@ public class ManageStandServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageStandServlet</title>");  
+            out.println("<title>Servlet ManageUserServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageStandServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ManageUserServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,19 +56,14 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        if(request.getParameter("created") != null) {
-            request.setAttribute("created", "true".equals(request.getParameter("created")));
+        ArrayList<User> users = UserDAO.getINSTANCE().getallUser();
+        if (users.isEmpty()) {
+            request.setAttribute("message", "The user is empty, please create a user!");
+        } else {
+            request.setAttribute("users", users);
         }
-        if(request.getParameter("updated") != null) {
-            request.setAttribute("updated", "true".equals(request.getParameter("updated")));
-        }
-        if(request.getParameter("deleted") != null) {
-            request.setAttribute("deleted", "true".equals(request.getParameter("deleted")));
-        }
-        request.setAttribute("stands", StandDAO.INSTANCE.getStands());
-        request.getRequestDispatcher("views/manageStand.jsp").forward(request, response);
-        
-    } 
+        request.getRequestDispatcher("views/manageUser.jsp").forward(request, response);
+    }
 
     /** 
      * Handles the HTTP <code>POST</code> method.
@@ -81,8 +75,6 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
-        
         doGet(request, response);
     }
 

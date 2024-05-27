@@ -19,8 +19,8 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author admin
  */
-@WebServlet(name="ManageStandServlet", urlPatterns={"/manageStand"})
-public class ManageStandServlet extends HttpServlet {
+@WebServlet(name="DeleteStandServlet", urlPatterns={"/deleteStand"})
+public class DeleteStandServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +37,10 @@ public class ManageStandServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageStandServlet</title>");  
+            out.println("<title>Servlet DeleteStandServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageStandServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet DeleteStandServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,17 +57,16 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        if(request.getParameter("created") != null) {
-            request.setAttribute("created", "true".equals(request.getParameter("created")));
+        boolean deleted = false;
+        try {
+            int standId = Integer.parseInt(request.getParameter("standId"));
+            deleted = StandDAO.INSTANCE.deleteStand(standId);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        if(request.getParameter("updated") != null) {
-            request.setAttribute("updated", "true".equals(request.getParameter("updated")));
-        }
-        if(request.getParameter("deleted") != null) {
-            request.setAttribute("deleted", "true".equals(request.getParameter("deleted")));
-        }
-        request.setAttribute("stands", StandDAO.INSTANCE.getStands());
-        request.getRequestDispatcher("views/manageStand.jsp").forward(request, response);
+        
+        response.sendRedirect("manageStand?deleted=" + deleted);
+        
         
     } 
 
@@ -81,9 +80,7 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
-        
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /** 

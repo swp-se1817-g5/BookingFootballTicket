@@ -4,8 +4,8 @@
  */
 package models;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -14,30 +14,29 @@ import java.util.Date;
 public class News {
 
     private int newsId;
-    private int userId;
+    private Match matchId;
+    private User userId;
     private String title;
     private String content;
-    private Date postTime;
     private String createBy;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     private String updateBy;
-    private LocalDate lastUpdateDate;
+    private LocalDateTime lastUpdateDate;
+    private int status;
     private boolean isDeleted;
+
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
 
     public News() {
     }
 
-    public News(int newsId, int userId, String title, String content, Date postTime, String createBy, LocalDate createdDate, String updateBy, LocalDate lastUpdateDate, boolean isDeleted) {
-        this.newsId = newsId;
+    public News(Match matchId, User userId, String title, String content, String createBy, int status) {
+        this.matchId = matchId;
         this.userId = userId;
         this.title = title;
         this.content = content;
-        this.postTime = postTime;
         this.createBy = createBy;
-        this.createdDate = createdDate;
-        this.updateBy = updateBy;
-        this.lastUpdateDate = lastUpdateDate;
-        this.isDeleted = isDeleted;
+        this.status = status;
     }
 
     public int getNewsId() {
@@ -48,11 +47,11 @@ public class News {
         this.newsId = newsId;
     }
 
-    public int getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 
@@ -72,14 +71,6 @@ public class News {
         this.content = content;
     }
 
-    public Date getPostTime() {
-        return postTime;
-    }
-
-    public void setPostTime(Date postTime) {
-        this.postTime = postTime;
-    }
-
     public String getCreateBy() {
         return createBy;
     }
@@ -88,11 +79,11 @@ public class News {
         this.createBy = createBy;
     }
 
-    public LocalDate getCreatedDate() {
-        return createdDate;
+    public String getCreatedDate() {
+        return createdDate != null ? createdDate.format(formatter) : null;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -104,12 +95,20 @@ public class News {
         this.updateBy = updateBy;
     }
 
-    public LocalDate getLastUpdateDate() {
-        return lastUpdateDate;
+    public String getLastUpdateDate() {
+        return lastUpdateDate != null ? lastUpdateDate.format(formatter) : null;
     }
 
-    public void setLastUpdateDate(LocalDate lastUpdateDate) {
+    public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public boolean isIsDeleted() {
@@ -118,6 +117,19 @@ public class News {
 
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
+    }
+
+    public Match getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(Match matchId) {
+        this.matchId = matchId;
+    }
+
+    @Override
+    public String toString() {
+        return "News{" + "newsId=" + newsId + ", matchId=" + matchId + ", userId=" + userId + ", title=" + title + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", status=" + status +", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
     }
 
 }

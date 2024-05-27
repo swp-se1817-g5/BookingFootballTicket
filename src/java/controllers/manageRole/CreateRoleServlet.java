@@ -3,24 +3,22 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.manageStand;
+package controllers.manageRole;
 
-import dal.StandDAO;
+import dal.RoleDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import models.Role;
 
 /**
  *
- * @author admin
+ * @author Vinh
  */
-@WebServlet(name="ManageStandServlet", urlPatterns={"/manageStand"})
-public class ManageStandServlet extends HttpServlet {
+public class CreateRoleServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -37,10 +35,10 @@ public class ManageStandServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageStandServlet</title>");  
+            out.println("<title>Servlet CreateRoleServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageStandServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet CreateRoleServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -57,18 +55,7 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        if(request.getParameter("created") != null) {
-            request.setAttribute("created", "true".equals(request.getParameter("created")));
-        }
-        if(request.getParameter("updated") != null) {
-            request.setAttribute("updated", "true".equals(request.getParameter("updated")));
-        }
-        if(request.getParameter("deleted") != null) {
-            request.setAttribute("deleted", "true".equals(request.getParameter("deleted")));
-        }
-        request.setAttribute("stands", StandDAO.INSTANCE.getStands());
-        request.getRequestDispatcher("views/manageStand.jsp").forward(request, response);
-        
+        doPost(request, response);
     } 
 
     /** 
@@ -81,9 +68,13 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
-        
-        doGet(request, response);
+        String roleName = request.getParameter("roleName");
+        if(roleName!=null && !roleName.isBlank()){
+            Role role = new Role(roleName, "admin");
+            RoleDAO.INSTANCE.createRole(role);
+            request.setAttribute("message", "Create successfully!");
+        }
+        request.getRequestDispatcher("views/manageRole.jsp").forward(request, response);
     }
 
     /** 
