@@ -59,6 +59,12 @@ public class User {
 
     }
 
+    public User(String userName, String email, String avatar) {
+        this.userName = userName;
+        this.email = email;
+        this.avatar = avatar;
+    }
+
     public int getUserId() {
         return userId;
     }

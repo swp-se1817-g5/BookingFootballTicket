@@ -44,7 +44,7 @@ CREATE TABLE FootballClub (
     createdBy VARCHAR(255),
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
-    lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    lastUpdatedDate DATETIME2 null,
     isDeleted BIT DEFAULT 0
 );
 GO
@@ -119,7 +119,7 @@ CREATE TABLE Stand (
     createdBy VARCHAR(255),
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(255),
-    lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+    lastUpdatedDate DATETIME2 null,
     isDeleted BIT DEFAULT 0
 );
 GO
