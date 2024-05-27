@@ -1,5 +1,5 @@
-
 package dal;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.*;
 import java.util.List;
+
 /**
  *
  * @author Vinh
@@ -68,7 +69,7 @@ public class UserDAO {
         int n = 0;
         try {
             String sql = "INSERT INTO [dbo].[User] (email, [name], avatar) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = connect.prepareStatement(sql);
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getName());
             preparedStatement.setString(3, user.getAvatar());
@@ -79,51 +80,28 @@ public class UserDAO {
         return n > 0;
     }
 
-    public boolean addUser(User user) {
-
-        String sql = "INSERT INTO [User](userName, password, email, phoneNumber, name) VALUES (?, ?, ?, ?, ?)";
-        boolean added = false;
-        try {
-            PreparedStatement ps = connect.prepareStatement(sql);
-            ps.setString(1, user.getUserName());
-            ps.setString(2, user.getPassword());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPhoneNumber());
-            ps.setString(5, user.getName());
-
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                added = true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            added = false;
-        }
-        return added;
-    }
-
     public User authenticateUser(String email, String password) {
-        String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
+        String sql = "SELECT * FROM [User] WHERE email = ? AND password = ? AND isDeleted = 0";
         try {
-            PreparedStatement ps = connect.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User user = new User();
-                user.setUserId(rs.getInt("userId"));
-                user.setRoleId(rs.getInt("roleId"));
-                user.setUserName(rs.getString("userName"));
-                user.setPassword(rs.getString("password"));
-                user.setEmail(rs.getString("email"));
-                user.setPhoneNumber(rs.getString("phoneNumber"));
-                user.setAvatar(rs.getString("avatar"));
-                user.setName(rs.getString("name"));
-                user.setCreatedBy(rs.getString("createdBy"));
-                user.setCreatedDate(rs.getDate("createdDate").toLocalDate());
-                user.setUpdatedBy(rs.getString("updatedBy"));
-                user.setLastUpdatedDate(rs.getDate("lastUpdatedDate").toLocalDate());
-                user.setIsDeleted(rs.getBoolean("isDeleted"));
+                user.setUserId(rs.getInt(1));
+                user.setRoleId(rs.getInt(2));
+                user.setUserName(rs.getString(3));
+                user.setPassword(rs.getString(4));
+                user.setEmail(rs.getString(5));
+                user.setPhoneNumber(rs.getString(6));
+                user.setAvatar(rs.getString(7));
+                user.setName(rs.getString(8));
+                user.setCreatedBy(rs.getString(9));
+                user.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
+                user.setUpdatedBy(rs.getString(11));
+                user.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
+                user.setIsDeleted(rs.getBoolean(13));
                 return user;
             }
         } catch (SQLException e) {
@@ -132,71 +110,11 @@ public class UserDAO {
         return null;
     }
 
-    
-
-    public boolean updateUserInformation(User user) {
-        String sql = "UPDATE [User] SET roleId = ?, userName = ?, password = ?, email = ?, phoneNumber = ?, avatar = ?, name = ?, updatedBy = ?, lastUpdatedDate = ?, isDeleted = ? WHERE userId = ?";
-        boolean updated = false;
-        try {
-            PreparedStatement ps = connect.prepareStatement(sql);
-            ps.setInt(1, user.getRoleId());
-            ps.setString(2, user.getUserName());
-            ps.setString(3, user.getPassword());
-            ps.setString(4, user.getEmail());
-            ps.setString(5, user.getPhoneNumber());
-            ps.setString(6, user.getAvatar());
-            ps.setString(7, user.getName());
-            ps.setString(8, user.getUpdatedBy());
-            ps.setObject(9, user.getLastUpdatedDate());
-            ps.setBoolean(10, user.isIsDeleted());
-            ps.setInt(11, user.getUserId());
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                updated = true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            updated = false;
-        }
-        return updated;
-    }
-
-    public User getUserById(int id) {
-        String sql = "SELECT * FROM [User] WHERE userId = ?";
-        User user = null;
-        try {
-            PreparedStatement ps = connect.prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                user = new User();
-                user.setUserId(rs.getInt("userId"));
-                user.setRoleId(rs.getInt("roleId"));
-                user.setUserName(rs.getString("userName"));
-                user.setPassword(rs.getString("password"));
-                user.setEmail(rs.getString("email"));
-                user.setPhoneNumber(rs.getString("phoneNumber"));
-                user.setAvatar(rs.getString("avatar"));
-                user.setName(rs.getString("name"));
-                user.setCreatedBy(rs.getString("createdBy"));
-                user.setCreatedDate(rs.getObject("createdDate", LocalDate.class));
-                user.setUpdatedBy(rs.getString("updatedBy"));
-                user.setLastUpdatedDate(rs.getObject("lastUpdatedDate", LocalDate.class));
-                user.setIsDeleted(rs.getBoolean("isDeleted"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return user;
-    }
-    
-
-
     public boolean deleteUser(int userId) {
         boolean deleted = false;
         String sql = "UPDATE [User] SET isDeleted = 1 WHERE userId = ?";
         try {
-            PreparedStatement ps = connect.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, userId);
             if (ps.executeUpdate() > 0) {
                 deleted = true;
@@ -208,9 +126,9 @@ public class UserDAO {
     }
 
     public User getUserByEmail(String email) {
-        String sql = "SELECT * FROM [User] WHERE email = ? && isDeleted=0";
+        String sql = "SELECT * FROM [User] WHERE email = ? AND isDeleted=0";
         try {
-            PreparedStatement ps = connect.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int userId = rs.getInt("userId");
@@ -233,12 +151,12 @@ public class UserDAO {
         return null;
     }
 
-    public User getUserbyID(String userID) {
+    public User getUserbyID(int userID) {
         User u = new User();
         try {
             String sql = "select * from [dbo].[User] where userId = ? and isDeleted = 0";
             ps = con.prepareStatement(sql);
-            ps.setString(1, userID);
+            ps.setInt(1, userID);
             rs = ps.executeQuery();
             while (rs.next()) {
                 u.setUserId(rs.getInt(1));
@@ -288,56 +206,65 @@ public class UserDAO {
         return users;
     }
 
-    public void createUser(User user) throws SQLException {
+    public boolean createUser(User user) {
         String sql = "INSERT INTO [dbo].[User] (roleId, userName, password, email, phoneNumber, avatar, name, "
                 + "createdBy,updatedBy\n"
                 + "      ,lastUpdatedDate,isDeleted) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ? ,? , ? )";
-        ps = con.prepareStatement(sql);
-
-        int userRoleId = 2;
-
-        ps.setInt(1, userRoleId);
-        ps.setString(2, user.getUserName());
-        ps.setString(3, user.getPassword());
-        ps.setString(4, user.getEmail());
-        ps.setString(5, user.getPhoneNumber());
-        ps.setString(6, user.getAvatar());
-        ps.setString(7, user.getName());
-        ps.setString(8, "admin");
-        ps.setString(9, null);
-        ps.setString(10, null);
-        ps.setBoolean(11, false);
-        ps.executeUpdate();
+        boolean added = false;
+        try {
+            ps = con.prepareStatement(sql);
+            int userRoleId = 2;
+            ps.setInt(1, userRoleId);
+            ps.setString(2, user.getUserName());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getEmail());
+            ps.setString(5, user.getPhoneNumber());
+            ps.setString(6, user.getAvatar());
+            ps.setString(7, user.getName());
+            ps.setString(8, "admin");
+            ps.setString(9, null);
+            ps.setString(10, null);
+            ps.setBoolean(11, false);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                added = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            added = false;
+        }
+        return added;
     }
 
-    public void updateUser(User user) throws SQLException {
+    public boolean updateUser(User user) {
         String sql = "UPDATE [dbo].[User] SET roleId = ?, userName = ?, password = ?, email = ?, phoneNumber = ?, "
                 + "avatar = ?, name = ?, updatedBy = ? ,lastUpdatedDate = ? WHERE userId = ? and isDeleted = 0";
+        boolean updated = false;
         user.setLastUpdatedDate(LocalDateTime.now());
-        ps = con.prepareStatement(sql);
-
-        ps.setInt(1, user.getRoleId());
-        ps.setString(2, user.getUserName());
-        ps.setString(3, user.getPassword());
-        ps.setString(4, user.getEmail());
-        ps.setString(5, user.getPhoneNumber());
-        ps.setString(6, user.getAvatar());
-        ps.setString(7, user.getName());
-        ps.setString(8, "admin");
-        LocalDateTime currentTime = LocalDateTime.now();
-        user.setLastUpdatedDate(currentTime);
-        ps.setTimestamp(9, Timestamp.valueOf(currentTime));
-        ps.setInt(10, user.getUserId());
-        ps.executeUpdate();
-
-    }
-
-    public void deleteUser(User user) throws SQLException {
-        String sql = "UPDATE [dbo].[User] SET isDeleted = 1 WHERE userId = ?";
-        ps = con.prepareStatement(sql);
-        ps.setInt(1, user.getUserId());
-        ps.executeUpdate();
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, user.getRoleId());
+            ps.setString(2, user.getUserName());
+            ps.setString(3, user.getPassword());
+            ps.setString(4, user.getEmail());
+            ps.setString(5, user.getPhoneNumber());
+            ps.setString(6, user.getAvatar());
+            ps.setString(7, user.getName());
+            ps.setString(8, "admin");
+            LocalDateTime currentTime = LocalDateTime.now();
+            user.setLastUpdatedDate(currentTime);
+            ps.setTimestamp(9, Timestamp.valueOf(currentTime));
+            ps.setInt(10, user.getUserId());
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                updated = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            updated = false;
+        }
+        return updated;
     }
 
     public ArrayList<User> getUsers(int offset, int noOfRecords) {
