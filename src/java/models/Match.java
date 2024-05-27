@@ -4,10 +4,8 @@
  */
 package models;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  *
@@ -29,7 +27,7 @@ public class Match {
     private LocalDateTime lastUpdatedDate;
     private boolean isDeleted;
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     
     public Match() {
     }

@@ -62,7 +62,6 @@ public class SeasonDAO {
                 s.setCreatedDate(rs.getTimestamp(6).toLocalDateTime());
                 s.setUpdatedBy(rs.getString(7));
                 s.setLastUpdatedDate(rs.getTimestamp(8).toLocalDateTime());
-                s.setIsDeleted(rs.getBoolean(9));
                 seasons.add(s);
             }
         } catch (SQLException e) {
@@ -111,14 +110,18 @@ public class SeasonDAO {
             ps = con.prepareStatement(sql);
             ps.setInt(1, Integer.parseInt(seasonID));
             rs = ps.executeQuery();
-            s.setSeasonId(Integer.parseInt(seasonID));
-            s.setSeasonName(rs.getString(2));
-            s.setStartDate(rs.getDate(3));
-            s.setEndDate((rs.getDate(4)));
-            s.setCreatedBy(rs.getString(5));
-            s.setCreatedDate(rs.getTimestamp(6).toLocalDateTime());
-            s.setUpdatedBy(rs.getString(7));
-            s.setLastUpdatedDate(rs.getTimestamp(8).toLocalDateTime());
+            while(rs.next())
+            {
+                s.setSeasonId(Integer.parseInt(seasonID));
+                s.setSeasonName(rs.getString(2));
+                s.setStartDate(rs.getDate(3));
+                s.setEndDate((rs.getDate(4)));
+                s.setCreatedBy(rs.getString(5));
+                s.setCreatedDate(rs.getTimestamp(6).toLocalDateTime());
+                s.setUpdatedBy(rs.getString(7));
+                s.setLastUpdatedDate(rs.getTimestamp(8).toLocalDateTime());
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(SeasonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -130,6 +133,8 @@ public class SeasonDAO {
 //        for (Season season : seasons) {
 //            System.out.println(season.toString());
 //        }
+        Season s = SeasonDAO.INSTANCE.getSeasonbyID("1");
+        System.out.println(s.toString());
     }
 
 }

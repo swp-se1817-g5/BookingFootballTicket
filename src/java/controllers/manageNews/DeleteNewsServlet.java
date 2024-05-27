@@ -8,15 +8,18 @@ import dal.NewsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import models.News;
 
 /**
  *
  * @author nguye
  */
+@WebServlet(name = "DeleteNewsServlet", urlPatterns = {"/deleteNews"})
 public class DeleteNewsServlet extends HttpServlet {
 
     /**
@@ -36,7 +39,7 @@ public class DeleteNewsServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteNewsServlet</title>");            
+            out.println("<title>Servlet DeleteNewsServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet DeleteNewsServlet at " + request.getContextPath() + "</h1>");
@@ -57,12 +60,13 @@ public class DeleteNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int i = 0;
-        int newsId = Integer.parseInt(request.getParameter("newsId"));
+        HttpSession session = request.getSession();
+        int newsId = Integer.parseInt(request.getParameter("newsId") != null ? request.getParameter("newsId") : "");
         News n = NewsDAO.INSTANCE.getNews(newsId);
         n.setStatus(0);
-       i =  NewsDAO.INSTANCE.updateNews(n);
-       response.sendRedirect("manageNews");
+        int deleted = NewsDAO.INSTANCE.updateNews(n);
+        session.setAttribute("deleted", deleted);
+        response.sendRedirect("manageNews");
     }
 
     /**

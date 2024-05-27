@@ -93,7 +93,18 @@ public class ManageNewsServlet extends HttpServlet {
         } else {
             request.setAttribute("err", "listMatch Empty!!!");
         }
-
+        if (session.getAttribute("created") != null) {
+            request.setAttribute("created", session.getAttribute("created"));
+            session.removeAttribute("created");
+        }
+        if (session.getAttribute("updated") != null) {
+            request.setAttribute("updated", session.getAttribute("updated"));
+            session.removeAttribute("updated");
+        }
+        if (session.getAttribute("deleted") != null) {
+            request.setAttribute("deleted", session.getAttribute("deleted"));
+            session.removeAttribute("deleted");
+        }
         request.getRequestDispatcher("views/manageNews.jsp").forward(request, response);
     }
 

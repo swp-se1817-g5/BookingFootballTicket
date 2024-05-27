@@ -137,6 +137,21 @@
                 display: flex;
                 justify-content: right;
             }
+            .toast {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                min-width: 200px;
+                z-index: 10000;
+            }
+            .toast.success .toast-header {
+                background-color: #28a745;
+                color: white;
+            }
+            .toast.error .toast-header {
+                background-color: #dc3545;
+                color: white;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -172,7 +187,7 @@
                                 <th>Team 2</th>
                                 <th>Title</th>
                                 <th>Content</th>
-                                <th>Time</th>
+                                <th>Time Start</th>
                                 <th>Status</th>
                                 <th>Action</th>
 
@@ -210,7 +225,7 @@
                                     <td>
                                         <a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
                                         <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
-                                        <a onclick="return confirmDelete(${n.newsId})"class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                        <a onclick="return confirmDelete(${n.newsId})" href = "deleteNews?newsId=${n.newsId}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                     </td>
                                 </tr>
                             </c:if>
@@ -219,8 +234,7 @@
                     </table>
                     <script>
                         function confirmDelete(newsId) {
-                            confirm("Are you sure you want to delete newsId = " + newsId);
-                            location.href = "deleteNews?newsId=" + newsId;
+                            return confirm("Are you sure you want to delete newsId = " + newsId);
                         }
                     </script>
 
@@ -251,7 +265,7 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Time</label>
+                                            <label>Time Start</label>
                                             <c:forEach items="${sessionScope.MatchIdNotInNews}" var="mni">
                                                 <input name="matchId" class="form-control" value="${mni.time}" readonly>
                                             </c:forEach>
@@ -369,6 +383,65 @@
                             </div>
                         </div>
                     </c:forEach>
+                    <div class="toast" id="updateToast" data-delay="3000">
+                        <div class="toast-header">
+                            <strong class="mr-auto" id="toastTitle"></strong>
+                            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+                        </div>
+                        <div class="toast-body" id="toastMessage"></div>
+                    </div>
+                    <script>
+                        $(document).ready(function () {
+                            var updated = '<%= request.getAttribute("updated") %>';
+                            if (updated !== 'null' && updated !== '') {
+                                var toast = $('#updateToast');
+                                if (updated !== "0") {
+                                    toast.find('#toastTitle').text('Success');
+                                    toast.find('#toastMessage').text('News updated successfully.');
+                                    toast.addClass('success').removeClass('error');
+                                } else {
+                                    toast.find('#toastTitle').text('Error');
+                                    toast.find('#toastMessage').text('Failed to update news.');
+                                    toast.addClass('error').removeClass('success');
+                                }
+                                toast.toast('show');
+                            }
+                        });
+
+                        $(document).ready(function () {
+                            var created = '<%= request.getAttribute("created") %>';
+                            if (created !== 'null' && created !== '') {
+                                var toast = $('#updateToast');
+                                if (created !== "0") {
+                                    toast.find('#toastTitle').text('Success');
+                                    toast.find('#toastMessage').text('News created successfully.');
+                                    toast.addClass('success').removeClass('error');
+                                } else {
+                                    toast.find('#toastTitle').text('Error');
+                                    toast.find('#toastMessage').text('Failed to created news.');
+                                    toast.addClass('error').removeClass('success');
+                                }
+                                toast.toast('show');
+                            }
+                        });
+                        
+                        $(document).ready(function () {
+                            var deleted = '<%= request.getAttribute("deleted") %>';
+                            if (deleted !== 'null' && deleted !== '') {
+                                var toast = $('#updateToast');
+                                if (deleted !== "0") {
+                                    toast.find('#toastTitle').text('Success');
+                                    toast.find('#toastMessage').text('News deleted successfully.');
+                                    toast.addClass('success').removeClass('error');
+                                } else {
+                                    toast.find('#toastTitle').text('Error');
+                                    toast.find('#toastMessage').text('Failed to deleted news.');
+                                    toast.addClass('error').removeClass('success');
+                                }
+                                toast.toast('show');
+                            }
+                        });
+                    </script>
                     <!--                    <div class="clearfix">
                                             <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
                                             <ul class="pagination">

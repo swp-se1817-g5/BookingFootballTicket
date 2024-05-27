@@ -7,6 +7,8 @@ package dal;
 import java.sql.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.FootballClub;
 
 /**
@@ -30,7 +32,7 @@ public class FootballClubDAO {
     public ArrayList<FootballClub> getFootballClubs() {
         ArrayList<FootballClub> fcs = new ArrayList<>();
         String sql = "select * from FootballClub where isDeleted = 0";
-       
+
         try {
             ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -75,8 +77,39 @@ public class FootballClubDAO {
         }
         return created;
     }
+
+    public FootballClub getFootballClubbyID(int FcID) {
+        FootballClub fc = new FootballClub();
+        String sql = "SELECT [clubId]\n"
+                + "      ,[clubName]\n"
+                + "      ,[img]\n"
+                + "      ,[createdBy]\n"
+                + "      ,[createdDate]\n"
+                + "      ,[updatedBy]\n"
+                + "      ,[lastUpdatedDate]\n"
+                + "  FROM [dbo].[FootballClub] WHERE [isDeleted] = 0 AND [clubId] = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setInt(1, FcID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                fc.setClubId(rs.getInt("clubId"));
+                fc.setClubName(rs.getString("clubName"));
+                fc.setImg(rs.getString("img"));
+                fc.setCreatedBy(rs.getString("createdBy"));
+                fc.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                fc.setUpdatedBy(rs.getString("updatedBy"));
+                fc.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(FootballClubDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return fc;
+    }
+
     public static void main(String[] args) {
-        System.out.println(FootballClubDAO.INSTANCE.getFootballClubs().toString());
+        System.out.println(FootballClubDAO.INSTANCE.getFootballClubbyID(1).toString());
+        
     }
 
 }
