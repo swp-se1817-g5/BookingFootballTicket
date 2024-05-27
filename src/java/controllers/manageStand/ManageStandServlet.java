@@ -66,6 +66,10 @@ public class ManageStandServlet extends HttpServlet {
             request.setAttribute("updated", (boolean)session.getAttribute("updated"));
             session.removeAttribute("updated");
         }
+         if(session.getAttribute("deleted") != null) {
+            request.setAttribute("deleted", (boolean)session.getAttribute("deleted"));
+            session.removeAttribute("deleted");
+        }
         request.setAttribute("stands", StandDAO.INSTANCE.getStands());
         request.getRequestDispatcher("views/manageStand.jsp").forward(request, response);
         

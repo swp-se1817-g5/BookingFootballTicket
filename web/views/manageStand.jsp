@@ -303,20 +303,22 @@ Author     : admin
                 </div>
             </div>  
         </div>   
-
-        <div class="toast" id="updateToast" data-delay="3000">
+        <!-- toast notification -->
+        <div class="toast" id="toastNotification" data-delay="3000">
             <div class="toast-header">
                 <strong class="mr-auto" id="toastTitle"></strong>
                 <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
             </div>
             <div class="toast-body" id="toastMessage"></div>
         </div>
-
+        
+        <!-- script for toast notification -->
         <script>
+            //update
             $(document).ready(function () {
                 var updated = '<%= request.getAttribute("updated") %>';
                 if (updated !== 'null' && updated !== '') {
-                    var toast = $('#updateToast');
+                    var toast = $('#toastNotification');
                     if (updated === "true") {
                         toast.find('#toastTitle').text('Success');
                         toast.find('#toastMessage').text('Stand updated successfully.');
@@ -330,17 +332,36 @@ Author     : admin
                 }
             });
             
-                $(document).ready(function () {
+            //create
+            $(document).ready(function () {
                 var created = '<%= request.getAttribute("created") %>';
                 if (created !== 'null' && created !== '') {
-                    var toast = $('#updateToast');
-                    if (updated === "true") {
+                    var toast = $('#toastNotification');
+                    if (created === "true") {
                         toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Stand updated successfully.');
+                        toast.find('#toastMessage').text('Stand created successfully.');
                         toast.addClass('success').removeClass('error');
-                    } else if (updated === "false") {
+                    } else if (created === "false") {
                         toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to update stand.');
+                        toast.find('#toastMessage').text('Failed to create stand.');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
+                }
+            });
+            
+            //delete
+            $(document).ready(function () {
+                var deleted = '<%= request.getAttribute("deleted") %>';
+                if (deleted !== 'null' && deleted !== '') {
+                    var toast = $('#toastNotification');
+                    if (deleted === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('Stand deleted successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (deleted === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to delete stand.');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
@@ -348,6 +369,8 @@ Author     : admin
             });
 
         </script>
+        
+        <!--script for create and update-->
         <script type="text/javascript">
             function doDelete(standId) {
                 if (confirm("Do you want to delete stand with id = " + standId))
