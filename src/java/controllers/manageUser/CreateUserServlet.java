@@ -85,13 +85,20 @@ public class CreateUserServlet extends HttpServlet {
         if (!userName.isBlank() && !password.isBlank() && !email.isBlank() && !phoneNumber.isBlank() && !name.isBlank()) {
             try {
                 User user = new User(userName, password, email, phoneNumber, avatar, name);
-                UserDAO.INSTANCE.createUser(user);
-                response.sendRedirect(request.getContextPath() + "/manageuser?message=User+created+successfully!");
-            } catch (SQLException ex) {
-                Logger.getLogger(CreateUserServlet.class.getName()).log(Level.SEVERE, null, ex);
+                boolean added = UserDAO.INSTANCE.createUser(user);
+                if (added) {
+                    response.sendRedirect(request.getContextPath() + "/manageuser?message=User+created+successfully!");
+                    return;
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/manageuser?message=Failed+to+create+user.");
+                    return;
+                }
+            } catch (Exception ex) {
+                response.sendRedirect(request.getContextPath() + "/manageuser?message=An+error+occurred+while+creating+user.");
+                return;
             }
         }
-        response.sendRedirect(request.getContextPath() + "/manageuser");
+        response.sendRedirect(request.getContextPath() + "/manageuser?message=Please+fill+all+fields.");
     }
 
     /**

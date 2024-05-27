@@ -26,7 +26,7 @@ import org.apache.tomcat.jni.SSLContext;
 @WebServlet(name = "ManageRole", urlPatterns = {"/managerole"})
 public class ManageRoleServlet extends HttpServlet {
 
-    private static final int RECORDS_PER_PAGE = 5;
+    private static final int RECORDS_PER_PAGE = 10;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

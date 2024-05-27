@@ -236,7 +236,7 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                    <div class="clearfix">
+                    <div class="clearfix" >
                         <div class="hint-text">Showing <strong>${requestScope.users.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>
                         <ul class="pagination">
                             <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
@@ -268,7 +268,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Email</label>
-                                    <input name="email" type="email" class="form-control" required>
+                                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Phone Number</label>
