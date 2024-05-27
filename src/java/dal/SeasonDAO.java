@@ -87,8 +87,8 @@ public class SeasonDAO {
             ps.setDate(2, new java.sql.Date(season.getStartDate().getTime()));
             ps.setDate(3, new java.sql.Date(season.getEndDate().getTime()));
             ps.setString(4, "admin");
-            ps.setString(5, "");
-            ps.setString(6, "");
+            ps.setString(5, null);
+            ps.setString(6, null);
             ps.setBoolean(7, false);
             rs = ps.executeQuery();
         } catch (SQLException e) {
@@ -111,8 +111,7 @@ public class SeasonDAO {
             ps = con.prepareStatement(sql);
             ps.setInt(1, Integer.parseInt(seasonID));
             rs = ps.executeQuery();
-            while(rs.next())
-            {
+            while (rs.next()) {
                 s.setSeasonId(Integer.parseInt(seasonID));
                 s.setSeasonName(rs.getString(2));
                 s.setStartDate(rs.getDate(3));
@@ -129,13 +128,54 @@ public class SeasonDAO {
         return s;
     }
 
+    public ArrayList<Season> getSeasons(int offset, int noOfRecords) {
+        ArrayList<Season> seasons = new ArrayList<>();
+        String query = "SELECT * FROM [dbo].[Season] WHERE [isDeleted] = 0 ORDER BY seasonId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, offset);
+            ps.setInt(2, noOfRecords);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Season s = new Season();
+                    s.setSeasonId(rs.getInt(1));
+                    s.setSeasonName(rs.getString(2));
+                    s.setStartDate(rs.getDate(3));
+                    s.setEndDate(rs.getDate(4));
+                    s.setCreatedBy(rs.getString(5));
+                    s.setCreatedDate(rs.getTimestamp(6).toLocalDateTime());
+                    s.setUpdatedBy(rs.getString(7));
+                    Timestamp updatedTimestamp = rs.getTimestamp(8);
+                    s.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+                    s.setIsDeleted(rs.getBoolean(9));
+                    seasons.add(s);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seasons;
+    }
+
+    public int getNoOfRecords() {
+        String query = "SELECT COUNT(*) FROM [Season]";
+        try (PreparedStatement ps = con.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
-//        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getAllseason();
-//        for (Season season : seasons) {
-//            System.out.println(season.toString());
-//        }
-        Season s = SeasonDAO.INSTANCE.getSeasonbyID("1");
-        System.out.println(s.toString());
+        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons(0, 5);
+        for (Season season : seasons) {
+            System.out.println(season.toString());
+        }
+//        Season s = SeasonDAO.INSTANCE.getSeasonbyID("1");
+//        System.out.println(s.toString());
     }
 
 }

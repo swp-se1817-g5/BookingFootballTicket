@@ -138,8 +138,8 @@ public class UserDAO {
         ps.setString(6, user.getAvatar());
         ps.setString(7, user.getName());
         ps.setString(8, "admin");
-        ps.setString(9, "");
-        ps.setString(10, "");
+        ps.setString(9, null);
+        ps.setString(10, null);
         ps.setBoolean(11, false);
         ps.executeUpdate();
     }
@@ -169,7 +169,52 @@ public class UserDAO {
     public void deleteUser(User user) throws SQLException {
         String sql = "UPDATE [dbo].[User] SET isDeleted = 1 WHERE userId = ?";
         ps = con.prepareStatement(sql);
+        ps.setInt(1, user.getUserId());
         ps.executeUpdate();
+    }
+
+    public ArrayList<User> getUsers(int offset, int noOfRecords) {
+        ArrayList<User> users = new ArrayList<>();
+        String query = "SELECT * FROM [User] WHERE [isDeleted] = 0 ORDER BY userId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, offset);
+            ps.setInt(2, noOfRecords);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    User u = new User();
+                    u.setUserId(rs.getInt(1));
+                    u.setRoleId(rs.getInt(2));
+                    u.setUserName(rs.getString(3));
+                    u.setPassword(rs.getString(4));
+                    u.setEmail(rs.getString(5));
+                    u.setPhoneNumber(rs.getString(6));
+                    u.setAvatar(rs.getString(7));
+                    u.setName(rs.getString(8));
+                    u.setCreatedBy(rs.getString(9));
+                    u.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
+                    u.setUpdatedBy(rs.getString(11));
+                    Timestamp updatedTimestamp = rs.getTimestamp(12);
+                    u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+                    users.add(u);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public int getNoOfRecords() {
+        String query = "SELECT COUNT(*) FROM [User]";
+        try (PreparedStatement ps = con.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public static void main(String[] args) {
@@ -184,6 +229,7 @@ public class UserDAO {
 //        User u = UserDAO.INSTANCE.getUserbyID("1");
 //        System.out.println(u);
 //        UserDAO.INSTANCE.updateUser(u);
+        System.out.println(UserDAO.INSTANCE.getUsers(0, 10));
     }
 
 }
