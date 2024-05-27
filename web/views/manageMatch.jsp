@@ -276,7 +276,7 @@
         <div id="updateMatchModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="updateMatch" method="post">
+                    <form action="updateMatch" method="post" onsubmit="return validateForm()">
                         <div class="modal-header">						
                             <h4 class="modal-title">Update Match</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -288,23 +288,23 @@
                             </div>
                             <div class="form-group">
                                 <label>FC-1</label>
-                                <select id="fc1Id" name="fc1Id" placeholder="Select 1 club" class="form-control" required>
+                                <select id="fc1Id2" name="fc1Id" placeholder="Select 1 club" class="form-control" required>
                                     <c:forEach items="${footballClubs}" var="fc">
                                         <option value="${fc.clubId}">${fc.clubName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>FC-2</label>
-                                <select id="fc2Id" name="fc2Id" placeholder="Select 1 club" class="form-control" required>
+                                <label>FC-2 <span id="errorFC2" class="error"></span></label>
+                                <select id="fc2Id2" name="fc2Id" placeholder="Select 1 club" class="form-control" required>
                                     <c:forEach items="${footballClubs}" var="fc">
                                         <option value="${fc.clubId}">${fc.clubName}</option>
                                     </c:forEach>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Start Time</label>
-                                <input id="startTime" type="datetime-local" class="form-control" name="startTime" required>
+                                <label>Start Time <span id="datetimeError2" class="error"></span></label>
+                                <input id="datetimeInput2" type="datetime-local" class="form-control" name="startTime" required>
                             </div>
                             <div class="form-group">
                                 <label>Season</label>
@@ -365,7 +365,6 @@
                     toast.toast('show');
                 }
             });
-
             $(document).ready(function () {
                 var created = '<%= request.getAttribute("created") %>';
                 if (created !== 'null' && created !== '') {
@@ -382,21 +381,22 @@
                     toast.toast('show');
                 }
             });
-
         </script>
         <script type="text/javascript">
             function doDelete(matchId) {
                 if (confirm("Do you want to delete Match with id = " + matchId))
                     location.href = 'deleteMatch?matchId=' + matchId;
             }
+            var excludeId = 1;
             function update(matchId, fc1Id, fc2Id, time, seasonId, statusId, typeId) {
                 document.getElementById('matchId').value = matchId;
-                setSelectedOption('fc1Id', fc1Id);
-                setSelectedOption('fc2Id', fc2Id);
+                setSelectedOption('fc1Id2', fc1Id);
+                setSelectedOption('fc2Id2', fc2Id);
                 setSelectedOption('seasonId', seasonId);
                 setSelectedOption('statusId', statusId);
                 setSelectedOption('typeId', typeId);
-                document.getElementById('startTime').value = time;
+                document.getElementById('datetimeInput2').value = time;
+                excludeId = matchId;
             }
 
             function setSelectedOption(selectId, valueToSelect) {
@@ -410,14 +410,21 @@
                 }
             }
 
-            // Lấy ngày giờ hiện tại
             const now = new Date().toISOString().slice(0, 16);
-            // Gán giá trị min cho input datetime-local
             document.getElementById('datetimeInput').setAttribute('min', now);
+            document.getElementById('datetimeInput2').setAttribute('min', now);
 
             var invalidDateTimes = [];
             <c:forEach var="match" items="${matches}">
             invalidDateTimes.push(new Date("<c:out value="${match.time}" />"));
+            </c:forEach>
+
+            var invalidDateTimes2 = [];
+            <c:forEach var="match" items="${matches}">
+                <c:set var="jsExcludeId" value="${excludeId}" />
+                <c:if test="${match.matchId != jsExcludeId}">
+            invalidDateTimes2.push(new Date("<c:out value='${match.time}' />"));
+                </c:if>
             </c:forEach>
 
             function validateForm() {
@@ -445,6 +452,39 @@
 
                     if (datetimeValue >= startTimeList && datetimeValue <= endTimeList) {
                         document.getElementById("datetimeError").innerText = "Invalid datetime";
+                        isValid = false;
+                        break; // Không hợp lệ, dừng việc submit form
+                    }
+                }
+
+                // Return the validity status
+                return isValid;
+            }
+            function validateForm2() {
+                // Clear previous error messages
+                document.getElementById("errorFC2").innerText = "";
+                document.getElementById("datetimeError2").innerText = "";
+
+                // Get form values
+                var fc1Id = document.getElementById("fc1Id2").value;
+                var fc2Id = document.getElementById("fc2Id2").value;
+                var datetimeValue = new Date(document.getElementById("datetimeInput2").value);
+
+                var isValid = true;
+
+                // Validate football club IDs
+                if (fc1Id === fc2Id) {
+                    document.getElementById("errorFC2").innerText = "Football club must be different";
+                    isValid = false;
+                }
+
+                // Validate datetime
+                for (var i = 0; i < invalidDateTimes2.length; i++) {
+                    var startTimeList = invalidDateTimes2[i];
+                    var endTimeList = new Date(startTimeList.getTime() + (300 * 60000)); // Thêm 300 phút
+
+                    if (datetimeValue >= startTimeList && datetimeValue <= endTimeList) {
+                        document.getElementById("datetimeError2").innerText = "Invalid datetime";
                         isValid = false;
                         break; // Không hợp lệ, dừng việc submit form
                     }
