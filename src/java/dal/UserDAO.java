@@ -1,19 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dal;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import models.User;
 import java.util.ArrayList;
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.List;
 
-/**
- *
- * @author admin
- */
 public class UserDAO {
+
     private Connection connect;
     public static UserDAO INSTANCE = new UserDAO();
 
@@ -54,23 +50,33 @@ public class UserDAO {
         return users;
     }
 
+    public boolean addUserGoogle(User user) {
+        int n = 0;
+        try {
+            String sql = "INSERT INTO [dbo].[User] (email, [name], avatar) VALUES (?, ?, ?)";
+            PreparedStatement preparedStatement = connect.prepareStatement(sql);
+            preparedStatement.setString(1, user.getEmail());
+            preparedStatement.setString(2, user.getName());
+            preparedStatement.setString(3, user.getAvatar());
+            n = preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return n > 0;
+    }
+
     public boolean addUser(User user) {
-        String sql = "INSERT INTO [User](roleId, userName, password, email, phoneNumber, avatar, name, createdBy, createdDate, updatedBy, lastUpdatedDate, isDeleted) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        String sql = "INSERT INTO [User](userName, password, email, phoneNumber, name) VALUES (?, ?, ?, ?, ?)";
         boolean added = false;
         try {
             PreparedStatement ps = connect.prepareStatement(sql);
-            ps.setInt(1, user.getRoleId());
-            ps.setString(2, user.getUserName());
-            ps.setString(3, user.getPassword());
-            ps.setString(4, user.getEmail());
-            ps.setString(5, user.getPhoneNumber());
-            ps.setString(6, user.getAvatar());
-            ps.setString(7, user.getName());
-            ps.setString(8, user.getCreatedBy());
-            ps.setObject(9, user.getCreatedDate());
-            ps.setString(10, user.getUpdatedBy());
-            ps.setObject(11, user.getLastUpdatedDate());
-            ps.setBoolean(12, user.isIsDeleted());
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getPassword());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getPhoneNumber());
+            ps.setString(5, user.getName());
+
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 added = true;
@@ -81,7 +87,7 @@ public class UserDAO {
         }
         return added;
     }
-    
+
     public User authenticateUser(String email, String password) {
         String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
         try {
@@ -111,6 +117,9 @@ public class UserDAO {
         }
         return null;
     }
+
+    
+
     public boolean updateUserInformation(User user) {
         String sql = "UPDATE [User] SET roleId = ?, userName = ?, password = ?, email = ?, phoneNumber = ?, avatar = ?, name = ?, updatedBy = ?, lastUpdatedDate = ?, isDeleted = ? WHERE userId = ?";
         boolean updated = false;
@@ -166,6 +175,8 @@ public class UserDAO {
         }
         return user;
     }
+    
+
 
     public boolean deleteUser(int userId) {
         boolean deleted = false;
@@ -183,32 +194,29 @@ public class UserDAO {
     }
 
     public User getUserByEmail(String email) {
-        String sql = "SELECT * FROM [User] WHERE email = ?";
-        User user = null;
+        String sql = "SELECT * FROM [User] WHERE email = ? && isDeleted=0";
         try {
             PreparedStatement ps = connect.prepareStatement(sql);
-            ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                user = new User();
-                user.setUserId(rs.getInt("userId"));
-                user.setRoleId(rs.getInt("roleId"));
-                user.setUserName(rs.getString("userName"));
-                user.setPassword(rs.getString("password"));
-                user.setEmail(rs.getString("email"));
-                user.setPhoneNumber(rs.getString("phoneNumber"));
-                user.setAvatar(rs.getString("avatar"));
-                user.setName(rs.getString("name"));
-                user.setCreatedBy(rs.getString("createdBy"));
-                user.setCreatedDate(rs.getObject("createdDate", LocalDate.class));
-                user.setUpdatedBy(rs.getString("updatedBy"));
-                user.setLastUpdatedDate(rs.getObject("lastUpdatedDate", LocalDate.class));
-                user.setIsDeleted(rs.getBoolean("isDeleted"));
+            while (rs.next()) {
+                int userId = rs.getInt("userId");
+                String userName = rs.getString("userName");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+
+                User user = new User();
+                user.setUserId(userId);
+                user.setUserName(userName);
+                user.setPassword(password);
+                user.setName(name);
+                return user;
+
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+
         }
-        return user;
+        return null;
     }
 
     public static void main(String[] args) {
