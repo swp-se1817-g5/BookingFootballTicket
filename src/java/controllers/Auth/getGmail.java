@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import constant.IconstantGmail;
 import java.io.IOException;
 import models.User;
+import models.UserGoogle;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
@@ -40,15 +41,13 @@ public class getGmail {
 
     }
 
-    public static User getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+    public static UserGoogle getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
 
         String link = IconstantGmail.GMAIL_LINK_GET_USER_INFO + accessToken;
 
         String response = Request.Get(link).execute().returnContent().asString();
-
-        User UPojo = new Gson().fromJson(response, User.class);
-
-        return UPojo;
-
+        System.out.println(response);
+        UserGoogle usGG = new Gson().fromJson(response, UserGoogle.class);
+        return usGG;
     }
 }

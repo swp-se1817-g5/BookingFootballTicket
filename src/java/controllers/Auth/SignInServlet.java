@@ -29,41 +29,23 @@ public class SignInServlet extends HttpServlet {
             throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-
-        HttpSession session = request.getSession();
-        User user = authenticateUser(email, password);
-
-        if (user != null) {
-            if (user.isIsDeleted()) {
-                session.setAttribute("userobj", user);
-                response.sendRedirect("manageMatch");
-
-//                session.setAttribute("email", email);
-//                session.setAttribute("password", password);
-//                session.setMaxInactiveInterval(3600);
-            } else {
-
-                session.setAttribute("userobj", user);
-                request.getRequestDispatcher("register").forward(request, response);
-            }
-        } else {
-            //request.setAttribute("errorMessage", "Email or password may be wrong ! Please try again! ");
-            request.getRequestDispatcher("register").forward(request, response);
-        }
-
-    }
-
-    private User authenticateUser(String email, String password) {
         UserDAO userDAO = UserDAO.INSTANCE;
-        User user = userDAO.getUserByEmail(email);
-        System.out.println("User: " + user);
-        if (user != null && user.getPassword().equals(password)) {
-            return user;
-
+        HttpSession session = request.getSession();
+        //get user by email and password
+        User user = userDAO.authenticateUser(email, password);
+        //if exist will set in seesion, may be set email and password or user 
+        if (user != null) {
+           session.setAttribute("currentUser", user);
+           //redirect to home page or check any thing before redirect to home page
+           request.getRequestDispatcher("index.html").forward(request, response);
+        } else {
+            //if not exits throw message ro view to display
+            request.setAttribute("errorMessage", "Email or password may be wrong ! Please try again! ");
+            request.getRequestDispatcher("views/signIn.jsp").forward(request, response);
         }
-        return null;
 
     }
+
 
     @Override
     public String getServletInfo() {

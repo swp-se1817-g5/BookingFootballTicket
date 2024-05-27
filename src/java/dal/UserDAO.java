@@ -1,19 +1,10 @@
-
 package dal;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.*;
-import java.util.List;
+
 /**
  *
  * @author Vinh
@@ -68,7 +59,7 @@ public class UserDAO {
         int n = 0;
         try {
             String sql = "INSERT INTO [dbo].[User] (email, [name], avatar) VALUES (?, ?, ?)";
-            PreparedStatement preparedStatement = connect.prepareStatement(sql);
+            PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getName());
             preparedStatement.setString(3, user.getAvatar());
@@ -81,10 +72,11 @@ public class UserDAO {
 
     public boolean addUser(User user) {
 
-        String sql = "INSERT INTO [User](userName, password, email, phoneNumber, name) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [User](userName, password, email, phoneNumber, name)"
+                + " VALUES (?, ?, ?, ?, ?)";
         boolean added = false;
         try {
-            PreparedStatement ps = connect.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, user.getUserName());
             ps.setString(2, user.getPassword());
             ps.setString(3, user.getEmail());
@@ -105,7 +97,7 @@ public class UserDAO {
     public User authenticateUser(String email, String password) {
         String sql = "SELECT * FROM [User] WHERE email = ? AND password = ?";
         try {
-            PreparedStatement ps = connect.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, email);
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
@@ -120,9 +112,7 @@ public class UserDAO {
                 user.setAvatar(rs.getString("avatar"));
                 user.setName(rs.getString("name"));
                 user.setCreatedBy(rs.getString("createdBy"));
-                user.setCreatedDate(rs.getDate("createdDate").toLocalDate());
                 user.setUpdatedBy(rs.getString("updatedBy"));
-                user.setLastUpdatedDate(rs.getDate("lastUpdatedDate").toLocalDate());
                 user.setIsDeleted(rs.getBoolean("isDeleted"));
                 return user;
             }
@@ -132,13 +122,11 @@ public class UserDAO {
         return null;
     }
 
-    
-
     public boolean updateUserInformation(User user) {
         String sql = "UPDATE [User] SET roleId = ?, userName = ?, password = ?, email = ?, phoneNumber = ?, avatar = ?, name = ?, updatedBy = ?, lastUpdatedDate = ?, isDeleted = ? WHERE userId = ?";
         boolean updated = false;
         try {
-            PreparedStatement ps = connect.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, user.getRoleId());
             ps.setString(2, user.getUserName());
             ps.setString(3, user.getPassword());
@@ -165,7 +153,7 @@ public class UserDAO {
         String sql = "SELECT * FROM [User] WHERE userId = ?";
         User user = null;
         try {
-            PreparedStatement ps = connect.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -179,9 +167,7 @@ public class UserDAO {
                 user.setAvatar(rs.getString("avatar"));
                 user.setName(rs.getString("name"));
                 user.setCreatedBy(rs.getString("createdBy"));
-                user.setCreatedDate(rs.getObject("createdDate", LocalDate.class));
                 user.setUpdatedBy(rs.getString("updatedBy"));
-                user.setLastUpdatedDate(rs.getObject("lastUpdatedDate", LocalDate.class));
                 user.setIsDeleted(rs.getBoolean("isDeleted"));
             }
         } catch (SQLException e) {
@@ -189,14 +175,12 @@ public class UserDAO {
         }
         return user;
     }
-    
-
 
     public boolean deleteUser(int userId) {
         boolean deleted = false;
         String sql = "UPDATE [User] SET isDeleted = 1 WHERE userId = ?";
         try {
-            PreparedStatement ps = connect.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, userId);
             if (ps.executeUpdate() > 0) {
                 deleted = true;
@@ -207,10 +191,38 @@ public class UserDAO {
         return deleted;
     }
 
-    public User getUserByEmail(String email) {
-        String sql = "SELECT * FROM [User] WHERE email = ? && isDeleted=0";
+    public User getUserByUserName(String usName) {
+        String sql = "SELECT * FROM [User] WHERE userName = ?";
         try {
-            PreparedStatement ps = connect.prepareStatement(sql);
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, usName);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int userId = rs.getInt("userId");
+                String userName = rs.getString("userName");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+
+                User user = new User();
+                user.setUserId(userId);
+                user.setUserName(userName);
+                user.setPassword(password);
+                user.setName(name);
+                return user;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+    public User getUserByEmail(String email) {
+        String sql = "SELECT * FROM [User] WHERE email = ? and isDeleted=0";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int userId = rs.getInt("userId");

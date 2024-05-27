@@ -49,12 +49,7 @@
                                                 <label for="userName" class="form-label">User Name</label>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="form-floating mb-3">
-                                                <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
-                                                <label for="password" class="form-label">Password</label>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="col-12">
                                             <div class="form-floating mb-3">
                                                 <input type="email" class="form-control" name="email" id="email" placeholder="name@example.com" required>
@@ -65,6 +60,18 @@
                                             <div class="form-floating mb-3">
                                                 <input type="text" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="Phone Number" required>
                                                 <label for="phoneNumber" class="form-label">Phone Number</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-floating mb-3">
+                                                <input type="password" class="form-control" name="password" id="password" placeholder="Password" required>
+                                                <label for="password" class="form-label">Password</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-floating mb-3">
+                                                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirm Password" required>
+                                                <label for="confirmPassword" class="form-label">Confirm Password</label>
                                             </div>
                                         </div>
                                         <div class="col-12">
