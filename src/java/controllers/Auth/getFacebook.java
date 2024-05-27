@@ -7,8 +7,8 @@ package controllers.Auth;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import constant.IconstantFB;
-import entity.FacebookAccount;
 import java.io.IOException;
+import models.User;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
@@ -17,7 +17,7 @@ import org.apache.http.client.fluent.Request;
  *
  * @author AD
  */
-public class Facebook {
+public class getFacebook {
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
         String response = Request.Post(IconstantFB.FACEBOOK_LINK_GET_TOKEN)
@@ -34,15 +34,15 @@ public class Facebook {
         String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
         return accessToken;
     }
-    public static FacebookAccount getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+    public static User getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
 
         String link = IconstantFB.FACEBOOK_LINK_GET_USER_INFO + accessToken;
 
         String response = Request.Get(link).execute().returnContent().asString();
 
-        FacebookAccount FBPojo = new Gson().fromJson(response, FacebookAccount.class);
+        User UPojo = new Gson().fromJson(response, User.class);
 
-        return FBPojo;
+        return UPojo;
 
     }
 }

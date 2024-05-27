@@ -5,9 +5,11 @@
 package controllers.manageRole;
 
 import dal.RoleDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +23,10 @@ import org.apache.tomcat.jni.SSLContext;
  *
  * @author Vinh
  */
+@WebServlet(name = "ManageRole", urlPatterns = {"/managerole"})
 public class ManageRoleServlet extends HttpServlet {
+
+    private static final int RECORDS_PER_PAGE = 5;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -61,12 +66,24 @@ public class ManageRoleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
-        if (roles.isEmpty()) {
-            request.setAttribute("message", "The role is empty, please create a role!");
-        } else {
-            request.setAttribute("roles", roles);
+//        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
+//        if (roles.isEmpty()) {
+//            request.setAttribute("message", "The role is empty, please create a role!");
+//        } else {
+//            request.setAttribute("roles", roles);
+//        }
+//        request.getRequestDispatcher("views/manageRole.jsp").forward(request, response);
+        int page = 1;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
         }
+        ArrayList<Role> roles = RoleDAO.INSTANCE.getRoles((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
+        int noOfRecords = RoleDAO.INSTANCE.getNoOfRecords();
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
+
+        request.setAttribute("roles", roles);
+        request.setAttribute("noOfPages", noOfPages);
+        request.setAttribute("currentPage", page);
         request.getRequestDispatcher("views/manageRole.jsp").forward(request, response);
     }
 

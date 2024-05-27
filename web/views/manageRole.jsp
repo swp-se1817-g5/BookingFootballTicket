@@ -171,6 +171,9 @@
                     <c:if test="${not empty requestScope.message}">
                         <div class="alert alert-warning">${requestScope.message}</div>
                     </c:if>
+                    <c:if test="${not empty param.message}">
+                        <div class="alert alert-warning">${param.message}</div>
+                    </c:if>
                     <table class="table table-striped table-hover table-bordered">
                         <thead>
                             <tr>
@@ -205,18 +208,16 @@
                             </c:forEach>
                         </tbody>
                     </table>
-                    <!--                    <div class="clearfix">
-                                            <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                                            <ul class="pagination">
-                                                <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                                                <li class="page-item"><a href="#" class="page-link">1</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">2</a></li>
-                                                <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">4</a></li>
-                                                <li class="page-item"><a href="#" class="page-link">5</a></li>
-                                                <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
-                                            </ul>
-                                        </div>-->
+                    <div class="clearfix">
+                        <div class="hint-text">Showing <strong>${requestScope.roles.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>
+                        <ul class="pagination">
+                            <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
+                                <li class="page-item ${pageNumber eq currentPage ? 'active' : ''}">
+                                    <a href="manageuser?page=${pageNumber}" class="page-link">${pageNumber}</a>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </div>
                 </div>
 
                 <div id="createRoleModal" class="modal fade">
