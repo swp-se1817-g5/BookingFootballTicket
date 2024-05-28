@@ -1,10 +1,13 @@
+USE BookingFootballTicket;
+GO
+
 -- Inserting values into the Role table
 INSERT INTO Role (roleName, createdBy, updatedBy)
 VALUES ('Admin', 'System', 'System'),
        ('User', 'System', 'System');
 
 -- Inserting values into the FootballClub table
-INSERT INTO FootballClub (clubName, img, createdBy
+INSERT INTO FootballClub (clubName, img, createdBy)
 VALUES ('Manchester United', 'manchester_united.jpg', 'System'),
        ('Real Madrid', 'real_madrid.jpg', 'System'),
        ('FC Barcelona', 'fc_barcelona.jpg', 'System');
@@ -13,7 +16,8 @@ VALUES ('Manchester United', 'manchester_united.jpg', 'System'),
 INSERT INTO MatchStatus (statusName, createdBy, updatedBy)
 VALUES ('Scheduled', 'System', 'System'),
        ('Ongoing', 'System', 'System'),
-       ('Completed', 'System', 'System');
+       ('Completed', 'System', 'System'),
+	   ('Cancel', 'System', 'System');
 
 -- Inserting values into the MatchType table
 INSERT INTO MatchType ([name], createdBy, updatedBy)
@@ -23,7 +27,8 @@ VALUES ('Friendly', 'System', 'System'),
 
 -- Inserting values into the Season table
 INSERT INTO Season (seasonName, startDate, endDate, createdBy, updatedBy)
-VALUES ('2024/2025', '2024-08-01', '2025-05-30', 'System', 'System');
+VALUES ('2024/2025', '2024-08-01', '2025-05-30', 'System', 'System'),
+	   ('2025/2026', '2025-08-01', '2026-05-30', 'System', 'System');
 
 -- Inserting values into the Stand table
 INSERT INTO Stand (standName, price, quantity, createdBy)
@@ -36,9 +41,9 @@ VALUES (1, 'admin', 'adminpassword', 'admin@example.com', '123456789', 'admin_av
        (2, 'user1', 'user1password', 'user1@example.com', '987654321', 'user1_avatar.jpg', 'Regular User', 'System', 'System');
 
 -- Inserting values into the Match table
-INSERT INTO Match (team1, team2, seasonId, stadiumImg, [time], statusId, matchTypeId, createdBy, updatedBy)
-VALUES (1, 2, 1, 'stadium_image.jpg', '2024-09-15 18:00:00', 1, 2, 'System', 'System'),
-       (2, 3, 1, 'stadium_image.jpg', '2024-10-20 15:30:00', 1, 2, 'System', 'System');
+INSERT INTO Match (team1, team2, seasonId, [time], statusId, matchTypeId, createdBy, updatedBy)
+VALUES (1, 2, 1, '2024-09-15 18:00:00', 1, 2, 'System', 'System'),
+       (2, 3, 1, '2024-10-20 15:30:00', 1, 2, 'System', 'System');
 
 -- Inserting values into the MatchStand table
 INSERT INTO MatchStand (matchId, standId, [availability], createdBy, updatedBy)
