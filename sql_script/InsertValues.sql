@@ -4,10 +4,10 @@ VALUES ('Admin', 'System', 'System'),
        ('User', 'System', 'System');
 
 -- Inserting values into the FootballClub table
-INSERT INTO FootballClub (clubName, img, createdBy, updatedBy)
-VALUES ('Manchester United', 'manchester_united.jpg', 'System', 'System'),
-       ('Real Madrid', 'real_madrid.jpg', 'System', 'System'),
-       ('FC Barcelona', 'fc_barcelona.jpg', 'System', 'System');
+INSERT INTO FootballClub (clubName, img, createdBy
+VALUES ('Manchester United', 'manchester_united.jpg', 'System'),
+       ('Real Madrid', 'real_madrid.jpg', 'System'),
+       ('FC Barcelona', 'fc_barcelona.jpg', 'System');
 
 -- Inserting values into the MatchStatus table
 INSERT INTO MatchStatus (statusName, createdBy, updatedBy)
@@ -26,9 +26,9 @@ INSERT INTO Season (seasonName, startDate, endDate, createdBy, updatedBy)
 VALUES ('2024/2025', '2024-08-01', '2025-05-30', 'System', 'System');
 
 -- Inserting values into the Stand table
-INSERT INTO Stand (standName, price, quantity, createdBy, updatedBy)
-VALUES ('VIP', 100.00, 100, 'System', 'System'),
-       ('Regular', 50.00, 200, 'System', 'System');
+INSERT INTO Stand (standName, price, quantity, createdBy)
+VALUES ('VIP', 100.00, 100, 'System'),
+       ('Regular', 50.00, 200, 'System');
 
 -- Inserting values into the User table
 INSERT INTO [User] (roleId, userName, [password], email, phoneNumber, avatar, [name], createdBy, updatedBy)
