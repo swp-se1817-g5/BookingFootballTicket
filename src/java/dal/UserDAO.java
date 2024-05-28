@@ -307,7 +307,8 @@ public class UserDAO {
                 u.setCreatedBy(rs.getString(9));
                 u.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
                 u.setUpdatedBy(rs.getString(11));
-                u.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
+                Timestamp updatedTimestamp = rs.getTimestamp(12);
+                u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
                 users.add(u);
             }
         } catch (SQLException e) {
