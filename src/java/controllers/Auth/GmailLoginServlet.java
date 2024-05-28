@@ -32,7 +32,8 @@ public class GmailLoginServlet extends HttpServlet {
         String error = request.getParameter("error");
         //neu user cancel login => error => redirect trang login
         if (error != null) {
-            request.getRequestDispatcher("login.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/signIn.jsp").forward(request, response);
+            return;
         }
         String accessToken = gg.getToken(code);
         UserGoogle ggUser = gg.getUserInfo(accessToken);
@@ -45,10 +46,13 @@ public class GmailLoginServlet extends HttpServlet {
             //if not exist => add user to database
             User us = new User(
                     ggUser.getName(),
+                    ggUser.getGiven_name(),
                     ggUser.getEmail(),
-                    ggUser.getPicture()
+                    ggUser.getPicture(),
+                    generatedPassword, 2
             );
-            UserDAO.INSTANCE.addUser(us);
+           boolean is =  UserDAO.INSTANCE.addUser(us);
+            System.out.println("add"+is);
             session.setAttribute("currentUser", UserDAO.INSTANCE.getUserByEmail(us.getEmail()));
         } else {
             //else save user in session => may be save email, password, or all userExist

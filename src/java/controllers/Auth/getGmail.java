@@ -8,7 +8,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import constant.IconstantGmail;
 import java.io.IOException;
-import models.User;
 import models.UserGoogle;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;

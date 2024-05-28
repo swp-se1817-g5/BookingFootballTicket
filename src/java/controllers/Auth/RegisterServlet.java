@@ -57,40 +57,52 @@ public class RegisterServlet extends HttpServlet {
         // Validate input
         if (name.isEmpty() || userName.isEmpty() || password.isEmpty() || email.isEmpty() || phoneNumber.isEmpty()) {
             request.setAttribute("errorMessage", "All fields are required!");
+            returnValueBefore(request, response, name, userName, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (!Validate.isValidName(name)) {
             request.setAttribute("errorMessage", "Name invalid");
+            //if field is error will null else will return value input before
+            returnValueBefore(request, response, null, userName, email, phoneNumber);
+            //the page will return
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
-        if (!Validate.isValidName(userName)) {
-            request.setAttribute("errorMessage", "userName invalid");
-            dispatch(request, response, "/views/register.jsp");
-            return;
-        }
         User userExistName = userDAO.getUserByUserName(userName);
         if (userExistName != null) {
             request.setAttribute("errorMessage", "userName have exist");
+            returnValueBefore(request, response, name,  null, email, phoneNumber);
+            dispatch(request, response, "/views/register.jsp");
+            return;
+        }
+        
+        if (!Validate.isValidPhoneNumber(phoneNumber)) {
+            request.setAttribute("errorMessage", "phone invalid");
+            returnValueBefore(request, response, name, userName, email, null);
+            dispatch(request, response, "/views/register.jsp");
+            return;
+        }
+        User userExistsPhone = userDAO.getUserByPhone(phoneNumber);
+        if (userExistsPhone != null) {
+            request.setAttribute("errorMessage", "Phone number have exist");
+            returnValueBefore(request, response, name, userName, email, null);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
         if (!Validate.isValidEmail(email)) {
             request.setAttribute("errorMessage", "email invalid");
+            returnValueBefore(request, response, name, userName, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
-        if (!Validate.isValidPhoneNumber(phoneNumber)) {
-            request.setAttribute("errorMessage", "phone invalid");
-            dispatch(request, response, "/views/register.jsp");
-            return;
-        }
+        
         User userExists = userDAO.getUserByEmail(email);
         if (userExists != null) {
             request.setAttribute("errorMessage", "Email have exits!");
+            returnValueBefore(request, response, name, userName, null, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
@@ -118,6 +130,7 @@ public class RegisterServlet extends HttpServlet {
         newUser.setPassword(password);
         newUser.setEmail(email);
         newUser.setPhoneNumber(phoneNumber);
+        newUser.setRoleId(2);
 
         try {
             status = userDAO.addUser(newUser);
@@ -143,6 +156,17 @@ public class RegisterServlet extends HttpServlet {
         return;
     }
 
+    //return the value input before
+    private void returnValueBefore(HttpServletRequest request, HttpServletResponse response, String name,
+            String userName, String mail, String phone)
+            throws ServletException, IOException {
+        request.setAttribute("name", name);
+        request.setAttribute("userName", userName);
+        request.setAttribute("email", mail);
+        request.setAttribute("phone", phone);
+    }
+    
+    //direct to page
     private void dispatch(HttpServletRequest request, HttpServletResponse response, String page)
             throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher(page);

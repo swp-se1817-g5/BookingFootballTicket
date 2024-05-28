@@ -74,9 +74,9 @@ public class UserDAO {
     }
 
     public boolean addUser(User user) {
-
-        String sql = "INSERT INTO [User](userName, password, email, phoneNumber, name)"
-                + " VALUES (?, ?, ?, ?, ?)";
+        System.out.println(user);
+        String sql = "INSERT INTO [User](userName, password, email, phoneNumber, name, avatar, roleId)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?)";
         boolean added = false;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -85,6 +85,8 @@ public class UserDAO {
             ps.setString(3, user.getEmail());
             ps.setString(4, user.getPhoneNumber());
             ps.setString(5, user.getName());
+            ps.setString(6, user.getAvatar());
+            ps.setInt(7, user.getRoleId());
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -238,6 +240,34 @@ public class UserDAO {
         String sql = "SELECT * FROM [User] WHERE email = ? AND isDeleted=0";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int userId = rs.getInt("userId");
+                String userName = rs.getString("userName");
+                String password = rs.getString("password");
+                String name = rs.getString("name");
+
+                User user = new User();
+                user.setUserId(userId);
+                user.setUserName(userName);
+                user.setPassword(password);
+                user.setName(name);
+                return user;
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        return null;
+    }
+
+    public User getUserByPhone(String phone) {
+        String sql = "SELECT * FROM [User] WHERE phone = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, phone);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int userId = rs.getInt("userId");
