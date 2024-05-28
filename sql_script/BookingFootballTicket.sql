@@ -24,7 +24,7 @@ CREATE TABLE [User] (
     userName VARCHAR(255) NOT NULL UNIQUE,
     [password] VARCHAR(255),
     email VARCHAR(255) NOT NULL UNIQUE,
-    phoneNumber VARCHAR(50) UNIQUE,
+    phoneNumber VARCHAR(50) null,
     avatar VARCHAR(255),
     [name] NVARCHAR(255),
     createdBy VARCHAR(255),
