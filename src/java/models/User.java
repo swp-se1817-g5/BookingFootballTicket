@@ -59,10 +59,13 @@ public class User {
 
     }
 
-    public User(String userName, String email, String avatar) {
+    public User(String name, String userName, String email, String avatar, String password, int roleId) {
+        this.name = name;
         this.userName = userName;
         this.email = email;
         this.avatar = avatar;
+        this.password = password;
+        this.roleId = roleId;
     }
 
     public int getUserId() {
