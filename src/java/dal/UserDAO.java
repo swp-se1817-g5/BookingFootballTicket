@@ -264,7 +264,7 @@ public class UserDAO {
     }
 
     public User getUserByPhone(String phone) {
-        String sql = "SELECT * FROM [User] WHERE phone = ?";
+        String sql = "SELECT * FROM [User] WHERE phoneNumber = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, phone);

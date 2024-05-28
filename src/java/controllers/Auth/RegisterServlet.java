@@ -46,14 +46,21 @@ public class RegisterServlet extends HttpServlet {
         String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
+        String avatar = request.getParameter("avatar");
 
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
+        String registerAmail = request.getParameter("registerAmail");
         String termsAndConditions = request.getParameter("iAgree"); // This will get "terms-and-conditions" if checkbox is checked
         boolean status = false;
         String errorMessage = "";
         String successMessage = "";
-
+        if(registerAmail != null) {
+            request.setAttribute("registerAmail", true);
+        }
+        if(avatar != null) {
+            request.setAttribute("avatar", avatar);
+        }
         // Validate input
         if (name.isEmpty() || userName.isEmpty() || password.isEmpty() || email.isEmpty() || phoneNumber.isEmpty()) {
             request.setAttribute("errorMessage", "All fields are required!");
@@ -85,41 +92,38 @@ public class RegisterServlet extends HttpServlet {
             dispatch(request, response, "/views/register.jsp");
             return;
         }
-        User userExistsPhone = userDAO.getUserByPhone(phoneNumber);
-        if (userExistsPhone != null) {
-            request.setAttribute("errorMessage", "Phone number have exist");
-            returnValueBefore(request, response, name, userName, email, null);
-            dispatch(request, response, "/views/register.jsp");
-            return;
-        }
+        
         if (!Validate.isValidEmail(email)) {
             request.setAttribute("errorMessage", "email invalid");
-            returnValueBefore(request, response, name, userName, email, phoneNumber);
+            returnValueBefore(request, response, name, userName, null, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
         
         User userExists = userDAO.getUserByEmail(email);
         if (userExists != null) {
-            request.setAttribute("errorMessage", "Email have exits!");
-            returnValueBefore(request, response, name, userName, null, phoneNumber);
+            request.setAttribute("errorMessage", "user name have exits!");
+            returnValueBefore(request, response, name, null, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
         // Mật khẩu cần ít nhất 8 kí tự, 1 kí tự thường, 1 kí tự in hoa, 1 kí tự số
         if (!Validate.isValidPassword(password)) {
             request.setAttribute("errorMessage", "Password needs at least 8 characters, 1 normal character, 1 uppercase character, 1 numeric character");
+            returnValueBefore(request, response, name, userName, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
         if (!password.equals(confirmPassword)) {
             request.setAttribute("errorMessage", "confirm password not equal password");
+            returnValueBefore(request, response, name, userName, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (termsAndConditions == null) {
             request.setAttribute("errorMessage", "Please agree with our Terms and Conditions and Privacy Statement");
+            returnValueBefore(request, response, name, userName, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
@@ -131,6 +135,7 @@ public class RegisterServlet extends HttpServlet {
         newUser.setEmail(email);
         newUser.setPhoneNumber(phoneNumber);
         newUser.setRoleId(2);
+        newUser.setAvatar(avatar);
 
         try {
             status = userDAO.addUser(newUser);
