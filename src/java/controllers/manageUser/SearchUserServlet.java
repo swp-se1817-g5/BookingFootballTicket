@@ -19,8 +19,9 @@ import models.User;
  *
  * @author Vinh
  */
-@WebServlet(name="SearchUser", urlPatterns={"/searchuser"})
+@WebServlet(name = "SearchUser", urlPatterns = {"/searchuser"})
 public class SearchUserServlet extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -73,16 +74,52 @@ public class SearchUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String searchType = request.getParameter("searchType");
         String keyword = request.getParameter("keyword");
-        if (keyword != null && !keyword.isBlank()) {
-            ArrayList<User> users = UserDAO.INSTANCE.getUserbyName(keyword);
-            if (!users.isEmpty()) {
+        // Check if both searchType and keyword are provided and not empty
+        if (searchType != null && !searchType.isBlank() && keyword != null && !keyword.isBlank()) {
+            ArrayList<User> users = new ArrayList<>();
+            // Perform search based on the searchType
+            switch (searchType) {
+                case "userid":
+                    try {
+                    int userId = Integer.parseInt(keyword);
+                    User u = UserDAO.INSTANCE.getUserbyID(userId);
+                    if (u != null) {
+                        users.add(u);
+                    } else {
+                        // No user found with the provided userid
+                        request.setAttribute("message", "No users found for the provided userid: " + userId);
+                        request.getRequestDispatcher("views/searchUser.jsp").forward(request, response);
+                        return; // Stop further processing
+                    }
+                } catch (NumberFormatException e) {
+                    request.setAttribute("message", "Invalid user ID format: " + keyword);
+                    request.getRequestDispatcher("views/searchUser.jsp").forward(request, response);
+                    return; // Stop further processing
+                }
+                break;
+                case "username":
+                    users = UserDAO.INSTANCE.getUserbyUsername(keyword);
+                    break;
+                case "name":
+                    users = UserDAO.INSTANCE.getUserbyName(keyword);
+                    break;
+                default:
+                    // Invalid search type, return error message
+                    request.setAttribute("message", "Invalid search type: " + searchType);
+                    break;
+            }
+            // Check if users list is not null and not empty
+            if (users != null && !users.isEmpty()) {
                 request.setAttribute("users", users);
             } else {
-                request.setAttribute("message", "User is exist!");
+                // No users found, return message
+                request.setAttribute("message", "No users found for the provided keyword: " + keyword);
             }
-            request.getRequestDispatcher("views/searchUser.jsp").forward(request, response);
         }
+        // Forward the request to the searchUser.jsp page
+        request.getRequestDispatcher("views/searchUser.jsp").forward(request, response);
     }
 
     /**

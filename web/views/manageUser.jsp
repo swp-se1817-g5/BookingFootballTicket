@@ -174,15 +174,16 @@
                             <div class="col-sm-4 searchh">
                                 <form action="searchuser" method="POST">
                                     <div class="d-flex align-items-center">
-                                        <div class="search-box">
-                                            <i class="material-icons">&#xE8B6;</i>
-                                            <input type="text" id="searchKeyword" name="keyword" class="form-control" placeholder="Search by name&hellip;">
-                                        </div>
-                                        <input type="submit" class="btn btn-success ml-2" value="Search">
+                                        <i class="material-icons mr-2">&#xE8B6;</i>
+                                        <select id="searchType" name="searchType" class="form-control mr-2">
+                                            <option value="username">Search by Username</option>
+                                            <option value="name">Search by Name</option>
+                                            <option value="userid">Search by User ID</option>
+                                        </select>
+                                        <input type="text" id="searchKeyword" name="keyword" class="form-control mr-2" placeholder="Search&hellip;" required>
+                                        <input type="submit" class="btn btn-success" value="Search">
                                     </div>
                                 </form>
-
-
                             </div>
                             <div class="col-sm-4 createe">
                                 <a href="#createUserModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
