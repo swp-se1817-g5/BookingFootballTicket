@@ -246,15 +246,15 @@ Author     : admin
                                 <div class="modal-body">	
                                     <div class="form-group">
                                         <label>Stand Name</label>
-                                        <input name="standName" type="text" class="form-control" required>
+                                        <input name="standName" type="text" class="form-control" maxlength="50" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Price</label>
-                                        <input name="price" type="number" min="0" step="any" class="form-control" required>
+                                        <input name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Quantity</label>
-                                        <input name="quantity" type="number" class="form-control" min="0" step="1" required>
+                                        <input name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
                                     </div>
 
                                 </div>
@@ -281,15 +281,15 @@ Author     : admin
                                     </div>
                                     <div class="form-group">
                                         <label>Stand Name</label>
-                                        <input id="standName" name="standName" type="text" class="form-control" required>
+                                        <input id="standName" name="standName" maxlength="50" type="text" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Price</label>
-                                        <input id="price" name="price" type="number" min="0" step="any" class="form-control" required>
+                                        <input id="price" name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                         <label>Quantity</label>
-                                        <input id="quantity" name="quantity" type="number" class="form-control" min="0" step="1" required>
+                                        <input id="quantity" name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
                                     </div>
 
                                 </div>
