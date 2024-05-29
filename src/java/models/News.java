@@ -26,13 +26,14 @@ public class News {
     private LocalDateTime lastUpdateDate;
     private boolean status;
     private boolean isDeleted;
+    private String deletedBy;
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
     public News() {
     }
 
-    public News(String mainTitle, String title, String mainContent, String content, String location, LocalDateTime kickOff, String createBy, String updateBy, boolean status) {
+    public News(String mainTitle, String title, String mainContent, String content, String location, LocalDateTime kickOff, String createBy, boolean status) {
         this.mainTitle = mainTitle;
         this.title = title;
         this.mainContent = mainContent;
@@ -40,7 +41,6 @@ public class News {
         this.location = location;
         this.kickOff = kickOff;
         this.createBy = createBy;
-        this.updateBy = updateBy;
         this.status = status;
     }
 
@@ -146,6 +146,14 @@ public class News {
 
     public void setKickOff(LocalDateTime KickOff) {
         this.kickOff = KickOff;
+    }
+
+    public String getDeletedBy() {
+        return deletedBy;
+    }
+
+    public void setDeletedBy(String deletedBy) {
+        this.deletedBy = deletedBy;
     }
 
     @Override

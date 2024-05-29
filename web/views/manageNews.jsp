@@ -168,12 +168,18 @@
                             <div class="col-sm-4"><h2>Manage <b>News</b></h2></div>
 
                             <div class="col-sm-4 searchh">
+
                                 <div class="search-box">
-                                    <i class="material-icons">&#xE8B6;</i>
-                                    <input type="text" class="form-control" placeholder="Search&hellip;">
+                                    <a onclick="inputValue()"><i class="material-icons">&#xE8B6;</i> </a> 
+                                    <input id="valueSearch"  type="text" class="form-control" placeholder="Search&hellip;">
                                 </div>
                             </div>
-
+                            <script>
+                                function inputValue(){
+                                    var valueSearch = document.getElementById('valueSearch').value;
+                                   location.href = "manageNews?go=search&valueSearch="+valueSearch;
+                                }
+                            </script>
                             <div class="col-sm-4 createe">
                                 <a href="#createNewsModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New News</span></a>
                             </div>
@@ -205,7 +211,7 @@
                                         <td>${n.mainContent}</td>
                                         <td>${n.content}</td>
                                         <td>${n.location}</td>
-                                        <td>${n.kickOff}</td>
+                                        <td><input type="datetime-local"value="${n.kickOff}" readonly style="border: none"></td>
                                         <c:if test="${n.status=='false'}"><td>Hide</td></c:if>
                                         <c:if test="${n.status=='true'}"><td>Show</td></c:if>
                                             <td>
@@ -255,9 +261,10 @@
                                             <input name="location" type="text" class="form-control" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>Kick Off</label>
-                                            <input name="kickOff" type="text" class="form-control" required>
+                                            <label>Kick Off <span id="datetimeError2" class="error"></span></label>
+                                            <input id="datetimeInput1" type="datetime-local" class="form-control" name="kickOff" required>
                                         </div>
+
                                         <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                                             <label>Status</label>
                                             <input name="status" type="radio" required checked value="2">Show
@@ -293,16 +300,18 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Create Date</label>
-                                            <input name="createDate" class="form-control" value="${n.createdDate}" readonly>
+                                            <input type="datetime-local" style="border: none" name="createDate" class="form-control" value="${n.createdDate}" readonly>
                                         </div>
+
                                         <div class="form-group">
                                             <label>Create By</label>
                                             <input name="createBy" class="form-control" value="${n.createBy}" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Last Update Date</label>
-                                            <input name="lastUpdateDate" class="form-control" value="${n.lastUpdateDate}" readonly>
+                                            <input type="datetime-local" name="lastUpdateDate" class="form-control" style="border: none" value="${n.lastUpdateDate}" readonly>
                                         </div>
+
                                         <div class="form-group">
                                             <label>Update By</label>
                                             <input name="updateBy" class="form-control" value="${n.updateBy}" readonly>
@@ -372,7 +381,7 @@
                     </c:forEach>
                     <script>
                         const now = new Date().toISOString().slice(0, 16);
-                        document.getElementById('datetimeInput').setAttribute('min', now);
+                        document.getElementById('datetimeInput1').setAttribute('min', now);
                         document.getElementById('datetimeInput2').setAttribute('min', now);
                     </script>
                     <div class="toast" id="updateToast" data-delay="3000">
