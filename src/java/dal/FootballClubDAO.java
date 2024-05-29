@@ -119,7 +119,7 @@ public class FootballClubDAO {
                 fc.setCreatedBy(rs.getString("createdBy"));
                 fc.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 fc.setUpdatedBy(rs.getString("updatedBy"));
-                fc.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
+                fc.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") == null ? null : rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
             }
         } catch (SQLException ex) {
             Logger.getLogger(FootballClubDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -129,7 +129,6 @@ public class FootballClubDAO {
 
     public static void main(String[] args) {
         System.out.println(FootballClubDAO.INSTANCE.getFootballClubbyID(1).toString());
-
     }
 
 }
