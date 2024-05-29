@@ -37,28 +37,43 @@
 
                                 <form action="register" method="post">
                                     <div class="row gy-3 overflow-hidden">
-                                        <div class="col-12">
+                                            <div class="col-12">
                                             <div class="form-floating mb-3">
-                                                <input type="text" value="${name}" class="form-control" name="name" id="name" placeholder="Name" required>
-                                                <label for="name" class="form-label">Name</label>
+                                                <input type="text" value="${name}" class="form-control"
+                                                       ${registerAmail != null?"hidden":""}
+                                                       name="name" id="name" placeholder="Name" required>
+                                                <label for="name" class="form-label" ${registerAmail != null?"hidden":""}>Name</label>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="form-floating mb-3">
-                                                <input type="text" value="${userName}" class="form-control" name="userName" id="userName" placeholder="User Name" required>
-                                                <label for="userName" class="form-label">User Name</label>
+                                                <input type="text" value="${userName}" class="form-control"
+                                                       ${registerAmail != null?"hidden":""}
+                                                       name="userName" id="userName" placeholder="User Name" required>
+                                                <label for="userName" class="form-label" ${registerAmail != null?"hidden":""}>User Name</label>
                                             </div>
                                         </div>
                                         
                                         <div class="col-12">
                                             <div class="form-floating mb-3">
-                                                <input type="email" value="${email}" class="form-control" name="email" id="email" placeholder="name@example.com" required>
-                                                <label for="email" class="form-label">Email</label>
+                                                <input type="email" value="${email}" class="form-control"
+                                                       ${registerAmail != null?"hidden":""}
+                                                       name="email" id="email" placeholder="name@example.com" required>
+                                                <label for="email" class="form-label" ${registerAmail != null?"hidden":""}>Email</label>
                                             </div>
                                         </div>
+                                        <c:if test="${registerAmail != null}">
+                                            <input type="text"
+                                                       class="form-control"
+                                                       hidden="true"
+                                                       value="${avatar}"
+                                                       name="avatar">
+                                        </c:if>     
+                                        <input name="registerAmail" value="${registerAmail}" hidden="true"/>
                                         <div class="col-12">
                                             <div class="form-floating mb-3">
-                                                <input type="text" value="${phone}" class="form-control" name="phoneNumber" id="phoneNumber" placeholder="Phone Number" required>
+                                                <input type="text" value="${phone}" class="form-control"
+                                                       name="phoneNumber" id="phoneNumber" placeholder="Phone Number" required>
                                                 <label for="phoneNumber" class="form-label">Phone Number</label>
                                             </div>
                                         </div>

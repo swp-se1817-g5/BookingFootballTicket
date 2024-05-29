@@ -5,7 +5,6 @@
 package dal;
 
 import java.sql.*;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -49,7 +48,7 @@ public class FootballClubDAO {
                 fcs.add(fc);
 
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -58,14 +57,12 @@ public class FootballClubDAO {
 
     public boolean createFootballClub(FootballClub fc) {
         boolean created = false;
-        String sql = "INSERT INTO FootballClub (clubName, img, createdBy, updatedBy, isDeleted) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO FootballClub (clubName, img, createdBy) VALUES (?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, fc.getClubName());
             ps.setString(2, fc.getImg());
             ps.setString(3, fc.getCreatedBy());
-            ps.setString(4, fc.getUpdatedBy());
-            ps.setBoolean(5, fc.isIsDeleted());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 created = true;
@@ -76,6 +73,29 @@ public class FootballClubDAO {
             e.printStackTrace(); // Proper exception handling
         }
         return created;
+    }
+
+    public boolean deleteFootballClub(int footballClubId) {
+        boolean deleted = false;
+        String sql = "update FootballClub set isDeleted = 1 where footballClubId = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, footballClubId);
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                deleted = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
+    
+    public boolean updateFootballClub(FootballClub fc) {
+        boolean updated = false;
+        String sql = "update FootballClub set  where footballClubId = ?";
+        
+        return updated;
     }
 
     public FootballClub getFootballClubbyID(int FcID) {
@@ -108,8 +128,7 @@ public class FootballClubDAO {
     }
 
     public static void main(String[] args) {
-//        System.out.println(FootballClubDAO.INSTANCE.getFootballClubbyID(5).toString());
-
+        System.out.println(FootballClubDAO.INSTANCE.getFootballClubbyID(1).toString());
     }
 
 }
