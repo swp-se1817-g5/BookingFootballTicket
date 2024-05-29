@@ -1,3 +1,4 @@
+
 USE master;
 GO
 
@@ -175,17 +176,18 @@ GO
 -- Table News
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
-    userId INT,
-    matchId INT,
+	mainTitle VARCHAR(255),
     title VARCHAR(255),
-    content NVARCHAR(MAX) NOT NULL,
-    createdBy VARCHAR(50), 
+	mainContent VARCHAR(255),
+    content NVARCHAR(MAX),
+	[location] VARCHAR(255),
+	kickOff DATETIME2 ,
+    createdBy VARCHAR(255) NOT NULL,
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(50) NULL,
     lastUpdatedDate DATETIME2 NULL,
-    [status] INT,
+	[status] BIT DEFAULT 0,
     isDeleted BIT DEFAULT 0,
-    FOREIGN KEY (userId) REFERENCES [User](userId),
-    FOREIGN KEY (matchId) REFERENCES [Match](matchId)
-);
+	);
+
 GO

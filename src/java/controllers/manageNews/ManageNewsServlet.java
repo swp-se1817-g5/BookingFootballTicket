@@ -4,7 +4,6 @@
  */
 package controllers.manageNews;
 
-import dal.FootballClubDAO;
 import dal.MatchDAO;
 import dal.NewsDAO;
 import java.io.IOException;
@@ -17,7 +16,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashSet;
-import models.FootballClub;
 import models.Match;
 import models.News;
 
@@ -66,45 +64,26 @@ public class ManageNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+//        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         ArrayList<News> listNews = NewsDAO.INSTANCE.getlistNews();
-        ArrayList<Match> listMatch = MatchDAO.INSTANCE.getMatches();
-        HashSet<Integer> MatchIdInNews = new HashSet<>();
-        for (News listNew : listNews) {
-            MatchIdInNews.add(listNew.getMatchId().getMatchId());
-        }
-//        out.println(MatchIdInNews.toString());
-        ArrayList<Match> MatchIdNotInNews = new ArrayList<>();
-        for (Match match : listMatch) {
-            if (!MatchIdInNews.contains(match.getMatchId())) {
-                MatchIdNotInNews.add(match);
-            }
-        }
-//        out.println(MatchIdNotInNews.toString());
-        session.setAttribute("MatchIdNotInNews", MatchIdNotInNews);
+        
         if (!listNews.isEmpty()) {
             session.setAttribute("getListNews", listNews);
-        } else {
-            request.setAttribute("err", "listNews Empty!!!");
         }
-        if (!listMatch.isEmpty()) {
-            session.setAttribute("getListMatch", listMatch);
-        } else {
-            request.setAttribute("err", "listMatch Empty!!!");
-        }
-        if (session.getAttribute("created") != null) {
-            request.setAttribute("created", session.getAttribute("created"));
-            session.removeAttribute("created");
-        }
-        if (session.getAttribute("updated") != null) {
-            request.setAttribute("updated", session.getAttribute("updated"));
-            session.removeAttribute("updated");
-        }
-        if (session.getAttribute("deleted") != null) {
-            request.setAttribute("deleted", session.getAttribute("deleted"));
-            session.removeAttribute("deleted");
-        }
+     
+//        if (session.getAttribute("created") != null) {
+//            request.setAttribute("created", session.getAttribute("created"));
+//            session.removeAttribute("created");
+//        }
+//        if (session.getAttribute("updated") != null) {
+//            request.setAttribute("updated", session.getAttribute("updated"));
+//            session.removeAttribute("updated");
+//        }
+//        if (session.getAttribute("deleted") != null) {
+//            request.setAttribute("deleted", session.getAttribute("deleted"));
+//            session.removeAttribute("deleted");
+//        }
         request.getRequestDispatcher("views/manageNews.jsp").forward(request, response);
     }
 
