@@ -1,4 +1,4 @@
--- Trigger update lastUpdatedDate in table News
+﻿-- Trigger update lastUpdatedDate in table News
 CREATE TRIGGER trg_UpdateLastUpdatedDate
 ON News
 AFTER UPDATE
