@@ -11,7 +11,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -23,16 +22,14 @@ public class ManageMatchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if(request.getParameter("created") != null) {
+        if (request.getParameter("created") != null) {
             request.setAttribute("created", "true".equals(request.getParameter("created")));
-        }
-        if(request.getParameter("updated") != null) {
+        } else if (request.getParameter("updated") != null) {
             request.setAttribute("updated", "true".equals(request.getParameter("updated")));
-        }
-        if(request.getParameter("deleted") != null) {
+        } else if (request.getParameter("deleted") != null) {
             request.setAttribute("deleted", "true".equals(request.getParameter("deleted")));
         }
-        
+
         request.setAttribute("matches", MatchDAO.INSTANCE.getMatches());
         request.setAttribute("seasons", SeasonDAO.INSTANCE.getAllseason());
         request.setAttribute("types", MatchDAO.INSTANCE.getMatchTypes());
@@ -44,7 +41,7 @@ public class ManageMatchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        doGet(request, response);
     }
 
     @Override

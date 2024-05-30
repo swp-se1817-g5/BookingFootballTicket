@@ -17,7 +17,6 @@ public class Match {
     private FootballClub team1;
     private FootballClub team2;
     private Season season;
-    private String stadiumImg;
     private LocalDateTime time;
     private MatchStatus status;
     private MatchType type; 
@@ -32,12 +31,11 @@ public class Match {
     public Match() {
     }
 
-    public Match(int matchId, FootballClub team1, FootballClub team2, Season season, String stadiumImg, LocalDateTime time, MatchStatus status, MatchType type, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
+    public Match(int matchId, FootballClub team1, FootballClub team2, Season season, LocalDateTime time, MatchStatus status, MatchType type, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.matchId = matchId;
         this.team1 = team1;
         this.team2 = team2;
         this.season = season;
-        this.stadiumImg = stadiumImg;
         this.time = time;
         this.status = status;
         this.type = type;
@@ -78,14 +76,6 @@ public class Match {
 
     public void setSeason(Season season) {
         this.season = season;
-    }
-
-    public String getStadiumImg() {
-        return stadiumImg;
-    }
-
-    public void setStadiumImg(String stadiumImg) {
-        this.stadiumImg = stadiumImg;
     }
 
     public String getTime() {
@@ -154,7 +144,7 @@ public class Match {
 
     @Override
     public String toString() {
-        return "Match{" + "matchId=" + matchId + ", team1=" + team1 + ", team2=" + team2 + ", season=" + season + ", stadiumImg=" + stadiumImg + ", time=" + time + ", status=" + status + ", type=" + type + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
+        return "Match{" + "matchId=" + matchId + ", team1=" + team1 + ", team2=" + team2 + ", season=" + season + ", time=" + time + ", status=" + status + ", type=" + type + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
     }
     
 }
