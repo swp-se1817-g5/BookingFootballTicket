@@ -42,7 +42,7 @@ GO
 -- Table FootballClub
 CREATE TABLE FootballClub (
     clubId INT PRIMARY KEY IDENTITY (1,1),
-    clubName NVARCHAR(50) NOT NULL,
+    clubName NVARCHAR(100) unique NOT NULL,
     img VARCHAR(255),
     createdBy VARCHAR(50),
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
@@ -115,7 +115,7 @@ GO
 -- Table Stand
 CREATE TABLE Stand (
     standId INT PRIMARY KEY IDENTITY (1,1),
-    standName VARCHAR(50) NOT NULL,
+    standName NVARCHAR(50) unique NOT NULL,
     price DECIMAL(10, 2),
     quantity INT,
     createdBy VARCHAR(50),

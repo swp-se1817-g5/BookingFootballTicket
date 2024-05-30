@@ -164,7 +164,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-4 createe">
-                                <a href="createFootballClub" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Club</span></a>
+                                <a href="createFootballClub" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Create New Club</span></a>
                             </div>
                         </div>
                     </div>
@@ -174,10 +174,10 @@
                                 <th>#</th>
                                 <th>Image<i class="fa "></i></th>
                                 <th>Club</th>
-                                <th>Create By<i class="fa "></i></th>
-                                <th>Create Date</th>
-                                <th>Last Update By<i class="fa "></i></th>
-                                <th>Last Update Date<i class="fa "></i></th>
+                                <th>Created By<i class="fa "></i></th>
+                                <th>Created Date</th>
+                                <th>Last Updated By<i class="fa "></i></th>
+                                <th>Last Updated Date<i class="fa "></i></th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -185,7 +185,7 @@
                             <c:forEach items="${requestScope.footballClubs}" var="o">
                                 <tr>
                                 <td>${o.clubId}</td>
-                                <td><a href="${o.img}"></a></td>
+                                <td><img src="${o.img}" width="80px" height="80px" alt="football club"/></td>
                                 <td>${o.clubName}</td>
                                 <td>${o.createdBy}</td>
                                 <td>${o.createdDate}</td>
