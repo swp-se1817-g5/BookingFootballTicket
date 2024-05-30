@@ -175,9 +175,9 @@
                                 </div>
                             </div>
                             <script>
-                                function inputValue(){
+                                function inputValue() {
                                     var valueSearch = document.getElementById('valueSearch').value;
-                                   location.href = "manageNews?go=search&valueSearch="+valueSearch;
+                                    location.href = "manageNews?go=search&valueSearch=" + valueSearch;
                                 }
                             </script>
                             <div class="col-sm-4 createe">
@@ -242,19 +242,19 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label>Main Title</label>
-                                            <input name="mainTitle" type="text" class="form-control" required>
+                                            <textarea name="mainTitle" type="text" class="form-control" required rows="2" maxlength="100"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Title</label>
-                                            <input name="title" type="text" class="form-control" required>
+                                            <textarea name="title" type="text-area" class="form-control" required rows="2" maxlength="100"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Main Content</label>
-                                            <input name="mainContent" type="text" class="form-control" required>
+                                            <textarea name="mainContent" type="text" class="form-control" required rows="2" maxlength="150"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Content</label>
-                                            <input name="content" type="text" class="form-control" required>
+                                            <textarea name="content" class="form-control" rows="5" required maxlength="300"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Location</label>
