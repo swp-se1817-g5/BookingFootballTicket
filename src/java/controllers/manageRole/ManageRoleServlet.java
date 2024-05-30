@@ -23,7 +23,7 @@ import org.apache.tomcat.jni.SSLContext;
  *
  * @author Vinh
  */
-@WebServlet(name = "ManageRole", urlPatterns = {"/managerole"})
+@WebServlet(name = "ManageRoleServlet", urlPatterns = {"/manageRole"})
 public class ManageRoleServlet extends HttpServlet {
 
     private static final int RECORDS_PER_PAGE = 10;
@@ -77,8 +77,9 @@ public class ManageRoleServlet extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        ArrayList<Role> roles = RoleDAO.INSTANCE.getRoles((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
-        int noOfRecords = RoleDAO.INSTANCE.getNoOfRecords();
+        RoleDAO roleDAO = RoleDAO.getINSTANCE();
+        ArrayList<Role> roles = roleDAO.getRoles((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
+        int noOfRecords = roleDAO.getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
 
         request.setAttribute("roles", roles);

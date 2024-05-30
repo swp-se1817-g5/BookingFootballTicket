@@ -168,12 +168,18 @@
                             <div class="col-sm-4"><h2>Manage <b>News</b></h2></div>
 
                             <div class="col-sm-4 searchh">
+
                                 <div class="search-box">
-                                    <i class="material-icons">&#xE8B6;</i>
-                                    <input type="text" class="form-control" placeholder="Search&hellip;">
+                                    <a onclick="inputValue()"><i class="material-icons">&#xE8B6;</i> </a> 
+                                    <input id="valueSearch"  type="text" class="form-control" placeholder="Search&hellip;">
                                 </div>
                             </div>
-
+                            <script>
+                                function inputValue() {
+                                    var valueSearch = document.getElementById('valueSearch').value;
+                                    location.href = "manageNews?go=search&valueSearch=" + valueSearch;
+                                }
+                            </script>
                             <div class="col-sm-4 createe">
                                 <a href="#createNewsModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New News</span></a>
                             </div>
@@ -182,54 +188,40 @@
                     <table class="table table-striped table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th>News ID</th>
-                                <th>Team 1</th>
-                                <th>Team 2</th>
+                                <th>#</th>
+                                <th>Main Title</th>
                                 <th>Title</th>
+                                <th>Main Content</th>
                                 <th>Content</th>
-                                <th>Time Start</th>
+                                <th>Location</th>
+                                <th>Kick Off</th>
                                 <th>Status</th>
                                 <th>Action</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            <c:if test="${ms != null}">
-                            <div style="color: green; display: flex; align-items: center;">
-                                <span style="margin-right: 5px;" class="bi bi-check-circle"></span>
-                                ${ms}
-                            </div>
-                        </c:if>
-                        <c:if test="${err != null}">
-                            <div style="color: red; display: flex; align-items: center;">
-                                <span style="margin-right: 5px;" class="bi bi-check-circle"></span>
-                                ${err}
-                            </div>
-                        </c:if>
-                        <c:forEach items="${sessionScope.getListNews}" var="n" varStatus="status">
-                            <c:if test="${n.status!=0}">
-                                <c:set var="m" value="${sessionScope.getListMatch[status.index]}" />
-                                <tr>
-                                    <td>${n.newsId}</td>
-                                    <td>${m.team1.clubName}</td>
-                                    <td>${m.team2.clubName}</td>
-                                    <td>${n.title}</td>
-                                    <td>${n.content}</td>
-                                    <td>${m.time}</td>
-                                    <c:if test="${n.status==1}">
-                                        <td>Hide</td>
-                                    </c:if>
-                                    <c:if test="${n.status==2}">
-                                        <td>Show</td>
-                                    </c:if>
-                                    <td>
-                                        <a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
-                                        <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
-                                        <a onclick="return confirmDelete(${n.newsId})" href = "deleteNews?newsId=${n.newsId}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                    </td>
-                                </tr>
-                            </c:if>
-                        </c:forEach>
+
+                            <c:forEach items="${sessionScope.getListNews}" var="n" varStatus="status">
+                                <c:if test="${!n.isDeleted}">
+                                    <tr>
+                                        <td>${status.count}</td>
+                                        <td>${n.mainTitle}</td>
+                                        <td>${n.title}</td>
+                                        <td>${n.mainContent}</td>
+                                        <td>${n.content}</td>
+                                        <td>${n.location}</td>
+                                        <td><input type="datetime-local"value="${n.kickOff}" readonly style="border: none"></td>
+                                        <c:if test="${n.status=='false'}"><td>Hide</td></c:if>
+                                        <c:if test="${n.status=='true'}"><td>Show</td></c:if>
+                                            <td>
+                                                <a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
+                                            <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
+                                            <a onclick="return confirmDelete(${n.newsId})" href = "deleteNews?newsId=${n.newsId}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                        </td>
+                                    </tr>
+                                </c:if>
+                            </c:forEach>
                         </tbody>
                     </table>
                     <script>
@@ -239,7 +231,6 @@
                     </script>
 
 
-                    <!--------------------------------------------------------------------------------------------------------------------------------------------->
                     <div id="createNewsModal" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -250,34 +241,30 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="form-group">
-                                            <label>Select Match</label>
-                                            <select name="matchId" id="matchIdSelect" class="form-control" onchange="updateTime()">
-                                                <c:choose>
-                                                    <c:when test="${not empty sessionScope.MatchIdNotInNews}">
-                                                        <c:forEach items="${sessionScope.MatchIdNotInNews}" var="mni">
-                                                            <option  value="${mni.matchId}">${mni.team1.clubName} - ${mni.team2.clubName}</option>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value="">Don't have any match</option>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Time Start</label>
-                                            <c:forEach items="${sessionScope.MatchIdNotInNews}" var="mni">
-                                                <input name="matchId" class="form-control" value="${mni.time}" readonly>
-                                            </c:forEach>
+                                            <label>Main Title</label>
+                                            <textarea name="mainTitle" type="text" class="form-control" required rows="2" maxlength="100"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Title</label>
-                                            <input name="title" type="text"  class="form-control" required>
+                                            <textarea name="title" type="text-area" class="form-control" required rows="2" maxlength="100"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Main Content</label>
+                                            <textarea name="mainContent" type="text" class="form-control" required rows="2" maxlength="150"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Content</label>
-                                            <input name="content" type="text" class="form-control" required>
+                                            <textarea name="content" class="form-control" rows="5" required maxlength="300"></textarea>
                                         </div>
+                                        <div class="form-group">
+                                            <label>Location</label>
+                                            <input name="location" type="text" class="form-control" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Kick Off <span id="datetimeError2" class="error"></span></label>
+                                            <input id="datetimeInput1" type="datetime-local" class="form-control" name="kickOff" required>
+                                        </div>
+
                                         <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                                             <label>Status</label>
                                             <input name="status" type="radio" required checked value="2">Show
@@ -292,13 +279,8 @@
                             </div>
                         </div>
                     </div>
-                    <script>
-                        function updateTime() {
-                            var matchId = document.getElementById("matchIdSelect").value;
-                            var time
-                        }
 
-                    </script>
+
                     <!--------------------------------------------------------------------------------------------------------------------------------------------->
 
 
@@ -307,31 +289,29 @@
                         <div id="viewDetailsNews${n.newsId}" class="modal fade">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <div class="modal-header">						
+                                    <div class="modal-header">			
                                         <h4 class="modal-title">View Details</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
                                     <div class="modal-body">					
                                         <div class="form-group">
-                                            <label>User ID</label>
-                                            <input name="userId" class="form-control" value="${n.userId.userId}" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Match ID</label>
-                                            <input name="matchId" class="form-control" value="${n.matchId.matchId}" readonly>
+                                            <label>News ID</label>
+                                            <input name="newsId" class="form-control" value="${n.newsId}" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Create Date</label>
-                                            <input name="createDate" class="form-control" value="${n.createdDate}" readonly>
+                                            <input type="datetime-local" style="border: none" name="createDate" class="form-control" value="${n.createdDate}" readonly>
                                         </div>
+
                                         <div class="form-group">
                                             <label>Create By</label>
                                             <input name="createBy" class="form-control" value="${n.createBy}" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label>Last Update Date</label>
-                                            <input name="lastUpdateDate" class="form-control" value="${n.lastUpdateDate}" readonly>
+                                            <input type="datetime-local" name="lastUpdateDate" class="form-control" style="border: none" value="${n.lastUpdateDate}" readonly>
                                         </div>
+
                                         <div class="form-group">
                                             <label>Update By</label>
                                             <input name="updateBy" class="form-control" value="${n.updateBy}" readonly>
@@ -361,17 +341,33 @@
                                                 <input name="newsId" class="form-control" value="${n.newsId}" readonly>
                                             </div>
                                             <div class="form-group">
+                                                <label>Main Title</label>
+                                                <input name="mainTitle" class="form-control" value="${n.mainTitle}">
+                                            </div>
+                                            <div class="form-group">
                                                 <label>Title</label>
                                                 <input name="title" class="form-control" value="${n.title}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Main Content</label>
+                                                <input name="mainContent" class="form-control" value="${n.mainContent}">
                                             </div>
                                             <div class="form-group">
                                                 <label>Content</label>
                                                 <input name="content" class="form-control" value="${n.content}">
                                             </div>
                                             <div class="form-group">
+                                                <label>Location</label>
+                                                <input name="location" class="form-control" value="${n.location}">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Kick Off <span id="datetimeError2" class="error"></span></label>
+                                                <input id="datetimeInput2" type="datetime-local" class="form-control" name="kickOff" required value="${n.kickOff}">
+                                            </div>
+                                            <div class="form-group">
                                                 <label>Status</label>
-                                                <input name="status" type="radio" required value="2" ${n.status == 2 ? 'checked' :''}>Show
-                                                <input name="status" type="radio" required value="1" ${n.status == 1 ? 'checked' :''}>Hide
+                                                <input name="status" type="radio" required value="1" ${n.status == 'true' ? 'checked' :''}>Show
+                                                <input name="status" type="radio" required value="0" ${n.status == 'false' ? 'checked' :''}>Hide
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -383,6 +379,11 @@
                             </div>
                         </div>
                     </c:forEach>
+                    <script>
+                        const now = new Date().toISOString().slice(0, 16);
+                        document.getElementById('datetimeInput1').setAttribute('min', now);
+                        document.getElementById('datetimeInput2').setAttribute('min', now);
+                    </script>
                     <div class="toast" id="updateToast" data-delay="3000">
                         <div class="toast-header">
                             <strong class="mr-auto" id="toastTitle"></strong>
@@ -392,55 +393,48 @@
                     </div>
                     <script>
                         $(document).ready(function () {
-                            var updated = '<%= request.getAttribute("updated") %>';
-                            if (updated !== 'null' && updated !== '') {
-                                var toast = $('#updateToast');
-                                if (updated !== "0") {
-                                    toast.find('#toastTitle').text('Success');
-                                    toast.find('#toastMessage').text('News updated successfully.');
-                                    toast.addClass('success').removeClass('error');
-                                } else {
-                                    toast.find('#toastTitle').text('Error');
-                                    toast.find('#toastMessage').text('Failed to update news.');
-                                    toast.addClass('error').removeClass('success');
+                            var actions = {
+                                updated: '<%= request.getAttribute("updated") %>',
+                                created: '<%= request.getAttribute("created") %>',
+                                deleted: '<%= request.getAttribute("deleted") %>'
+                            };
+
+                            for (var action in actions) {
+                                var status = actions[action];
+                                if (status !== 'null' && status !== '') {
+                                    var toast = $('#updateToast');
+                                    var title, message, classToAdd, classToRemove;
+
+                                    switch (action) {
+                                        case 'updated':
+                                            title = status !== "0" ? 'Success' : 'Error';
+                                            message = status !== "0" ? 'News updated successfully.' : 'Failed to update news.';
+                                            classToAdd = status !== "0" ? 'success' : 'error';
+                                            classToRemove = status !== "0" ? 'error' : 'success';
+                                            break;
+                                        case 'created':
+                                            title = status !== "0" ? 'Success' : 'Error';
+                                            message = status !== "0" ? 'News created successfully.' : 'Failed to create news.';
+                                            classToAdd = status !== "0" ? 'success' : 'error';
+                                            classToRemove = status !== "0" ? 'error' : 'success';
+                                            break;
+                                        case 'deleted':
+                                            title = status !== "0" ? 'Success' : 'Error';
+                                            message = status !== "0" ? 'News deleted successfully.' : 'Failed to delete news.';
+                                            classToAdd = status !== "0" ? 'success' : 'error';
+                                            classToRemove = status !== "0" ? 'error' : 'success';
+                                            break;
+
+                                    }
+
+                                    toast.find('#toastTitle').text(title);
+                                    toast.find('#toastMessage').text(message);
+                                    toast.addClass(classToAdd).removeClass(classToRemove);
+                                    toast.toast('show');
                                 }
-                                toast.toast('show');
                             }
                         });
 
-                        $(document).ready(function () {
-                            var created = '<%= request.getAttribute("created") %>';
-                            if (created !== 'null' && created !== '') {
-                                var toast = $('#updateToast');
-                                if (created !== "0") {
-                                    toast.find('#toastTitle').text('Success');
-                                    toast.find('#toastMessage').text('News created successfully.');
-                                    toast.addClass('success').removeClass('error');
-                                } else {
-                                    toast.find('#toastTitle').text('Error');
-                                    toast.find('#toastMessage').text('Failed to created news.');
-                                    toast.addClass('error').removeClass('success');
-                                }
-                                toast.toast('show');
-                            }
-                        });
-                        
-                        $(document).ready(function () {
-                            var deleted = '<%= request.getAttribute("deleted") %>';
-                            if (deleted !== 'null' && deleted !== '') {
-                                var toast = $('#updateToast');
-                                if (deleted !== "0") {
-                                    toast.find('#toastTitle').text('Success');
-                                    toast.find('#toastMessage').text('News deleted successfully.');
-                                    toast.addClass('success').removeClass('error');
-                                } else {
-                                    toast.find('#toastTitle').text('Error');
-                                    toast.find('#toastMessage').text('Failed to deleted news.');
-                                    toast.addClass('error').removeClass('success');
-                                }
-                                toast.toast('show');
-                            }
-                        });
                     </script>
                     <!--                    <div class="clearfix">
                                             <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>

@@ -19,7 +19,7 @@ import models.User;
  *
  * @author Vinh
  */
-@WebServlet(name = "ManageUser", urlPatterns = {"/manageuser"})
+@WebServlet(name = "ManageUser", urlPatterns = {"/manageUser"})
 public class ManageUserServlet extends HttpServlet {
 
     private static final int RECORDS_PER_PAGE = 10;

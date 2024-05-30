@@ -13,6 +13,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import models.News;
 
 /**
@@ -74,17 +77,42 @@ public class UpdateNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         HttpSession session = request.getSession();
-        int newsId = Integer.parseInt(request.getParameter("newsId"));
-        String title = request.getParameter("title");
-        String content = request.getParameter("content");
-        int status = Integer.parseInt(request.getParameter("status"));
-        News n = NewsDAO.INSTANCE.getNews(newsId);
-        n.setTitle(title);
-        n.setContent(content);
-        n.setStatus(status);
-        int updated = NewsDAO.INSTANCE.updateNews(n);
-        session.setAttribute("updated", updated);
+        try {
+            int newsId = Integer.parseInt(request.getParameter("newsId"));
+            String mainTitle = request.getParameter("mainTitle");
+            String title = request.getParameter("title");
+            String mainContent = request.getParameter("mainContent");
+            String content = request.getParameter("content");
+            String location = request.getParameter("location");
+            String kickOff_raw = request.getParameter("kickOff");
+            LocalDateTime kickOff;
+            try {
+                kickOff = LocalDateTime.parse(kickOff_raw, formatter);
+            } catch (DateTimeParseException e) {
+                throw new IllegalArgumentException("Invalid date time format", e);
+            }
+            boolean status = false;
+            int status_raw = Integer.parseInt(request.getParameter("status"));
+            if (status_raw == 1) {
+                status = true;
+            }
+            News n = NewsDAO.INSTANCE.getNewsByNewsId(newsId);
+            n.setMainTitle(mainTitle);
+            n.setTitle(title);
+            n.setMainContent(mainContent);
+            n.setContent(content);
+            n.setLocation(location);
+            n.setKickOff(kickOff);
+            n.setStatus(status);
+            n.setNewsId(newsId);
+            String userName = (String) session.getAttribute("userName");
+            n.setUpdateBy(userName);
+            session.setAttribute("updated", NewsDAO.INSTANCE.updateNews(n));
+        } catch (IllegalArgumentException e) {
+        }
+
         response.sendRedirect("manageNews");
     }
 

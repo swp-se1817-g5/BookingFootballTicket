@@ -19,7 +19,7 @@ import models.Season;
  *
  * @author Vinh
  */
-@WebServlet(name = "ManageSeason", urlPatterns = {"/manageseason"})
+@WebServlet(name = "ManageSeason", urlPatterns = {"/manageSeason"})
 public class ManageSeasonServlet extends HttpServlet {
 
     private static final int RECORDS_PER_PAGE = 10;

@@ -14,27 +14,32 @@ import java.time.format.DateTimeFormatter;
 public class News {
 
     private int newsId;
-    private Match matchId;
-    private User userId;
+    private String mainTitle;
     private String title;
+    private String mainContent;
     private String content;
+    private String location;
+    private LocalDateTime kickOff;
     private String createBy;
     private LocalDateTime createdDate;
     private String updateBy;
     private LocalDateTime lastUpdateDate;
-    private int status;
+    private boolean status;
     private boolean isDeleted;
+    private String deletedBy;
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
     public News() {
     }
 
-    public News(Match matchId, User userId, String title, String content, String createBy, int status) {
-        this.matchId = matchId;
-        this.userId = userId;
+    public News(String mainTitle, String title, String mainContent, String content, String location, LocalDateTime kickOff, String createBy, boolean status) {
+        this.mainTitle = mainTitle;
         this.title = title;
+        this.mainContent = mainContent;
         this.content = content;
+        this.location = location;
+        this.kickOff = kickOff;
         this.createBy = createBy;
         this.status = status;
     }
@@ -45,14 +50,6 @@ public class News {
 
     public void setNewsId(int newsId) {
         this.newsId = newsId;
-    }
-
-    public User getUserId() {
-        return userId;
-    }
-
-    public void setUserId(User userId) {
-        this.userId = userId;
     }
 
     public String getTitle() {
@@ -103,11 +100,11 @@ public class News {
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    public int getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(boolean status) {
         this.status = status;
     }
 
@@ -119,17 +116,49 @@ public class News {
         this.isDeleted = isDeleted;
     }
 
-    public Match getMatchId() {
-        return matchId;
+    public String getMainTitle() {
+        return mainTitle;
     }
 
-    public void setMatchId(Match matchId) {
-        this.matchId = matchId;
+    public void setMainTitle(String mainTitle) {
+        this.mainTitle = mainTitle;
+    }
+
+    public String getMainContent() {
+        return mainContent;
+    }
+
+    public void setMainContent(String mainContent) {
+        this.mainContent = mainContent;
+    }
+
+    public String getlocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getKickOff() {
+        return kickOff != null ? kickOff.format(formatter) : null;
+    }
+
+    public void setKickOff(LocalDateTime KickOff) {
+        this.kickOff = KickOff;
+    }
+
+    public String getDeletedBy() {
+        return deletedBy;
+    }
+
+    public void setDeletedBy(String deletedBy) {
+        this.deletedBy = deletedBy;
     }
 
     @Override
     public String toString() {
-        return "News{" + "newsId=" + newsId + ", matchId=" + matchId + ", userId=" + userId + ", title=" + title + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", status=" + status +", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
+        return "News{" + "newsId=" + newsId + ", mainTitle=" + mainTitle + ", title=" + title + ", mainContent=" + mainContent + ", content=" + content + ", location=" + location + ", kickOff=" + kickOff + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", status=" + status + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
     }
 
 }
