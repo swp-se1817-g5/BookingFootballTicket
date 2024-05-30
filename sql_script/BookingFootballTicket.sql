@@ -180,7 +180,7 @@ CREATE TABLE News (
     title VARCHAR(255),
 	mainContent VARCHAR(255),
     content NVARCHAR(MAX),
-	[location] VARCHAR(255),
+	[location] VARCHAR(255),	
 	kickOff DATETIME2 ,
     createdBy VARCHAR(50) NOT NULL,
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
