@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import models.News;
+import models.User;
 
 /**
  *
@@ -61,11 +62,18 @@ public class DeleteNewsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        int newsId = Integer.parseInt(request.getParameter("newsId") != null ? request.getParameter("newsId") : "");
-        News n = NewsDAO.INSTANCE.getNews(newsId);
-        n.setStatus(0);
-        int deleted = NewsDAO.INSTANCE.updateNews(n);
-        session.setAttribute("deleted", deleted);
+        int newsId;
+        try {
+            newsId = Integer.parseInt(request.getParameter("newsId"));
+            News n = NewsDAO.INSTANCE.getNewsByNewsId(newsId);
+            n.setIsDeleted(true);
+            String userName = (String)session.getAttribute("userName");
+            n.setDeletedBy(userName);
+            int deleted = NewsDAO.INSTANCE.deleteNews(n);
+            session.setAttribute("deleted", deleted);
+        } catch (NumberFormatException e) {
+        }
+
         response.sendRedirect("manageNews");
     }
 

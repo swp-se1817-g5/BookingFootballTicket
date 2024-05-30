@@ -1,3 +1,4 @@
+
 USE master;
 GO
 
@@ -41,7 +42,7 @@ GO
 -- Table FootballClub
 CREATE TABLE FootballClub (
     clubId INT PRIMARY KEY IDENTITY (1,1),
-    clubName NVARCHAR(100) NOT NULL,
+    clubName NVARCHAR(100) unique NOT NULL,
     img VARCHAR(255),
     createdBy VARCHAR(50),
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
@@ -114,7 +115,7 @@ GO
 -- Table Stand
 CREATE TABLE Stand (
     standId INT PRIMARY KEY IDENTITY (1,1),
-    standName VARCHAR(50) NOT NULL,
+    standName NVARCHAR(50) unique NOT NULL,
     price DECIMAL(10, 2),
     quantity INT,
     createdBy VARCHAR(50),
@@ -175,17 +176,20 @@ GO
 -- Table News
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
-    userId INT,
-    matchId INT,
+	mainTitle VARCHAR(255),
     title VARCHAR(255),
-    content NVARCHAR(MAX) NOT NULL,
-    createdBy VARCHAR(50), 
+	mainContent VARCHAR(255),
+    content NVARCHAR(MAX),
+	[location] VARCHAR(255),
+	kickOff DATETIME2 ,
+    createdBy VARCHAR(50) NOT NULL,
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(50) NULL,
     lastUpdatedDate DATETIME2 NULL,
-    [status] INT,
+	[status] BIT DEFAULT 0,
     isDeleted BIT DEFAULT 0,
-    FOREIGN KEY (userId) REFERENCES [User](userId),
-    FOREIGN KEY (matchId) REFERENCES [Match](matchId)
-);
+	deletedBy NVARCHAR(50),
+	);
+
 GO
+

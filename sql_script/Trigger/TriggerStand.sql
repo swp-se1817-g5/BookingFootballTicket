@@ -1,4 +1,4 @@
-use BookingFootballTicket;
+--use BookingFootballTicket;
 CREATE TRIGGER trg_UpdateLastUpdatedDate
 ON Stand
 AFTER UPDATE

@@ -14,10 +14,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import models.Match;
+import java.time.format.DateTimeParseException;
 import models.News;
-import models.User;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -25,7 +24,7 @@ import models.User;
  */
 @WebServlet(name = "CreateNewNewsServlet", urlPatterns = {"/createNewNews"})
 public class CreateNewNewsServlet extends HttpServlet {
-    
+
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
 
     /**
@@ -81,27 +80,35 @@ public class CreateNewNewsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         PrintWriter out = response.getWriter();
-       
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         HttpSession session = request.getSession();
-//        int userID = Integer.parseInt((String) session.getAttribute("userName"));
-        int matchId = Integer.parseInt(request.getParameter("matchId") != null ? request.getParameter("matchId") : "");
-//        out.println(matchId);
+//        String userName = (String) session.getAttribute("userName");
+        String userName = "Duong";
+        String mainTitle = request.getParameter("mainTitle");
         String title = request.getParameter("title");
+        String mainContent = request.getParameter("mainContent");
         String content = request.getParameter("content");
-        int status = Integer.parseInt(request.getParameter("status"));
-        Match m = new Match();
-        m.setMatchId(matchId);
-//        out.print(m.toString());
-        User u = new User();
-        int userID = 1;
-        u.setUserId(userID);
-        News n = new News(m, u, title, content, u.getUserName(), status);
-        int created = NewsDAO.INSTANCE.createNews(n, u, m);
+        String location = request.getParameter("location");
+        String kickOff_raw = request.getParameter("kickOff");
+        LocalDateTime kickOff;
+        try {
+            kickOff = LocalDateTime.parse(kickOff_raw, formatter);
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Invalid date time format", e);
+        }
+        int status_raw = Integer.parseInt(request.getParameter("status"));
+        boolean status = false;
+        if (status_raw == 2) {
+            status = true;
+        }
+        News n = new News(mainTitle, title, mainContent, content, location, kickOff, userName, status);
+        int created = NewsDAO.INSTANCE.createNews(n);
+        out.print(created);
         if (created != 0) {
             session.setAttribute("created", created);
-        } 
+        }
         response.sendRedirect("manageNews");
-        
+
     }
 
     /**
