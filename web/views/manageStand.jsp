@@ -174,7 +174,7 @@ Author     : admin
                 <div class="table-wrapper">
                     <div class="table-title">
                         <div class="row">
-                            <div class="col-sm-4"><h2>Manage <b>Stand</b></h2></div>
+                            <div class="col-sm-4"><h2>Stand <b>Management</b></h2></div>
 
                             <div class="col-sm-4 searchh">
                                 <div class="search-box">
@@ -183,7 +183,7 @@ Author     : admin
                                 </div>
                             </div>
                             <div class="col-sm-4 createe">
-                                <a href="#createStandModal" class="btn btn-success"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Stand</span></a>
+                                <a href="#createStandModal" class="btn btn-success"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create Stand</span></a>
                             </div>
                         </div>
                     </div>
@@ -194,10 +194,10 @@ Author     : admin
                                 <th>Stand Name</th>
                                 <th>Price<i class="fa "></i></th>
                                 <th>Quantity<i class="fa "></i></th>
-                                <th>Create By</th>
-                                <th>Create Date</th>
-                                <th>Last Update By<i class="fa "></i></th>
-                                <th>Last Update Date<i class="fa "></i></th>
+                                <th>Created By</th>
+                                <th>Created Date</th>
+                                <th>Last Updated By<i class="fa "></i></th>
+                                <th>Last Updated Date<i class="fa "></i></th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -249,11 +249,11 @@ Author     : admin
                                         <input name="standName" type="text" class="form-control" maxlength="50" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Price</label>
+                                        <label>Price (VND)</label>
                                         <input name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Quantity</label>
+                                        <label>Quantity (Seat)</label>
                                         <input name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
                                     </div>
 
@@ -284,11 +284,11 @@ Author     : admin
                                         <input id="standName" name="standName" maxlength="50" type="text" class="form-control" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Price</label>
+                                        <label>Price (VND)</label>
                                         <input id="price" name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
                                     </div>
                                     <div class="form-group">
-                                        <label>Quantity</label>
+                                        <label>Quantity (Seat)</label>
                                         <input id="quantity" name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
                                     </div>
 
