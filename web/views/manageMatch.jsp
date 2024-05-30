@@ -237,7 +237,6 @@
                                 <th>Season</th>
                                 <th>Status</th>
                                 <th>Type</th>
-                                <th>Stadium</th>
                                 <th>Create By</th>
                                 <th>Create Date</th>
                                 <th>Last Update By</th>
@@ -256,7 +255,6 @@
                                     <td>${o.season.seasonName}</td>
                                     <td>${o.status.matchStatusName}</td>
                                     <td>${o.type.name}</td>
-                                    <td>${o.stadiumImg}</td>
                                     <td>${o.createdBy}</td>
                                     <td>${o.createdDate}</td>
                                     <td>${o.updatedBy}</td>
@@ -276,7 +274,7 @@
         <div id="updateMatchModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="updateMatch" method="post" onsubmit="return validateForm()">
+                    <form action="updateMatch" method="post" onsubmit="return validateForm2()">
                         <div class="modal-header">						
                             <h4 class="modal-title">Update Match</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -340,7 +338,8 @@
             </div>
         </div>
 
-        <div class="toast" id="updateToast" data-delay="3000">
+        <!-- toast notification -->
+        <div class="toast" id="toastNotification" data-delay="3000">
             <div class="toast-header">
                 <strong class="mr-auto" id="toastTitle"></strong>
                 <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
@@ -352,30 +351,50 @@
             $(document).ready(function () {
                 var updated = '<%= request.getAttribute("updated") %>';
                 if (updated !== 'null' && updated !== '') {
-                    var toast = $('#updateToast');
+                    var toast = $('#toastNotification');
                     if (updated === "true") {
                         toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Stand updated successfully.');
+                        toast.find('#toastMessage').text('Match updated successfully.');
                         toast.addClass('success').removeClass('error');
                     } else if (updated === "false") {
                         toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to update stand.');
+                        toast.find('#toastMessage').text('Failed to update match.');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
                 }
             });
+
+            //create
             $(document).ready(function () {
                 var created = '<%= request.getAttribute("created") %>';
                 if (created !== 'null' && created !== '') {
-                    var toast = $('#updateToast');
-                    if (updated === "true") {
+                    var toast = $('#toastNotification');
+                    if (created === "true") {
                         toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Stand updated successfully.');
+                        toast.find('#toastMessage').text('Match created successfully.');
                         toast.addClass('success').removeClass('error');
-                    } else if (updated === "false") {
+                    } else if (created === "false") {
                         toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to update stand.');
+                        toast.find('#toastMessage').text('Failed to create match.');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
+                }
+            });
+
+            //delete
+            $(document).ready(function () {
+                var deleted = '<%= request.getAttribute("deleted") %>';
+                if (deleted !== 'null' && deleted !== '') {
+                    var toast = $('#toastNotification');
+                    if (deleted === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('Match deleted successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (deleted === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to delete match.');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
@@ -468,7 +487,8 @@
                 // Get form values
                 var fc1Id = document.getElementById("fc1Id2").value;
                 var fc2Id = document.getElementById("fc2Id2").value;
-                var datetimeValue = new Date(document.getElementById("datetimeInput2").value);
+                var datetimeValue = Date(document.getElementById("datetimeInput2").value);
+                var datetimeValue_raw = new datetimeValue;
 
                 var isValid = true;
 
@@ -483,11 +503,14 @@
                     var startTimeList = invalidDateTimes2[i];
                     var endTimeList = new Date(startTimeList.getTime() + (300 * 60000)); // Thêm 300 phút
 
-                    if (datetimeValue >= startTimeList && datetimeValue <= endTimeList) {
-                        document.getElementById("datetimeError2").innerText = "Invalid datetime";
-                        isValid = false;
-                        break; // Không hợp lệ, dừng việc submit form
+                    if (startTimeList !== datetimeValue_raw) {
+                        if (datetimeValue >= startTimeList && datetimeValue <= endTimeList) {
+                            document.getElementById("datetimeError2").innerText = "Invalid datetime";
+                            isValid = false;
+                            break; // Không hợp lệ, dừng việc submit form
+                        }
                     }
+
                 }
 
                 // Return the validity status

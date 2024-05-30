@@ -66,13 +66,6 @@ public class ManageRoleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
-//        if (roles.isEmpty()) {
-//            request.setAttribute("message", "The role is empty, please create a role!");
-//        } else {
-//            request.setAttribute("roles", roles);
-//        }
-//        request.getRequestDispatcher("views/manageRole.jsp").forward(request, response);
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));

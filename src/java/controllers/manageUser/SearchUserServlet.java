@@ -84,7 +84,7 @@ public class SearchUserServlet extends HttpServlet {
                 case "userid":
                     try {
                     int userId = Integer.parseInt(keyword);
-                    User u = UserDAO.INSTANCE.getUserbyID(userId);
+                    User u = UserDAO.getINSTANCE().getUserbyID(userId);
                     if (u != null) {
                         users.add(u);
                     } else {
@@ -100,10 +100,10 @@ public class SearchUserServlet extends HttpServlet {
                 }
                 break;
                 case "username":
-                    users = UserDAO.INSTANCE.getUserbyUsername(keyword);
+                    users = UserDAO.getINSTANCE().getUserbyUsername(keyword);
                     break;
                 case "name":
-                    users = UserDAO.INSTANCE.getUserbyName(keyword);
+                    users = UserDAO.getINSTANCE().getUserbyName(keyword);
                     break;
                 default:
                     // Invalid search type, return error message
