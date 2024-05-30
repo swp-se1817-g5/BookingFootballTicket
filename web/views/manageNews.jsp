@@ -211,7 +211,7 @@
                                         <td>${n.mainContent}</td>
                                         <td>${n.content}</td>
                                         <td>${n.location}</td>
-                                        <td><input type="datetime-local"value="${n.kickOff}" readonly style="border: none"></td>
+                                        <td><input type="datetime-local"value="${n.kickOff}" readonly style="border: none; background: none"></td>
                                         <c:if test="${n.status=='false'}"><td>Hide</td></c:if>
                                         <c:if test="${n.status=='true'}"><td>Show</td></c:if>
                                             <td>
