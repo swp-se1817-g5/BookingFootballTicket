@@ -8,9 +8,9 @@ VALUES ('Admin', 'System', 'System'),
 
 -- Inserting values into the FootballClub table
 INSERT INTO FootballClub (clubName, img, createdBy)
-VALUES ('Manchester United', 'manchester_united.jpg', 'System'),
-       ('Real Madrid', 'real_madrid.jpg', 'System'),
-       ('FC Barcelona', 'fc_barcelona.jpg', 'System');
+VALUES ('Manchester United', 'https://upload.wikimedia.org/wikipedia/vi/thumb/a/a1/Man_Utd_FC_.svg/1200px-Man_Utd_FC_.svg.png', 'Admin'),
+       ('Real Madrid', 'https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Real_Madrid_CF.svg/1200px-Real_Madrid_CF.svg.png', 'Admin'),
+       ('FC Barcelona', 'https://upload.wikimedia.org/wikipedia/vi/thumb/9/91/FC_Barcelona_logo.svg/220px-FC_Barcelona_logo.svg.png', 'System');
 
 -- Inserting values into the MatchStatus table
 INSERT INTO MatchStatus (statusName, createdBy, updatedBy)
@@ -68,4 +68,23 @@ VALUES
 ('Big Match Coming Up!', 'Exciting Match', 'Don\t miss the exciting match between FC Awesome and FC Legends', 'Detailed content about the match...', 'Stadium 1', '2024-06-15 18:00:00', 'Admin', 'Admin'),
 ('Season Opener', 'First Match of the Season', 'The new season kicks off with a thrilling match', 'Detailed content about the season opener...', 'Stadium 2', '2024-07-20 20:00:00', 'Admin', 'Admin');
 GO
+
+UPDATE FootballClub
+SET clubName = CASE
+                    WHEN clubName = 'Manchester United' THEN 'New Manchester United Name'
+                    WHEN clubName = 'Real Madrid' THEN 'New Real Madrid Name'
+                    WHEN clubName = 'FC Barcelona' THEN 'New FC Barcelona Name'
+                    ELSE clubName
+              END,
+    img = CASE
+                    WHEN clubName = 'Manchester United' THEN 'https://new_image_url_for_manchester_united.png'
+                    WHEN clubName = 'Real Madrid' THEN 'https://new_image_url_for_real_madrid.png'
+                    WHEN clubName = 'FC Barcelona' THEN 'https://new_image_url_for_fc_barcelona.png'
+                    ELSE img
+              END,
+    createdBy = CASE
+                    WHEN clubName IN ('Manchester United', 'Real Madrid') THEN 'New Admin Name'
+                    WHEN clubName = 'FC Barcelona' THEN 'New System Name'
+                    ELSE createdBy
+                END;
 
