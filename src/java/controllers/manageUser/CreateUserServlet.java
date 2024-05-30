@@ -21,7 +21,7 @@ import models.User;
  *
  * @author Vinh
  */
-@WebServlet(name = "CreateUser", urlPatterns = {"/createuser"})
+@WebServlet(name = "CreateUser", urlPatterns = {"/createUser"})
 public class CreateUserServlet extends HttpServlet {
 
     /**

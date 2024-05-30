@@ -18,7 +18,7 @@ import models.Role;
  *
  * @author Vinh
  */
-@WebServlet(name = "CreateRole", urlPatterns = {"/createrole"})
+@WebServlet(name = "CreateRole", urlPatterns = {"/createRole"})
 public class CreateRoleServlet extends HttpServlet {
 
     /**
