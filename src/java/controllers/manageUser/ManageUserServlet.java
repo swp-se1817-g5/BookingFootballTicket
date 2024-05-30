@@ -66,8 +66,8 @@ public class ManageUserServlet extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        ArrayList<User> users = UserDAO.INSTANCE.getUsers((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
-        int noOfRecords = UserDAO.INSTANCE.getNoOfRecords();
+        ArrayList<User> users = UserDAO.getINSTANCE().getUsers((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
+        int noOfRecords = UserDAO.getINSTANCE().getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
 
         request.setAttribute("users", users);

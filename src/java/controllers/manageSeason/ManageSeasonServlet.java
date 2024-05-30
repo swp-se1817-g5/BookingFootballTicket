@@ -62,19 +62,12 @@ public class ManageSeasonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getAllseason();
-//        if (seasons.isEmpty()) {
-//            request.setAttribute("message", "The season is empty, please create a season!");
-//        } else {
-//            request.setAttribute("seasons", seasons);
-//        }
-//        request.getRequestDispatcher("views/manageSeason.jsp").forward(request, response);
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
-        int noOfRecords = SeasonDAO.INSTANCE.getNoOfRecords();
+        ArrayList<Season> seasons = SeasonDAO.getINSTANCE().getSeasons((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
+        int noOfRecords = SeasonDAO.getINSTANCE().getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
 
         request.setAttribute("seasons", seasons);
