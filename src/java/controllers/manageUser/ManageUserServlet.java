@@ -4,6 +4,7 @@
  */
 package controllers.manageUser;
 
+import dal.RoleDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import models.Role;
 import models.User;
 
 /**
@@ -66,11 +68,13 @@ public class ManageUserServlet extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
+        ArrayList<Role> roles = RoleDAO.getINSTANCE().getRoles((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
         ArrayList<User> users = UserDAO.getINSTANCE().getUsers((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
         int noOfRecords = UserDAO.getINSTANCE().getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
 
         request.setAttribute("users", users);
+        request.setAttribute("roles", roles);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
         request.getRequestDispatcher("views/manageUser.jsp").forward(request, response);
