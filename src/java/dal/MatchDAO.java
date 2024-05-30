@@ -112,6 +112,39 @@ public class MatchDAO {
         return matchStatus;
     }
 
+    public boolean updateMatch(Match match) {
+        boolean updated = false;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+        LocalDateTime localDateTime = LocalDateTime.parse(match.getTime(), formatter);
+        Timestamp timestamp = Timestamp.valueOf(localDateTime);
+        String sql = "UPDATE Match SET "
+                + "team1 = ?, "
+                + "team2 = ?, "
+                + "seasonId = ?, "
+                + "[time] = ?, "
+                + "statusId = ?, "
+                + "matchTypeId = ?, "
+                + "updatedBy = ?, "
+                + "WHERE matchId = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, match.getTeam1().getClubId());
+            ps.setInt(2, match.getTeam2().getClubId());
+            ps.setInt(3, match.getSeason().getSeasonId());
+            ps.setTimestamp(4, timestamp);
+            ps.setInt(5, match.getStatus().getMatchStatusId());
+            ps.setInt(6, match.getType().getTypeId());
+            ps.setString(7, match.getUpdatedBy());
+            ps.setInt(8, match.getMatchId());
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                updated = true;
+            }
+        } catch (SQLException e) {
+        }
+        return updated;
+    }
+
     public ArrayList<MatchType> getMatchTypes() {
         ArrayList<MatchType> matchType = new ArrayList<>();
         try {
@@ -137,6 +170,7 @@ public class MatchDAO {
     }
 
     public ArrayList<Match> getMatches() {
+        INSTANCE.updateMatchStatus();
         ArrayList<Match> matches = new ArrayList<>();
         try {
             System.out.println("Loading data...");
@@ -152,7 +186,6 @@ public class MatchDAO {
                     + "s.seasonName, "
                     + "s.startDate AS seasonStartDate, "
                     + "s.endDate AS seasonEndDate, "
-                    + "m.stadiumImg AS matchStadiumImg, "
                     + "m.[time] AS matchTime, "
                     + "ms.statusId AS matchStatusId, "
                     + "ms.statusName AS matchStatusName, "
@@ -181,7 +214,6 @@ public class MatchDAO {
                 MatchType mt = new MatchType();
 
                 m.setMatchId(rs.getInt("matchId"));
-                m.setStadiumImg(rs.getString("matchStadiumImg"));
                 m.setTime(rs.getTimestamp("matchTime").toLocalDateTime());
 
                 fc1.setClubId(rs.getInt("team1Id"));
@@ -225,19 +257,18 @@ public class MatchDAO {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime localDateTime = LocalDateTime.parse(match.getTime(), formatter);
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
-        String sql = "INSERT INTO Match (team1, team2, seasonId, stadiumImg, [time], statusId, matchTypeId, createdBy, updatedBy) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Match (team1, team2, seasonId, [time], statusId, matchTypeId, createdBy, updatedBy) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, match.getTeam1().getClubId()); // team1
             ps.setInt(2, match.getTeam2().getClubId()); // team2
             ps.setInt(3, match.getSeason().getSeasonId()); // seasonId
-            ps.setString(4, ""); // stadiumImg
-            ps.setTimestamp(5, timestamp); // time
-            ps.setInt(6, match.getStatus().getMatchStatusId()); // statusId
-            ps.setInt(7, match.getType().getTypeId()); // matchTypeId
-            ps.setString(8, match.getCreatedBy()); // createdBy
-            ps.setString(9, match.getUpdatedBy()); // updatedBy
+            ps.setTimestamp(4, timestamp); // time
+            ps.setInt(5, match.getStatus().getMatchStatusId()); // statusId
+            ps.setInt(6, match.getType().getTypeId()); // matchTypeId
+            ps.setString(7, match.getCreatedBy()); // createdBy
+            ps.setString(8, match.getUpdatedBy()); // updatedBy
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -262,13 +293,18 @@ public class MatchDAO {
                 deleted = true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
         }
         return deleted;
     }
 
-    public static void main(String[] args) {
-        System.out.println(MatchDAO.INSTANCE.getMatchTypeById("2").getName());
+    public void updateMatchStatus() {
+        String sql = "UPDATE Match "
+                + "SET statusId = 2 "
+                + "WHERE [time] <= CURRENT_TIMESTAMP AND statusId <> 2 ";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+        }
     }
-
 }
