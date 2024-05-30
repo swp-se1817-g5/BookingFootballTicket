@@ -37,8 +37,8 @@ VALUES ('VIP', 100.00, 100, 'System'),
 
 -- Inserting values into the User table
 INSERT INTO [User] (roleId, userName, [password], email, phoneNumber, avatar, [name], createdBy, updatedBy)
-VALUES (1, 'admin', 'adminpassword', 'admin@example.com', '123456789', 'admin_avatar.jpg', 'Admin User', 'System', 'System'),
-       (2, 'user1', 'user1password', 'user1@example.com', '987654321', 'user1_avatar.jpg', 'Regular User', 'System', 'System');
+VALUES (1, 'admin', 'adminpassword', 'admin@example.com', '123456789', 'https://png.pngtree.com/png-clipart/20240408/original/pngtree-salesmen-transparent-icon-pro-user-avatar-simple-for-web-and-mobile-png-image_14778887.png', 'Admin User', 'System', 'System'),
+       (2, 'user1', 'user1password', 'user1@example.com', '987654321', 'https://img.lovepik.com/png/20231027/Blue-white-simple-avatar-placeholder-internet-the-internet_369192_wh860.png', 'Regular User', 'System', 'System');
 
 -- Inserting values into the Match table
 INSERT INTO Match (team1, team2, seasonId, [time], statusId, matchTypeId, createdBy, updatedBy)

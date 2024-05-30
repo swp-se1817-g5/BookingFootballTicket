@@ -215,7 +215,7 @@
                         <ul class="pagination">
                             <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
                                 <li class="page-item ${pageNumber eq currentPage ? 'active' : ''}">
-                                    <a href="manageuser?page=${pageNumber}" class="page-link">${pageNumber}</a>
+                                    <a href="manageSeason?page=${pageNumber}" class="page-link">${pageNumber}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -226,7 +226,7 @@
             <div id="createSeasonModal" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="createseason" method="post" >
+                        <form action="createSeason" method="post" >
                             <div class="modal-header">						
                                 <h4 class="modal-title">Create Season</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
