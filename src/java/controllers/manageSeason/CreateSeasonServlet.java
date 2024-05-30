@@ -88,18 +88,18 @@ public class CreateSeasonServlet extends HttpServlet {
 
                 if (end.after(start)) {
                     Season season = new Season(seasonName, start, end);
-                    SeasonDAO.INSTANCE.createSeason(season);
-                    response.sendRedirect(request.getContextPath() + "/manageseason?message=Season+created+successfully!");
+                    SeasonDAO.getINSTANCE().createSeason(season);
+                    response.sendRedirect(request.getContextPath() + "/manageSeason?message=Season+created+successfully!");
                     return;
                 } else {
-                    response.sendRedirect(request.getContextPath() + "/manageseason?message=End+date+must+be+after+start+date!");
+                    response.sendRedirect(request.getContextPath() + "/manageSeason?message=End+date+must+be+after+start+date!");
                     return;
                 }
             } catch (ParseException ex) {
                 Logger.getLogger(CreateSeasonServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        request.getRequestDispatcher("/manageseason").forward(request, response);
+        request.getRequestDispatcher("/manageSeason").forward(request, response);
     }
 
     /**

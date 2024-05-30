@@ -23,14 +23,13 @@ public class DeleteMatchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-                boolean deleted = false;
+        boolean deleted = false;
         try {
             int matchId = Integer.parseInt(request.getParameter("matchId"));
             deleted = MatchDAO.INSTANCE.deleteMatch(matchId);
         } catch (NumberFormatException e) {
         }
-        request.setAttribute("deleted", deleted);
-        request.getRequestDispatcher("manageMatch").forward(request, response);
+        response.sendRedirect("manageMatch?deleted=" + deleted);
     }
 
     @Override
