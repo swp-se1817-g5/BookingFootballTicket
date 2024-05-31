@@ -55,7 +55,8 @@ public class RoleDAO {
                 r.setCreateBy(rs.getString(3));
                 r.setCreatedDate(rs.getTimestamp(4).toLocalDateTime());
                 r.setUpdatedBy(rs.getString(5));
-                r.setLastUpdatedDate(rs.getTimestamp(6).toLocalDateTime());
+                Timestamp updatedTimestamp = rs.getTimestamp(6);
+                r.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
                 roles.add(r);
             }
         } catch (SQLException e) {
@@ -82,7 +83,8 @@ public class RoleDAO {
             role.setCreateBy(rs.getString(3));
             role.setCreatedDate(rs.getTimestamp(4).toLocalDateTime());
             role.setUpdatedBy(rs.getString(5));
-            role.setLastUpdatedDate(rs.getTimestamp(6).toLocalDateTime());
+            Timestamp updatedTimestamp = rs.getTimestamp(6);
+            role.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
         } catch (SQLException e) {
         }
         return role;

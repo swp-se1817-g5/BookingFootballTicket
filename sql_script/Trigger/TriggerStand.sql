@@ -1,5 +1,5 @@
 --use BookingFootballTicket;
-CREATE TRIGGER trg_UpdateLastUpdatedDate
+CREATE TRIGGER trg_UpdateStand
 ON Stand
 AFTER UPDATE
 AS

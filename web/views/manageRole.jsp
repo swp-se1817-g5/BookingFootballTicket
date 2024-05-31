@@ -213,7 +213,7 @@
                         <ul class="pagination">
                             <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
                                 <li class="page-item ${pageNumber eq currentPage ? 'active' : ''}">
-                                    <a href="manageuser?page=${pageNumber}" class="page-link">${pageNumber}</a>
+                                    <a href="manageRole?page=${pageNumber}" class="page-link">${pageNumber}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -223,7 +223,7 @@
                 <div id="createRoleModal" class="modal fade">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <form action="createrole" method="post">
+                            <form action="createRole" method="post">
                                 <div class="modal-header">						
                                     <h4 class="modal-title">Create Role</h4>
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

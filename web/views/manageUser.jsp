@@ -172,7 +172,7 @@
                         <div class="row">
                             <div class="col-sm-4"><h2>Manage <b>User</b></h2></div>
                             <div class="col-sm-4 searchh">
-                                <form action="searchuser" method="POST">
+                                <form action="searchUser" method="POST">
                                     <div class="d-flex align-items-center">
                                         <i class="material-icons mr-2">&#xE8B6;</i>
                                         <select id="searchType" name="searchType" class="form-control mr-2">
@@ -201,6 +201,7 @@
                             <tr>
                                 <th>User ID</th>
                                 <th>User Name</th>
+                                <th>Role Name</th>
                                 <th>Email</th>
                                 <th>Phone Number</th>
                                 <th>Avatar</th>
@@ -213,27 +214,32 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <c:forEach items="${requestScope.users}" var="o">
-                                <tr>
-                                    <td>${o.userId}</td>
-                                    <td>${o.userName}</td>
-                                    <td>${o.email}</td>
-                                    <td>${o.phoneNumber}</td>
-                                    <td><img src="${o.avatar}" alt="Avatar" style="max-width: 100px; max-height: 100px;"></td>
-                                    <td>${o.name}</td>
-                                    <td>${o.createdBy}</td>
-                                    <td>${o.createdDate}</td>
-                                    <td>${o.updatedBy}</td>
-                                    <td>${o.lastUpdatedDate}</td>
-                                    <td>
-                                        <a href="editUser.jsp?userId=${o.userId}" class="edit" title="Edit" data-toggle="tooltip">
-                                            <i class="material-icons">&#xE254;</i>
-                                        </a>
-                                        <a href="deleteUser?userId=${o.userId}" class="delete" title="Delete" data-toggle="tooltip">
-                                            <i class="material-icons">&#xE872;</i>
-                                        </a>
-                                    </td>
-                                </tr>
+                            <c:forEach items="${requestScope.roles}" var="r">
+                                <c:forEach items="${requestScope.users}" var="o">
+                                    <c:if test="${o.roleId == r.roleId}">
+                                        <tr>
+                                            <td>${o.userId}</td>
+                                            <td>${o.userName}</td>
+                                            <td>${r.roleName}</td>
+                                            <td>${o.email}</td>
+                                            <td>${o.phoneNumber}</td>
+                                            <td><img src="${o.avatar}" alt="Avatar" style="max-width: 100px; max-height: 100px;"></td>
+                                            <td>${o.name}</td>
+                                            <td>${o.createdBy}</td>
+                                            <td>${o.createdDate}</td>
+                                            <td>${o.updatedBy}</td>
+                                            <td>${o.lastUpdatedDate}</td>
+                                            <td>
+                                                <a href="editUser.jsp?userId=${o.userId}" class="edit" title="Edit" data-toggle="tooltip">
+                                                    <i class="material-icons">&#xE254;</i>
+                                                </a>
+                                                <a href="deleteUser?userId=${o.userId}" class="delete" title="Delete" data-toggle="tooltip">
+                                                    <i class="material-icons">&#xE872;</i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </c:if>
+                                </c:forEach>
                             </c:forEach>
                         </tbody>
                     </table>
@@ -242,7 +248,7 @@
                         <ul class="pagination">
                             <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
                                 <li class="page-item ${pageNumber eq currentPage ? 'active' : ''}">
-                                    <a href="manageuser?page=${pageNumber}" class="page-link">${pageNumber}</a>
+                                    <a href="manageUser?page=${pageNumber}" class="page-link">${pageNumber}</a>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -253,7 +259,7 @@
             <div id="createUserModal" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="createuser" method="post">
+                        <form action="createUser" method="post">
                             <div class="modal-header">						
                                 <h4 class="modal-title">Create User</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
