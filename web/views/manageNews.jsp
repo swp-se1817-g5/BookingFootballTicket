@@ -201,10 +201,9 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             <c:forEach items="${sessionScope.getListNews}" var="n" varStatus="status">
                                 <c:if test="${!n.isDeleted}">
-                                    <tr>
+                                    <tr style="word-break: break-word">
                                         <td>${status.count}</td>
                                         <td>${n.mainTitle}</td>
                                         <td>${n.title}</td>
@@ -230,7 +229,6 @@
                         }
                     </script>
 
-
                     <div id="createNewsModal" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -242,23 +240,23 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label>Main Title</label>
-                                            <textarea name="mainTitle" type="text" class="form-control" required rows="2" maxlength="100"></textarea>
+                                            <textarea name="mainTitle" class="form-control" required rows="2" maxlength="100"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Title</label>
-                                            <textarea name="title" type="text-area" class="form-control" required rows="2" maxlength="100"></textarea>
+                                            <textarea name="title" class="form-control" required rows="2"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Main Content</label>
-                                            <textarea name="mainContent" type="text" class="form-control" required rows="2" maxlength="150"></textarea>
+                                            <textarea name="mainContent"class="form-control" required rows="2"></textarea>
                                         </div>
-                                        <div class="form-group">
+                                        <div class="form-group" style="word-break: break-word">
                                             <label>Content</label>
-                                            <textarea name="content" class="form-control" rows="5" required maxlength="300"></textarea>
+                                            <textarea name="content" class="form-control" rows="5" required></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label>Location</label>
-                                            <input name="location" type="text" class="form-control" required>
+                                            <input name="location" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Kick Off <span id="datetimeError2" class="error"></span></label>
