@@ -1,7 +1,7 @@
-    <%-- 
-    Document   : manageFootballClub
-    Created on : May 23, 2024, 12:20:34 PM
-    Author     : admin
+<%-- 
+Document   : manageFootballClub
+Created on : May 23, 2024, 12:20:34 PM
+Author     : admin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -15,6 +15,49 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
+
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+        <!-- Libraries Stylesheet -->
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+        <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -142,6 +185,22 @@
                 display: flex;
                 justify-content: right;
             }
+
+            .toast {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                min-width: 200px;
+                z-index: 10000;
+            }
+            .toast.success .toast-header {
+                background-color: #28a745;
+                color: white;
+            }
+            .toast.error .toast-header {
+                background-color: #dc3545;
+                color: white;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -150,7 +209,125 @@
         </script>
     </head>
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid position-relative bg-white d-flex p-0">
+
+            <!-- Spinner Start -->
+            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
+            <!-- Spinner End -->
+
+            <!-- Sidebar Start -->
+            <div class="sidebar pe-4 pb-3">
+                <nav class="navbar bg-light navbar-light">
+                    <a href="index.html" class="navbar-brand mx-4 mb-3">
+                        <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHBOARD</h3>
+                    </a>
+                    <div class="d-flex align-items-center ms-4 mb-4">
+                        <div class="position-relative">
+                            <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Jhon Doe</h6>
+                            <span>Admin</span>
+                        </div>
+                    </div>
+                    <div class="navbar-nav w-100">
+                        <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Managers</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="manageUser" class="dropdown-item">Manage User</a>
+                                <a href="manageMatch" class="dropdown-item">Manage Match</a>
+                                <a href="manageFootballClub" class="dropdown-item activegit s">Manage Football Club</a>
+                                <a href="manageSeason" class="dropdown-item">Manage Season</a>
+                                <a href="manageStand" class="dropdown-item">Manage Stand</a>
+                                <a href="manageRole" class="dropdown-item">Manage Role</a>
+                                <a href="manageNews" class="dropdown-item">Manage News</a>
+                            </div>
+                        </div>
+                        <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
+                        <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
+                        <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
+                        <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="signin.html" class="dropdown-item">Sign In</a>
+                                <a href="signup.html" class="dropdown-item">Sign Up</a>
+                                <a href="404.html" class="dropdown-item">404 Error</a>
+                                <a href="blank.html" class="dropdown-item">Blank Page</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <!-- Sidebar End -->
+
+            <div class="content">
+                <!-- Navbar Start -->
+                <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+                    <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                        <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
+                    </a>
+                    <a href="#" class="sidebar-toggler flex-shrink-0">
+                        <i class="fa fa-bars"></i>
+                    </a>
+                    <form class="d-none d-md-flex ms-4">
+                        <input class="form-control border-0" type="search" placeholder="Search">
+                    </form>
+                    <div class="navbar-nav align-items-center ms-auto">
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <i class="fa fa-envelope me-lg-2"></i>
+                                <span class="d-none d-lg-inline-flex">Message</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <a href="#" class="dropdown-item">
+                                    <div class="d-flex align-items-center">
+                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                        <div class="ms-2">
+                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
+                                            <small>15 minutes ago</small>
+                                        </div>
+                                    </div>
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item text-center">See all message</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <i class="fa fa-bell me-lg-2"></i>
+                                <span class="d-none d-lg-inline-flex">Notificatin</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <a href="#" class="dropdown-item">
+                                    <h6 class="fw-normal mb-0">Profile updated</h6>
+                                    <small>15 minutes ago</small>
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="#" class="dropdown-item text-center">See all notifications</a>
+                            </div>
+                        </div>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                <span class="d-none d-lg-inline-flex">John Doe</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                                <a href="#" class="dropdown-item">My Profile</a>
+                                <a href="#" class="dropdown-item">Settings</a>
+                                <a href="#" class="dropdown-item">Log Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+                <!-- Navbar End -->
+                <div class="container-fluid">
             <div class="table-responsive">
                 <div class="table-wrapper">
                     <div class="table-title">
@@ -200,20 +377,172 @@
                                     
                         </tbody>
                     </table>
-<!--                    <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-                        <ul class="pagination">
-                            <li class="page-item disabled"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link"><i class="fa fa-angle-double-right"></i></a></li>
-                        </ul>
-                    </div>-->
                 </div>
             </div>  
-        </div>   
+        </div>     
+            </div>      
+        </div>      
+
+
+        <div id="createStandModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="createStand" method="post">
+                        <div class="modal-header">						
+                            <h4 class="modal-title">Create Stand</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">	
+                            <div class="form-group">
+                                <label>Stand Name</label>
+                                <input name="standName" type="text" class="form-control" maxlength="50" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Price (VND)</label>
+                                <input name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity (Seat)</label>
+                                <input name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" class="btn btn-success" value="Add">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="updateStandModal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="updateStand" method="post">
+                        <div class="modal-header">						
+                            <h4 class="modal-title">Update Stand</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label>Stand ID</label>
+                                <input id="standId" name="standId" readonly type="number" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Stand Name</label>
+                                <input id="standName" name="standName" maxlength="50" type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Price (VND)</label>
+                                <input id="price" name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity (Seat)</label>
+                                <input id="quantity" name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                            <input type="submit" class="btn btn-success" value="Update">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- toast notification -->
+        <div class="toast" id="toastNotification" data-delay="3000">
+            <div class="toast-header">
+                <strong class="mr-auto" id="toastTitle"></strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+
+        <!-- script for toast notification -->
+        <script>
+            //update
+            $(document).ready(function () {
+                var updated = '<%= request.getAttribute("updated") %>';
+                if (updated !== 'null' && updated !== '') {
+                    var toast = $('#toastNotification');
+                    if (updated === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('Stand updated successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (updated === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to update stand.');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
+                }
+            });
+
+            //create
+            $(document).ready(function () {
+                var created = '<%= request.getAttribute("created") %>';
+                if (created !== 'null' && created !== '') {
+                    var toast = $('#toastNotification');
+                    if (created === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('Stand created successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (created === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to create stand.');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
+                }
+            });
+
+            //delete
+            $(document).ready(function () {
+                var deleted = '<%= request.getAttribute("deleted") %>';
+                if (deleted !== 'null' && deleted !== '') {
+                    var toast = $('#toastNotification');
+                    if (deleted === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('Stand deleted successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (deleted === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to delete stand.');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
+                }
+            });
+
+        </script>
+
+        <!--script for create and update-->
+        <script type="text/javascript">
+            function doDelete(standId) {
+                if (confirm("Do you want to delete stand with id = " + standId))
+                    location.href = 'deleteStand?standId=' + standId;
+            }
+            function update(standId, standName, price, quantity) {
+                document.getElementById('standId').value = standId;
+                document.getElementById('standName').value = standName;
+                document.getElementById('price').value = price;
+                document.getElementById('quantity').value = quantity;
+            }
+        </script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/chart/chart.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
     </body>
 </html>
