@@ -389,7 +389,7 @@ Author     : admin
         <div id="createStandModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="createStand" method="post">
+                    <form id="createStandForm" action="createStand" method="post">
                         <div class="modal-header">						
                             <h4 class="modal-title">Create Stand</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -397,7 +397,8 @@ Author     : admin
                         <div class="modal-body">	
                             <div class="form-group">
                                 <label>Stand Name</label>
-                                <input name="standName" type="text" class="form-control" maxlength="50" required>
+                                <input id="standNameInput" name="standName" type="text" class="form-control" maxlength="50" required>
+                                <span id="standNameError" class="text-danger"></span> <!-- Thêm span để hiển thị thông báo lỗi -->
                             </div>
                             <div class="form-group">
                                 <label>Price (VND)</label>
@@ -418,10 +419,11 @@ Author     : admin
             </div>
         </div>
 
+
         <div id="updateStandModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="updateStand" method="post">
+                    <form id="updateStandForm" action="updateStand" method="post">
                         <div class="modal-header">						
                             <h4 class="modal-title">Update Stand</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -430,20 +432,23 @@ Author     : admin
                             <div class="form-group">
                                 <label>Stand ID</label>
                                 <input id="standId" name="standId" readonly type="number" class="form-control" required>
+                                <span id="standIdError" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label>Stand Name</label>
                                 <input id="standName" name="standName" maxlength="50" type="text" class="form-control" required>
+                                <span id="standNameError" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label>Price (VND)</label>
                                 <input id="price" name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
+                                <span id="priceError" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label>Quantity (Seat)</label>
                                 <input id="quantity" name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
+                                <span id="quantityError" class="text-danger"></span>
                             </div>
-
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -453,6 +458,8 @@ Author     : admin
                 </div>
             </div>
         </div>
+
+
         <!-- toast notification -->
         <div class="toast" id="toastNotification" data-delay="3000">
             <div class="toast-header">
@@ -521,18 +528,66 @@ Author     : admin
         </script>
 
         <!--script for create and update-->
-        <script type="text/javascript">
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+
+                // Convert the stands list from JSP to a JavaScript array
+                var stands = [];
+            <c:forEach items="${stands}" var="stand">
+                stands.push({standId: "${stand.standId}", standName: "${stand.standName}"});
+            </c:forEach>
+
+                // Check for duplicate stand name before submitting the create form
+                $('#createStandForm').submit(function (event) {
+                    var standName = $('#standNameInput').val().trim();
+                    var duplicate = stands.some(stand => stand.standName === standName);
+
+                    if (duplicate) {
+                        $('#standNameError').text('Stand name already exists. Please choose a different name.');
+                        event.preventDefault();
+                    } else {
+                        $('#standNameError').text('');
+                    }
+                });
+
+                // Check for duplicate stand name before submitting the update form
+                $('#updateStandForm').submit(function (event) {
+                    var standId = $('#standId').val();
+                    var standName = $('#standName').val().trim();
+                    var originalStand = stands.find(stand => stand.standId == standId);
+                    var duplicate = stands.some(stand => stand.standName === standName && stand.standId != standId);
+
+                    if (standName !== originalStand.standName && duplicate) {
+                        $('#standNameError').text('Stand name already exists. Please choose a different name.');
+                        event.preventDefault();
+                    } else {
+                        $('#standNameError').text('');
+                    }
+                });
+            });
+
             function doDelete(standId) {
                 if (confirm("Do you want to delete stand with id = " + standId))
                     location.href = 'deleteStand?standId=' + standId;
             }
+
             function update(standId, standName, price, quantity) {
                 document.getElementById('standId').value = standId;
                 document.getElementById('standName').value = standName;
                 document.getElementById('price').value = price;
                 document.getElementById('quantity').value = quantity;
+                // Clear error messages when opening the modal
+                $('#standIdError').text('');
+                $('#standNameError').text('');
+                $('#priceError').text('');
+                $('#quantityError').text('');
             }
         </script>
+
+
+
+
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
