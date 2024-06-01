@@ -4,6 +4,7 @@
  */
 package controllers.manageUser;
 
+import dal.RoleDAO;
 import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import models.Role;
 import models.User;
 
 /**
@@ -79,12 +81,13 @@ public class SearchUserServlet extends HttpServlet {
         // Check if both searchType and keyword are provided and not empty
         if (searchType != null && !searchType.isBlank() && keyword != null && !keyword.isBlank()) {
             ArrayList<User> users = new ArrayList<>();
+            ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
             // Perform search based on the searchType
             switch (searchType) {
-                case "userid":
+                case "userId":
                     try {
                     int userId = Integer.parseInt(keyword);
-                    User u = UserDAO.getINSTANCE().getUserbyID(userId);
+                    User u = UserDAO.getINSTANCE().getUserbyuserID(userId);
                     if (u != null) {
                         users.add(u);
                     } else {
@@ -99,11 +102,21 @@ public class SearchUserServlet extends HttpServlet {
                     return; // Stop further processing
                 }
                 break;
-                case "username":
-                    users = UserDAO.getINSTANCE().getUserbyUsername(keyword);
+                case "userName":
+                    users = UserDAO.getINSTANCE().getUserbyType("userName",keyword);
                     break;
                 case "name":
-                    users = UserDAO.getINSTANCE().getUserbyName(keyword);
+                    users = UserDAO.getINSTANCE().getUserbyType("name",keyword);
+                    break;
+                case "email":
+                    users = UserDAO.getINSTANCE().getUserbyType("email", keyword);
+                    break;
+                case "phoneNumber":
+                    users = UserDAO.getINSTANCE().getUserbyType("phoneNumber", keyword);
+                    break;
+                case "roleId":
+                    int roleId = Integer.parseInt(keyword);
+                    users = UserDAO.getINSTANCE().getUserbyroleID(roleId);
                     break;
                 default:
                     // Invalid search type, return error message
@@ -113,6 +126,7 @@ public class SearchUserServlet extends HttpServlet {
             // Check if users list is not null and not empty
             if (users != null && !users.isEmpty()) {
                 request.setAttribute("users", users);
+                request.setAttribute("roles", roles);
             } else {
                 // No users found, return message
                 request.setAttribute("message", "No users found for the provided keyword: " + keyword);

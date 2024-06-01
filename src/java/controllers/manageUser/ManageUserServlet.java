@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.HashMap;
 import models.Role;
 import models.User;
 
@@ -67,8 +68,11 @@ public class ManageUserServlet extends HttpServlet {
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
+            if (page < 1) {
+                page = 1;
+            }
         }
-        ArrayList<Role> roles = RoleDAO.getINSTANCE().getRoles((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
+        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
         ArrayList<User> users = UserDAO.getINSTANCE().getUsers((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
         int noOfRecords = UserDAO.getINSTANCE().getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);

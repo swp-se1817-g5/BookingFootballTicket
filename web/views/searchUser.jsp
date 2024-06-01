@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bootstrap Simple Data Table</title>
+        <title>User Result</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -156,7 +156,7 @@
                     <div class="table-title">
                         <div class="row">
                             <div class="col-sm-4"><h2>Manage <b>User</b></h2></div>
-                            <div class="col-sm-8 text-right"><input type="button" value="Back" onclick="window.location.href = 'manageuser'"></div>
+                            <div class="col-sm-8 text-right"><input type="button" value="Back" onclick="window.location.href = 'manageUser'"></div>
                         </div>
                     </div>
                     <c:if test="${not empty requestScope.message}">
@@ -165,16 +165,30 @@
                     <table class="table table-striped table-hover table-bordered">
                         <thead>
                             <tr>
-                                <th>User ID</th>
+                                <th>
+                                    User ID
+                                    <button class="btn btn-link btn-sm" onclick="sortTableBy('userId')">
+                                        <i class="fa fa-sort"></i>
+                                    </button>
+                                </th>
                                 <th>User Name</th>
+                                <th>Role Name</th>
                                 <th>Email</th>
                                 <th>Phone Number</th>
                                 <th>Avatar</th>
                                 <th>Name</th>
                                 <th>Created By</th>
-                                <th>Created Date</th>
+                                <th>Created Date
+                                    <button class="btn btn-link btn-sm" onclick="sortTableBy('createdDate')">
+                                        <i class="fa fa-sort"></i>
+                                    </button>
+                                </th>
                                 <th>Last Updated By</th>
-                                <th>Last Updated Date</th>
+                                <th>Last Updated Date
+                                    <button class="btn btn-link btn-sm" onclick="sortTableBy('lastUpdatedDate')">
+                                        <i class="fa fa-sort"></i>
+                                    </button>
+                                </th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -183,6 +197,11 @@
                                 <tr>
                                     <td>${o.userId}</td>
                                     <td>${o.userName}</td>
+                                    <c:forEach items="${requestScope.roles}" var="r">
+                                        <c:if test="${r.roleId eq o.roleId}">
+                                            <td>${r.roleName}</td>
+                                        </c:if>
+                                    </c:forEach>
                                     <td>${o.email}</td>
                                     <td>${o.phoneNumber}</td>
                                     <td><img src="${o.avatar}" alt="Avatar" style="max-width: 100px; max-height: 100px;"></td>

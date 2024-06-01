@@ -54,6 +54,7 @@ public class UserDAO {
                 users.add(u);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         return users;
     }
@@ -290,7 +291,7 @@ public class UserDAO {
         return null;
     }
 
-    public User getUserbyID(int userID) {
+    public User getUserbyuserID(int userID) {
         User u = null;
         try {
             String sql = "select * from [dbo].[User] where userId = ? and isDeleted = 0";
@@ -314,14 +315,15 @@ public class UserDAO {
                 u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         return u;
     }
 
-    public ArrayList<User> getUserbyName(String keyword) {
+    public ArrayList<User> getUserbyType(String searchType, String keyword) {
         ArrayList<User> users = new ArrayList<>();
         try {
-            String sql = "select * from [dbo].[User] where name LIKE ? and isDeleted = 0";
+            String sql = "SELECT * FROM [dbo].[User] WHERE " + searchType + " LIKE ? AND isDeleted = 0";
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + keyword + "%");
             rs = ps.executeQuery();
@@ -343,16 +345,17 @@ public class UserDAO {
                 users.add(u);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         return users;
     }
 
-    public ArrayList<User> getUserbyUsername(String keyword) {
+    public ArrayList<User> getUserbyroleID(int roleId) {
         ArrayList<User> users = new ArrayList<>();
         try {
-            String sql = "select * from [dbo].[User] where userName LIKE ? and isDeleted = 0";
+            String sql = "select * from [dbo].[User] where roleId = ? and isDeleted = 0";
             ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + keyword + "%");
+            ps.setInt(1, roleId);
             rs = ps.executeQuery();
             while (rs.next()) {
                 User u = new User();
@@ -372,6 +375,7 @@ public class UserDAO {
                 users.add(u);
             }
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         return users;
     }

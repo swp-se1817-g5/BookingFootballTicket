@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
  * @author AD
  */
 public class Validate {
+
     public static final boolean isValidName(String name) {
         Pattern pattern = Pattern.compile(IConstant.REGEX_NAME);
         Matcher matcher = pattern.matcher(name);
@@ -28,6 +29,12 @@ public class Validate {
     public static final boolean isValidPhoneNumber(String phoneNumber) {
         Pattern pattern = Pattern.compile(IConstant.REGEX_PHONE_NUMBER);
         Matcher matcher = pattern.matcher(phoneNumber);
+        return matcher.matches();
+    }
+
+    public static final boolean isNumber(String numberStr) {
+        Pattern pattern = Pattern.compile(IConstant.REGEX_NUMBER);
+        Matcher matcher = pattern.matcher(numberStr);
         return matcher.matches();
     }
 
