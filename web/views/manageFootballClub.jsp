@@ -242,7 +242,7 @@ Author     : admin
                             <div class="dropdown-menu bg-transparent border-0">
                                 <a href="manageUser" class="dropdown-item">Manage User</a>
                                 <a href="manageMatch" class="dropdown-item">Manage Match</a>
-                                <a href="manageFootballClub" class="dropdown-item activegit s">Manage Football Club</a>
+                                <a href="manageFootballClub" class="dropdown-item active">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item">Manage Stand</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
@@ -341,7 +341,7 @@ Author     : admin
                                 </div>
                             </div>
                             <div class="col-sm-4 createe">
-                                <a href="createFootballClub" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Create New Club</span></a>
+                                <a href="#createFCModal" data-toggle="modal" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Create New Club</span></a>
                             </div>
                         </div>
                     </div>
@@ -384,28 +384,23 @@ Author     : admin
         </div>      
 
 
-        <div id="createStandModal" class="modal fade">
+        <div id="createFCModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="createStand" method="post">
+                    <form action="createFootballClub" method="post" enctype="multipart/form-data">
                         <div class="modal-header">						
-                            <h4 class="modal-title">Create Stand</h4>
+                            <h4 class="modal-title">Create Football Club</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">	
                             <div class="form-group">
-                                <label>Stand Name</label>
-                                <input name="standName" type="text" class="form-control" maxlength="50" required>
+                                <label>Images</label>
+                                <input name="image" type="file" accept="image/*"  class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Price (VND)</label>
-                                <input name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
+                                <label>Football Club Name</label>
+                                <input name="clubName" type="text" class="form-control" maxlength="50" required>
                             </div>
-                            <div class="form-group">
-                                <label>Quantity (Seat)</label>
-                                <input name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
-                            </div>
-
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -487,11 +482,11 @@ Author     : admin
                     var toast = $('#toastNotification');
                     if (created === "true") {
                         toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Stand created successfully.');
+                        toast.find('#toastMessage').text('Football Club created successfully.');
                         toast.addClass('success').removeClass('error');
                     } else if (created === "false") {
                         toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to create stand.');
+                        toast.find('#toastMessage').text('Failed to create Football Club.');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
@@ -521,7 +516,7 @@ Author     : admin
         <!--script for create and update-->
         <script type="text/javascript">
             function doDelete(standId) {
-                if (confirm("Do you want to delete stand with id = " + standId))
+                if (confirm("Do you want to delete Football Club with id = " + standId))
                     location.href = 'deleteStand?standId=' + standId;
             }
             function update(standId, standName, price, quantity) {
