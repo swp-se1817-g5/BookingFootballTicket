@@ -307,7 +307,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Phone Number</label>
-                                    <input name="phoneNumber" type="text" class="form-control" onblur="validatePhonenumber(this)" required>
+                                    <input name="phoneNumber" type="text" class="form-control" pattern="[0-9]{10}" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="avatar">Avatar</label>
@@ -351,30 +351,13 @@
                         errorMessage = "User ID must be a positive integer.";
                     }
                     break;
-                case "email":
-                    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-                    if (!emailPattern.test(keyword)) {
-                        isValid = false;
-                        errorMessage = "Invalid email format.";
-                    }
-                    break;
-                case "phoneNumber":
-                    if (!/^\d{10}$/.test(keyword)) {
-                        isValid = false;
-                        errorMessage = "Phone number must be a 10-digit number.";
-                    }
-                    break;
             }
-
-            // Hiển thị thông báo lỗi
             const errorMessageElement = document.getElementById("error-message");
             if (!isValid) {
                 errorMessageElement.textContent = errorMessage;
-                // Clear ô search và focus vào ô search sau khi thông báo lỗi
                 document.getElementById("searchKeyword").value = "";
                 document.getElementById("searchKeyword").focus();
             } else {
-                // Xóa thông báo lỗi nếu giá trị hợp lệ
                 errorMessageElement.textContent = "";
             }
             return isValid;
@@ -390,13 +373,13 @@
 
             if (searchType === "roleId") {
                 keywordInput.style.display = "none";
-                keywordInput.removeAttribute("required"); 
+                keywordInput.removeAttribute("required");
                 keywordSelect.style.display = "block";
                 keywordInput.setAttribute("name", "key");
-                keywordSelect.setAttribute("name", "keyword"); 
+                keywordSelect.setAttribute("name", "keyword");
             } else {
                 keywordInput.style.display = "block";
-                keywordInput.setAttribute("required", "required"); 
+                keywordInput.setAttribute("required", "required");
                 keywordSelect.style.display = "none";
                 keywordInput.setAttribute("name", "keyword");
             }
