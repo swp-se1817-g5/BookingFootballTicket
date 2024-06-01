@@ -79,10 +79,10 @@ public class CreateNewNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+//        PrintWriter out = response.getWriter();
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         HttpSession session = request.getSession();
-//        String userName = (String) session.getAttribute("userName");
+//        String userName = (String) session.getAttribute("currentUser");
         String userName = "Duong";
         String mainTitle = request.getParameter("mainTitle");
         String title = request.getParameter("title");
@@ -103,7 +103,7 @@ public class CreateNewNewsServlet extends HttpServlet {
         }
         News n = new News(mainTitle, title, mainContent, content, location, kickOff, userName, status);
         int created = NewsDAO.INSTANCE.createNews(n);
-        out.print(created);
+//        out.print(created);
         if (created != 0) {
             session.setAttribute("created", created);
         }
