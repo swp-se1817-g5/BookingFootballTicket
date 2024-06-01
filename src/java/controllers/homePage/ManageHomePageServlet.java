@@ -58,7 +58,10 @@ public class ManageHomePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+//        out.print(MatchDAO.INSTANCE.getMatches());
         request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
+        
         request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
     }
 
