@@ -50,15 +50,15 @@ public class RegisterServlet extends HttpServlet {
 
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
-        String registerAmail = request.getParameter("registerAmail");
+        String registerEmail = request.getParameter("registerEmail");
         String termsAndConditions = request.getParameter("iAgree"); // This will get "terms-and-conditions" if checkbox is checked
         boolean status = false;
         String errorMessage = "";
         String successMessage = "";
-        if(registerAmail != null) {
-            request.setAttribute("registerAmail", true);
+        if (Boolean.valueOf(registerEmail)) {
+            request.setAttribute("registerEmail", true);
         }
-        if(avatar != null) {
+        if (avatar != null) {
             request.setAttribute("avatar", avatar);
         }
         // Validate input
@@ -70,7 +70,7 @@ public class RegisterServlet extends HttpServlet {
         }
 
         if (!Validate.isValidName(name)) {
-            request.setAttribute("errorMessage", "Name invalid");
+            request.setAttribute("errorMessage", "Name invalid!");
             //if field is error will null else will return value input before
             returnValueBefore(request, response, null, userName, email, phoneNumber);
             //the page will return
@@ -80,42 +80,48 @@ public class RegisterServlet extends HttpServlet {
 
         User userExistName = userDAO.getUserByUserName(userName);
         if (userExistName != null) {
-            request.setAttribute("errorMessage", "userName have exist");
-            returnValueBefore(request, response, name,  null, email, phoneNumber);
+            request.setAttribute("errorMessage", "userName have exist!");
+            returnValueBefore(request, response, name, null, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
-        
+
         if (!Validate.isValidPhoneNumber(phoneNumber)) {
-            request.setAttribute("errorMessage", "phone invalid");
+            String messPhone = "Phone Number invalid!";
+            if (!phoneNumber.startsWith("0")
+                    && phoneNumber.length() == 10
+                    && Validate.isNumber(phoneNumber)) {
+                messPhone = "Phone must be start with 0";
+            }
+            request.setAttribute("errorMessage", messPhone);
             returnValueBefore(request, response, name, userName, email, null);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
-        
+
         if (!Validate.isValidEmail(email)) {
-            request.setAttribute("errorMessage", "email invalid");
+            request.setAttribute("errorMessage", "Email invalid!");
             returnValueBefore(request, response, name, userName, null, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
-        
+
         User userExists = userDAO.getUserByEmail(email);
         if (userExists != null) {
-            request.setAttribute("errorMessage", "user name have exits!");
-            returnValueBefore(request, response, name, null, email, phoneNumber);
+            request.setAttribute("errorMessage", "Email have exits!");
+            returnValueBefore(request, response, name, userName, null, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
         // Mật khẩu cần ít nhất 8 kí tự, 1 kí tự thường, 1 kí tự in hoa, 1 kí tự số
         if (!Validate.isValidPassword(password)) {
-            request.setAttribute("errorMessage", "Password needs at least 8 characters, 1 normal character, 1 uppercase character, 1 numeric character");
+            request.setAttribute("errorMessage", "Password needs at least 8 characters, 1 normal character, 1 uppercase character, 1 numeric character!!");
             returnValueBefore(request, response, name, userName, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
         if (!password.equals(confirmPassword)) {
-            request.setAttribute("errorMessage", "confirm password not equal password");
+            request.setAttribute("errorMessage", "Confirm password not equal password!!");
             returnValueBefore(request, response, name, userName, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
@@ -137,27 +143,14 @@ public class RegisterServlet extends HttpServlet {
         newUser.setRoleId(2);
         newUser.setAvatar(avatar);
 
-        try {
-            status = userDAO.addUser(newUser);
-            if (status) {
-                //if add success save this user into session and direct to home page
-                successMessage = "Register successfully!!!";
-                HttpSession session = request.getSession();
-                session.setAttribute("successMessage", successMessage);
-                session.setAttribute("currentUser", userDAO.getUserByEmail(email));
-                session.setMaxInactiveInterval(3600);
-                request.getRequestDispatcher("homePage").forward(request, response);
-                return; // Exit the method to prevent further processing
-            } else {
-                errorMessage = "Something went wrong! Please try again!";
-            }
-        } catch (Exception e) {
-            errorMessage = "An error occurred: " + e.getMessage();
-        }
-
-        //if have any thing error will throw register page to display
-        request.setAttribute("errorMessage", errorMessage);
-        dispatch(request, response, "/views/register.jsp");
+        status = userDAO.addUser(newUser);
+        //if add success save this user into session and direct to home page
+        successMessage = "Register successfully!!!";
+        HttpSession session = request.getSession();
+        session.setAttribute("successMessage", successMessage);
+        session.setAttribute("currentUser", userDAO.getUserByEmail(email));
+        session.setMaxInactiveInterval(Integer.MAX_VALUE);
+        request.getRequestDispatcher("homePage").forward(request, response);
         return;
     }
 
@@ -170,7 +163,7 @@ public class RegisterServlet extends HttpServlet {
         request.setAttribute("email", mail);
         request.setAttribute("phone", phone);
     }
-    
+
     //direct to page
     private void dispatch(HttpServletRequest request, HttpServletResponse response, String page)
             throws ServletException, IOException {
