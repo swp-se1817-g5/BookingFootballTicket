@@ -41,10 +41,6 @@ public class RoleDAO {
         try {
             String sql = "SELECT [roleId]\n"
                     + "      ,[roleName]\n"
-                    + "      ,[createdBy]\n"
-                    + "      ,[createdDate]\n"
-                    + "      ,[updatedBy]\n"
-                    + "      ,[lastUpdatedDate]\n"
                     + "  FROM [dbo].[Role] WHERE [isDeleted] = 0 ";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -52,11 +48,6 @@ public class RoleDAO {
                 Role r = new Role();
                 r.setRoleId(rs.getInt(1));
                 r.setRoleName(rs.getString(2));
-                r.setCreateBy(rs.getString(3));
-                r.setCreatedDate(rs.getTimestamp(4).toLocalDateTime());
-                r.setUpdatedBy(rs.getString(5));
-                Timestamp updatedTimestamp = rs.getTimestamp(6);
-                r.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
                 roles.add(r);
             }
         } catch (SQLException e) {
@@ -65,7 +56,7 @@ public class RoleDAO {
         return roles;
     }
 
-    public Role getRolebyID(int ID) {
+    public Role getRolebyID(int roleID) {
         Role role = new Role();
         String sql = "SELECT [roleId]\n"
                 + "      ,[roleName]\n"
@@ -76,9 +67,9 @@ public class RoleDAO {
                 + "  FROM [dbo].[Role] WHERE [roleId] = ? AND [isDeleted] = 0";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, ID);
+            ps.setInt(1, roleID);
             rs = ps.executeQuery();
-            role.setRoleId(ID);
+            role.setRoleId(roleID);
             role.setRoleName(rs.getString(2));
             role.setCreateBy(rs.getString(3));
             role.setCreatedDate(rs.getTimestamp(4).toLocalDateTime());

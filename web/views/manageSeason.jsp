@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bootstrap Simple Data Table</title>
+        <title>Manage Season</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -142,6 +142,9 @@
                 display: flex;
                 justify-content: right;
             }
+            table.table tbody tr:hover {
+                background-color: #f2f2f2;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -173,7 +176,7 @@
                     <c:if test="${not empty param.message}">
                         <div class="alert alert-warning">${param.message}</div>
                     </c:if>
-                    <table class="table table-striped table-hover table-bordered">
+                    <table id="seasonTable" class="table table-striped table-hover table-bordered">
                         <thead>
                             <tr>
                                 <th>Season ID</th>
@@ -213,11 +216,17 @@
                     <div class="clearfix">
                         <div class="hint-text">Showing <strong>${requestScope.seasons.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>
                         <ul class="pagination">
-                            <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
+                            <c:if test="${page > 1}">
+                                <li class="page-item"><a href="manageSeason?page=${page - 1}" class="page-link"><</a></li>
+                                </c:if>  
+                                <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
                                 <li class="page-item ${pageNumber eq currentPage ? 'active' : ''}">
                                     <a href="manageSeason?page=${pageNumber}" class="page-link">${pageNumber}</a>
                                 </li>
                             </c:forEach>
+                            <c:if test="${page < noOfPages}">
+                                <li class="page-item"><a href="manageSeason?page=${page + 1}" class="page-link">></a></li>
+                                </c:if>
                         </ul>
                     </div>
                 </div>
@@ -226,7 +235,7 @@
             <div id="createSeasonModal" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="createSeason" method="post" >
+                        <form action="createSeason" method="post" onsubmit="return validateForm()">
                             <div class="modal-header">						
                                 <h4 class="modal-title">Create Season</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -234,15 +243,18 @@
                             <div class="modal-body">					
                                 <div class="form-group">
                                     <label>Season Name</label>
-                                    <input name="seasonName" type="text" class="form-control" required>
+                                    <input id="seasonName" name="seasonName" type="text" class="form-control" required oninput="validateForm()">
+                                    <div id="seasonNameError" style="color: red;"></div>
                                 </div>
                                 <div class="form-group">
                                     <label>Start Date</label>
-                                    <input id="startDate" name="startDate" type="date" class="form-control" required>
+                                    <input id="startDate" name="startDate" type="date" class="form-control" required oninput="validateForm()">
+                                    <div id="startDateError" style="color: red;"></div>
                                 </div>
                                 <div class="form-group">
                                     <label>End Date</label>
-                                    <input id="endDate" name="endDate" type="date" class="form-control" required>
+                                    <input id="endDate" name="endDate" type="date" class="form-control" required oninput="validateForm()">
+                                    <div id="endDateError" style="color: red;"></div>
                                 </div>
                             </div>
                             <div class="modal-footer">

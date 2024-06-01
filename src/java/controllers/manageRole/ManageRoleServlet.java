@@ -69,6 +69,9 @@ public class ManageRoleServlet extends HttpServlet {
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
+            if (page < 1) {
+                page = 1;
+            }
         }
         RoleDAO roleDAO = RoleDAO.getINSTANCE();
         ArrayList<Role> roles = roleDAO.getRoles((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
