@@ -52,6 +52,10 @@ public class ManageNewsServlet extends HttpServlet {
         }
     }
 
+    public boolean isNullOrBlank(String str) {
+        return str == null || str.trim().isEmpty();
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -64,15 +68,12 @@ public class ManageNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         ArrayList<News> listNews;
-
         String go = request.getParameter("go");
-        if (go != null) {
+        if (!isNullOrBlank(go)) {
             if (go.equals("search")) {
                 String valueSearch = request.getParameter("valueSearch");
-                out.print(valueSearch);
                 listNews = NewsDAO.INSTANCE.search(valueSearch);
                 if (!listNews.isEmpty()) {
                     session.setAttribute("getListNews", listNews);
@@ -99,7 +100,6 @@ public class ManageNewsServlet extends HttpServlet {
             }
             request.getRequestDispatcher("views/manageNews.jsp").forward(request, response);
         }
-
     }
 
     /**

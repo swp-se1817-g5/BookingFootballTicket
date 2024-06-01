@@ -1,4 +1,0 @@
-ALTER TABLE [dbo].[User] DROP CONSTRAINT phoneNumber
-
-ALTER TABLE Users 
-ALTER COLUMN phoneNumber VARCHAR(50) NULL;

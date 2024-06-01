@@ -1,6 +1,5 @@
 package controllers.Auth;
 
-import constant.IConstant;
 import dal.UserDAO;
 import java.io.IOException;
 
@@ -10,7 +9,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.security.SecureRandom;
 import java.util.Objects;
 import models.User;
 import models.UserGoogle;
@@ -32,7 +30,7 @@ public class GmailLoginServlet extends HttpServlet {
         String error = request.getParameter("error");
         //neu user cancel login => error => redirect trang login
         if (error != null) {
-            request.getRequestDispatcher("/views/signIn.jsp").forward(request, response);
+            request.getRequestDispatcher("/views/register.jsp").forward(request, response);
             return;
         }
         String accessToken = gg.getToken(code);
@@ -65,7 +63,7 @@ public class GmailLoginServlet extends HttpServlet {
         request.setAttribute("userName", userName);
         request.setAttribute("email", mail);
         request.setAttribute("phone", phone);
-        request.setAttribute("registerAmail", true);
+        request.setAttribute("registerEmail", true);
         request.setAttribute("avatar", avatar);
     }
 

@@ -10,7 +10,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bootstrap Simple Data Table</title>
+        <title>Manage Role</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -142,6 +142,9 @@
                 display: flex;
                 justify-content: right;
             }
+            table.table tbody tr:hover {
+                background-color: #f2f2f2;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -211,11 +214,17 @@
                     <div class="clearfix">
                         <div class="hint-text">Showing <strong>${requestScope.roles.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>
                         <ul class="pagination">
-                            <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
+                            <c:if test="${page > 1}">
+                                <li class="page-item"><a href="manageRole?page=${page - 1}" class="page-link"><</a></li>
+                                </c:if>  
+                                <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
                                 <li class="page-item ${pageNumber eq currentPage ? 'active' : ''}">
                                     <a href="manageRole?page=${pageNumber}" class="page-link">${pageNumber}</a>
                                 </li>
                             </c:forEach>
+                            <c:if test="${page < noOfPages}">
+                                <li class="page-item"><a href="manageRole?page=${page + 1}" class="page-link">></a></li>
+                                </c:if>
                         </ul>
                     </div>
                 </div>

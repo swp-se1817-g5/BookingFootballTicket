@@ -83,6 +83,7 @@ public class CreateNewNewsServlet extends HttpServlet {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         HttpSession session = request.getSession();
 //        String userName = (String) session.getAttribute("currentUser");
+//        out.print(userName);
         String userName = "Duong";
         String mainTitle = request.getParameter("mainTitle");
         String title = request.getParameter("title");
