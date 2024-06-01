@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author nguye
  */
-@WebServlet(name = "ManageHomePageServlet", urlPatterns = {"/manageHomePage"})
+@WebServlet(name = "ManageHomePageServlet", urlPatterns = {"/homePage"})
 public class ManageHomePageServlet extends HttpServlet {
 
     /**
