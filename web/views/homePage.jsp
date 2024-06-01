@@ -334,7 +334,7 @@
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
-                        <li><a data-auth="login" href="javascript:void(0)">Login</a></li>
+                        <li><a data-auth="login" href="./login">Login</a></li>
                         <li class="sell"><a data-quick-list="search" data-disabled class="sell" href="#">sell</a></li>
                         <div class="cart user-nav">
                             <a href="#">
@@ -1008,11 +1008,11 @@
                                                     <a href="/europa-league/europa-league-final" class="inner">
                                                         <div class="badges">
                                                             <div>
-                                                                <!--<img src="${lm.team1.img}" alt="/uploads/Atalantasized.png">-->
+                                                                <img src="${lm.team1.img}" alt="/uploads/Atalantasized.png">
                                                                 <p>${lm.team1.clubName}</p>
                                                             </div>
                                                             <div>
-                                                                <!--<img src="${lm.team2.img}" alt="/uploads/Bayersized.png">-->
+                                                                <img src="${lm.team2.img}" alt="/uploads/Bayersized.png">
                                                                 <p>${lm.team1.clubName}</p>
                                                             </div>
                                                         </div>
