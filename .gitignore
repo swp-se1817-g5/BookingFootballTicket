@@ -9,3 +9,5 @@
 # Ignore NetBeans specific files
 nbproject/private/
 nbproject/privileges.xml   
+/UploadImage/build/
+/UploadImage/nbproject/private/

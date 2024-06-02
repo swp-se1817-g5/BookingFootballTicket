@@ -1,86 +1,130 @@
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
-
 package controllers.manageFootballClub;
 
+import dal.FootballClubDAO;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.FootballClub;
 
-/**
- *
- * @author admin
- */
-@WebServlet(name="CreateFootballClubServlet", urlPatterns={"/createFootballClub"})
+@WebServlet(name = "CreateFootballClubServlet", urlPatterns = {"/createFootballClub"})
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024 * 10, // 10 MB
+    maxFileSize = 1024 * 1024 * 50,       // 50 MB
+    maxRequestSize = 1024 * 1024 * 100    // 100 MB
+)
 public class CreateFootballClubServlet extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet CreateFootballClubServlet</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CreateFootballClubServlet at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    } 
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
-     * Handles the HTTP <code>GET</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    private static final Logger LOGGER = Logger.getLogger(CreateFootballClubServlet.class.getName());
+    private static final String IMAGE_FOLDER = "Images/FootballClubs";
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        response.sendRedirect("views/createFootballClub.jsp");
-    } 
-
-    /** 
-     * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-        String clubName = request.getParameter("clubName");
-        
+            throws ServletException, IOException {
+        response.sendRedirect("views/manageFootballClub.jsp");
     }
 
-    /** 
-     * Returns a short description of the servlet.
-     * @return a String containing servlet description
-     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        boolean created = false;
+        HttpSession session = request.getSession();
+        String errorMessage = null;
+
+        try {
+            Part filePart = request.getPart("image");
+            if (filePart != null && filePart.getSize() > 0) {
+                String img = handleFileUpload(filePart);
+                String clubName = request.getParameter("clubName");
+                String userName = (String) session.getAttribute("userName");
+
+                FootballClub fc = new FootballClub();
+                fc.setClubName(clubName);
+                fc.setImg(img);
+                fc.setCreatedBy(userName);
+
+                created = FootballClubDAO.INSTANCE.createFootballClub(fc);
+            }
+        } catch (IOException | ServletException e) {
+            errorMessage = e.getMessage();
+            LOGGER.log(Level.SEVERE, "Error processing the file upload", e);
+        }
+
+        if (created) {
+            response.sendRedirect("manageFootballClub?created=true");
+        } else {
+            try (PrintWriter out = response.getWriter()) {
+                response.setContentType("text/html;charset=UTF-8");
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Error Creating Football Club</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<h1>Error Creating Football Club</h1>");
+                if (errorMessage != null) {
+                    out.println("<p>Error: " + errorMessage + "</p>");
+                } else {
+                    out.println("<p>An unknown error occurred.</p>");
+                }
+                out.println("<a href=\"views/manageFootballClub.jsp\">Back to Manage Football Club</a>");
+                out.println("</body>");
+                out.println("</html>");
+            }
+        }
+    }
+
+    private String handleFileUpload(Part filePart) throws IOException {
+        String fileName = getFileName(filePart);
+        if (fileName == null) {
+            throw new IOException("Invalid file name.");
+        }
+
+        String storePath = getServletContext().getRealPath("/" + IMAGE_FOLDER);
+        File uploads = new File(storePath);
+        if (!uploads.exists()) {
+            Files.createDirectories(uploads.toPath());
+        }
+
+        File file = new File(uploads, fileName);
+
+        try (InputStream input = filePart.getInputStream(); FileOutputStream output = new FileOutputStream(file)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = input.read(buffer)) != -1) {
+                output.write(buffer, 0, bytesRead);
+            }
+        }
+
+        return IMAGE_FOLDER + "/" + fileName;
+    }
+
+    private String getFileName(Part part) {
+        String contentDisposition = part.getHeader("content-disposition");
+        if (contentDisposition != null) {
+            for (String content : contentDisposition.split(";")) {
+                if (content.trim().startsWith("filename")) {
+                    return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+                }
+            }
+        }
+        return null;
+    }
+
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Servlet for creating a football club with image upload functionality.";
+    }
 }
-

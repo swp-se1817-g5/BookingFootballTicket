@@ -242,7 +242,7 @@ Author     : admin
                             <div class="dropdown-menu bg-transparent border-0">
                                 <a href="manageUser" class="dropdown-item">Manage User</a>
                                 <a href="manageMatch" class="dropdown-item">Manage Match</a>
-                                <a href="manageFootballClub" class="dropdown-item activegit s">Manage Football Club</a>
+                                <a href="manageFootballClub" class="dropdown-item active">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item">Manage Stand</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
@@ -269,143 +269,83 @@ Author     : admin
 
             <div class="content">
                 <!-- Navbar Start -->
-                <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                    <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                        <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-                    </a>
-                    <a href="#" class="sidebar-toggler flex-shrink-0">
-                        <i class="fa fa-bars"></i>
-                    </a>
-                    <form class="d-none d-md-flex ms-4">
-                        <input class="form-control border-0" type="search" placeholder="Search">
-                    </form>
-                    <div class="navbar-nav align-items-center ms-auto">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fa fa-envelope me-lg-2"></i>
-                                <span class="d-none d-lg-inline-flex">Message</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item text-center">See all message</a>
-                            </div>
-                        </div>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fa fa-bell me-lg-2"></i>
-                                <span class="d-none d-lg-inline-flex">Notificatin</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">
-                                    <h6 class="fw-normal mb-0">Profile updated</h6>
-                                    <small>15 minutes ago</small>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item text-center">See all notifications</a>
-                            </div>
-                        </div>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <span class="d-none d-lg-inline-flex">John Doe</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">My Profile</a>
-                                <a href="#" class="dropdown-item">Settings</a>
-                                <a href="#" class="dropdown-item">Log Out</a>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
+                <%@include file="dashboardHeader.jsp" %>
                 <!-- Navbar End -->
                 <div class="container-fluid">
-            <div class="table-responsive">
-                <div class="table-wrapper">
-                    <div class="table-title">
-                        <div class="row">
-                            <div class="col-sm-4"><h2>Manage <b>Football Club</b></h2></div>
+                    <div class="table-responsive">
+                        <div class="table-wrapper">
+                            <div class="table-title">
+                                <div class="row">
+                                    <div class="col-sm-4"><h2>Manage <b>Football Club</b></h2></div>
 
-                            <div class="col-sm-4 searchh">
-                                <div class="search-box">
-                                    <i class="material-icons">&#xE8B6;</i>
-                                    <input type="text" class="form-control" placeholder="Search by name&hellip;">
+                                    <div class="col-sm-4 searchh">
+                                        <div class="search-box">
+                                            <i class="material-icons">&#xE8B6;</i>
+                                            <input type="text" class="form-control" placeholder="Search by name&hellip;">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 createe">
+                                        <a href="#createFCModal" data-toggle="modal" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Create New Club</span></a>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-4 createe">
-                                <a href="createFootballClub" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Create New Club</span></a>
-                            </div>
+                            <table class="table table-striped table-hover table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Image<i class="fa "></i></th>
+                                        <th>Club</th>
+                                        <th>Created By<i class="fa "></i></th>
+                                        <th>Created Date</th>
+                                        <th>Last Updated By<i class="fa "></i></th>
+                                        <th>Last Updated Date<i class="fa "></i></th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <c:forEach items="${requestScope.footballClubs}" var="o">
+                                        <tr>
+                                            <td>${o.clubId}</td>
+                                            <td><img src="${o.img}" width="80px" height="80px" alt="football club"/></td>
+                                            <td>${o.clubName}</td>
+                                            <td>${o.createdBy}</td>
+                                            <td>${o.createdDate}</td>
+                                            <td>${o.updatedBy}</td>
+                                            <td>${o.lastUpdatedDate}</td>
+                                            <td>
+                                                <a href="#updateFCModal" onclick="update('${o.clubId}', '${o.clubName}')" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
+                                                <a href="#"  class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
+
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                    <table class="table table-striped table-hover table-bordered">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Image<i class="fa "></i></th>
-                                <th>Club</th>
-                                <th>Created By<i class="fa "></i></th>
-                                <th>Created Date</th>
-                                <th>Last Updated By<i class="fa "></i></th>
-                                <th>Last Updated Date<i class="fa "></i></th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <c:forEach items="${requestScope.footballClubs}" var="o">
-                                <tr>
-                                <td>${o.clubId}</td>
-                                <td><img src="${o.img}" width="80px" height="80px" alt="football club"/></td>
-                                <td>${o.clubName}</td>
-                                <td>${o.createdBy}</td>
-                                <td>${o.createdDate}</td>
-                                <td>${o.updatedBy}</td>
-                                <td>${o.lastUpdatedDate}</td>
-                                <td>
-                                    <a href="#" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i></a>
-                                    <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                </td>
-                            </tr>
-                            </c:forEach>
-                                    
-                        </tbody>
-                    </table>
-                </div>
-            </div>  
-        </div>     
+                    </div>  
+                </div>     
             </div>      
         </div>      
 
 
-        <div id="createStandModal" class="modal fade">
+        <div id="createFCModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="createStand" method="post">
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Create Stand</h4>
+                    <form action="createFootballClub" id="createFootballClubForm" method="post" enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Create Football Club</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <div class="modal-body">	
+                        <div class="modal-body">
                             <div class="form-group">
-                                <label>Stand Name</label>
-                                <input name="standName" type="text" class="form-control" maxlength="50" required>
+                                <label>Images</label>
+                                <input name="image" type="file" accept="image/*" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Price (VND)</label>
-                                <input name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
+                                <label>Football Club Name</label>
+                                <input id="clubNameInput" name="clubName" type="text" class="form-control" maxlength="50" required>
+                                <span id="clubNameInputError" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label>Quantity (Seat)</label>
-                                <input name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
-                            </div>
-
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -416,32 +356,25 @@ Author     : admin
             </div>
         </div>
 
-        <div id="updateStandModal" class="modal fade">
+
+        <div id="updateFCModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="updateStand" method="post">
+                    <form action="updateStand" id="updateFootballClubForm" method="post">
                         <div class="modal-header">						
-                            <h4 class="modal-title">Update Stand</h4>
+                            <h4 class="modal-title">Update Football Club</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Stand ID</label>
-                                <input id="standId" name="standId" readonly type="number" class="form-control" required>
+                                <label>Club ID</label>
+                                <input id="clubId" name="clubId" readonly type="number" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Stand Name</label>
-                                <input id="standName" name="standName" maxlength="50" type="text" class="form-control" required>
+                                <label>Club Name</label>
+                                <input id="clubName" name="clubName" maxlength="50" type="text" class="form-control" required>
+                                <span id="clubNameError" class="text-danger"></span>
                             </div>
-                            <div class="form-group">
-                                <label>Price (VND)</label>
-                                <input id="price" name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Quantity (Seat)</label>
-                                <input id="quantity" name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
-                            </div>
-
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -451,6 +384,7 @@ Author     : admin
                 </div>
             </div>
         </div>
+
         <!-- toast notification -->
         <div class="toast" id="toastNotification" data-delay="3000">
             <div class="toast-header">
@@ -487,11 +421,11 @@ Author     : admin
                     var toast = $('#toastNotification');
                     if (created === "true") {
                         toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Stand created successfully.');
+                        toast.find('#toastMessage').text('Football Club created successfully.');
                         toast.addClass('success').removeClass('error');
                     } else if (created === "false") {
                         toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to create stand.');
+                        toast.find('#toastMessage').text('Failed to create Football Club.');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
@@ -519,17 +453,67 @@ Author     : admin
         </script>
 
         <!--script for create and update-->
-        <script type="text/javascript">
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+
+                // Convert the stands list from JSP to a JavaScript array
+                var clubs = [];
+            <c:forEach items="${footballClubs}" var="club">
+                clubs.push({clubId: "${club.clubId}", clubName: "${club.clubName}"});
+            </c:forEach>
+
+                // Check for duplicate stand name before submitting the create form
+                $('#createFootballClubForm').submit(function (event) {
+                    var clubName = $('#clubNameInput').val().trim();
+                    var duplicate = clubs.some(club => club.clubName === clubName);
+
+                    if (duplicate) {
+                        $('#clubNameInputError').text('Club already exists. Please choose a different name.');
+                        event.preventDefault();
+                    } else {
+                        $('#clubNameInputError').text('');
+                    }
+                });
+
+                // Check for duplicate club name before submitting the update form
+                $('#updateFootballClubForm').submit(function (event) {
+                    var clubId = $('#clubId').val();
+                    var clubName = $('#clubName').val().trim();
+
+                    var originalClub = clubs.find(club => club.clubId == clubId);
+
+                    var duplicate = clubs.some(club => club.clubName === clubName && club.clubId != clubId);
+                    console.log(duplicate);
+
+                    if (clubName !== originalClub.clubName && duplicate) {
+                        $('#clubNameError').text('Club already exists. Please choose a different name');
+                        event.preventDefault();
+                    } else {
+                        $('#clubNameError').text('');
+                    }
+                });
+
+
+            });
+
             function doDelete(standId) {
                 if (confirm("Do you want to delete stand with id = " + standId))
                     location.href = 'deleteStand?standId=' + standId;
             }
-            function update(standId, standName, price, quantity) {
-                document.getElementById('standId').value = standId;
-                document.getElementById('standName').value = standName;
-                document.getElementById('price').value = price;
-                document.getElementById('quantity').value = quantity;
+
+            function update(clubId, clubName) {
+                document.getElementById('clubId').value = clubId;
+                document.getElementById('clubName').value = clubName;
+
+               
+                $('#clubNameError').text('');
+
             }
+            function create() {
+                
+            }
+           
         </script>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

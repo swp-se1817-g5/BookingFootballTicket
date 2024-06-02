@@ -59,7 +59,7 @@ public class FootballClubDAO {
         boolean created = false;
         String sql = "INSERT INTO FootballClub (clubName, img, createdBy) VALUES (?, ?, ?)";
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setString(1, fc.getClubName());
             ps.setString(2, fc.getImg());
             ps.setString(3, fc.getCreatedBy());
@@ -79,7 +79,7 @@ public class FootballClubDAO {
         boolean deleted = false;
         String sql = "update FootballClub set isDeleted = 1 where footballClubId = ?";
         try {
-            PreparedStatement ps = con.prepareStatement(sql);
+            ps = con.prepareStatement(sql);
             ps.setInt(1, footballClubId);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -98,7 +98,7 @@ public class FootballClubDAO {
         return updated;
     }
 
-    public FootballClub getFootballClubbyID(int FcID) {
+    public FootballClub getFootballClubbyID(int fCID) {
         FootballClub fc = new FootballClub();
         String sql = "SELECT [clubId]\n"
                 + "      ,[clubName]\n"
@@ -110,7 +110,7 @@ public class FootballClubDAO {
                 + "  FROM [dbo].[FootballClub] WHERE [isDeleted] = 0 AND [clubId] = ?";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, FcID);
+            ps.setInt(1, fCID);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 fc.setClubId(rs.getInt("clubId"));

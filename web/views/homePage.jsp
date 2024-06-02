@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html class="no-js" lang="en-GB">
     <head>
@@ -335,7 +336,7 @@
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
-                        <li><a data-auth="login" href="javascript:void(0)">Login</a></li>
+                        <li><a data-auth="login" href="./login">Login</a></li>
                         <li class="sell"><a data-quick-list="search" data-disabled class="sell" href="#">sell</a></li>
                         <div class="cart user-nav">
                             <a href="#">
@@ -990,851 +991,627 @@
                                         </a>
                                 </div>
                             </div>
-                            <div class="item">
-                                <div class="block match">
-                                    <div class="top">
-                                        <div class="tickets-sold">
-                                            <div class="ftp-tickets"></div>
-                                            <div class="label">Tickets sold</div>
-                                            <div class="value">79</div>
-                                        </div>
-                                        <div class="favourite event_10292" type="event" uid="10292">
-                                            <button type="button" class="favourite-toggle ">
-                                                <div class="heart"><div>
-                                                        </button>
+                            <c:forEach items="${getListMatches}" var="lm">
+                                <div class="item">
+                                    <div class="block match">
+                                        <div class="top">
+                                            <div class="tickets-sold">
+                                                <div class="ftp-tickets"></div>
+                                                <div class="label">Tickets sold</div>
+                                                <div class="value">79</div>
+                                            </div>
+                                            <div class="favourite event_10292" type="event" uid="10292">
+                                                <button type="button" class="favourite-toggle ">
+                                                    <div class="heart"><div>
+                                                            </button>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <a href="/europa-league/europa-league-final" class="inner">
-                                                    <div class="badges">
-                                                        <div><img src="https://www.footballticketpad.com/uploads/Atalantasized.png" alt="/uploads/Atalantasized.png"></div>
-                                                        <div><img src="https://www.footballticketpad.com/uploads/Bayersized.png" alt="/uploads/Bayersized.png"></div>
-                                                    </div>
-                                                    <div class="teams"> Europa League Final Tickets</div>
-                                                    <div class="details">
-                                                        <div class="location">Dublin Arena</div>
-                                                        <div class="date">22nd May 2024</div>
-                                                        <div class="league">Europa League</div>
-                                                    </div>
-                                                </a>
-                                                <a href="/europa-league/europa-league-final">
-                                                    <div class="price-from">Tickets from <span class="price">&pound;199.00 </span></div>
-                                                    <div class="book" data-ripple>Book now</div>
-                                                </a>
-                                                <a href="/europa-league/europa-league-final" class="inner-mobile">
-                                                    <div class="left">
-                                                        <div class="day">WED</div>
-                                                        <div class="date">22nd May</div>
-                                                        <div class="time">03:00</div>
-                                                    </div>
-                                                    <div class="right">
-                                                        <div class="teams"> Europa League Final Tickets</div>
-                                                        <div class="location">Dublin Arena</div>
-                                                        <div class="league">Europa League</div>
-                                                        <div class="price-from">From <span class="price">&pound;199.00 </span></div>
-                                                        <div class="tickets-left">Limited stock remaining!</div>
-                                                    </div>
-                                                </a>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="block match">
-                                            <div class="top">
-                                                <div class="tickets-sold">
-                                                    <div class="ftp-tickets"></div>
-                                                    <div class="label">Tickets sold</div>
-                                                    <div class="value">186</div>
-                                                </div>
-                                                <div class="favourite event_10290" type="event" uid="10290">
-                                                    <button type="button" class="favourite-toggle ">
-                                                        <div class="heart"><div>
-                                                                </button>
+
+                                                    <a href="/europa-league/europa-league-final" class="inner">
+                                                        <div class="badges">
+                                                            <div>
+                                                                <img src="${lm.team1.img}" alt="/uploads/Atalantasized.png">
+                                                                <p>${lm.team1.clubName}</p>
+                                                            </div>
+                                                            <div>
+                                                                <img src="${lm.team2.img}" alt="/uploads/Bayersized.png">
+                                                                <p>${lm.team1.clubName}</p>
                                                             </div>
                                                         </div>
-                                                        <a href="/fa-cup/fa-cup-final-2024" class="inner">
-                                                            <div class="badges">
-                                                                <div><img src="https://www.footballticketpad.com/uploads/man-city.png" alt="/uploads/man-city.png"></div>
-                                                                <div><img src="https://www.footballticketpad.com/uploads/man-utd.png" alt="/uploads/man-utd.png"></div>
-                                                            </div>
-                                                            <div class="teams"> FA Cup Final 2024 Tickets</div>
-                                                            <div class="details">
-                                                                <div class="location">Wembley</div>
-                                                                <div class="date">25th May 2024</div>
-                                                                <div class="league">FA Cup </div>
-                                                            </div>
-                                                        </a>
-                                                        <a href="/fa-cup/fa-cup-final-2024">
-                                                            <div class="price-from">Tickets from <span class="price">&pound;449.99 </span></div>
-                                                            <div class="book" data-ripple>Book now</div>
-                                                        </a>
-                                                        <a href="/fa-cup/fa-cup-final-2024" class="inner-mobile">
-                                                            <div class="left">
-                                                                <div class="day">SAT</div>
-                                                                <div class="date">25th May</div>
-                                                                <div class="time">03:00</div>
-                                                            </div>
-                                                            <div class="right">
-                                                                <div class="teams"> FA Cup Final 2024 Tickets</div>
-                                                                <div class="location">Wembley</div>
-                                                                <div class="league">FA Cup </div>
-                                                                <div class="price-from">From <span class="price">&pound;449.99 </span></div>
-                                                                <div class="tickets-left">Selling fast!</div>
-                                                            </div>
-                                                        </a>
+                                                        <div class="teams"> Europa League Final Tickets</div>
+                                                        <div class="details">
+                                                            <div class="location">Dublin Arena</div>
+                                                            <div class="date">22nd May 2024</div>
+                                                            <div class="league">Europa League</div>
+                                                        </div>
+                                                    </a>
+                                                    <a href="/europa-league/europa-league-final">
+                                                        <div class="price-from">Tickets from <span class="price">&pound;199.00 </span></div>
+                                                        <div class="book" data-ripple>Book now</div>
+                                                    </a>
+                                                    <a href="/europa-league/europa-league-final" class="inner-mobile">
+                                                        <div class="left">
+                                                            <div class="day">WED</div>
+                                                            <div class="date">22nd May</div>
+                                                            <div class="time">03:00</div>
+                                                        </div>
+                                                        <div class="right">
+                                                            <div class="teams"> Europa League Final Tickets</div>
+                                                            <div class="location">Dublin Arena</div>
+                                                            <div class="league">Europa League</div>
+                                                            <div class="price-from">From <span class="price">&pound;199.00 </span></div>
+                                                            <div class="tickets-left">Limited stock remaining!</div>
+                                                        </div>
+                                                    </a>
+                                            </div>
+                                        </div>               
+                                    </c:forEach>
+
+                                    <div class="euro-2024">
+                                        <div class="flags">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <div class="enjoy">
+                                            <div class="enjoy-inner">
+                                                <p>Witness the Thrill of</p>
+                                                <p>Euro 2024!</p>
+                                                <div class="n-text">
+                                                    <p>Explore Fixtures & Book Your Tickets now!</p>
                                                 </div>
                                             </div>
+                                            <div class="enj-btn-wrapper">
+                                                <button>
+                                                    <a href="https://www.footballticketpad.com/group/league/uefa-euro-2024">VIEW FIXTURES</a>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="banner-section">
+                                        <div class="image" style="background-image:url(https://www.footballticketpad.com/assets/frontend/2018/images/stadium_banner.png);"></div>
+                                        <div class="inner">
                                             <div class="item">
-                                                <div class="block match">
-                                                    <div class="top">
-                                                        <div class="tickets-sold">
-                                                            <div class="ftp-tickets"></div>
-                                                            <div class="label">Tickets sold</div>
-                                                            <div class="value">258</div>
-                                                        </div>
-                                                        <div class="favourite event_10314" type="event" uid="10314">
+                                                <div class="icon"><div class="ftp-ticket"></div></div>
+                                                <div class="heading">100% Ticket Guarantee</div>
+                                                <div class="text">No need to worry - your tickets are guaranteed, no matter what.</div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="icon"><div class="ftp-customer-support"></div></div>
+                                                <div class="heading">24/7 Customer Support</div>
+                                                <div class="text">Need help purchasing your tickets? Our team are available around the clock.</div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="icon"><div class="ftp-secure"></div></div>
+                                                <div class="heading">SSL Secure Checkout</div>
+                                                <div class="text">Your online payment always is safe with our state-of-the-art secure checkout.</div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="icon"><div class="ftp-star-outline"></div></div>
+                                                <div class="heading">Rated 5 Stars</div>
+                                                <div class="text">We are proud to be one of the most reputable football ticket marketplaces.</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="section">
+                                        <div class="inner">
+                                            <h2>Top Teams</h2>
+                                            <div class="grid top-teams">
+                                                <div class="item">
+                                                    <div class="block team">
+                                                        <div class="favourite club_15" type="club" uid="15">
                                                             <button type="button" class="favourite-toggle ">
                                                                 <div class="heart"><div>
                                                                         </button>
                                                                     </div>
+                                                                    <div class="badge" style="background-color: #ef0207">
+                                                                        <a href="https://www.footballticketpad.com/group/club/arsenal-tickets" class="image">
+                                                                            <img src="https://www.footballticketpad.com/uploads/arsenal1.png" alt="Arsenal">
+                                                                        </a>
+                                                                    </div>
+                                                                    <a href="https://www.footballticketpad.com/group/club/arsenal-tickets" class="inner">
+                                                                        <div class="team-name">Arsenal</div>
+                                                                        <div class="details">
+                                                                            <div>0 Games listed</div>
+                                                                            <div><strong>No tickets available</strong></div>
+                                                                            <div>Next match: TBC</div>
+                                                                        </div>
+                                                                        <div class="view">View fixtures</div>
+                                                                    </a>
                                                                 </div>
-                                                                <a href="/scottish-cup/scottish-cup-final" class="inner">
-                                                                    <div class="badges">
-                                                                        <div><img src="https://www.footballticketpad.com/uploads/Celtic.png" alt="/uploads/Celtic.png"></div>
-                                                                        <div><img src="https://www.footballticketpad.com/uploads/Rangers.png" alt="/uploads/Rangers.png"></div>
-                                                                    </div>
-                                                                    <div class="teams"> Scottish Cup Final Tickets</div>
-                                                                    <div class="details">
-                                                                        <div class="location">Hampden Park</div>
-                                                                        <div class="date">25th May 2024</div>
-                                                                        <div class="league">Scottish Cup</div>
-                                                                    </div>
-                                                                </a>
-                                                                <a href="/scottish-cup/scottish-cup-final">
-                                                                    <div class="price-from">Tickets from <span class="price">&pound;410.00 </span></div>
-                                                                    <div class="book" data-ripple>Book now</div>
-                                                                </a>
-                                                                <a href="/scottish-cup/scottish-cup-final" class="inner-mobile">
-                                                                    <div class="left">
-                                                                        <div class="day">SAT</div>
-                                                                        <div class="date">25th May</div>
-                                                                        <div class="time">03:00</div>
-                                                                    </div>
-                                                                    <div class="right">
-                                                                        <div class="teams"> Scottish Cup Final Tickets</div>
-                                                                        <div class="location">Hampden Park</div>
-                                                                        <div class="league">Scottish Cup</div>
-                                                                        <div class="price-from">From <span class="price">&pound;410.00 </span></div>
-                                                                        <div class="tickets-left">Popular event, book now!</div>
-                                                                    </div>
-                                                                </a>
                                                         </div>
-                                                    </div>
-                                                    <div class="item">
-                                                        <div class="block match">
-                                                            <div class="top">
-                                                                <div class="tickets-sold">
-                                                                    <div class="ftp-tickets"></div>
-                                                                    <div class="label">Tickets sold</div>
-                                                                    <div class="value">161</div>
-                                                                </div>
-                                                                <div class="favourite event_10035" type="event" uid="10035">
+                                                        <div class="item">
+                                                            <div class="block team">
+                                                                <div class="favourite club_14" type="club" uid="14">
                                                                     <button type="button" class="favourite-toggle ">
                                                                         <div class="heart"><div>
                                                                                 </button>
                                                                             </div>
+                                                                            <div class="badge" style="background-color: #00318a">
+                                                                                <a href="https://www.footballticketpad.com/group/club/chelsea-tickets" class="image">
+                                                                                    <img src="https://www.footballticketpad.com/uploads/Chelsea-Logo.png" alt="Chelsea">
+                                                                                </a>
+                                                                            </div>
+                                                                            <a href="https://www.footballticketpad.com/group/club/chelsea-tickets" class="inner">
+                                                                                <div class="team-name">Chelsea</div>
+                                                                                <div class="details">
+                                                                                    <div>0 Games listed</div>
+                                                                                    <div><strong>No tickets available</strong></div>
+                                                                                    <div>Next match: TBC</div>
+                                                                                </div>
+                                                                                <div class="view">View fixtures</div>
+                                                                            </a>
                                                                         </div>
-                                                                        <a href="/uefa-euro-2024/denmark-v-england" class="inner">
-                                                                            <div class="badges">
-                                                                                <div><img src="https://www.footballticketpad.com/uploads/Denmark.png" alt="/uploads/Denmark.png"></div>
-                                                                                <div><img src="https://www.footballticketpad.com/uploads/England.png" alt="/uploads/England.png"></div>
-                                                                            </div>
-                                                                            <div class="teams"> Denmark v England Tickets</div>
-                                                                            <div class="details">
-                                                                                <div class="location">Deutsche Bank Park</div>
-                                                                                <div class="date">20th June 2024</div>
-                                                                                <div class="league">UEFA EURO 2024</div>
-                                                                            </div>
-                                                                        </a>
-                                                                        <a href="/uefa-euro-2024/denmark-v-england">
-                                                                            <div class="price-from">Tickets from <span class="price">&pound;540.75 </span></div>
-                                                                            <div class="book" data-ripple>Book now</div>
-                                                                        </a>
-                                                                        <a href="/uefa-euro-2024/denmark-v-england" class="inner-mobile">
-                                                                            <div class="left">
-                                                                                <div class="day">THU</div>
-                                                                                <div class="date">20th June</div>
-                                                                                <div class="time">06:00</div>
-                                                                            </div>
-                                                                            <div class="right">
-                                                                                <div class="teams"> Denmark v England Tickets</div>
-                                                                                <div class="location">Deutsche Bank Park</div>
-                                                                                <div class="league">UEFA EURO 2024</div>
-                                                                                <div class="price-from">From <span class="price">&pound;540.75 </span></div>
-                                                                                <div class="tickets-left">Selling fast!</div>
-                                                                            </div>
-                                                                        </a>
                                                                 </div>
-                                                            </div>
-                                                            <div class="item">
-                                                                <div class="block match">
-                                                                    <div class="top">
-                                                                        <div class="tickets-sold">
-                                                                            <div class="ftp-tickets"></div>
-                                                                            <div class="label">Tickets sold</div>
-                                                                            <div class="value">242</div>
-                                                                        </div>
-                                                                        <div class="favourite event_10047" type="event" uid="10047">
+                                                                <div class="item">
+                                                                    <div class="block team">
+                                                                        <div class="favourite club_13" type="club" uid="13">
                                                                             <button type="button" class="favourite-toggle ">
                                                                                 <div class="heart"><div>
                                                                                         </button>
                                                                                     </div>
+                                                                                    <div class="badge" style="background-color: #e32c22">
+                                                                                        <a href="https://www.footballticketpad.com/group/club/manchester-united-tickets" class="image">
+                                                                                            <img src="https://www.footballticketpad.com/uploads/man-utd.png" alt="Manchester United">
+                                                                                        </a>
+                                                                                    </div>
+                                                                                    <a href="https://www.footballticketpad.com/group/club/manchester-united-tickets" class="inner">
+                                                                                        <div class="team-name">Manchester United</div>
+                                                                                        <div class="details">
+                                                                                            <div>3 Games listed</div>
+                                                                                            <div>Tickets starting <strong>from &pound;449.99 </strong></div>
+                                                                                            <div>Next match: FA Cup Final 2024</div>
+                                                                                        </div>
+                                                                                        <div class="view">View fixtures</div>
+                                                                                    </a>
                                                                                 </div>
-                                                                                <a href="/uefa-euro-2024/england-v-slovenia" class="inner">
-                                                                                    <div class="badges">
-                                                                                        <div><img src="https://www.footballticketpad.com/uploads/England.png" alt="/uploads/England.png"></div>
-                                                                                        <div><img src="https://www.footballticketpad.com/uploads/slovenia-hd-logo-121705.png" alt="/uploads/slovenia-hd-logo-121705.png"></div>
-                                                                                    </div>
-                                                                                    <div class="teams"> England v Slovenia Tickets</div>
-                                                                                    <div class="details">
-                                                                                        <div class="location">RheinEnergieSTADION</div>
-                                                                                        <div class="date">25th June 2024</div>
-                                                                                        <div class="league">UEFA EURO 2024</div>
-                                                                                    </div>
-                                                                                </a>
-                                                                                <a href="/uefa-euro-2024/england-v-slovenia">
-                                                                                    <div class="price-from">Tickets from <span class="price">&pound;320.00 </span></div>
-                                                                                    <div class="book" data-ripple>Book now</div>
-                                                                                </a>
-                                                                                <a href="/uefa-euro-2024/england-v-slovenia" class="inner-mobile">
-                                                                                    <div class="left">
-                                                                                        <div class="day">TUE</div>
-                                                                                        <div class="date">25th June</div>
-                                                                                        <div class="time">09:00</div>
-                                                                                    </div>
-                                                                                    <div class="right">
-                                                                                        <div class="teams"> England v Slovenia Tickets</div>
-                                                                                        <div class="location">RheinEnergieSTADION</div>
-                                                                                        <div class="league">UEFA EURO 2024</div>
-                                                                                        <div class="price-from">From <span class="price">&pound;320.00 </span></div>
-                                                                                        <div class="tickets-left">Popular event, book now!</div>
-                                                                                    </div>
-                                                                                </a>
                                                                         </div>
-                                                                    </div>
-                                                                    <div class="item">
-                                                                        <div class="block match">
-                                                                            <div class="top">
-                                                                                <div class="tickets-sold">
-                                                                                    <div class="ftp-tickets"></div>
-                                                                                    <div class="label">Tickets sold</div>
-                                                                                    <div class="value">224</div>
-                                                                                </div>
-                                                                                <div class="favourite event_10033" type="event" uid="10033">
+                                                                        <div class="item">
+                                                                            <div class="block team">
+                                                                                <div class="favourite club_23" type="club" uid="23">
                                                                                     <button type="button" class="favourite-toggle ">
                                                                                         <div class="heart"><div>
                                                                                                 </button>
                                                                                             </div>
-                                                                                        </div>
-                                                                                        <a href="/uefa-euro-2024/scotland-v-switzerland" class="inner">
-                                                                                            <div class="badges">
-                                                                                                <div><img src="https://www.footballticketpad.com/uploads/scotland-hd-logo-124124.png" alt="/uploads/scotland-hd-logo-124124.png"></div>
-                                                                                                <div><img src="https://www.footballticketpad.com/uploads/Swisssized.png" alt="/uploads/Swisssized.png"></div>
-                                                                                            </div>
-                                                                                            <div class="teams"> Scotland v Switzerland Tickets</div>
-                                                                                            <div class="details">
-                                                                                                <div class="location">RheinEnergieSTADION</div>
-                                                                                                <div class="date">19th June 2024</div>
-                                                                                                <div class="league">UEFA EURO 2024</div>
-                                                                                            </div>
-                                                                                        </a>
-                                                                                        <a href="/uefa-euro-2024/scotland-v-switzerland">
-                                                                                            <div class="price-from">Tickets from <span class="price">&pound;350.00 </span></div>
-                                                                                            <div class="book" data-ripple>Book now</div>
-                                                                                        </a>
-                                                                                        <a href="/uefa-euro-2024/scotland-v-switzerland" class="inner-mobile">
-                                                                                            <div class="left">
-                                                                                                <div class="day">WED</div>
-                                                                                                <div class="date">19th June</div>
-                                                                                                <div class="time">09:00</div>
-                                                                                            </div>
-                                                                                            <div class="right">
-                                                                                                <div class="teams"> Scotland v Switzerland Tickets</div>
-                                                                                                <div class="location">RheinEnergieSTADION</div>
-                                                                                                <div class="league">UEFA EURO 2024</div>
-                                                                                                <div class="price-from">From <span class="price">&pound;350.00 </span></div>
-                                                                                                <div class="tickets-left">Popular event, book now!</div>
-                                                                                            </div>
-                                                                                        </a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="euro-2024">
-                                                                    <div class="flags">
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                        <div></div>
-                                                                    </div>
-                                                                    <div class="enjoy">
-                                                                        <div class="enjoy-inner">
-                                                                            <p>Witness the Thrill of</p>
-                                                                            <p>Euro 2024!</p>
-                                                                            <div class="n-text">
-                                                                                <p>Explore Fixtures & Book Your Tickets now!</p>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="enj-btn-wrapper">
-                                                                            <button>
-                                                                                <a href="https://www.footballticketpad.com/group/league/uefa-euro-2024">VIEW FIXTURES</a>
-                                                                            </button>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="banner-section">
-                                                                    <div class="image" style="background-image:url(https://www.footballticketpad.com/assets/frontend/2018/images/stadium_banner.png);"></div>
-                                                                    <div class="inner">
-                                                                        <div class="item">
-                                                                            <div class="icon"><div class="ftp-ticket"></div></div>
-                                                                            <div class="heading">100% Ticket Guarantee</div>
-                                                                            <div class="text">No need to worry - your tickets are guaranteed, no matter what.</div>
-                                                                        </div>
-                                                                        <div class="item">
-                                                                            <div class="icon"><div class="ftp-customer-support"></div></div>
-                                                                            <div class="heading">24/7 Customer Support</div>
-                                                                            <div class="text">Need help purchasing your tickets? Our team are available around the clock.</div>
-                                                                        </div>
-                                                                        <div class="item">
-                                                                            <div class="icon"><div class="ftp-secure"></div></div>
-                                                                            <div class="heading">SSL Secure Checkout</div>
-                                                                            <div class="text">Your online payment always is safe with our state-of-the-art secure checkout.</div>
-                                                                        </div>
-                                                                        <div class="item">
-                                                                            <div class="icon"><div class="ftp-star-outline"></div></div>
-                                                                            <div class="heading">Rated 5 Stars</div>
-                                                                            <div class="text">We are proud to be one of the most reputable football ticket marketplaces.</div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="section">
-                                                                    <div class="inner">
-                                                                        <h2>Top Teams</h2>
-                                                                        <div class="grid top-teams">
-                                                                            <div class="item">
-                                                                                <div class="block team">
-                                                                                    <div class="favourite club_15" type="club" uid="15">
-                                                                                        <button type="button" class="favourite-toggle ">
-                                                                                            <div class="heart"><div>
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                                <div class="badge" style="background-color: #ef0207">
-                                                                                                    <a href="https://www.footballticketpad.com/group/club/arsenal-tickets" class="image">
-                                                                                                        <img src="https://www.footballticketpad.com/uploads/arsenal1.png" alt="Arsenal">
-                                                                                                    </a>
-                                                                                                </div>
-                                                                                                <a href="https://www.footballticketpad.com/group/club/arsenal-tickets" class="inner">
-                                                                                                    <div class="team-name">Arsenal</div>
-                                                                                                    <div class="details">
-                                                                                                        <div>0 Games listed</div>
-                                                                                                        <div><strong>No tickets available</strong></div>
-                                                                                                        <div>Next match: TBC</div>
-                                                                                                    </div>
-                                                                                                    <div class="view">View fixtures</div>
+                                                                                            <div class="badge" style="background-color: #5a95c8">
+                                                                                                <a href="https://www.footballticketpad.com/group/club/manchester-city-tickets" class="image">
+                                                                                                    <img src="https://www.footballticketpad.com/uploads/man-city.png" alt="Manchester City ">
                                                                                                 </a>
                                                                                             </div>
-                                                                                    </div>
-                                                                                    <div class="item">
-                                                                                        <div class="block team">
-                                                                                            <div class="favourite club_14" type="club" uid="14">
-                                                                                                <button type="button" class="favourite-toggle ">
-                                                                                                    <div class="heart"><div>
-                                                                                                            </button>
-                                                                                                        </div>
-                                                                                                        <div class="badge" style="background-color: #00318a">
-                                                                                                            <a href="https://www.footballticketpad.com/group/club/chelsea-tickets" class="image">
-                                                                                                                <img src="https://www.footballticketpad.com/uploads/Chelsea-Logo.png" alt="Chelsea">
-                                                                                                            </a>
-                                                                                                        </div>
-                                                                                                        <a href="https://www.footballticketpad.com/group/club/chelsea-tickets" class="inner">
-                                                                                                            <div class="team-name">Chelsea</div>
-                                                                                                            <div class="details">
-                                                                                                                <div>0 Games listed</div>
-                                                                                                                <div><strong>No tickets available</strong></div>
-                                                                                                                <div>Next match: TBC</div>
-                                                                                                            </div>
-                                                                                                            <div class="view">View fixtures</div>
+                                                                                            <a href="https://www.footballticketpad.com/group/club/manchester-city-tickets" class="inner">
+                                                                                                <div class="team-name">Manchester City </div>
+                                                                                                <div class="details">
+                                                                                                    <div>1 Games listed</div>
+                                                                                                    <div>Tickets starting <strong>from &pound;449.99 </strong></div>
+                                                                                                    <div>Next match: FA Cup Final 2024</div>
+                                                                                                </div>
+                                                                                                <div class="view">View fixtures</div>
+                                                                                            </a>
+                                                                                        </div>
+                                                                                </div>
+                                                                                <div class="item">
+                                                                                    <div class="block team">
+                                                                                        <div class="favourite club_22" type="club" uid="22">
+                                                                                            <button type="button" class="favourite-toggle ">
+                                                                                                <div class="heart"><div>
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                    <div class="badge" style="background-color: #cf2433">
+                                                                                                        <a href="https://www.footballticketpad.com/group/club/liverpool-tickets" class="image">
+                                                                                                            <img src="https://www.footballticketpad.com/uploads/liverpool.png" alt="Liverpool">
                                                                                                         </a>
                                                                                                     </div>
-                                                                                            </div>
-                                                                                            <div class="item">
-                                                                                                <div class="block team">
-                                                                                                    <div class="favourite club_13" type="club" uid="13">
-                                                                                                        <button type="button" class="favourite-toggle ">
-                                                                                                            <div class="heart"><div>
-                                                                                                                    </button>
-                                                                                                                </div>
-                                                                                                                <div class="badge" style="background-color: #e32c22">
-                                                                                                                    <a href="https://www.footballticketpad.com/group/club/manchester-united-tickets" class="image">
-                                                                                                                        <img src="https://www.footballticketpad.com/uploads/man-utd.png" alt="Manchester United">
-                                                                                                                    </a>
-                                                                                                                </div>
-                                                                                                                <a href="https://www.footballticketpad.com/group/club/manchester-united-tickets" class="inner">
-                                                                                                                    <div class="team-name">Manchester United</div>
-                                                                                                                    <div class="details">
-                                                                                                                        <div>3 Games listed</div>
-                                                                                                                        <div>Tickets starting <strong>from &pound;449.99 </strong></div>
-                                                                                                                        <div>Next match: FA Cup Final 2024</div>
-                                                                                                                    </div>
-                                                                                                                    <div class="view">View fixtures</div>
+                                                                                                    <a href="https://www.footballticketpad.com/group/club/liverpool-tickets" class="inner">
+                                                                                                        <div class="team-name">Liverpool</div>
+                                                                                                        <div class="details">
+                                                                                                            <div>0 Games listed</div>
+                                                                                                            <div><strong>No tickets available</strong></div>
+                                                                                                            <div>Next match: TBC</div>
+                                                                                                        </div>
+                                                                                                        <div class="view">View fixtures</div>
+                                                                                                    </a>
+                                                                                                </div>
+                                                                                        </div>
+                                                                                        <div class="item">
+                                                                                            <div class="block team">
+                                                                                                <div class="favourite club_29" type="club" uid="29">
+                                                                                                    <button type="button" class="favourite-toggle ">
+                                                                                                        <div class="heart"><div>
+                                                                                                                </button>
+                                                                                                            </div>
+                                                                                                            <div class="badge" style="background-color: #6f8ad0">
+                                                                                                                <a href="https://www.footballticketpad.com/group/club/tottenham-tickets" class="image">
+                                                                                                                    <img src="https://www.footballticketpad.com/uploads/tottenham.png" alt="Tottenham Hotspur">
                                                                                                                 </a>
                                                                                                             </div>
-                                                                                                    </div>
-                                                                                                    <div class="item">
-                                                                                                        <div class="block team">
-                                                                                                            <div class="favourite club_23" type="club" uid="23">
-                                                                                                                <button type="button" class="favourite-toggle ">
-                                                                                                                    <div class="heart"><div>
-                                                                                                                            </button>
-                                                                                                                        </div>
-                                                                                                                        <div class="badge" style="background-color: #5a95c8">
-                                                                                                                            <a href="https://www.footballticketpad.com/group/club/manchester-city-tickets" class="image">
-                                                                                                                                <img src="https://www.footballticketpad.com/uploads/man-city.png" alt="Manchester City ">
-                                                                                                                            </a>
-                                                                                                                        </div>
-                                                                                                                        <a href="https://www.footballticketpad.com/group/club/manchester-city-tickets" class="inner">
-                                                                                                                            <div class="team-name">Manchester City </div>
-                                                                                                                            <div class="details">
-                                                                                                                                <div>1 Games listed</div>
-                                                                                                                                <div>Tickets starting <strong>from &pound;449.99 </strong></div>
-                                                                                                                                <div>Next match: FA Cup Final 2024</div>
-                                                                                                                            </div>
-                                                                                                                            <div class="view">View fixtures</div>
+                                                                                                            <a href="https://www.footballticketpad.com/group/club/tottenham-tickets" class="inner">
+                                                                                                                <div class="team-name">Tottenham Hotspur</div>
+                                                                                                                <div class="details">
+                                                                                                                    <div>1 Games listed</div>
+                                                                                                                    <div>Tickets starting <strong>from &pound;60.00 </strong></div>
+                                                                                                                    <div>Next match: Tottenham v Bayern Munich </div>
+                                                                                                                </div>
+                                                                                                                <div class="view">View fixtures</div>
+                                                                                                            </a>
+                                                                                                        </div>
+                                                                                                </div>
+                                                                                                <div class="item">
+                                                                                                    <div class="block team">
+                                                                                                        <div class="favourite club_19" type="club" uid="19">
+                                                                                                            <button type="button" class="favourite-toggle ">
+                                                                                                                <div class="heart"><div>
+                                                                                                                        </button>
+                                                                                                                    </div>
+                                                                                                                    <div class="badge" style="background-color: #284487">
+                                                                                                                        <a href="https://www.footballticketpad.com/group/club/everton-tickets" class="image">
+                                                                                                                            <img src="https://www.footballticketpad.com/uploads/everton.png" alt="Everton">
                                                                                                                         </a>
                                                                                                                     </div>
-                                                                                                            </div>
-                                                                                                            <div class="item">
-                                                                                                                <div class="block team">
-                                                                                                                    <div class="favourite club_22" type="club" uid="22">
-                                                                                                                        <button type="button" class="favourite-toggle ">
-                                                                                                                            <div class="heart"><div>
-                                                                                                                                    </button>
-                                                                                                                                </div>
-                                                                                                                                <div class="badge" style="background-color: #cf2433">
-                                                                                                                                    <a href="https://www.footballticketpad.com/group/club/liverpool-tickets" class="image">
-                                                                                                                                        <img src="https://www.footballticketpad.com/uploads/liverpool.png" alt="Liverpool">
-                                                                                                                                    </a>
-                                                                                                                                </div>
-                                                                                                                                <a href="https://www.footballticketpad.com/group/club/liverpool-tickets" class="inner">
-                                                                                                                                    <div class="team-name">Liverpool</div>
-                                                                                                                                    <div class="details">
-                                                                                                                                        <div>0 Games listed</div>
-                                                                                                                                        <div><strong>No tickets available</strong></div>
-                                                                                                                                        <div>Next match: TBC</div>
-                                                                                                                                    </div>
-                                                                                                                                    <div class="view">View fixtures</div>
+                                                                                                                    <a href="https://www.footballticketpad.com/group/club/everton-tickets" class="inner">
+                                                                                                                        <div class="team-name">Everton</div>
+                                                                                                                        <div class="details">
+                                                                                                                            <div>0 Games listed</div>
+                                                                                                                            <div><strong>No tickets available</strong></div>
+                                                                                                                            <div>Next match: TBC</div>
+                                                                                                                        </div>
+                                                                                                                        <div class="view">View fixtures</div>
+                                                                                                                    </a>
+                                                                                                                </div>
+                                                                                                        </div>
+                                                                                                        <div class="item">
+                                                                                                            <div class="block team">
+                                                                                                                <div class="favourite club_99" type="club" uid="99">
+                                                                                                                    <button type="button" class="favourite-toggle ">
+                                                                                                                        <div class="heart"><div>
+                                                                                                                                </button>
+                                                                                                                            </div>
+                                                                                                                            <div class="badge" style="background-color: #ffce00">
+                                                                                                                                <a href="https://www.footballticketpad.com/group/club/barcelona" class="image">
+                                                                                                                                    <img src="https://www.footballticketpad.com/uploads/BarcelonaSized.png" alt="Barcelona">
                                                                                                                                 </a>
                                                                                                                             </div>
-                                                                                                                    </div>
-                                                                                                                    <div class="item">
-                                                                                                                        <div class="block team">
-                                                                                                                            <div class="favourite club_29" type="club" uid="29">
+                                                                                                                            <a href="https://www.footballticketpad.com/group/club/barcelona" class="inner">
+                                                                                                                                <div class="team-name">Barcelona</div>
+                                                                                                                                <div class="details">
+                                                                                                                                    <div>1 Games listed</div>
+                                                                                                                                    <div>Tickets starting <strong>from &pound;257.50 </strong></div>
+                                                                                                                                    <div>Next match: Sevilla v Barcelona</div>
+                                                                                                                                </div>
+                                                                                                                                <div class="view">View fixtures</div>
+                                                                                                                            </a>
+                                                                                                                        </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                            <a href="https://www.footballticketpad.com/teams" class="c2a_btn">All teams</a>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="banner-section c2a">
+                                                                                                        <div class="image" style="background-image:url(https://www.footballticketpad.com/assets/frontend/2018/images/stadium_banner.png);"></div>
+                                                                                                        <div class="inner">
+                                                                                                            <h3>Popular Tickets</h3>
+                                                                                                            <div class="text">
+                                                                                                                Adam &amp; 99 others have bought tickets to watch in the Champions League on Saturday, 01 June 2024. Tickets are currently selling at &pound; 1665.00
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+
+
+                                                                                                    <div class="section">
+                                                                                                        <div class="inner">
+                                                                                                            <h2>Upcoming games</h2>
+                                                                                                            <div class="grid up-games">
+                                                                                                                <div class="item">
+                                                                                                                    <div class="block match">
+                                                                                                                        <div class="top">
+                                                                                                                            <div class="tickets-sold">
+                                                                                                                                <div class="ftp-tickets"></div>
+                                                                                                                                <div class="label">Tickets sold</div>
+                                                                                                                                <div class="value">186</div>
+                                                                                                                            </div>
+                                                                                                                            <div class="favourite event_10290" type="event" uid="10290">
                                                                                                                                 <button type="button" class="favourite-toggle ">
                                                                                                                                     <div class="heart"><div>
                                                                                                                                             </button>
                                                                                                                                         </div>
-                                                                                                                                        <div class="badge" style="background-color: #6f8ad0">
-                                                                                                                                            <a href="https://www.footballticketpad.com/group/club/tottenham-tickets" class="image">
-                                                                                                                                                <img src="https://www.footballticketpad.com/uploads/tottenham.png" alt="Tottenham Hotspur">
-                                                                                                                                            </a>
-                                                                                                                                        </div>
-                                                                                                                                        <a href="https://www.footballticketpad.com/group/club/tottenham-tickets" class="inner">
-                                                                                                                                            <div class="team-name">Tottenham Hotspur</div>
-                                                                                                                                            <div class="details">
-                                                                                                                                                <div>1 Games listed</div>
-                                                                                                                                                <div>Tickets starting <strong>from &pound;60.00 </strong></div>
-                                                                                                                                                <div>Next match: Tottenham v Bayern Munich </div>
-                                                                                                                                            </div>
-                                                                                                                                            <div class="view">View fixtures</div>
-                                                                                                                                        </a>
                                                                                                                                     </div>
+                                                                                                                                    <a href="/fa-cup/fa-cup-final-2024" class="inner">
+                                                                                                                                        <div class="badges">
+                                                                                                                                            <div><img src="https://www.footballticketpad.com/uploads/man-city.png" alt /></div>
+                                                                                                                                            <div><img src="https://www.footballticketpad.com/uploads/man-utd.png" alt /></div>
+                                                                                                                                        </div>
+                                                                                                                                        <div class="teams">
+                                                                                                                                            FA Cup Final 2024
+                                                                                                                                        </div>
+                                                                                                                                        <div class="details">
+                                                                                                                                            <div class="location">Wembley</div>
+                                                                                                                                            <div class="date"> 25th May 2024 </div>
+                                                                                                                                            <div class="league">FA Cup </div>
+                                                                                                                                        </div>
+                                                                                                                                    </a>
+                                                                                                                                    <a href="/fa-cup/fa-cup-final-2024">
+                                                                                                                                        <div class="price-from"><span class="price">
+                                                                                                                                                Tickets from &pound;449.99 </span></div>
+                                                                                                                                        <div class="book" data-ripple>Book now</div>
+                                                                                                                                    </a>
+                                                                                                                                    <a href="/fa-cup/fa-cup-final-2024" class="inner-mobile">
+                                                                                                                                        <div class="left">
+                                                                                                                                            <div class="day"> Sat </div>
+                                                                                                                                            <div class="date"> 25th May </div>
+                                                                                                                                            <div class="time">15:00</div>
+                                                                                                                                        </div>
+                                                                                                                                        <div class="right">
+                                                                                                                                            <div class="teams">
+                                                                                                                                                FA Cup Final 2024
+                                                                                                                                            </div>
+                                                                                                                                            <div class="location">Wembley</div>
+                                                                                                                                            <div class="league">FA Cup </div>
+                                                                                                                                            <div class="price-from">from &pound;449.99 </div>
+                                                                                                                                            <div class="tickets-left">Limited stock remaining!</div>
+                                                                                                                                        </div>
+                                                                                                                                    </a>
                                                                                                                             </div>
-                                                                                                                            <div class="item">
-                                                                                                                                <div class="block team">
-                                                                                                                                    <div class="favourite club_19" type="club" uid="19">
+                                                                                                                        </div>
+                                                                                                                        <div class="item">
+                                                                                                                            <div class="block match">
+                                                                                                                                <div class="top">
+                                                                                                                                    <div class="tickets-sold">
+                                                                                                                                        <div class="ftp-tickets"></div>
+                                                                                                                                        <div class="label">Tickets sold</div>
+                                                                                                                                        <div class="value">269</div>
+                                                                                                                                    </div>
+                                                                                                                                    <div class="favourite event_10291" type="event" uid="10291">
                                                                                                                                         <button type="button" class="favourite-toggle ">
                                                                                                                                             <div class="heart"><div>
                                                                                                                                                     </button>
                                                                                                                                                 </div>
-                                                                                                                                                <div class="badge" style="background-color: #284487">
-                                                                                                                                                    <a href="https://www.footballticketpad.com/group/club/everton-tickets" class="image">
-                                                                                                                                                        <img src="https://www.footballticketpad.com/uploads/everton.png" alt="Everton">
-                                                                                                                                                    </a>
-                                                                                                                                                </div>
-                                                                                                                                                <a href="https://www.footballticketpad.com/group/club/everton-tickets" class="inner">
-                                                                                                                                                    <div class="team-name">Everton</div>
-                                                                                                                                                    <div class="details">
-                                                                                                                                                        <div>0 Games listed</div>
-                                                                                                                                                        <div><strong>No tickets available</strong></div>
-                                                                                                                                                        <div>Next match: TBC</div>
-                                                                                                                                                    </div>
-                                                                                                                                                    <div class="view">View fixtures</div>
-                                                                                                                                                </a>
                                                                                                                                             </div>
+                                                                                                                                            <a href="/champions-league-tickets/champions-league-final-2024" class="inner">
+                                                                                                                                                <div class="badges">
+                                                                                                                                                    <div><img src="https://www.footballticketpad.com/uploads/BorussiaDortsized.png" alt /></div>
+                                                                                                                                                    <div><img src="https://www.footballticketpad.com/uploads/RealMadridSized.png" alt /></div>
+                                                                                                                                                </div>
+                                                                                                                                                <div class="teams">
+                                                                                                                                                    Champions League Final 2024
+                                                                                                                                                </div>
+                                                                                                                                                <div class="details">
+                                                                                                                                                    <div class="location">Wembley</div>
+                                                                                                                                                    <div class="date"> 01st June 2024 </div>
+                                                                                                                                                    <div class="league">Champions League</div>
+                                                                                                                                                </div>
+                                                                                                                                            </a>
+                                                                                                                                            <a href="/champions-league-tickets/champions-league-final-2024">
+                                                                                                                                                <div class="price-from"><span class="price">
+                                                                                                                                                        Tickets from &pound;1,665.00 </span></div>
+                                                                                                                                                <div class="book" data-ripple>Book now</div>
+                                                                                                                                            </a>
+                                                                                                                                            <a href="/champions-league-tickets/champions-league-final-2024" class="inner-mobile">
+                                                                                                                                                <div class="left">
+                                                                                                                                                    <div class="day"> Sat </div>
+                                                                                                                                                    <div class="date"> 01st June </div>
+                                                                                                                                                    <div class="time">20:00</div>
+                                                                                                                                                </div>
+                                                                                                                                                <div class="right">
+                                                                                                                                                    <div class="teams">
+                                                                                                                                                        Champions League Final 2024
+                                                                                                                                                    </div>
+                                                                                                                                                    <div class="location">Wembley</div>
+                                                                                                                                                    <div class="league">Champions League</div>
+                                                                                                                                                    <div class="price-from">from &pound;1,665.00 </div>
+                                                                                                                                                    <div class="tickets-left">Limited stock remaining!</div>
+                                                                                                                                                </div>
+                                                                                                                                            </a>
                                                                                                                                     </div>
-                                                                                                                                    <div class="item">
-                                                                                                                                        <div class="block team">
-                                                                                                                                            <div class="favourite club_99" type="club" uid="99">
+                                                                                                                                </div>
+                                                                                                                                <div class="item">
+                                                                                                                                    <div class="block match">
+                                                                                                                                        <div class="top">
+                                                                                                                                            <div class="tickets-sold">
+                                                                                                                                                <div class="ftp-tickets"></div>
+                                                                                                                                                <div class="label">Tickets sold</div>
+                                                                                                                                                <div class="value">79</div>
+                                                                                                                                            </div>
+                                                                                                                                            <div class="favourite event_10292" type="event" uid="10292">
                                                                                                                                                 <button type="button" class="favourite-toggle ">
                                                                                                                                                     <div class="heart"><div>
                                                                                                                                                             </button>
                                                                                                                                                         </div>
-                                                                                                                                                        <div class="badge" style="background-color: #ffce00">
-                                                                                                                                                            <a href="https://www.footballticketpad.com/group/club/barcelona" class="image">
-                                                                                                                                                                <img src="https://www.footballticketpad.com/uploads/BarcelonaSized.png" alt="Barcelona">
-                                                                                                                                                            </a>
-                                                                                                                                                        </div>
-                                                                                                                                                        <a href="https://www.footballticketpad.com/group/club/barcelona" class="inner">
-                                                                                                                                                            <div class="team-name">Barcelona</div>
-                                                                                                                                                            <div class="details">
-                                                                                                                                                                <div>1 Games listed</div>
-                                                                                                                                                                <div>Tickets starting <strong>from &pound;257.50 </strong></div>
-                                                                                                                                                                <div>Next match: Sevilla v Barcelona</div>
-                                                                                                                                                            </div>
-                                                                                                                                                            <div class="view">View fixtures</div>
-                                                                                                                                                        </a>
                                                                                                                                                     </div>
+                                                                                                                                                    <a href="/europa-league/europa-league-final" class="inner">
+                                                                                                                                                        <div class="badges">
+                                                                                                                                                            <div><img src="https://www.footballticketpad.com/uploads/Atalantasized.png" alt /></div>
+                                                                                                                                                            <div><img src="https://www.footballticketpad.com/uploads/Bayersized.png" alt /></div>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="teams">
+                                                                                                                                                            Europa League Final
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="details">
+                                                                                                                                                            <div class="location">Dublin Arena</div>
+                                                                                                                                                            <div class="date"> 22nd May 2024 </div>
+                                                                                                                                                            <div class="league">Europa League</div>
+                                                                                                                                                        </div>
+                                                                                                                                                    </a>
+                                                                                                                                                    <a href="/europa-league/europa-league-final">
+                                                                                                                                                        <div class="price-from"><span class="price">
+                                                                                                                                                                Tickets from &pound;199.00 </span></div>
+                                                                                                                                                        <div class="book" data-ripple>Book now</div>
+                                                                                                                                                    </a>
+                                                                                                                                                    <a href="/europa-league/europa-league-final" class="inner-mobile">
+                                                                                                                                                        <div class="left">
+                                                                                                                                                            <div class="day"> Wed </div>
+                                                                                                                                                            <div class="date"> 22nd May </div>
+                                                                                                                                                            <div class="time">15:00</div>
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="right">
+                                                                                                                                                            <div class="teams">
+                                                                                                                                                                Europa League Final
+                                                                                                                                                            </div>
+                                                                                                                                                            <div class="location">Dublin Arena</div>
+                                                                                                                                                            <div class="league">Europa League</div>
+                                                                                                                                                            <div class="price-from">from &pound;199.00 </div>
+                                                                                                                                                            <div class="tickets-left">Popular event, book now!</div>
+                                                                                                                                                        </div>
+                                                                                                                                                    </a>
                                                                                                                                             </div>
                                                                                                                                         </div>
-                                                                                                                                        <a href="https://www.footballticketpad.com/teams" class="c2a_btn">All teams</a>
                                                                                                                                     </div>
                                                                                                                                 </div>
-                                                                                                                                <div class="banner-section c2a">
-                                                                                                                                    <div class="image" style="background-image:url(https://www.footballticketpad.com/assets/frontend/2018/images/stadium_banner.png);"></div>
-                                                                                                                                    <div class="inner">
-                                                                                                                                        <h3>Popular Tickets</h3>
-                                                                                                                                        <div class="text">
-                                                                                                                                            Adam &amp; 99 others have bought tickets to watch in the Champions League on Saturday, 01 June 2024. Tickets are currently selling at &pound; 1665.00
-                                                                                                                                        </div>
-                                                                                                                                    </div>
-                                                                                                                                </div>
+                                                                                                                            </div>
 
-
-                                                                                                                                <div class="section">
-                                                                                                                                    <div class="inner">
-                                                                                                                                        <h2>Upcoming games</h2>
-                                                                                                                                        <div class="grid up-games">
-                                                                                                                                            <div class="item">
-                                                                                                                                                <div class="block match">
-                                                                                                                                                    <div class="top">
-                                                                                                                                                        <div class="tickets-sold">
-                                                                                                                                                            <div class="ftp-tickets"></div>
-                                                                                                                                                            <div class="label">Tickets sold</div>
-                                                                                                                                                            <div class="value">186</div>
+                                                                                                                            <div class="section">
+                                                                                                                                <div class="inner">
+                                                                                                                                    <h2>Tournaments</h2>
+                                                                                                                                    <div class="grid tour">
+                                                                                                                                        <div class="item">
+                                                                                                                                            <div class="block team league">
+                                                                                                                                                <div class="favourite league_7" type="league" uid="7">
+                                                                                                                                                    <button type="button" class="favourite-toggle ">
+                                                                                                                                                        <div class="heart"><div>
+                                                                                                                                                                </button>
+                                                                                                                                                            </div>
+                                                                                                                                                            <div class="badge" style="background-image: url(https://www.footballticketpad.com/uploads/prem.jpg);">
+                                                                                                                                                                <a href="/group/league/premier-league" class="image">
+                                                                                                                                                                    <img src="https://www.footballticketpad.com/uploads/EPL-White-size.png" alt="Premier League" />
+                                                                                                                                                                </a>
+                                                                                                                                                            </div>
+                                                                                                                                                            <a href="https://www.footballticketpad.com/group/league/premier-league" class="inner">
+                                                                                                                                                                <div class="team-name">Premier League</div>
+                                                                                                                                                                <div class="details">
+                                                                                                                                                                    <div>0 Games listed</div>
+                                                                                                                                                                    <div>20 Teams</div>
+                                                                                                                                                                    <div><b>No tickets available</b></div>
+                                                                                                                                                                </div>
+                                                                                                                                                                <div class="view">View fixtures</div>
+                                                                                                                                                            </a>
                                                                                                                                                         </div>
-                                                                                                                                                        <div class="favourite event_10290" type="event" uid="10290">
+                                                                                                                                                </div>
+                                                                                                                                                <div class="item">
+                                                                                                                                                    <div class="block team league">
+                                                                                                                                                        <div class="favourite league_46" type="league" uid="46">
                                                                                                                                                             <button type="button" class="favourite-toggle ">
                                                                                                                                                                 <div class="heart"><div>
                                                                                                                                                                         </button>
                                                                                                                                                                     </div>
-                                                                                                                                                                </div>
-                                                                                                                                                                <a href="/fa-cup/fa-cup-final-2024" class="inner">
-                                                                                                                                                                    <div class="badges">
-                                                                                                                                                                        <div><img src="https://www.footballticketpad.com/uploads/man-city.png" alt /></div>
-                                                                                                                                                                        <div><img src="https://www.footballticketpad.com/uploads/man-utd.png" alt /></div>
+                                                                                                                                                                    <div class="badge" style="background-image: url(https://www.footballticketpad.com/uploads/fa-cup.jpg);">
+                                                                                                                                                                        <a href="/group/league/fa-cup" class="image">
+                                                                                                                                                                            <img src="https://www.footballticketpad.com/uploads/FA-Cup-Logo.png" alt="FA Cup " />
+                                                                                                                                                                        </a>
                                                                                                                                                                     </div>
-                                                                                                                                                                    <div class="teams">
-                                                                                                                                                                        FA Cup Final 2024
-                                                                                                                                                                    </div>
-                                                                                                                                                                    <div class="details">
-                                                                                                                                                                        <div class="location">Wembley</div>
-                                                                                                                                                                        <div class="date"> 25th May 2024 </div>
-                                                                                                                                                                        <div class="league">FA Cup </div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </a>
-                                                                                                                                                                <a href="/fa-cup/fa-cup-final-2024">
-                                                                                                                                                                    <div class="price-from"><span class="price">
-                                                                                                                                                                            Tickets from &pound;449.99 </span></div>
-                                                                                                                                                                    <div class="book" data-ripple>Book now</div>
-                                                                                                                                                                </a>
-                                                                                                                                                                <a href="/fa-cup/fa-cup-final-2024" class="inner-mobile">
-                                                                                                                                                                    <div class="left">
-                                                                                                                                                                        <div class="day"> Sat </div>
-                                                                                                                                                                        <div class="date"> 25th May </div>
-                                                                                                                                                                        <div class="time">15:00</div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                    <div class="right">
-                                                                                                                                                                        <div class="teams">
-                                                                                                                                                                            FA Cup Final 2024
+                                                                                                                                                                    <a href="https://www.footballticketpad.com/group/league/fa-cup" class="inner">
+                                                                                                                                                                        <div class="team-name">FA Cup </div>
+                                                                                                                                                                        <div class="details">
+                                                                                                                                                                            <div>2 Games listed</div>
+                                                                                                                                                                            <div>37 Teams</div>
+                                                                                                                                                                            <div>Tickets starting <b>from &pound;450.00 </b></div>
                                                                                                                                                                         </div>
-                                                                                                                                                                        <div class="location">Wembley</div>
-                                                                                                                                                                        <div class="league">FA Cup </div>
-                                                                                                                                                                        <div class="price-from">from &pound;449.99 </div>
-                                                                                                                                                                        <div class="tickets-left">Limited stock remaining!</div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </a>
-                                                                                                                                                        </div>
-                                                                                                                                                    </div>
-                                                                                                                                                    <div class="item">
-                                                                                                                                                        <div class="block match">
-                                                                                                                                                            <div class="top">
-                                                                                                                                                                <div class="tickets-sold">
-                                                                                                                                                                    <div class="ftp-tickets"></div>
-                                                                                                                                                                    <div class="label">Tickets sold</div>
-                                                                                                                                                                    <div class="value">269</div>
+                                                                                                                                                                        <div class="view">View fixtures</div>
+                                                                                                                                                                    </a>
                                                                                                                                                                 </div>
-                                                                                                                                                                <div class="favourite event_10291" type="event" uid="10291">
+                                                                                                                                                        </div>
+                                                                                                                                                        <div class="item">
+                                                                                                                                                            <div class="block team league">
+                                                                                                                                                                <div class="favourite league_113" type="league" uid="113">
                                                                                                                                                                     <button type="button" class="favourite-toggle ">
                                                                                                                                                                         <div class="heart"><div>
                                                                                                                                                                                 </button>
                                                                                                                                                                             </div>
-                                                                                                                                                                        </div>
-                                                                                                                                                                        <a href="/champions-league-tickets/champions-league-final-2024" class="inner">
-                                                                                                                                                                            <div class="badges">
-                                                                                                                                                                                <div><img src="https://www.footballticketpad.com/uploads/BorussiaDortsized.png" alt /></div>
-                                                                                                                                                                                <div><img src="https://www.footballticketpad.com/uploads/RealMadridSized.png" alt /></div>
+                                                                                                                                                                            <div class="badge" style="background-image: url(https://www.footballticketpad.com/uploads/Juvstad.png);">
+                                                                                                                                                                                <a href="/group/league/serie-a" class="image">
+                                                                                                                                                                                    <img src="https://www.footballticketpad.com/uploads/Serie_A_unsized.png" alt="Serie A" />
+                                                                                                                                                                                </a>
                                                                                                                                                                             </div>
-                                                                                                                                                                            <div class="teams">
-                                                                                                                                                                                Champions League Final 2024
-                                                                                                                                                                            </div>
-                                                                                                                                                                            <div class="details">
-                                                                                                                                                                                <div class="location">Wembley</div>
-                                                                                                                                                                                <div class="date"> 01st June 2024 </div>
-                                                                                                                                                                                <div class="league">Champions League</div>
-                                                                                                                                                                            </div>
-                                                                                                                                                                        </a>
-                                                                                                                                                                        <a href="/champions-league-tickets/champions-league-final-2024">
-                                                                                                                                                                            <div class="price-from"><span class="price">
-                                                                                                                                                                                    Tickets from &pound;1,665.00 </span></div>
-                                                                                                                                                                            <div class="book" data-ripple>Book now</div>
-                                                                                                                                                                        </a>
-                                                                                                                                                                        <a href="/champions-league-tickets/champions-league-final-2024" class="inner-mobile">
-                                                                                                                                                                            <div class="left">
-                                                                                                                                                                                <div class="day"> Sat </div>
-                                                                                                                                                                                <div class="date"> 01st June </div>
-                                                                                                                                                                                <div class="time">20:00</div>
-                                                                                                                                                                            </div>
-                                                                                                                                                                            <div class="right">
-                                                                                                                                                                                <div class="teams">
-                                                                                                                                                                                    Champions League Final 2024
+                                                                                                                                                                            <a href="https://www.footballticketpad.com/group/league/serie-a" class="inner">
+                                                                                                                                                                                <div class="team-name">Serie A</div>
+                                                                                                                                                                                <div class="details">
+                                                                                                                                                                                    <div>11 Games listed</div>
+                                                                                                                                                                                    <div>20 Teams</div>
+                                                                                                                                                                                    <div>Tickets starting <b>from &pound;42.92 </b></div>
                                                                                                                                                                                 </div>
-                                                                                                                                                                                <div class="location">Wembley</div>
-                                                                                                                                                                                <div class="league">Champions League</div>
-                                                                                                                                                                                <div class="price-from">from &pound;1,665.00 </div>
-                                                                                                                                                                                <div class="tickets-left">Limited stock remaining!</div>
-                                                                                                                                                                            </div>
-                                                                                                                                                                        </a>
-                                                                                                                                                                </div>
-                                                                                                                                                            </div>
-                                                                                                                                                            <div class="item">
-                                                                                                                                                                <div class="block match">
-                                                                                                                                                                    <div class="top">
-                                                                                                                                                                        <div class="tickets-sold">
-                                                                                                                                                                            <div class="ftp-tickets"></div>
-                                                                                                                                                                            <div class="label">Tickets sold</div>
-                                                                                                                                                                            <div class="value">79</div>
+                                                                                                                                                                                <div class="view">View fixtures</div>
+                                                                                                                                                                            </a>
                                                                                                                                                                         </div>
-                                                                                                                                                                        <div class="favourite event_10292" type="event" uid="10292">
+                                                                                                                                                                </div>
+                                                                                                                                                                <div class="item">
+                                                                                                                                                                    <div class="block team league">
+                                                                                                                                                                        <div class="favourite league_43" type="league" uid="43">
                                                                                                                                                                             <button type="button" class="favourite-toggle ">
                                                                                                                                                                                 <div class="heart"><div>
                                                                                                                                                                                         </button>
                                                                                                                                                                                     </div>
-                                                                                                                                                                                </div>
-                                                                                                                                                                                <a href="/europa-league/europa-league-final" class="inner">
-                                                                                                                                                                                    <div class="badges">
-                                                                                                                                                                                        <div><img src="https://www.footballticketpad.com/uploads/Atalantasized.png" alt /></div>
-                                                                                                                                                                                        <div><img src="https://www.footballticketpad.com/uploads/Bayersized.png" alt /></div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                    <div class="teams">
-                                                                                                                                                                                        Europa League Final
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                    <div class="details">
-                                                                                                                                                                                        <div class="location">Dublin Arena</div>
-                                                                                                                                                                                        <div class="date"> 22nd May 2024 </div>
-                                                                                                                                                                                        <div class="league">Europa League</div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                </a>
-                                                                                                                                                                                <a href="/europa-league/europa-league-final">
-                                                                                                                                                                                    <div class="price-from"><span class="price">
-                                                                                                                                                                                            Tickets from &pound;199.00 </span></div>
-                                                                                                                                                                                    <div class="book" data-ripple>Book now</div>
-                                                                                                                                                                                </a>
-                                                                                                                                                                                <a href="/europa-league/europa-league-final" class="inner-mobile">
-                                                                                                                                                                                    <div class="left">
-                                                                                                                                                                                        <div class="day"> Wed </div>
-                                                                                                                                                                                        <div class="date"> 22nd May </div>
-                                                                                                                                                                                        <div class="time">15:00</div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                    <div class="right">
-                                                                                                                                                                                        <div class="teams">
-                                                                                                                                                                                            Europa League Final
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                        <div class="location">Dublin Arena</div>
-                                                                                                                                                                                        <div class="league">Europa League</div>
-                                                                                                                                                                                        <div class="price-from">from &pound;199.00 </div>
-                                                                                                                                                                                        <div class="tickets-left">Popular event, book now!</div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                </a>
-                                                                                                                                                                        </div>
-                                                                                                                                                                    </div>
-                                                                                                                                                                </div>
-                                                                                                                                                            </div>
-                                                                                                                                                        </div>
-
-                                                                                                                                                        <div class="section">
-                                                                                                                                                            <div class="inner">
-                                                                                                                                                                <h2>Tournaments</h2>
-                                                                                                                                                                <div class="grid tour">
-                                                                                                                                                                    <div class="item">
-                                                                                                                                                                        <div class="block team league">
-                                                                                                                                                                            <div class="favourite league_7" type="league" uid="7">
-                                                                                                                                                                                <button type="button" class="favourite-toggle ">
-                                                                                                                                                                                    <div class="heart"><div>
-                                                                                                                                                                                            </button>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                        <div class="badge" style="background-image: url(https://www.footballticketpad.com/uploads/prem.jpg);">
-                                                                                                                                                                                            <a href="/group/league/premier-league" class="image">
-                                                                                                                                                                                                <img src="https://www.footballticketpad.com/uploads/EPL-White-size.png" alt="Premier League" />
-                                                                                                                                                                                            </a>
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                        <a href="https://www.footballticketpad.com/group/league/premier-league" class="inner">
-                                                                                                                                                                                            <div class="team-name">Premier League</div>
-                                                                                                                                                                                            <div class="details">
-                                                                                                                                                                                                <div>0 Games listed</div>
-                                                                                                                                                                                                <div>20 Teams</div>
-                                                                                                                                                                                                <div><b>No tickets available</b></div>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                            <div class="view">View fixtures</div>
+                                                                                                                                                                                    <div class="badge" style="background-image: url(https://www.footballticketpad.com/uploads/l1-sta.jpg);">
+                                                                                                                                                                                        <a href="/group/league/ligue-1" class="image">
+                                                                                                                                                                                            <img src="https://www.footballticketpad.com/uploads/Ligue1fin.png" alt="Ligue 1" />
                                                                                                                                                                                         </a>
                                                                                                                                                                                     </div>
-                                                                                                                                                                            </div>
-                                                                                                                                                                            <div class="item">
-                                                                                                                                                                                <div class="block team league">
-                                                                                                                                                                                    <div class="favourite league_46" type="league" uid="46">
-                                                                                                                                                                                        <button type="button" class="favourite-toggle ">
-                                                                                                                                                                                            <div class="heart"><div>
-                                                                                                                                                                                                    </button>
-                                                                                                                                                                                                </div>
-                                                                                                                                                                                                <div class="badge" style="background-image: url(https://www.footballticketpad.com/uploads/fa-cup.jpg);">
-                                                                                                                                                                                                    <a href="/group/league/fa-cup" class="image">
-                                                                                                                                                                                                        <img src="https://www.footballticketpad.com/uploads/FA-Cup-Logo.png" alt="FA Cup " />
-                                                                                                                                                                                                    </a>
-                                                                                                                                                                                                </div>
-                                                                                                                                                                                                <a href="https://www.footballticketpad.com/group/league/fa-cup" class="inner">
-                                                                                                                                                                                                    <div class="team-name">FA Cup </div>
-                                                                                                                                                                                                    <div class="details">
-                                                                                                                                                                                                        <div>2 Games listed</div>
-                                                                                                                                                                                                        <div>37 Teams</div>
-                                                                                                                                                                                                        <div>Tickets starting <b>from &pound;450.00 </b></div>
-                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                    <div class="view">View fixtures</div>
+                                                                                                                                                                                    <a href="https://www.footballticketpad.com/group/league/ligue-1" class="inner">
+                                                                                                                                                                                        <div class="team-name">Ligue 1</div>
+                                                                                                                                                                                        <div class="details">
+                                                                                                                                                                                            <div>0 Games listed</div>
+                                                                                                                                                                                            <div>18 Teams</div>
+                                                                                                                                                                                            <div><b>No tickets available</b></div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        <div class="view">View fixtures</div>
+                                                                                                                                                                                    </a>
+                                                                                                                                                                                </div>
+                                                                                                                                                                        </div>
+                                                                                                                                                                        <div class="item">
+                                                                                                                                                                            <div class="block team league">
+                                                                                                                                                                                <div class="favourite league_757" type="league" uid="757">
+                                                                                                                                                                                    <button type="button" class="favourite-toggle ">
+                                                                                                                                                                                        <div class="heart"><div>
+                                                                                                                                                                                                </button>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                            <div class="badge" style="background-image: url(https://www.footballticketpad.com/assets/frontend/2018/images/leagues/backgrounds/1.jpg);">
+                                                                                                                                                                                                <a href="/group/league/uefa-euro-2024" class="image">
+                                                                                                                                                                                                    <img src="https://www.footballticketpad.com/uploads/UEFA_Euro_2024.png" alt="UEFA EURO 2024" />
                                                                                                                                                                                                 </a>
                                                                                                                                                                                             </div>
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                    <div class="item">
-                                                                                                                                                                                        <div class="block team league">
-                                                                                                                                                                                            <div class="favourite league_113" type="league" uid="113">
-                                                                                                                                                                                                <button type="button" class="favourite-toggle ">
-                                                                                                                                                                                                    <div class="heart"><div>
+                                                                                                                                                                                            <a href="https://www.footballticketpad.com/group/league/uefa-euro-2024" class="inner">
+                                                                                                                                                                                                <div class="team-name">UEFA EURO 2024</div>
+                                                                                                                                                                                                <div class="details">
+                                                                                                                                                                                                    <div>51 Games listed</div>
+                                                                                                                                                                                                    <div>0 Teams</div>
+                                                                                                                                                                                                    <div>Tickets starting <b>from &pound;618.00 </b></div>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                                <div class="view">View fixtures</div>
+                                                                                                                                                                                            </a>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                                <div class="item">
+                                                                                                                                                                                    <div class="block team league">
+                                                                                                                                                                                        <div class="favourite league_41" type="league" uid="41">
+                                                                                                                                                                                            <button type="button" class="favourite-toggle ">
+                                                                                                                                                                                                <div class="heart"><div>
                                                                                                                                                                                                         </button>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <div class="badge" style="background-image: url(https://www.footballticketpad.com/uploads/Juvstad.png);">
-                                                                                                                                                                                                        <a href="/group/league/serie-a" class="image">
-                                                                                                                                                                                                        <img src="https://www.footballticketpad.com/uploads/Serie_A_unsized.png" alt="Serie A" />
-                                                                                                                                                                                                        </a>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <a href="https://www.footballticketpad.com/group/league/serie-a" class="inner">
-                                                                                                                                                                                                        <div class="team-name">Serie A</div>
-                                                                                                                                                                                                        <div class="details">
-                                                                                                                                                                                                        <div>11 Games listed</div>
-                                                                                                                                                                                                        <div>20 Teams</div>
-                                                                                                                                                                                                        <div>Tickets starting <b>from &pound;42.92 </b></div>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <div class="view">View fixtures</div>
-                                                                                                                                                                                                        </a>
                                                                                                                                                                                                     </div>
-                                                                                                                                                                                            </div>
-                                                                                                                                                                                            <div class="item">
-                                                                                                                                                                                                <div class="block team league">
-                                                                                                                                                                                                    <div class="favourite league_43" type="league" uid="43">
-                                                                                                                                                                                                        <button type="button" class="favourite-toggle ">
-                                                                                                                                                                                                        <div class="heart"><div>
-                                                                                                                                                                                                        </button>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <div class="badge" style="background-image: url(https://www.footballticketpad.com/uploads/l1-sta.jpg);">
-                                                                                                                                                                                                        <a href="/group/league/ligue-1" class="image">
-                                                                                                                                                                                                        <img src="https://www.footballticketpad.com/uploads/Ligue1fin.png" alt="Ligue 1" />
-                                                                                                                                                                                                        </a>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <a href="https://www.footballticketpad.com/group/league/ligue-1" class="inner">
-                                                                                                                                                                                                        <div class="team-name">Ligue 1</div>
-                                                                                                                                                                                                        <div class="details">
-                                                                                                                                                                                                        <div>0 Games listed</div>
-                                                                                                                                                                                                        <div>18 Teams</div>
-                                                                                                                                                                                                        <div><b>No tickets available</b></div>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <div class="view">View fixtures</div>
-                                                                                                                                                                                                        </a>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                    <div class="item">
-                                                                                                                                                                                                        <div class="block team league">
-                                                                                                                                                                                                        <div class="favourite league_757" type="league" uid="757">
-                                                                                                                                                                                                        <button type="button" class="favourite-toggle ">
-                                                                                                                                                                                                        <div class="heart"><div>
-                                                                                                                                                                                                        </button>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <div class="badge" style="background-image: url(https://www.footballticketpad.com/assets/frontend/2018/images/leagues/backgrounds/1.jpg);">
-                                                                                                                                                                                                        <a href="/group/league/uefa-euro-2024" class="image">
-                                                                                                                                                                                                        <img src="https://www.footballticketpad.com/uploads/UEFA_Euro_2024.png" alt="UEFA EURO 2024" />
-                                                                                                                                                                                                        </a>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <a href="https://www.footballticketpad.com/group/league/uefa-euro-2024" class="inner">
-                                                                                                                                                                                                        <div class="team-name">UEFA EURO 2024</div>
-                                                                                                                                                                                                        <div class="details">
-                                                                                                                                                                                                        <div>51 Games listed</div>
-                                                                                                                                                                                                        <div>0 Teams</div>
-                                                                                                                                                                                                        <div>Tickets starting <b>from &pound;618.00 </b></div>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <div class="view">View fixtures</div>
-                                                                                                                                                                                                        </a>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <div class="item">
-                                                                                                                                                                                                        <div class="block team league">
-                                                                                                                                                                                                        <div class="favourite league_41" type="league" uid="41">
-                                                                                                                                                                                                        <button type="button" class="favourite-toggle ">
-                                                                                                                                                                                                        <div class="heart"><div>
-                                                                                                                                                                                                        </button>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <div class="badge" style="background-image: url(https://www.footballticketpad.com/uploads/la-liga-.jpg);">
+                                                                                                                                                                                                    <div class="badge" style="background-image: url(https://www.footballticketpad.com/uploads/la-liga-.jpg);">
                                                                                                                                                                                                         <a href="/group/league/la-liga" class="image">
                                                                                                                                                                                                         <img src="https://www.footballticketpad.com/uploads/La-Liga_logo.png" alt="La Liga" />
                                                                                                                                                                                                         </a>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <a href="https://www.footballticketpad.com/group/league/la-liga" class="inner">
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                    <a href="https://www.footballticketpad.com/group/league/la-liga" class="inner">
                                                                                                                                                                                                         <div class="team-name">La Liga</div>
                                                                                                                                                                                                         <div class="details">
                                                                                                                                                                                                         <div>10 Games listed</div>
@@ -1842,13 +1619,13 @@
                                                                                                                                                                                                         <div>Tickets starting <b>from &pound;257.50 </b></div>
                                                                                                                                                                                                         </div>
                                                                                                                                                                                                         <div class="view">View fixtures</div>
-                                                                                                                                                                                                        </a>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <div class="item">
-                                                                                                                                                                                                        <div class="block team league">
-                                                                                                                                                                                                        <div class="favourite league_446" type="league" uid="446">
-                                                                                                                                                                                                        <button type="button" class="favourite-toggle ">
+                                                                                                                                                                                                    </a>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        <div class="item">
+                                                                                                                                                                                            <div class="block team league">
+                                                                                                                                                                                                <div class="favourite league_446" type="league" uid="446">
+                                                                                                                                                                                                    <button type="button" class="favourite-toggle ">
                                                                                                                                                                                                         <div class="heart"><div>
                                                                                                                                                                                                         </button>
                                                                                                                                                                                                         </div>
@@ -1867,9 +1644,9 @@
                                                                                                                                                                                                         <div class="view">View fixtures</div>
                                                                                                                                                                                                         </a>
                                                                                                                                                                                                         </div>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <div class="item">
-                                                                                                                                                                                                        <div class="block team league">
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                                <div class="item">
+                                                                                                                                                                                                    <div class="block team league">
                                                                                                                                                                                                         <div class="favourite league_44" type="league" uid="44">
                                                                                                                                                                                                         <button type="button" class="favourite-toggle ">
                                                                                                                                                                                                         <div class="heart"><div>
@@ -1891,6 +1668,7 @@
                                                                                                                                                                                                         </a>
                                                                                                                                                                                                         </div>
                                                                                                                                                                                                         </div>
+
                                                                                                                                                                                                         </div>
                                                                                                                                                                                                         <a href="leagues" class="c2a_btn">View all</a>
                                                                                                                                                                                                         </div>
@@ -1937,12 +1715,23 @@
                                                                                                                                                                                                         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                                                                                                                                                                                                         <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
                                                                                                                                                                                                         <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
-                                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script
+                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                    <a href="leagues" class="c2a_btn">View all</a>
+                                                                                                                                                                                                </div>
+                                                                                                                                                                                            </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                    <%@include file="footer.jsp" %>
+                                                                                                                                                                                    <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                    <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                    <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
 
-                                                                                                                                                                                                        <script type="277d7fe9745a504718d895ab-application/javascript" async src="//static.klaviyo.com/onsite/js/klaviyo.js?company_id=TFyH8Y"></script>
 
-                                                                                                                                                                                                        <script defer src="https://www.footballticketpad.com/assets/frontend/2018/js/functions.home.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                    <script type="277d7fe9745a504718d895ab-application/javascript" async src="//static.klaviyo.com/onsite/js/klaviyo.js?company_id=TFyH8Y"></script>
+
+                                                                                                                                                                                    <script defer src="https://www.footballticketpad.com/assets/frontend/2018/js/functions.home.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
 
 
-                                                                                                                                                                                                        <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="277d7fe9745a504718d895ab-|49" defer></script></body>
-                                                                                                                                                                                                        </html>
+                                                                                                                                                                                    <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="277d7fe9745a504718d895ab-|49" defer></script></body>
+                                                                                                                                                                                    </html>

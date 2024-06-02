@@ -269,7 +269,7 @@ Author     : admin
 
             <div class="content">
                 <!-- Navbar Start -->
-                <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+<!--                <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
                     <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
                         <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
                     </a>
@@ -325,7 +325,8 @@ Author     : admin
                             </div>
                         </div>
                     </div>
-                </nav>
+                </nav>-->
+                <%@include file="dashboardHeader.jsp" %>
                 <!-- Navbar End -->
                 <div class="container-fluid">
                     <div class="table-responsive">
@@ -398,7 +399,7 @@ Author     : admin
                             <div class="form-group">
                                 <label>Stand Name</label>
                                 <input id="standNameInput" name="standName" type="text" class="form-control" maxlength="50" required>
-                                <span id="standNameError" class="text-danger"></span> <!-- Thêm span để hiển thị thông báo lỗi -->
+                                <span id="standNameInputError" class="text-danger"></span> <!-- Thêm span để hiển thị thông báo lỗi -->
                             </div>
                             <div class="form-group">
                                 <label>Price (VND)</label>
@@ -544,10 +545,10 @@ Author     : admin
                     var duplicate = stands.some(stand => stand.standName === standName);
 
                     if (duplicate) {
-                        $('#standNameError').text('Stand name already exists. Please choose a different name.');
+                        $('#standNameInputError').text('Stand name already exists. Please choose a different name.');
                         event.preventDefault();
                     } else {
-                        $('#standNameError').text('');
+                        $('#standNameInputError').text('');
                     }
                 });
 
