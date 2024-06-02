@@ -162,6 +162,21 @@
                 color: red;
                 font-size: 0.7em;
             }
+            .toast {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                min-width: 200px;
+                z-index: 10000;
+            }
+            .toast.success .toast-header {
+                background-color: #28a745;
+                color: white;
+            }
+            .toast.error .toast-header {
+                background-color: #dc3545;
+                color: white;
+            }
         </style>
         <script>
             $(document).ready(function () {
