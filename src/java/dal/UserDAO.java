@@ -291,13 +291,14 @@ public class UserDAO {
     }
 
     public User getUserbyID(int userID) {
-        User u = new User();
+        User u = null;
         try {
             String sql = "select * from [dbo].[User] where userId = ? and isDeleted = 0";
             ps = con.prepareStatement(sql);
             ps.setInt(1, userID);
             rs = ps.executeQuery();
             while (rs.next()) {
+                u = new User();
                 u.setUserId(rs.getInt(1));
                 u.setRoleId(rs.getInt(2));
                 u.setUserName(rs.getString(3));
@@ -309,7 +310,8 @@ public class UserDAO {
                 u.setCreatedBy(rs.getString(9));
                 u.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
                 u.setUpdatedBy(rs.getString(11));
-                u.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
+                Timestamp updatedTimestamp = rs.getTimestamp(12);
+                u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
             }
         } catch (SQLException e) {
         }
@@ -319,10 +321,9 @@ public class UserDAO {
     public ArrayList<User> getUserbyName(String keyword) {
         ArrayList<User> users = new ArrayList<>();
         try {
-            String sql = "select * from [dbo].[User] where (userName LIKE ? or name LIKE ?) and isDeleted = 0";
+            String sql = "select * from [dbo].[User] where name LIKE ? and isDeleted = 0";
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + keyword + "%");
-            ps.setString(2, "%" + keyword + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 User u = new User();
@@ -337,7 +338,37 @@ public class UserDAO {
                 u.setCreatedBy(rs.getString(9));
                 u.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
                 u.setUpdatedBy(rs.getString(11));
-                u.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
+                Timestamp updatedTimestamp = rs.getTimestamp(12);
+                u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+                users.add(u);
+            }
+        } catch (SQLException e) {
+        }
+        return users;
+    }
+
+    public ArrayList<User> getUserbyUsername(String keyword) {
+        ArrayList<User> users = new ArrayList<>();
+        try {
+            String sql = "select * from [dbo].[User] where userName LIKE ? and isDeleted = 0";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + keyword + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User();
+                u.setUserId(rs.getInt(1));
+                u.setRoleId(rs.getInt(2));
+                u.setUserName(rs.getString(3));
+                u.setPassword(rs.getString(4));
+                u.setEmail(rs.getString(5));
+                u.setPhoneNumber(rs.getString(6));
+                u.setAvatar(rs.getString(7));
+                u.setName(rs.getString(8));
+                u.setCreatedBy(rs.getString(9));
+                u.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
+                u.setUpdatedBy(rs.getString(11));
+                Timestamp updatedTimestamp = rs.getTimestamp(12);
+                u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
                 users.add(u);
             }
         } catch (SQLException e) {
