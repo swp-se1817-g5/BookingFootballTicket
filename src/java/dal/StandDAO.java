@@ -26,11 +26,23 @@ public class StandDAO {
         }
     }
 
-    public ArrayList<Stand> getStands() {
+    public ArrayList<Stand> getStands(String standName) {
         ArrayList<Stand> stands = new ArrayList<>();
-        String sql = "SELECT * FROM Stand where isDeleted = 0";
+        String sql = "SELECT * FROM Stand WHERE isDeleted = 0"+
+
+    
+       
+             " AND standName LIKE ?";
+        
+
         try {
             PreparedStatement ps = con.prepareStatement(sql);
+
+           
+         
+                ps.setString(1, "%" + standName + "%");
+           
+
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Stand stand = new Stand();
@@ -41,12 +53,12 @@ public class StandDAO {
                 stand.setCreatedBy(rs.getString("createdBy"));
                 stand.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 stand.setUpdatedBy(rs.getString("updatedBy"));
-                stand.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") == null ? null : rs.getTimestamp("lastUpdatedDate").toLocalDateTime() );
+                stand.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") == null ? null : rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
                 stand.setIsDeleted(rs.getBoolean("isDeleted"));
                 stands.add(stand);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Proper exception handling
+            e.printStackTrace(); 
         }
         return stands;
     }
@@ -99,8 +111,9 @@ public class StandDAO {
             ps.setString(4, stand.getUpdatedBy());
             ps.setInt(5, stand.getStandId());
             int rowsAffected = ps.executeUpdate();
-            if(rowsAffected > 0)
+            if (rowsAffected > 0) {
                 updated = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

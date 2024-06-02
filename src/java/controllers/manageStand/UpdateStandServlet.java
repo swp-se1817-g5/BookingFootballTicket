@@ -90,7 +90,7 @@ public class UpdateStandServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.sendRedirect("manageStand?updated="+updated);
+        response.sendRedirect("manageStand?standUpdated="+updated);
         
     }
 
