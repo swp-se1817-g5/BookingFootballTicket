@@ -107,8 +107,8 @@ public class UpdateNewsServlet extends HttpServlet {
             n.setKickOff(kickOff);
             n.setStatus(status);
             n.setNewsId(newsId);
-            String userName = (String) session.getAttribute("currentUser");
-            n.setUpdateBy(userName);
+            String createdBy = (String) session.getAttribute("userName");
+            n.setUpdateBy(createdBy);
             session.setAttribute("updated", NewsDAO.INSTANCE.updateNews(n));
         } catch (IllegalArgumentException e) {
         }

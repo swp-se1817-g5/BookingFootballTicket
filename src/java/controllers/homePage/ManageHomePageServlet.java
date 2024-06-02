@@ -4,6 +4,7 @@
  */
 package controllers.homePage;
 
+import dal.FootballClubDAO;
 import dal.MatchDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -61,6 +62,7 @@ public class ManageHomePageServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 //        out.print(MatchDAO.INSTANCE.getMatches());
         request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
+        request.setAttribute("getFootballClubs", FootballClubDAO.INSTANCE.getFootballClubs());
         
         request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
     }

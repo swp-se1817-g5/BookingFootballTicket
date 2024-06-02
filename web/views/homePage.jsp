@@ -1008,11 +1008,11 @@
                                                     <a href="/europa-league/europa-league-final" class="inner">
                                                         <div class="badges">
                                                             <div>
-                                                                <img src="${lm.team1.img}" alt="/uploads/Atalantasized.png">
+                                                                <td><img src="${lm.team1.img}" width="80px" height="80px" alt="football club"/></td>
                                                                 <p>${lm.team1.clubName}</p>
                                                             </div>
                                                             <div>
-                                                                <img src="${lm.team2.img}" alt="/uploads/Bayersized.png">
+                                                                <td><img src="${lm.team2.img}" width="80px" height="80px" alt="football club"/></td>
                                                                 <p>${lm.team1.clubName}</p>
                                                             </div>
                                                         </div>
