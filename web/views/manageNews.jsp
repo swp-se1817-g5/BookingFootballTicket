@@ -244,9 +244,9 @@ Author     : duong
                                 <a href="manageMatch" class="dropdown-item">Manage Match</a>
                                 <a href="manageFootballClub" class="dropdown-item">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
-                                <a href="manageStand" class="dropdown-item active">Manage Stand</a>
+                                <a href="manageStand" class="dropdown-item ">Manage Stand</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
-                                <a href="manageNews" class="dropdown-item">Manage News</a>
+                                <a href="manageNews" class="dropdown-item active">Manage News</a>
                             </div>
                         </div>
                         <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
