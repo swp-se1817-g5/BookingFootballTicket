@@ -64,13 +64,13 @@ public class ManageStandServlet extends HttpServlet {
     throws ServletException, IOException {
         testUser(request);
         if(request.getParameter("standCreated") != null) {
-            request.setAttribute("created", "true".equals(request.getParameter("created")));
+            request.setAttribute("created", "true".equals(request.getParameter("standCreated")));
         }
         if(request.getParameter("standUpdated") != null) {
-            request.setAttribute("updated", "true".equals(request.getParameter("updated")));
+            request.setAttribute("updated", "true".equals(request.getParameter("standUpdated")));
         }
         if(request.getParameter("standDeleted") != null) {
-            request.setAttribute("deleted", "true".equals(request.getParameter("deleted")));
+            request.setAttribute("deleted", "true".equals(request.getParameter("standDeleted")));
         }
         String search = request.getParameter("search") == null ? "" : request.getParameter("search").trim() ;
         
