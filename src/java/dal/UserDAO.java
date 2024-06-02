@@ -292,6 +292,7 @@ public class UserDAO {
     }
 
     public User getUserbyuserID(int userID) {
+
         User u = null;
         try {
             String sql = "select * from [dbo].[User] where userId = ? and isDeleted = 0";
@@ -324,6 +325,7 @@ public class UserDAO {
         ArrayList<User> users = new ArrayList<>();
         try {
             String sql = "SELECT * FROM [dbo].[User] WHERE " + searchType + " LIKE ? AND isDeleted = 0";
+
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + keyword + "%");
             rs = ps.executeQuery();
@@ -342,6 +344,37 @@ public class UserDAO {
                 u.setUpdatedBy(rs.getString(11));
                 Timestamp updatedTimestamp = rs.getTimestamp(12);
                 u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+
+                users.add(u);
+            }
+        } catch (SQLException e) {
+        }
+        return users;
+    }
+
+    public ArrayList<User> getUserbyUsername(String keyword) {
+        ArrayList<User> users = new ArrayList<>();
+        try {
+            String sql = "select * from [dbo].[User] where userName LIKE ? and isDeleted = 0";
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + keyword + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User();
+                u.setUserId(rs.getInt(1));
+                u.setRoleId(rs.getInt(2));
+                u.setUserName(rs.getString(3));
+                u.setPassword(rs.getString(4));
+                u.setEmail(rs.getString(5));
+                u.setPhoneNumber(rs.getString(6));
+                u.setAvatar(rs.getString(7));
+                u.setName(rs.getString(8));
+                u.setCreatedBy(rs.getString(9));
+                u.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
+                u.setUpdatedBy(rs.getString(11));
+                Timestamp updatedTimestamp = rs.getTimestamp(12);
+                u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+
                 users.add(u);
             }
         } catch (SQLException e) {
