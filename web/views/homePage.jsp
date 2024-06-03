@@ -37,7 +37,7 @@
             $.ajaxSetup({ headers: { 'csrftoken' : '25RWzOSoBxW6zeNZpsZcQG32rZDnZ63jZxfO44g6' } });
             var auto_complete_source="https://www.footballticketpad.com/events/auto-complete";
         </script>
-
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <script type="277d7fe9745a504718d895ab-text/javascript">
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -336,7 +336,13 @@
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
-                        <li><a data-auth="login" href="./login">Login</a></li>
+                        <c:choose>
+                            <c:when test="${sessionScope.currentUser==null}"> <li><a data-auth="login" href="./login">Login</a></li></c:when>
+                            <c:when test="${sessionScope.currentUser!=null}"> <li><a data-auth="login" href=""><i class="bi bi-person"></i></a></li></c:when>
+                            </c:choose>
+
+
+
                         <li class="sell"><a data-quick-list="search" data-disabled class="sell" href="#">sell</a></li>
                         <div class="cart user-nav">
                             <a href="#">
@@ -381,36 +387,36 @@
                         <span class="ftp-menu"></span>
                     </div>
                 </nav>
-                <div class="auth_window">
-                    <div class="overlay"></div>
-                    <div class="window">
-                        <div class="left-image" style="background-image: url(https://www.footballticketpad.com/assets/frontend/2018/images/auth_feature.png);"></div>
-                        <form method="post" class="signin-form enquiryform">
-                            <div class="close" data-close-auth>X</div>
-                            <div class="heading">Sign in</div>
-                            <button type="button" class="api_login facebook">
-                                <span class="ftp-facebook-logo"></span>
-                                Continue with Facebook
-                            </button>
-                            <button type="button" class="api_login google">
-                                <span class="ftp-GoogleLogoColor"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
-                                Sign in with Google
-                            </button>
-                            <div class="separator">
-                                <div class="text">or</div>
-                            </div>
-                            <input type="email" name="username" id="username" placeholder="Email address" />
-                            <input type="password" name="password" id="password" placeholder="Password" />
-                            <div class="login-message" style="color: #ff0000;"></div>
-                            <br>
-                            <button type="submit" name="auth_login" class="c2a_btn login-btn">Sign in</button>
-                            <div class="options">
-                                <a href="/forgot-password">Forgot your password?</a>
-                            </div>
-                            <div class="register">Don't have an account? <a href="https://www.footballticketpad.com/registration">Sign up</a></div>
-                        </form>
-                    </div>
-                </div>
+                <!--                <div class="auth_window">
+                                    <div class="overlay"></div>
+                                    <div class="window">
+                                        <div class="left-image" style="background-image: url(https://www.footballticketpad.com/assets/frontend/2018/images/auth_feature.png);"></div>
+                                        <form method="post" class="signin-form enquiryform">
+                                            <div class="close" data-close-auth>X</div>
+                                            <div class="heading">Sign in</div>
+                                            <button type="button" class="api_login facebook">
+                                                <span class="ftp-facebook-logo"></span>
+                                                Continue with Facebook
+                                            </button>
+                                            <button type="button" class="api_login google">
+                                                <span class="ftp-GoogleLogoColor"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></span>
+                                                Sign in with Google
+                                            </button>
+                                            <div class="separator">
+                                                <div class="text">or</div>
+                                            </div>
+                                            <input type="email" name="username" id="username" placeholder="Email address" />
+                                            <input type="password" name="password" id="password" placeholder="Password" />
+                                            <div class="login-message" style="color: #ff0000;"></div>
+                                            <br>
+                                            <button type="submit" name="auth_login" class="c2a_btn login-btn">Sign in</button>
+                                            <div class="options">
+                                                <a href="/forgot-password">Forgot your password?</a>
+                                            </div>
+                                            <div class="register">Don't have an account? <a href="https://www.footballticketpad.com/registration">Sign up</a></div>
+                                        </form>
+                                    </div>
+                                </div>-->
                 <div class="search_window">
                     <input style="opacity:0 " name id="convUpcomingGame" value="Upcoming game">
                     <div class="overlay"></div>
@@ -993,7 +999,7 @@
                             </div>
                             <c:forEach items="${getListMatches}" var="lm" varStatus="lmStatus">
                                 <c:set var="m" value="${getMatches[lmStatus.index]}" />
-                             
+
                                 <div class="item">
                                     <div class="block match">
                                         <div class="top">
@@ -1015,7 +1021,7 @@
                                                                 <p>${lm.team1.clubName}</p>
                                                             </div>
                                                             <div>
-                                                                <td><img src="${lm.team2.img}" width="80px" height="80px" alt="football club"/></td>
+                                                                <td><img src="${lm.team2.img}" width="75px" height="auto" alt="football club"/></td>
                                                                 <p>${lm.team2.clubName}</p>
                                                             </div>
                                                         </div>
@@ -1718,23 +1724,23 @@
                                                                                                                                                                                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                                                                                                                                                                                     <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
                                                                                                                                                                                     <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
-                                                                                                                                                                            <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script
-                                                                                                                                                                                        </div>
-                                                                                                                                                                                            <a href="leagues" class="c2a_btn">View all</a>
-                                                                                                                                                                                        </div>
+                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script
                                                                                                                                                                                     </div>
-                                                                                                                                                                                </div>
-                                                                                                                                                                            </div>
-                                                                                                                                                            <%@include file="footer.jsp" %>
-                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
-                                                                                                                                                            <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
-                                                                                                                                                            <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                                        <a href="leagues" class="c2a_btn">View all</a>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                        </div>
+                                                                                                                                                                                                        </div>
+                                                                                                                                                </div>
+                                                                                                                                                                                            <%@include file="footer.jsp" %>
+                                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
 
 
-                                                                                                                                                            <script type="277d7fe9745a504718d895ab-application/javascript" async src="//static.klaviyo.com/onsite/js/klaviyo.js?company_id=TFyH8Y"></script>
+                                                                                                                                                                                        <script type="277d7fe9745a504718d895ab-application/javascript" async src="//static.klaviyo.com/onsite/js/klaviyo.js?company_id=TFyH8Y"></script>
 
-                                                                                                                                                            <script defer src="https://www.footballticketpad.com/assets/frontend/2018/js/functions.home.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                        <script defer src="https://www.footballticketpad.com/assets/frontend/2018/js/functions.home.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
 
 
-                                                                                                                                                            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="277d7fe9745a504718d895ab-|49" defer></script></body>
-                                                                                                                                                            </html>
+                                                                                                                                                                                        <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="277d7fe9745a504718d895ab-|49" defer></script></body>
+                                                                                                                                                                                        </html>
