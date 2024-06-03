@@ -28,13 +28,15 @@ public class FootballClubDAO {
         }
     }
 
-    public ArrayList<FootballClub> getFootballClubs() {
+    public ArrayList<FootballClub> getFootballClubs(String clubName) {
         ArrayList<FootballClub> fcs = new ArrayList<>();
-        String sql = "select * from FootballClub where isDeleted = 0";
+        String sql = "select * from FootballClub where isDeleted = 0 and clubName like ?";
 
         try {
             ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + clubName + "%");
             ResultSet rs = ps.executeQuery();
+            
             while (rs.next()) {
                 FootballClub fc = new FootballClub();
                 fc.setClubId(rs.getInt("clubId"));
