@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import models.News;
+import models.User;
 
 /**
  *
@@ -98,18 +99,18 @@ public class UpdateNewsServlet extends HttpServlet {
             if (status_raw == 1) {
                 status = true;
             }
-            News n = NewsDAO.INSTANCE.getNewsByNewsId(newsId);
-            n.setMainTitle(mainTitle);
-            n.setTitle(title);
-            n.setMainContent(mainContent);
-            n.setContent(content);
-            n.setLocation(location);
-            n.setKickOff(kickOff);
-            n.setStatus(status);
-            n.setNewsId(newsId);
-            String createdBy = (String) session.getAttribute("userName");
-            n.setUpdateBy(createdBy);
-            session.setAttribute("updated", NewsDAO.INSTANCE.updateNews(n));
+            News news = NewsDAO.INSTANCE.getNewsByNewsId(newsId);
+            news.setMainTitle(mainTitle);
+            news.setTitle(title);
+            news.setMainContent(mainContent);
+            news.setContent(content);
+            news.setLocation(location);
+            news.setKickOff(kickOff);
+            news.setStatus(status);
+            news.setNewsId(newsId);
+            User createdBy_raw = (User)session.getAttribute("currentUser");
+            news.setUpdateBy(createdBy_raw.getUserName());
+            session.setAttribute("updated", NewsDAO.INSTANCE.updateNews(news));
         } catch (IllegalArgumentException e) {
         }
 

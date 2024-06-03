@@ -5,12 +5,16 @@
 
 package controllers.Auth;
 
+import dal.UserDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.Objects;
+import models.FacebookUser;
+import models.User;
 
 /**
  *
@@ -28,12 +32,28 @@ public class FacebookLoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String code = request.getParameter("code");
-        System.out.println(code);
-        getFacebook FB = new getFacebook();
-        String accessToken = FB.getToken(code);
-        System.out.println(accessToken);
+//        String code = request.getParameter("code");
+//        System.out.println(code);
+//        getFacebook FB = new getFacebook();
+//        String accessToken = FB.getToken(code);
+//        System.out.println(accessToken);
+//        FacebookUser accFb = FB.getUserInfo(accessToken);
+//         User userExist = UserDAO.INSTANCE.getUserByEmail(accFb.getEmail());
+//        if (Objects.isNull(userExist)) {
+//            //if not exist => redirect to register page
+//            returnValueBefore(request, response,
+//                    accFb.getName(),
+//                    accFb.getName(),
+//                    accFb.getEmail(),
+//                    null
+//            );
+//            request.getRequestDispatcher("/views/register.jsp").forward(request, response);
+//            return;
+//        } else {
+//            //else save user in session => may be save email, password, or all userExist
+//            System.out.println(userExist);
+//            session.setAttribute("currentUser", userExist);
+//        }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

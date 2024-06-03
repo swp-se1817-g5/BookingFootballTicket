@@ -120,19 +120,19 @@ public class UserDAO {
                 user.setCreatedBy(rs.getString("createdBy"));
                 user.setUpdatedBy(rs.getString("updatedBy"));
                 user.setIsDeleted(rs.getBoolean("isDeleted"));
-                user.setUserId(rs.getInt(1));
-                user.setRoleId(rs.getInt(2));
-                user.setUserName(rs.getString(3));
-                user.setPassword(rs.getString(4));
-                user.setEmail(rs.getString(5));
-                user.setPhoneNumber(rs.getString(6));
-                user.setAvatar(rs.getString(7));
-                user.setName(rs.getString(8));
-                user.setCreatedBy(rs.getString(9));
-                user.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
-                user.setUpdatedBy(rs.getString(11));
-                user.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
-                user.setIsDeleted(rs.getBoolean(13));
+//                user.setUserId(rs.getInt(1));
+//                user.setRoleId(rs.getInt(2));
+//                user.setUserName(rs.getString(3));
+//                user.setPassword(rs.getString(4));
+//                user.setEmail(rs.getString(5));
+//                user.setPhoneNumber(rs.getString(6));
+//                user.setAvatar(rs.getString(7));
+//                user.setName(rs.getString(8));
+//                user.setCreatedBy(rs.getString(9));
+//                user.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
+//                user.setUpdatedBy(rs.getString(11));
+//                user.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
+//                user.setIsDeleted(rs.getBoolean(13));
                 return user;
             }
         } catch (SQLException e) {

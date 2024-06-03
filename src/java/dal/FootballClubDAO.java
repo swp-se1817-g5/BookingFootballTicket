@@ -28,13 +28,15 @@ public class FootballClubDAO {
         }
     }
 
-    public ArrayList<FootballClub> getFootballClubs() {
+    public ArrayList<FootballClub> getFootballClubs(String clubName) {
         ArrayList<FootballClub> fcs = new ArrayList<>();
-        String sql = "select * from FootballClub where isDeleted = 0";
+        String sql = "select * from FootballClub where isDeleted = 0 and clubName like ?";
 
         try {
             ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + clubName + "%");
             ResultSet rs = ps.executeQuery();
+
             while (rs.next()) {
                 FootballClub fc = new FootballClub();
                 fc.setClubId(rs.getInt("clubId"));
@@ -90,11 +92,11 @@ public class FootballClubDAO {
         }
         return deleted;
     }
-    
+
     public boolean updateFootballClub(FootballClub fc) {
         boolean updated = false;
         String sql = "update FootballClub set  where footballClubId = ?";
-        
+
         return updated;
     }
 
@@ -127,8 +129,48 @@ public class FootballClubDAO {
         return fc;
     }
 
+    public ArrayList<FootballClub> getFootballClubs(int offset, int noOfRecords) {
+        ArrayList<FootballClub> fcs = new ArrayList<>();
+        String query = "SELECT * FROM [dbo].[FootballClub] WHERE [isDeleted] = 0 ORDER BY clubId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, offset);
+            ps.setInt(2, noOfRecords);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    FootballClub fc = new FootballClub();
+                    fc.setClubId(rs.getInt("clubId"));
+                    fc.setClubName(rs.getString("clubName"));
+                    fc.setImg(rs.getString("img"));
+                    fc.setCreatedBy(rs.getString("createdBy"));
+                    fc.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                    fc.setUpdatedBy(rs.getString("updatedBy"));
+                    fc.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") == null ? null : rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
+                    fc.setIsDeleted(rs.getBoolean("isDeleted"));
+                    fcs.add(fc);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return fcs;
+    }
+
+    public int getNoOfRecords() {
+        int quantity = 0;
+        String query = "SELECT COUNT(*) FROM [FootballClub]";
+        try (PreparedStatement ps = con.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) {
+                quantity = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return quantity;
+    }
+
     public static void main(String[] args) {
-        System.out.println(FootballClubDAO.INSTANCE.getFootballClubbyID(1).toString());
+        System.out.println(FootballClubDAO.INSTANCE.getFootballClubs(2, 2));
     }
 
 }

@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import models.Stand;
+import models.User;
 
 /**
  *
@@ -75,7 +76,8 @@ public class CreateStandServlet extends HttpServlet {
         HttpSession session = request.getSession();
         boolean created = false;
         try {
-            String createdBy = (String)session.getAttribute("userName");
+            User user = (User)session.getAttribute("currentUser");
+            String createdBy = user.getUserName();
             String standName = request.getParameter("standName").trim();
             BigDecimal price  = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
             int quantity = Integer.parseInt(request.getParameter("quantity"));
