@@ -27,11 +27,9 @@ public class SignInServlet extends HttpServlet {
             for (Cookie c : arr) {
                 if (c.getName().equals("emailSave")) {
                     request.setAttribute("emailValid", c.getValue());
-                    System.out.println(c.getValue()+"mail");
                 }
                 if (c.getName().equals("passSave")) {
                     request.setAttribute("passValid", c.getValue());
-                    System.out.println(c.getValue()+"pass");
                 }
             }
         }
