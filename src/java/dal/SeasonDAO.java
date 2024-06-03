@@ -61,7 +61,7 @@ public class SeasonDAO {
                 s.setCreatedBy(rs.getString(5));
                 s.setCreatedDate(rs.getTimestamp(6).toLocalDateTime());
                 s.setUpdatedBy(rs.getString(7));
-                s.setLastUpdatedDate(rs.getTimestamp(8).toLocalDateTime());
+                s.setLastUpdatedDate(rs.getTimestamp(8) != null ? rs.getTimestamp(8).toLocalDateTime() : null);
                 seasons.add(s);
             }
         } catch (SQLException e) {
@@ -118,7 +118,7 @@ public class SeasonDAO {
                 s.setCreatedBy(rs.getString(5));
                 s.setCreatedDate(rs.getTimestamp(6).toLocalDateTime());
                 s.setUpdatedBy(rs.getString(7));
-                s.setLastUpdatedDate(rs.getTimestamp(8).toLocalDateTime());
+                s.setLastUpdatedDate(rs.getTimestamp(8) != null ? rs.getTimestamp(8).toLocalDateTime() : null);
             }
 
         } catch (SQLException ex) {
