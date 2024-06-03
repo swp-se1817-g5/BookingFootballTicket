@@ -542,7 +542,7 @@ Author     : admin
                 stands.push({standId: "${stand.standId}", standName: "${stand.standName}"});
             </c:forEach>
 
-                // Check for duplicate stand name before submitting the create form
+                // Check for duplicate stand name and empty before submitting the create form
                 $('#createStandForm').submit(function (event) {
                     var standName = $('#standNameInput').val().trim();
                     var empty = standName === "";
@@ -562,10 +562,14 @@ Author     : admin
                 $('#updateStandForm').submit(function (event) {
                     var standId = $('#standId').val();
                     var standName = $('#standName').val().trim();
+                    var empty = standName === "";
                     var originalStand = stands.find(stand => stand.standId == standId);
                     var duplicate = stands.some(stand => stand.standName === standName && stand.standId != standId);
-
-                    if (standName !== originalStand.standName && duplicate) {
+                    if(empty){
+                        $('#standNameError').text('Can not be empty or blank!');
+                        event.preventDefault();
+                    }
+                    else if (standName !== originalStand.standName && duplicate) {
                         $('#standNameError').text('Stand name already exists. Please choose a different name.');
                         event.preventDefault();
                     } else {
