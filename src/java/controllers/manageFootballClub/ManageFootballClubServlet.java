@@ -68,7 +68,8 @@ public class ManageFootballClubServlet extends HttpServlet {
         if (request.getParameter("deleted") != null) {
             request.setAttribute("deleted", "true".equals(request.getParameter("deleted")));
         }
-        request.setAttribute("footballClubs", FootballClubDAO.INSTANCE.getFootballClubs());
+        String search = request.getParameter("search");
+        request.setAttribute("footballClubs", FootballClubDAO.INSTANCE.getFootballClubs(search == null ? "" : search));
         request.getRequestDispatcher("views/manageFootballClub.jsp").forward(request, response);
     }
 
