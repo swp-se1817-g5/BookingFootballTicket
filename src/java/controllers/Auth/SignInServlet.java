@@ -5,7 +5,6 @@ import models.User;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,19 +20,13 @@ public class SignInServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Cookie[] arr = request.getCookies();
-        if (arr != null) {
-            //tim cookie cua cart
-            for (Cookie c : arr) {
-                if (c.getName().equals("emailSave")) {
-                    request.setAttribute("emailValid", c.getValue());
-                    System.out.println(c.getValue()+"mail");
-                }
-                if (c.getName().equals("passSave")) {
-                    request.setAttribute("passValid", c.getValue());
-                    System.out.println(c.getValue()+"pass");
-                }
-            }
+        HttpSession session = request.getSession();
+        String email = (String) session.getAttribute("emailSave");
+        String password = (String) session.getAttribute("passSave");
+
+        if (email != null && password != null) {
+            request.setAttribute("emailValid", email);
+            request.setAttribute("passValid", password);
         }
 
         request.getRequestDispatcher("views/signIn.jsp").forward(request, response);
@@ -45,34 +38,36 @@ public class SignInServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember_me");
-        System.out.println("remember = "+remember);
+        System.out.println("remember = " + remember);
         UserDAO userDAO = UserDAO.INSTANCE;
         HttpSession session = request.getSession();
-        //get user by email and password
+
+        // Get user by email and password
         User user = userDAO.authenticateUser(email, password);
-        //if exist will set in seesion, may be set email and password or user 
+
+        // If exist, set in session, maybe set email and password or user
         if (user != null) {
-           session.setAttribute("currentUser", user);
-           if(remember != null && remember.equals("on")) {
-               Cookie cookieEmail = new Cookie("emailSave", email);
-               Cookie cookiePassword = new Cookie("passSave", password);
-               response.addCookie(cookieEmail);
-               response.addCookie(cookiePassword);
-               cookieEmail.setMaxAge(60 * 60 * 1);
-               cookiePassword.setMaxAge(60 * 60 * 1);
-           }
-           //popup
-           request.setAttribute("isFirstLogin", true);
-           //redirect to home page or check any thing before redirect to home page
-           request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
+            session.setAttribute("currentUser", user);
+
+            if (remember != null && remember.equals("on")) {
+                session.setAttribute("emailSave", email);
+                session.setAttribute("passSave", password);
+            } else {
+                session.removeAttribute("emailSave");
+                session.removeAttribute("passSave");
+            }
+
+            // Popup
+            request.setAttribute("isFirstLogin", true);
+
+            // Redirect to home page or check anything before redirect to home page
+            request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
         } else {
-            //if not exits throw message ro view to display
-            request.setAttribute("errorMessage", "Email or password may be wrong ! Please try again! ");
+            // If not exists, throw message to view to display
+            request.setAttribute("errorMessage", "Email or password may be wrong! Please try again!");
             request.getRequestDispatcher("views/signIn.jsp").forward(request, response);
         }
-
     }
-
 
     @Override
     public String getServletInfo() {
