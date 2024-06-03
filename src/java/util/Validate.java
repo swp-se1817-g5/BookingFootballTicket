@@ -15,6 +15,8 @@ import java.util.regex.Pattern;
 public class Validate {
 
     public static final boolean isValidName(String name) {
+//      Sử dụng Pattern để biên dịch biểu thức chính quy IConstant.REGEX_NAME.
+//      Sử dụng Matcher để kiểm tra xem chuỗi name có khớp với biểu thức chính quy hay không.
         Pattern pattern = Pattern.compile(IConstant.REGEX_NAME);
         Matcher matcher = pattern.matcher(name);
         return matcher.matches();
