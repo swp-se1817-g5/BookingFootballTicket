@@ -173,14 +173,12 @@ public class NewsDAO {
     public int deleteNews(News n) {
         int i = 0;
         String sql = "UPDATE [News]"
-                + "   SET[deletedBy] = ?"
-                + "      ,[isDeleted] = ?"
+                + "   SET[isDeleted] = ?"
                 + " WHERE newsId =?";
         try {
             ps = connect.prepareStatement(sql);
-            ps.setString(1, n.getDeletedBy());
-            ps.setInt(2, n.isIsDeleted() ? 1 : 0);
-            ps.setInt(3, n.getNewsId());
+            ps.setInt(1, n.isIsDeleted() ? 1 : 0);
+            ps.setInt(2, n.getNewsId());
             i = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);

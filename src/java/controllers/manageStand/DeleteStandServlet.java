@@ -65,7 +65,7 @@ public class DeleteStandServlet extends HttpServlet {
             e.printStackTrace();
         }
         
-        response.sendRedirect("manageStand?deleted=" + deleted);
+        response.sendRedirect("manageStand?standDeleted=" + deleted);
         
         
     } 

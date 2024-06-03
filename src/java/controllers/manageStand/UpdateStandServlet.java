@@ -77,7 +77,7 @@ public class UpdateStandServlet extends HttpServlet {
         try {
             int standId = Integer.parseInt(request.getParameter("standId"));
             String upDatedBy = (String)session.getAttribute("userName");
-            String standName = request.getParameter("standName");
+            String standName = request.getParameter("standName").trim();
             BigDecimal price  = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
             int quantity = Integer.parseInt(request.getParameter("quantity"));
             Stand stand = new Stand();
@@ -90,7 +90,7 @@ public class UpdateStandServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.sendRedirect("manageStand?updated="+updated);
+        response.sendRedirect("manageStand?standUpdated="+updated);
         
     }
 

@@ -76,7 +76,7 @@ public class CreateStandServlet extends HttpServlet {
         boolean created = false;
         try {
             String createdBy = (String)session.getAttribute("userName");
-            String standName = request.getParameter("standName");
+            String standName = request.getParameter("standName").trim();
             BigDecimal price  = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
             int quantity = Integer.parseInt(request.getParameter("quantity"));
             Stand stand = new Stand();
@@ -90,7 +90,7 @@ public class CreateStandServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.sendRedirect("manageStand?created=" + created);
+        response.sendRedirect("manageStand?standCreated=" + created);
         
     }
 

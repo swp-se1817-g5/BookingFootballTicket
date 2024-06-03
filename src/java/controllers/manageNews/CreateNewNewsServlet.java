@@ -82,32 +82,35 @@ public class CreateNewNewsServlet extends HttpServlet {
 //        PrintWriter out = response.getWriter();
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         HttpSession session = request.getSession();
-//        String userName = (String) session.getAttribute("currentUser");
 //        out.print(userName);
-        String userName = "Duong";
-        String mainTitle = request.getParameter("mainTitle");
-        String title = request.getParameter("title");
-        String mainContent = request.getParameter("mainContent");
-        String content = request.getParameter("content");
-        String location = request.getParameter("location");
-        String kickOff_raw = request.getParameter("kickOff");
-        LocalDateTime kickOff;
         try {
-            kickOff = LocalDateTime.parse(kickOff_raw, formatter);
-        } catch (DateTimeParseException e) {
-            throw new IllegalArgumentException("Invalid date time format", e);
-        }
-        int status_raw = Integer.parseInt(request.getParameter("status"));
-        boolean status = false;
-        if (status_raw == 2) {
-            status = true;
-        }
-        News n = new News(mainTitle, title, mainContent, content, location, kickOff, userName, status);
-        int created = NewsDAO.INSTANCE.createNews(n);
+            String createdBy = (String) session.getAttribute("userName");
+            String mainTitle = request.getParameter("mainTitle");
+            String title = request.getParameter("title");
+            String mainContent = request.getParameter("mainContent");
+            String content = request.getParameter("content");
+            String location = request.getParameter("location");
+            String kickOff_raw = request.getParameter("kickOff");
+            LocalDateTime kickOff;
+            try {
+                kickOff = LocalDateTime.parse(kickOff_raw, formatter);
+            } catch (DateTimeParseException e) {
+                throw new IllegalArgumentException("Invalid date time format", e);
+            }
+            int status_raw = Integer.parseInt(request.getParameter("status"));
+            boolean status = false;
+            if (status_raw == 2) {
+                status = true;
+            }
+            News n = new News(mainTitle, title, mainContent, content, location, kickOff, createdBy, status);
+            int created = NewsDAO.INSTANCE.createNews(n);
 //        out.print(created);
-        if (created != 0) {
-            session.setAttribute("created", created);
+            if (created != 0) {
+                session.setAttribute("created", created);
+            }
+        } catch (IllegalArgumentException e) {
         }
+
         response.sendRedirect("manageNews");
 
     }

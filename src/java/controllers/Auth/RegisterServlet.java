@@ -150,7 +150,8 @@ public class RegisterServlet extends HttpServlet {
         session.setAttribute("successMessage", successMessage);
         session.setAttribute("currentUser", userDAO.getUserByEmail(email));
         session.setMaxInactiveInterval(Integer.MAX_VALUE);
-        request.getRequestDispatcher("homePage").forward(request, response);
+        request.setAttribute("isRegister", true);
+        request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
         return;
     }
 

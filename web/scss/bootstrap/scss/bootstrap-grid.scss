@@ -23,7 +23,7 @@ $include-column-box-sizing: true !default;
 
 @import "utilities";
 
-$utilities: map-get-multiple(
+/*$utilities: map-get-multiple(
   $utilities,
   (
     "display",
@@ -59,6 +59,6 @@ $utilities: map-get-multiple(
     "padding-bottom",
     "padding-start",
   )
-);
+);*/
 
 @import "utilities/api";

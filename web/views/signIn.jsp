@@ -69,7 +69,7 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <label>Email</label>
-                                    <input name="email" type="email" required class="form-control">
+                                    <input name="email" type="email" value="${emailValid}" required class="form-control">
                                 </div>
                             </div>
                         </div>
@@ -77,19 +77,22 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <label>Password</label>
-                                    <input name="password" type="password" required class="form-control">
+                                    <input name="password" type="password"
+                                           value="${passValid}" 
+                                           required class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="d-flex align-items-center">
                                 <input class="" type="checkbox"
-                                       value="" name="remember_me"  id="remember_me">
+                                       name="remember_me"
+                                       name="remember_me"  id="remember_me">
                                 <label class="form-check-label text-secondary fs-3" 
                                        style="margin-left: 5px; font-weight: 400;" for="remember_me">
                                     Remember me!
                                 </label>
-                                <a href="forgetPassword.jsp" class="ml-auto">Forgot Password?</a>
+                                <a href="views/forgotPassword.jsp" class="ml-auto">Forgot Password?</a>
                             </div>
                         </div>
                         <div class="col-lg-12 m-b30 mt-4">
