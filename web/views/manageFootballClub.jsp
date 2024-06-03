@@ -279,10 +279,13 @@ Author     : admin
                                     <div class="col-sm-4"><h2>Manage <b>Football Club</b></h2></div>
 
                                     <div class="col-sm-4 searchh">
-                                        <div class="search-box">
-                                            <i class="material-icons">&#xE8B6;</i>
-                                            <input type="text" class="form-control" placeholder="Search by name&hellip;">
-                                        </div>
+                                        <form action="manageFootballClub" method="get" id="searchForm">
+                                            <div class="search-box">
+                                                <i class="material-icons">&#xE8B6;</i>
+                                                <input id="searchInputForm" type="text" name="search" class="form-control" placeholder="Search by name&hellip;">
+                                            </div>
+                                        </form>
+
                                     </div>
                                     <div class="col-sm-4 createe">
                                         <a href="#createFCModal" data-toggle="modal" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Create New Club</span></a>
@@ -497,6 +500,15 @@ Author     : admin
 
             });
 
+            $(document).ready(function () {
+                $('#searchInput').keypress(function (event) {
+                    if (event.keyCode === 13) { // 13 is the Enter key
+                        event.preventDefault();  // Prevent the default form submission
+                        $('#searchForm').submit(); // Manually submit the form
+                    }
+                });
+            });
+
             function doDelete(standId) {
                 if (confirm("Do you want to delete stand with id = " + standId))
                     location.href = 'deleteStand?standId=' + standId;
@@ -506,14 +518,14 @@ Author     : admin
                 document.getElementById('clubId').value = clubId;
                 document.getElementById('clubName').value = clubName;
 
-               
+
                 $('#clubNameError').text('');
 
             }
             function create() {
-                
+
             }
-           
+
         </script>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

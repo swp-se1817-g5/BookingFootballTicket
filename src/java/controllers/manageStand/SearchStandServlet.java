@@ -5,7 +5,6 @@
 
 package controllers.manageStand;
 
-import dal.StandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,16 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.math.BigDecimal;
-import models.Stand;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name="CreateStandServlet", urlPatterns={"/createStand"})
-public class CreateStandServlet extends HttpServlet {
+@WebServlet(name="SearchStandServlet", urlPatterns={"/searchStand"})
+public class SearchStandServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -39,10 +35,10 @@ public class CreateStandServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateStandServlet</title>");  
+            out.println("<title>Servlet SearchStandServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateStandServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet SearchStandServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +54,7 @@ public class CreateStandServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {  
+    throws ServletException, IOException {
         response.sendRedirect("manageStand");
     } 
 
@@ -72,25 +68,8 @@ public class CreateStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        boolean created = false;
-        try {
-            String createdBy = (String)session.getAttribute("userName");
-            String standName = request.getParameter("standName").trim();
-            BigDecimal price  = BigDecimal.valueOf(Double.parseDouble(request.getParameter("price")));
-            int quantity = Integer.parseInt(request.getParameter("quantity"));
-            Stand stand = new Stand();
-            stand.setCreatedBy(createdBy);
-            stand.setStandName(standName);
-            stand.setPrice(price);
-            stand.setQuantity(quantity);
-            created = StandDAO.INSTANCE.createStand(stand);
-            
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        response.sendRedirect("manageStand?standCreated=" + created);
+        String standName = request.getParameter("standName").trim();
+        
         
     }
 
