@@ -518,6 +518,15 @@ public class UserDAO {
         return 0;
     }
 
+    public ArrayList<User> getPaginatedUsers(ArrayList<User> users, int page, int pageSize) {
+        int start = (page - 1) * pageSize;
+        int end = Math.min(start + pageSize, users.size());
+        if (start >= users.size() || start < 0) {
+            return new ArrayList<>();
+        }
+        return new ArrayList<>(users.subList(start, end));
+    }
+
     public static void main(String[] args) {
 //        User u = new User("VINH", "123", "vinh123@gmail.com", "012345678910", "", "Vin");
 //        try {

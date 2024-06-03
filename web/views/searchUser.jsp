@@ -236,9 +236,9 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Managers</a>
                             <div class="dropdown-menu bg-transparent border-0">
-                                <a href="manageUser" class="dropdown-item">Manage User</a>
+                                <a href="manageUser" class="dropdown-item active">Manage User</a>
                                 <a href="manageMatch" class="dropdown-item">Manage Match</a>
-                                <a href="manageFootballClub" class="dropdown-item active">Manage Football Club</a>
+                                <a href="manageFootballClub" class="dropdown-item ">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item">Manage Stand</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
@@ -335,6 +335,20 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
+                            </div>
+                            <div class="clearfix" >
+                                <div class="hint-text">Showing <strong>${requestScope.users.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>
+                                <ul class="pagination">
+                                    <c:if test="${currentPage > 1}">
+                                        <li class="page-item"><a class="page-link" href="?searchType=${param.searchType}&keyword=${param.keyword}&page=${currentPage - 1}&pageSize=${pageSize}">Previous</a></li>
+                                        </c:if>
+                                        <c:forEach var="i" begin="1" end="${totalPages}">
+                                        <li class="page-item ${i == currentPage ? 'active' : ''}"><a class="page-link" href="?searchType=${param.searchType}&keyword=${param.keyword}&page=${i}&pageSize=${pageSize}">${i}</a></li>
+                                        </c:forEach>
+                                        <c:if test="${currentPage < totalPages}">
+                                        <li class="page-item"><a class="page-link" href="?searchType=${param.searchType}&keyword=${param.keyword}&page=${currentPage + 1}&pageSize=${pageSize}">Next</a></li>
+                                        </c:if>
+                                </ul>
                             </div>
                         </div>
                     </div> 

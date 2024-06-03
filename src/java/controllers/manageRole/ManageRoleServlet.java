@@ -81,6 +81,7 @@ public class ManageRoleServlet extends HttpServlet {
         request.setAttribute("roles", roles);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
+        request.setAttribute("noOfRecords", noOfRecords);
         request.getRequestDispatcher("views/manageRole.jsp").forward(request, response);
     }
 

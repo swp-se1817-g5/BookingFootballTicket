@@ -236,9 +236,9 @@
                         <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Managers</a>
                             <div class="dropdown-menu bg-transparent border-0">
-                                <a href="manageUser" class="dropdown-item">Manage User</a>
+                                <a href="manageUser" class="dropdown-item active">Manage User</a>
                                 <a href="manageMatch" class="dropdown-item">Manage Match</a>
-                                <a href="manageFootballClub" class="dropdown-item active">Manage Football Club</a>
+                                <a href="manageFootballClub" class="dropdown-item ">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item">Manage Stand</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>

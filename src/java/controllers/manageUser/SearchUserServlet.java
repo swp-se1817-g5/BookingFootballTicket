@@ -78,10 +78,19 @@ public class SearchUserServlet extends HttpServlet {
             throws ServletException, IOException {
         String searchType = request.getParameter("searchType");
         String keyword = request.getParameter("keyword");
+        int page = 1;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+            if (page < 1) {
+                page = 1;
+            }
+        }
+        int pageSize = 10;
         // Check if both searchType and keyword are provided and not empty
         if (searchType != null && !searchType.isBlank() && keyword != null && !keyword.isBlank()) {
             ArrayList<User> users = new ArrayList<>();
             ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
+            int totalUsers = 0;
             // Perform search based on the searchType
             switch (searchType) {
                 case "userId":
@@ -90,6 +99,7 @@ public class SearchUserServlet extends HttpServlet {
                     User u = UserDAO.getINSTANCE().getUserbyuserID(userId);
                     if (u != null) {
                         users.add(u);
+                        totalUsers = 1;
                     } else {
                         // No user found with the provided userid
                         request.setAttribute("message", "No users found for the provided userid: " + userId);
@@ -103,20 +113,25 @@ public class SearchUserServlet extends HttpServlet {
                 }
                 break;
                 case "userName":
-                    users = UserDAO.getINSTANCE().getUserbyType("userName",keyword);
+                    users = UserDAO.getINSTANCE().getUserbyType("userName", keyword);
+                    totalUsers = users.size();
                     break;
                 case "name":
-                    users = UserDAO.getINSTANCE().getUserbyType("name",keyword);
+                    users = UserDAO.getINSTANCE().getUserbyType("name", keyword);
+                    totalUsers = users.size();
                     break;
                 case "email":
                     users = UserDAO.getINSTANCE().getUserbyType("email", keyword);
+                    totalUsers = users.size();
                     break;
                 case "phoneNumber":
                     users = UserDAO.getINSTANCE().getUserbyType("phoneNumber", keyword);
+                    totalUsers = users.size();
                     break;
                 case "roleId":
                     int roleId = Integer.parseInt(keyword);
                     users = UserDAO.getINSTANCE().getUserbyroleID(roleId);
+                    totalUsers = users.size();
                     break;
                 default:
                     // Invalid search type, return error message
@@ -125,11 +140,17 @@ public class SearchUserServlet extends HttpServlet {
             }
             // Check if users list is not null and not empty
             if (users != null && !users.isEmpty()) {
-                request.setAttribute("users", users);
+                ArrayList<User> paginatedUsers = UserDAO.getINSTANCE().getPaginatedUsers(users, page, pageSize);
+                int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
+                request.setAttribute("users", paginatedUsers);
                 request.setAttribute("roles", roles);
+                request.setAttribute("currentPage", page);
+                request.setAttribute("totalPages", totalPages);
+                request.setAttribute("noOfRecords", totalUsers);
             } else {
                 // No users found, return message
                 request.setAttribute("message", "No users found for the provided keyword: " + keyword);
+                request.setAttribute("noOfRecords",0);
             }
         }
         // Forward the request to the searchUser.jsp page
