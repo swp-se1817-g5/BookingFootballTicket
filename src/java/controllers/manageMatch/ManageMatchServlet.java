@@ -34,7 +34,7 @@ public class ManageMatchServlet extends HttpServlet {
         request.setAttribute("seasons", SeasonDAO.INSTANCE.getAllseason());
         request.setAttribute("types", MatchDAO.INSTANCE.getMatchTypes());
         request.setAttribute("statusList", MatchDAO.INSTANCE.getMatchStatus());
-        request.setAttribute("footballClubs", FootballClubDAO.INSTANCE.getFootballClubs(""));
+        request.setAttribute("footballClubs", FootballClubDAO.INSTANCE.getFootballClubs());
         request.getRequestDispatcher("views/manageMatch.jsp").forward(request, response);
     }
 
