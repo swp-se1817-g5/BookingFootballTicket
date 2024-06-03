@@ -63,7 +63,7 @@ public class ManageHomePageServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 //        out.print(MatchDAO.INSTANCE.getMatches());
         request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getFootballClubs", FootballClubDAO.INSTANCE.getFootballClubs());
+        request.setAttribute("getFootballClubs", FootballClubDAO.INSTANCE.getFootballClubs(""));
         request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
 //        request.setAttribute("getStandsWithMinPrice", StandDAO.INSTANCE.getStandsWithMinPrice());
         
