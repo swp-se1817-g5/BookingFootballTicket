@@ -64,10 +64,10 @@
             fbq('init', '388758328741664');
             fbq('track', 'PageView');
         </script>
-    <noscript>
+        <noscript>
     <img height="1" width="1" style="display:none"
-                   src="https://www.facebook.com/tr?id=388758328741664&ev=PageView&noscript=1"
-                   />
+         src="https://www.facebook.com/tr?id=388758328741664&ev=PageView&noscript=1"
+         />
     </noscript>
 
 </head>
@@ -991,7 +991,9 @@
                                         </a>
                                 </div>
                             </div>
-                            <c:forEach items="${getListMatches}" var="lm">
+                            <c:forEach items="${getListMatches}" var="lm" varStatus="lmStatus">
+                                <c:set var="m" value="${getMatches[lmStatus.index]}" />
+                             
                                 <div class="item">
                                     <div class="block match">
                                         <div class="top">
@@ -1006,7 +1008,6 @@
                                                             </button>
                                                         </div>
                                                     </div>
-
                                                     <a href="/europa-league/europa-league-final" class="inner">
                                                         <div class="badges">
                                                             <div>
@@ -1015,18 +1016,20 @@
                                                             </div>
                                                             <div>
                                                                 <td><img src="${lm.team2.img}" width="80px" height="80px" alt="football club"/></td>
-                                                                <p>${lm.team1.clubName}</p>
+                                                                <p>${lm.team2.clubName}</p>
                                                             </div>
                                                         </div>
+                                                        <br>
                                                         <div class="teams"> Europa League Final Tickets</div>
                                                         <div class="details">
-                                                            <div class="location">Dublin Arena</div>
-                                                            <div class="date">22nd May 2024</div>
+                                                            <div class="location">Mỹ Đình Stadium</div>
+                                                            <div class="date">
+                                                                <input type="datetime-local"value="${m.time}" readonly style="border: none; background: none"></div>
                                                             <div class="league">Europa League</div>
                                                         </div>
                                                     </a>
                                                     <a href="/europa-league/europa-league-final">
-                                                        <div class="price-from">Tickets from <span class="price">&pound;199.00 </span></div>
+                                                        <div class="price-from">Tickets from<span class="price"></span></div>
                                                         <div class="book" data-ripple>Book now</div>
                                                     </a>
                                                     <a href="/europa-league/europa-league-final" class="inner-mobile">
@@ -1044,7 +1047,7 @@
                                                         </div>
                                                     </a>
                                             </div>
-                                        </div>               
+                                        </div>    
                                     </c:forEach>
 
                                     <div class="euro-2024">
@@ -1669,69 +1672,69 @@
                                                                                                                                                                                                         </div>
                                                                                                                                                                                                         </div>
 
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <a href="leagues" class="c2a_btn">View all</a>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                        <script>
-                     
-                                                                                                                                                                                                        </script>                                                                                                                                                                                 
-                                                                                                                                                                                                        <%
-                                                                                                                                                                                                        Boolean isFirstLogin = (Boolean) request.getAttribute("isFirstLogin");
-                                                                                                                                                                                                        if (isFirstLogin != null && isFirstLogin) {
-                                                                                                                                                                                                        %>  
-                                                                                                                                                                                                        <script type="text/javascript">
-                                                                                                                                                                                                        window.onload = function() {
-                                                                                                                                                                                                        showLoginPopup("Login successfully !!");
-                                                                                                                                                                                                        }
-                                                                                                                                                                                                        </script>
-                                                                                                                                                                                                        <%
-                                                                                                                                                                                                        }
-                                                                                                                                                                                                        %> 
-
-                                                                                                                                                                                                        <%
-                                                                                                                                                                                                        Boolean isRegister = (Boolean) request.getAttribute("isRegister");
-                                                                                                                                                                                                        if (isRegister != null && isRegister) {
-                                                                                                                                                                                                        %>  
-                                                                                                                                                                                                        <script type="text/javascript">
-                                                                                                                                                                                                        window.onload = function() {
-                                                                                                                                                                                                        showLoginPopup("Register successfully !!");
-                                                                                                                                                                                                        }
-                                                                                                                                                                                                        </script>
-                                                                                                                                                                                                        <%
-                                                                                                                                                                                                        }
-                                                                                                                                                                                                        %> 
-
-                                                                                                                                                                                                        <script type="text/javascript">
-                                                                                                                                                                                                        function showLoginPopup(mess) {
-                                                                                                                                                                                                        Swal.fire({
-                                                                                                                                                                                                        title: mess,
-                                                                                                                                                                                                        icon: 'success' 
-                                                                                                                                                                                                        });
-                                                                                                                                                                                                        }
-                                                                                                                                                                                                        </script>
-                                                                                                                                                                                                        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-                                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
-                                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
-                                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script
                                                                                                                                                                                                     </div>
                                                                                                                                                                                                     <a href="leagues" class="c2a_btn">View all</a>
                                                                                                                                                                                                 </div>
                                                                                                                                                                                             </div>
                                                                                                                                                                                         </div>
                                                                                                                                                                                     </div>
-                                                                                                                                                                                    <%@include file="footer.jsp" %>
+                                                                                                                                                                                    <script>
+
+                                                                                                                                                                                    </script>                                                                                                                                                                                 
+                                                                                                                                                                                    <%
+                                                                                                                                                                                    Boolean isFirstLogin = (Boolean) request.getAttribute("isFirstLogin");
+                                                                                                                                                                                    if (isFirstLogin != null && isFirstLogin) {
+                                                                                                                                                                                    %>  
+                                                                                                                                                                                    <script type="text/javascript">
+                                                                                                                                                                                        window.onload = function () {
+                                                                                                                                                                                            showLoginPopup("Login successfully !!");
+                                                                                                                                                                                        }
+                                                                                                                                                                                    </script>
+                                                                                                                                                                                    <%
+                                                                                                                                                                                    }
+                                                                                                                                                                                    %> 
+
+                                                                                                                                                                                    <%
+                                                                                                                                                                                    Boolean isRegister = (Boolean) request.getAttribute("isRegister");
+                                                                                                                                                                                    if (isRegister != null && isRegister) {
+                                                                                                                                                                                    %>  
+                                                                                                                                                                                    <script type="text/javascript">
+                                                                                                                                                                                        window.onload = function () {
+                                                                                                                                                                                            showLoginPopup("Register successfully !!");
+                                                                                                                                                                                        }
+                                                                                                                                                                                    </script>
+                                                                                                                                                                                    <%
+                                                                                                                                                                                    }
+                                                                                                                                                                                    %> 
+
+                                                                                                                                                                                    <script type="text/javascript">
+                                                                                                                                                                                        function showLoginPopup(mess) {
+                                                                                                                                                                                            Swal.fire({
+                                                                                                                                                                                                title: mess,
+                                                                                                                                                                                                icon: 'success'
+                                                                                                                                                                                            });
+                                                                                                                                                                                        }
+                                                                                                                                                                                    </script>
+                                                                                                                                                                                    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                                                                                                                                                                                     <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
                                                                                                                                                                                     <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
-                                                                                                                                                                                    <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                            <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                            <a href="leagues" class="c2a_btn">View all</a>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                    </div>
+                                                                                                                                                                                </div>
+                                                                                                                                                                            </div>
+                                                                                                                                                            <%@include file="footer.jsp" %>
+                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                            <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                            <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
 
 
-                                                                                                                                                                                    <script type="277d7fe9745a504718d895ab-application/javascript" async src="//static.klaviyo.com/onsite/js/klaviyo.js?company_id=TFyH8Y"></script>
+                                                                                                                                                            <script type="277d7fe9745a504718d895ab-application/javascript" async src="//static.klaviyo.com/onsite/js/klaviyo.js?company_id=TFyH8Y"></script>
 
-                                                                                                                                                                                    <script defer src="https://www.footballticketpad.com/assets/frontend/2018/js/functions.home.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                            <script defer src="https://www.footballticketpad.com/assets/frontend/2018/js/functions.home.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
 
 
-                                                                                                                                                                                    <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="277d7fe9745a504718d895ab-|49" defer></script></body>
-                                                                                                                                                                                    </html>
+                                                                                                                                                            <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="277d7fe9745a504718d895ab-|49" defer></script></body>
+                                                                                                                                                            </html>
