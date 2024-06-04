@@ -76,8 +76,8 @@ public class UserDAO {
 
     public boolean addUser(User user) {
         System.out.println(user);
-        String sql = "INSERT INTO [User](userName, password, email, phoneNumber, name, avatar, roleId)"
-                + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [User](userName, password, email, phoneNumber, name, avatar, roleId, createdBy, updatedBy)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         boolean added = false;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -88,6 +88,8 @@ public class UserDAO {
             ps.setString(5, user.getName());
             ps.setString(6, user.getAvatar());
             ps.setInt(7, user.getRoleId());
+            ps.setString(8, user.getCreatedBy());
+            ps.setString(9, user.getUpdatedBy());
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
