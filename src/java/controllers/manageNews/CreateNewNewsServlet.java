@@ -103,8 +103,8 @@ public class CreateNewNewsServlet extends HttpServlet {
             if (status_raw == 2) {
                 status = true;
             }
-            News n = new News(mainTitle, title, mainContent, content, location, kickOff, createdBy_raw.getUserName(), status);
-            int created = NewsDAO.INSTANCE.createNews(n);
+            News news = new News(mainTitle, title, mainContent, content, location, kickOff, createdBy_raw.getUserName(), status);
+            int created = NewsDAO.INSTANCE.createNews(news);
 //        out.print(created);
             if (created != 0) {
                 session.setAttribute("created", created);
