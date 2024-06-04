@@ -336,16 +336,22 @@ Author     : duong
                                     <div class="col-sm-4"><a href="manageNews"><h2>News <b>Management</b></h2></a></div>
 
                                     <div class="col-sm-4 searchh">
-                                        <div class="search-box">
-                                            <a onclick="inputValue()"><i class="material-icons">&#xE8B6;</i> </a> 
-                                            <input id="valueSearch"  type="text" class="form-control" placeholder="Search&hellip;">
+                                        <div class="search-box" id="searchForm">
+                                            <a><i class="material-icons">&#xE8B6;</i></a>
+                                            <input id="valueSearch" type="text" class="form-control" placeholder="Search...">
                                         </div>
                                     </div>
+
                                     <script>
-                                        function inputValue() {
-                                            var valueSearch = document.getElementById('valueSearch').value;
-                                            location.href = "manageNews?go=search&valueSearch=" + valueSearch;
-                                        }
+                                        $(document).ready(function () {
+                                            $('#valueSearch').keypress(function (event) {
+                                                if (event.keyCode === 13) { // 13 is the Enter key
+                                                    event.preventDefault(); // Prevent the default form submission
+                                                    var valueSearch = document.getElementById('valueSearch').value;
+                                                    location.href = "manageNews?go=search&valueSearch=" + encodeURIComponent(valueSearch);
+                                                }
+                                            });
+                                        });
                                     </script>
                                     <div class="col-sm-4 createe">
                                         <a href="#createNewsModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create News</span></a>
