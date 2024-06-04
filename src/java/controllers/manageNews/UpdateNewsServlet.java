@@ -114,6 +114,7 @@ public class UpdateNewsServlet extends HttpServlet {
         } catch (IllegalArgumentException e) {
         }
 
+        
         response.sendRedirect("manageNews");
     }
 
