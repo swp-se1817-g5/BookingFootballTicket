@@ -92,7 +92,11 @@
                                                style="margin-left: 5px; font-weight: 400;" for="remember_me">
                                             Remember me!
                                         </label>
-                                        <a href="views/forgetPassword.jsp" class="ml-auto">Forgot Password?</a>
+
+<!--                                        <a href="views/forgetPassword.jsp" class="ml-auto">Forgot Password?</a>-->
+
+                                        <a href="sendmail" class="ml-auto">Forgot Password?</a>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-b30 mt-4">
@@ -128,6 +132,19 @@
         <script src="assets/js/functions.js"></script>
         <script src="assets/js/contact.js"></script>
         <script src='assets/vendors/switcher/switcher.js'></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <%
+    String successMess = (String) request.getAttribute("successMess");
+    if (successMess != null) {
+        %>
+        <div class="alert alert-success" role="alert">
+            <%= successMess %>
+        </div>
+        <%
+        }
+        %>
+
     </body>
 
 </html>
