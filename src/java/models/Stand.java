@@ -8,8 +8,6 @@ public class Stand {
 
     private int standId;
     private String standName;
-    private BigDecimal price;
-    private int quantity;
     private String createdBy;
     private LocalDateTime createdDate;
     private String updatedBy;
@@ -20,19 +18,15 @@ public class Stand {
 
     public Stand() {
     }
-
-    public Stand(int standId, String standName, BigDecimal price, int quantity, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
+    public Stand(int standId, String standName, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.standId = standId;
         this.standName = standName;
-        this.price = price;
-        this.quantity = quantity;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
         this.updatedBy = updatedBy;
         this.lastUpdatedDate = lastUpdatedDate;
         this.isDeleted = isDeleted;
     }
-
     public int getStandId() {
         return standId;
     }
@@ -48,23 +42,6 @@ public class Stand {
     public void setStandName(String standName) {
         this.standName = standName;
     }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
     public String getCreatedBy() {
         return createdBy;
     }
@@ -105,8 +82,5 @@ public class Stand {
         this.isDeleted = isDeleted;
     }
 
-    @Override
-    public String toString() {
-        return "Stand{" + "standId=" + standId + ", standName=" + standName + ", price=" + price + ", quantity=" + quantity + ", createdBy=" + createdBy + ", createdDate=" + getCreatedDate() + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + getLastUpdatedDate() + ", isDeleted=" + isDeleted + '}';
-    }
+    
 }
