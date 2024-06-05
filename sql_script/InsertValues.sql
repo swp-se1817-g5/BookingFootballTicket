@@ -1,90 +1,82 @@
 USE BookingFootballTicket;
 GO
 
--- Inserting values into the Role table
-INSERT INTO Role (roleName, createdBy, updatedBy)
-VALUES ('Admin', 'System', 'System'),
-       ('User', 'System', 'System');
-
--- Inserting values into the FootballClub table
-INSERT INTO FootballClub (clubName, img, createdBy)
-VALUES ('Manchester United', 'https://upload.wikimedia.org/wikipedia/vi/thumb/a/a1/Man_Utd_FC_.svg/1200px-Man_Utd_FC_.svg.png', 'Admin'),
-       ('Real Madrid', 'https://upload.wikimedia.org/wikipedia/en/thumb/5/56/Real_Madrid_CF.svg/1200px-Real_Madrid_CF.svg.png', 'Admin'),
-       ('FC Barcelona', 'https://upload.wikimedia.org/wikipedia/vi/thumb/9/91/FC_Barcelona_logo.svg/220px-FC_Barcelona_logo.svg.png', 'System');
-
--- Inserting values into the MatchStatus table
-INSERT INTO MatchStatus (statusName, createdBy, updatedBy)
-VALUES ('Scheduled', 'System', 'System'),
-       ('Ongoing', 'System', 'System'),
-       ('Completed', 'System', 'System'),
-	   ('Cancel', 'System', 'System');
-
--- Inserting values into the MatchType table
-INSERT INTO MatchType ([name], createdBy, updatedBy)
-VALUES ('Friendly', 'System', 'System'),
-       ('League', 'System', 'System'),
-       ('Cup', 'System', 'System');
-
--- Inserting values into the Season table
-INSERT INTO Season (seasonName, startDate, endDate, createdBy, updatedBy)
-VALUES ('2024/2025', '2024-08-01', '2025-05-30', 'System', 'System'),
-	   ('2025/2026', '2025-08-01', '2026-05-30', 'System', 'System');
-
--- Inserting values into the Stand table
-INSERT INTO Stand (standName, price, quantity, createdBy)
-VALUES ('VIP', 100.00, 100, 'System'),
-       ('Regular', 50.00, 200, 'System');
-
--- Inserting values into the User table
-INSERT INTO [User] (roleId, userName, [password], email, phoneNumber, avatar, [name], createdBy, updatedBy)
-VALUES (1, 'admin', 'adminpassword', 'admin@example.com', '123456789', 'https://png.pngtree.com/png-clipart/20240408/original/pngtree-salesmen-transparent-icon-pro-user-avatar-simple-for-web-and-mobile-png-image_14778887.png', 'Admin User', 'System', 'System'),
-       (2, 'user1', 'user1password', 'user1@example.com', '987654321', 'https://img.lovepik.com/png/20231027/Blue-white-simple-avatar-placeholder-internet-the-internet_369192_wh860.png', 'Regular User', 'System', 'System');
-
--- Inserting values into the Match table
-INSERT INTO Match (team1, team2, seasonId, [time], statusId, matchTypeId, createdBy, updatedBy)
-VALUES (1, 2, 1, '2024-09-15 18:00:00', 1, 2, 'System', 'System'),
-       (2, 3, 1, '2024-10-20 15:30:00', 1, 2, 'System', 'System');
-
--- Inserting values into the MatchStand table
-INSERT INTO MatchStand (matchId, standId, [availability], createdBy, updatedBy)
-VALUES (1, 1, 50, 'System', 'System'),
-       (1, 2, 100, 'System', 'System'),
-       (2, 1, 75, 'System', 'System'),
-       (2, 2, 150, 'System', 'System');
-
--- Inserting values into the HistoryPurchasedTicket table
-INSERT INTO HistoryPurchasedTicket (matchStandId, qrCode, price, number, [status], createdBy, updatedBy)
-VALUES (1, 'QR123456', 100.00, 2, 'Valid', 'System', 'System'),
-       (2, 'QR789012', 50.00, 4, 'Valid', 'System', 'System');
-
--- Inserting values into the Payment table
-INSERT INTO Payment (userId, ticketId, price, date)
-VALUES (2, 1, 100.00, '2024-09-14 12:00:00'),
-       (2, 2, 200.00, '2024-10-19 10:30:00');
-
--- Inserting values into the News table
-INSERT INTO News (mainTitle, title, mainContent, content, Location, kickOff, createdBy, updatedBy)
-VALUES 
-('Big Match Coming Up!', 'Exciting Match', 'Don\t miss the exciting match between FC Awesome and FC Legends', 'Detailed content about the match...', 'Stadium 1', '2024-06-15 18:00:00', 'Admin', 'Admin'),
-('Season Opener', 'First Match of the Season', 'The new season kicks off with a thrilling match', 'Detailed content about the season opener...', 'Stadium 2', '2024-07-20 20:00:00', 'Admin', 'Admin');
+-- Insert values into Role table
+INSERT INTO Role (roleName) VALUES
+('Admin'),
+('User'),
+('Staff');
 GO
 
-UPDATE FootballClub
-SET clubName = CASE
-                    WHEN clubName = 'Manchester United' THEN 'New Manchester United Name'
-                    WHEN clubName = 'Real Madrid' THEN 'New Real Madrid Name'
-                    WHEN clubName = 'FC Barcelona' THEN 'New FC Barcelona Name'
-                    ELSE clubName
-              END,
-    img = CASE
-                    WHEN clubName = 'Manchester United' THEN 'https://new_image_url_for_manchester_united.png'
-                    WHEN clubName = 'Real Madrid' THEN 'https://new_image_url_for_real_madrid.png'
-                    WHEN clubName = 'FC Barcelona' THEN 'https://new_image_url_for_fc_barcelona.png'
-                    ELSE img
-              END,
-    createdBy = CASE
-                    WHEN clubName IN ('Manchester United', 'Real Madrid') THEN 'New Admin Name'
-                    WHEN clubName = 'FC Barcelona' THEN 'New System Name'
-                    ELSE createdBy
-                END;
+-- Insert values into User table
+INSERT INTO [User] (email, [name], roleId, [hashPassword], phoneNumber, avatar, createdBy) VALUES
+('admin@example.com', 'Admin User', 1, 'hashed_password_admin', '1234567890', 'Images/avatar/avatar1.jpg', 'admin@example.com'),
+('user1@example.com', 'User One', 2, 'hashed_password_user1', '0987654321', 'Images/avatar/avatar2.jpg', 'admin@example.com'),
+('user2@example.com', 'User Two', 2, 'hashed_password_user2', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com');
+GO
 
+-- Insert values into FootballClub table
+INSERT INTO FootballClub (clubName, img, Description, createdBy) VALUES
+('Football Club A', 'path/to/image1.jpg', 'Description of Football Club A', 'admin@example.com'),
+('Football Club B', 'path/to/image2.jpg', 'Description of Football Club B', 'admin@example.com');
+GO
+
+-- Insert values into MatchStatus table
+INSERT INTO MatchStatus (statusName) VALUES
+('Scheduled'),
+('Completed'),
+('Cancelled');
+GO
+
+-- Insert values into MatchType table
+INSERT INTO MatchType ([name]) VALUES
+('Friendly'),
+('League'),
+('Cup');
+GO
+
+-- Insert values into Season table
+INSERT INTO Season (seasonName, startDate, endDate, createdBy) VALUES
+('Season 2024', '2024-01-01', '2024-12-31', 'admin@example.com');
+GO
+
+-- Insert values into Match table
+INSERT INTO Match (team1, team2, seasonId, [startTime], statusId, matchTypeId, createdBy) VALUES
+(1, 2, 1, '2024-06-01 15:00:00', 1, 2, 'admin@example.com');
+GO
+
+-- Insert values into Stand table
+INSERT INTO Stand (standName, createdBy) VALUES
+('North Stand', 'admin@example.com'),
+('South Stand', 'admin@example.com');
+GO
+
+-- Insert values into SeatArea table
+INSERT INTO SeatArea (standId, seatName, price, quantity, createdBy) VALUES
+(1, 'North Stand - Area 1', 50.00, 100, 'admin@example.com'),
+(2, 'South Stand - Area 1', 40.00, 150, 'admin@example.com');
+GO
+
+-- Insert values into MatchSeat table
+INSERT INTO MatchSeat (matchId, seatId, [availability], createdBy) VALUES
+(1, 1, 100, 'admin@example.com'),
+(1, 2, 150, 'admin@example.com');
+GO
+
+-- Insert values into HistoryPurchasedTicket table
+INSERT INTO HistoryPurchasedTicket (matchSeatId, email, qrCode, price, number, [status], createdBy) VALUES
+(1, 'user1@example.com', 'QRCode1', 50.00, 1, 'Purchased', 'admin@example.com'),
+(2, 'user2@example.com', 'QRCode2', 40.00, 2, 'Purchased', 'admin@example.com');
+GO
+
+-- Insert values into Payment table
+INSERT INTO Payment (email, ticketId, price) VALUES
+('user1@example.com', 1, 50.00),
+('user2@example.com', 2, 80.00);
+GO
+
+-- Insert values into News table
+INSERT INTO News (mainTitle, title, mainContent, content, [location], postTime, createdBy) VALUES
+('Main Title 1', 'Title 1', 'Main Content 1', 'Content 1', 'Location 1', '2024-06-01 10:00:00', 'admin@example.com'),
+('Main Title 2', 'Title 2', 'Main Content 2', 'Content 2', 'Location 2', '2024-06-02 10:00:00', 'admin@example.com');
+GO

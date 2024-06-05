@@ -1,12 +1,9 @@
 package dal;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import models.*;
-import java.util.List;
 
 /**
  *
@@ -19,7 +16,7 @@ public class UserDAO {
     private PreparedStatement ps;
     private ResultSet rs;
 
-    private UserDAO() {
+    public UserDAO() {
         if (INSTANCE == null) {
             con = new DBContext().connect;
         } else {
@@ -29,6 +26,12 @@ public class UserDAO {
 
     public static UserDAO getINSTANCE() {
         return INSTANCE;
+    }
+    
+    private void checkConnection() throws SQLException {
+        if (con == null || con.isClosed()) {
+            con = new DBContext().connect; // Thử kết nối lại nếu kết nối hiện tại là null hoặc đã đóng
+        }
     }
 
     public ArrayList<User> getallUser() {
@@ -122,19 +125,6 @@ public class UserDAO {
                 user.setCreatedBy(rs.getString("createdBy"));
                 user.setUpdatedBy(rs.getString("updatedBy"));
                 user.setIsDeleted(rs.getBoolean("isDeleted"));
-//                user.setUserId(rs.getInt(1));
-//                user.setRoleId(rs.getInt(2));
-//                user.setUserName(rs.getString(3));
-//                user.setPassword(rs.getString(4));
-//                user.setEmail(rs.getString(5));
-//                user.setPhoneNumber(rs.getString(6));
-//                user.setAvatar(rs.getString(7));
-//                user.setName(rs.getString(8));
-//                user.setCreatedBy(rs.getString(9));
-//                user.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
-//                user.setUpdatedBy(rs.getString(11));
-//                user.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
-//                user.setIsDeleted(rs.getBoolean(13));
                 return user;
             }
         } catch (SQLException e) {
@@ -237,6 +227,37 @@ public class UserDAO {
 
         }
         return null;
+    }
+
+    public boolean checkEmailExist(String email) {
+        String sql = "SELECT COUNT(*) FROM [User] WHERE email = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void changePass(String email, String hashedPassword) throws SQLException {
+        String sql = "UPDATE [User] SET password = ? WHERE email = ?";
+        try {
+            checkConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, hashedPassword);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (ps != null) ps.close();
+        }
     }
 
     public User getUserByEmail(String email) {
