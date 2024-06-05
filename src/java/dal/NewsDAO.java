@@ -133,8 +133,8 @@ public class NewsDAO {
         }
         return i;
     }
+    
 // Update news
-
     public int updateNews(News n) {
         int m = 0;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -185,7 +185,6 @@ public class NewsDAO {
         return i;
     }
 // Get list all of news
-
     public News getNewsByNewsId(int newsId) {
         String sql = "SELECT * FROM News n WHERE n.newsId =? AND isDelete = 0";
         try {
@@ -205,7 +204,6 @@ public class NewsDAO {
                 n.setIsDeleted(rs.getBoolean("isDeleted"));
                 return n;
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
