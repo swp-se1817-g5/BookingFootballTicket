@@ -103,12 +103,12 @@ public class NewsDAO {
         }
         return list;
     }
-
-    public static void main(String[] args) {
-        for (Object search : NewsDAO.INSTANCE.search("Stadium")) {
-            System.out.println(search.toString());
-        }
-    }
+//
+//    public static void main(String[] args) {
+//        for (Object search : NewsDAO.INSTANCE.search("Stadium")) {
+//            System.out.println(search.toString());
+//        }
+//    }
 
 //  Create a news
     public int createNews(News n) {
@@ -133,8 +133,8 @@ public class NewsDAO {
         }
         return i;
     }
+    
 // Update news
-
     public int updateNews(News n) {
         int m = 0;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -185,9 +185,8 @@ public class NewsDAO {
         return i;
     }
 // Get list all of news
-
     public News getNewsByNewsId(int newsId) {
-        String sql = "SELECT * FROM News n WHERE n.newsId =? AND isDelete = 0";
+        String sql = "SELECT * FROM News n WHERE n.newsId =? AND isDeleted = 0";
         try {
             ps = connect.prepareStatement(sql);
             ps.setInt(1, newsId);
@@ -202,14 +201,14 @@ public class NewsDAO {
                 n.setUpdateBy(rs.getString("updatedBy"));
                 n.setLastUpdateDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
                 n.setStatus(rs.getBoolean("status"));
-                n.setIsDeleted(rs.getBoolean("isDeleted"));
                 return n;
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-
+    public static void main(String[] args) {
+        System.out.println(NewsDAO.INSTANCE.getNewsByNewsId(5).toString());
+    }
 }
