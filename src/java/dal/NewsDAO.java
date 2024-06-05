@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.News;
-import models.User;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.sql.Timestamp;
@@ -39,7 +38,7 @@ public class NewsDAO {
 // Get list all of news
     public ArrayList<News> getlistNews() {
         ArrayList<News> list = new ArrayList<>();
-        String sql = "SELECT * FROM News n";
+        String sql = "SELECT * FROM News n WHERE isDeleted = 0";
         try {
             ps = connect.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -188,7 +187,7 @@ public class NewsDAO {
 // Get list all of news
 
     public News getNewsByNewsId(int newsId) {
-        String sql = "SELECT * FROM News n WHERE n.newsId =?";
+        String sql = "SELECT * FROM News n WHERE n.newsId =? AND isDelete = 0";
         try {
             ps = connect.prepareStatement(sql);
             ps.setInt(1, newsId);
