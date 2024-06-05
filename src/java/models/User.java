@@ -1,22 +1,11 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- *
- * @author thuat
- */
 public class User {
 
-    private int userId;
     private int roleId;
-    private String userName;
     private String password;
     private String email;
     private String phoneNumber;
@@ -29,14 +18,12 @@ public class User {
     private boolean isDeleted;
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
-    
+
     public User() {
     }
 
-    public User(int userId, int roleId, String userName, String password, String email, String phoneNumber, String avatar, String name, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
-        this.userId = userId;
+    public User(int roleId, String password, String email, String phoneNumber, String avatar, String name, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.roleId = roleId;
-        this.userName = userName;
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -49,41 +36,26 @@ public class User {
         this.isDeleted = isDeleted;
     }
 
-    public User(String userName, String password, String email, String phoneNumber, String avatar, String name) {
-        this.userName = userName;
+    public User(String password, String email, String phoneNumber, String avatar, String name) {
         this.password = password;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.avatar = avatar;
         this.name = name;
-
     }
 
-    public User(int userId, String userName, String email, String avatar, String name) {
-        this.userId = userId;
-        this.userName = userName;
+    public User(String email, String avatar, String name) {
         this.email = email;
         this.avatar = avatar;
         this.name = name;
     }
-    
-    
 
-    public User(String name, String userName, String email, String avatar, String password, int roleId) {
+    public User(String name, String email, String avatar, String password, int roleId) {
         this.name = name;
-        this.userName = userName;
         this.email = email;
         this.avatar = avatar;
         this.password = password;
         this.roleId = roleId;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public int getRoleId() {
@@ -92,14 +64,6 @@ public class User {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 
     public String getPassword() {
@@ -184,7 +148,6 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", roleId=" + roleId + ", userName=" + userName + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", avatar=" + avatar + ", name=" + name + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
+        return "User{" + "roleId=" + roleId + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", avatar=" + avatar + ", name=" + name + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
     }
-
 }

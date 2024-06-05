@@ -19,7 +19,7 @@ CREATE TABLE [User] (
 	email VARCHAR(50) PRIMARY KEY,
 	[name] NVARCHAR(50),
 	roleId INT,
-	[hashPassword] VARCHAR(100),
+	[hashedPassword] VARCHAR(100),
 	phoneNumber VARCHAR(10) NULL,
 	avatar VARCHAR(255),
 	createdBy VARCHAR(50),

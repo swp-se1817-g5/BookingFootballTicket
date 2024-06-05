@@ -336,10 +336,18 @@
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
-                        <c:choose>
-                            <c:when test="${sessionScope.currentUser==null}"> <li><a data-auth="login" href="./login">Login</a></li></c:when>
-                            <c:when test="${sessionScope.currentUser!=null}"> <li><a data-auth="profile" href=""><i class="bi bi-person"></i></a></li></c:when>
-                                </c:choose>
+                        <ul>
+    <c:choose>
+        <c:when test="${sessionScope.currentUser==null}">
+            <li><a data-auth="login" href="./login">Login</a></li>
+        </c:when>
+        <c:when test="${sessionScope.currentUser!=null}">
+            <li><a data-auth="profile" href="./profile"><i class="bi bi-person"></i> Profile</a></li>
+            <li><a data-auth="change-password" href="./change-password"><i class="bi bi-key"></i> Change Password</a></li>
+            <li><a data-auth="logout" href="./logout">Logout</a></li>
+        </c:when>
+    </c:choose>
+</ul>
 
 
 
