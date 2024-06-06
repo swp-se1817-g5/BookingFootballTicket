@@ -1,12 +1,9 @@
 package dal;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import models.*;
-import java.util.List;
 
 /**
  *
@@ -19,7 +16,7 @@ public class UserDAO {
     private PreparedStatement ps;
     private ResultSet rs;
 
-    private UserDAO() {
+    public UserDAO() {
         if (INSTANCE == null) {
             con = new DBContext().connect;
         } else {
@@ -31,6 +28,12 @@ public class UserDAO {
         return INSTANCE;
     }
 
+    private void checkConnection() throws SQLException {
+        if (con == null || con.isClosed()) {
+            con = new DBContext().connect; // Thử kết nối lại nếu kết nối hiện tại là null hoặc đã đóng
+        }
+    }
+
     public ArrayList<User> getallUser() {
         ArrayList<User> users = new ArrayList<>();
         try {
@@ -39,19 +42,19 @@ public class UserDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 User u = new User();
-                u.setUserId(rs.getInt(1));
-                u.setRoleId(rs.getInt(2));
-                u.setUserName(rs.getString(3));
-                u.setPassword(rs.getString(4));
-                u.setEmail(rs.getString(5));
-                u.setPhoneNumber(rs.getString(6));
-                u.setAvatar(rs.getString(7));
-                u.setName(rs.getString(8));
-                u.setCreatedBy(rs.getString(9));
-                u.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
-                u.setUpdatedBy(rs.getString(11));
-                u.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
+                u.setEmail(rs.getString("email"));
+                u.setName(rs.getString("name"));
+                u.setRoleId(rs.getInt("roleId"));
+                u.setHashedPassword(rs.getString("hashedPassword"));
+                u.setPhoneNumber(rs.getString("phoneNumber"));
+                u.setAvatar(rs.getString("avatar"));
+                u.setCreatedBy(rs.getString("createdBy"));
+                u.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                u.setUpdatedBy(rs.getString("updatedBy"));
+                u.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
+                u.setIsDeleted(rs.getBoolean("isDeleted"));
                 users.add(u);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -62,7 +65,7 @@ public class UserDAO {
     public boolean addUserGoogle(User user) {
         int n = 0;
         try {
-            String sql = "INSERT INTO [dbo].[User] (email, [name], avatar) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO [dbo].[User] (email, name, avatar) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
             preparedStatement.setString(1, user.getEmail());
             preparedStatement.setString(2, user.getName());
@@ -76,18 +79,27 @@ public class UserDAO {
 
     public boolean addUser(User user) {
         System.out.println(user);
-        String sql = "INSERT INTO [User](userName, password, email, phoneNumber, name, avatar, roleId)"
-                + " VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [User](email, name, roleId, hashedPassword, phoneNumber, avatar, createdBy, updatedBy, isDeleted, lastUpdatedDate)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         boolean added = false;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setString(1, user.getUserName());
-            ps.setString(2, user.getPassword());
-            ps.setString(3, user.getEmail());
-            ps.setString(4, user.getPhoneNumber());
-            ps.setString(5, user.getName());
+            ps.setString(1, user.getEmail());
+            ps.setString(2, user.getName());
+            ps.setInt(3, user.getRoleId());
+            ps.setString(4, user.getHashedPassword());
+            ps.setString(5, user.getPhoneNumber());
             ps.setString(6, user.getAvatar());
-            ps.setInt(7, user.getRoleId());
+            ps.setString(7, user.getCreatedBy());
+            ps.setString(8, user.getUpdatedBy());
+            ps.setBoolean(9, user.isIsDeleted());
+
+            // Chuyển đổi định dạng của lastUpdatedDate từ LocalDateTime sang Timestamp
+            Timestamp lastUpdatedTimestamp = null;
+            if (user.getLastUpdatedDate() != null) {
+                lastUpdatedTimestamp = Timestamp.valueOf(user.getLastUpdatedDate());
+            }
+            ps.setTimestamp(10, lastUpdatedTimestamp);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -101,7 +113,7 @@ public class UserDAO {
     }
 
     public User authenticateUser(String email, String password) {
-        String sql = "SELECT * FROM [User] WHERE email = ? AND password = ? AND isDeleted = 0";
+        String sql = "SELECT * FROM [User] WHERE email = ? AND hashedPassword = ? AND isDeleted = 0";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, email);
@@ -109,30 +121,17 @@ public class UserDAO {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User user = new User();
-                user.setUserId(rs.getInt("userId"));
-                user.setRoleId(rs.getInt("roleId"));
-                user.setUserName(rs.getString("userName"));
-                user.setPassword(rs.getString("password"));
                 user.setEmail(rs.getString("email"));
+                user.setName(rs.getString("name"));
+                user.setRoleId(rs.getInt("roleId"));
+                user.setHashedPassword(rs.getString("hashedPassword"));
                 user.setPhoneNumber(rs.getString("phoneNumber"));
                 user.setAvatar(rs.getString("avatar"));
-                user.setName(rs.getString("name"));
                 user.setCreatedBy(rs.getString("createdBy"));
+                user.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 user.setUpdatedBy(rs.getString("updatedBy"));
+                user.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
                 user.setIsDeleted(rs.getBoolean("isDeleted"));
-//                user.setUserId(rs.getInt(1));
-//                user.setRoleId(rs.getInt(2));
-//                user.setUserName(rs.getString(3));
-//                user.setPassword(rs.getString(4));
-//                user.setEmail(rs.getString(5));
-//                user.setPhoneNumber(rs.getString(6));
-//                user.setAvatar(rs.getString(7));
-//                user.setName(rs.getString(8));
-//                user.setCreatedBy(rs.getString(9));
-//                user.setCreatedDate(rs.getTimestamp(10).toLocalDateTime());
-//                user.setUpdatedBy(rs.getString(11));
-//                user.setLastUpdatedDate(rs.getTimestamp(12).toLocalDateTime());
-//                user.setIsDeleted(rs.getBoolean(13));
                 return user;
             }
         } catch (SQLException e) {
@@ -237,23 +236,58 @@ public class UserDAO {
         return null;
     }
 
+    public boolean checkEmailExist(String email) {
+        String sql = "SELECT COUNT(*) FROM [User] WHERE email = ?";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next() && rs.getInt(1) > 0) {
+                    return true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void changePass(String email, String hashedPassword) throws SQLException {
+        String sql = "UPDATE [User] SET hashedPassword = ? WHERE email = ?";
+        try {
+            checkConnection();
+            ps = con.prepareStatement(sql);
+            ps.setString(1, hashedPassword);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+    }
+
     public User getUserByEmail(String email) {
-        String sql = "SELECT * FROM [User] WHERE email = ? AND isDeleted=0";
+        String sql = "SELECT * FROM [User] WHERE email = ? AND isDeleted = 0";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int userId = rs.getInt("userId");
-                String userName = rs.getString("userName");
-                String password = rs.getString("password");
-                String name = rs.getString("name");
-
+            if (rs.next()) {
                 User user = new User();
-                user.setUserId(userId);
-                user.setUserName(userName);
-                user.setPassword(password);
-                user.setName(name);
+                user.setEmail(rs.getString("email"));
+                user.setName(rs.getString("name"));
+                user.setRoleId(rs.getInt("roleId"));
+                user.setHashedPassword(rs.getString("hashedPassword"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setCreatedBy(rs.getString("createdBy"));
+                user.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                user.setUpdatedBy(rs.getString("updatedBy"));
+                user.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
+                user.setIsDeleted(rs.getBoolean("isDeleted"));
                 return user;
 
             }
@@ -265,22 +299,24 @@ public class UserDAO {
     }
 
     public User getUserByPhone(String phone) {
-        String sql = "SELECT * FROM [User] WHERE phoneNumber = ?";
+        String sql = "SELECT * FROM [User] WHERE phoneNumber = ? AND isDeleted = 0";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, phone);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int userId = rs.getInt("userId");
-                String userName = rs.getString("userName");
-                String password = rs.getString("password");
-                String name = rs.getString("name");
-
+            if (rs.next()) {
                 User user = new User();
-                user.setUserId(userId);
-                user.setUserName(userName);
-                user.setPassword(password);
-                user.setName(name);
+                user.setEmail(rs.getString("email"));
+                user.setName(rs.getString("name"));
+                user.setRoleId(rs.getInt("roleId"));
+                user.setHashedPassword(rs.getString("hashedPassword"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setCreatedBy(rs.getString("createdBy"));
+                user.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                user.setUpdatedBy(rs.getString("updatedBy"));
+                user.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
+                user.setIsDeleted(rs.getBoolean("isDeleted"));
                 return user;
 
             }
@@ -516,6 +552,15 @@ public class UserDAO {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public ArrayList<User> getPaginatedUsers(ArrayList<User> users, int page, int pageSize) {
+        int start = (page - 1) * pageSize;
+        int end = Math.min(start + pageSize, users.size());
+        if (start >= users.size() || start < 0) {
+            return new ArrayList<>();
+        }
+        return new ArrayList<>(users.subList(start, end));
     }
 
     public static void main(String[] args) {

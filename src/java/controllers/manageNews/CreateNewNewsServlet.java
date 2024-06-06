@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import models.News;
 import java.time.format.DateTimeFormatter;
+import models.User;
 
 /**
  *
@@ -84,7 +85,7 @@ public class CreateNewNewsServlet extends HttpServlet {
         HttpSession session = request.getSession();
 //        out.print(userName);
         try {
-            String createdBy = (String) session.getAttribute("userName");
+            User createdBy_raw = (User) session.getAttribute("currentUser");
             String mainTitle = request.getParameter("mainTitle");
             String title = request.getParameter("title");
             String mainContent = request.getParameter("mainContent");
@@ -102,8 +103,8 @@ public class CreateNewNewsServlet extends HttpServlet {
             if (status_raw == 2) {
                 status = true;
             }
-            News n = new News(mainTitle, title, mainContent, content, location, kickOff, createdBy, status);
-            int created = NewsDAO.INSTANCE.createNews(n);
+            News news = new News(mainTitle, title, mainContent, content, location, kickOff, createdBy_raw.getUserName(), status);
+            int created = NewsDAO.INSTANCE.createNews(news);
 //        out.print(created);
             if (created != 0) {
                 session.setAttribute("created", created);

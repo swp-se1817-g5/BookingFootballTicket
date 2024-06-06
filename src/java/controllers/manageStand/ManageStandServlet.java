@@ -46,11 +46,6 @@ public class ManageStandServlet extends HttpServlet {
         }
     } 
     
-    private void testUser(HttpServletRequest request) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.setAttribute("userName", "admin");
-    }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -62,7 +57,6 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        testUser(request);
         if(request.getParameter("standCreated") != null) {
             request.setAttribute("created", "true".equals(request.getParameter("standCreated")));
         }

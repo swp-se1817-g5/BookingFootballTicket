@@ -336,10 +336,16 @@
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
-                        <c:choose>
-                            <c:when test="${sessionScope.currentUser==null}"> <li><a data-auth="login" href="./login">Login</a></li></c:when>
-                            <c:when test="${sessionScope.currentUser!=null}"> <li><a data-auth="login" href=""><i class="bi bi-person"></i></a></li></c:when>
-                            </c:choose>
+                        <ul>
+    <c:choose>
+        <c:when test="${sessionScope.currentUser==null}">
+            <li><a data-auth="login" href="./login">Login</a></li>
+        </c:when>
+        <c:when test="${sessionScope.currentUser!=null}">
+            <li><a data-auth="profile" href="./profile"><i class="bi bi-person"></i> Profile</a></li>
+        </c:when>
+    </c:choose>
+</ul>
 
 
 
@@ -999,7 +1005,7 @@
                             </div>
                             <c:forEach items="${getListMatches}" var="lm" varStatus="lmStatus">
                                 <c:set var="m" value="${getMatches[lmStatus.index]}" />
-
+                                <c:set var="s" value="${getAllseason[lmStatus.index]}" />
                                 <div class="item">
                                     <div class="block match">
                                         <div class="top">
@@ -1381,6 +1387,7 @@
                                                                                                                                             <div class="tickets-left">Limited stock remaining!</div>
                                                                                                                                         </div>
                                                                                                                                     </a>
+                                                                                                                                    
                                                                                                                             </div>
                                                                                                                         </div>
                                                                                                                         <div class="item">
@@ -1724,23 +1731,23 @@
                                                                                                                                                                                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                                                                                                                                                                                     <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
                                                                                                                                                                                     <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
-                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script
-                                                                                                                                                                                    </div>
-                                                                                                                                                                                                        <a href="leagues" class="c2a_btn">View all</a>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                        </div>
-                                                                                                                                                                                                        </div>
-                                                                                                                                                </div>
-                                                                                                                                                                                            <%@include file="footer.jsp" %>
-                                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
-                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
-                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                    <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        <a href="leagues" class="c2a_btn">View all</a>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        </div>
+                                                                                                                                                                                        <%@include file="footer.jsp" %>
+                                                                                                                                                                                        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                    <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                    <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
 
 
-                                                                                                                                                                                        <script type="277d7fe9745a504718d895ab-application/javascript" async src="//static.klaviyo.com/onsite/js/klaviyo.js?company_id=TFyH8Y"></script>
+                                                                                                                                                                                    <script type="277d7fe9745a504718d895ab-application/javascript" async src="//static.klaviyo.com/onsite/js/klaviyo.js?company_id=TFyH8Y"></script>
 
-                                                                                                                                                                                        <script defer src="https://www.footballticketpad.com/assets/frontend/2018/js/functions.home.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
+                                                                                                                                                                                    <script defer src="https://www.footballticketpad.com/assets/frontend/2018/js/functions.home.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
 
 
-                                                                                                                                                                                        <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="277d7fe9745a504718d895ab-|49" defer></script></body>
-                                                                                                                                                                                        </html>
+                                                                                                                                                                                    <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="277d7fe9745a504718d895ab-|49" defer></script></body>
+                                                                                                                                                                                    </html>

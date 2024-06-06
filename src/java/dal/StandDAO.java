@@ -4,7 +4,6 @@
  */
 package dal;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import models.Stand;
@@ -28,28 +27,19 @@ public class StandDAO {
 
     public ArrayList<Stand> getStands(String standName) {
         ArrayList<Stand> stands = new ArrayList<>();
-        String sql = "SELECT * FROM Stand WHERE isDeleted = 0"+
-
-    
-       
-             " AND standName LIKE ?";
-        
+        String sql = "SELECT * FROM Stand WHERE isDeleted = 0"
+                + " AND standName LIKE ?";
 
         try {
             PreparedStatement ps = con.prepareStatement(sql);
 
-           
-         
-                ps.setString(1, "%" + standName + "%");
-           
+            ps.setString(1, "%" + standName + "%");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Stand stand = new Stand();
                 stand.setStandId(rs.getInt("standId"));
                 stand.setStandName(rs.getString("standName"));
-                stand.setPrice(rs.getBigDecimal("price"));
-                stand.setQuantity(rs.getInt("quantity"));
                 stand.setCreatedBy(rs.getString("createdBy"));
                 stand.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 stand.setUpdatedBy(rs.getString("updatedBy"));
@@ -58,20 +48,18 @@ public class StandDAO {
                 stands.add(stand);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
         return stands;
     }
 
     public boolean createStand(Stand stand) {
         boolean created = false;
-        String sql = "insert into stand(standName, price, quantity, createdBy) values(?,?,?,?)";
+        String sql = "insert into stand(standName, createdBy) values(?,?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, stand.getStandName());
-            ps.setBigDecimal(2, stand.getPrice());
-            ps.setInt(3, stand.getQuantity());
-            ps.setString(4, stand.getCreatedBy());
+            ps.setString(2, stand.getCreatedBy());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 created = true;
@@ -102,14 +90,12 @@ public class StandDAO {
 
     public boolean updateStand(Stand stand) {
         boolean updated = false;
-        String sql = "update stand set standName = ?, price = ?, quantity = ?, updatedBy = ? where standId = ?";
+        String sql = "update stand set standName = ?, updatedBy = ? where standId = ?";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, stand.getStandName());
-            ps.setBigDecimal(2, stand.getPrice());
-            ps.setInt(3, stand.getQuantity());
-            ps.setString(4, stand.getUpdatedBy());
-            ps.setInt(5, stand.getStandId());
+            ps.setString(2, stand.getUpdatedBy());
+            ps.setInt(3, stand.getStandId());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 updated = true;

@@ -238,10 +238,10 @@
                             <div class="dropdown-menu bg-transparent border-0">
                                 <a href="manageUser" class="dropdown-item">Manage User</a>
                                 <a href="manageMatch" class="dropdown-item">Manage Match</a>
-                                <a href="manageFootballClub" class="dropdown-item active">Manage Football Club</a>
+                                <a href="manageFootballClub" class="dropdown-item ">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item">Manage Stand</a>
-                                <a href="manageRole" class="dropdown-item">Manage Role</a>
+                                <a href="manageRole" class="dropdown-item active">Manage Role</a>
                                 <a href="manageNews" class="dropdown-item">Manage News</a>
                             </div>
                         </div>

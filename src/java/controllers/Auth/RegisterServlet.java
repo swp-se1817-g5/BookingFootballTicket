@@ -3,6 +3,8 @@ package controllers.Auth;
 import dal.UserDAO;
 import jakarta.servlet.RequestDispatcher;
 import models.User;
+import org.mindrot.jbcrypt.BCrypt;
+
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.PrintWriter;
 import util.Validate;
+import java.time.LocalDateTime;
 
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
 public class RegisterServlet extends HttpServlet {
@@ -43,7 +46,6 @@ public class RegisterServlet extends HttpServlet {
         UserDAO userDAO = UserDAO.INSTANCE;
 
         String name = request.getParameter("name");
-        String userName = request.getParameter("userName");
         String password = request.getParameter("password");
         String confirmPassword = request.getParameter("confirmPassword");
         String avatar = request.getParameter("avatar");
@@ -51,129 +53,114 @@ public class RegisterServlet extends HttpServlet {
         String email = request.getParameter("email");
         String phoneNumber = request.getParameter("phoneNumber");
         String registerEmail = request.getParameter("registerEmail");
-        String termsAndConditions = request.getParameter("iAgree"); // This will get "terms-and-conditions" if checkbox is checked
+        String termsAndConditions = request.getParameter("iAgree");
         boolean status = false;
         String errorMessage = "";
         String successMessage = "";
+
         if (Boolean.valueOf(registerEmail)) {
             request.setAttribute("registerEmail", true);
         }
         if (avatar != null) {
             request.setAttribute("avatar", avatar);
         }
-        // Validate input
-        if (name.isEmpty() || userName.isEmpty() || password.isEmpty() || email.isEmpty() || phoneNumber.isEmpty()) {
+
+        if (name.isEmpty() || password.isEmpty() || email.isEmpty() || phoneNumber.isEmpty()) {
             request.setAttribute("errorMessage", "All fields are required!");
-            returnValueBefore(request, response, name, userName, email, phoneNumber);
+            returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (!Validate.isValidName(name)) {
             request.setAttribute("errorMessage", "Name invalid!");
-            //if field is error will null else will return value input before
-            returnValueBefore(request, response, null, userName, email, phoneNumber);
-            //the page will return
-            dispatch(request, response, "/views/register.jsp");
-            return;
-        }
-
-        User userExistName = userDAO.getUserByUserName(userName);
-        if (userExistName != null) {
-            request.setAttribute("errorMessage", "userName have exist!");
-            returnValueBefore(request, response, name, null, email, phoneNumber);
+            returnValueBefore(request, response, null, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (!Validate.isValidPhoneNumber(phoneNumber)) {
             String messPhone = "Phone Number invalid!";
-            if (!phoneNumber.startsWith("0")
-                    && phoneNumber.length() == 10
-                    && Validate.isNumber(phoneNumber)) {
-                messPhone = "Phone must be start with 0";
+            if (!phoneNumber.startsWith("0") && phoneNumber.length() == 10 && Validate.isNumber(phoneNumber)) {
+                messPhone = "Phone must start with 0";
             }
             request.setAttribute("errorMessage", messPhone);
-            returnValueBefore(request, response, name, userName, email, null);
+            returnValueBefore(request, response, name, email, null);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (!Validate.isValidEmail(email)) {
             request.setAttribute("errorMessage", "Email invalid!");
-            returnValueBefore(request, response, name, userName, null, phoneNumber);
+            returnValueBefore(request, response, name, null, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         User userExists = userDAO.getUserByEmail(email);
         if (userExists != null) {
-            request.setAttribute("errorMessage", "Email have exits!");
-            returnValueBefore(request, response, name, userName, null, phoneNumber);
+            request.setAttribute("errorMessage", "Email already exists!");
+            returnValueBefore(request, response, name, null, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
-        // Mật khẩu cần ít nhất 8 kí tự, 1 kí tự thường, 1 kí tự in hoa, 1 kí tự số
+
         if (!Validate.isValidPassword(password)) {
-            request.setAttribute("errorMessage", "Password needs at least 8 characters, 1 normal character, 1 uppercase character, 1 numeric character!!");
-            returnValueBefore(request, response, name, userName, email, phoneNumber);
+            request.setAttribute("errorMessage", "Password needs at least 8 characters, 1 normal character, 1 uppercase character, 1 numeric character!");
+            returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
+
         if (!password.equals(confirmPassword)) {
-            request.setAttribute("errorMessage", "Confirm password not equal password!!");
-            returnValueBefore(request, response, name, userName, email, phoneNumber);
+            request.setAttribute("errorMessage", "Confirm password does not match password!");
+            returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (termsAndConditions == null) {
             request.setAttribute("errorMessage", "Please agree with our Terms and Conditions and Privacy Statement");
-            returnValueBefore(request, response, name, userName, email, phoneNumber);
+            returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
+        // Hash the password using bcrypt
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+        LocalDateTime now = LocalDateTime.now();
+
+
         User newUser = new User();
         newUser.setName(name);
-        newUser.setUserName(userName);
-        newUser.setPassword(password);
+        newUser.setHashedPassword(hashedPassword); // Save hashed password
         newUser.setEmail(email);
         newUser.setPhoneNumber(phoneNumber);
         newUser.setRoleId(2);
         newUser.setAvatar(avatar);
+        newUser.setCreatedBy(email);
+        newUser.setUpdatedBy(email);
+        newUser.setCreatedDate(now);
+        newUser.setLastUpdatedDate(now);
 
         status = userDAO.addUser(newUser);
-        //if add success save this user into session and direct to home page
-        successMessage = "Register successfully!!!";
+        successMessage = "Registered successfully!";
         HttpSession session = request.getSession();
         session.setAttribute("successMessage", successMessage);
         session.setAttribute("currentUser", userDAO.getUserByEmail(email));
         session.setMaxInactiveInterval(Integer.MAX_VALUE);
         request.setAttribute("isRegister", true);
         request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
-        return;
     }
 
-    //return the value input before
-    private void returnValueBefore(HttpServletRequest request, HttpServletResponse response, String name,
-            String userName, String mail, String phone)
-            throws ServletException, IOException {
+    private void returnValueBefore(HttpServletRequest request, HttpServletResponse response, String name, String email, String phoneNumber) {
         request.setAttribute("name", name);
-        request.setAttribute("userName", userName);
-        request.setAttribute("email", mail);
-        request.setAttribute("phone", phone);
+        request.setAttribute("email", email);
+        request.setAttribute("phoneNumber", phoneNumber);
     }
 
-    //direct to page
-    private void dispatch(HttpServletRequest request, HttpServletResponse response, String page)
-            throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
+    private void dispatch(HttpServletRequest request, HttpServletResponse response, String url) throws ServletException, IOException {
+        RequestDispatcher dispatcher = request.getRequestDispatcher(url);
         dispatcher.forward(request, response);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Register Servlet";
     }
 }
