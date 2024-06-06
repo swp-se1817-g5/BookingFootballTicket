@@ -73,13 +73,13 @@ public class sendMailServlet extends HttpServlet {
             session.setAttribute("emailReset", emailReset);
 
             if (!dao.checkEmailExist(emailReset)) {
-                request.setAttribute("mess", "You have not registered for this email!! ");
+                request.setAttribute("messEr", "You have not registered for this email!! ");
                 request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             } else if (test) {
                 request.setAttribute("mess", "Check your mail !");
                 request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             } else {
-                request.setAttribute("mess", "Server error");
+                request.setAttribute("messEr", "Server error");
                 request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             }
         } catch (Exception e) {

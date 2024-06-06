@@ -79,8 +79,8 @@ public class UserDAO {
 
     public boolean addUser(User user) {
         System.out.println(user);
-        String sql = "INSERT INTO [User](email, name, roleId, hashedPassword, phoneNumber, avatar, createdBy, updatedBy, isDeleted, lastUpdatedDate)"
-                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [User](email, name, roleId, hashedPassword, phoneNumber, avatar, createdBy, updatedBy, isDeleted)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         boolean added = false;
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -93,13 +93,6 @@ public class UserDAO {
             ps.setString(7, user.getCreatedBy());
             ps.setString(8, user.getUpdatedBy());
             ps.setBoolean(9, user.isIsDeleted());
-
-            // Chuyển đổi định dạng của lastUpdatedDate từ LocalDateTime sang Timestamp
-            Timestamp lastUpdatedTimestamp = null;
-            if (user.getLastUpdatedDate() != null) {
-                lastUpdatedTimestamp = Timestamp.valueOf(user.getLastUpdatedDate());
-            }
-            ps.setTimestamp(10, lastUpdatedTimestamp);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -245,6 +238,26 @@ public class UserDAO {
         return false;
     }
 
+    public boolean checkOldPass(String email, String oldPassword) {
+        try {
+            checkConnection(); // Kiểm tra và thử kết nối lại nếu cần
+            String sql = "SELECT COUNT(*) FROM [User] WHERE email = ? AND hashedPassword = ?";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, email);
+                ps.setString(2, oldPassword);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) > 0) {
+                        return true;
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error in checkOldPass: " + e.getMessage());
+        }
+        return false;
+
+    }
+
     public void changePass(String email, String hashedPassword) throws SQLException {
         String sql = "UPDATE [User] SET hashedPassword = ? WHERE email = ?";
         try {
@@ -285,6 +298,24 @@ public class UserDAO {
                 return user;
             }
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+     public String getHashedPasswordByEmail(String email) {
+        try {
+            checkConnection(); // Vérifier la connexion avant d'exécuter la requête SQL
+            String sql = "SELECT hashedPassword FROM [User] WHERE email = ?";
+            try (PreparedStatement ps = con.prepareStatement(sql)) {
+                ps.setString(1, email);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getString("hashedPassword");
+                    }
+                }
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
