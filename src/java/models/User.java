@@ -36,6 +36,20 @@ public class User {
         this.isDeleted = isDeleted;
     }
 
+    public User(String email, String name, int roleId, String hashedPassword, String phoneNumber, String avatar, String createdBy, LocalDateTime createdDate, boolean isDeleted) {
+        this.email = email;
+        this.name = name;
+        this.roleId = roleId;
+        this.hashedPassword = hashedPassword;
+        this.phoneNumber = phoneNumber;
+        this.avatar = avatar;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
+        this.isDeleted = isDeleted;
+    }
+
+    
+
     public String getFormattedLastUpdatedDate() {
         return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
     }

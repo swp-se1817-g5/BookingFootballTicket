@@ -274,29 +274,10 @@
                                 <div class="row">
                                     <div class="col-sm-4"><h2>Manage <b>User</b></h2></div>
                                     <div class="col-sm-4 searchh">
-                                        <form id="searchForm" action="searchUser" method="POST">
-                                            <div class="d-flex align-items-center">
-                                                <i class="material-icons mr-2">&#xE8B6;</i>
-                                                <select id="searchType" name="searchType" class="form-control mr-2">
-                                                    <option value="userName">Search by Username</option>
-                                                    <option value="name">Search by Name</option>
-                                                    <option value="userId">Search by User ID</option>
-                                                    <option value="email">Search by Email</option>
-                                                    <option value="phoneNumber">Search by Phone Number</option>
-                                                    <option value="roleId">Search by Role</option>
-                                                </select>
-                                                <input type="text" id="searchKeyword" name="keyword" class="form-control mr-2" placeholder="Search&hellip;" required="" >
-                                                <select id="roleIdSelect" name="roleId" class="form-control mr-2" style="display: none;">
-                                                    <c:forEach items="${roles}" var="o">
-                                                        <option value="${o.roleId}">${o.roleName}</option> 
-                                                    </c:forEach>
-                                                </select>
-                                                <input type="submit" class="btn btn-success" value="Search">
-                                            </div>
-                                            <div>
-                                                <div id="error-message" style="color: red;"></div>
-                                            </div>
-                                        </form>
+                                        <!-- Button to open the search modal -->
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchUserModal">
+                                            Open Search User Form
+                                        </button>
                                     </div>
                                     <div class="col-sm-4 createe">
                                         <a href="#createUserModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
@@ -313,45 +294,32 @@
                                 <table id="userTable" class="table table-striped table-hover table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>
-                                                User ID
-                                            </th>
-                                            <th>User Name</th>
-                                            <th>Role Name</th>
                                             <th>Email</th>
+                                            <th>Name</th>
+                                            <th>Role</th>
                                             <th>Phone Number</th>
                                             <th>Avatar<i class="fa "></i></th>
-                                            <th>Name</th>
-                                            <th>Created By<i class="fa "></i></th>
-                                            <th>Created Date</th>
-                                            <th>Last Updated By<i class="fa "></i></th>
-                                            <th>Last Updated Date<i class="fa "></i></th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <c:forEach items="${requestScope.users}" var="o">
                                             <tr>
-                                                <td>${o.userId}</td>
-                                                <td>${o.userName}</td>
+                                                <td>${o.email}</td>
+                                                <td>${o.name}</td>
                                                 <c:forEach items="${requestScope.roles}" var="r">
                                                     <c:if test="${r.roleId eq o.roleId}">
                                                         <td>${r.roleName}</td>
                                                     </c:if>
                                                 </c:forEach>
-                                                <td>${o.email}</td>
                                                 <td>${o.phoneNumber}</td>
                                                 <td><img src="${o.avatar}" alt="Avatar" style="max-width: 100px; max-height: 100px;"></td>
-                                                <td>${o.name}</td>
-                                                <td>${o.createdBy}</td>
-                                                <td>${o.createdDate}</td>
-                                                <td>${o.updatedBy}</td>
-                                                <td>${o.lastUpdatedDate}</td>
                                                 <td>
-                                                    <a href="editUser.jsp?userId=${o.userId}" class="edit" title="Edit" data-toggle="tooltip">
+                                                    <a href="#" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
+                                                    <a href="editUser.jsp?email=${o.email}" class="edit" title="Edit" data-toggle="tooltip">
                                                         <i class="material-icons">&#xE254;</i>
                                                     </a>
-                                                    <a href="deleteUser?userId=${o.userId}" class="delete" title="Delete" data-toggle="tooltip">
+                                                    <a href="deleteUser?email=${o.email}" class="delete" title="Delete" data-toggle="tooltip">
                                                         <i class="material-icons">&#xE872;</i>
                                                     </a>
                                                 </td>
@@ -389,12 +357,12 @@
                                     </div>
                                     <div class="modal-body">					
                                         <div class="form-group">
-                                            <label>User Name</label>
-                                            <input name="userName" type="text" class="form-control" required>
+                                            <label>Email</label>
+                                            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" required>
                                         </div>
                                         <div class="form-group">
-                                            <label>Password</label>
-                                            <input name="password" type="password" class="form-control" required>
+                                            <label>Name</label>
+                                            <input name="name" type="text" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="role">User Role</label>
@@ -405,8 +373,8 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Email</label>
-                                            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" required>
+                                            <label>Password</label>
+                                            <input name="password" type="password" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Phone Number</label>
@@ -419,10 +387,7 @@
                                         <div class="form-group">
                                             <img id="avatarPreview" src="" alt="Avatar Preview" style="max-width: 200px; max-height: 200px;">
                                         </div>
-                                        <div class="form-group">
-                                            <label>Name</label>
-                                            <input name="name" type="text" class="form-control" required>
-                                        </div>
+                                        
                                     </div>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -432,7 +397,49 @@
 
                             </div>
                         </div>
-                    </div> 
+                    </div>
+                    <!-- Search User Modal -->
+                    <div id="searchUserModal" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form id="searchForm" action="searchUser" method="post">
+                                    <div class="modal-header">						
+                                        <h4 class="modal-title">Search User</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    </div>
+                                    <div class="modal-body">					
+                                        <div class="form-group">
+                                            <label for="name"> Name</label>
+                                            <input name="name" type="text" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phoneNumber">Phone Number</label>
+                                            <input name="phoneNumber" type="text" class="form-control" pattern="[0-9]{10}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="roleId">User Role</label>
+                                            <select name="roleId" class="form-control">
+                                                <c:forEach items="${roles}" var="role">
+                                                    <option value="${role.roleId}">${role.roleName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <div id="error-message" style="color: red;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                        <input type="submit" class="btn btn-success" value="Search">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -548,14 +555,14 @@
 
         });
 
-        function deleteUser(userId) {
-            if (confirm("Do you want to delete user with ID = " + userId))
-                location.href = 'deleteUser?userId=' + userId;
+        function deleteUser(email) {
+            if (confirm("Do you want to delete user with email = " + email))
+                location.href = 'deleteUser?email=' + email;
         }
 
-        function updateUser(userId, userName) {
-            document.getElementById('clubId').value = clubId;
-            document.getElementById('clubName').value = clubName;
+        function updateUser(email, name) {
+            document.getElementById('email').value = email;
+            document.getElementById('name').value = name;
 
 
             $('#clubNameError').text('');
@@ -564,53 +571,6 @@
     <script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
-        });
-        // Hàm validateSearchForm để kiểm tra giá trị nhập vào ô search
-        function validateSearchForm() {
-            const searchType = document.getElementById("searchType").value;
-            const keyword = document.getElementById("searchKeyword").value;
-            let isValid = true;
-            let errorMessage = "";
-
-            switch (searchType) {
-                case "userId":
-                    if (!/^\d+$/.test(keyword)) {
-                        isValid = false;
-                        errorMessage = "User ID must be a positive integer.";
-                    }
-                    break;
-            }
-            const errorMessageElement = document.getElementById("error-message");
-            if (!isValid) {
-                errorMessageElement.textContent = errorMessage;
-                document.getElementById("searchKeyword").value = "";
-                document.getElementById("searchKeyword").focus();
-            } else {
-                errorMessageElement.textContent = "";
-            }
-            return isValid;
-        }
-        document.getElementById("searchKeyword").addEventListener("input", function () {
-            validateSearchForm();
-        });
-
-        document.getElementById("searchType").addEventListener("change", function () {
-            var searchType = this.value;
-            var keywordInput = document.getElementById("searchKeyword");
-            var keywordSelect = document.getElementById("roleIdSelect");
-
-            if (searchType === "roleId") {
-                keywordInput.style.display = "none";
-                keywordInput.removeAttribute("required");
-                keywordSelect.style.display = "block";
-                keywordInput.setAttribute("name", "key");
-                keywordSelect.setAttribute("name", "keyword");
-            } else {
-                keywordInput.style.display = "block";
-                keywordInput.setAttribute("required", "required");
-                keywordSelect.style.display = "none";
-                keywordInput.setAttribute("name", "keyword");
-            }
         });
     </script>
     <script>
@@ -622,7 +582,6 @@
                 reader.onload = function (e) {
                     $('#avatarPreview').attr('src', e.target.result);
                 }
-
                 reader.readAsDataURL(input.files[0]); // Convert image to base64 string
             }
         }
