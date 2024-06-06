@@ -172,7 +172,11 @@ CREATE TABLE Payment (
 	FOREIGN KEY (ticketId) REFERENCES HistoryPurchasedTicket(ticketId)
 );
 GO
-
+CREATE TABLE NewsImages (
+    imageId INT PRIMARY KEY IDENTITY (1,1),
+    imageUrl VARCHAR(255),
+);
+GO
 -- Table News
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
@@ -189,12 +193,7 @@ CREATE TABLE News (
     isDeleted BIT DEFAULT 0,
 	imageId INT,
     FOREIGN KEY (imageId) REFERENCES NewsImages(imageId)
-
 );
 GO
 
-CREATE TABLE NewsImages (
-    imageId INT PRIMARY KEY IDENTITY (1,1),
-    imageUrl VARCHAR(255),
-);
-GO
+
