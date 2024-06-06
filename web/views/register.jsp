@@ -49,80 +49,70 @@
 
     </head>
     <body id="bg">
-        <div class="page-wraper">
-            <div class="account-form">
-                <div class="account-head" style="background-image:url(./assets/images/background/bg2.jpg);">
-                    <a href="index.html"><img src="./assets/images/logo-white-2.png" alt=""></a>
-                </div>
-                <div class="account-form-inner">
-                    <div class="account-container">
-                        <div class="heading-bx left">
-                            <h2 class="title-head">Sign Up <span>Now</span></h2>
-                            <p>Login Your Account <a href="http://localhost:8080/BookingFootballTicket/login">Click here</a></p>
-                        </div>	
+    <div class="page-wraper">
+        <div class="account-form">
+            <div class="account-head" style="background-image:url(./assets/images/background/bg2.jpg);">
+                <a href="index.html"><img src="./assets/images/logo-white-2.png" alt=""></a>
+            </div>
+            <div class="account-form-inner">
+                <div class="account-container">
+                    <div class="heading-bx left">
+                        <h2 class="title-head">Sign Up <span>Now</span></h2>
+                        <p>Login Your Account <a href="http://localhost:8080/BookingFootballTicket/login">Click here</a></p>
+                    </div>	
 
-                        <c:if test="${not empty errorMessage}">
-                            <p style="color:red">${errorMessage}</p>
-                        </c:if>
+                    <c:if test="${not empty errorMessage}">
+                        <p style="color:red">${errorMessage}</p>
+                    </c:if>
 
-                        <form class="contact-bx" action="register" method="post">
-                            <div class="row placeani">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <label ${registerEmail != null?"hidden":""}>Your Name</label>
-                                            <input value="${name}" class="form-control"
-                                                   ${registerEmail != null?"hidden":""}
-                                                   name="name" id="name" required="" class="form-control">
-                                        </div>
+                    <form class="contact-bx" action="register" method="post">
+                        <div class="row placeani">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <label ${registerEmail != null?"hidden":""}>Your Name</label>
+                                        <input value="${name}" class="form-control"
+                                               ${registerEmail != null?"hidden":""}
+                                               name="name" id="name" required="" class="form-control">
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <label for="userName" class="form-label" ${registerEmail != null?"hidden":""}>User name</label>
-                                            <input name="userName" value="${userName}" class="form-control"
-                                                   ${registerEmail != null?"hidden":""} required
-                                                   class="form-control">
-                                        </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="input-group"> 
+                                        <label for="email" class="form-label" 
+                                               ${registerEmail != null?"hidden":""}>Email</label>
+                                        <input type="email" value="${email}" class="form-control"
+                                               ${registerEmail != null?"hidden":""}
+                                               name="email" id="email"
+                                               requiredclass="form-control" required="">
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <div class="input-group"> 
-                                            <label for="email" class="form-label" 
-                                                   ${registerEmail != null?"hidden":""}>Email</label>
-                                            <input type="email" value="${email}" class="form-control"
-                                                   ${registerEmail != null?"hidden":""}
-                                                   name="email" id="email"
-                                                   requiredclass="form-control" required="">
-                                        </div>
+                            </div>
+                            <c:if test="${registerEmail != null}">
+                                <input type="text"
+                                       class="form-control"
+                                       hidden="true"
+                                       value="${avatar}"
+                                       name="avatar"/>
+                            </c:if>
+                            <input name="registerEmail" value="${registerEmail}" hidden="true"/>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="input-group"> 
+                                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                                        <input type="text" value="${phone}" class="form-control"
+                                               name="phoneNumber" id="phoneNumber" 
+                                               required>
                                     </div>
                                 </div>
-                                <c:if test="${registerEmail != null}">
-                                    <input type="text"
-                                           class="form-control"
-                                           hidden="true"
-                                           value="${avatar}"
-                                           name="avatar"/>
-                                </c:if>
-                                <input name="registerEmail" value="${registerEmail}" hidden="true"/>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <div class="input-group"> 
-                                            <label for="phoneNumber" class="form-label">Phone Number</label>
-                                            <input type="text" value="${phone}" class="form-control"
-                                                   name="phoneNumber" id="phoneNumber" 
-                                                   required>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <div class="input-group"> 
-                                            <input type="password" class="form-control" name="password"
-                                                   id="password" required>
-                                            <label for="password" class="form-label">Password</label>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <div class="input-group"> 
+                                        <input type="password" class="form-control" name="password"
+                                               id="password" required>
+                                        <label for="password" class="form-label">Password</label>
                                         </div>
                                     </div>
                                 </div>      

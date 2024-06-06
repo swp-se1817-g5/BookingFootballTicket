@@ -1,5 +1,6 @@
 package controllers.Auth;
 
+import constant.IConstant;
 import dal.UserDAO;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -45,8 +46,11 @@ public class changePassForget extends HttpServlet {
                 // Băm mật khẩu trước khi lưu vào cơ sở dữ liệu
                 String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
                 dao.changePass(emailReset, hashedPassword);
-                request.setAttribute("successMess", "Reset password successfully!");
-                response.sendRedirect(request.getContextPath() + "/views/signIn.jsp");
+                request.setAttribute("mess", "Reset password successfully!");
+                request.setAttribute("resetPassword", true);
+                
+                session.setAttribute("currentUser", dao.getUserByEmail(emailReset));
+                request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
             } catch (SQLException ex) {
                 Logger.getLogger(changePassForget.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("mess", "An error occurred while resetting the password. Please try again later.");

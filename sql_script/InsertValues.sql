@@ -9,7 +9,7 @@ INSERT INTO Role (roleName) VALUES
 GO
 
 -- Insert values into User table
-INSERT INTO [User] (email, [name], roleId, [hashPassword], phoneNumber, avatar, createdBy) VALUES
+INSERT INTO [User] (email, [name], roleId, [hashedPassword], phoneNumber, avatar, createdBy) VALUES
 ('admin@example.com', 'Admin User', 1, 'hashed_password_admin', '1234567890', 'Images/avatar/avatar1.jpg', 'admin@example.com'),
 ('user1@example.com', 'User One', 2, 'hashed_password_user1', '0987654321', 'Images/avatar/avatar2.jpg', 'admin@example.com'),
 ('user2@example.com', 'User Two', 2, 'hashed_password_user2', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com');
