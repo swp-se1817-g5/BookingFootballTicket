@@ -244,7 +244,8 @@ Author     : admin
                                 <a href="manageMatch" class="dropdown-item">Manage Match</a>
                                 <a href="manageFootballClub" class="dropdown-item">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
-                                <a href="manageStand" class="dropdown-item active">Manage Stand</a>
+                                <a href="manageStand" class="dropdown-item">Manage Stand</a>
+                                <a href="manageSeatArea" class="dropdown-item active">Manage Seat Area</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
                                 <a href="manageNews" class="dropdown-item">Manage News</a>
                             </div>
@@ -276,7 +277,7 @@ Author     : admin
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><h2>Stand <b>Management</b></h2></div>
+                                    <div class="col-sm-4"><h2>Seat Area <b>Management</b></h2></div>
 
                                     <div class="col-sm-4 searchh">
                                         <form action="manageStand" method="get" id="searchForm">
@@ -288,7 +289,7 @@ Author     : admin
 
                                     </div>
                                     <div class="col-sm-4 createe">
-                                        <a href="#createStandModal" class="btn btn-success"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create Stand</span></a>
+                                        <a href="#createSeatAreaModal" class="btn btn-success"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create Seat Are</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -296,18 +297,24 @@ Author     : admin
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Stand Name</th>
+                                        <th>Seat Area</th>
+                                        <td>cell</td>
+                                        <th>Price<i class="fa "></i></th>
+                                        <th>Quantity<i class="fa "></i></th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${requestScope.stands}" var="o">
                                         <tr>
-                                            <td>${o.standId}</td>
+                                            <td>${o.seatId}</td>
                                             <td>${o.standName}</td>
+                                            <td></td>
+                                            <td>${o.price}</td>
+                                            <td>${o.quantity}</td>
                                             <td>
-                                                <a onclick="viewDetail('${o.standId}', '${o.standName}', '${o.createdBy}', '${o.createdDate}', '${o.updatedBY}', '${o.lastUpdatedDate}')" href="#viewDetailModal" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
-                                                <a onclick="update('${o.standId}', '${o.standName}')"  href="#updateStandModal" class="edit" title="E'${o.standId}', '${o.standName}'dit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
+                                                <a href="#" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
+                                                <a onclick="update('${o.standId}', '${o.standName}', '${o.price}', '${o.quantity}')"  href="#updateStandModal" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
                                                 <a onclick="doDelete(${o.standId})" href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                             </td>
                                         </tr>
@@ -319,33 +326,7 @@ Author     : admin
                     </div> 
                 </div>      
             </div>      
-        </div>    
-
-        <div id="viewDetailModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">						
-                        <h4 class="modal-title">Stand Information</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Stand ID</label>
-                            <input id="standDetailId" readonly type="number" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Stand Name</label>
-                            <input id="standDetailName" maxlength="50" type="text" class="form-control" required>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    </div>
-
-                </div>
-            </div>
-        </div>        
+        </div>      
 
 
         <div id="createStandModal" class="modal fade">
@@ -362,14 +343,14 @@ Author     : admin
                                 <input id="standNameInput" name="standName" type="text" class="form-control" maxlength="50" required>
                                 <span id="standNameInputError" class="text-danger"></span> 
                             </div>
-                            <!--                            <div class="form-group">
-                                                            <label>Price (VND)</label>
-                                                            <input name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Quantity (Seat)</label>
-                                                            <input name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
-                                                        </div>-->
+                            <div class="form-group">
+                                <label>Price (VND)</label>
+                                <input name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity (Seat)</label>
+                                <input name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
+                            </div>
 
                         </div>
                         <div class="modal-footer">
@@ -401,16 +382,16 @@ Author     : admin
                                 <input id="standName" name="standName" maxlength="50" type="text" class="form-control" required>
                                 <span id="standNameError" class="text-danger"></span>
                             </div>
-                            <!--                            <div class="form-group">
-                                                            <label>Price (VND)</label>
-                                                            <input id="price" name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
-                                                            <span id="priceError" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Quantity (Seat)</label>
-                                                            <input id="quantity" name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
-                                                            <span id="quantityError" class="text-danger"></span>
-                                                        </div>-->
+                            <div class="form-group">
+                                <label>Price (VND)</label>
+                                <input id="price" name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
+                                <span id="priceError" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Quantity (Seat)</label>
+                                <input id="quantity" name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
+                                <span id="quantityError" class="text-danger"></span>
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -523,10 +504,11 @@ Author     : admin
                     var empty = standName === "";
                     var originalStand = stands.find(stand => stand.standId == standId);
                     var duplicate = stands.some(stand => stand.standName === standName && stand.standId != standId);
-                    if (empty) {
+                    if(empty){
                         $('#standNameError').text('Can not be empty or blank!');
                         event.preventDefault();
-                    } else if (standName !== originalStand.standName && duplicate) {
+                    }
+                    else if (standName !== originalStand.standName && duplicate) {
                         $('#standNameError').text('Stand name already exists. Please choose a different name.');
                         event.preventDefault();
                     } else {
@@ -543,15 +525,6 @@ Author     : admin
                     }
                 });
             });
-
-            function viewDetail(standId, standName, createdBy, createdDate, updatedBy, lastUpdatedDate) {
-                document.getElementById('standDetailId').value = standId;
-                document.getElementById('standDetailName').value = standName;
-                document.getElementById('createdBy').value = createdBy;
-                document.getElementById('createdDate').value = createdDate;
-                document.getElementById('updatedBy').value = updatedBy;
-                document.getElementById('lastUpdatedDate').value = lastUpdatedDate;
-            }
 
             function doDelete(standId) {
                 if (confirm("Do you want to delete stand with id = " + standId))
