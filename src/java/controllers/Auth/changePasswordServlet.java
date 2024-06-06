@@ -100,21 +100,18 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
                 if (!BCrypt.checkpw(oldpass, hashedPasswordFromDB)) { 
                     request.setAttribute("messEr", "OldPassword Error!");
                 } else {
-                    // Băm mật khẩu mới trước khi lưu vào cơ sở dữ liệu
                     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
                     dao.changePass(email, hashedPassword);
-                    request.setAttribute("mess", "Change Password Successfully!");
-                    
-                    // Chuyển hướng đến trang homePage
-                    response.sendRedirect("views/homePage.jsp");
-                    return; // Thêm return ở đây để ngăn không tiếp tục thực thi code dưới đây nếu đã chuyển hướng
+                    request.setAttribute("changePassword", true);
+                    response.sendRedirect("homePage");
+                    return; 
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(changePasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("mess", password);
             }
             request.getRequestDispatcher("views/changePassword.jsp").forward(request, response);
-            return; // Thêm return ở đây để ngăn không tiếp tục thực thi code dưới đây nếu đã chuyển hướng
+            return; 
         }
     }
 

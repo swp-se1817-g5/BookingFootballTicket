@@ -1,6 +1,5 @@
 package controllers.Auth;
 
-import constant.IConstant;
 import dal.UserDAO;
 import java.io.IOException;
 import java.sql.SQLException;
