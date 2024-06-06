@@ -19,7 +19,7 @@ CREATE TABLE [User] (
 	email VARCHAR(50) PRIMARY KEY,
 	[name] NVARCHAR(50),
 	roleId INT,
-	[hashPassword] VARCHAR(100),
+	[hashedPassword] VARCHAR(100),
 	phoneNumber VARCHAR(10) NULL,
 	avatar VARCHAR(255),
 	createdBy VARCHAR(50),
@@ -180,13 +180,14 @@ CREATE TABLE News (
 	title VARCHAR(255),
     mainContent VARCHAR(255),
 	content NVARCHAR(MAX),
-    [location] VARCHAR(255),    
+    [location] VARCHAR(255),
     postTime DATETIME2 ,
 	createdBy VARCHAR(50) NOT NULL,
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
 	updatedBy VARCHAR(50) NULL,
 	lastUpdatedDate DATETIME2 NULL,
-    [status] BIT DEFAULT 0,
+    [status] BIT DEFAULT 1,
+	[state] BIT DEFAULT 0, 
 	isDeleted BIT DEFAULT 0
     );
 

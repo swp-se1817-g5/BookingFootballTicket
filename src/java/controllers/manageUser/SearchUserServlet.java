@@ -93,29 +93,6 @@ public class SearchUserServlet extends HttpServlet {
             int totalUsers = 0;
             // Perform search based on the searchType
             switch (searchType) {
-                case "userId":
-                    try {
-                    int userId = Integer.parseInt(keyword);
-                    User u = UserDAO.getINSTANCE().getUserbyuserID(userId);
-                    if (u != null) {
-                        users.add(u);
-                        totalUsers = 1;
-                    } else {
-                        // No user found with the provided userid
-                        request.setAttribute("message", "No users found for the provided userid: " + userId);
-                        request.getRequestDispatcher("views/searchUser.jsp").forward(request, response);
-                        return; // Stop further processing
-                    }
-                } catch (NumberFormatException e) {
-                    request.setAttribute("message", "Invalid user ID format: " + keyword);
-                    request.getRequestDispatcher("views/searchUser.jsp").forward(request, response);
-                    return; // Stop further processing
-                }
-                break;
-                case "userName":
-                    users = UserDAO.getINSTANCE().getUserbyType("userName", keyword);
-                    totalUsers = users.size();
-                    break;
                 case "name":
                     users = UserDAO.getINSTANCE().getUserbyType("name", keyword);
                     totalUsers = users.size();

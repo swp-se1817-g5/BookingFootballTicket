@@ -1,27 +1,16 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package models;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-/**
- *
- * @author thuat
- */
 public class User {
 
-    private int userId;
-    private int roleId;
-    private String userName;
-    private String password;
     private String email;
+    private String name;
+    private int roleId;
+    private String hashedPassword;
     private String phoneNumber;
     private String avatar;
-    private String name;
     private String createdBy;
     private LocalDateTime createdDate;
     private String updatedBy;
@@ -29,19 +18,17 @@ public class User {
     private boolean isDeleted;
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
-    
+
     public User() {
     }
 
-    public User(int userId, int roleId, String userName, String password, String email, String phoneNumber, String avatar, String name, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
-        this.userId = userId;
-        this.roleId = roleId;
-        this.userName = userName;
-        this.password = password;
+    public User(String email, String name, int roleId, String hashedPassword, String phoneNumber, String avatar, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.email = email;
+        this.name = name;
+        this.roleId = roleId;
+        this.hashedPassword = hashedPassword;
         this.phoneNumber = phoneNumber;
         this.avatar = avatar;
-        this.name = name;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
         this.updatedBy = updatedBy;
@@ -49,41 +36,38 @@ public class User {
         this.isDeleted = isDeleted;
     }
 
-    public User(String userName, String password, String email, String phoneNumber, String avatar, String name) {
-        this.userName = userName;
-        this.password = password;
+    public User(String email, String name, int roleId, String hashedPassword, String phoneNumber, String avatar, String createdBy, LocalDateTime createdDate, boolean isDeleted) {
         this.email = email;
+        this.name = name;
+        this.roleId = roleId;
+        this.hashedPassword = hashedPassword;
         this.phoneNumber = phoneNumber;
         this.avatar = avatar;
-        this.name = name;
-
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
+        this.isDeleted = isDeleted;
     }
 
-    public User(int userId, String userName, String email, String avatar, String name) {
-        this.userId = userId;
-        this.userName = userName;
-        this.email = email;
-        this.avatar = avatar;
-        this.name = name;
-    }
-    
     
 
-    public User(String name, String userName, String email, String avatar, String password, int roleId) {
-        this.name = name;
-        this.userName = userName;
+    public String getFormattedLastUpdatedDate() {
+        return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
-        this.avatar = avatar;
-        this.password = password;
-        this.roleId = roleId;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getName() {
+        return name;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getRoleId() {
@@ -94,28 +78,12 @@ public class User {
         this.roleId = roleId;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getHashedPassword() {
+        return hashedPassword;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+    public void setHashedPassword(String hashedPassword) {
+        this.hashedPassword = hashedPassword;
     }
 
     public String getPhoneNumber() {
@@ -132,14 +100,6 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getCreatedBy() {
@@ -184,7 +144,18 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "userId=" + userId + ", roleId=" + roleId + ", userName=" + userName + ", password=" + password + ", email=" + email + ", phoneNumber=" + phoneNumber + ", avatar=" + avatar + ", name=" + name + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
+        return "User{"
+                + "email='" + email + '\''
+                + ", name='" + name + '\''
+                + ", roleId=" + roleId
+                + ", hashedPassword='" + hashedPassword + '\''
+                + ", phoneNumber='" + phoneNumber + '\''
+                + ", avatar='" + avatar + '\''
+                + ", createdBy='" + createdBy + '\''
+                + ", createdDate=" + createdDate
+                + ", updatedBy='" + updatedBy + '\''
+                + ", lastUpdatedDate=" + lastUpdatedDate
+                + ", isDeleted=" + isDeleted
+                + '}';
     }
-
 }
