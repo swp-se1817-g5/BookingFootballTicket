@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
  */
 public class SeatArea {
     private int seatId;
+    private String seatName;
     private Stand stand;
     private BigDecimal price;
     private int quantity;
@@ -24,8 +25,9 @@ public class SeatArea {
     public SeatArea() {
     }
 
-    public SeatArea(int seatId, Stand stand, BigDecimal price, int quantity, String createdBy, DateTimeFormatter createdDate, String updatedBy, DateTimeFormatter lastUpdatedDate) {
+    public SeatArea(int seatId, String seatName, Stand stand, BigDecimal price, int quantity, String createdBy, DateTimeFormatter createdDate, String updatedBy, DateTimeFormatter lastUpdatedDate) {
         this.seatId = seatId;
+        this.seatName = seatName;
         this.stand = stand;
         this.price = price;
         this.quantity = quantity;
@@ -34,6 +36,17 @@ public class SeatArea {
         this.updatedBy = updatedBy;
         this.lastUpdatedDate = lastUpdatedDate;
     }
+    
+    
+    public String getSeatName() {
+        return seatName;
+    }
+
+    public void setSeatName(String seatName) {
+        this.seatName = seatName;
+    }
+    
+    
 
     public int getSeatId() {
         return seatId;
