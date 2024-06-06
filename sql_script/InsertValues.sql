@@ -76,7 +76,12 @@ INSERT INTO Payment (email, ticketId, price) VALUES
 GO
 
 -- Insert values into News table
-INSERT INTO News (mainTitle, title, mainContent, content, [location], postTime, createdBy) VALUES
+INSERT INTO News (mainTitle, title, mainContent, content, createdBy) VALUES
 ('Main Title 1', 'Title 1', 'Main Content 1', 'Content 1', 'Location 1', '2024-06-01 10:00:00', 'admin@example.com'),
 ('Main Title 2', 'Title 2', 'Main Content 2', 'Content 2', 'Location 2', '2024-06-02 10:00:00', 'admin@example.com');
+GO
+INSERT INTO NewsImages (newsId, imageUrl) VALUES 
+(1, 'http://example.com/image1.jpg'),
+(1, 'http://example.com/image2.jpg'),
+(1, 'http://example.com/image3.jpg');
 GO

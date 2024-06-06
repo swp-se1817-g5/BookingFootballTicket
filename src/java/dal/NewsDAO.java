@@ -49,13 +49,13 @@ public class NewsDAO {
                 n.setTitle(rs.getString("title"));
                 n.setMainContent(rs.getString("mainContent"));
                 n.setContent(rs.getString("content"));
-                n.setLocation(rs.getString("location"));
-                n.setKickOff(rs.getTimestamp("kickOff") != null ? rs.getTimestamp("kickOff").toLocalDateTime() : null);
                 n.setCreateBy(rs.getString("createdBy"));
                 n.setCreatedDate(rs.getTimestamp("createdDate") != null ? rs.getTimestamp("createdDate").toLocalDateTime() : null);
                 n.setUpdateBy(rs.getString("updatedBy"));
                 n.setLastUpdateDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
+                n.setImage(rs.getString("image"));
                 n.setStatus(rs.getBoolean("status"));
+                n.setState(rs.getBoolean("state"));
                 n.setIsDeleted(rs.getBoolean("isDeleted"));
                 list.add(n);
             }
@@ -208,7 +208,7 @@ public class NewsDAO {
         }
         return null;
     }
-    public static void main(String[] args) {
-        System.out.println(NewsDAO.INSTANCE.getNewsByNewsId(5).toString());
-    }
+//    public static void main(String[] args) {
+//        System.out.println(NewsDAO.INSTANCE.getNewsByNewsId(5).toString());
+//    }
 }
