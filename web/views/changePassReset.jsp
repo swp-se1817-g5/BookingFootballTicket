@@ -105,15 +105,25 @@
         <script src='assets/vendors/switcher/switcher.js'></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-                                        var password = document.getElementById("password")
-                                                , confirm_password = document.getElementById("confirmPassword");
+                                        var regexPassword = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$';
 
-                                        document.getElementById('signupLogo').src = "https://s3-us-west-2.amazonaws.com/shipsy-public-assets/shipsy/SHIPSY_LOGO_BIRD_BLUE.png";
-                                        enableSubmitButton();
+                                        var password = document.getElementById("password"),
+                                                confirm_password = document.getElementById("confirmPassword");
 
                                         function validatePassword() {
-                                            if (password.value != confirm_password.value) {
-                                                confirm_password.setCustomValidity("Passwords Don't Match");
+                                            var passwordValue = password.value;
+                                            if (!new RegExp(regexPassword).test(passwordValue)) {
+                                                password.setCustomValidity("Password needs at least 8 characters, 1 lowercase character, 1 uppercase character, and 1 numeric character.");
+                                                return false;
+                                            } else {
+                                                password.setCustomValidity('');
+                                                return true;
+                                            }
+                                        }
+
+                                        function validateConfirmPassword() {
+                                            if (password.value !== confirm_password.value) {
+                                                confirm_password.setCustomValidity("Passwords must be same!");
                                                 return false;
                                             } else {
                                                 confirm_password.setCustomValidity('');
@@ -123,16 +133,6 @@
 
                                         password.onchange = validatePassword;
                                         confirm_password.onkeyup = validatePassword;
-
-                                        function enableSubmitButton() {
-                                            document.getElementById('submitButton').disabled = false;
-                                            document.getElementById('loader').style.display = 'none';
-                                        }
-
-                                        function disableSubmitButton() {
-                                            document.getElementById('submitButton').disabled = true;
-                                            document.getElementById('loader').style.display = 'unset';
-                                        }
 
                                         function validateSignupForm() {
                                             var form = document.getElementById('signupForm');
@@ -151,41 +151,49 @@
                                             onSignup();
                                         }
 
-                                        function onSignup() {
-                                            var xhttp = new XMLHttpRequest();
-                                            xhttp.onreadystatechange = function () {
-
-                                                disableSubmitButton();
-
-                                                if (this.readyState == 4 && this.status == 200) {
-                                                    enableSubmitButton();
-                                                } else {
-                                                    console.log('AJAX call failed!');
-                                                    setTimeout(function () {
-                                                        enableSubmitButton();
-                                                    }, 1000);
-                                                }
-
-                                            };
-
-                                            xhttp.open("GET", "ajax_info.txt", true);
-                                            xhttp.send();
-                                        }
+//                                        function onSignup() {
+//                                            var xhttp = new XMLHttpRequest();
+//                                            xhttp.onreadystatechange = function () {
+//
+//                                                disableSubmitButton();
+//
+//                                                if (this.readyState == 4 && this.status == 200) {
+//                                                    enableSubmitButton();
+//                                                } else {
+//                                                    console.log('AJAX call failed!');
+//                                                    setTimeout(function () {
+//                                                        enableSubmitButton();
+//                                                    }, 1000);
+//                                                }
+//
+//                                            };
+//
+//                                            xhttp.open("GET", "ajax_info.txt", true);
+//                                            xhttp.send();
+//                                        }
         </script>
         <%
-        String message = (String) request.getAttribute("mess"); 
-        if (message != null) { 
-    %>
-    <script>
-        Swal.fire({
-            title: "Reset Password",
-            text: "<%= message %>",
-            icon: "success"
-        });
-    </script>
-    <%
-        } 
-    %>
-</body>
+           String mess = (String) request.getAttribute("mess");
+           if(mess != null) {
+        %>  
+        <script type="text/javascript">
+            window.onload = function () {
+                var message = '<%= mess != null ? mess.replace("'", "\\'") : "" %>';
+                showLoginPopup(message);
+            }
+        </script>
+        <%
+          }
+        %>
+
+        <script type="text/javascript">
+            function showLoginPopup(mess) {
+                Swal.fire({
+                    title: mess,
+                    icon: 'error'
+                });
+            }
+        </script>
+    </body>
 
 </html>

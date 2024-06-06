@@ -2,6 +2,7 @@
 <html lang="en">
 
     <head>
+
         <!-- META ============================================= -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,7 +24,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
 
         <!-- PAGE TITLE HERE ============================================= -->
-        <title>Forget Password </title>
+        <title>Change Password </title>
 
         <!-- MOBILE SPECIFIC ============================================= -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,22 +57,37 @@
                 <div class="account-form-inner">
                     <div class="account-container">
                         <div class="heading-bx left">
-                            <h2 class="title-head">Forget <span>Password</span></h2>
-                            <p>Login Your Account <a href="http://localhost:8080/BookingFootballTicket/login">Click here</a></p>
+                            <h2 class="title-head">Change <span>Password</span></h2>
                         </div>
 
-                        <form action="sendmail" method="post" class="contact-bx">
+                        <form action="changepass" method="post" class="contact-bx">
                             <div class="row placeani">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your Email Address</label>
-                                            <input name="emailInputReset" type="text" required="" class="form-control">
+                                            <label>Old Password</label>
+                                            <input name="oldpassword" type="password" id="oldpassword" required="" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label>New Password</label>
+                                            <input name="password" type="password" id="password" required="" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label>Confirm Password</label>
+                                            <input name="confirmPassword" type="password" id="confirmPassword" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-b30">
-                                    <button name="submit" type="submit" onclick="return validateEmail();" value="Submit" class="btn button-md">Submit</button>
+                                    <button name="submit" type="submit" onclick="validateSignupForm()" value="Submit" class="btn button-md">Submit</button>
                                 </div>
                             </div>
                         </form>
@@ -97,16 +113,72 @@
         <script src='assets/vendors/switcher/switcher.js'></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-                                        function validateEmail() {
-                                            var email = document.querySelector('input[name="emailInputReset"]').value;
-                                            var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-                                            if (!emailRegex.test(email)) {
-                                                showErrorPopup("Please enter a valid email addres!");
+                                        var regexPassword = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$';
+
+                                        var password = document.getElementById("password"),
+                                                confirm_password = document.getElementById("confirmPassword");
+
+                                        function validatePassword() {
+                                            var passwordValue = password.value;
+                                            if (!new RegExp(regexPassword).test(passwordValue)) {
+                                                password.setCustomValidity("Password needs at least 8 characters, 1 lowercase character, 1 uppercase character, and 1 numeric character.");
                                                 return false;
+                                            } else {
+                                                password.setCustomValidity('');
+                                                return true;
                                             }
-                                            return true;
                                         }
 
+                                        function validateConfirmPassword() {
+                                            if (password.value !== confirm_password.value) {
+                                                confirm_password.setCustomValidity("Passwords must be same!");
+                                                return false;
+                                            } else {
+                                                confirm_password.setCustomValidity('');
+                                                return true;
+                                            }
+                                        }
+
+                                        password.onchange = validatePassword;
+                                        confirm_password.onkeyup = validatePassword;
+
+                                        function validateSignupForm() {
+                                            var form = document.getElementById('signupForm');
+
+                                            for (var i = 0; i < form.elements.length; i++) {
+                                                if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')) {
+                                                    console.log('There are some required fields!');
+                                                    return false;
+                                                }
+                                            }
+
+                                            if (!validatePassword()) {
+                                                return false;
+                                            }
+
+                                            onSignup();
+                                        }
+
+//                                        function onSignup() {
+//                                            var xhttp = new XMLHttpRequest();
+//                                            xhttp.onreadystatechange = function () {
+//
+//                                                disableSubmitButton();
+//
+//                                                if (this.readyState == 4 && this.status == 200) {
+//                                                    enableSubmitButton();
+//                                                } else {
+//                                                    console.log('AJAX call failed!');
+//                                                    setTimeout(function () {
+//                                                        enableSubmitButton();
+//                                                    }, 1000);
+//                                                }
+//
+//                                            };
+//
+//                                            xhttp.open("GET", "ajax_info.txt", true);
+//                                            xhttp.send();
+//                                        }
         </script>
         <%
     String mess = (String) request.getAttribute("mess");
@@ -143,8 +215,6 @@
                 });
             }
         </script>
-
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 
 </html>

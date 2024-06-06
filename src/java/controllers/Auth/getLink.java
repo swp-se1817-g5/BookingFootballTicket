@@ -42,7 +42,6 @@ public class getLink {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-
         return isSent;
     }
 
