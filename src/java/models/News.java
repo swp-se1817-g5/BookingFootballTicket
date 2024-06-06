@@ -22,8 +22,7 @@ public class News {
     private LocalDateTime createdDate;
     private String updateBy;
     private LocalDateTime lastUpdateDate;
-    private String image;
-    private boolean status;
+    private int status;
     private boolean state;
     private boolean isDeleted;
 
@@ -32,14 +31,12 @@ public class News {
     public News() {
     }
 
-    public News(String mainTitle, String title, String mainContent, String content, String createBy, String updateBy, String image, boolean status, boolean state, String deletedBy) {
+    public News(String mainTitle, String title, String mainContent, String content, String createBy,int status, boolean state) {
         this.mainTitle = mainTitle;
         this.title = title;
         this.mainContent = mainContent;
         this.content = content;
         this.createBy = createBy;
-        this.updateBy = updateBy;
-        this.image = image;
         this.status = status;
         this.state = state;
     }
@@ -116,19 +113,11 @@ public class News {
         this.createBy = createBy;
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public boolean isStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -150,7 +139,7 @@ public class News {
 
     @Override
     public String toString() {
-        return "News{" + "newsId=" + newsId + ", mainTitle=" + mainTitle + ", title=" + title + ", mainContent=" + mainContent + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", image=" + image + ", status=" + status + ", state=" + state + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
+        return "News{" + "newsId=" + newsId + ", mainTitle=" + mainTitle + ", title=" + title + ", mainContent=" + mainContent + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", status=" + status + ", state=" + state + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
     }
 
 }

@@ -81,7 +81,6 @@ public class CreateNewNewsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 //        PrintWriter out = response.getWriter();
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         HttpSession session = request.getSession();
 //        out.print(userName);
         try {
@@ -90,20 +89,13 @@ public class CreateNewNewsServlet extends HttpServlet {
             String title = request.getParameter("title");
             String mainContent = request.getParameter("mainContent");
             String content = request.getParameter("content");
-            String location = request.getParameter("location");
-            String kickOff_raw = request.getParameter("kickOff");
-            LocalDateTime kickOff;
-            try {
-                kickOff = LocalDateTime.parse(kickOff_raw, formatter);
-            } catch (DateTimeParseException e) {
-                throw new IllegalArgumentException("Invalid date time format", e);
+            int status = 1;
+            int state_raw = Integer.parseInt(request.getParameter("state"));
+            boolean state = false;
+            if (state_raw == 1) {
+                state = true;
             }
-            int status_raw = Integer.parseInt(request.getParameter("status"));
-            boolean status = false;
-            if (status_raw == 2) {
-                status = true;
-            }
-            News news = new News(mainTitle, title, mainContent, content, location, kickOff, createdBy_raw.getUserName(), status);
+            News news = new News(mainTitle, title, mainContent, content, createdBy_raw.getEmail(), status, state);
             int created = NewsDAO.INSTANCE.createNews(news);
 //        out.print(created);
             if (created != 0) {

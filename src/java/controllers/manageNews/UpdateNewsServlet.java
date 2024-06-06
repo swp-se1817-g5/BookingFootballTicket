@@ -78,7 +78,7 @@ public class UpdateNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         try {
             int newsId = Integer.parseInt(request.getParameter("newsId"));
@@ -86,35 +86,26 @@ public class UpdateNewsServlet extends HttpServlet {
             String title = request.getParameter("title");
             String mainContent = request.getParameter("mainContent");
             String content = request.getParameter("content");
-            String location = request.getParameter("location");
-            String kickOff_raw = request.getParameter("kickOff");
-            LocalDateTime kickOff;
-            try {
-                kickOff = LocalDateTime.parse(kickOff_raw, formatter);
-            } catch (DateTimeParseException e) {
-                throw new IllegalArgumentException("Invalid date time format", e);
-            }
-            boolean status = false;
-            int status_raw = Integer.parseInt(request.getParameter("status"));
-            if (status_raw == 1) {
-                status = true;
+            int state_raw = Integer.parseInt(request.getParameter("state"));
+            boolean state = false;
+            int status = Integer.parseInt(request.getParameter("status"));
+            if (state_raw == 1) {
+                state = true;
             }
             News news = NewsDAO.INSTANCE.getNewsByNewsId(newsId);
             news.setMainTitle(mainTitle);
             news.setTitle(title);
             news.setMainContent(mainContent);
             news.setContent(content);
-            news.setLocation(location);
-            news.setKickOff(kickOff);
             news.setStatus(status);
+            news.setState(state);
             news.setNewsId(newsId);
-            User createdBy_raw = (User)session.getAttribute("currentUser");
-            news.setUpdateBy(createdBy_raw.getUserName());
+            User createdBy_raw = (User) session.getAttribute("currentUser");
+            news.setUpdateBy(createdBy_raw.getEmail());
             session.setAttribute("updated", NewsDAO.INSTANCE.updateNews(news));
         } catch (IllegalArgumentException e) {
         }
 
-        
         response.sendRedirect("manageNews");
     }
 
