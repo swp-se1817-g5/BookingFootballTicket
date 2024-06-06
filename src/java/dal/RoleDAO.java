@@ -41,7 +41,7 @@ public class RoleDAO {
         try {
             String sql = "SELECT [roleId]\n"
                     + "      ,[roleName]\n"
-                    + "  FROM [dbo].[Role] WHERE [isDeleted] = 0 ";
+                    + "  FROM [dbo].[Role]";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -60,39 +60,26 @@ public class RoleDAO {
         Role role = new Role();
         String sql = "SELECT [roleId]\n"
                 + "      ,[roleName]\n"
-                + "      ,[createdBy]\n"
-                + "      ,[createdDate]\n"
-                + "      ,[updatedBy]\n"
-                + "      ,[lastUpdatedDate]\n"
-                + "  FROM [dbo].[Role] WHERE [roleId] = ? AND [isDeleted] = 0";
+                + "  FROM [dbo].[Role] WHERE [roleId] = ?";
         try {
             ps = con.prepareStatement(sql);
             ps.setInt(1, roleID);
             rs = ps.executeQuery();
             role.setRoleId(roleID);
             role.setRoleName(rs.getString(2));
-            role.setCreateBy(rs.getString(3));
-            role.setCreatedDate(rs.getTimestamp(4).toLocalDateTime());
-            role.setUpdatedBy(rs.getString(5));
-            Timestamp updatedTimestamp = rs.getTimestamp(6);
-            role.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
         } catch (SQLException e) {
+            e.printStackTrace();
         }
         return role;
     }
 
     public void createRole(Role role) {
         String sql = "INSERT INTO [dbo].[Role] "
-                + "([roleName], [createdBy],[updatedBy]\n"
-                + "      ,[lastUpdatedDate],[isDeleted]) "
-                + "VALUES (?, ?, ? , ? , ? )";
+                + "([roleName] "
+                + "VALUES (? )";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, role.getRoleName());
-            ps.setString(2, role.getCreateBy());
-            ps.setString(3, null);
-            ps.setString(4, null);
-            ps.setBoolean(5, false);
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,22 +89,19 @@ public class RoleDAO {
     public void updateRole(Role role) {
         String sql = "UPDATE [dbo].[Role]\n"
                 + "   SET [roleName] = ?\n"
-                + "      ,[updatedBy] = ?\n"
-                + "      ,[lastUpdatedDate] = ?\n"
                 + " WHERE [roleId] = ?";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, role.getRoleName());
-            ps.setString(2, "admin");
-            ps.setDate(3, java.sql.Date.valueOf(role.getLastUpdatedDate()));
-
+            ps.setInt(2,role.getRoleId() );
         } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     public ArrayList<Role> getRoles(int offset, int noOfRecords) {
         ArrayList<Role> roles = new ArrayList<>();
-        String query = "SELECT * FROM [dbo].[Role] WHERE [isDeleted] = 0 ORDER BY roleId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String query = "SELECT * FROM [dbo].[Role] ORDER BY roleId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, offset);
@@ -127,11 +111,6 @@ public class RoleDAO {
                     Role r = new Role();
                     r.setRoleId(rs.getInt(1));
                     r.setRoleName(rs.getString(2));
-                    r.setCreateBy(rs.getString(3));
-                    r.setCreatedDate(rs.getTimestamp(4).toLocalDateTime());
-                    r.setUpdatedBy(rs.getString(5));
-                    Timestamp updatedTimestamp = rs.getTimestamp(6);
-                    r.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
                     roles.add(r);
                 }
             }
@@ -156,7 +135,7 @@ public class RoleDAO {
     public static void main(String[] args) {
 //        Role role = new Role("customer","admin");
 //        RoleDAO.INSTANCE.insertRole(role);
-        ArrayList<Role> roles = RoleDAO.INSTANCE.getRoles(1, 5);
+        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
         for (Role role : roles) {
             System.out.println(role.toString());
         }

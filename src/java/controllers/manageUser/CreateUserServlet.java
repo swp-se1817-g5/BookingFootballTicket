@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.User;
@@ -75,17 +76,25 @@ public class CreateUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
         String email = request.getParameter("email");
+        String name = request.getParameter("name");
+        String password = request.getParameter("password");
         String phoneNumber = request.getParameter("phoneNumber");
         String avatar = request.getParameter("avatar");
-        String name = request.getParameter("name");
 
-        if (!userName.isBlank() && !password.isBlank() && !email.isBlank() && !phoneNumber.isBlank() && !name.isBlank()) {
+        if (!email.isBlank() && !name.isBlank() && !password.isBlank() && !phoneNumber.isBlank()) {
             try {
-                User user = new User(userName, password, email, phoneNumber, avatar, name);
+                // Set additional fields
+                int roleId = 2; // Assuming a default role ID, adjust as necessary
+                String createdBy = "admin"; // Adjust as necessary
+                boolean isDeleted = false;
+
+                // Create the User object
+                User user = new User(email, name, roleId, password, phoneNumber, avatar, createdBy, LocalDateTime.now(), isDeleted);
+
+                // Save the user
                 boolean added = UserDAO.getINSTANCE().createUser(user);
+
                 if (added) {
                     response.sendRedirect(request.getContextPath() + "/manageUser?message=User+created+successfully!");
                     return;
