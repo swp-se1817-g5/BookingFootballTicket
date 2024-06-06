@@ -11,8 +11,8 @@ GO
 -- Insert values into User table
 INSERT INTO [User] (email, [name], roleId, [hashedPassword], phoneNumber, avatar, createdBy) VALUES
 ('admin@example.com', 'Admin User', 1, 'hashed_password_admin', '1234567890', 'Images/avatar/avatar1.jpg', 'admin@example.com'),
-('user1@example.com', 'User One', 2, 'hashed_password_user1', '0987654321', 'Images/avatar/avatar2.jpg', 'admin@example.com'),
-('user2@example.com', 'User Two', 2, 'hashed_password_user2', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com');
+('user1@example.com', 'User ', 2, 'hashed_password_user1', '0987654321', 'Images/avatar/avatar2.jpg', 'admin@example.com'),
+('user2@example.com', 'Staff', 3, 'hashed_password_user2', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com');
 GO
 
 -- Insert values into FootballClub table
@@ -76,7 +76,13 @@ INSERT INTO Payment (email, ticketId, price) VALUES
 GO
 
 -- Insert values into News table
-INSERT INTO News (mainTitle, title, mainContent, content, [location], postTime, createdBy) VALUES
-('Main Title 1', 'Title 1', 'Main Content 1', 'Content 1', 'Location 1', '2024-06-01 10:00:00', 'admin@example.com'),
-('Main Title 2', 'Title 2', 'Main Content 2', 'Content 2', 'Location 2', '2024-06-02 10:00:00', 'admin@example.com');
+INSERT INTO News (mainTitle, title, mainContent, content, createdBy) VALUES
+('Main Title 1', 'Title 1', 'Main Content 1', 'Content 1', 'admin@example.com'),
+('Main Title 2', 'Title 2', 'Main Content 2', 'Content 2', 'admin@example.com');
+GO
+-- Insert values into NewsImages table
+INSERT INTO NewsImages (NewsId, imageUrl) VALUES 
+(1,'http://example.com/image1.jpg'),
+(1,'http://example.com/image2.jpg'),
+(1,'http://example.com/image3.jpg');
 GO

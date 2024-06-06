@@ -12,9 +12,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.News;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.sql.Timestamp;
 
 /**
  *
@@ -49,14 +46,12 @@ public class NewsDAO {
                 n.setTitle(rs.getString("title"));
                 n.setMainContent(rs.getString("mainContent"));
                 n.setContent(rs.getString("content"));
-                n.setLocation(rs.getString("location"));
-                n.setKickOff(rs.getTimestamp("kickOff") != null ? rs.getTimestamp("kickOff").toLocalDateTime() : null);
                 n.setCreateBy(rs.getString("createdBy"));
                 n.setCreatedDate(rs.getTimestamp("createdDate") != null ? rs.getTimestamp("createdDate").toLocalDateTime() : null);
                 n.setUpdateBy(rs.getString("updatedBy"));
                 n.setLastUpdateDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
-                n.setStatus(rs.getBoolean("status"));
-                n.setIsDeleted(rs.getBoolean("isDeleted"));
+                n.setStatus(rs.getInt("status"));
+                n.setState(rs.getBoolean("state"));
                 list.add(n);
             }
         } catch (SQLException ex) {
@@ -64,6 +59,9 @@ public class NewsDAO {
         }
         return list;
     }
+//    public static void main(String[] args) {
+//        System.out.println(NewsDAO.INSTANCE.getlistNews().toString());
+//    }
 //Search by 
 
     public ArrayList<News> search(String value) {
@@ -73,8 +71,6 @@ public class NewsDAO {
                 + "    title LIKE '%" + value + "%' OR\n"
                 + "    mainContent LIKE '%" + value + "%' OR\n"
                 + "    content LIKE '%" + value + "%' OR\n"
-                + "    Location LIKE '%" + value + "%' OR\n"
-                + "    kickOff LIKE '%" + value + "%' OR\n"
                 + "    createdBy LIKE '%" + value + "%' OR\n"
                 + "    updatedBy LIKE '%" + value + "%'";
 
@@ -88,14 +84,10 @@ public class NewsDAO {
                 n.setTitle(rs.getString("title"));
                 n.setMainContent(rs.getString("mainContent"));
                 n.setContent(rs.getString("content"));
-                n.setLocation(rs.getString("location"));
-                n.setKickOff(rs.getTimestamp("kickOff") != null ? rs.getTimestamp("kickOff").toLocalDateTime() : null);
                 n.setCreateBy(rs.getString("createdBy"));
                 n.setCreatedDate(rs.getTimestamp("createdDate") != null ? rs.getTimestamp("createdDate").toLocalDateTime() : null);
                 n.setUpdateBy(rs.getString("updatedBy"));
                 n.setLastUpdateDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
-                n.setStatus(rs.getBoolean("status"));
-                n.setIsDeleted(rs.getBoolean("isDeleted"));
                 list.add(n);
             }
         } catch (SQLException ex) {
@@ -113,41 +105,33 @@ public class NewsDAO {
 //  Create a news
     public int createNews(News n) {
         int i = 0;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        LocalDateTime localDateTime = LocalDateTime.parse(n.getKickOff(), formatter);
-        Timestamp timestamp = Timestamp.valueOf(localDateTime);
-        String sql = "INSERT INTO [News] ([mainTitle],[title],[mainContent],[content],[location],[kickOff],[createdBy],[status]) VALUES(?,?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO [News] ([mainTitle],[title],[mainContent],[content],[status],[state],[createdBy]) VALUES(?,?,?,?,?,?,?)";
         try {
             ps = connect.prepareStatement(sql);
             ps.setString(1, n.getMainTitle());
             ps.setString(2, n.getTitle());
             ps.setString(3, n.getMainContent());
             ps.setString(4, n.getContent());
-            ps.setString(5, n.getlocation());
-            ps.setTimestamp(6, timestamp);
+            ps.setInt(5, n.getStatus());
+            ps.setBoolean(6, n.isState());
             ps.setString(7, n.getCreateBy());
-            ps.setInt(8, n.isStatus() ? 1 : 0);
             i = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return i;
     }
-    
+
 // Update news
     public int updateNews(News n) {
         int m = 0;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        LocalDateTime localDateTime = LocalDateTime.parse(n.getKickOff(), formatter);
-        Timestamp timestamp = Timestamp.valueOf(localDateTime);
         String sql = "UPDATE [News]"
                 + "   SET [mainTitle] = ?"
                 + "      ,[title] = ?"
                 + "      ,[mainContent] = ?"
                 + "      ,[content] = ?"
-                + "      ,[location] = ?"
-                + "      ,[kickOff] = ?"
                 + "      ,[status] = ?"
+                + "      ,[state] = ?"
                 + "      ,[updatedBy] = ?"
                 + " WHERE newsId =?";
         try {
@@ -156,11 +140,10 @@ public class NewsDAO {
             ps.setString(2, n.getTitle());
             ps.setString(3, n.getMainContent());
             ps.setString(4, n.getContent());
-            ps.setString(5, n.getlocation());
-            ps.setTimestamp(6, timestamp);
-            ps.setInt(7, n.isStatus() ? 1 : 0);
-            ps.setString(8, n.getUpdateBy());
-            ps.setInt(9, n.getNewsId());
+            ps.setInt(5, n.getStatus());
+            ps.setBoolean(6, n.isState());
+            ps.setString(7, n.getUpdateBy());
+            ps.setInt(8, n.getNewsId());
             m = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -185,6 +168,7 @@ public class NewsDAO {
         return i;
     }
 // Get list all of news
+
     public News getNewsByNewsId(int newsId) {
         String sql = "SELECT * FROM News n WHERE n.newsId =? AND isDeleted = 0";
         try {
@@ -194,13 +178,16 @@ public class NewsDAO {
             while (rs.next()) {
                 News n = new News();
                 n.setNewsId(rs.getInt("newsId"));
+                n.setMainTitle(rs.getString("mainTitle"));
                 n.setTitle(rs.getString("title"));
+                n.setMainContent(rs.getString("mainContent"));
                 n.setContent(rs.getString("content"));
                 n.setCreateBy(rs.getString("createdBy"));
                 n.setCreatedDate(rs.getTimestamp("createdDate") != null ? rs.getTimestamp("createdDate").toLocalDateTime() : null);
                 n.setUpdateBy(rs.getString("updatedBy"));
                 n.setLastUpdateDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
-                n.setStatus(rs.getBoolean("status"));
+                n.setStatus(rs.getInt("status"));
+                n.setState(rs.getBoolean("state"));
                 return n;
             }
         } catch (SQLException ex) {
@@ -209,6 +196,6 @@ public class NewsDAO {
         return null;
     }
     public static void main(String[] args) {
-        System.out.println(NewsDAO.INSTANCE.getNewsByNewsId(5).toString());
+        System.out.println(NewsDAO.INSTANCE.getNewsByNewsId(1).toString());
     }
 }
