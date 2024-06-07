@@ -4,6 +4,7 @@
  */
 package controllers.manageUser;
 
+import com.google.gson.JsonObject;
 import dal.RoleDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -96,7 +97,92 @@ public class ManageUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        int page = 1;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+            if (page < 1) {
+                page = 1;
+            }
+        }
+        int roleId = 0;
+        String roleIdParam = request.getParameter("roleId");
+        if (roleIdParam != null && !roleIdParam.isEmpty()) {
+            try {
+                roleId = Integer.parseInt(roleIdParam);
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
+        ArrayList<User> users;
+        int noOfRecords;
+        int noOfPages;
+        if (roleId == 0) {
+            users = UserDAO.getINSTANCE().getUsers((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
+            noOfRecords = UserDAO.getINSTANCE().getNoOfRecords();
+            noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
+        } else {
+            users = UserDAO.getINSTANCE().getUsersByRoleId(roleId, 0, RECORDS_PER_PAGE); // Không cần phân trang ở đây
+            noOfRecords = UserDAO.getINSTANCE().getNoOfRecordsByRoleId(roleId);
+            noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
+        }
+        // Build HTML response
+        StringBuilder htmlResponse = new StringBuilder();
+        for (User user : users) {
+            String roleName = getRoleName(user.getRoleId());
+            htmlResponse.append("<tr>");
+            htmlResponse.append("<td>").append(user.getEmail()).append("</td>");
+            htmlResponse.append("<td>").append(user.getName()).append("</td>");
+            htmlResponse.append("<td>").append(roleName).append("</td>");
+            htmlResponse.append("<td>").append(user.getPhoneNumber()).append("</td>");
+            htmlResponse.append("<td>").append(user.getAvatar()).append("</td>");
+            htmlResponse.append("<td>");
+            htmlResponse.append("<a href=\"#\" class=\"view\" title=\"View\" data-toggle=\"modal\"><i class=\"material-icons\">&#xE417;</i></a>");
+            htmlResponse.append("<a href=\"editUser.jsp?email=").append(user.getEmail()).append("\" class=\"edit\" title=\"Edit\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE254;</i></a>");
+            htmlResponse.append("<a href=\"deleteUser?email=").append(user.getEmail()).append("\" class=\"delete\" title=\"Delete\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE872;</i></a>");
+            htmlResponse.append("</td>");
+            htmlResponse.append("</tr>");
+            htmlResponse.append("</tr>");
+        }
+        /// Build pagination HTML
+        StringBuilder pagination = new StringBuilder();
+        pagination.append("<ul class='pagination'>");
+        if (page > 1) {
+            pagination.append("<li class='page-item'><a href='#' data-page='1' class='page-link'>First</a></li>");
+            pagination.append("<li class='page-item'><a href='#' data-page='" + (page - 1) + "' class='page-link'>Previous</a></li>");
+        }
+        for (int i = 1; i <= noOfPages; i++) {
+            if (i == page) {
+                pagination.append("<li class='page-item active'><a href='#' data-page='" + i + "' class='page-link'>" + i + "</a></li>");
+            } else {
+                pagination.append("<li class='page-item'><a href='#' data-page='" + i + "' class='page-link'>" + i + "</a></li>");
+            }
+        }
+        if (page < noOfPages) {
+            pagination.append("<li class='page-item'><a href='#' data-page='" + (page + 1) + "' class='page-link'>Next</a></li>");
+            pagination.append("<li class='page-item'><a href='#' data-page='" + noOfPages + "' class='page-link'>Last</a></li>");
+        }
+        pagination.append("</ul>");
+        response.setContentType("application/json");
+        JsonObject jsonResponse = new JsonObject();
+        jsonResponse.addProperty("html", htmlResponse.toString());
+        jsonResponse.addProperty("pagination", pagination.toString());
+        jsonResponse.addProperty("usersCount", users.size()); // Số lượng người dùng trong trang hiện tại
+        PrintWriter out = response.getWriter();
+        out.println(jsonResponse.toString());
+        out.close();
+    }
+
+    private String getRoleName(int roleId) {
+        String roleName = "";
+        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
+        for (Role role : roles) {
+            if (role.getRoleId() == roleId) {
+                roleName = role.getRoleName();
+                break;
+            }
+        }
+        return roleName;
     }
 
     /**

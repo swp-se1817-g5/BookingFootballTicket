@@ -511,6 +511,90 @@ public class UserDAO {
         return new ArrayList<>(users.subList(start, end));
     }
 
+    public ArrayList<User> searchUsers(String email, String name, String phoneNumber, int roleId) {
+        ArrayList<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM [User] WHERE isDeleted = 0";
+        sql += " AND email LIKE ?";
+        sql += " AND name LIKE ?";
+        sql += " AND roleId = ?";
+        sql += " AND phoneNumber LIKE ?";
+        String Email = (email != null) ? email : "";
+        String Name = (name != null) ? name : "";
+        String PhoneNumber = (phoneNumber != null) ? phoneNumber : "";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + Email + "%");
+            ps.setString(2, "%" + Name + "%");
+            ps.setInt(3, roleId);
+            ps.setString(4, "%" + PhoneNumber + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                User u = new User();
+                u.setEmail(rs.getString(1));
+                u.setName(rs.getString(2));
+                u.setRoleId(rs.getInt(3));
+                u.setHashedPassword(rs.getString(4));
+                u.setPhoneNumber(rs.getString(5));
+                u.setAvatar(rs.getString(6));
+                u.setCreatedBy(rs.getString(7));
+                u.setCreatedDate(rs.getTimestamp(8).toLocalDateTime());
+                u.setUpdatedBy(rs.getString(9));
+                Timestamp updatedTimestamp = rs.getTimestamp(10);
+                u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+                users.add(u);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public ArrayList<User> getUsersByRoleId(int roleId, int offset, int noOfRecords) {
+        ArrayList<User> users = new ArrayList<>();
+        String query = "SELECT * FROM [User] WHERE [roleId] = ? AND [isDeleted] = 0 ORDER BY email OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, roleId);
+            ps.setInt(2, offset);
+            ps.setInt(3, noOfRecords);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    User u = new User();
+                    u.setEmail(rs.getString(1));
+                    u.setName(rs.getString(2));
+                    u.setRoleId(rs.getInt(3));
+                    u.setHashedPassword(rs.getString(4));
+                    u.setPhoneNumber(rs.getString(5));
+                    u.setAvatar(rs.getString(6));
+                    u.setCreatedBy(rs.getString(7));
+                    u.setCreatedDate(rs.getTimestamp(8).toLocalDateTime());
+                    u.setUpdatedBy(rs.getString(9));
+                    Timestamp updatedTimestamp = rs.getTimestamp(10);
+                    u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+                    users.add(u);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public int getNoOfRecordsByRoleId(int roleId) {
+        String query = "SELECT COUNT(*) FROM [User] WHERE [roleId] = ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, roleId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
 //        User u = new User("VINH", "123", "vinh123@gmail.com", "012345678910", "", "Vin");
 //        try {
@@ -518,12 +602,12 @@ public class UserDAO {
 //        } catch (SQLException ex) {
 //            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-//          ArrayList<User> users = UserDAO.INSTANCE.getallUser();
-//          System.out.println(users.toString());
+        ArrayList<User> users = UserDAO.INSTANCE.searchUsers(null, "user", null, 1);
+        System.out.println(users.toString());
 //        User u = UserDAO.INSTANCE.getUserbyID("1");
 //        System.out.println(u);
 //        UserDAO.INSTANCE.updateUser(u);
-        System.out.println(UserDAO.INSTANCE.getUsers(0, 10));
+//        System.out.println(UserDAO.INSTANCE.getUsers(0, 10));
     }
 
 }

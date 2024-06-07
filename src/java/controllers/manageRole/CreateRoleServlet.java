@@ -75,7 +75,7 @@ public class CreateRoleServlet extends HttpServlet {
             throws ServletException, IOException {
         String roleName = request.getParameter("roleName");
         if (roleName != null && !roleName.isBlank()) {
-            Role role = new Role(roleName, "admin");
+            Role role = new Role(roleName);
             RoleDAO.getINSTANCE().createRole(role);
             response.sendRedirect(request.getContextPath() + "/manageRole?message=Role+created+successfully!");
         } else {

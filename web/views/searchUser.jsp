@@ -202,6 +202,20 @@
             table.table tbody tr:hover {
                 background-color: #f2f2f2;
             }
+            .btn-custom {
+                background-color: #007bff; /* Màu nền */
+                color: white; /* Màu chữ */
+                border: none; /* Bỏ viền */
+                padding: 10px 20px; /* Khoảng cách bên trong */
+                font-size: 16px; /* Kích thước chữ */
+                cursor: pointer; /* Con trỏ */
+                border-radius: 5px; /* Bo góc */
+                transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+            }
+
+            .btn-custom:hover {
+                background-color: #0056b3; /* Màu nền khi hover */
+            }
         </style>
     </head>
     <body>
@@ -274,8 +288,8 @@
                                 <div class="row">
                                     <div class="col-sm-4"><h2>Manage <b>User</b></h2></div>
 
-                                    <div class="col-sm-4 ">
-                                        <div class="col-sm-8 text-right"><input type="button" value="Back" onclick="window.location.href = 'manageUser'"></div>
+                                    <div class="col-sm-8 text-right">
+                                        <input type="button" class="btn btn-custom" value="Back" onclick="window.location.href = 'manageUser'">
                                     </div>
                                 </div>
                             </div>
@@ -289,45 +303,32 @@
                                 <table id="userTable" class="table table-striped table-hover table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>
-                                                User ID
-                                            </th>
-                                            <th>User Name</th>
-                                            <th>Role Name</th>
                                             <th>Email</th>
+                                            <th>Name</th>
+                                            <th>Role</th>
                                             <th>Phone Number</th>
                                             <th>Avatar<i class="fa "></i></th>
-                                            <th>Name</th>
-                                            <th>Created By<i class="fa "></i></th>
-                                            <th>Created Date</th>
-                                            <th>Last Updated By<i class="fa "></i></th>
-                                            <th>Last Updated Date<i class="fa "></i></th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <c:forEach items="${requestScope.users}" var="o">
                                             <tr>
-                                                <td>${o.userId}</td>
-                                                <td>${o.userName}</td>
+                                                <td>${o.email}</td>
+                                                <td>${o.name}</td>
                                                 <c:forEach items="${requestScope.roles}" var="r">
                                                     <c:if test="${r.roleId eq o.roleId}">
                                                         <td>${r.roleName}</td>
                                                     </c:if>
                                                 </c:forEach>
-                                                <td>${o.email}</td>
                                                 <td>${o.phoneNumber}</td>
                                                 <td><img src="${o.avatar}" alt="Avatar" style="max-width: 100px; max-height: 100px;"></td>
-                                                <td>${o.name}</td>
-                                                <td>${o.createdBy}</td>
-                                                <td>${o.createdDate}</td>
-                                                <td>${o.updatedBy}</td>
-                                                <td>${o.lastUpdatedDate}</td>
                                                 <td>
-                                                    <a href="editUser.jsp?userId=${o.userId}" class="edit" title="Edit" data-toggle="tooltip">
+                                                    <a href="#" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
+                                                    <a href="editUser.jsp?email=${o.email}" class="edit" title="Edit" data-toggle="tooltip">
                                                         <i class="material-icons">&#xE254;</i>
                                                     </a>
-                                                    <a href="deleteUser?userId=${o.userId}" class="delete" title="Delete" data-toggle="tooltip">
+                                                    <a href="deleteUser?email=${o.email}" class="delete" title="Delete" data-toggle="tooltip">
                                                         <i class="material-icons">&#xE872;</i>
                                                     </a>
                                                 </td>
