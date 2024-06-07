@@ -1261,270 +1261,244 @@
                                 <div class="label">Stadium Map</div>
                             </div>
                             <div class="stadium-map">
-                                <svg viewBox="0 0 555.9 484.7" class="filter category-1 category-3">
-                                <image width="250" height="250" data-tags="kat--1,kat-1" src="./assets/images/stand.png" transform="translate(151 113)"></image>
-                                <path d="M59.2 149.2 29.8 144c1-18.3 8.1-30 8.1-30l26.7 12.2-5.4 23z" data-block="312" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="M65.6 123.3 39 110.9c4.1-13.6 15.3-26.4 15.3-26.4l23.3 18.2-12 20.6z" data-block="311" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="M97 83.7s-14.2 9.7-18.2 16.8L55.7 82.3c7.8-13.2 22.7-21.8 22.7-21.8L97 83.7z" data-block="310" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m118.7 69.3-19.9 13-18.2-23c11.5-12.1 26.3-16 26.3-16l11.8 26z" data-block="309" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m143.8 62.2-23 6.5-11.2-26.6c9.9-7.9 29.9-9.6 29.9-9.6l4.3 29.7z" data-block="308" data-section="central-upper-longside" data-tags="category-2,kat--2"></path>
-                                <path d="M108.9 436.5c-26.6-9.8-27.8-16.2-27.8-16.2l18-22.8 21.9 12-12.1 27z" data-block="322" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="M141.8 446.4s-18-.4-31.8-9l13.2-27.9 14.8 5.8 7.9-.2-4.1 31.3z" data-block="323" data-section="category-2" data-tags="kat--3,shortside-upper-tier"></path>
-                                <path d="M439.8 437.6s-8.1 7.7-29.4 8.2l-4.3-29.4 22.8-5.1 10.9 26.3z" data-block="332" data-section="category-2" data-tags="kat--3,shortside-upper-tier"></path>
-                                <path d="M469.7 420.7s-9.9 11.2-26.8 15.9l-11.7-26.5 21-12.7 17.5 23.3z" data-block="333" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m513.9 364.5-26.5-11.8 4.9-22.8 29.3 4.9c1.3 16.3-7.7 29.7-7.7 29.7z" data-block="336" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m522 141.5-30.2 4.8-5.4-22.2 27.2-12c8.9 11.3 8.4 29.4 8.4 29.4z" data-block="343" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m511.7 109.6-27.1 11.9-11.9-20.6 23.6-17.8c10.7 6.7 15.4 26.5 15.4 26.5z" data-block="344" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m471 99.3-17.8-17.1L471.8 59c17.7 11.5 23 22 23 22L471 99.3z" data-block="345" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="M428.3 68.2s-10-5.7-23.2-6.1l4.5-28.8s17.7-.3 30.8 8.4l-12.1 26.5z" data-block="348" data-section="central-upper-longside" data-tags="category-2"></path>
-                                <path d="m423.8 111.9-19.1-9.4 4.9-36.5c20.5.2 36.2 14.5 36.2 14.5l-22 31.4z" data-block="246" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m441.3 128.5-15.7-14.8 22.7-32.1s12.7 6.2 24.5 24.2l-31.5 22.7z" data-block="245" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m487.9 138.5-37.4 8.4-7.3-15.9 30.6-22.7c12.9 15.7 14.1 30.2 14.1 30.2z" data-block="244" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M446.6 397.8 424 364.5l15.2-14.3 31.9 23.7c-17.5 21.8-24.5 23.9-24.5 23.9z" data-block="236" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M444.7 398.8s-15.2 12.9-33.1 13.2l-8.2-37.2 18.3-9 23 33z" data-block="235" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M126.9 363.8 111.6 350l-32.2 23.2s6.4 13.5 24.5 24.2l23-33.6z" data-block="225" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m101.6 147.7-38.5-8.5c2.7-17.4 14-31.7 14-31.7l31.6 23.6-7.1 16.6z" data-block="217" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m109.7 129.3-31.3-23.4c7.2-15.4 25.3-24.4 25.3-24.4l21.8 32.8-15.8 15z" data-block="216" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m146.7 103.6-19.7 9.1-21.4-32.6c20.2-15.1 36.3-14.2 36.3-14.2l4.8 37.7z" data-block="215" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M424.7 136s-4.3-5.6-21.4-14.2l5.7-14.9c18.4 6.4 26 18.2 26 18.2L424.7 136z" data-block="135" data-section="category-2"></path>
-                                <path d="m447.8 147.4-16.4 4.5-5.9-14.8 11.4-10.5c.1 0 4.2 1.1 10.9 20.8z" class="selected disabled" data-block="134" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze"></path>
-                                <path d="m432.8 354.8-12.5-11.4 11.2-17 15.1 5.8s-3.6 11.8-13.8 22.6z" data-block="127" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="m130.7 343.6-11.9 11.2c-9.5-7.6-15-23.9-15-23.9l16.2-4.5 10.7 17.2z" data-block="117" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="m120.2 152.2-16.9-5c3.1-13.6 11.9-21.1 11.9-21.1l11.9 12.2-6.9 13.9z" data-block="109" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="m148.3 122.6-19.8 13.5-12.2-11.7c9.9-13 26.4-16.9 26.4-16.9l5.6 15.1z" data-block="108" data-section="category-2" data-tags="kat--3"></path>
-                                <path d="M96.8 396.1 79 418.8l-21.8-20.9 23.2-18.3z" data-block="321" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m79.3 377.8-23.9 18.3-16-27.6 27.4-11.3z" data-block="320" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m65.6 354.4-27.4 12.2-8.7-30.7 29.7-3.9z" data-block="319" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m58.5 329-29.8 5.1-3-30.3 31-1.1z" data-block="318" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m56.7 300.2-31.8 1.1-3.6-29.3h35.4z" data-block="317" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m56.7 238.2-35.9.4 1.4-28.3h34.5z" data-block="315" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="M56.7 207.7H22.6l2.2-28.3h31.5z" data-block="314" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m59.2 151.3-30.6-5.1-3.8 30.4 31.6.4z" data-block="313" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m173.7 26.9-30.5 4.9 2.4 30.4 28.1-1.1z" data-block="307" data-section="central-upper-longside" data-tags="category-2"></path>
-                                <path d="m208.9 23.2-32.6 2.5v35.4h32.6z" data-block="306" data-section="central-upper-longside" data-tags="category-2"></path>
-                                <path d="M241.6 61.1h-31.8V23.3l31.8-2.4z" data-block="305" data-section="central-upper-longside" data-tags="kat--2" class="disabled"></path>
-                                <path d="m173.9 451.2-30-4.1 5-30.9h25z" data-block="324" data-section="category-2" data-tags="kat--2"></path>
-                                <path d="m208.4 456.6-32.2-4.8v-34.3h32.2z" data-block="325" data-section="category-2" data-tags="kat--2"></path>
-                                <path d="m241.7 459-32.3-2.5v-39h32.3z" data-block="326" data-section="central-upper-longside" data-tags="kat--2" class="disabled"></path>
-                                <path d="m308.9 457.7-33.1 1.3v-41.5h33.1z" data-block="328" data-section="central-upper-longside" data-tags="kat--1" class="disabled"></path>
-                                <path d="m342.2 456.6-32.3 1.4v-40.5h32.3z" data-block="329" data-section="central-upper-longside" data-tags="kat--2" class="disabled"></path>
-                                <path d="m375 451.6-30.6 4.5v-38.6H375z" data-block="330" data-section="category-2" data-tags="kat--2"></path>
-                                <path d="m408.2 447.2-31.7 4.4v-34.1h26.9z" data-block="331" data-section="category-2" data-tags="kat--2"></path>
-                                <path d="M494.6 396.8 472.1 419 454 395.7l18.1-18.1z" data-block="334" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m496.2 393.9-22.7-18.5 12.2-19.9 27.1 12.1z" data-block="335" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m522.5 332.2-29.6-5.5 1.8-26.7 32.5 2.6z" data-block="337" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m527.8 300-33.1-2.1v-28.5h35.6z" data-block="338" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="M530.3 206.7h-35.6v-29.5l32-1.1z" data-block="341" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="M526.7 174.8h-32.5l-1.5-26.2 29.3-3.8z" data-block="342" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m451.2 81-20.3-12.2 11.2-26.2 27.4 15.2z" data-block="346" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="m407.5 33.1-31.3-5.9v33.9l27.5 1.1z" data-block="349" data-section="central-upper-longside" data-tags="category-2"></path>
-                                <path d="m375.2 26.9-32-3.7v37.9h32z" data-block="301" data-section="central-upper-longside" data-tags="category-2"></path>
-                                <path d="m342 23.1-33.1-3.3v41.3H342z" data-block="302" data-section="central-upper-longside" data-tags="kat--2" class="disabled"></path>
-                                <path d="M275.7 61.1h-32V20.8l32-1z" data-block="304" data-section="central-upper-longside" data-tags="kat--1" class="disabled"></path>
-                                <path d="m402.3 102.5-17.6-1.1v-32l23.2-3.4z" data-block="247" data-section="longside-lower-tier" data-tags="category-1,kat--1,kat-1"></path>
-                                <path d="m491.2 172.2-38.2.4-2.1-22.6 37.8-8.5z" data-block="243" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M492.7 207.5h-39.4v-31.4l39.4-1.3z" data-block="242" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m492.3 303-39.4-2.8.4-28.3h39z" data-block="239" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m488.6 338.2-37.7-9.2 1.6-26.4 39.8 2.4z" data-block="238" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m473 371.8-31.8-23.6 8.3-16.5 38.4 10z" data-block="237" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m409.5 412.8-31.9 2.1-2.6-39.1 26.1-1z" data-block="234" data-section="longside-lower-tier" data-tags="central-lower-longside,kat--1,kat-1"></path>
-                                <path d="M375 414.9h-29.4v-39.1h28.1z" data-block="233" data-section="longside-lower-tier" data-tags="central-lower-longside,kat--1,kat-1"></path>
-                                <path d="m173.9 414.1-32.7-.6 8.2-38.8 24.5 1.1z" data-block="227" data-section="longside-lower-tier" data-tags="central-lower-longside,kat--1,kat-1"></path>
-                                <path d="m139.2 412.8-33.4-13.9 23.2-33.7 18.9 9z" data-block="226" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m110.7 348-33 23.5-13.9-32.1 37.5-8.4z" data-block="224" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M100.3 328.5 62.8 338l-3.6-34.2 40.1-1.1z" data-block="223" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M99.3 300 59 301.3l-1-30.8h41.3z" data-block="222" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m101.2 149-38.1-8.2-3.9 32.8h40.1z" data-block="218" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="m166.9 68.2-23.7-2.3 4.9 37.3 18.8-1.8z" data-block="214" data-section="longside-lower-tier" data-tags="category-1,kat--1,kat-1"></path>
-                                <path d="m430.1 356.6-23.5 14.2L396 331l9.3-5.9 18.3 10.5-5.7 8.3z" data-block="126" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="m144.3 370.5-23-13.6 11.8-13.7-5.4-8.2 19.3-11 9 7z" data-block="116" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="m145.1 155.8-15.9-15.9-8 14.9-17.9-5.2-3 28.2h44.8z" data-block="110" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="m176.4 102.5-32.3 3.8 6.9 18.1-5.9 3.1 10.5 18.8h20.8z" data-block="107" data-section="longside-lower-tier" data-tags="category-1"></path>
-                                <path d="m406 106.3-30.9-3.8v43.8h22.5l10.5-19.7-7.5-1.7z" data-block="136" data-section="longside-lower-tier" data-tags="category-1"></path>
-                                <path d="M450.9 178h-43l.3-23.2 16.6-15.7 5.5 14.5 18.5-3.5z" data-block="133" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="m447.7 328.7-16.9-5-6 9.9-16.9-9.8v-23.6h43.2z" data-block="128" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="m404.5 371.6-29.5 1.5V331h19.1z" data-block="125" data-section="longside-lower-tier" data-tags="category-1,central-lower-longside,kat--1,kat-1"></path>
-                                <path d="m176.2 373.8-29.7-2.4 11.1-40.4h18.6z" data-block="118" data-section="longside-lower-tier" data-tags="category-1,central-lower-longside,kat--1,kat-1"></path>
-                                <path d="m145.8 322.4-19.3 10.7-5.4-9.5-18.3 5.4-2.5-29.7h44.8z" data-block="115" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="M20.8 241h35.8v28.2H20.8z" data-block="316" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="M242.6 417.5h32V459h-32z" data-block="327" data-section="central-upper-longside" data-tags="kat--1" class="disabled"></path>
-                                <path d="M494.7 238.8h35.6v29.6h-35.6z" data-block="339" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="M494.7 207.9h35.6v29.6h-35.6z" data-block="340" data-section="category-3" data-tags="kat--3,shortside-upper-tier" class=""></path>
-                                <path d="M276.9 19.8h30.8V61h-30.8z" data-block="303" data-section="central-upper-longside" data-tags="kat--1" class="disabled"></path>
-                                <path d="M453.3 210.2h39v29.6h-39z" data-block="241" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M453.3 241.2h39v29.2h-39z" data-block="240" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M306.5 375.8h37.9v40.5h-37.9z" data-block="232" data-section="longside-lower-tier" data-tags="prime-seats"></path>
-                                <path d="M275.8 375.8h29.7v40.5h-29.7z" data-block="231" data-section="longside-lower-tier" data-tags="prime-seats"></path>
-                                <path d="M246.2 375.8h28.3v40.5h-28.3z" data-block="230" data-section="longside-lower-tier" data-tags="prime-seats"></path>
-                                <path d="M207.1 375.8H245v40.1h-37.9z" data-block="229" data-section="longside-lower-tier" data-tags="prime-seats"></path>
-                                <path d="M176.2 375.8h29.7v40.5h-29.7z" data-block="228" data-section="longside-lower-tier" data-tags="central-lower-longside,kat--1,kat-1"></path>
-                                <path d="M58 241h41.3v28.2H58z" data-block="221" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M58 210.3h41.3v28.2H58z" data-block="220" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M59.2 174.8h40.2v33.4H59.2z" data-block="219" data-section="category-2" data-tags="kat--3,shortside"></path>
-                                <path d="M168 68.2h16.6v33.2H168z" data-block="213" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M185.8 68.2h15.5v33.2h-15.5z" data-block="212" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M202.3 68.2h13.1v33.2h-13.1z" data-block="211" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M216.6 68.2h17.7v33.2h-17.7z" data-block="210" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M235.6 68.2h15.3v33.2h-15.3z" data-block="209" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M252.1 68.2h15.5v33.2h-15.5z" data-block="208" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M268.7 68.2h15.5v33.2h-15.5z" data-block="207" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M285.2 68.2h14.3v33.2h-14.3z" data-block="206" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M300.5 68.2H316v33.2h-15.5z" data-block="205" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M317.2 68.2h16.5v33.2h-16.5z" data-block="204" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M334.9 69.4h14.2v32h-14.2z" data-block="203" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M350.3 69.4H366v32h-15.7z" data-block="202" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M368.1 69.4h15.5v32h-15.5z" data-block="201" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M177.5 102.5h31.1v43.8h-31.1z" data-block="106" data-section="longside-lower-tier" data-tags="category-1"></path>
-                                <path d="M209.8 102.5h31.8v43.8h-31.8z" data-block="105" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M242.8 102.5h31.8v43.8h-31.8z" data-block="104" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M275.8 102.5h31.8v43.8h-31.8z" data-block="103" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M308.8 102.5h31.8v43.8h-31.8z" data-block="102" data-section="vip-hospitality-package" data-tags="prime-seats"></path>
-                                <path d="M342.9 102.5h30.7v43.8h-30.7z" data-block="101" data-section="longside-lower-tier" data-tags="category-1"></path>
-                                <path d="M407.9 179.8h43v27.7h-43z" data-block="132" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="M407.9 208.8h43v29.7h-43z" data-block="131" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="M407.9 239.8h43v29.7h-43z" data-block="130" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="M407.9 270.8h43v27.5h-43z" data-block="129" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="M342.3 331h30.5v42.1h-30.5z" data-block="124" data-section="longside-lower-tier" data-tags="category-1,central-lower-longside,kat--1,kat-1"></path>
-                                <path d="M309.6 331H341v42.8h-31.4z" data-block="123" data-section="longside-lower-tier" data-tags="prime-seats"></path>
-                                <path d="M276.8 331h30.8v42.8h-30.8z" data-block="122" data-section="longside-lower-tier" data-tags="prime-seats"></path>
-                                <path d="M243.8 331h30.8v42.8h-30.8z" data-block="121" data-section="longside-lower-tier" data-tags="prime-seats"></path>
-                                <path d="M209.6 331h32v42.8h-32z" data-block="120" data-section="longside-lower-tier" data-tags="prime-seats"></path>
-                                <path d="M177.8 331h30.5v42.8h-30.5z" data-block="119" data-section="longside-lower-tier" data-tags="category-1,central-lower-longside,kat--1,kat-1"></path>
-                                <path d="M100.3 271.6h44.8v26.1h-44.8z" data-block="114" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="M100.3 239.8h44.8v29.4h-44.8z" data-block="113" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="M100.3 209.8h44.8v28.5h-44.8z" data-block="112" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <path d="M100.3 179.4h44.8v29.8h-44.8z" data-block="111" data-section="fans-first" data-tags="kat--5,stehpl--tze,stehpl-tze" class="disabled"></path>
-                                <text class="maptext" font-size="12" transform="translate(216.41 46.83)">305</text>
-                                <text class="maptext" font-size="12" transform="translate(250.95 45.83)">304</text>
-                                <text class="maptext" font-size="12" transform="translate(483.16 376.62)">335</text>
-                                <text class="maptext" font-size="12" transform="translate(465.57 402.29)">334</text>
-                                <text class="maptext" font-size="12" transform="translate(439.74 421.79)">333</text>
-                                <text class="maptext" font-size="12" transform="translate(412.7 434.29)">332</text>
-                                <text class="maptext" font-size="12" transform="translate(383.12 439.83)">331</text>
-                                <text class="maptext" font-size="12" transform="translate(351.85 442.79)">330</text>
-                                <text class="maptext" font-size="12" transform="translate(317.2 445.74)">329</text>
-                                <text class="maptext" font-size="12" transform="translate(282.32 446.41)">328</text>
-                                <text class="maptext" font-size="12" transform="translate(248.32 446.41)">327</text>
-                                <text class="maptext" font-size="12" transform="translate(217.75 446.41)">326</text>
-                                <text class="maptext" font-size="12" transform="translate(185.05 441.33)">325</text>
-                                <text class="maptext" font-size="12" transform="translate(150.66 439.83)">324</text>
-                                <text class="maptext" font-size="12" transform="translate(122.7 434.54)">323</text>
-                                <text class="maptext" font-size="12" transform="translate(93.2 421.79)">322</text>
-                                <text class="maptext" font-size="12" transform="translate(69.32 402.29)">321</text>
-                                <text class="maptext" font-size="12" transform="translate(50.32 379.58)">320</text>
-                                <text class="maptext" font-size="12" transform="translate(38.28 351.08)">319</text>
-                                <text class="maptext" font-size="12" transform="translate(32.82 320.33)">318</text>
-                                <text class="maptext" font-size="12" transform="translate(29.74 289.33)">317</text>
-                                <text class="maptext" font-size="12" transform="translate(29.49 258.29)">316</text>
-                                <text class="maptext" font-size="12" transform="translate(30.49 229.75)">315</text>
-                                <text class="maptext" font-size="12" transform="translate(30.49 200.17)">314</text>
-                                <text class="maptext" font-size="12" transform="translate(32.82 169.33)">313</text>
-                                <text class="maptext" font-size="12" transform="translate(38.28 139.87)">312</text>
-                                <text class="maptext" font-size="12" transform="translate(47.53 111.87)">311</text>
-                                <text class="maptext" font-size="12" transform="translate(65.57 84.24)">310</text>
-                                <text class="maptext" font-size="12" transform="translate(93.2 67.12)">309</text>
-                                <text class="maptext" font-size="12" transform="translate(118.74 56.29)">308</text>
-                                <text class="maptext" font-size="12" transform="translate(150.72 50.37)">307</text>
-                                <text class="maptext" font-size="12" transform="translate(183.66 47.83)">306</text>
-                                <text class="maptext" font-size="9" transform="translate(169.7 89.07)">213</text>
-                                <text class="maptext" font-size="9" transform="translate(187.95 89.24)">212</text>
-                                <text class="maptext" font-size="9" transform="translate(203.32 88.93)">211</text>
-                                <text class="maptext" font-size="9" transform="translate(218.57 88.93)">210</text>
-                                <text class="maptext" font-size="9" transform="translate(234.62 88.93)">209</text>
-                                <text class="maptext" font-size="9" transform="translate(251.12 88.93)">208</text>
-                                <text class="maptext" font-size="9" transform="translate(269.95 89.24)">207</text>
-                                <text class="maptext" font-size="9" transform="translate(285.28 89.24)">206</text>
-                                <text class="maptext" font-size="9" transform="translate(301.45 88.93)">205</text>
-                                <text class="maptext" font-size="9" transform="translate(318.45 89.24)">204</text>
-                                <text class="maptext" font-size="9" transform="translate(334.91 89.24)">203</text>
-                                <text class="maptext" font-size="9" transform="translate(350.85 89.24)">202</text>
-                                <text class="maptext" font-size="12" transform="translate(150.66 399.66)">227</text>
-                                <text class="maptext" font-size="12" transform="translate(118.74 393.91)">226</text>
-                                <text class="maptext" font-size="12" transform="translate(93.2 378.58)">225</text>
-                                <text class="maptext" font-size="12" transform="translate(77.57 352.37)">224</text>
-                                <text class="maptext" font-size="12" transform="translate(72.16 323.99)">223</text>
-                                <text class="maptext" font-size="12" transform="translate(72.16 289.33)">222</text>
-                                <text class="maptext" font-size="12" transform="translate(72.16 257.83)">221</text>
-                                <text class="maptext" font-size="12" transform="translate(72.16 228.83)">220</text>
-                                <text class="maptext" font-size="12" transform="translate(72.16 197.83)">219</text>
-                                <text class="maptext" font-size="12" transform="translate(72.16 163.83)">218</text>
-                                <text class="maptext" font-size="12" transform="translate(78.45 136.12)">217</text>
-                                <text class="maptext" font-size="12" transform="translate(93.2 111.87)">216</text>
-                                <text class="maptext" font-size="12" transform="translate(121.07 93.83)">215</text>
-                                <text class="maptext" font-size="12" transform="translate(148.32 89.24)">214</text>
-                                <text class="maptext" font-size="12" transform="translate(284.16 44.67)">303</text>
-                                <text class="maptext" font-size="12" transform="translate(316.03 44.58)">302</text>
-                                <text class="maptext" font-size="12" transform="translate(350.57 46.83)">301</text>
-                                <text class="maptext" font-size="12" transform="translate(382.16 48.83)">349</text>
-                                <text class="maptext" font-size="12" transform="translate(409.78 53.16)">348</text>
-                                <text class="maptext" font-size="12" transform="translate(440.78 67.12)">347</text>
-                                <text class="maptext" font-size="12" transform="translate(464.58 84.83)">346</text>
-                                <text class="maptext" font-size="12" transform="translate(483.16 107.49)">345</text>
-                                <text class="maptext" font-size="12" transform="translate(494.82 135.99)">343</text>
-                                <text class="maptext" font-size="12" transform="translate(499.16 164.7)">342</text>
-                                <text class="maptext" font-size="12" transform="translate(501.66 197.83)">341</text>
-                                <text class="maptext" font-size="12" transform="translate(501.66 228.83)">340</text>
-                                <text class="maptext" font-size="12" transform="translate(501.66 259.79)">339</text>
-                                <text class="maptext" font-size="12" transform="translate(501.66 291.52)">338</text>
-                                <text class="maptext" font-size="12" transform="translate(501.66 320.33)">337</text>
-                                <text class="maptext" font-size="12" transform="translate(494.82 349.29)">336</text>
-                                <text class="maptext" font-size="12" transform="translate(250.95 129.16)">104</text>
-                                <text class="maptext" font-size="12" transform="translate(217.75 130.25)">105</text>
-                                <text class="maptext" font-size="12" transform="translate(184.62 130.24)">106</text>
-                                <text class="maptext" font-size="12" transform="translate(157.53 129.16)">107</text>
-                                <text class="maptext" font-size="12" transform="matrix(.89 -.44 .44 .89 127.91 129.33)">108</text>
-                                <text class="maptext" font-size="12" transform="matrix(.51 -.85 .85 .51 117.83 151.63)">109</text>
-                                <text class="maptext" font-size="12" transform="translate(113.97 169.33)">110</text>
-                                <text class="maptext" font-size="12" transform="translate(113.78 200.17)">111</text>
-                                <text class="maptext" font-size="12" transform="translate(113.28 228.83)">112</text>
-                                <text class="maptext" font-size="12" transform="translate(112.78 259.79)">113</text>
-                                <text class="maptext" font-size="12" transform="translate(114.28 291.52)">114</text>
-                                <text class="maptext" font-size="12" transform="translate(112.78 316.12)">115</text>
-                                <text class="maptext" font-size="12" transform="translate(132.32 340.68)">117</text>
-                                <text class="maptext" font-size="12" transform="translate(155.03 357.16)">118</text>
-                                <text class="maptext" font-size="12" transform="translate(183.66 358.2)">119</text>
-                                <text class="maptext" font-size="12" transform="translate(216.62 358.2)">120</text>
-                                <text class="maptext" font-size="12" transform="translate(250.95 358.2)">121</text>
-                                <text class="maptext" font-size="12" transform="translate(285.28 359.2)">122</text>
-                                <text class="maptext" font-size="12" transform="translate(317.2 359.2)">123</text>
-                                <text class="maptext" font-size="12" transform="translate(350.28 359.2)">124</text>
-                                <text class="maptext" font-size="12" transform="translate(380.16 359.2)">125</text>
-                                <text class="maptext" font-size="12" transform="translate(399.66 340.68)">126</text>
-                                <text class="maptext" font-size="12" transform="translate(416.16 316.12)">128</text>
-                                <text class="maptext" font-size="12" transform="translate(416.16 289.33)">129</text>
-                                <text class="maptext" font-size="12" transform="translate(416.16 259.79)">130</text>
-                                <text class="maptext" font-size="12" transform="translate(416.16 228.83)">131</text>
-                                <text class="maptext" font-size="12" transform="translate(416.16 200.17)">132</text>
-                                <text class="maptext" font-size="12" transform="translate(416.16 172.58)">133</text>
-                                <text class="maptext" font-size="12" transform="matrix(.38 -.92 .92 .38 -330.74 358.97)">134</text>
-                                <text class="maptext" font-size="12" transform="matrix(.74 .66 -.66 .74 617.81 282.98)">135</text>
-                                <text class="maptext" font-size="12" transform="translate(380.16 129.33)">136</text>
-                                <text class="maptext" font-size="9" transform="translate(388.16 89.24)">247</text>
-                                <text class="maptext" font-size="9" transform="translate(368.95 89.24)">201</text>
-                                <text class="maptext" font-size="12" transform="translate(413.04 91.83)">246</text>
-                                <text class="maptext" font-size="12" transform="translate(439.82 111.87)">245</text>
-                                <text class="maptext" font-size="12" transform="translate(456.16 136.12)">244</text>
-                                <text class="maptext" font-size="12" transform="translate(465.57 163.83)">243</text>
-                                <text class="maptext" font-size="12" transform="translate(465.57 197.83)">242</text>
-                                <text class="maptext" font-size="12" transform="translate(465.57 232.33)">241</text>
-                                <text class="maptext" font-size="12" transform="translate(465.57 261.83)">240</text>
-                                <text class="maptext" font-size="12" transform="translate(465.57 291.52)">239</text>
-                                <text class="maptext" font-size="12" transform="translate(462.66 323.99)">238</text>
-                                <text class="maptext" font-size="12" transform="translate(456.16 351.7)">237</text>
-                                <text class="maptext" font-size="12" transform="translate(439.82 377.58)">236</text>
-                                <text class="maptext" font-size="12" transform="matrix(-.48 .87 -.87 -.48 595.7 -739.61)">127</text>
-                                <text class="maptext" font-size="12" transform="translate(413.04 393.91)">235</text>
-                                <text class="maptext" font-size="12" transform="translate(383.62 399.2)">234</text>
-                                <text class="maptext" font-size="12" transform="translate(352.85 399.66)">233</text>
-                                <text class="maptext" font-size="12" transform="translate(317.2 399.66)">232</text>
-                                <text class="maptext" font-size="12" transform="translate(284.16 399.66)">231</text>
-                                <text class="maptext" font-size="12" transform="translate(252.12 399.66)">230</text>
-                                <text class="maptext" font-size="12" transform="translate(215.41 399.66)">229</text>
-                                <text class="maptext" font-size="12" transform="translate(183.66 399.66)">228</text>
-                                <text class="maptext" font-size="12" transform="translate(284.16 129.33)">103</text>
-                                <text class="maptext" font-size="12" transform="translate(316.03 129.25)">102</text>
-                                <text class="maptext" font-size="12" transform="translate(350.57 129.25)">101</text>
+                                <svg id="svgStadium" viewBox="0 0 1247 1136" data-section="" data-block="" data-tags="" >
+                                <defs>
+                                <style>
+                                    path {
+                                        fill: #cccccc;
+                                    }
+
+                                    .maptext {
+                                        font-size: 45.833px;
+                                        fill: #fff;
+                                        font-family: "Myriad Pro";
+                                        font-weight: 700;
+                                    }
+                                    [data-block] {
+                                        transition: fill 0.3s ease; /* Transition để làm mượt việc thay đổi màu */
+                                    }
+
+                                    /* Định nghĩa màu riêng cho từng section khi hover và click */
+                                    .fans-side,
+                                    .fans-side.hovered,
+                                    .fans-side.clicked {
+                                        fill: #F1D446; /* Màu vang cho fans-side */
+                                    }
+
+                                    .standard,
+                                    .standard.hovered,
+                                    .standard.clicked {
+                                        fill: #E99C8A; /* Màu xanh lá cho standard */
+                                    }
+
+                                    .vip-stand,
+                                    .vip-stand.hovered,
+                                    .vip-stand.clicked {
+                                        fill: #5b5a82; /* Màu xanh dương cho vip-stand */
+                                    }
+
+                                    .under-roof,
+                                    .under-roof.hovered,
+                                    .under-roof.clicked {
+                                        fill: #A96EBB; /* Màu vàng cho under-roof */
+                                    }
+
+                                    .on-roof,
+                                    .on-roof.hovered,
+                                    .on-roof.clicked {
+                                        fill: #85E1D5; /* Màu hồng cho on-roof */
+                                    }
+
+
+                                    .cls-1 {
+                                        fill: #bb6767;
+                                    }
+                                    .cls-2 {
+                                        fill: #b8ce94;
+                                    }
+                                    .cls-2, .cls-3, .cls-4 {
+                                        stroke: #fdffff;
+                                        stroke-width: 3px;
+                                    }
+                                    .cls-2, .cls-3 {
+                                        fill-rule: evenodd;
+                                    }
+                                    .cls-3, .cls-4 {
+                                        fill: none;
+                                    }
+                                </style>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const svg = document.getElementById('svgStadium');
+
+                                        const paths = svg.querySelectorAll('path');
+
+                                        paths.forEach(function (path) {
+                                            var sectionName = path.getAttribute('data-section');
+                                            path.classList.add(sectionName);
+                                        });
+
+                                        // Thiết lập màu mặc định cho tất cả các phần tử khi trang tải xong
+                                        paths.forEach(function (path) {
+                                            var sectionName = path.getAttribute('data-section');
+                                            path.classList.add(sectionName);
+                                        });
+
+                                        paths.forEach(function (path) {
+                                            path.classList.add('clicked');
+                                        });
+
+                                        paths.forEach(function (path) {
+                                            path.addEventListener('mouseenter', function () {
+                                                var sectionName = this.getAttribute('data-section');
+                                                var sections = document.querySelectorAll('path[data-section="' + sectionName + '"]');
+                                                sections.forEach(function (item) {
+                                                    item.classList.add('hovered', sectionName);
+                                                });
+                                            });
+
+                                            path.addEventListener('mouseleave', function () {
+                                                var sectionName = this.getAttribute('data-section');
+                                                var sections = document.querySelectorAll('path[data-section="' + sectionName + '"]');
+                                                sections.forEach(function (item) {
+                                                    if (!item.classList.contains('clicked')) {
+                                                        item.classList.remove('hovered', sectionName);
+                                                    }
+                                                });
+                                            });
+
+                                            path.addEventListener('click', function () {
+                                                var sectionName = this.getAttribute('data-section');
+                                                var sections = document.querySelectorAll('path[data-section="' + sectionName + '"]');
+                                                sections.forEach(function (item) {
+                                                    item.classList.toggle('clicked');
+                                                    item.classList.remove('hovered'); // Remove hovered class when clicked
+                                                });
+                                            });
+
+
+                                        });
+                                    });
+
+
+
+                                </script>
+                                </defs>
+                                <%--Stand C--%>
+                                <path data-section="fans-side" data-block="4" data-tags="" d="M294,405s-43.585,33.376-66.465,76.174l-81.853-34.1S175,395.162,251.139,344.783Z"/>
+                                <path data-section="standard" data-block="5" data-tags="" d="M246.139,343.783s-71.127,46.322-105.457,102.286L57.986,404s42.049-65.858,141.67-123.373Z"/>
+                                <path data-section="fans-side" data-block="3" data-tags="" d="M223.535,482.174s-22.88,35.12-22.88,83.826H106.328s-5.088-52.684,35.354-117.931Z"/>
+                                <path data-section="standard" data-block="6" data-tags="" d="M137.682,448.069S102.328,500.572,102.328,566H0.463s-5.081-75.469,54.523-160Z"/>
+                                <path data-section="fans-side" data-block="1" data-tags="" d="M293,733s-43.585-33.376-66.465-76.174l-81.853,34.105S174,742.838,250.139,793.217Z"/>
+                                <path data-section="standard" data-block="8" data-tags="" d="M247.139,793.217S176.012,746.9,141.682,690.931L58.986,733s42.049,65.858,141.67,123.373Z"/>
+                                <path data-section="fans-side" data-block="2" data-tags="" d="M224.535,653.826s-22.88-35.12-22.88-83.826H107.328s-5.088,52.683,35.354,117.931Z"/>
+                                <path data-section="standard" data-block="7" data-tags="" d="M138.682,688.931S103.328,636.428,103.328,571H1.463s-5.081,75.469,54.523,160Z"/>
+                                <%--Stand D--%>
+                                <path data-section="fans-side" data-block="4" data-tags="" d="M953,403s43.585,33.376,66.46,76.174l81.86-34.1S1072,393.162,995.861,342.783Z"/>
+                                <path data-section="standard" data-block="5" data-tags="" d="M999.861,340.783s71.129,46.322,105.459,102.286L1188.01,401s-42.04-65.858-141.67-123.373Z"/>
+                                <path data-section="fans-side" data-block="3" data-tags="" d="M1022.46,482.174s22.88,35.12,22.88,83.826h94.33s5.09-52.684-35.35-117.931Z"/>
+                                <path data-section="standard" data-block="6" data-tags="" d="M1107.32,448.069s35.35,52.5,35.35,117.931h101.87s5.08-75.469-54.53-160Z"/>
+                                <path data-section="fans-side" data-block="1" data-tags="" d="M953,732s43.585-33.376,66.46-76.174l81.86,34.105S1072,741.838,995.861,792.217Z"/>
+                                <path data-section="standard" data-block="8" data-tags="" d="M999.861,792.217S1070.99,745.9,1105.32,689.931L1188.01,732s-42.04,65.858-141.67,123.373Z"/>
+                                <path data-section="fans-side" data-block="2" data-tags="" d="M1023.46,653.826s22.88-35.12,22.88-83.826h94.33s5.09,52.683-35.35,117.931Z"/>
+                                <path data-section="standard" data-block="7" data-tags="" d="M1109.32,687.931s35.35-52.5,35.35-117.931h101.87s5.08,75.469-54.53,160Z"/>
+                                <%--Stand B--%>
+                                <path data-section="fans-side" data-block="1" data-tags="" d="M441.256,339.7S393.907,353.931,334,396l-42.861-60.217s60.753-37.4,121.224-54.963Z"/>
+                                <path data-section="standard" data-block="12" data-tags="" d="M410.364,276.82s-74.741,23.456-121.225,54.963l-46.484-63.158s78.536-41.444,137.569-57.513Z"/>
+                                <path data-section="vip-stand" data-block="2" data-tags="" d="M524.909,318s-21.621,2.448-80.653,20.7L415.364,279.82s51.512-16.421,101.054-23.606Z"/>
+                                <path data-section="under-roof" data-block="11" data-tags="" d="M516.418,253.214s-56.568,7.848-101.055,23.606l-30.139-65.708s68.964-19.393,122.412-25.656Z"/>
+                                <path data-section="vip-stand" data-block="3" data-tags="" d="M623,309.469s-76.818,2.322-94.091,7.532l-8.491-61.787A731.946,731.946,0,0,1,623,248.028v61.441Z"/>
+                                <path data-section="under-roof" data-block="10" data-tags="" d="M623,244.028s-63.93.333-102.582,7.186l-8.782-67.758s68.08-7.888,111.364-7.888v68.46Z"/>
+                                <path data-section="fans-side" data-block="6" data-tags="" d="M808.744,339.7S856.093,353.931,916,396l42.861-60.217s-60.754-37.4-121.225-54.963Z"/>
+                                <path data-section="standard" data-block="7" data-tags="" d="M837.636,276.82s74.741,23.456,121.225,54.963l46.479-63.158s-78.532-41.444-137.564-57.513Z"/>
+                                <path data-section="vip-stand" data-block="5" data-tags="" d="M724.091,318s21.62,2.448,80.653,20.7l28.892-58.876S782.124,263.4,732.581,256.214Z"/>
+                                <path data-section="under-roof" data-block="8" data-tags="" d="M732.581,253.214s56.569,7.848,101.055,23.606l30.14-65.708s-68.965-19.393-122.413-25.656Z"/>
+                                <path data-section="vip-stand" data-block="4" data-tags="" d="M626,309.469s76.818,2.322,94.091,7.532l8.49-61.787A731.921,731.921,0,0,0,626,248.028v61.441Z"/>
+                                <path data-section="under-roof" data-block="9" data-tags="" d="M626,244.028s63.93,0.333,102.581,7.186l8.783-67.758s-68.08-7.888-111.364-7.888v68.46Z"/>
+                                <path data-section="on-roof" data-block="13" data-tags="" d="M471.289,145.64H335L292.139,86.361s63.3-37.493,121.225-55.2Z"/>
+                                <path data-section="on-roof" data-block="14" data-tags="" d="M623,145.64H477.289L419.364,31.163S510.078-.342,623-0.342V145.64Z"/>
+                                <path data-section="on-roof" data-block="16" data-tags="" d="M776.711,145.64H913l42.861-59.279s-63.3-37.493-121.225-55.2Z"/>
+                                <path data-section="on-roof" data-block="15" data-tags="" d="M626,145.64H771.711L829.636,31.163S738.922-.342,626-0.342V145.64Z"/>
+                                <%--Stand A--%>
+                                <path data-section="fans-side" data-block="1" data-tags="" d="M440.256,795.3S392.907,781.069,333,739l-42.861,60.217s60.753,37.4,121.224,54.963Z"/>
+                                <path data-section="standard" data-block="12" data-tags="" d="M408.364,857.18s-74.741-23.456-121.225-54.963l-46.484,63.158s78.536,41.444,137.569,57.513Z"/>
+                                <path data-section="vip-stand" data-block="2" data-tags="" d="M524.909,817s-21.621-2.447-80.653-20.694L415.364,855.18s51.512,16.421,101.054,23.606Z"/>
+                                <path data-section="under-roof" data-block="11" data-tags="" d="M515.418,881.786s-56.568-7.848-101.055-23.606l-30.139,65.708s68.964,19.393,122.412,25.656Z"/>
+                                <path data-section="vip-stand" data-block="3" data-tags="" d="M622,824.531s-76.818-2.322-94.091-7.533l-8.491,61.788A731.946,731.946,0,0,0,622,885.972V824.531Z"/>
+                                <path data-section="under-roof" data-block="10" data-tags="" d="M622,888.972s-63.93-.333-102.582-7.186l-8.782,67.758s68.08,7.888,111.364,7.888v-68.46Z"/>
+                                <path data-section="fans-side" data-block="6" data-tags="" d="M808.744,794.3S856.093,780.069,916,738l42.861,60.217s-60.754,37.4-121.225,54.963Z"/>
+                                <path data-section="standard" data-block="7" data-tags="" d="M838.636,859.18s74.741-23.456,121.225-54.963l46.479,63.158s-78.532,41.444-137.564,57.513Z"/>
+                                <path data-section="vip-stand" data-block="5" data-tags="" d="M725.091,817s21.62-2.447,80.653-20.694l28.892,58.876S783.124,871.6,733.581,878.786Z"/>
+                                <path data-section="under-roof" data-block="8" data-tags="" d="M733.581,882.786s56.569-7.848,101.055-23.606l30.14,65.708s-68.965,19.393-122.413,25.656Z"/>
+                                <path data-section="vip-stand" data-block="4" data-tags="" d="M627,824.531s76.818-2.322,94.091-7.533l8.49,61.788A731.921,731.921,0,0,1,627,885.972V824.531Z"/>
+                                <path data-section="under-roof" data-block="9" data-tags="" d="M627,889.972s63.93-.333,102.581-7.186l8.783,67.758s-68.08,7.888-111.364,7.888v-68.46Z"/>
+                                <path data-section="on-roof" data-block="13" data-tags="" d="M471.289,990.36H335l-42.861,59.28s63.3,37.49,121.225,55.2Z"/>
+                                <path data-section="on-roof" data-block="14" data-tags="" d="M622,990.36H476.289l-57.925,114.48s90.714,31.5,203.636,31.5V990.36Z"/>
+                                <path data-section="on-roof" data-block="16" data-tags="" d="M777.711,990.36H914l42.861,59.28s-63.3,37.49-121.225,55.2Z"/>
+                                <path data-section="on-roof" data-block="15" data-tags="" d="M626,990.36H771.711l57.925,114.48s-90.714,31.5-203.636,31.5V990.36Z"/>
+                                <%--<path data-section="" data-block="" data-tags="" d="M422.11,451.308H833.1V691.527H422.11V451.308Z"/>--%>
+
+                                <path class="cls-1" d="M253.625 569a371.375 244.531 0 1 0 742.75 0a371.375 244.531 0 1 0 -742.75 0" />
+                                <path class="cls-2" d="M422.11,451.308H833.1V691.527H422.11V451.308Z" />
+                                <path class="cls-3" d="M625,450.875V691.531" />
+                                <path class="cls-3" d="M423.614,530.116h34.618v78.5H423.614" />
+                                <path class="cls-3" d="M423.614,647.872H499v-154.7H423.614" />
+                                <path id="Shape_16_copy" data-name="Shape 16 copy" class="cls-3" d="M830.386,530.116H795.768v78.5h34.618" />
+                                <path id="Shape_17_copy" data-name="Shape 17 copy" class="cls-3" d="M830.386,647.872H755v-154.7h75.389" />
+                                <path class="cls-4" d="M592 569a32 32 0 1 0 64 0a32 32 0 1 0 -64 0" />
+
+
+                                <text class="maptext" x="360.125" y="820.219">1</text>
+                                <text class="maptext" x="468.125" y="852.219">2</text>
+                                <text class="maptext" x="563.125" y="870.219">3</text>
+                                <text class="maptext" x="666.125" y="868.219">4</text>
+                                <text class="maptext" x="765.126" y="855.218">5</text>
+                                <text class="maptext" x="871.126" y="818.219">6</text>
+                                <text class="maptext" x="305.125" y="885.219">12</text>
+                                <text class="maptext" x="430.125" y="921.219">11</text>
+                                <text class="maptext" x="544.125" y="939.219">10</text>
+                                <text class="maptext" x="669.125" y="941.219">9</text>
+                                <text class="maptext" x="787.125" y="925.219">8</text>
+                                <text class="maptext" x="910.125" y="888.219">7</text>
+                                <text class="maptext" x="356.124" y="1053.219">13</text>
+                                <text class="maptext" x="511.125" y="1075.218">14</text>
+                                <text class="maptext" x="687.124" y="1075.218">15</text>
+                                <text class="maptext" x="850.125" y="1047.218">16</text>
+                                <text class="maptext" x="1016.125" y="736.219">1</text>
+                                <text class="maptext" x="1073.125" y="635.218">2</text>
+                                <text class="maptext" x="1075.125" y="533.219">3</text>
+                                <text class="maptext" x="1010.125" y="426.219">4</text>
+                                <text class="maptext" font-size="25" x="1080.125" y="373.219">5</text>
+                                <text class="maptext" x="1166.125" y="505.219">6</text>
+                                <text class="maptext" x="1172.125" y="659.219">7</text>
+                                <text class="maptext" x="1082.125" y="791.218">8</text>
+                                <text class="maptext" x="213.125" y="736.219">1</text>
+                                <text class="maptext" x="156.124" y="635.218">2</text>
+                                <text class="maptext" x="151.125" y="531.219">3</text>
+                                <text class="maptext" x="218.125" y="434.219">4</text>
+                                <text class="maptext" x="147.125" y="380.219">5</text>
+                                <text class="maptext" x="58.125" y="513.219">6</text>
+                                <text class="maptext" x="62.125" y="661.219">7</text>
+                                <text class="maptext" x="143.124" y="790.219">8</text>
+                                <text class="maptext" x="360.125" y="352.219">1</text>
+                                <text class="maptext" x="468.125" y="313.219">2</text>
+                                <text class="maptext" x="564.125" y="297.218">3</text>
+                                <text class="maptext" x="665.125" y="297.218">4</text>
+                                <text class="maptext" x="762.125" y="313.219">5</text>
+                                <text class="maptext" x="872.126" y="350.219">6</text>
+                                <text class="maptext" x="907.125" y="287.218">7</text>
+                                <text class="maptext" x="784.125" y="246.219">8</text>
+                                <text class="maptext" x="665.125" y="231.219">9</text>
+                                <text class="maptext" x="549.125" y="229.219">10</text>
+                                <text class="maptext" x="361.125" y="115.219">13</text>
+                                <text class="maptext" x="511.125" y="94.219">14</text>
+                                <text class="maptext" x="678.125" y="94.219">15</text>
+                                <text class="maptext" x="841.125" y="115.219">16</text>
+                                <text class="maptext" x="434.126" y="246.219">11</text>
+                                <text class="maptext" x="305.125" y="284.219">12</text>
                                 </svg>
+
+
                                 <div class="section-toolTip">
                                     <div class="block">Block: <span></span></div>
                                     <div class="availability"><span></span> tickets remaining</div>
@@ -1574,32 +1548,32 @@
                                 <div class="column">
                                     <div class="item" data-type="category-1">
                                         <div class="key" style="border-color:#E99C8A" "></div><div class="text">
-                                            Category 1
+                                            Standard
                                         </div>
                                     </div>
                                     <div class="item" data-type="category-2">
                                         <div class="key" style="border-color:#F1D446" "></div><div class="text">
-                                            Category 2
+                                            Fans side
                                         </div>
                                     </div>
                                     <div class="item" data-type="category-3">
-                                        <div class="key" style="border-color:#86A8BF" "></div><div class="text">
-                                            Category 3
+                                        <div class="key" style="border-color:#cccccc" "></div><div class="text">
+                                            No Select
                                         </div>
                                     </div>
                                     <div class="item" data-type="longside-lower-tier">
                                         <div class="key" style="border-color:#A96EBB" "></div><div class="text">
-                                            Longside Lower Tier
+                                            Under the Roof
                                         </div>
                                     </div>
                                     <div class="item" data-type="prime-seats">
-                                        <div class="key" style="border-color:#000000" "></div><div class="text">
-                                            Prime Seats
+                                        <div class="key" style="border-color:#5b5a82" "></div><div class="text">
+                                            Vip Seat
                                         </div>
                                     </div>
                                     <div class="item" data-type="shortside-upper-tier">
                                         <div class="key" style="border-color:#85E1D5" "></div><div class="text">
-                                            Shortside Upper Tier
+                                            On the Roof
                                         </div>
                                     </div>
                                 </div>
@@ -1677,7 +1651,7 @@
                                                 only <span>2</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -1729,7 +1703,7 @@
                                                 only <span>2</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -1755,7 +1729,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -1781,7 +1755,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -1807,7 +1781,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -1833,7 +1807,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -1859,7 +1833,7 @@
                                                 only <span>2</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -1885,7 +1859,7 @@
                                                 only <span>2</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -1911,7 +1885,7 @@
                                                 only <span>3</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -1937,7 +1911,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -1963,7 +1937,7 @@
                                                 only <span>1</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -1989,7 +1963,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2015,7 +1989,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2041,7 +2015,7 @@
                                                 only <span>2</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2067,7 +2041,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2093,7 +2067,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2119,7 +2093,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2145,7 +2119,7 @@
                                                 only <span>2</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2171,7 +2145,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2197,7 +2171,7 @@
                                                 only <span>3</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2222,7 +2196,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2248,7 +2222,7 @@
                                                 only <span>2</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2274,7 +2248,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2300,7 +2274,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2326,7 +2300,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2352,7 +2326,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2378,7 +2352,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2404,7 +2378,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2430,7 +2404,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2456,7 +2430,7 @@
                                                 only <span>1</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2482,7 +2456,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2508,7 +2482,7 @@
                                                 <span>4</span>
                                                 ticket(s) <div class="showIcons">
                                                     <span class="icons">
-                                                        <img src="/assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
+                                                        <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
                                                         <div class="arrow-left"></div>
                                                         <span class="toolTipText">Mobile tickets</span>
                                                     </span>
@@ -2527,7 +2501,7 @@
                                 <div class="filters">
                                     <div class="left">
                                         <div class="tickets">
-                                            <img src="/assets/frontend/2018/images/tickets.svg" alt="Tickets">
+                                            <img src="../assets/frontend/2018/images/tickets.svg" alt="Tickets">
                                             <span class="tickets_count">4</span>
                                         </div>
                                         <div class="seated-together">
@@ -2540,7 +2514,7 @@
                                     </div>
                                     <div class="right">
                                         <div class="remove-filters">
-                                            <img src="/assets/frontend/2018/images/alerts/error.svg" alt="Remove Filters">
+                                            <img src="../assets/frontend/2018/images/alerts/error.svg" alt="Remove Filters">
                                             Remove Filters
                                         </div>
                                     </div>

@@ -59,7 +59,7 @@
                             <h2 class="title-head">Forget <span>Password</span></h2>
                             <p>Login Your Account <a href="http://localhost:8080/BookingFootballTicket/login">Click here</a></p>
                         </div>
-                       
+
                         <form action="sendmail" method="post" class="contact-bx">
                             <div class="row placeani">
                                 <div class="col-lg-12">
@@ -101,25 +101,50 @@
                                             var email = document.querySelector('input[name="emailInputReset"]').value;
                                             var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
                                             if (!emailRegex.test(email)) {
-                                                alert("Vui lòng nhap dia chi email hop le.");
+                                                showErrorPopup("Please enter a valid email addres!");
                                                 return false;
                                             }
                                             return true;
                                         }
 
         </script>
-        <% 
-        String message = (String) request.getAttribute("mess"); 
-        if (message != null) { 
-    %>
-        <script>
-            Swal.fire({
-                title: "Reset Password",
-                text: "<%= message %>",
-                icon: "success"
-            });
+        <%
+    String mess = (String) request.getAttribute("mess");
+    String messEr = (String) request.getAttribute("messEr");
+    if (mess != null || messEr != null) {
+        %>  
+        <script type="text/javascript">
+            window.onload = function () {
+                var message = '<%= mess != null ? mess.replace("'", "\\'") : "" %>';
+                var errorMessage = '<%= messEr != null ? messEr.replace("'", "\\'") : "" %>';
+                if (message) {
+                    showLoginPopup(message);
+                }
+                if (errorMessage) {
+                    showErrorPopup(errorMessage);
+                }
+            }
         </script>
-    <% } %>
+        <%
+            }
+        %>
+        <script type="text/javascript">
+            function showLoginPopup(mess) {
+                Swal.fire({
+                    title: mess,
+                    icon: 'success'
+                });
+            }
+
+            function showErrorPopup(messEr) {
+                Swal.fire({
+                    title: messEr,
+                    icon: 'error'
+                });
+            }
+        </script>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 
 </html>

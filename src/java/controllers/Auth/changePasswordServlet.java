@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageNews;
+package controllers.Auth;
 
-import dal.NewsDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,20 +13,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeParseException;
-import models.News;
-import java.time.format.DateTimeFormatter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.User;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
- * @author nguye
+ * @author AD
  */
-@WebServlet(name = "CreateNewNewsServlet", urlPatterns = {"/createNewNews"})
-public class CreateNewNewsServlet extends HttpServlet {
-
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
+@WebServlet(name = "changePassServlet", urlPatterns = {"/changepass"})
+public class changePasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +43,10 @@ public class CreateNewNewsServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateNewNewsServlet</title>");
+            out.println("<title>Servlet changePassServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateNewNewsServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet changePassServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,7 +64,7 @@ public class CreateNewNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("views/changePassword.jsp").forward(request, response);
     }
 
     /**
@@ -78,35 +76,50 @@ public class CreateNewNewsServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-//        PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
-//        out.print(userName);
-        try {
-            User createdBy_raw = (User) session.getAttribute("currentUser");
-            String mainTitle = request.getParameter("mainTitle");
-            String title = request.getParameter("title");
-            String mainContent = request.getParameter("mainContent");
-            String content = request.getParameter("content");
-            int status = 1;
-            int state_raw = Integer.parseInt(request.getParameter("state"));
-            boolean state = false;
-            if (state_raw == 1) {
-                state = true;
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String oldpass = request.getParameter("oldpassword");
+    String password = request.getParameter("password");
+    UserDAO dao = new UserDAO();
+    HttpSession session = request.getSession();
+
+    if (session != null) {
+        User user = (User) session.getAttribute("currentUser");
+
+        if (user != null) {
+            String email = user.getEmail();
+
+            try {
+                // Băm mật khẩu cũ nhập từ người dùng
+                String hashedOldPassword = BCrypt.hashpw(oldpass, BCrypt.gensalt()); 
+
+                // Lấy mật khẩu đã băm từ cơ sở dữ liệu
+                String hashedPasswordFromDB = dao.getHashedPasswordByEmail(email);
+
+                // So sánh mật khẩu đã băm từ cơ sở dữ liệu với mật khẩu băm từ mật khẩu cũ nhập vào từ người dùng
+                if (!BCrypt.checkpw(oldpass, hashedPasswordFromDB)) { 
+                    request.setAttribute("messEr", "OldPassword Error!");
+                } else {
+                    String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+                    dao.changePass(email, hashedPassword);
+                    request.setAttribute("changePassword", true);
+                    response.sendRedirect("homePage");
+                    return; 
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(changePasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+                request.setAttribute("mess", password);
             }
-            News news = new News(mainTitle, title, mainContent, content, createdBy_raw.getEmail(), status, state);
-            int created = NewsDAO.INSTANCE.createNews(news);
-//        out.print(created);
-            if (created != 0) {
-                session.setAttribute("created", created);
-            }
-        } catch (IllegalArgumentException e) {
+            request.getRequestDispatcher("views/changePassword.jsp").forward(request, response);
+            return; 
         }
-
-        response.sendRedirect("manageNews");
-
     }
+
+        // Xử lý trường hợp session hoặc user là null
+        // Ví dụ: chuyển hướng đến trang đăng nhập
+        response.sendRedirect("login");
+    }
+
 
     /**
      * Returns a short description of the servlet.

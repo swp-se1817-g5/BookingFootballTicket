@@ -141,7 +141,6 @@ public class RegisterServlet extends HttpServlet {
         newUser.setCreatedBy(email);
         newUser.setUpdatedBy(email);
         newUser.setCreatedDate(now);
-        newUser.setLastUpdatedDate(now);
 
         status = userDAO.addUser(newUser);
         successMessage = "Registered successfully!";

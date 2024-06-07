@@ -24,7 +24,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
 
         <!-- PAGE TITLE HERE ============================================= -->
-        <title>Reset Password </title>
+        <title>Change Password </title>
 
         <!-- MOBILE SPECIFIC ============================================= -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,15 +57,23 @@
                 <div class="account-form-inner">
                     <div class="account-container">
                         <div class="heading-bx left">
-                            <h2 class="title-head">Reset <span>Password</span></h2>
+                            <h2 class="title-head">Change <span>Password</span></h2>
                         </div>
 
-                        <form action="changePassForget" method="post" class="contact-bx">
+                        <form action="changepass" method="post" class="contact-bx">
                             <div class="row placeani">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Password</label>
+                                            <label>Old Password</label>
+                                            <input name="oldpassword" type="password" id="oldpassword" required="" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label>New Password</label>
                                             <input name="password" type="password" id="password" required="" class="form-control">
                                         </div>
                                     </div>
@@ -151,7 +159,6 @@
                                             onSignup();
                                         }
 
-
 //                                        function onSignup() {
 //                                            var xhttp = new XMLHttpRequest();
 //                                            xhttp.onreadystatechange = function () {
@@ -174,23 +181,36 @@
 //                                        }
         </script>
         <%
-           String mess = (String) request.getAttribute("mess");
-           if(mess != null) {
+    String mess = (String) request.getAttribute("mess");
+    String messEr = (String) request.getAttribute("messEr");
+    if (mess != null || messEr != null) {
         %>  
         <script type="text/javascript">
             window.onload = function () {
                 var message = '<%= mess != null ? mess.replace("'", "\\'") : "" %>';
-                showLoginPopup(message);
+                var errorMessage = '<%= messEr != null ? messEr.replace("'", "\\'") : "" %>';
+                if (message) {
+                    showLoginPopup(message);
+                }
+                if (errorMessage) {
+                    showErrorPopup(errorMessage);
+                }
             }
         </script>
         <%
-          }
+            }
         %>
-
         <script type="text/javascript">
             function showLoginPopup(mess) {
                 Swal.fire({
                     title: mess,
+                    icon: 'success'
+                });
+            }
+
+            function showErrorPopup(messEr) {
+                Swal.fire({
+                    title: messEr,
                     icon: 'error'
                 });
             }

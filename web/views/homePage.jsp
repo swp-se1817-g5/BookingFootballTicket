@@ -281,17 +281,20 @@
                                         <a href="https://www.footballticketpad.com/group/club/switzerland">
                                             <div class="text hasLogo"><span style="background-image:url(/uploads/resized-logs/club-214.png);"></span>Switzerland</div>
                                         </a>
-                                    </li></div>
+                                    </li>
+                                </div>
                             </ul>
                         </li>
                         <li>
                             <a href="/leagues" class="has-child">Tournaments</a>
                             <ul class="advanced">
-                                <div class="half left"><li>
+                                <div class="half left">
+                                    <li>
                                         <a href="https://www.footballticketpad.com/group/league/premier-league">
                                             <div class="text hasLogo"><span style="background-image:url(/uploads/resized-logs/league-7.png);"></span>Premier League</div>
                                         </a>
-                                    </li><li>
+                                    </li>
+                                    <li>
                                         <a href="https://www.footballticketpad.com/group/league/fa-cup">
                                             <div class="text hasLogo"><span style="background-image:url(/uploads/resized-logs/league-46.png);"></span>FA Cup </div>
                                         </a>
@@ -337,12 +340,33 @@
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
                         <ul>
-    <c:choose>
-        <c:when test="${sessionScope.currentUser==null}">
-            <li><a data-auth="login" href="./login">Login</a></li>
-        </c:when>
-        <c:when test="${sessionScope.currentUser!=null}">
-            <li><a data-auth="profile" href="./profile"><i class="bi bi-person"></i> Profile</a></li>
+                            <c:choose>
+                                <c:when test="${sessionScope.currentUser==null}">
+                                    <li><a data-auth="login" href="./login">Login</a></li>
+                                    </c:when>
+                                    <c:when test="${sessionScope.currentUser!=null}">
+                                    <li>
+                                        <a data-auth="profile" class="has-child">Profile</a>
+                                        <ul class="advanced" style="min-width: 195px; right: 0;">
+                                            <li>
+                                                <a href="https://www.footballticketpad.com/group/club/inter-milan">
+                                                    View Profile
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="./changepass">
+                                                    Change Password
+                                                </a>
+                                            </li>
+                                            <c:if test="${sessionScope.currentUser != null}">
+                                            <li>
+                                                <a href="./logout">
+                                                    Logout
+                                                </a>
+                                            </li>
+                                            </c:if>
+                                        </ul>
+                                    </li>
         </c:when>
     </c:choose>
 </ul>
@@ -1693,7 +1717,33 @@
                                                                                                                                                                                     </div>
                                                                                                                                                                                     <script>
 
-                                                                                                                                                                                    </script>                                                                                                                                                                                 
+                                                                                                                                                                                    </script>       
+                                                                                                                                                                                    <%
+                                                                                                                                                                                     Boolean resetPassword = (Boolean) request.getAttribute("resetPassword");
+                                                                                                                                                                                     if (resetPassword != null) {
+                                                                                                                                                                                    %>  
+                                                                                                                                                                                    <script type="text/javascript">
+                                                                                                                                                                                        window.onload = function () {
+                                                                                                                                                                                            showLoginPopup("Reset password successfully!");
+                                                                                                                                                                                        }
+                                                                                                                                                                                    </script>
+                                                                                                                                                                                    <%
+                                                                                                                                                                                     }
+                                                                                                                                                                                    %> 
+                                                                                                                                                                                    
+                                                                                                                                                                                    <%
+                                                                                                                                                                                     Boolean changePassword = (Boolean) request.getAttribute("changePassword");
+                                                                                                                                                                                     if (changePassword != null) {
+                                                                                                                                                                                    %>  
+                                                                                                                                                                                    <script type="text/javascript">
+                                                                                                                                                                                        window.onload = function () {
+                                                                                                                                                                                            showLoginPopup("Change password successfully!");
+                                                                                                                                                                                        }
+                                                                                                                                                                                    </script>
+                                                                                                                                                                                    <%
+                                                                                                                                                                                     }
+                                                                                                                                                                                    %> 
+                                                                                                                                                                                    
                                                                                                                                                                                     <%
                                                                                                                                                                                     Boolean isFirstLogin = (Boolean) request.getAttribute("isFirstLogin");
                                                                                                                                                                                     if (isFirstLogin != null && isFirstLogin) {
@@ -1728,6 +1778,7 @@
                                                                                                                                                                                             });
                                                                                                                                                                                         }
                                                                                                                                                                                     </script>
+                                                                                                                                                                                    
                                                                                                                                                                                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                                                                                                                                                                                     <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
                                                                                                                                                                                     <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>
