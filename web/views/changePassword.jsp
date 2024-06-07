@@ -131,7 +131,7 @@
 
                                         function validateConfirmPassword() {
                                             if (password.value !== confirm_password.value) {
-                                                confirm_password.setCustomValidity("Passwords must be same!");
+                                                confirm_password.setCustomValidity("Passwords must match!");
                                                 return false;
                                             } else {
                                                 confirm_password.setCustomValidity('');
@@ -140,7 +140,7 @@
                                         }
 
                                         password.onchange = validatePassword;
-                                        confirm_password.onkeyup = validatePassword;
+                                        confirm_password.onkeyup = validateConfirmPassword;
 
                                         function validateSignupForm() {
                                             var form = document.getElementById('signupForm');
@@ -152,7 +152,7 @@
                                                 }
                                             }
 
-                                            if (!validatePassword()) {
+                                            if (!validatePassword() || !validateConfirmPassword()) {
                                                 return false;
                                             }
 
