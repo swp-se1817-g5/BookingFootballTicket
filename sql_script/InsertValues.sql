@@ -64,21 +64,21 @@ INSERT INTO MatchSeat (matchId, seatId, [availability], createdBy) VALUES
 GO
 
 -- Insert values into HistoryPurchasedTicket table
-INSERT INTO HistoryPurchasedTicket (matchSeatId, email, qrCode, price, number, [status], createdBy) VALUES
+INSERT INTO HistoryPurchasedTicket (matchSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
 (1, 'user1@example.com', 'QRCode1', 50.00, 1, 'Purchased', 'admin@example.com'),
 (2, 'user2@example.com', 'QRCode2', 40.00, 2, 'Purchased', 'admin@example.com');
 GO
 
 -- Insert values into Payment table
-INSERT INTO Payment (email, ticketId, price) VALUES
+/*INSERT INTO Payment (email, ticketId, price) VALUES
 ('user1@example.com', 1, 50.00),
 ('user2@example.com', 2, 80.00);
 GO
-
+*/
 -- Insert values into News table
-INSERT INTO News (mainTitle, title, mainContent, content, createdBy) VALUES
-('Main Title 1', 'Title 1', 'Main Content 1', 'Content 1', 'admin@example.com'),
-('Main Title 2', 'Title 2', 'Main Content 2', 'Content 2', 'admin@example.com');
+INSERT INTO News (title, content, createdBy) VALUES
+('Title 1','Content 1', 'admin@example.com'),
+('Title 2', 'Content 2', 'admin@example.com');
 GO
 -- Insert values into NewsImages table
 INSERT INTO NewsImages (NewsId, imageUrl) VALUES 
