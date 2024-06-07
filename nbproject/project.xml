@@ -61,9 +61,6 @@
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
                 <library dirs="200">
-                    <file>${file.reference.jBCrypt-0.4.jar-1}</file>
-                </library>
-                <library dirs="200">
                     <file>${file.reference.javax.activation-1.2.0.jar}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
@@ -73,6 +70,10 @@
                 </library>
                 <library dirs="200">
                     <file>${file.reference.javax.mail.jar}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.jBCrypt-0.4.jar-1}</file>
                     <path-in-war>WEB-INF/lib</path-in-war>
                 </library>
             </web-module-libraries>
