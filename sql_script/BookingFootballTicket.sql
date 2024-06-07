@@ -148,11 +148,11 @@ CREATE TABLE HistoryPurchasedTicket (
 	qrCode VARCHAR(255),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
 	price DECIMAL(10, 2),
-	number INT,
+	quantity INT,
 	[status] VARCHAR(50),
 	createdBy VARCHAR(50),
-	updatedBy VARCHAR(50) NULL,
-	lastUpdatedDate DATETIME2 NULL,
+	--updatedBy VARCHAR(50) NULL,
+	--lastUpdatedDate DATETIME2 NULL,
 	isDeleted BIT DEFAULT 0,
     FOREIGN KEY (matchSeatId) REFERENCES MatchSeat(matchSeatId),
     FOREIGN KEY (email) REFERENCES [User](email)
@@ -160,7 +160,7 @@ CREATE TABLE HistoryPurchasedTicket (
 GO
 
 -- Table Payment
-CREATE TABLE Payment (
+/*CREATE TABLE Payment (
 	paymentId INT PRIMARY KEY IDENTITY (1,1),
 	email VARCHAR(50),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
@@ -172,13 +172,13 @@ CREATE TABLE Payment (
 	FOREIGN KEY (ticketId) REFERENCES HistoryPurchasedTicket(ticketId)
 );
 GO
-
+*/
 -- Table News
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
-    mainTitle VARCHAR(255),
+  --  mainTitle VARCHAR(255),
     title VARCHAR(255),
-    mainContent VARCHAR(255),
+  --  mainContent VARCHAR(255),
     content NVARCHAR(MAX),
     createdBy VARCHAR(50) NOT NULL,
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
