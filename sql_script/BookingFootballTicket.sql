@@ -113,7 +113,7 @@ GO
     CREATE TABLE SeatArea (
     seatId INT PRIMARY KEY IDENTITY (1,1),
     standId INT,
-    seatName NVARCHAR(50) unique NOT NULL,
+    seatName NVARCHAR(50),
     price DECIMAL(10, 2),
     quantity INT,
     createdBy VARCHAR(50),
@@ -130,11 +130,6 @@ CREATE TABLE MatchSeat(
 	matchId INT,
 	seatId INT,
 	[availability] INT,
-	createdBy VARCHAR(50),
-	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-	updatedBy VARCHAR(50),
-	lastUpdatedDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-	isDeleted BIT DEFAULT 0,
 	FOREIGN KEY (matchId) REFERENCES Match(matchId),
 	FOREIGN KEY (seatId ) REFERENCES SeatArea(seatId)
 );
