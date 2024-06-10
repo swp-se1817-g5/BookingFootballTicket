@@ -278,9 +278,11 @@
                                                 <label class="input-group-text" for="roleFilter">Filter</label>
                                             </div>
                                             <select class="custom-select" id="roleFilter" name="roleFilter">
-                                                <option value="all">All Roles</option>
+                                                <option value="0">All Roles</option>
                                                 <c:forEach items="${roles}" var="role">
-                                                    <option value="${role.roleId}">${role.roleName}</option>
+                                                    <c:if test="${role.roleId != 1}">
+                                                        <option value="${role.roleId}">${role.roleName}</option>
+                                                    </c:if>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -316,26 +318,28 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach items="${requestScope.users}" var="o">
-                                            <tr>
-                                                <td>${o.email}</td>
-                                                <td>${o.name}</td>
-                                                <c:forEach items="${requestScope.roles}" var="r">
-                                                    <c:if test="${r.roleId eq o.roleId}">
-                                                        <td>${r.roleName}</td>
-                                                    </c:if>
-                                                </c:forEach>
-                                                <td>${o.phoneNumber}</td>
-                                                <td><img src="${o.avatar}" alt="Avatar" style="max-width: 100px; max-height: 100px;"></td>
-                                                <td>
-                                                    <a href="#" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
-                                                    <a href="editUser.jsp?email=${o.email}" class="edit" title="Edit" data-toggle="tooltip">
-                                                        <i class="material-icons">&#xE254;</i>
-                                                    </a>
-                                                    <a href="deleteUser?email=${o.email}" class="delete" title="Delete" data-toggle="tooltip">
-                                                        <i class="material-icons">&#xE872;</i>
-                                                    </a>
-                                                </td>
-                                            </tr>
+                                            <c:if test="${o.roleId != 1}">
+                                                <tr>
+                                                    <td>${o.email}</td>
+                                                    <td>${o.name}</td>
+                                                    <c:forEach items="${requestScope.roles}" var="r">
+                                                        <c:if test="${r.roleId eq o.roleId}">
+                                                            <td>${r.roleName}</td>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    <td>${o.phoneNumber}</td>
+                                                    <td><img src="${o.avatar}" alt="Avatar" style="max-width: 100px; max-height: 100px;"></td>
+                                                    <td>
+                                                        <a href="#" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
+                                                        <a href="editUser.jsp?email=${o.email}" class="edit" title="Edit" data-toggle="tooltip">
+                                                            <i class="material-icons">&#xE254;</i>
+                                                        </a>
+                                                        <a href="deleteUser?email=${o.email}" class="delete" title="Delete" data-toggle="tooltip">
+                                                            <i class="material-icons">&#xE872;</i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </c:if>
                                         </c:forEach>
                                     </tbody>
                                 </table>
@@ -362,7 +366,7 @@
                     <div id="createUserModal" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form id="createUserForm" action="createUser" method="post">
+                                <form id="createUserForm" name="createUserForm" action="createUser" method="post">
                                     <div class="modal-header">						
                                         <h4 class="modal-title">Create User</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -370,7 +374,8 @@
                                     <div class="modal-body">					
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" required>
+                                            <input name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" required>
+                                            <div id="emailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label>Name</label>
@@ -380,17 +385,21 @@
                                             <label for="role">User Role</label>
                                             <select name="roleId" class="form-control" required>
                                                 <c:forEach items="${roles}" var="role">
-                                                    <option value="${role.roleId}">${role.roleName}</option>
+                                                    <c:if test="${role.roleId != 1}">
+                                                        <option value="${role.roleId}">${role.roleName}</option>
+                                                    </c:if>
                                                 </c:forEach>
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label>Password</label>
                                             <input name="password" type="password" class="form-control" required>
+                                            <div id="passwordError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label>Phone Number</label>
                                             <input name="phoneNumber" type="text" class="form-control" pattern="[0-9]{10}" required>
+                                            <div id="phoneNumberError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="avatar">Avatar</label>
@@ -399,22 +408,21 @@
                                         <div class="form-group">
                                             <img id="avatarPreview" src="" alt="Avatar Preview" style="max-width: 200px; max-height: 200px;">
                                         </div>
-
                                     </div>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                                         <input type="submit" class="btn btn-success" value="Add">
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>
+
                     <!-- Search User Modal -->
                     <div id="searchUserModal" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form id="searchForm" action="searchUser" method="post">
+                                <form id="searchForm" name="searchForm" action="searchUser" method="post">
                                     <div class="modal-header">						
                                         <h4 class="modal-title">Search User</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -423,7 +431,7 @@
                                         <div class="form-row">
                                             <div class="form-group col-md-3">
                                                 <label for="email">Email</label>
-                                                <input name="email" type="email"  class="form-control">
+                                                <input name="email" type="text" class="form-control">
                                             </div>
                                             <div class="form-group col-md-3">
                                                 <label for="name">Name</label>
@@ -433,7 +441,9 @@
                                                 <label for="roleId">User Role</label>
                                                 <select name="roleId" class="form-control">
                                                     <c:forEach items="${roles}" var="role">
-                                                        <option value="${role.roleId}">${role.roleName}</option>
+                                                        <c:if test="${role.roleId != 1}">
+                                                            <option value="${role.roleId}">${role.roleName}</option>
+                                                        </c:if>
                                                     </c:forEach>
                                                 </select>
                                             </div>
@@ -476,11 +486,11 @@
                 var toast = $('#toastNotification');
                 if (updated === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Stand updated successfully.');
+                    toast.find('#toastMessage').text('User updated successfully.');
                     toast.addClass('success').removeClass('error');
                 } else if (updated === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to update stand.');
+                    toast.find('#toastMessage').text('Failed to update user.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -494,11 +504,11 @@
                 var toast = $('#toastNotification');
                 if (created === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Football Club created successfully.');
+                    toast.find('#toastMessage').text('User created successfully.');
                     toast.addClass('success').removeClass('error');
                 } else if (created === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to create Football Club.');
+                    toast.find('#toastMessage').text('Failed to create User.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -512,11 +522,11 @@
                 var toast = $('#toastNotification');
                 if (deleted === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Stand deleted successfully.');
+                    toast.find('#toastMessage').text('User deleted successfully.');
                     toast.addClass('success').removeClass('error');
                 } else if (deleted === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to delete stand.');
+                    toast.find('#toastMessage').text('Failed to delete user.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -528,57 +538,47 @@
     <script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
-
-            // Convert the stands list from JSP to a JavaScript array
-            var clubs = [];
-        <c:forEach items="${footballClubs}" var="club">
-            clubs.push({clubId: "${club.clubId}", clubName: "${club.clubName}"});
+            // Convert the users list from JSP to a JavaScript array
+            var users = [];
+        <c:forEach items="${users}" var="user">
+            users.push({email: "${user.email}", name: "${user.name}"});
         </c:forEach>
 
-            // Check for duplicate stand name before submitting the create form
+            // Check for duplicate email before submitting the create form
             $('#createUserForm').submit(function (event) {
-                var clubName = $('#clubNameInput').val().trim();
-                var duplicate = clubs.some(club => club.clubName === clubName);
-
+                var email = $('#email').val().trim();
+                var duplicate = users.some(user => user.email === email);
                 if (duplicate) {
-                    $('#clubNameInputError').text('Club already exists. Please choose a different name.');
+                    $('#emailError').text('Email already exists. Please choose a different email.');
                     event.preventDefault();
                 } else {
-                    $('#clubNameInputError').text('');
+                    $('#emailError').text('');
                 }
             });
 
-            // Check for duplicate club name before submitting the update form
-            $('#updateFootballClubForm').submit(function (event) {
-                var clubId = $('#clubId').val();
-                var clubName = $('#clubName').val().trim();
-
-                var originalClub = clubs.find(club => club.clubId == clubId);
-
-                var duplicate = clubs.some(club => club.clubName === clubName && club.clubId != clubId);
-                console.log(duplicate);
-
-                if (clubName !== originalClub.clubName && duplicate) {
-                    $('#clubNameError').text('Club already exists. Please choose a different name');
+            // Check for duplicate email before submitting the update form
+            $('#updateUserForm').submit(function (event) {
+                var email = $('#emailInput').val().trim();
+                var duplicate = users.some(user => user.email === email);
+                if (duplicate) {
+                    $('#emailInputError').text('Email already exists. Please choose a different email.');
                     event.preventDefault();
                 } else {
-                    $('#clubNameError').text('');
+                    $('#emailInputError').text('');
                 }
             });
+
+            function deleteUser(email) {
+                if (confirm("Do you want to delete user with email = " + email))
+                    location.href = 'deleteUser?email=' + email;
+            }
+
+            function updateUser(email, name) {
+                document.getElementById('email').value = email;
+                document.getElementById('name').value = name;
+                $('#UseremailError').text('');
+            }
         });
-
-        function deleteUser(email) {
-            if (confirm("Do you want to delete user with email = " + email))
-                location.href = 'deleteUser?email=' + email;
-        }
-
-        function updateUser(email, name) {
-            document.getElementById('email').value = email;
-            document.getElementById('name').value = name;
-
-
-            $('#clubNameError').text('');
-        }
     </script>
     <script>
         $(document).ready(function () {
@@ -590,7 +590,6 @@
         function previewImage(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
-
                 reader.onload = function (e) {
                     $('#avatarPreview').attr('src', e.target.result);
                 }
@@ -605,49 +604,87 @@
             });
         });
     </script>
+    <%--Validate Create--%>
     <script>
         function validateEmail() {
-            var email = document.getElementById('email').value.trim();
+            var email = $('[name="email"]').val().trim();
             var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
             if (email === '') {
-                return 'Email is required. ';
+                $('#emailError').text('Email is required.');
+                return false;
             } else if (!emailPattern.test(email)) {
-                return 'Invalid email format. ';
+                $('#emailError').text('Invalid email format.');
+                return false;
+            } else {
+                $('#emailError').text('');
+                return true;
             }
-            return '';
+        }
+
+        function validateName() {
+            var name = $('[name="name"]').val().trim();
+            if (name === '') {
+                $('#nameError').text('Name is required.');
+                return false;
+            } else {
+                $('#nameError').text('');
+                return true;
+            }
         }
 
         function validatePhoneNumber() {
-            var phoneNumber = document.getElementById('phoneNumber').value.trim();
+            var phoneNumber = $('[name="phoneNumber"]').val().trim();
             var phonePattern = /^[0-9]{10}$/;
             if (phoneNumber === '') {
-                return 'Phone number is required. ';
+                $('#phoneNumberError').text('Phone number is required.');
+                return false;
             } else if (!phonePattern.test(phoneNumber)) {
-                return 'Invalid phone number format. ';
+                $('#phoneNumberError').text('Invalid phone number format.');
+                return false;
+            } else {
+                $('#phoneNumberError').text('');
+                return true;
             }
-            return '';
         }
-        function showErrorMessage(message) {
-            document.getElementById('error-message').innerText = message;
+
+        function validatePassword() {
+            var password = $('[name="password"]').val().trim();
+            var passwordPattern = /^(?=.*[0-9])(?=.*[A-Z]).{8,20}$/;
+            if (password === '') {
+                $('#passwordError').text('Password is required.');
+                return false;
+            } else if (password.length < 8 || password.length > 20) {
+                $('#passwordError').text('Password must be between 6 and 20 characters long.');
+                return false;
+            } else if (!passwordPattern.test(password)) {
+                $('#passwordError').text('Password must contain at least one digit and one uppercase letter.');
+                return false;
+            } else {
+                $('#passwordError').text('');
+                return true;
+            }
         }
 
         function validateForm() {
-            var errorMessage = '';
-            errorMessage += validateEmail();
-            errorMessage += validatePhoneNumber();
-            if (errorMessage !== '') {
-                showErrorMessage(errorMessage);
-                return false;
-            }
-            return true;
+            var emailValid = validateEmail();
+            var nameValid = validateName();
+            var phoneNumberValid = validatePhoneNumber();
+            var passwordValid = validatePassword();
+            return emailValid && nameValid && phoneNumberValid && passwordValid;
         }
-        document.getElementById('email').addEventListener('input', function () {
-            var errorMessage = validateEmail();
-            showErrorMessage(errorMessage);
+
+        // Validate fields on input
+        $('[name="email"]').on('input', function () {
+            validateEmail();
         });
-        document.getElementById('phoneNumber').addEventListener('input', function () {
-            var errorMessage = validatePhoneNumber();
-            showErrorMessage(errorMessage);
+        $('[name="name"]').on('input', function () {
+            validateName();
+        });
+        $('[name="phoneNumber"]').on('input', function () {
+            validatePhoneNumber();
+        });
+        $('[name="password"]').on('input', function () {
+            validatePassword();
         });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -661,13 +698,42 @@
                     data: {roleId: roleId},
                     success: function (data) {
                         $('#userTable tbody').html(data.html);
-                        $('.pagination').html(data.pagination); 
+                        $('.pagination').html(data.pagination);
                         $('.hint-text strong').text(data.usersCount);
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr.responseText);
                     }
                 });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#searchForm').on('submit', function (event) {
+                event.preventDefault(); // Prevent the form from submitting via the browser
+
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        $('#searchUserModal').modal('hide'); // Hide the modal on success
+                        $('#userTable tbody').html(data.html);
+                        $('.pagination').html(data.pagination);
+                        $('.hint-text strong').text(data.usersCount);
+                    },
+                    error: function (xhr, status, error) {
+                        $('#error-message').text("Error: " + xhr.responseText);
+                    }
+                });
+            });
+            // Handle pagination clicks
+            $(document).on('click', '.pagination a', function (e) {
+                e.preventDefault();
+                var page = $(this).data('page');
+                $('#searchForm').append('<input type="hidden" name="page" value="' + page + '">');
+                $('#searchForm').submit();
             });
         });
     </script>

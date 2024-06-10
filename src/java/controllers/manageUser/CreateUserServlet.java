@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
@@ -63,6 +64,7 @@ public class CreateUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.sendRedirect("manageUser");
     }
 
     /**
@@ -76,38 +78,28 @@ public class CreateUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String name = request.getParameter("name");
-        String password = request.getParameter("password");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String avatar = request.getParameter("avatar");
-
+        HttpSession session = request.getSession();
+        boolean created = false;
+//        User currentUser = (User) session.getAttribute("currentUser");
+//        String createdBy = currentUser.getEmail();
+        String email = request.getParameter("email").trim();
+        String name = request.getParameter("name").trim();
+        String password = request.getParameter("password").trim();
+        String phoneNumber = request.getParameter("phoneNumber").trim();
+        String avatar = request.getParameter("avatar").trim();
+        int roleId = Integer.parseInt(request.getParameter("roleId"));
         if (!email.isBlank() && !name.isBlank() && !password.isBlank() && !phoneNumber.isBlank()) {
-            try {
-                // Set additional fields
-                int roleId = 2; // Assuming a default role ID, adjust as necessary
-                String createdBy = "admin"; // Adjust as necessary
-                boolean isDeleted = false;
+            // Tạo đối tượng User mới
+            User user = new User(email, name, roleId, password, phoneNumber, avatar, "admin", LocalDateTime.now(), false);
 
-                // Create the User object
-                User user = new User(email, name, roleId, password, phoneNumber, avatar, createdBy, LocalDateTime.now(), isDeleted);
-
-                // Save the user
-                boolean added = UserDAO.getINSTANCE().createUser(user);
-
-                if (added) {
-                    response.sendRedirect(request.getContextPath() + "/manageUser?message=User+created+successfully!");
-                    return;
-                } else {
-                    response.sendRedirect(request.getContextPath() + "/manageUser?message=Failed+to+create+user.");
-                    return;
-                }
-            } catch (Exception ex) {
-                response.sendRedirect(request.getContextPath() + "/manageUser?message=An+error+occurred+while+creating+user.");
-                return;
-            }
+            // Lưu người dùng vào cơ sở dữ liệu
+            created = UserDAO.getINSTANCE().createUser(user);
         }
-        response.sendRedirect(request.getContextPath() + "/manageUser?message=Please+fill+all+fields.");
+        if(created) {
+            response.sendRedirect("manageUser?userCreated=" + created);
+        } else {
+            response.sendRedirect("manageUser?userCreated=" + created);
+        }
     }
 
     /**
