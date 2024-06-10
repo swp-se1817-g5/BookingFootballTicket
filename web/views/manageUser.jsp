@@ -272,11 +272,23 @@
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><h2>Manage <b>User</b></h2></div>
+                                    <div class="col-sm-4">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <label class="input-group-text" for="roleFilter">Filter</label>
+                                            </div>
+                                            <select class="custom-select" id="roleFilter" name="roleFilter">
+                                                <option value="all">All Roles</option>
+                                                <c:forEach items="${roles}" var="role">
+                                                    <option value="${role.roleId}">${role.roleName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-sm-4 searchh">
                                         <!-- Button to open the search modal -->
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchUserModal">
-                                            Open Search User Form
+                                            Open Search
                                         </button>
                                     </div>
                                     <div class="col-sm-4 createe">
@@ -387,7 +399,7 @@
                                         <div class="form-group">
                                             <img id="avatarPreview" src="" alt="Avatar Preview" style="max-width: 200px; max-height: 200px;">
                                         </div>
-                                        
+
                                     </div>
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -408,25 +420,27 @@
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
                                     <div class="modal-body">					
-                                        <div class="form-group">
-                                            <label for="name"> Name</label>
-                                            <input name="name" type="text" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Email</label>
-                                            <input name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="phoneNumber">Phone Number</label>
-                                            <input name="phoneNumber" type="text" class="form-control" pattern="[0-9]{10}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="roleId">User Role</label>
-                                            <select name="roleId" class="form-control">
-                                                <c:forEach items="${roles}" var="role">
-                                                    <option value="${role.roleId}">${role.roleName}</option>
-                                                </c:forEach>
-                                            </select>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-3">
+                                                <label for="email">Email</label>
+                                                <input name="email" type="email"  class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="name">Name</label>
+                                                <input name="name" type="text" class="form-control">
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="roleId">User Role</label>
+                                                <select name="roleId" class="form-control">
+                                                    <c:forEach items="${roles}" var="role">
+                                                        <option value="${role.roleId}">${role.roleName}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-md-3">
+                                                <label for="phoneNumber">Phone Number</label>
+                                                <input name="phoneNumber" type="text" class="form-control">
+                                            </div>
                                         </div>
                                         <div class="form-group">
                                             <div id="error-message" style="color: red;"></div>
@@ -551,8 +565,6 @@
                     $('#clubNameError').text('');
                 }
             });
-
-
         });
 
         function deleteUser(email) {
@@ -590,6 +602,72 @@
         $(document).ready(function () {
             $('input[name="avatar"]').change(function () {
                 previewImage(this);
+            });
+        });
+    </script>
+    <script>
+        function validateEmail() {
+            var email = document.getElementById('email').value.trim();
+            var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+            if (email === '') {
+                return 'Email is required. ';
+            } else if (!emailPattern.test(email)) {
+                return 'Invalid email format. ';
+            }
+            return '';
+        }
+
+        function validatePhoneNumber() {
+            var phoneNumber = document.getElementById('phoneNumber').value.trim();
+            var phonePattern = /^[0-9]{10}$/;
+            if (phoneNumber === '') {
+                return 'Phone number is required. ';
+            } else if (!phonePattern.test(phoneNumber)) {
+                return 'Invalid phone number format. ';
+            }
+            return '';
+        }
+        function showErrorMessage(message) {
+            document.getElementById('error-message').innerText = message;
+        }
+
+        function validateForm() {
+            var errorMessage = '';
+            errorMessage += validateEmail();
+            errorMessage += validatePhoneNumber();
+            if (errorMessage !== '') {
+                showErrorMessage(errorMessage);
+                return false;
+            }
+            return true;
+        }
+        document.getElementById('email').addEventListener('input', function () {
+            var errorMessage = validateEmail();
+            showErrorMessage(errorMessage);
+        });
+        document.getElementById('phoneNumber').addEventListener('input', function () {
+            var errorMessage = validatePhoneNumber();
+            showErrorMessage(errorMessage);
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#roleFilter').change(function () {
+                var roleId = $(this).val();
+                $.ajax({
+                    type: 'POST',
+                    url: 'manageUser',
+                    data: {roleId: roleId},
+                    success: function (data) {
+                        $('#userTable tbody').html(data.html);
+                        $('.pagination').html(data.pagination); 
+                        $('.hint-text strong').text(data.usersCount);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
             });
         });
     </script>

@@ -65,6 +65,7 @@ public class ManageNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         ArrayList<News> listNews;
         String go = request.getParameter("go");
@@ -74,6 +75,7 @@ public class ManageNewsServlet extends HttpServlet {
                 listNews = NewsDAO.INSTANCE.search(valueSearch);
                 if (!listNews.isEmpty()) {
                     session.setAttribute("getListNews", listNews);
+
                 }
                 request.getRequestDispatcher("views/manageNews.jsp").forward(request, response);
             }
@@ -81,6 +83,7 @@ public class ManageNewsServlet extends HttpServlet {
             listNews = NewsDAO.INSTANCE.getlistNews();
             if (!listNews.isEmpty()) {
                 session.setAttribute("getListNews", listNews);
+                out.print(listNews.toString());
             }
 
             if (session.getAttribute("created") != null) {

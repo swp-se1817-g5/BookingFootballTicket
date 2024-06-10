@@ -18,62 +18,27 @@ public class News {
     private String title;
     private String mainContent;
     private String content;
-    private String location;
-    private LocalDateTime kickOff;
     private String createBy;
     private LocalDateTime createdDate;
     private String updateBy;
     private LocalDateTime lastUpdateDate;
-    private boolean status;
+    private int status;
+    private boolean state;
     private boolean isDeleted;
-    private String deletedBy;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
     public News() {
     }
 
-    public News(String mainTitle, String title, String mainContent, String content, String location, LocalDateTime kickOff, String createBy, boolean status) {
+    public News(String mainTitle, String title, String mainContent, String content, String createBy,int status, boolean state) {
         this.mainTitle = mainTitle;
         this.title = title;
         this.mainContent = mainContent;
         this.content = content;
-        this.location = location;
-        this.kickOff = kickOff;
         this.createBy = createBy;
         this.status = status;
-    }
-
-    public int getNewsId() {
-        return newsId;
-    }
-
-    public void setNewsId(int newsId) {
-        this.newsId = newsId;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+        this.state = state;
     }
 
     public String getCreatedDate() {
@@ -100,20 +65,12 @@ public class News {
         this.lastUpdateDate = lastUpdateDate;
     }
 
-    public boolean isStatus() {
-        return status;
+    public int getNewsId() {
+        return newsId;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
-    }
-
-    public boolean isIsDeleted() {
-        return isDeleted;
-    }
-
-    public void setIsDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setNewsId(int newsId) {
+        this.newsId = newsId;
     }
 
     public String getMainTitle() {
@@ -124,6 +81,14 @@ public class News {
         this.mainTitle = mainTitle;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public String getMainContent() {
         return mainContent;
     }
@@ -132,33 +97,49 @@ public class News {
         this.mainContent = mainContent;
     }
 
-    public String getlocation() {
-        return location;
+    public String getContent() {
+        return content;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getKickOff() {
-        return kickOff != null ? kickOff.format(formatter) : null;
+    public String getCreateBy() {
+        return createBy;
     }
 
-    public void setKickOff(LocalDateTime KickOff) {
-        this.kickOff = KickOff;
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 
-    public String getDeletedBy() {
-        return deletedBy;
+    public int getStatus() {
+        return status;
     }
 
-    public void setDeletedBy(String deletedBy) {
-        this.deletedBy = deletedBy;
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public boolean isState() {
+        return state;
+    }
+
+    public void setState(boolean state) {
+        this.state = state;
+    }
+
+    public boolean isIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     @Override
     public String toString() {
-        return "News{" + "newsId=" + newsId + ", mainTitle=" + mainTitle + ", title=" + title + ", mainContent=" + mainContent + ", content=" + content + ", location=" + location + ", kickOff=" + kickOff + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", status=" + status + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
+        return "News{" + "newsId=" + newsId + ", mainTitle=" + mainTitle + ", title=" + title + ", mainContent=" + mainContent + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", status=" + status + ", state=" + state + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
     }
 
 }
