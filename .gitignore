@@ -1,5 +1,9 @@
 # Ignore build output directories
-/build/
+/build/empty/
+/build/generated-sources/
+/build/web/*
+!/build/web/Images/
+
 /dist/
 /nbbuild/
 /nbdist/
