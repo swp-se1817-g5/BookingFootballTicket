@@ -408,7 +408,15 @@ public class UserDAO {
                 Timestamp updatedTimestamp = rs.getTimestamp(10);
                 u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
                 users.add(u);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
     public User getUserByPhone(String phone) {
+        User user = null;
         String sql = "SELECT * FROM [User] WHERE phoneNumber = ? AND isDeleted = 0";
         try {
             checkConnection();
@@ -416,7 +424,7 @@ public class UserDAO {
             ps.setString(1, phone);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                User user = new User();
+                user = new User();
                 user.setEmail(rs.getString("email"));
                 user.setName(rs.getString("name"));
                 user.setRoleId(rs.getInt("roleId"));
@@ -428,12 +436,11 @@ public class UserDAO {
                 user.setUpdatedBy(rs.getString("updatedBy"));
                 user.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
                 user.setIsDeleted(rs.getBoolean("isDeleted"));
-                return user;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return users;
+        return user;
     }
 
     public ArrayList<User> getUsersByRoleId(int roleId, int offset, int noOfRecords) {
