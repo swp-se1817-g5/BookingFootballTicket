@@ -77,7 +77,7 @@ public class UpdateStandServlet extends HttpServlet {
 
             int standId = Integer.parseInt(request.getParameter("standId"));
             User user = (User)session.getAttribute("currentUser");
-            String updatedBy = user.getUserName();
+            String updatedBy = user.getEmail();
             String standName = request.getParameter("standName").trim();
             Stand stand = new Stand();
             stand.setStandId(standId);

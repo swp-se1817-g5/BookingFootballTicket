@@ -3,9 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.manageStand;
+package controllers.manageSeatArea;
 
-import dal.StandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,15 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import models.User;
 
 /**
  *
  * @author admin
  */
-@WebServlet(name="ManageStandServlet", urlPatterns={"/manageStand"})
-public class ManageStandServlet extends HttpServlet {
+@WebServlet(name="ManageSeateAreaServlet", urlPatterns={"/manageSeateArea"})
+public class ManageSeateAreaServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -38,23 +35,15 @@ public class ManageStandServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageStandServlet</title>");  
+            out.println("<title>Servlet ManageSeateAreaServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageStandServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ManageSeateAreaServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     } 
-    
-    
-//    private void testUser(HttpServletRequest request) throws ServletException, IOException{
-//        HttpSession session = request.getSession();
-//        User user = new User();
-//        user.setEmail("quachthekiet@gmail.com");
-//        session.setAttribute("currentUser", user);
-//    }
-    
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -66,22 +55,7 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-//        testUser(request);
-        if(request.getParameter("standCreated") != null) {
-            request.setAttribute("created", "true".equals(request.getParameter("standCreated")));
-        }
-        if(request.getParameter("standUpdated") != null) {
-            request.setAttribute("updated", "true".equals(request.getParameter("standUpdated")));
-        }
-        if(request.getParameter("standDeleted") != null) {
-            request.setAttribute("deleted", "true".equals(request.getParameter("standDeleted")));
-        }
-        String search = request.getParameter("search") == null ? "" : request.getParameter("search").trim() ;
-        
-        request.setAttribute("stands", StandDAO.INSTANCE.getStands(search));
-       
-        request.getRequestDispatcher("views/manageStand.jsp").forward(request, response);
-        
+        processRequest(request, response);
     } 
 
     /** 
@@ -94,9 +68,7 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
-        
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /** 

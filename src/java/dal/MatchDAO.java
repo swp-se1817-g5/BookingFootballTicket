@@ -157,10 +157,6 @@ public class MatchDAO {
                 MatchType h = new MatchType();
                 h.setTypeId(rs.getInt("TypeId"));
                 h.setName(rs.getString("name"));
-                h.setCreatedBy(rs.getString("createdBy"));
-                h.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
-                h.setUpdatedBy(rs.getString("updatedBy"));
-                h.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
                 h.setIsDeleted(rs.getBoolean("isDeleted"));
                 matchType.add(h);
             }
@@ -186,7 +182,7 @@ public class MatchDAO {
                     + "s.seasonName, "
                     + "s.startDate AS seasonStartDate, "
                     + "s.endDate AS seasonEndDate, "
-                    + "m.[time] AS matchTime, "
+                    + "m.[startTime] AS matchTime, "
                     + "ms.statusId AS matchStatusId, "
                     + "ms.statusName AS matchStatusName, "
                     + "mt.TypeId AS typeId, "
@@ -257,7 +253,7 @@ public class MatchDAO {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime localDateTime = LocalDateTime.parse(match.getTime(), formatter);
         Timestamp timestamp = Timestamp.valueOf(localDateTime);
-        String sql = "INSERT INTO Match (team1, team2, seasonId, [time], statusId, matchTypeId, createdBy, updatedBy) "
+        String sql = "INSERT INTO Match (team1, team2, seasonId, startTime, statusId, matchTypeId, createdBy, updatedBy) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
@@ -306,5 +302,9 @@ public class MatchDAO {
             ps.executeUpdate();
         } catch (SQLException e) {
         }
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(INSTANCE.getMatches().get(0).toString());
     }
 }
