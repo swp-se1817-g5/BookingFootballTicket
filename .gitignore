@@ -3,7 +3,7 @@
 /build/generated-sources/
 /build/web/*
 !/build/web/Images/
-
+!/build/web/Images/**
 
 /dist/
 /nbbuild/
