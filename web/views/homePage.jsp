@@ -354,16 +354,17 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="http://localhost:8080/BookingFootballTicket/changepass">
+                                                <a href="./changepass">
                                                     Change Password
                                                 </a>
                                             </li>
-                                            
+                                            <c:if test="${sessionScope.currentUser != null}">
                                             <li>
-                                                <a href="https://www.footballticketpad.com/group/club/borussia-dortmund">
+                                                <a href="./logout">
                                                     Logout
                                                 </a>
                                             </li>
+                                            </c:if>
                                         </ul>
                                     </li>
         </c:when>

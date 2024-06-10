@@ -76,8 +76,10 @@ public class SearchUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String searchType = request.getParameter("searchType");
-        String keyword = request.getParameter("keyword");
+        String email = request.getParameter("email");
+        String name = request.getParameter("name");
+        String phoneNumber = request.getParameter("phoneNumber");
+        int roleId = Integer.parseInt(request.getParameter("roleId"));
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
@@ -86,49 +88,26 @@ public class SearchUserServlet extends HttpServlet {
             }
         }
         int pageSize = 10;
-        // Check if both searchType and keyword are provided and not empty
-        if (searchType != null && !searchType.isBlank() && keyword != null && !keyword.isBlank()) {
-            ArrayList<User> users = new ArrayList<>();
-            ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
-            int totalUsers = 0;
-            // Perform search based on the searchType
-            switch (searchType) {
-                case "name":
-                    users = UserDAO.getINSTANCE().getUserbyType("name", keyword);
-                    totalUsers = users.size();
-                    break;
-                case "email":
-                    users = UserDAO.getINSTANCE().getUserbyType("email", keyword);
-                    totalUsers = users.size();
-                    break;
-                case "phoneNumber":
-                    users = UserDAO.getINSTANCE().getUserbyType("phoneNumber", keyword);
-                    totalUsers = users.size();
-                    break;
-                case "roleId":
-                    int roleId = Integer.parseInt(keyword);
-                    users = UserDAO.getINSTANCE().getUserbyroleID(roleId);
-                    totalUsers = users.size();
-                    break;
-                default:
-                    // Invalid search type, return error message
-                    request.setAttribute("message", "Invalid search type: " + searchType);
-                    break;
-            }
-            // Check if users list is not null and not empty
-            if (users != null && !users.isEmpty()) {
-                ArrayList<User> paginatedUsers = UserDAO.getINSTANCE().getPaginatedUsers(users, page, pageSize);
-                int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
-                request.setAttribute("users", paginatedUsers);
-                request.setAttribute("roles", roles);
-                request.setAttribute("currentPage", page);
-                request.setAttribute("totalPages", totalPages);
-                request.setAttribute("noOfRecords", totalUsers);
-            } else {
-                // No users found, return message
-                request.setAttribute("message", "No users found for the provided keyword: " + keyword);
-                request.setAttribute("noOfRecords",0);
-            }
+        email = (email != null) ? email : "";
+        name = (name != null) ? name : "";
+        phoneNumber = (phoneNumber != null) ? phoneNumber : "";
+        // Perform user search
+        ArrayList<User> users = UserDAO.getINSTANCE().searchUsers(email, name, phoneNumber, roleId);
+        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
+        int totalUsers = users.size();
+        // Check if users list is not null and not empty
+        if (users != null && !users.isEmpty()) {
+            ArrayList<User> paginatedUsers = UserDAO.getINSTANCE().getPaginatedUsers(users, page, pageSize);
+            int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
+            request.setAttribute("users", paginatedUsers);
+            request.setAttribute("roles", roles);
+            request.setAttribute("currentPage", page);
+            request.setAttribute("totalPages", totalPages);
+            request.setAttribute("noOfRecords", totalUsers);
+        } else {
+            // No users found, return message
+            request.setAttribute("message", "No users found for the provided keyword: " + email + name + phoneNumber);
+            request.setAttribute("noOfRecords", 0);
         }
         // Forward the request to the searchUser.jsp page
         request.getRequestDispatcher("views/searchUser.jsp").forward(request, response);

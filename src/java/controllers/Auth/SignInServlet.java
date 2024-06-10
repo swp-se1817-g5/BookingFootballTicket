@@ -42,10 +42,10 @@ public class SignInServlet extends HttpServlet {
         UserDAO userDAO = UserDAO.INSTANCE;
         HttpSession session = request.getSession();
 
-        // Get user by email and password
+        // Authenticate user by email and plaintext password
         User user = userDAO.authenticateUser(email, password);
 
-        // If exist, set in session, maybe set email and password or user
+        // If user exists, set in session, maybe set email and password or user
         if (user != null) {
             session.setAttribute("currentUser", user);
 

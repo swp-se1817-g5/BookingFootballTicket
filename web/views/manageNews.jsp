@@ -366,33 +366,43 @@ Author     : duong
                                         <th>Title</th>
                                         <th>Main Content</th>
                                         <th>Content</th>
-                                        <th>Location</th>
-                                        <th>Kick Off</th>
                                         <th>Status</th>
+                                        <th>State</th>
                                         <th>Action</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${sessionScope.getListNews}" var="n" varStatus="status">
-                                        <c:if test="${!n.isDeleted}">
-                                            <tr style="word-break: break-word">
-                                                <td>${status.count}</td>
-                                                <td>${n.mainTitle}</td>
-                                                <td>${n.title}</td>
-                                                <td>${n.mainContent}</td>
-                                                <td>${n.content}</td>
-                                                <td>${n.location}</td>
-                                                <td><input type="datetime-local"value="${n.kickOff}" readonly style="border: none; background: none"></td>
-                                                <c:if test="${n.status=='false'}"><td>Hide</td></c:if>
-                                                <c:if test="${n.status=='true'}"><td>Show</td></c:if>
-                                                    <td>
-                                                        <a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
-                                                    <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
-                                                    <a onclick="return confirmDelete(${n.newsId})" href = "deleteNews?newsId=${n.newsId}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                                </td>
-                                            </tr>
-                                        </c:if>
+                                        <tr style="word-break: break-word">
+                                            <td>${status.count}</td>
+                                            <td>${n.mainTitle}</td>
+                                            <td>${n.title}</td>
+                                            <td>${n.mainContent}</td>
+                                            <td>${n.content}</td>
+                                            <c:if test=""></c:if>
+                                            <c:choose>
+                                                <c:when test="${n.status == 0}">
+                                                    <td>Rejected</td>
+                                                </c:when>
+                                                <c:when test="${n.status == 1}">
+                                                    <td>Pending</td>
+                                                </c:when>
+                                                <c:when test="${n.status == 2}">
+                                                    <td>Approved</td>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <td>Unknown</td>
+                                                </c:otherwise>
+                                            </c:choose>
+                                            <c:if test="${n.state=='false'}"><td>Hide</td></c:if>
+                                            <c:if test="${n.state=='true'}"><td>Show</td></c:if>
+                                                <td>
+                                                    <a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
+                                                <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
+                                                <a onclick="return confirmDelete(${n.newsId})" href = "deleteNews?newsId=${n.newsId}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                            </td>
+                                        </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
@@ -432,19 +442,10 @@ Author     : duong
                                 <label>Content</label>
                                 <textarea name="content" class="form-control" rows="5" required></textarea>
                             </div>
-                            <div class="form-group">
-                                <label>Location</label>
-                                <input name="location" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Kick Off <span id="datetimeError2" class="error"></span></label>
-                                <input id="datetimeInput1" type="datetime-local" class="form-control" name="kickOff" required>
-                            </div>
-
                             <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
-                                <label>Status</label>
-                                <input name="status" type="radio" required checked value="2">Show
-                                <input name="status" type="radio" required value="1">Hide
+                                <label>State</label>
+                                <input name="state" type="radio" required checked value="1">Show
+                                <input name="state" type="radio" required value="0">Hide
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -527,17 +528,14 @@ Author     : duong
                                     <input name="content" class="form-control" value="${n.content}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Location</label>
-                                    <input name="location" class="form-control" value="${n.location}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Kick Off <span id="datetimeError2" class="error"></span></label>
-                                    <input id="datetimeInput2" type="datetime-local" class="form-control" name="kickOff" required value="${n.kickOff}">
+                                    <label>State</label>
+                                    <input name="state" type="radio" required value="1" ${n.state == 'true' ? 'checked' :''}>Show
+                                    <input name="state" type="radio" required value="0" ${n.state == 'false' ? 'checked' :''}>Hide
                                 </div>
                                 <div class="form-group">
                                     <label>Status</label>
-                                    <input name="status" type="radio" required value="1" ${n.status == 'true' ? 'checked' :''}>Show
-                                    <input name="status" type="radio" required value="0" ${n.status == 'false' ? 'checked' :''}>Hide
+                                    <input name="status" type="radio" required value="0" ${n.status == 0 ? 'checked' :''}>Reject
+                                    <input name="status" type="radio" required value="2" ${n.status == 2 ? 'checked' :''}>Approve
                                 </div>
                             </div>
                             <div class="modal-footer">
