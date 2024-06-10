@@ -276,7 +276,7 @@ Author     : admin
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><h2>Stand <b>Management</b></h2></div>
+                                    <div class="col-sm-4"><h2>Manage <b>Stand</b></h2></div>
 
                                     <div class="col-sm-4 searchh">
                                         <form action="manageStand" method="get" id="searchForm">
@@ -306,7 +306,7 @@ Author     : admin
                                             <td>${o.standId}</td>
                                             <td>${o.standName}</td>
                                             <td>
-                                                <a onclick="viewDetail('${o.standId}', '${o.standName}', '${o.createdBy}', '${o.createdDate}', '${o.updatedBY}', '${o.lastUpdatedDate}')" href="#viewDetailModal" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
+                                                <a onclick="viewDetail('${o.standId}', '${o.standName}', '${o.createdBy}', '${o.createdDate}', '${o.updatedBy}', '${o.lastUpdatedDate}')" href="#viewDetailModal" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
                                                 <a onclick="update('${o.standId}', '${o.standName}')"  href="#updateStandModal" class="edit" title="E'${o.standId}', '${o.standName}'dit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
                                                 <a onclick="doDelete(${o.standId})" href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                             </td>
@@ -336,6 +336,22 @@ Author     : admin
                         <div class="form-group">
                             <label>Stand Name</label>
                             <input id="standDetailName" maxlength="50" type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Created By</label>
+                            <input id="createdBy" readonly="" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Created Date</label>
+                            <input id="createdDate" readonly="" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Updated By</label>
+                            <input id="updatedBy" readonly="" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Last Updated Date</label>
+                            <input id="lastUpdatedDate" readonly="" class="form-control" required>
                         </div>
 
                     </div>

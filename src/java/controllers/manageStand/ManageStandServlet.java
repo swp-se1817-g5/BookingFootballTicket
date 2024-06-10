@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import models.User;
 
 /**
  *
@@ -46,6 +47,14 @@ public class ManageStandServlet extends HttpServlet {
         }
     } 
     
+    
+    private void testUser(HttpServletRequest request) throws ServletException, IOException{
+        HttpSession session = request.getSession();
+        User user = new User();
+        user.setEmail("quachthekiet@gmail.com");
+        session.setAttribute("currentUser", user);
+    }
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
      * Handles the HTTP <code>GET</code> method.
@@ -57,6 +66,7 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        testUser(request);
         if(request.getParameter("standCreated") != null) {
             request.setAttribute("created", "true".equals(request.getParameter("standCreated")));
         }
