@@ -27,6 +27,7 @@ public class SeatArea {
     public SeatArea() {
     }
 
+
     public SeatArea(int seatId, String seatName, Stand stand, BigDecimal price, int quantity, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate) {
         this.seatId = seatId;
         this.seatName = seatName;
@@ -38,6 +39,17 @@ public class SeatArea {
         this.updatedBy = updatedBy;
         this.lastUpdatedDate = lastUpdatedDate;
     }
+    
+    
+    public String getSeatName() {
+        return seatName;
+    }
+
+    public void setSeatName(String seatName) {
+        this.seatName = seatName;
+    }
+    
+    
 
     public int getSeatId() {
         return seatId;
@@ -45,14 +57,6 @@ public class SeatArea {
 
     public void setSeatId(int seatId) {
         this.seatId = seatId;
-    }
-
-    public String getSeatName() {
-        return seatName;
-    }
-
-    public void setSeatName(String seatName) {
-        this.seatName = seatName;
     }
 
     public Stand getStand() {

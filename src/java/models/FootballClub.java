@@ -6,8 +6,9 @@ import java.time.format.DateTimeFormatter;
 public class FootballClub {
 
     private int clubId;
-    private String clubName;
     private String img;
+    private String clubName;
+    private String description;
     private String createdBy;
     private LocalDateTime createdDate;
     private String updatedBy;
@@ -19,16 +20,28 @@ public class FootballClub {
     public FootballClub() {
     }
 
-    public FootballClub(int clubId, String clubName, String img, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
+    public FootballClub(int clubId, String img, String clubName, String description, String createdBy,
+            LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
         this.clubId = clubId;
-        this.clubName = clubName;
         this.img = img;
+        this.clubName = clubName;
+        this.description = description;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
         this.updatedBy = updatedBy;
         this.lastUpdatedDate = lastUpdatedDate;
         this.isDeleted = isDeleted;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    
 
     public int getClubId() {
         return clubId;
