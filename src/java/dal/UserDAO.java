@@ -277,8 +277,7 @@ public class UserDAO {
         try {
             checkConnection();
             ps = con.prepareStatement(sql);
-            int userRoleId = 2;
-            ps.setInt(1, userRoleId);
+            ps.setInt(1, user.getRoleId());
             ps.setString(2, user.getName());
             ps.setString(3, user.getHashedPassword());
             ps.setString(4, user.getEmail());
@@ -329,7 +328,7 @@ public class UserDAO {
 
     public ArrayList<User> getUsers(int offset, int noOfRecords) {
         ArrayList<User> users = new ArrayList<>();
-        String query = "SELECT * FROM [User] WHERE [isDeleted] = 0 ORDER BY email OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String query = "SELECT * FROM [User] WHERE [isDeleted] = 0 AND [roleId] <> 1 ORDER BY email OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, offset);
@@ -358,7 +357,7 @@ public class UserDAO {
     }
 
     public int getNoOfRecords() {
-        String query = "SELECT COUNT(*) FROM [User]";
+        String query = "SELECT COUNT(*) FROM [User] WHERE [roleId] <> 1";
         try (PreparedStatement ps = con.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
             if (rs.next()) {
                 return rs.getInt(1);

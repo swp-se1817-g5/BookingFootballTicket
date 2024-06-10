@@ -105,13 +105,10 @@ public class ManageUserServlet extends HttpServlet {
             }
         }
         int roleId = 0;
-        String roleIdParam = request.getParameter("roleId");
-        if (roleIdParam != null && !roleIdParam.isEmpty()) {
-            try {
-                roleId = Integer.parseInt(roleIdParam);
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
+        try {
+            roleId = Integer.parseInt(request.getParameter("roleId"));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
         ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
         ArrayList<User> users;
@@ -129,20 +126,22 @@ public class ManageUserServlet extends HttpServlet {
         // Build HTML response
         StringBuilder htmlResponse = new StringBuilder();
         for (User user : users) {
-            String roleName = getRoleName(user.getRoleId());
-            htmlResponse.append("<tr>");
-            htmlResponse.append("<td>").append(user.getEmail()).append("</td>");
-            htmlResponse.append("<td>").append(user.getName()).append("</td>");
-            htmlResponse.append("<td>").append(roleName).append("</td>");
-            htmlResponse.append("<td>").append(user.getPhoneNumber()).append("</td>");
-            htmlResponse.append("<td>").append(user.getAvatar()).append("</td>");
-            htmlResponse.append("<td>");
-            htmlResponse.append("<a href=\"#\" class=\"view\" title=\"View\" data-toggle=\"modal\"><i class=\"material-icons\">&#xE417;</i></a>");
-            htmlResponse.append("<a href=\"editUser.jsp?email=").append(user.getEmail()).append("\" class=\"edit\" title=\"Edit\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE254;</i></a>");
-            htmlResponse.append("<a href=\"deleteUser?email=").append(user.getEmail()).append("\" class=\"delete\" title=\"Delete\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE872;</i></a>");
-            htmlResponse.append("</td>");
-            htmlResponse.append("</tr>");
-            htmlResponse.append("</tr>");
+            if (user.getRoleId() != 1) {
+                String roleName = getRoleName(user.getRoleId());
+                htmlResponse.append("<tr>");
+                htmlResponse.append("<td>").append(user.getEmail()).append("</td>");
+                htmlResponse.append("<td>").append(user.getName()).append("</td>");
+                htmlResponse.append("<td>").append(roleName).append("</td>");
+                htmlResponse.append("<td>").append(user.getPhoneNumber()).append("</td>");
+                htmlResponse.append("<td>").append("<img src=\"" + user.getAvatar() + "\" alt=\"User Avatar\" style=\"max-width: 100px; max-height: 100px;\">").append("</td>");
+                htmlResponse.append("<td>");
+                htmlResponse.append("<a href=\"#\" class=\"view\" title=\"View\" data-toggle=\"modal\"><i class=\"material-icons\">&#xE417;</i></a>");
+                htmlResponse.append("<a href=\"editUser.jsp?email=").append(user.getEmail()).append("\" class=\"edit\" title=\"Edit\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE254;</i></a>");
+                htmlResponse.append("<a href=\"deleteUser?email=").append(user.getEmail()).append("\" class=\"delete\" title=\"Delete\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE872;</i></a>");
+                htmlResponse.append("</td>");
+                htmlResponse.append("</tr>");
+                htmlResponse.append("</tr>");
+            }
         }
         /// Build pagination HTML
         StringBuilder pagination = new StringBuilder();
