@@ -5,6 +5,7 @@
 package models;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
@@ -12,20 +13,24 @@ import java.time.format.DateTimeFormatter;
  * @author admin
  */
 public class SeatArea {
+
     private int seatId;
+    private String seatName;
     private Stand stand;
     private BigDecimal price;
     private int quantity;
     private String createdBy;
-    private DateTimeFormatter createdDate;
+    private LocalDateTime createdDate;
     private String updatedBy;
-    private DateTimeFormatter lastUpdatedDate;
+    private LocalDateTime lastUpdatedDate;
 
     public SeatArea() {
     }
 
-    public SeatArea(int seatId, Stand stand, BigDecimal price, int quantity, String createdBy, DateTimeFormatter createdDate, String updatedBy, DateTimeFormatter lastUpdatedDate) {
+
+    public SeatArea(int seatId, String seatName, Stand stand, BigDecimal price, int quantity, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate) {
         this.seatId = seatId;
+        this.seatName = seatName;
         this.stand = stand;
         this.price = price;
         this.quantity = quantity;
@@ -34,6 +39,17 @@ public class SeatArea {
         this.updatedBy = updatedBy;
         this.lastUpdatedDate = lastUpdatedDate;
     }
+    
+    
+    public String getSeatName() {
+        return seatName;
+    }
+
+    public void setSeatName(String seatName) {
+        this.seatName = seatName;
+    }
+    
+    
 
     public int getSeatId() {
         return seatId;
@@ -75,11 +91,11 @@ public class SeatArea {
         this.createdBy = createdBy;
     }
 
-    public DateTimeFormatter getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(DateTimeFormatter createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -91,15 +107,12 @@ public class SeatArea {
         this.updatedBy = updatedBy;
     }
 
-    public DateTimeFormatter getLastUpdatedDate() {
+    public LocalDateTime getLastUpdatedDate() {
         return lastUpdatedDate;
     }
 
-    public void setLastUpdatedDate(DateTimeFormatter lastUpdatedDate) {
+    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
         this.lastUpdatedDate = lastUpdatedDate;
     }
-    
-        
-  
-    
+
 }

@@ -1266,6 +1266,8 @@
                                 <style>
                                     path {
                                         fill: #cccccc;
+                                        stroke: #cccccc;
+                                        stroke-width: 3;
                                     }
 
                                     .maptext {
@@ -1273,6 +1275,7 @@
                                         fill: #fff;
                                         font-family: "Myriad Pro";
                                         font-weight: 700;
+                                        pointer-events: none;
                                     }
                                     [data-block] {
                                         transition: fill 0.3s ease; /* Transition để làm mượt việc thay đổi màu */
@@ -1283,30 +1286,35 @@
                                     .fans-side.hovered,
                                     .fans-side.clicked {
                                         fill: #F1D446; /* Màu vang cho fans-side */
+                                        transition: fill 0.3s ease;
                                     }
 
                                     .standard,
                                     .standard.hovered,
                                     .standard.clicked {
                                         fill: #E99C8A; /* Màu xanh lá cho standard */
+                                        transition: fill 0.3s ease;
                                     }
 
                                     .vip-stand,
                                     .vip-stand.hovered,
                                     .vip-stand.clicked {
                                         fill: #5b5a82; /* Màu xanh dương cho vip-stand */
+                                        transition: fill 0.3s ease;
                                     }
 
                                     .under-roof,
                                     .under-roof.hovered,
                                     .under-roof.clicked {
                                         fill: #A96EBB; /* Màu vàng cho under-roof */
+                                        transition: fill 0.3s ease;
                                     }
 
                                     .on-roof,
                                     .on-roof.hovered,
                                     .on-roof.clicked {
                                         fill: #85E1D5; /* Màu hồng cho on-roof */
+                                        transition: fill 0.3s ease;
                                     }
 
 
@@ -1330,8 +1338,10 @@
                                 <script>
                                     document.addEventListener('DOMContentLoaded', function () {
                                         const svg = document.getElementById('svgStadium');
-
+                                        
                                         const paths = svg.querySelectorAll('path');
+
+
 
                                         paths.forEach(function (path) {
                                             var sectionName = path.getAttribute('data-section');
@@ -1375,8 +1385,6 @@
                                                     item.classList.remove('hovered'); // Remove hovered class when clicked
                                                 });
                                             });
-
-
                                         });
                                     });
 
@@ -1544,34 +1552,34 @@
 
                             </div>
                             <div class="seating hidden-s-view">
-                                <div class="heading">Select a section that you'd like to be seated in</div>
-                                <div class="column">
-                                    <div class="item" data-type="category-1">
+                                <div class="heading">Explain Selected above</div>
+                                <div class="column" id="all-seating">
+                                    <div class="item active" data-type="standard">
                                         <div class="key" style="border-color:#E99C8A" "></div><div class="text">
                                             Standard
                                         </div>
                                     </div>
-                                    <div class="item" data-type="category-2">
+                                    <div class="item active" data-type="fans-side">
                                         <div class="key" style="border-color:#F1D446" "></div><div class="text">
                                             Fans side
                                         </div>
                                     </div>
-                                    <div class="item" data-type="category-3">
+                                    <div class="item active" data-type="no-select">
                                         <div class="key" style="border-color:#cccccc" "></div><div class="text">
                                             No Select
                                         </div>
                                     </div>
-                                    <div class="item" data-type="longside-lower-tier">
+                                    <div class="item active" data-type="under-roof">
                                         <div class="key" style="border-color:#A96EBB" "></div><div class="text">
                                             Under the Roof
                                         </div>
                                     </div>
-                                    <div class="item" data-type="prime-seats">
+                                    <div class="item active" data-type="vip-stand">
                                         <div class="key" style="border-color:#5b5a82" "></div><div class="text">
                                             Vip Seat
                                         </div>
                                     </div>
-                                    <div class="item" data-type="shortside-upper-tier">
+                                    <div class="item active" data-type="on-roof">
                                         <div class="key" style="border-color:#85E1D5" "></div><div class="text">
                                             On the Roof
                                         </div>

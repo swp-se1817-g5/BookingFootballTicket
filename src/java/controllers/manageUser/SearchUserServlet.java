@@ -4,15 +4,16 @@
  */
 package controllers.manageUser;
 
+import com.google.gson.JsonObject;
 import dal.RoleDAO;
 import dal.UserDAO;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import models.Role;
 import models.User;
@@ -76,10 +77,11 @@ public class SearchUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String name = request.getParameter("name");
-        String phoneNumber = request.getParameter("phoneNumber");
+        String email = request.getParameter("email").trim();
+        String name = request.getParameter("name").trim();
+        String phoneNumber = request.getParameter("phoneNumber").trim();
         int roleId = Integer.parseInt(request.getParameter("roleId"));
+
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
@@ -91,36 +93,74 @@ public class SearchUserServlet extends HttpServlet {
         email = (email != null) ? email : "";
         name = (name != null) ? name : "";
         phoneNumber = (phoneNumber != null) ? phoneNumber : "";
-        // Perform user search
+
         ArrayList<User> users = UserDAO.getINSTANCE().searchUsers(email, name, phoneNumber, roleId);
-        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
         int totalUsers = users.size();
-        // Check if users list is not null and not empty
-        if (users != null && !users.isEmpty()) {
-            ArrayList<User> paginatedUsers = UserDAO.getINSTANCE().getPaginatedUsers(users, page, pageSize);
-            int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
-            request.setAttribute("users", paginatedUsers);
-            request.setAttribute("roles", roles);
-            request.setAttribute("currentPage", page);
-            request.setAttribute("totalPages", totalPages);
-            request.setAttribute("noOfRecords", totalUsers);
-        } else {
-            // No users found, return message
-            request.setAttribute("message", "No users found for the provided keyword: " + email + name + phoneNumber);
-            request.setAttribute("noOfRecords", 0);
+        int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
+        ArrayList<User> paginatedUsers = UserDAO.getINSTANCE().getPaginatedUsers(users, page, pageSize);
+
+        StringBuilder htmlResponse = new StringBuilder();
+        for (User user : paginatedUsers) {
+            String roleName = getRoleName(user.getRoleId());
+            htmlResponse.append("<tr>");
+            htmlResponse.append("<td>").append(user.getEmail()).append("</td>");
+            htmlResponse.append("<td>").append(user.getName()).append("</td>");
+            htmlResponse.append("<td>").append(roleName).append("</td>");
+            htmlResponse.append("<td>").append(user.getPhoneNumber()).append("</td>");
+            htmlResponse.append("<td>").append("<img src=\"" + user.getAvatar() + "\" alt=\"User Avatar\" style=\"max-width: 100px; max-height: 100px;\">").append("</td>");
+            htmlResponse.append("<td>");
+            htmlResponse.append("<a href=\"#\" class=\"view\" title=\"View\" data-toggle=\"modal\"><i class=\"material-icons\">&#xE417;</i></a>");
+            htmlResponse.append("<a href=\"editUser.jsp?email=").append(user.getEmail()).append("\" class=\"edit\" title=\"Edit\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE254;</i></a>");
+            htmlResponse.append("<a href=\"deleteUser?email=").append(user.getEmail()).append("\" class=\"delete\" title=\"Delete\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE872;</i></a>");
+            htmlResponse.append("</td>");
+            htmlResponse.append("</tr>");
         }
-        // Forward the request to the searchUser.jsp page
-        request.getRequestDispatcher("views/searchUser.jsp").forward(request, response);
+        StringBuilder pagination = new StringBuilder();
+        pagination.append("<ul class='pagination'>");
+        if (page > 1) {
+            pagination.append("<li class='page-item'><a href='#' data-page='1' class='page-link'>First</a></li>");
+            pagination.append("<li class='page-item'><a href='#' data-page='").append(page - 1).append("' class='page-link'>Previous</a></li>");
+        }
+        for (int i = 1; i <= totalPages; i++) {
+            if (i == page) {
+                pagination.append("<li class='page-item active'><a href='#' data-page='").append(i).append("' class='page-link'>").append(i).append("</a></li>");
+            } else {
+                pagination.append("<li class='page-item'><a href='#' data-page='").append(i).append("' class='page-link'>").append(i).append("</a></li>");
+            }
+        }
+        if (page < totalPages) {
+            pagination.append("<li class='page-item'><a href='#' data-page='").append(page + 1).append("' class='page-link'>Next</a></li>");
+            pagination.append("<li class='page-item'><a href='#' data-page='").append(totalPages).append("' class='page-link'>Last</a></li>");
+        }
+        pagination.append("</ul>");
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        JsonObject jsonResponse = new JsonObject();
+        jsonResponse.addProperty("html", htmlResponse.toString());
+        jsonResponse.addProperty("pagination", pagination.toString());
+        jsonResponse.addProperty("usersCount", totalUsers);
+
+        PrintWriter out = response.getWriter();
+        out.println(jsonResponse.toString());
+        out.close();
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    private String getRoleName(int roleId) {
+        String roleName = "";
+        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
+        for (Role role : roles) {
+            if (role.getRoleId() == roleId) {
+                roleName = role.getRoleName();
+                break;
+            }
+        }
+        return roleName;
+    }
+
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "SearchUserServlet handles searching users with AJAX.";
+    }
 }
