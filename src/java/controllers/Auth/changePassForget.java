@@ -13,8 +13,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.mindrot.jbcrypt.BCrypt;
 
-@WebServlet(name="changePassForget", urlPatterns={"/changePassForget"})
-public class changePassForget extends HttpServlet {
+@WebServlet(name="ChangePassForget", urlPatterns={"/changePassForget"})
+public class ChangePassForget extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -51,7 +51,7 @@ public class changePassForget extends HttpServlet {
                 session.setAttribute("currentUser", dao.getUserByEmail(emailReset));
                 request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
             } catch (SQLException ex) {
-                Logger.getLogger(changePassForget.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ChangePassForget.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("mess", "An error occurred while resetting the password. Please try again later.");
                 request.getRequestDispatcher("views/changePassReset.jsp").forward(request, response);
             }

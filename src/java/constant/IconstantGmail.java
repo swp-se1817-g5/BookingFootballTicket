@@ -9,9 +9,9 @@ package constant;
  * @author AD
  */
 public class IconstantGmail {
-    public static final String GMAIL_CLIENT_ID = "1073401471200-ghdb1gukfmee5sopljko5nca3568qnd6.apps.googleusercontent.com";
+    public static final String GMAIL_CLIENT_ID = "710226049781-g37fdin0lmq797dniqao07fsr27oj20j.apps.googleusercontent.com";
 
-    public static final String GMAIL_CLIENT_SECRET = "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";
+    public static final String GMAIL_CLIENT_SECRET = "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";
 
     public static final String GMAIL_REDIRECT_URI = "http://localhost:8080/BookingFootballTicket/gmail";
 

@@ -17,7 +17,7 @@ import org.apache.http.client.fluent.Request;
  *
  * @author AD
  */
-public class getGmail {
+public class GetGmail {
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
 

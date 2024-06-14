@@ -86,3 +86,9 @@ INSERT INTO NewsImages (NewsId, imageUrl) VALUES
 (1,'http://example.com/image2.jpg'),
 (1,'http://example.com/image3.jpg');
 GO
+
+INSERT INTO tokenForgetPassword (token, expiryTime, isUsed, userEmail)
+VALUES 
+('token1', DATEADD(hour, 1, CURRENT_TIMESTAMP), 0, 'quantahe170941@fpt.edu.vn')
+GO
+

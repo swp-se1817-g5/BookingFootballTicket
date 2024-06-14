@@ -29,7 +29,7 @@ public class SignInServlet extends HttpServlet {
             request.setAttribute("passValid", password);
         }
 
-        request.getRequestDispatcher("views/signIn.jsp").forward(request, response);
+        request.getRequestDispatcher("views/login.jsp").forward(request, response);
     }
 
     @Override
@@ -65,7 +65,7 @@ public class SignInServlet extends HttpServlet {
         } else {
             // If not exists, throw message to view to display
             request.setAttribute("errorMessage", "Email or password may be wrong! Please try again!");
-            request.getRequestDispatcher("views/signIn.jsp").forward(request, response);
+            request.getRequestDispatcher("views/login.jsp").forward(request, response);
         }
     }
 

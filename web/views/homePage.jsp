@@ -1732,17 +1732,18 @@
                                                                                                                                                                                     %> 
                                                                                                                                                                                     
                                                                                                                                                                                     <%
-                                                                                                                                                                                     Boolean changePassword = (Boolean) request.getAttribute("changePassword");
-                                                                                                                                                                                     if (changePassword != null) {
-                                                                                                                                                                                    %>  
-                                                                                                                                                                                    <script type="text/javascript">
-                                                                                                                                                                                        window.onload = function () {
-                                                                                                                                                                                            showLoginPopup("Change password successfully!");
-                                                                                                                                                                                        }
-                                                                                                                                                                                    </script>
-                                                                                                                                                                                    <%
-                                                                                                                                                                                     }
-                                                                                                                                                                                    %> 
+    Boolean changePassword = (Boolean) session.getAttribute("changePassword");
+    if (changePassword != null) {
+        session.removeAttribute("changePassword");
+%>  
+        <script type="text/javascript">
+            window.onload = function () {
+                showLoginPopup("Change password successfully!");
+            }
+        </script>
+<%
+    }
+%>
                                                                                                                                                                                     
                                                                                                                                                                                     <%
                                                                                                                                                                                     Boolean isFirstLogin = (Boolean) request.getAttribute("isFirstLogin");
