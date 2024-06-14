@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageNews;
+package controllers.manage_news;
 
 import dal.NewsDAO;
 import java.io.IOException;
@@ -14,19 +14,17 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import models.News;
-import java.time.format.DateTimeFormatter;
 import models.User;
 
 /**
  *
  * @author nguye
  */
-@WebServlet(name = "CreateNewNewsServlet", urlPatterns = {"/createNewNews"})
-public class CreateNewNewsServlet extends HttpServlet {
-
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
+@WebServlet(name = "UpdateNewsServlet", urlPatterns = {"/updateNews"})
+public class UpdateNewsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,14 +39,13 @@ public class CreateNewNewsServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateNewNewsServlet</title>");
+            out.println("<title>Servlet UpdateNewsServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateNewNewsServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateNewsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -80,32 +77,35 @@ public class CreateNewNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
-//        out.print(userName);
         try {
-            User createdBy_raw = (User) session.getAttribute("currentUser");
+            int newsId = Integer.parseInt(request.getParameter("newsId"));
             String mainTitle = request.getParameter("mainTitle");
             String title = request.getParameter("title");
             String mainContent = request.getParameter("mainContent");
             String content = request.getParameter("content");
-            int status = 1;
-            int state_raw = Integer.parseInt(request.getParameter("state"));
+            int stateRaw = Integer.parseInt(request.getParameter("state"));
             boolean state = false;
-            if (state_raw == 1) {
+            int status = Integer.parseInt(request.getParameter("status"));
+            if (stateRaw == 1) {
                 state = true;
             }
-            News news = new News(mainTitle, title, mainContent, content, createdBy_raw.getEmail(), status, state);
-            int created = NewsDAO.INSTANCE.createNews(news);
-//        out.print(created);
-            if (created != 0) {
-                session.setAttribute("created", created);
-            }
+            News news = NewsDAO.getInstance().getNewsByNewsId(newsId);
+            news.setMainTitle(mainTitle);
+            news.setTitle(title);
+            news.setMainContent(mainContent);
+            news.setContent(content);
+            news.setStatus(status);
+            news.setState(state);
+            news.setNewsId(newsId);
+            User createdBy_raw = (User) session.getAttribute("currentUser");
+            news.setUpdateBy(createdBy_raw.getEmail());
+            session.setAttribute("updated", NewsDAO.getInstance().updateNews(news));
         } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
 
         response.sendRedirect("manageNews");
-
     }
 
     /**

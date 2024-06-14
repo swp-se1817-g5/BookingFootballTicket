@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageNews;
+package controllers.manage_news;
 
 import dal.NewsDAO;
 import java.io.IOException;
@@ -14,13 +14,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import models.News;
+import models.User;
 
 /**
  *
  * @author nguye
  */
-@WebServlet(name = "DeleteNewsServlet", urlPatterns = {"/deleteNews"})
-public class DeleteNewsServlet extends HttpServlet {
+@WebServlet(name = "CreateNewNewsServlet", urlPatterns = {"/createNewNews"})
+public class CreateNewNewsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,14 +36,13 @@ public class DeleteNewsServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
+           out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteNewsServlet</title>");
+            out.println("<title>Servlet CreateNewNewsServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteNewsServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateNewNewsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,18 +60,7 @@ public class DeleteNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        int newsId;
-        try {
-            newsId = Integer.parseInt(request.getParameter("newsId"));
-            News news = NewsDAO.INSTANCE.getNewsByNewsId(newsId);
-            news.setIsDeleted(true);
-            int deleted = NewsDAO.INSTANCE.deleteNews(news);
-            session.setAttribute("deleted", deleted);
-        } catch (NumberFormatException e) {
-        }
-
-        response.sendRedirect("manageNews");
+        processRequest(request, response);
     }
 
     /**
@@ -85,7 +74,31 @@ public class DeleteNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        try {
+            User createdByRaw = (User) session.getAttribute("currentUser");
+            String mainTitle = request.getParameter("mainTitle");
+            String title = request.getParameter("title");
+            String mainContent = request.getParameter("mainContent");
+            String content = request.getParameter("content");
+            int status = 1;
+            int stateRaw = Integer.parseInt(request.getParameter("state"));
+            boolean state = false;
+            if (stateRaw == 1) {
+                state = true;
+            }
+            News news = new News(mainTitle, title, mainContent, content, createdByRaw.getEmail(), status, state);
+            int created = NewsDAO.getInstance().createNews(news);
+            if (created != 0) {
+                session.setAttribute("created", created);
+            }
+        } 
+        catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+
+        response.sendRedirect("manageNews");
+
     }
 
     /**
