@@ -171,10 +171,10 @@ GO
 -- Table News
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
-  --  mainTitle VARCHAR(255),
     title VARCHAR(255),
-  --  mainContent VARCHAR(255),
     content NVARCHAR(MAX),
+	image VARCHAR(255),
+	conclusion NVARCHAR(MAX),
     createdBy VARCHAR(50) NOT NULL,
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(50) NULL,
@@ -184,12 +184,6 @@ CREATE TABLE News (
     isDeleted BIT DEFAULT 0,
 );
 GO
-CREATE TABLE NewsImages (
-    imageId INT PRIMARY KEY IDENTITY (1,1),
-    imageUrl VARCHAR(255),
-	NewsId INT,
-	FOREIGN KEY (NewsId) REFERENCES News(NewsId)
-);
-GO
+
 
 

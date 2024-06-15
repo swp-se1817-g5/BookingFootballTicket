@@ -8,11 +8,14 @@ import dal.NewsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import models.News;
 import models.User;
 
@@ -21,6 +24,7 @@ import models.User;
  * @author nguye
  */
 @WebServlet(name = "CreateNewNewsServlet", urlPatterns = {"/createNewNews"})
+@MultipartConfig
 public class CreateNewNewsServlet extends HttpServlet {
 
     /**
@@ -36,7 +40,7 @@ public class CreateNewNewsServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-           out.println("<!DOCTYPE html>");
+            out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet CreateNewNewsServlet</title>");
@@ -74,31 +78,48 @@ public class CreateNewNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         HttpSession session = request.getSession();
+        PrintWriter out = response.getWriter();
         try {
-            User createdByRaw = (User) session.getAttribute("currentUser");
-            String mainTitle = request.getParameter("mainTitle");
+//            User createdByRaw = (User) session.getAttribute("currentUser");
+            User createdByRaw = new User();
+            createdByRaw.setEmail("duongnche173192@fpt.edu.vn");
             String title = request.getParameter("title");
-            String mainContent = request.getParameter("mainContent");
             String content = request.getParameter("content");
+            String conclusion = request.getParameter("conclusion");
+
             int status = 1;
             int stateRaw = Integer.parseInt(request.getParameter("state"));
             boolean state = false;
             if (stateRaw == 1) {
                 state = true;
             }
-            News news = new News(mainTitle, title, mainContent, content, createdByRaw.getEmail(), status, state);
-            int created = NewsDAO.getInstance().createNews(news);
-            if (created != 0) {
-                session.setAttribute("created", created);
+            Part part = request.getPart("image");
+            String imagePath = null;
+            if ((part == null) || (part.getSubmittedFileName().trim().isEmpty()) || (part.getSubmittedFileName() == null)) {
+                imagePath = "";
+                out.print("if");
+            } else {
+                String path = request.getServletContext().getRealPath("/images/news");
+                File dir = new File(path);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File image = new File(dir, part.getSubmittedFileName());
+                part.write(image.getAbsolutePath());
+                imagePath = request.getContextPath() + "/images/news/" + image.getName();
+                News news = new News(title, content, imagePath, conclusion, createdByRaw.getEmail(), status, state);
+                int created = NewsDAO.getInstance().createNews(news);
+                if (created != 0) {
+                    session.setAttribute("created", created);       
+                }
             }
-        } 
-        catch (IllegalArgumentException e) {
+
+        } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
-
         response.sendRedirect("manageNews");
-
     }
 
     /**
