@@ -22,10 +22,12 @@ public class NewsDAO {
     private static volatile NewsDAO INSTANCE;
     private final Connection connect;
     // Define constants for the string literals
-    private static final String SQL_QUERY_GET_LIST_NEWS = "SELECT * FROM News n WHERE isDeleted = 0";
+    private static final String SQL_QUERY_GET_LIST_NEWS = "SELECT * FROM News WHERE isDeleted = 0";
     private static final String NEWS_ID = "newsId";
     private static final String TITLE = "title";
     private static final String CONTENT = "content";
+    private static final String IMAGE = "image";
+    private static final String CONCLUSION = "conclusion";
     private static final String CREATED_BY = "createdBy";
     private static final String CREATED_DATE = "createdDate";
     private static final String UPDATED_BY = "updatedBy";
@@ -62,6 +64,8 @@ public class NewsDAO {
                 news.setNewsId(rs.getInt(NEWS_ID));
                 news.setTitle(rs.getString(TITLE));
                 news.setContent(rs.getString(CONTENT));
+                news.setImage(rs.getString(IMAGE));
+                news.setConclusion(rs.getString(CONCLUSION));
                 news.setCreateBy(rs.getString(CREATED_BY));
                 news.setCreatedDate(rs.getTimestamp(CREATED_DATE) != null ? rs.getTimestamp(CREATED_DATE).toLocalDateTime() : null);
                 news.setUpdateBy(rs.getString(UPDATED_BY));
@@ -76,7 +80,15 @@ public class NewsDAO {
         return list;
     }
 
-//Search by 
+    public static void main(String[] args) {
+        ArrayList<News> list = NewsDAO.getInstance().getlistNews();
+        for (News news : list) {
+            System.out.println(news.toString());
+
+        }
+    }
+    //Search by 
+
     public ArrayList<News> search(String value) {
         ArrayList<News> list = new ArrayList<>();
         String SQL_QUERY_SEARCH_NEWS = "SELECT * FROM News WHERE mainTitle LIKE '%" + value + "%' OR title LIKE '%" + value + "%' OR  mainContent LIKE '%" + value + "%' OR  content LIKE '%" + value + "%' OR createdBy LIKE '%" + value + "%' OR updatedBy LIKE '%" + value + "%'";
@@ -101,47 +113,50 @@ public class NewsDAO {
     }
 //  Create a news
 
-    public int createNews(News n) {
-        int i = 0;
-        String sql = "INSERT INTO [News] ([mainTitle],[title],[mainContent],[content],[status],[state],[createdBy]) VALUES(?,?,?,?,?,?,?)";
+    public int createNews(News news) {
+        int n = 0;
+        String sql = "INSERT INTO [News] ([title],[content],[image],[conclusion],[status],[state],[createdBy]) VALUES(?,?,?,?,?,?,?)";
         try {
             ps = connect.prepareStatement(sql);
-            ps.setString(1, n.getMainTitle());
-            ps.setString(2, n.getTitle());
-            ps.setString(3, n.getMainContent());
-            ps.setString(4, n.getContent());
-            ps.setInt(5, n.getStatus());
-            ps.setBoolean(6, n.isState());
-            ps.setString(7, n.getCreateBy());
-            i = ps.executeUpdate();
+            ps.setString(1, news.getTitle());
+            ps.setString(2, news.getContent());
+            ps.setString(3, news.getImage());
+            ps.setString(4, news.getConclusion());
+            ps.setInt(5, news.getStatus());
+            ps.setBoolean(6, news.isState());
+            ps.setString(7, news.getCreateBy());
+            n = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return i;
+        return n;
     }
+//    public static void main(String[] args) {
+//        News n = new News("aasdasd", "adsadasd", "asdsad", 0, true);
+//       
+//        System.out.println(NewsDAO.getInstance().createNews(n));
+//    }
 
 // Update news
     public int updateNews(News n) {
         int m = 0;
         String sql = "UPDATE [News]"
-                + "   SET [mainTitle] = ?"
-                + "      ,[title] = ?"
-                + "      ,[mainContent] = ?"
+                + "   SET [title] = ?"
                 + "      ,[content] = ?"
+                + "      ,[image] = ?"
                 + "      ,[status] = ?"
                 + "      ,[state] = ?"
                 + "      ,[updatedBy] = ?"
                 + " WHERE newsId =?";
         try {
             ps = connect.prepareStatement(sql);
-            ps.setString(1, n.getMainTitle());
-            ps.setString(2, n.getTitle());
-            ps.setString(3, n.getMainContent());
-            ps.setString(4, n.getContent());
-            ps.setInt(5, n.getStatus());
-            ps.setBoolean(6, n.isState());
-            ps.setString(7, n.getUpdateBy());
-            ps.setInt(8, n.getNewsId());
+            ps.setString(1, n.getTitle());
+            ps.setString(2, n.getContent());
+            ps.setString(3, n.getImage());
+            ps.setInt(4, n.getStatus());
+            ps.setBoolean(5, n.isState());
+            ps.setString(6, n.getUpdateBy());
+            ps.setInt(7, n.getNewsId());
             m = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
