@@ -60,13 +60,15 @@
                             <p>Login Your Account <a href="http://localhost:8080/BookingFootballTicket/login">Click here</a></p>
                         </div>
 
-                        <form action="sendmail" method="post" class="contact-bx">
+                        <form action="requestPassword" method="post" class="contact-bx">
                             <div class="row placeani">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Your Email Address</label>
-                                            <input name="emailInputReset" type="text" required="" class="form-control">
+                                                <input type="email" class="form-control"
+                                                       name="email" 
+                                                       id="email" required>
                                         </div>
                                     </div>
                                 </div>

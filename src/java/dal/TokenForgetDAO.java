@@ -45,18 +45,18 @@ public class TokenForgetDAO extends DBContext{
         return false;
     }
     public TokenForgetPassword getTokenPassword(String token) {
-        String sql = "Select * from [tokenForgetPassword] where token = ?";
+        String sql = "SELECT * FROM [tokenForgetPassword] WHERE token = ?";
         try {
             PreparedStatement ps = connect.prepareStatement(sql);
             ps.setString(1, token);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 return new TokenForgetPassword(
-                        rs.getInt("id"),
-                        rs.getString("userEmail"),
-                        rs.getBoolean("isUsed"),
-                        rs.getString("token"),
-                        rs.getTimestamp("expiryTime").toLocalDateTime()
+                    rs.getInt("id"),
+                    rs.getBoolean("isUsed"),
+                    rs.getString("token"),
+                    rs.getString("userEmail"),
+                    rs.getTimestamp("expiryTime").toLocalDateTime()
                 );
             }
         } catch (SQLException e) {
@@ -71,7 +71,7 @@ public class TokenForgetDAO extends DBContext{
                 + "   SET [isUsed] = ?\n"
                 + " WHERE token = ?";
         try {
-            PreparedStatement st = connection.prepareStatement(sql);
+            PreparedStatement st = connect.prepareStatement(sql);
             st.setBoolean(1, token.isIsUsed());
             st.setString(2, token.getToken());
             st.executeUpdate();

@@ -95,7 +95,7 @@
 
 <!--                                        <a href="views/forgetPassword.jsp" class="ml-auto">Forgot Password?</a>-->
 
-                                        <a href="sendmail" class="ml-auto">Forgot Password?</a>
+                                        <a href="requestPassword" class="ml-auto">Forgot Password?</a>
 
                                     </div>
                                 </div>

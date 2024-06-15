@@ -205,23 +205,23 @@ public class UserDAO {
         return deleted;
     }
 
-    public boolean checkEmailExist(String email) {
-        String sql = "SELECT COUNT(*) FROM [User] WHERE email = ?";
-        try {
-            checkConnection();
-            try (PreparedStatement ps = con.prepareStatement(sql)) {
-                ps.setString(1, email);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next() && rs.getInt(1) > 0) {
-                        return true;
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+//    public boolean checkEmailExist(String email) {
+//        String sql = "SELECT COUNT(*) FROM [User] WHERE email = ?";
+//        try {
+//            checkConnection();
+//            try (PreparedStatement ps = con.prepareStatement(sql)) {
+//                ps.setString(1, email);
+//                try (ResultSet rs = ps.executeQuery()) {
+//                    if (rs.next() && rs.getInt(1) > 0) {
+//                        return true;
+//                    }
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+//    }
 
     public void changePass(String email, String hashedPassword) throws SQLException {
         String sql = "UPDATE [User] SET hashedPassword = ? WHERE email = ?";
