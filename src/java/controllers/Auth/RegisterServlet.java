@@ -153,9 +153,9 @@ public class RegisterServlet extends HttpServlet {
     }
 
     private void returnValueBefore(HttpServletRequest request, HttpServletResponse response, String name, String email, String phoneNumber) {
+        request.setAttribute("phoneNumber", phoneNumber);
         request.setAttribute("name", name);
         request.setAttribute("email", email);
-        request.setAttribute("phoneNumber", phoneNumber);
     }
 
     private void dispatch(HttpServletRequest request, HttpServletResponse response, String url) throws ServletException, IOException {
