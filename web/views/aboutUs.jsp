@@ -1,3 +1,10 @@
+<%-- 
+    Document   : aboutUs
+    Created on : Jun 15, 2024, 11:18:44 PM
+    Author     : AD
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!doctype html>
 <html class="no-js" lang="en-GB">
     <head>
@@ -931,7 +938,7 @@
                         <h1>Terms & Conditions</h1>
                         <nav class="breadcrumb hidden-mobile">
                             <ul>
-                                <li><a href="./homePage">Home</a></li><li>Terms & Conditions</li>
+                                <li><a href="./homePage">Home</a></li><li>About Us</li>
                             </ul>
                         </nav>
                     </div>
@@ -943,10 +950,8 @@
         <div class="section">
             <div class="inner">
                 <div class="text">
-                    <p><H2>Terms and condition</H2></p>
-                    <p> BookingFootballTicket does not charge any fees when paying by credit or debit card.</p>
-                    <p> Your bank or credit/debit card company may add transaction fees and we are not responsible for any additional fees from the bank or credit/debit card company your debt.</p>
-                    <p> Immediately after receiving the customer's payment via bank transfer, we will contact you to confirm information and support ticket delivery according to contractual agreement or direct agreement with the customer. If the delivery commitment time has passed and the customer has not received the product, they can contact hotline: 0819215525 for assistance.</p>
+                    <p><H2>About Us</H2></p>
+                    <p> Here at BookingFootballTicket we pride ourselves on providing a secure platform on which one can securely purchase football tickets to the most anticipated matches across the globe, with great customer service.</p>
                     <p>&nbsp;</p>
                 </div>
             </div>
@@ -954,7 +959,7 @@
     </div>
     <style type="text/css">
         .template-generic-page .content .section .inner .text {
-            color: #353535 !important;
+            color:Â #353535 !important;
             line-height: 28px;
             font-size: 16px;
         }
@@ -1169,3 +1174,4 @@
 
 <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="8ffda3b6bf364c1cf05a777d-|49" defer></script></body>
 </html>
+
