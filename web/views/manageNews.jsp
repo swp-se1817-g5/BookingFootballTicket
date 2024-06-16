@@ -6,6 +6,7 @@ Author     : duong
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -362,9 +363,7 @@ Author     : duong
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Main Title</th>
                                         <th>Title</th>
-                                        <th>Main Content</th>
                                         <th>Content</th>
                                         <th>Status</th>
                                         <th>State</th>
@@ -376,10 +375,26 @@ Author     : duong
                                     <c:forEach items="${sessionScope.getListNews}" var="n" varStatus="status">
                                         <tr style="word-break: break-word">
                                             <td>${status.count}</td>
-                                            <td>${n.mainTitle}</td>
-                                            <td>${n.title}</td>
-                                            <td>${n.mainContent}</td>
-                                            <td>${n.content}</td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${fn:length(n.title) > 30}">
+                                                        ${fn:substring(n.title, 0, 30)}...
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${n.title}
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${fn:length(n.content) > 50}">
+                                                        ${fn:substring(n.content, 0, 50)}...
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${n.content}
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                             <c:if test=""></c:if>
                                             <c:choose>
                                                 <c:when test="${n.status == 0}">
@@ -420,27 +435,28 @@ Author     : duong
         <div id="createNewsModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="createNewNews" method="post">
+                    <form action="createNewNews" method="post" enctype="multipart/form-data">
                         <div class="modal-header">						
                             <h4 class="modal-title">Create News</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Main Title</label>
-                                <textarea name="mainTitle" class="form-control" required rows="2" maxlength="100"></textarea>
-                            </div>
-                            <div class="form-group">
                                 <label>Title</label>
                                 <textarea name="title" class="form-control" required rows="2"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Main Content</label>
-                                <textarea name="mainContent"class="form-control" required rows="2"></textarea>
                             </div>
                             <div class="form-group" style="word-break: break-word">
                                 <label>Content</label>
                                 <textarea name="content" class="form-control" rows="5" required></textarea>
+                            </div>
+                            <div class="form-group" style="word-break: break-word">
+                                <label>Image</label>
+                                <br>
+                                <input type="file" name="image"><br>
+                            </div>
+                            <div class="form-group" style="word-break: break-word">
+                                <label>Conclusion</label>
+                                <textarea name="conclusion" class="form-control" rows="5" required></textarea>
                             </div>
                             <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                                 <label>State</label>
@@ -474,8 +490,24 @@ Author     : duong
                                 <input name="newsId" class="form-control" value="${n.newsId}" readonly>
                             </div>
                             <div class="form-group">
+                                <label>Title</label>
+                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.title}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Content</label>
+                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.content}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Image</label><br>
+                                <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
+                            </div>
+                            <div class="form-group">
+                                <label>Conclusion</label>
+                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.conclusion}</p>
+                            </div>
+                            <div class="form-group">
                                 <label>Create Date</label>
-                                <input type="datetime-local" style="border: none" name="createDate" class="form-control" value="${n.createdDate}" readonly>
+                                <input type="datetime-local" name="createDate" class="form-control" value="${n.createdDate}" readonly>
                             </div>
 
                             <div class="form-group">
@@ -501,7 +533,7 @@ Author     : duong
             <div id="updateNews${n.newsId}" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="updateNews" method="post">
+                        <form action="updateNews" method="post" enctype="multipart/form-data">
                             <div class="modal-header">						
                                 <h4 class="modal-title">Update News</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -512,20 +544,18 @@ Author     : duong
                                     <input name="newsId" class="form-control" value="${n.newsId}" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label>Main Title</label>
-                                    <input name="mainTitle" class="form-control" value="${n.mainTitle}">
-                                </div>
-                                <div class="form-group">
                                     <label>Title</label>
                                     <input name="title" class="form-control" value="${n.title}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Main Content</label>
-                                    <input name="mainContent" class="form-control" value="${n.mainContent}">
-                                </div>
-                                <div class="form-group">
                                     <label>Content</label>
                                     <input name="content" class="form-control" value="${n.content}">
+                                </div>
+                                <div class="form-group" style="word-break: break-word">
+                                    <label>Image</label>
+                                    <br>
+                                    <input type="file" name="image"><br>
+                                    <input type="hidden" name="currentImage" value="${n.image}">
                                 </div>
                                 <div class="form-group">
                                     <label>State</label>
