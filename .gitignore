@@ -1,5 +1,5 @@
 # Ignore build output directories
-/build/*
+/build/**
 # Không ignore folder images và tất cả nội dung bên trong nó
 !build/web/images
 !build/web/images/**
