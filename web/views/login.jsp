@@ -58,7 +58,7 @@
                     <div class="account-container">
                         <div class="heading-bx left">
                             <h2 class="title-head">Login <span>Now</span></h2>
-                            <p>Register Your Account <a href="http://localhost:8080/BookingFootballTicket/register">Click here</a></p>
+                            <p>Register Your Account <a href="./register">Click here</a></p>
                         </div>    
                         <c:if test="${not empty errorMessage}">
                             <p style="color:red">${errorMessage}</p>
