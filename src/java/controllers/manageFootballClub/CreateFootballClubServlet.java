@@ -29,7 +29,7 @@ import models.User;
 public class CreateFootballClubServlet extends HttpServlet {
 
     private static final Logger LOGGER = Logger.getLogger(CreateFootballClubServlet.class.getName());
-    private static final String IMAGE_FOLDER = "Images/FootballClubs";
+    private static final String IMAGE_FOLDER = "images/footballclubs";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
