@@ -4,8 +4,6 @@
  */
 package models;
 
-import java.time.LocalDateTime;
-
 /**
  *
  * @author thuat
@@ -14,17 +12,17 @@ public class MatchSeat {
 
     private int matchSeatId;
     private int matchId;
-    private int seatId;
+    private SeatArea seatarea;
     private int availability;
 
-    public MatchSeat(int matchSeatId, int matchId, int seatId, int availability) {
-        this.matchSeatId = matchSeatId;
-        this.matchId = matchId;
-        this.seatId = seatId;
-        this.availability = availability;
+    public MatchSeat() {
     }
 
-    public MatchSeat() {
+    public MatchSeat(int matchSeatId, int matchId, SeatArea seatarea, int availability) {
+        this.matchSeatId = matchSeatId;
+        this.matchId = matchId;
+        this.seatarea = seatarea;
+        this.availability = availability;
     }
 
     public int getMatchSeatId() {
@@ -35,20 +33,20 @@ public class MatchSeat {
         this.matchSeatId = matchSeatId;
     }
 
-    public int getMatchId() {
+    public int getMatch() {
         return matchId;
     }
 
-    public void setMatchId(int matchId) {
+    public void setMatch(int matchId) {
         this.matchId = matchId;
     }
 
-    public int getSeatId() {
-        return seatId;
+    public SeatArea getSeatarea() {
+        return seatarea;
     }
 
-    public void setSeatId(int seatId) {
-        this.seatId = seatId;
+    public void setSeatarea(SeatArea seatarea) {
+        this.seatarea = seatarea;
     }
 
     public int getAvailability() {
@@ -58,10 +56,12 @@ public class MatchSeat {
     public void setAvailability(int availability) {
         this.availability = availability;
     }
-    
+
     @Override
     public String toString() {
-        return "MatchSeat{" + "matchSeatId=" + matchSeatId + ", matchId=" + matchId + ", seatId=" + seatId + ", availability=" + availability + '}';
+        return "MatchSeat{" + "matchSeatId=" + matchSeatId + ", match=" + matchId + ", seatarea=" + seatarea + ", availability=" + availability + '}';
     }
+
+    
 
 }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageMatch;
+package controllers.manage_match;
 
 import dal.*;
 import java.io.IOException;
@@ -16,18 +16,23 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author thuat
  */
+
 @WebServlet(name = "ManageMatchServlet", urlPatterns = {"/manageMatch"})
 public class ManageMatchServlet extends HttpServlet {
+    private static final String ACTION_1 = "created";
+    private static final String ACTION_2 = "updated";
+    private static final String ACTION_3 = "deleted";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("created") != null) {
-            request.setAttribute("created", "true".equals(request.getParameter("created")));
-        } else if (request.getParameter("updated") != null) {
-            request.setAttribute("updated", "true".equals(request.getParameter("updated")));
-        } else if (request.getParameter("deleted") != null) {
-            request.setAttribute("deleted", "true".equals(request.getParameter("deleted")));
+        
+        if (request.getParameter(ACTION_1) != null) {
+            request.setAttribute(ACTION_1, "true".equals(request.getParameter(ACTION_1)));
+        } else if (request.getParameter(ACTION_2) != null) {
+            request.setAttribute(ACTION_2, "true".equals(request.getParameter(ACTION_2)));
+        } else if (request.getParameter(ACTION_3) != null) {
+            request.setAttribute(ACTION_3, "true".equals(request.getParameter(ACTION_3)));
         }
 
         request.setAttribute("matches", MatchDAO.INSTANCE.getMatches());

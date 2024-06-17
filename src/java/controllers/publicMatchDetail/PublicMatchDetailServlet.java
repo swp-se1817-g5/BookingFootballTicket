@@ -7,6 +7,7 @@ package controllers.publicMatchDetail;
 
 import dal.FootballClubDAO;
 import dal.MatchDAO;
+import dal.MatchSeatDAO;
 import dal.SeasonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -58,7 +59,13 @@ public class PublicMatchDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.setAttribute("seatByMatch", MatchDAO.INSTANCE.getMatches());
+        String id_string = request.getParameter("matchId");
+        int id = 1;
+        try {
+            id = Integer.parseInt(id_string);
+        } catch (Exception e) {
+        }
+        request.setAttribute("seatByMatch", MatchSeatDAO.INSTANCE.getMatchSeatbyMatch(id));
         request.getRequestDispatcher("views/publicMatchDetail.jsp").forward(request, response);
     } 
 

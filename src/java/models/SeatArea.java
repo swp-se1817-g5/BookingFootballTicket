@@ -5,8 +5,6 @@
 package models;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -19,25 +17,17 @@ public class SeatArea {
     private Stand stand;
     private BigDecimal price;
     private int quantity;
-    private String createdBy;
-    private LocalDateTime createdDate;
-    private String updatedBy;
-    private LocalDateTime lastUpdatedDate;
 
     public SeatArea() {
     }
 
 
-    public SeatArea(int seatId, String seatName, Stand stand, BigDecimal price, int quantity, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate) {
+    public SeatArea(int seatId, String seatName, Stand stand, BigDecimal price, int quantity) {
         this.seatId = seatId;
         this.seatName = seatName;
         this.stand = stand;
         this.price = price;
         this.quantity = quantity;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
-        this.updatedBy = updatedBy;
-        this.lastUpdatedDate = lastUpdatedDate;
     }
     
     
@@ -81,38 +71,6 @@ public class SeatArea {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    public LocalDateTime getLastUpdatedDate() {
-        return lastUpdatedDate;
-    }
-
-    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
-        this.lastUpdatedDate = lastUpdatedDate;
     }
 
 }
