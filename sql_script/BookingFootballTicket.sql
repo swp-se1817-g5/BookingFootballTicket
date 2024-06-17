@@ -134,7 +134,6 @@ GO
     standId INT,
 	seatClassId INT,
     seatName NVARCHAR(50),
-    price DECIMAL(10, 2),
     quantity INT,
 	isActive BIT DEFAULT 1,
     FOREIGN KEY (standId) REFERENCES Stand(standId),
