@@ -140,8 +140,8 @@ INSERT INTO News (title, content, createdBy) VALUES
 ('Title 1','Content 1', 'admin@example.com'),
 ('Title 2', 'Content 2', 'admin@example.com');
 GO
-INSERT INTO ImageNews(imageUrl,newsId) VALUES
-('images/news/BarcelonaSized.png',18),
-('images/news/user.png',18);
+INSERT INTO tokenForgetPassword (token, expiryTime, isUsed, userEmail)
+VALUES 
+('token1', DATEADD(hour, 1, CURRENT_TIMESTAMP), 0, 'quantahe170941@fpt.edu.vn')
 GO
 
