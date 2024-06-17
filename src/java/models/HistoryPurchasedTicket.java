@@ -16,7 +16,8 @@ public class HistoryPurchasedTicket {
 
     private int ticketId;
     private MatchSeat matchSeatId;
-    private String email;
+    private Season seasonSeatedId;
+    private User email;
     private String qrCode;
     private BigDecimal price;
     private int quantity;
@@ -28,16 +29,17 @@ public class HistoryPurchasedTicket {
     public HistoryPurchasedTicket() {
     }
 
-    public HistoryPurchasedTicket(int ticketId, MatchSeat matchSeatId, String email, String qrCode, LocalDateTime createdDate, BigDecimal price, int quantity, boolean status, String createdBy) {
+    public HistoryPurchasedTicket(int ticketId, MatchSeat matchSeatId, Season seasonSeatedId, User email, String qrCode, BigDecimal price, int quantity, boolean status, String createdBy, LocalDateTime createdDate) {
         this.ticketId = ticketId;
         this.matchSeatId = matchSeatId;
+        this.seasonSeatedId = seasonSeatedId;
         this.email = email;
         this.qrCode = qrCode;
-        this.createdDate = createdDate;
         this.price = price;
         this.quantity = quantity;
         this.status = status;
         this.createdBy = createdBy;
+        this.createdDate = createdDate;
     }
 
     public int getTicketId() {
@@ -56,11 +58,19 @@ public class HistoryPurchasedTicket {
         this.matchSeatId = matchSeatId;
     }
 
-    public String getEmail() {
+    public Season getSeasonSeatedId() {
+        return seasonSeatedId;
+    }
+
+    public void setSeasonSeatedId(Season seasonSeatedId) {
+        this.seasonSeatedId = seasonSeatedId;
+    }
+
+    public User getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(User email) {
         this.email = email;
     }
 
@@ -70,14 +80,6 @@ public class HistoryPurchasedTicket {
 
     public void setQrCode(String qrCode) {
         this.qrCode = qrCode;
-    }
-
-    public String getCreatedDate() {
-        return createdDate != null ? createdDate.format(formatter) : null;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
     }
 
     public BigDecimal getPrice() {
@@ -96,7 +98,7 @@ public class HistoryPurchasedTicket {
         this.quantity = quantity;
     }
 
-    public boolean getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
@@ -112,9 +114,21 @@ public class HistoryPurchasedTicket {
         this.createdBy = createdBy;
     }
 
+   
+
+    public String getCreatedDate() {
+        return createdDate != null ? createdDate.format(formatter) : null;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
     @Override
     public String toString() {
-        return "HistoryPurchasedTicket{" + "ticketId=" + ticketId + ", matchSeatId=" + matchSeatId + ", email=" + email + ", qrCode=" + qrCode + ", createdDate=" + createdDate + ", price=" + price + ", quantity=" + quantity + ", status=" + status + ", createdBy=" + createdBy + '}';
+        return "HistoryPurchasedTicket{" + "ticketId=" + ticketId + ", matchSeatId=" + matchSeatId + ", seasonSeatedId=" + seasonSeatedId + ", email=" + email + ", qrCode=" + qrCode + ", price=" + price + ", quantity=" + quantity + ", status=" + status + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", formatter=" + formatter + '}';
     }
+
+    
 
 }

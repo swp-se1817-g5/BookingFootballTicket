@@ -14,6 +14,8 @@ import java.util.logging.Logger;
 import models.HistoryPurchasedTicket;
 import models.MatchSeat;
 import models.News;
+import models.Season;
+import models.User;
 
 /**
  *
@@ -27,6 +29,7 @@ public class HistoryPurchasedTicketDAO {
     private static final String SQL_QUERY_GET_LIST_NEWS = "SELECT * FROM HistoryPurchasedTicket";
     private static final String TICKET_ID = "ticketId";
     private static final String MATCH_SEAT_ID = "matchSeatId";
+    private static final String SEASON_SEAT_ID = "seasonSeatId";
     private static final String EMAIL = "email";
     private static final String QRCODE = "qrCode";
     private static final String PRICE = "price";
@@ -65,7 +68,12 @@ public class HistoryPurchasedTicketDAO {
                 MatchSeat matchSeat = new MatchSeat();
                 matchSeat.setMatchSeatId(rs.getInt(MATCH_SEAT_ID));
                 historyPurchasedTicket.setMatchSeatId(matchSeat);
-                historyPurchasedTicket.setEmail(rs.getString(EMAIL));
+                Season season = new Season();
+                season.setSeasonId(rs.getInt(SEASON_SEAT_ID));
+                historyPurchasedTicket.setSeasonSeatedId(season);
+                User user = new User();
+                user.setEmail(EMAIL);
+                historyPurchasedTicket.setEmail(user);
                 historyPurchasedTicket.setQrCode(rs.getString(QRCODE));
                 historyPurchasedTicket.setPrice(rs.getBigDecimal(PRICE));
                 historyPurchasedTicket.setQuantity(rs.getInt(QUANTITY));
@@ -80,6 +88,9 @@ public class HistoryPurchasedTicketDAO {
         return list;
     }
     public static void main(String[] args) {
-        
+        ArrayList<HistoryPurchasedTicket> list = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicket();
+        for (HistoryPurchasedTicket historyPurchasedTicket : list) {
+            System.out.println(historyPurchasedTicket.toString());
+        }
     }
 }
