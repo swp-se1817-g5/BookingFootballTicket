@@ -1,139 +1,120 @@
-///*
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-// * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
-// */
-//package models;
-//
-//import java.time.LocalDate;
-//
-///**
-// *
-// * @author admin
-// */
-//public class HistoryPurchasedTicket {
-//    private int ticketId;
-//    private MatchStand matchStandId;
-//    private String qrCode;
-//    private LocalDate createdDate;
-//    private double price;
-//    private int number;
-//    private String status;
-//    private String createdBy;
-//    private String updatedBy;
-//    private LocalDate lastUpdatedDate;
-//    private boolean isDeleted;
-//
-//    public HistoryPurchasedTicket() {
-//    }
-//
-//    public HistoryPurchasedTicket(int ticketId, MatchStand matchStandId, String qrCode, LocalDate createdDate, double price, int number, String status, String createdBy, String updatedBy, LocalDate lastUpdatedDate, boolean isDeleted) {
-//        this.ticketId = ticketId;
-//        this.matchStandId = matchStandId;
-//        this.qrCode = qrCode;
-//        this.createdDate = createdDate;
-//        this.price = price;
-//        this.number = number;
-//        this.status = status;
-//        this.createdBy = createdBy;
-//        this.updatedBy = updatedBy;
-//        this.lastUpdatedDate = lastUpdatedDate;
-//        this.isDeleted = isDeleted;
-//    }
-//
-//    public int getTicketId() {
-//        return ticketId;
-//    }
-//
-//    public void setTicketId(int ticketId) {
-//        this.ticketId = ticketId;
-//    }
-//
-//    public MatchStand getMatchStandId() {
-//        return matchStandId;
-//    }
-//
-//    public void setMatchStandId(MatchStand matchStandId) {
-//        this.matchStandId = matchStandId;
-//    }
-//
-//    public String getQrCode() {
-//        return qrCode;
-//    }
-//
-//    public void setQrCode(String qrCode) {
-//        this.qrCode = qrCode;
-//    }
-//
-//    public LocalDate getCreatedDate() {
-//        return createdDate;
-//    }
-//
-//    public void setCreatedDate(LocalDate createdDate) {
-//        this.createdDate = createdDate;
-//    }
-//
-//    public double getPrice() {
-//        return price;
-//    }
-//
-//    public void setPrice(double price) {
-//        this.price = price;
-//    }
-//
-//    public int getNumber() {
-//        return number;
-//    }
-//
-//    public void setNumber(int number) {
-//        this.number = number;
-//    }
-//
-//    public String getStatus() {
-//        return status;
-//    }
-//
-//    public void setStatus(String status) {
-//        this.status = status;
-//    }
-//
-//    public String getCreatedBy() {
-//        return createdBy;
-//    }
-//
-//    public void setCreatedBy(String createdBy) {
-//        this.createdBy = createdBy;
-//    }
-//
-//    public String getUpdatedBy() {
-//        return updatedBy;
-//    }
-//
-//    public void setUpdatedBy(String updatedBy) {
-//        this.updatedBy = updatedBy;
-//    }
-//
-//    public LocalDate getLastUpdatedDate() {
-//        return lastUpdatedDate;
-//    }
-//
-//    public void setLastUpdatedDate(LocalDate lastUpdatedDate) {
-//        this.lastUpdatedDate = lastUpdatedDate;
-//    }
-//
-//    public boolean isIsDeleted() {
-//        return isDeleted;
-//    }
-//
-//    public void setIsDeleted(boolean isDeleted) {
-//        this.isDeleted = isDeleted;
-//    }
-//
-//    @Override
-//    public String toString() {
-//        return "HistoryPurchasedTicket{" + "ticketId=" + ticketId + ", matchStandId=" + matchStandId + ", qrCode=" + qrCode + ", createdDate=" + createdDate + ", price=" + price + ", number=" + number + ", status=" + status + ", createdBy=" + createdBy + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", isDeleted=" + isDeleted + '}';
-//    }
-//    
-//
-//    
-//    
-//}
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package models;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+/**
+ *
+ * @author admin
+ */
+public class HistoryPurchasedTicket {
+
+    private int ticketId;
+    private MatchSeat matchSeatId;
+    private String email;
+    private String qrCode;
+    private BigDecimal price;
+    private int quantity;
+    private boolean status;
+    private String createdBy;
+    private LocalDateTime createdDate;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+
+    public HistoryPurchasedTicket() {
+    }
+
+    public HistoryPurchasedTicket(int ticketId, MatchSeat matchSeatId, String email, String qrCode, LocalDateTime createdDate, BigDecimal price, int quantity, boolean status, String createdBy) {
+        this.ticketId = ticketId;
+        this.matchSeatId = matchSeatId;
+        this.email = email;
+        this.qrCode = qrCode;
+        this.createdDate = createdDate;
+        this.price = price;
+        this.quantity = quantity;
+        this.status = status;
+        this.createdBy = createdBy;
+    }
+
+    public int getTicketId() {
+        return ticketId;
+    }
+
+    public void setTicketId(int ticketId) {
+        this.ticketId = ticketId;
+    }
+
+    public MatchSeat getMatchSeatId() {
+        return matchSeatId;
+    }
+
+    public void setMatchSeatId(MatchSeat matchSeatId) {
+        this.matchSeatId = matchSeatId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getQrCode() {
+        return qrCode;
+    }
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
+    }
+
+    public String getCreatedDate() {
+        return createdDate != null ? createdDate.format(formatter) : null;
+    }
+
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    @Override
+    public String toString() {
+        return "HistoryPurchasedTicket{" + "ticketId=" + ticketId + ", matchSeatId=" + matchSeatId + ", email=" + email + ", qrCode=" + qrCode + ", createdDate=" + createdDate + ", price=" + price + ", quantity=" + quantity + ", status=" + status + ", createdBy=" + createdBy + '}';
+    }
+
+}

@@ -100,24 +100,26 @@ public class UpdateNewsServlet extends HttpServlet {
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
+
                 File image = new File(dir, part.getSubmittedFileName());
                 part.write(image.getAbsolutePath());
                 imagePath = request.getContextPath() + "/images/news/" + image.getName();
-                News news = NewsDAO.getInstance().getNewsByNewsId(newsId);
-                news.setTitle(title);
-                news.setContent(content);
-                news.setImage(imagePath);
-                news.setStatus(status);
-                news.setState(state);
-                news.setNewsId(newsId);
+            }
+            News news = NewsDAO.getInstance().getNewsByNewsId(newsId);
+            news.setTitle(title);
+            news.setContent(content);
+            news.setImage(imagePath);
+            news.setStatus(status);
+            news.setState(state);
+            news.setNewsId(newsId);
 //            User createdBy_raw = (User) session.getAttribute("currentUser");
 //            news.setUpdateBy(createdBy_raw.getEmail());
-                news.setUpdateBy("duongnche173192@fpt.edu.vn");
-                session.setAttribute("updated", NewsDAO.getInstance().updateNews(news));
-            }
+            news.setUpdateBy("duongnche173192@fpt.edu.vn");
+            session.setAttribute("updated", NewsDAO.getInstance().updateNews(news));
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
+
         response.sendRedirect("manageNews");
     }
 
