@@ -335,7 +335,8 @@
                                 <li><a href="/leagues"><div class="text view-all">View all leagues ></div></a></li>
                             </ul>
                         </li>
-                        <li><a href="https://www.footballticketpad.com/contact-us">Contact Us</a></li>
+                        
+                        <li><a href="./about">About Us</a></li>
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
@@ -356,6 +357,11 @@
                                             <li>
                                                 <a href="./changepass">
                                                     Change Password
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="./changepass">
+                                                    Instructions For Buy Tickets 
                                                 </a>
                                             </li>
                                             <c:if test="${sessionScope.currentUser != null}">
@@ -1732,17 +1738,18 @@
                                                                                                                                                                                     %> 
                                                                                                                                                                                     
                                                                                                                                                                                     <%
-                                                                                                                                                                                     Boolean changePassword = (Boolean) request.getAttribute("changePassword");
-                                                                                                                                                                                     if (changePassword != null) {
-                                                                                                                                                                                    %>  
-                                                                                                                                                                                    <script type="text/javascript">
-                                                                                                                                                                                        window.onload = function () {
-                                                                                                                                                                                            showLoginPopup("Change password successfully!");
-                                                                                                                                                                                        }
-                                                                                                                                                                                    </script>
-                                                                                                                                                                                    <%
-                                                                                                                                                                                     }
-                                                                                                                                                                                    %> 
+    Boolean changePassword = (Boolean) session.getAttribute("changePassword");
+    if (changePassword != null) {
+        session.removeAttribute("changePassword");
+%>  
+        <script type="text/javascript">
+            window.onload = function () {
+                showLoginPopup("Change password successfully!");
+            }
+        </script>
+<%
+    }
+%>
                                                                                                                                                                                     
                                                                                                                                                                                     <%
                                                                                                                                                                                     Boolean isFirstLogin = (Boolean) request.getAttribute("isFirstLogin");

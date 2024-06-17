@@ -35,7 +35,6 @@ public class DeleteNewsServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -64,11 +63,12 @@ public class DeleteNewsServlet extends HttpServlet {
         int newsId;
         try {
             newsId = Integer.parseInt(request.getParameter("newsId"));
-            News news = NewsDAO.INSTANCE.getNewsByNewsId(newsId);
+            News news = NewsDAO.getInstance().getNewsByNewsId(newsId);
             news.setIsDeleted(true);
-            int deleted = NewsDAO.INSTANCE.deleteNews(news);
+            int deleted = NewsDAO.getInstance().deleteNews(news);
             session.setAttribute("deleted", deleted);
         } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
 
         response.sendRedirect("manageNews");

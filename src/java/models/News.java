@@ -14,10 +14,10 @@ import java.time.format.DateTimeFormatter;
 public class News {
 
     private int newsId;
-    private String mainTitle;
     private String title;
-    private String mainContent;
     private String content;
+    private String image;
+    private String conclusion;
     private String createBy;
     private LocalDateTime createdDate;
     private String updateBy;
@@ -31,11 +31,11 @@ public class News {
     public News() {
     }
 
-    public News(String mainTitle, String title, String mainContent, String content, String createBy,int status, boolean state) {
-        this.mainTitle = mainTitle;
+    public News(String title, String content, String image, String conclusion, String createBy, int status, boolean state) {
         this.title = title;
-        this.mainContent = mainContent;
         this.content = content;
+        this.image = image;
+        this.conclusion = conclusion;
         this.createBy = createBy;
         this.status = status;
         this.state = state;
@@ -73,14 +73,6 @@ public class News {
         this.newsId = newsId;
     }
 
-    public String getMainTitle() {
-        return mainTitle;
-    }
-
-    public void setMainTitle(String mainTitle) {
-        this.mainTitle = mainTitle;
-    }
-
     public String getTitle() {
         return title;
     }
@@ -89,16 +81,24 @@ public class News {
         this.title = title;
     }
 
-    public String getMainContent() {
-        return mainContent;
-    }
-
-    public void setMainContent(String mainContent) {
-        this.mainContent = mainContent;
-    }
-
     public String getContent() {
         return content;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public String getConclusion() {
+        return conclusion;
+    }
+
+    public void setConclusion(String conclusion) {
+        this.conclusion = conclusion;
     }
 
     public void setContent(String content) {
@@ -139,7 +139,7 @@ public class News {
 
     @Override
     public String toString() {
-        return "News{" + "newsId=" + newsId + ", mainTitle=" + mainTitle + ", title=" + title + ", mainContent=" + mainContent + ", content=" + content + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", status=" + status + ", state=" + state + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
+        return "News{" + "newsId=" + newsId + ", title=" + title + ", content=" + content + ", image=" + image + ", conclusion=" + conclusion + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", status=" + status + ", state=" + state + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
     }
 
 }

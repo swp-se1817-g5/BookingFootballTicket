@@ -8,14 +8,14 @@ import dal.NewsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import models.News;
 import models.User;
 
@@ -24,6 +24,7 @@ import models.User;
  * @author nguye
  */
 @WebServlet(name = "UpdateNewsServlet", urlPatterns = {"/updateNews"})
+@MultipartConfig
 public class UpdateNewsServlet extends HttpServlet {
 
     /**
@@ -39,7 +40,6 @@ public class UpdateNewsServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -78,34 +78,46 @@ public class UpdateNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         try {
             int newsId = Integer.parseInt(request.getParameter("newsId"));
-            String mainTitle = request.getParameter("mainTitle");
             String title = request.getParameter("title");
-            String mainContent = request.getParameter("mainContent");
             String content = request.getParameter("content");
-            int state_raw = Integer.parseInt(request.getParameter("state"));
+            int stateRaw = Integer.parseInt(request.getParameter("state"));
             boolean state = false;
             int status = Integer.parseInt(request.getParameter("status"));
-            if (state_raw == 1) {
+            if (stateRaw == 1) {
                 state = true;
             }
-            News news = NewsDAO.INSTANCE.getNewsByNewsId(newsId);
-            news.setMainTitle(mainTitle);
-            news.setTitle(title);
-            news.setMainContent(mainContent);
-            news.setContent(content);
-            news.setStatus(status);
-            news.setState(state);
-            news.setNewsId(newsId);
-            User createdBy_raw = (User) session.getAttribute("currentUser");
-            news.setUpdateBy(createdBy_raw.getEmail());
-            session.setAttribute("updated", NewsDAO.INSTANCE.updateNews(news));
+            Part part = request.getPart("image");
+            String currentImage = request.getParameter("currentImage");
+            String imagePath = null;
+            if ((part == null) || (part.getSubmittedFileName().trim().isEmpty()) || (part.getSubmittedFileName() == null)) {
+                imagePath = currentImage;
+            } else {
+                String path = request.getServletContext().getRealPath("/images/news");
+                File dir = new File(path);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File image = new File(dir, part.getSubmittedFileName());
+                part.write(image.getAbsolutePath());
+                imagePath = request.getContextPath() + "/images/news/" + image.getName();
+                News news = NewsDAO.getInstance().getNewsByNewsId(newsId);
+                news.setTitle(title);
+                news.setContent(content);
+                news.setImage(imagePath);
+                news.setStatus(status);
+                news.setState(state);
+                news.setNewsId(newsId);
+//            User createdBy_raw = (User) session.getAttribute("currentUser");
+//            news.setUpdateBy(createdBy_raw.getEmail());
+                news.setUpdateBy("duongnche173192@fpt.edu.vn");
+                session.setAttribute("updated", NewsDAO.getInstance().updateNews(news));
+            }
         } catch (IllegalArgumentException e) {
+            e.printStackTrace();
         }
-
         response.sendRedirect("manageNews");
     }
 

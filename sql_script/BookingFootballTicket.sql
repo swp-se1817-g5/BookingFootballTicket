@@ -31,6 +31,17 @@ CREATE TABLE [User] (
 );
 GO
 
+-- Table tokenForgetPassword
+CREATE TABLE tokenForgetPassword (
+    id INT IDENTITY(1,1) PRIMARY KEY,
+    token VARCHAR(255) NOT NULL,
+    expiryTime DATETIME2 NOT NULL,
+    isUsed BIT NOT NULL,
+    userEmail VARCHAR(50) NOT NULL,
+    FOREIGN KEY (userEmail) REFERENCES [User](email)
+);
+GO
+
 -- Table FootballClub
 CREATE TABLE FootballClub (
 	clubId INT PRIMARY KEY IDENTITY (1,1),
@@ -192,10 +203,10 @@ GO
 -- Table News
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
-  --  mainTitle VARCHAR(255),
     title VARCHAR(255),
-  --  mainContent VARCHAR(255),
     content NVARCHAR(MAX),
+	image VARCHAR(255),
+	conclusion NVARCHAR(MAX),
     createdBy VARCHAR(50) NOT NULL,
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(50) NULL,
@@ -205,12 +216,6 @@ CREATE TABLE News (
     isDeleted BIT DEFAULT 0,
 );
 GO
-CREATE TABLE NewsImages (
-    imageId INT PRIMARY KEY IDENTITY (1,1),
-    imageUrl VARCHAR(255),
-	NewsId INT,
-	FOREIGN KEY (NewsId) REFERENCES News(NewsId)
-);
-GO
+
 
 

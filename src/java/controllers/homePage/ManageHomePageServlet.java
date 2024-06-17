@@ -7,7 +7,6 @@ package controllers.homePage;
 import dal.FootballClubDAO;
 import dal.MatchDAO;
 import dal.SeasonDAO;
-import dal.StandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -36,7 +35,6 @@ public class ManageHomePageServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -61,15 +59,10 @@ public class ManageHomePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-//        out.print(MatchDAO.INSTANCE.getMatches());
         request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
         request.setAttribute("getFootballClubs", FootballClubDAO.INSTANCE.getFootballClubs(""));
         request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
         request.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
-//        request.setAttribute("getStandsWithMinPrice", StandDAO.INSTANCE.getStandsWithMinPrice());
-        
-        
         request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
     }
 

@@ -60,8 +60,16 @@
                             <h2 class="title-head">Reset <span>Password</span></h2>
                         </div>
 
-                        <form action="changePassForget" method="post" class="contact-bx">
+                        <form action="resetPassword" method="post" class="contact-bx">
                             <div class="row placeani">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <label>Email</label>
+                                            <input name="email" value="${email}" type="email" id="email" required="" class="form-control" readonly>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
@@ -74,7 +82,7 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Confirm Password</label>
-                                            <input name="confirmPassword" type="password" id="confirmPassword" required="" class="form-control">
+                                            <input name="confirm_password" type="password" id="confirm_password" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
