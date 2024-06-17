@@ -21,6 +21,9 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "ManageFootballClubServlet", urlPatterns = {"/manageFootballClub"})
 public class ManageFootballClubServlet extends HttpServlet {
 
+    private final int numOfRecords = 2;
+    private int pageIndex = 1;
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -59,17 +62,42 @@ public class ManageFootballClubServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("created") != null) {
-            request.setAttribute("created", "true".equals(request.getParameter("created")));
+        if (request.getParameter("fcCreated") != null) {
+            request.setAttribute("created", "true".equals(request.getParameter("fcCreated")));
         }
-        if (request.getParameter("updated") != null) { 
-            request.setAttribute("updated", "true".equals(request.getParameter("updated")));
+
+
+        if (request.getParameter("fcUpdated") != null) {
+            request.setAttribute("updated", "true".equals(request.getParameter("fcUpdated")));
+
+
         }
-        if (request.getParameter("deleted") != null) {
-            request.setAttribute("deleted", "true".equals(request.getParameter("deleted")));
+        if (request.getParameter("fcDeleted") != null) {
+            request.setAttribute("deleted", "true".equals(request.getParameter("fcDeleted")));
         }
+        
         String search = request.getParameter("search");
-        request.setAttribute("footballClubs", FootballClubDAO.INSTANCE.getFootballClubs(search == null ? "" : search));
+        search = search == null ? "" : search.trim();
+        
+        int totalRecords = FootballClubDAO.INSTANCE.gettotalRecords(search);
+        int endPage = (totalRecords / numOfRecords);
+        if (totalRecords % numOfRecords != 0 || totalRecords == 0) {
+            endPage++;
+        }
+        
+        try {
+            String pageIndexRaw = request.getParameter("pageIndex");
+            if (pageIndexRaw != null) {
+                pageIndex = Integer.parseInt(pageIndexRaw);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        request.setAttribute("endPage", endPage);
+        request.setAttribute("pageIndex", pageIndex);
+        request.setAttribute("search", search);
+        request.setAttribute("footballClubs", FootballClubDAO.INSTANCE.paggingFootballClubs(pageIndex, numOfRecords, search));
         request.getRequestDispatcher("views/manageFootballClub.jsp").forward(request, response);
     }
 

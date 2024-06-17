@@ -175,7 +175,7 @@ CREATE TABLE HistoryPurchasedTicket (
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
 	price DECIMAL(10, 2),
 	quantity INT,
-	[status] VARCHAR(50),
+	[status] BIT,
 	createdBy VARCHAR(50),
 	--updatedBy VARCHAR(50) NULL,
 	--lastUpdatedDate DATETIME2 NULL,

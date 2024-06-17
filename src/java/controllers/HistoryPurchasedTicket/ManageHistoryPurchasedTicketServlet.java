@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.manageSeatArea;
+package controllers.HistoryPurchasedTicket;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,10 +15,10 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author admin
+ * @author nguye
  */
-@WebServlet(name="ManageSeateAreaServlet", urlPatterns={"/manageSeateArea"})
-public class ManageSeateAreaServlet extends HttpServlet {
+@WebServlet(name="ManageHistoryPuchasedTicketServlet", urlPatterns={"/manageHistoryPurchasedTicket"})
+public class ManageHistoryPurchasedTicketServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,10 +35,10 @@ public class ManageSeateAreaServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageSeateAreaServlet</title>");  
+            out.println("<title>Servlet ManageHistoryPuchasedTicketServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageSeateAreaServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ManageHistoryPuchasedTicketServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -55,7 +55,7 @@ public class ManageSeateAreaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.getRequestDispatcher("views/manageHistoryPurchasedTicket.jsp").forward(request, response);
     } 
 
     /** 

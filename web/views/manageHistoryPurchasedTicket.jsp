@@ -246,9 +246,9 @@ Author     : duong
                                 <a href="manageFootballClub" class="dropdown-item">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item ">Manage Stand</a>
-                                      <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
-                                <a href="manageNews" class="dropdown-item active">Manage News</a>
+                                <a href="manageNews" class="dropdown-item ">Manage News</a>
+                                <a href="manageHistoryPurchasedTicket" class="dropdown-item active">Manage History Purchased Ticket</a>
                             </div>
                         </div>
                         <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
@@ -364,12 +364,13 @@ Author     : duong
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Title</th>
-                                        <th>Content</th>
+                                        <th>Match Seat</th>
+                                        <th>Email</th>
+                                        <th>createDate</th>
+                                        <th>Price</th>
+                                        <th>Quantity</th>
                                         <th>Status</th>
-                                        <th>State</th>
                                         <th>Action</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -432,8 +433,8 @@ Author     : duong
                 </div>      
             </div>      
         </div>      
-
-        <div id="createNewsModal" class="modal fade">
+        <!--------------------------------------------------------------------------------------------------------------------------------------------->
+<!--        <div id="createNewsModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form action="createNewNews" method="post" enctype="multipart/form-data">
@@ -453,7 +454,7 @@ Author     : duong
                             <div class="form-group" style="word-break: break-word">
                                 <label>Image</label>
                                 <br>
-                                <input type="file" name="image" required=""><br>
+                                <input type="file" name="image"><br>
                             </div>
                             <div class="form-group" style="word-break: break-word">
                                 <label>Conclusion</label>
@@ -472,7 +473,7 @@ Author     : duong
                     </form>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!--------------------------------------------------------------------------------------------------------------------------------------------->
 
         <c:forEach items="${sessionScope.getListNews}" var="n">
@@ -528,8 +529,8 @@ Author     : duong
             </div>
         </c:forEach>
         <!--------------------------------------------------------------------------------------------------------------------------------------------->
-        <c:forEach items="${sessionScope.getListNews}" var="n">
-            <div id="updateNews${n.newsId}" class="modal fade">
+        <%--<c:forEach items="${sessionScope.getListNews}" var="n">--%>
+<!--            <div id="updateNews${n.newsId}" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <form action="updateNews" method="post" enctype="multipart/form-data">
@@ -550,19 +551,12 @@ Author     : duong
                                     <label>Content</label>
                                     <input name="content" class="form-control" value="${n.content}">
                                 </div>
-<<<<<<< HEAD
-                                <div class="form-group" style="word-break: break-word">
-                                    <label>Image</label>
-                                    <br>
-                                    <input type="file" name="image"><br>
-=======
-                                 <div class="form-group">
-                                <label>Image</label><br>
-                                <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
-                            </div>
+                                <div class="form-group">
+                                    <label>Image</label><br>
+                                    <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
+                                </div>
                                 <div class="form-group" style="word-break: break-word">
                                     <input type="file" name="image">
->>>>>>> 2c1da679cb6d15041b306d4e66f3a3c3092627ba
                                     <input type="hidden" name="currentImage" value="${n.image}">
                                 </div>
                                 <div class="form-group">
@@ -572,8 +566,8 @@ Author     : duong
                                 </div>
                                 <div class="form-group">
                                     <label>Status</label>
-                                    <input name="status" type="radio"  value="0" ${n.status == 0 ? 'checked' :''}>Reject
-                                    <input name="status" type="radio"  value="2" ${n.status == 2 ? 'checked' :''}>Approve
+                                    <input name="status" type="radio" required value="0" ${n.status == 0 ? 'checked' :''}>Reject
+                                    <input name="status" type="radio" required value="2" ${n.status == 2 ? 'checked' :''}>Approve
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -583,13 +577,13 @@ Author     : duong
                         </form>
                     </div>
                 </div>
-            </div>
-        </c:forEach>
-        <script>
+            </div>-->
+        <%--</c:forEach>--%>
+<!--        <script>
             const now = new Date().toISOString().slice(0, 16);
             document.getElementById('datetimeInput1').setAttribute('min', now);
             document.getElementById('datetimeInput2').setAttribute('min', now);
-        </script>
+        </script>-->
         <div class="toast" id="updateToast" data-delay="3000">
             <div class="toast-header">
                 <strong class="mr-auto" id="toastTitle"></strong>
@@ -597,7 +591,7 @@ Author     : duong
             </div>
             <div class="toast-body" id="toastMessage"></div>
         </div>
-        <script>
+<!--        <script>
             $(document).ready(function () {
                 var actions = {
                     updated: '<%= request.getAttribute("updated") %>',
@@ -641,7 +635,7 @@ Author     : duong
                 }
             });
 
-        </script>
+        </script>-->
 
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

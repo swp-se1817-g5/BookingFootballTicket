@@ -245,6 +245,7 @@ Author     : admin
                                 <a href="manageFootballClub" class="dropdown-item active">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item">Manage Stand</a>
+                                <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
                                 <a href="manageNews" class="dropdown-item">Manage News</a>
                             </div>
@@ -288,7 +289,7 @@ Author     : admin
 
                                     </div>
                                     <div class="col-sm-4 createe">
-                                        <a href="#createFCModal" data-toggle="modal" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Create New Club</span></a>
+                                        <a href="#createModal" data-toggle="modal" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Club</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -298,10 +299,7 @@ Author     : admin
                                         <th>#</th>
                                         <th>Image<i class="fa "></i></th>
                                         <th>Club</th>
-                                        <th>Created By<i class="fa "></i></th>
-                                        <th>Created Date</th>
-                                        <th>Last Updated By<i class="fa "></i></th>
-                                        <th>Last Updated Date<i class="fa "></i></th>
+                                        <th>Description<i class="fa "></i></th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -311,10 +309,7 @@ Author     : admin
                                             <td>${o.clubId}</td>
                                             <td><img src="${o.img}" width="80px" height="80px" alt="football club"/></td>
                                             <td>${o.clubName}</td>
-                                            <td>${o.createdBy}</td>
-                                            <td>${o.createdDate}</td>
-                                            <td>${o.updatedBy}</td>
-                                            <td>${o.lastUpdatedDate}</td>
+                                            <td>${o.description}</td>
                                             <td>
                                                 <a href="#updateFCModal" onclick="update('${o.clubId}', '${o.clubName}')" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
                                                 <a href="#"  class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
@@ -324,6 +319,13 @@ Author     : admin
 
                                 </tbody>
                             </table>
+                            <div class="clearfix">
+                                <ul class="pagination">
+                                    <c:forEach begin="1" end="${requestScope.endPage}" var="i" >
+                                        <li class="page-item ${pageIndex == i ? 'active': '' }"><a href="manageFootballClub?pageIndex=${i}&search=${search}" class="page-link">${i}</a></li>
+                                    </c:forEach>
+                                </ul>
+                            </div>
                         </div>
                     </div>  
                 </div>     
@@ -331,12 +333,12 @@ Author     : admin
         </div>      
 
 
-        <div id="createFCModal" class="modal fade">
+        <div id="createModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <form action="createFootballClub" id="createFootballClubForm" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
-                            <h4 class="modal-title">Create Football Club</h4>
+                            <h4 class="modal-title">Add New Club</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
@@ -348,6 +350,11 @@ Author     : admin
                                 <label>Football Club Name</label>
                                 <input id="clubNameInput" name="clubName" type="text" class="form-control" maxlength="50" required>
                                 <span id="clubNameInputError" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="descriptionInput" name="description" type="text" class="form-control" maxlength="255"></textarea>
+                                <span id="descriptionInputError" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -466,12 +473,16 @@ Author     : admin
                 clubs.push({clubId: "${club.clubId}", clubName: "${club.clubName}"});
             </c:forEach>
 
-                // Check for duplicate stand name before submitting the create form
+                // Check for duplicate fb name before submitting the create form
                 $('#createFootballClubForm').submit(function (event) {
                     var clubName = $('#clubNameInput').val().trim();
+                    var emptyClubName = clubName === "";
                     var duplicate = clubs.some(club => club.clubName === clubName);
-
-                    if (duplicate) {
+                    if(emptyClubName) {
+                       $('#clubNameInputError').text('Can not be empty or blank!');
+                        event.preventDefault(); 
+                    }
+                    else if (duplicate) {
                         $('#clubNameInputError').text('Club already exists. Please choose a different name.');
                         event.preventDefault();
                     } else {

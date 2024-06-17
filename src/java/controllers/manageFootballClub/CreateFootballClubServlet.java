@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.FootballClub;
+import models.User;
 
 @WebServlet(name = "CreateFootballClubServlet", urlPatterns = {"/createFootballClub"})
 @MultipartConfig(
@@ -39,7 +40,7 @@ public class CreateFootballClubServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        boolean created = false;
+        boolean fcCreated = false;
         HttpSession session = request.getSession();
         String errorMessage = null;
 
@@ -47,43 +48,23 @@ public class CreateFootballClubServlet extends HttpServlet {
             Part filePart = request.getPart("image");
             if (filePart != null && filePart.getSize() > 0) {
                 String img = handleFileUpload(filePart);
-                String clubName = request.getParameter("clubName");
-                String userName = (String) session.getAttribute("userName");
+                String clubName = request.getParameter("clubName").trim();
+                User user = (User) session.getAttribute("currentUser");
+                String description = request.getParameter("description");
+                description = description == null ? "" : description.trim();
 
                 FootballClub fc = new FootballClub();
                 fc.setClubName(clubName);
                 fc.setImg(img);
-                fc.setCreatedBy(userName);
-
-                created = FootballClubDAO.INSTANCE.createFootballClub(fc);
+                fc.setCreatedBy(user.getEmail());
+                fc.setDescription(description);
+                fcCreated = FootballClubDAO.INSTANCE.createFootballClub(fc);
             }
         } catch (IOException | ServletException e) {
-            errorMessage = e.getMessage();
-            LOGGER.log(Level.SEVERE, "Error processing the file upload", e);
+            e.printStackTrace();
         }
+        session.setAttribute("fcCreated", fcCreated);
 
-        if (created) {
-            response.sendRedirect("manageFootballClub?created=true");
-        } else {
-            try (PrintWriter out = response.getWriter()) {
-                response.setContentType("text/html;charset=UTF-8");
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Error Creating Football Club</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h1>Error Creating Football Club</h1>");
-                if (errorMessage != null) {
-                    out.println("<p>Error: " + errorMessage + "</p>");
-                } else {
-                    out.println("<p>An unknown error occurred.</p>");
-                }
-                out.println("<a href=\"views/manageFootballClub.jsp\">Back to Manage Football Club</a>");
-                out.println("</body>");
-                out.println("</html>");
-            }
-        }
     }
 
     private String handleFileUpload(Part filePart) throws IOException {

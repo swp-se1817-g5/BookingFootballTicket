@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageNews;
+package controllers.manage_seat_area;
 
-import dal.NewsDAO;
+import dal.SeatAreaDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import models.News;
 
 /**
  *
- * @author nguye
+ * @author admin
  */
-@WebServlet(name = "DeleteNewsServlet", urlPatterns = {"/deleteNews"})
-public class DeleteNewsServlet extends HttpServlet {
+@WebServlet(name = "ManageSeatAreaServlet", urlPatterns = {"/manageSeatArea"})
+public class ManageSeatAreaServlet extends HttpServlet {
+
+    private final int numberItemsPerPage = 10;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,13 +35,14 @@ public class DeleteNewsServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet DeleteNewsServlet</title>");
+            out.println("<title>Servlet ManageSeateAreaServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet DeleteNewsServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageSeateAreaServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,18 +60,39 @@ public class DeleteNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        int newsId;
+        String searchSeatArea = request.getParameter("searchSeatArea");
+        String searchStand = request.getParameter("searchStand");
+
+        if (searchSeatArea == null) {
+            searchSeatArea = "";
+        }
+        if (searchStand == null) {
+            searchStand = "";
+        }
+
+        int pageIndex = 1;
+        int total = SeatAreaDAO.INSTANCE.getTotal(searchStand, searchStand);
+        int endPage = total / numberItemsPerPage;
+        if (total % numberItemsPerPage != 0) {
+            endPage++;
+        }
+
         try {
-            newsId = Integer.parseInt(request.getParameter("newsId"));
-            News news = NewsDAO.getInstance().getNewsByNewsId(newsId);
-            news.setIsDeleted(true);
-            session.setAttribute("deleted", NewsDAO.getInstance().deleteNews(news));
-        } catch (NumberFormatException e) {
+            String pageIndexRaw = request.getParameter("pageIndex");
+            if (pageIndexRaw != null) {
+                pageIndex = Integer.parseInt(pageIndexRaw);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        response.sendRedirect("manageNews");
+        request.setAttribute("endPage", endPage);
+        request.setAttribute("pageIndex", pageIndex);
+        request.setAttribute("searchSeatArea", searchSeatArea);
+        request.setAttribute("searchStand", searchStand);
+        request.setAttribute("seatAreas", SeatAreaDAO.INSTANCE.paggingSeatAreas(pageIndex, numberItemsPerPage, searchStand, searchStand));
+        request.getRequestDispatcher("views/manageSeatArea.jsp").forward(request, response);
+
     }
 
     /**

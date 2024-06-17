@@ -88,7 +88,6 @@ public class CreateNewNewsServlet extends HttpServlet {
             String title = request.getParameter("title");
             String content = request.getParameter("content");
             String conclusion = request.getParameter("conclusion");
-
             int status = 1;
             int stateRaw = Integer.parseInt(request.getParameter("state"));
             boolean state = false;
@@ -110,12 +109,8 @@ public class CreateNewNewsServlet extends HttpServlet {
                 part.write(image.getAbsolutePath());
                 imagePath = request.getContextPath() + "/images/news/" + image.getName();
                 News news = new News(title, content, imagePath, conclusion, createdByRaw.getEmail(), status, state);
-                int created = NewsDAO.getInstance().createNews(news);
-                if (created != 0) {
-                    session.setAttribute("created", created);       
-                }
+                session.setAttribute("created", NewsDAO.getInstance().createNews(news));
             }
-
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }
