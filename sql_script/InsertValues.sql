@@ -1,4 +1,4 @@
-USE BookingFootballTicket;
+USE BookingFootballTickett;
 GO
 
 -- Insert values into Role table
@@ -55,66 +55,75 @@ INSERT INTO Stand (standName, createdBy) VALUES
 ('D', 'admin@example.com');
 GO
 
+-- Insert values into SeatClass table
+INSERT INTO SeatClass (seatClassName, price) VALUES
+('fans-side', '150000'),
+('standard', '50000'),
+('vip-stand', '200000'),
+('on-roof', '60000'),
+('under-roof', '70000');
+GO
+
 -- Stand A
-INSERT INTO SeatArea (standId, seatName, price, quantity, createdBy) VALUES
-(1, '1', 30.00, 200, 'admin@example.com'),
-(1, '2', 25.00, 250, 'admin@example.com'),
-(1, '3', 50.00, 100, 'admin@example.com'),
-(1, '4', 40.00, 150, 'admin@example.com'),
-(1, '5', 50.00, 100, 'admin@example.com'),
-(1, '6', 40.00, 150, 'admin@example.com'),
-(1, '7', 30.00, 200, 'admin@example.com'),
-(1, '8', 25.00, 250, 'admin@example.com'),
-(1, '9', 50.00, 100, 'admin@example.com'),
-(1, '10', 40.00, 150, 'admin@example.com'),
-(1, '11', 50.00, 100, 'admin@example.com'),
-(1, '12', 40.00, 150, 'admin@example.com'),
-(1, '13', 60.00, 50, 'admin@example.com'),
-(1, '14', 60.00, 50, 'admin@example.com'),
-(1, '15', 60.00, 50, 'admin@example.com'),
-(1, '16', 60.00, 50, 'admin@example.com');
+INSERT INTO SeatArea (standId, seatName, quantity) VALUES
+(1, '1', 200),
+(1, '2', 250),
+(1, '3', 100),
+(1, '4', 150 ),
+(1, '5', 100 ),
+(1, '6', 150 ),
+(1, '7', 200 ),
+(1, '8', 250 ),
+(1, '9', 100 ),
+(1, '10', 150 ),
+(1, '11', 100 ),
+(1, '12', 150 ),
+(1, '13', 50 ),
+(1, '14', 50),
+(1, '15', 50),
+(1, '16', 50);
 
 -- Stand B
-INSERT INTO SeatArea (standId, seatName, price, quantity, createdBy) VALUES
-(2, '1', 30.00, 200, 'admin@example.com'),
-(2, '2', 25.00, 250, 'admin@example.com'),
-(2, '3', 50.00, 100, 'admin@example.com'),
-(2, '4', 40.00, 150, 'admin@example.com'),
-(2, '5', 50.00, 100, 'admin@example.com'),
-(2, '6', 40.00, 150, 'admin@example.com'),
-(2, '7', 30.00, 200, 'admin@example.com'),
-(2, '8', 25.00, 250, 'admin@example.com'),
-(2, '9', 50.00, 100, 'admin@example.com'),
-(2, '10', 40.00, 150, 'admin@example.com'),
-(2, '11', 50.00, 100, 'admin@example.com'),
-(2, '12', 40.00, 150, 'admin@example.com'),
-(2, '13', 60.00, 50, 'admin@example.com'),
-(2, '14', 60.00, 50, 'admin@example.com'),
-(2, '15', 60.00, 50, 'admin@example.com'),
-(2, '16', 60.00, 50, 'admin@example.com');
+INSERT INTO SeatArea (standId, seatName, quantity) VALUES
+(2, '1', 200),
+(2, '2', 250),
+(2, '3', 100),
+(2, '4', 150),
+(2, '5', 100),
+(2, '6', 150),
+(2, '7', 200),
+(2, '8', 250),
+(2, '9', 100),
+(2, '10', 150),
+(2, '11', 100),
+(2, '12', 150),
+(2, '13', 50),
+(2, '14', 50),
+(2, '15', 50),
+(2, '16', 50);
 
 -- Stand C
-INSERT INTO SeatArea (standId, seatName, price, quantity, createdBy) VALUES
-(3, '1', 30.00, 200, 'admin@example.com'),
-(3, '2', 25.00, 250, 'admin@example.com'),
-(3, '3', 30.00, 200, 'admin@example.com'),
-(3, '4', 25.00, 250, 'admin@example.com'),
-(3, '5', 30.00, 200, 'admin@example.com'),
-(3, '6', 25.00, 250, 'admin@example.com'),
-(3, '7', 30.00, 200, 'admin@example.com'),
-(3, '8', 25.00, 250, 'admin@example.com');
+INSERT INTO SeatArea (standId, seatName, quantity) VALUES
+(3, '1', 200),
+(3, '2', 250),
+(3, '3', 200),
+(3, '4', 250),
+(3, '5', 200),
+(3, '6', 250),
+(3, '7', 200),
+(3, '8', 250);
 
 -- Stand D
-INSERT INTO SeatArea (standId, seatName, price, quantity, createdBy) VALUES
-(4, '1', 30.00, 200, 'admin@example.com'),
-(4, '2', 25.00, 250, 'admin@example.com'),
-(4, '3', 30.00, 200, 'admin@example.com'),
-(4, '4', 25.00, 250, 'admin@example.com'),
-(4, '5', 30.00, 200, 'admin@example.com'),
-(4, '6', 25.00, 250, 'admin@example.com'),
-(4, '7', 30.00, 200, 'admin@example.com'),
-(4, '8', 25.00, 250, 'admin@example.com');
-GO
+INSERT INTO SeatArea (standId, seatName, quantity) VALUES
+(4, '1', 200),
+(4, '2', 250),
+(4, '3', 200),
+(4, '4', 250),
+(4, '5', 200),
+(4, '6', 250),
+(4, '7', 200),
+(4, '8', 250);
+
 
 
 -- Insert values into MatchSeat table
@@ -140,15 +149,3 @@ INSERT INTO News (title, content, createdBy) VALUES
 ('Title 1','Content 1', 'admin@example.com'),
 ('Title 2', 'Content 2', 'admin@example.com');
 GO
--- Insert values into NewsImages table
-INSERT INTO NewsImages (NewsId, imageUrl) VALUES 
-(1,'http://example.com/image1.jpg'),
-(1,'http://example.com/image2.jpg'),
-(1,'http://example.com/image3.jpg');
-GO
-
-INSERT INTO tokenForgetPassword (token, expiryTime, isUsed, userEmail)
-VALUES 
-('token1', DATEADD(hour, 1, CURRENT_TIMESTAMP), 0, 'quantahe170941@fpt.edu.vn')
-GO
-

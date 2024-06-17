@@ -6,10 +6,8 @@ package dal;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
 import models.MatchSeat;
 import models.SeatArea;
-import models.Stand;
 
 /**
  *
