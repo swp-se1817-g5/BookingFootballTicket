@@ -552,10 +552,19 @@ Author     : duong
                                     <label>Content</label>
                                     <input name="content" class="form-control" value="${n.content}">
                                 </div>
+<<<<<<< HEAD
                                 <div class="form-group" style="word-break: break-word">
                                     <label>Image</label>
                                     <br>
                                     <input type="file" name="image"><br>
+=======
+                                 <div class="form-group">
+                                <label>Image</label><br>
+                                <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
+                            </div>
+                                <div class="form-group" style="word-break: break-word">
+                                    <input type="file" name="image">
+>>>>>>> 2c1da679cb6d15041b306d4e66f3a3c3092627ba
                                     <input type="hidden" name="currentImage" value="${n.image}">
                                 </div>
                                 <div class="form-group">

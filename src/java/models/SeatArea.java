@@ -5,8 +5,6 @@
 package models;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -19,27 +17,26 @@ public class SeatArea {
     private Stand stand;
     private BigDecimal price;
     private int quantity;
+<<<<<<< HEAD
     private String createdBy;
     private LocalDateTime createdDate;
     private String updatedBy;
     private LocalDateTime lastUpdatedDate;
     
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
+=======
+>>>>>>> 2c1da679cb6d15041b306d4e66f3a3c3092627ba
 
     public SeatArea() {
     }
 
 
-    public SeatArea(int seatId, String seatName, Stand stand, BigDecimal price, int quantity, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate) {
+    public SeatArea(int seatId, String seatName, Stand stand, BigDecimal price, int quantity) {
         this.seatId = seatId;
         this.seatName = seatName;
         this.stand = stand;
         this.price = price;
         this.quantity = quantity;
-        this.createdBy = createdBy;
-        this.createdDate = createdDate;
-        this.updatedBy = updatedBy;
-        this.lastUpdatedDate = lastUpdatedDate;
     }
     
     
@@ -85,6 +82,7 @@ public class SeatArea {
         this.quantity = quantity;
     }
 
+<<<<<<< HEAD
     public String getCreatedBy() {
         return createdBy;
     }
@@ -124,4 +122,6 @@ public class SeatArea {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
+=======
+>>>>>>> 2c1da679cb6d15041b306d4e66f3a3c3092627ba
 }

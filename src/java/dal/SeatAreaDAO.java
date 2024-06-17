@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package dal;
 
 import java.sql.*;
@@ -11,24 +7,20 @@ import java.util.List;
 import models.SeatArea;
 import models.Stand;
 
-/**
- *
- * @author admin
- */
 public class SeatAreaDAO {
 
-    public static SeatAreaDAO INSTANCE = new SeatAreaDAO();
-    private Connection con;
+    public static final SeatAreaDAO INSTANCE = new SeatAreaDAO();
+    private final Connection con;
 
     private SeatAreaDAO() {
-        if (INSTANCE == null) {
-            con = new DBContext().connect;
-        } else {
-            INSTANCE = this;
-        }
+        con = new DBContext().connect;
     }
 
-    public ArrayList<SeatArea> getSeat() {
+    /**
+     *
+     * @return
+     */
+    public ArrayList<SeatArea> getSeatByMatch() {
         ArrayList<SeatArea> seats = new ArrayList<>();
         String sql = """
                      SELECT 
@@ -37,38 +29,32 @@ public class SeatAreaDAO {
                      st.standName as standName,
                      sa.seatName,
                      sa.price,
-                     sa.quantity,
-                     sa.createdBy,
-                     sa.createdDate,
-                     sa.updatedBy,
-                     sa.lastUpdatedDate
+                     sa.quantity
                      FROM [SeatArea] sa
                      JOIN Stand st on st.standId = sa.standId
-                     WHERE isDeleted = 0 """;
+                     WHERE sa.isDeleted = 0 """;
 
-        try {
-            PreparedStatement ps = con.prepareStatement(sql);
+        try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
+<<<<<<< HEAD
             ResultSet rs = ps.executeQuery();
+=======
+>>>>>>> 2c1da679cb6d15041b306d4e66f3a3c3092627ba
             while (rs.next()) {
                 SeatArea seat = new SeatArea();
                 Stand stand = new Stand();
 
                 stand.setStandId(rs.getInt("standId"));
                 stand.setStandName(rs.getString("standName"));
-
                 seat.setSeatId(rs.getInt("seatId"));
                 seat.setSeatName(rs.getString("seatName"));
                 seat.setPrice(rs.getBigDecimal("price"));
                 seat.setQuantity(rs.getInt("quantity"));
                 seat.setStand(stand);
-                seat.setCreatedBy(rs.getString("createdBy"));
-                seat.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
-                seat.setUpdatedBy(rs.getString("updatedBy"));
-                seat.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") == null ? null : rs.getTimestamp("lastUpdatedDate").toLocalDateTime());
                 seats.add(seat);
             }
         } catch (SQLException e) {
+<<<<<<< HEAD
             e.printStackTrace();
         }
         return seats;
@@ -203,4 +189,10 @@ public class SeatAreaDAO {
         System.out.println(INSTANCE.paggingSeatAreas(1, 5, "", "").toString());
     }
 
+=======
+            e.printStackTrace(); // Print stack trace or use a logger to log the exception
+        }
+        return seats;
+    }
+>>>>>>> 2c1da679cb6d15041b306d4e66f3a3c3092627ba
 }

@@ -66,8 +66,10 @@ public class ManageFootballClubServlet extends HttpServlet {
             request.setAttribute("created", "true".equals(request.getParameter("fcCreated")));
         }
 
+
         if (request.getParameter("fcUpdated") != null) {
             request.setAttribute("updated", "true".equals(request.getParameter("fcUpdated")));
+
 
         }
         if (request.getParameter("fcDeleted") != null) {
