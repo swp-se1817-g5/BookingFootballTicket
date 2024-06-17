@@ -23,6 +23,8 @@ public class SeatArea {
     private LocalDateTime createdDate;
     private String updatedBy;
     private LocalDateTime lastUpdatedDate;
+    
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
 
     public SeatArea() {
     }
@@ -49,7 +51,7 @@ public class SeatArea {
         this.seatName = seatName;
     }
     
-    
+   
 
     public int getSeatId() {
         return seatId;
@@ -94,6 +96,10 @@ public class SeatArea {
     public LocalDateTime getCreatedDate() {
         return createdDate;
     }
+    
+    public String getCreatedDateFormat(){
+        return createdDate != null ? createdDate.format(formatter) : null ;
+    }
 
     public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
@@ -109,6 +115,9 @@ public class SeatArea {
 
     public LocalDateTime getLastUpdatedDate() {
         return lastUpdatedDate;
+    }
+    public String getLastUpdatedDateFormat(){
+        return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
     }
 
     public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {

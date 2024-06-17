@@ -6,6 +6,7 @@ package dal;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.FootballClub;
@@ -129,18 +130,21 @@ public class FootballClubDAO {
         return fc;
     }
 
-    public ArrayList<FootballClub> getFootballClubs(int offset, int noOfRecords) {
-        ArrayList<FootballClub> fcs = new ArrayList<>();
-        String query = "SELECT * FROM [dbo].[FootballClub] WHERE [isDeleted] = 0 ORDER BY clubId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+    public List<FootballClub> paggingFootballClubs(int pageIndex, int numOfRecords, String search) {
+        List<FootballClub> fcs = new ArrayList<>();
+        String query = "SELECT * FROM [dbo].[FootballClub] WHERE [isDeleted] = 0 and clubName like ? ORDER BY clubId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, offset);
-            ps.setInt(2, noOfRecords);
+        try {
+            ps = con.prepareStatement(query);
+            ps.setString(1, "%" + search + "%");
+            ps.setInt(2, (pageIndex - 1) * numOfRecords);
+            ps.setInt(3, numOfRecords);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     FootballClub fc = new FootballClub();
                     fc.setClubId(rs.getInt("clubId"));
                     fc.setClubName(rs.getString("clubName"));
+                    fc.setDescription(rs.getString("description"));
                     fc.setImg(rs.getString("img"));
                     fc.setCreatedBy(rs.getString("createdBy"));
                     fc.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
@@ -156,10 +160,13 @@ public class FootballClubDAO {
         return fcs;
     }
 
-    public int getNoOfRecords() {
+    public int gettotalRecords(String search) {
         int quantity = 0;
-        String query = "SELECT COUNT(*) FROM [FootballClub]";
-        try (PreparedStatement ps = con.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
+        String query = "SELECT COUNT(*) FROM [FootballClub] where footballClub like ? ";
+        try {
+            ps = con.prepareStatement(query);
+            ps.setString(1, "%" + search + "%");
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 quantity = rs.getInt(1);
             }
@@ -170,7 +177,7 @@ public class FootballClubDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(FootballClubDAO.INSTANCE.getFootballClubs(2, 2));
+
     }
 
 }

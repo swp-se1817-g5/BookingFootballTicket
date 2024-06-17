@@ -245,6 +245,7 @@ Author     : duong
                                 <a href="manageFootballClub" class="dropdown-item">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item ">Manage Stand</a>
+                                      <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
                                 <a href="manageNews" class="dropdown-item active">Manage News</a>
                             </div>
