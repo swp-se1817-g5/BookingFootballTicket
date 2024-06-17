@@ -2,27 +2,30 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageFootballClub;
+package controllers.manageNews;
 
-import dal.FootballClubDAO;
+import dal.NewsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
+import models.News;
+import models.User;
 
 /**
  *
- * @author admin
+ * @author nguye
  */
-@WebServlet(name = "ManageFootballClubServlet", urlPatterns = {"/manageFootballClub"})
-public class ManageFootballClubServlet extends HttpServlet {
-
-    private final int numOfRecords = 2;
-    private int pageIndex = 1;
+@WebServlet(name = "CreateNewNewsServlet", urlPatterns = {"/createNewNews"})
+@MultipartConfig
+public class CreateNewNewsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,14 +40,13 @@ public class ManageFootballClubServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageFootballClubServlet</title>");
+            out.println("<title>Servlet CreateNewNewsServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageFootballClubServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateNewNewsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,41 +64,7 @@ public class ManageFootballClubServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("fcCreated") != null) {
-            request.setAttribute("created", "true".equals(request.getParameter("fcCreated")));
-        }
-
-        if (request.getParameter("fcUpdated") != null) {
-            request.setAttribute("updated", "true".equals(request.getParameter("fcUpdated")));
-
-        }
-        if (request.getParameter("fcDeleted") != null) {
-            request.setAttribute("deleted", "true".equals(request.getParameter("fcDeleted")));
-        }
-        
-        String search = request.getParameter("search");
-        search = search == null ? "" : search.trim();
-        
-        int totalRecords = FootballClubDAO.INSTANCE.gettotalRecords(search);
-        int endPage = (totalRecords / numOfRecords);
-        if (totalRecords % numOfRecords != 0 || totalRecords == 0) {
-            endPage++;
-        }
-        
-        try {
-            String pageIndexRaw = request.getParameter("pageIndex");
-            if (pageIndexRaw != null) {
-                pageIndex = Integer.parseInt(pageIndexRaw);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        request.setAttribute("endPage", endPage);
-        request.setAttribute("pageIndex", pageIndex);
-        request.setAttribute("search", search);
-        request.setAttribute("footballClubs", FootballClubDAO.INSTANCE.paggingFootballClubs(pageIndex, numOfRecords, search));
-        request.getRequestDispatcher("views/manageFootballClub.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -110,7 +78,48 @@ public class ManageFootballClubServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        HttpSession session = request.getSession();
+        PrintWriter out = response.getWriter();
+        try {
+//            User createdByRaw = (User) session.getAttribute("currentUser");
+            User createdByRaw = new User();
+            createdByRaw.setEmail("duongnche173192@fpt.edu.vn");
+            String title = request.getParameter("title");
+            String content = request.getParameter("content");
+            String conclusion = request.getParameter("conclusion");
+
+            int status = 1;
+            int stateRaw = Integer.parseInt(request.getParameter("state"));
+            boolean state = false;
+            if (stateRaw == 1) {
+                state = true;
+            }
+            Part part = request.getPart("image");
+            String imagePath = null;
+            if ((part == null) || (part.getSubmittedFileName().trim().isEmpty()) || (part.getSubmittedFileName() == null)) {
+                imagePath = "";
+                out.print("if");
+            } else {
+                String path = request.getServletContext().getRealPath("/images/news");
+                File dir = new File(path);
+                if (!dir.exists()) {
+                    dir.mkdirs();
+                }
+                File image = new File(dir, part.getSubmittedFileName());
+                part.write(image.getAbsolutePath());
+                imagePath = request.getContextPath() + "/images/news/" + image.getName();
+                News news = new News(title, content, imagePath, conclusion, createdByRaw.getEmail(), status, state);
+                int created = NewsDAO.getInstance().createNews(news);
+                if (created != 0) {
+                    session.setAttribute("created", created);       
+                }
+            }
+
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        }
+        response.sendRedirect("manageNews");
     }
 
     /**

@@ -35,7 +35,7 @@
                 <div class="account-container">
                     <div class="heading-bx left">
                         <h2 class="title-head">Sign Up <span>Now</span></h2>
-                        <p>Login Your Account <a href="http://localhost:8080/BookingFootballTicket/login">Click here</a></p>
+                        <p>Login Your Account <a href="./login">Click here</a></p>
                     </div>    
                     <c:if test="${not empty errorMessage}">
                         <p style="color:red">${errorMessage}</p>
@@ -107,7 +107,7 @@
                                            value="terms-and-conditions" name="iAgree"
                                            id="iAgree" required>
                                     <label class="form-check-label text-secondary fs-5" for="iAgree" style="font-weight: 400;" >
-                                        I agree to the <a href="#!"
+                                        I agree to the <a href="./term"
                                                           class="link-primary text-decoration-none text-info">
                                             terms and conditions!
                                         </a>

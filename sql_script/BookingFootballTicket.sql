@@ -1,10 +1,10 @@
 USE master;
 GO
 
-CREATE DATABASE BookingFootballTicket;
+CREATE DATABASE BookingFootballTickett;
 GO
 
-USE BookingFootballTicket;
+USE BookingFootballTickett;
 GO
 
 -- Table Role
@@ -120,18 +120,25 @@ CREATE TABLE Stand (
 );
 GO
 
+--Table SeatClass
+	CREATE TABLE SeatClass (
+    seatClassId INT PRIMARY KEY IDENTITY (1,1),
+    seatClassName NVARCHAR(50),
+    price DECIMAL(10, 2)
+);
+GO
+
 --Table SeatArea
     CREATE TABLE SeatArea (
     seatId INT PRIMARY KEY IDENTITY (1,1),
     standId INT,
+	seatClassId INT,
     seatName NVARCHAR(50),
     price DECIMAL(10, 2),
     quantity INT,
-    createdBy VARCHAR(50),
-	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-	updatedBy VARCHAR(50),
-	lastUpdatedDate DATETIME2 NULL,
-    FOREIGN KEY (standId) REFERENCES Stand(standId)
+	isActive BIT DEFAULT 1,
+    FOREIGN KEY (standId) REFERENCES Stand(standId),
+	FOREIGN KEY (seatClassId) REFERENCES SeatClass(seatClassId)
 );
 GO
 
@@ -140,9 +147,22 @@ CREATE TABLE MatchSeat(
 	matchSeatId INT PRIMARY KEY IDENTITY (1,1),
 	matchId INT,
 	seatId INT,
+	price DECIMAL(10, 2),
 	[availability] INT,
 	FOREIGN KEY (matchId) REFERENCES Match(matchId),
 	FOREIGN KEY (seatId ) REFERENCES SeatArea(seatId)
+);
+GO
+
+-- Table MatchSeason
+CREATE TABLE SeasonSeat(
+	seasonSeatId INT PRIMARY KEY IDENTITY (1,1),
+	seatId INT,
+	seasonId INT,
+	price DECIMAL(10, 2),
+	[availability] INT,
+	FOREIGN KEY (seatId) REFERENCES SeatArea(seatId),
+	FOREIGN KEY (seasonId ) REFERENCES Season(seasonId)
 );
 GO
 
@@ -150,6 +170,7 @@ GO
 CREATE TABLE HistoryPurchasedTicket (
 	ticketId INT PRIMARY KEY IDENTITY (1,1),
 	matchSeatId INT,
+	seasonSeatId INT,
     email VARCHAR(50),
 	qrCode VARCHAR(255),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
@@ -159,8 +180,8 @@ CREATE TABLE HistoryPurchasedTicket (
 	createdBy VARCHAR(50),
 	--updatedBy VARCHAR(50) NULL,
 	--lastUpdatedDate DATETIME2 NULL,
-	isDeleted BIT DEFAULT 0,
     FOREIGN KEY (matchSeatId) REFERENCES MatchSeat(matchSeatId),
+	FOREIGN KEY (seasonSeatId) REFERENCES SeasonSeat(seasonSeatId),
     FOREIGN KEY (email) REFERENCES [User](email)
 );
 GO

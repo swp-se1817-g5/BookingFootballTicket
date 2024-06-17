@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageMatch;
+package controllers.manage_match;
 
 import dal.MatchDAO;
 import java.io.IOException;
@@ -28,6 +28,7 @@ public class DeleteMatchServlet extends HttpServlet {
             int matchId = Integer.parseInt(request.getParameter("matchId"));
             deleted = MatchDAO.INSTANCE.deleteMatch(matchId);
         } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid date time format", e);
         }
         response.sendRedirect("manageMatch?deleted=" + deleted);
     }
@@ -35,6 +36,7 @@ public class DeleteMatchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.sendRedirect("manageMatch");
     }
 
     @Override
