@@ -169,12 +169,7 @@ public class SeasonDAO {
     }
 
     public static void main(String[] args) {
-        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons(0, 5);
-        for (Season season : seasons) {
-            System.out.println(season.toString());
-        }
-//        Season s = SeasonDAO.INSTANCE.getSeasonbyID("1");
-//        System.out.println(s.toString());
+// 
     }
 
 }

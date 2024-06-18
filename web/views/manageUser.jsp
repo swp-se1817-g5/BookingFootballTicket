@@ -654,7 +654,7 @@
                 $('#passwordError').text('Password is required.');
                 return false;
             } else if (password.length < 8 || password.length > 20) {
-                $('#passwordError').text('Password must be between 6 and 20 characters long.');
+                $('#passwordError').text('Password must be between 8 and 20 characters long.');
                 return false;
             } else if (!passwordPattern.test(password)) {
                 $('#passwordError').text('Password must contain at least one digit and one uppercase letter.');
@@ -727,13 +727,6 @@
                         $('#error-message').text("Error: " + xhr.responseText);
                     }
                 });
-            });
-            // Handle pagination clicks
-            $(document).on('click', '.pagination a', function (e) {
-                e.preventDefault();
-                var page = $(this).data('page');
-                $('#searchForm').append('<input type="hidden" name="page" value="' + page + '">');
-                $('#searchForm').submit();
             });
         });
     </script>
