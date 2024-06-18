@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageSeason;
+package controllers.manage_user;
 
-import dal.SeasonDAO;
+import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,17 +12,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import models.Season;
+import jakarta.servlet.http.HttpSession;
+import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.User;
 
 /**
  *
  * @author Vinh
  */
-@WebServlet(name = "ManageSeason", urlPatterns = {"/manageSeason"})
-public class ManageSeasonServlet extends HttpServlet {
-
-    private static final int RECORDS_PER_PAGE = 10;
+@WebServlet(name = "CreateUser", urlPatterns = {"/createUser"})
+public class CreateUserServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,14 +39,13 @@ public class ManageSeasonServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageSeasonServlet</title>");
+            out.println("<title>Servlet CreateUserServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageSeasonServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateUserServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,19 +63,7 @@ public class ManageSeasonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int page = 1;
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-        }
-        ArrayList<Season> seasons = SeasonDAO.getINSTANCE().getSeasons((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
-        int noOfRecords = SeasonDAO.getINSTANCE().getNoOfRecords();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
-
-        request.setAttribute("seasons", seasons);
-        request.setAttribute("noOfPages", noOfPages);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("noOfRecords", noOfRecords);
-        request.getRequestDispatcher("views/manageSeason.jsp").forward(request, response);
+        response.sendRedirect("manageUser");
     }
 
     /**
@@ -88,7 +77,22 @@ public class ManageSeasonServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        HttpSession session = request.getSession();
+        boolean created = false;
+        User currentUser = (User) session.getAttribute("currentUser");
+        String createdBy = currentUser.getEmail();
+        String email = request.getParameter("email").trim();
+        String name = request.getParameter("name").trim();
+        String password = request.getParameter("password").trim();
+        String phoneNumber = request.getParameter("phoneNumber").trim();
+        String avatar = request.getParameter("avatar").trim();
+        int roleId = Integer.parseInt(request.getParameter("roleId"));
+        if (!email.isBlank() && !name.isBlank() && !password.isBlank() && !phoneNumber.isBlank()) {
+            User user = new User(email, name, roleId, password, phoneNumber, avatar, createdBy, LocalDateTime.now(), false);
+
+            created = UserDAO.getINSTANCE().createUser(user);
+        }
+        response.sendRedirect("manageUser?userCreated=" + created);
     }
 
     /**
