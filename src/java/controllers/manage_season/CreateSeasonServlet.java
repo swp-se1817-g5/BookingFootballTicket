@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageUser;
+package controllers.manage_season;
 
-import dal.UserDAO;
+import dal.SeasonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,19 +12,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import models.User;
+import models.Season;
 
 /**
  *
  * @author Vinh
  */
-@WebServlet(name = "CreateUser", urlPatterns = {"/createUser"})
-public class CreateUserServlet extends HttpServlet {
+@WebServlet(name = "CreateSeason", urlPatterns = {"/createSeason"})
+public class CreateSeasonServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,14 +39,13 @@ public class CreateUserServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateUserServlet</title>");
+            out.println("<title>Servlet CreateSeasonServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateUserServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CreateSeasonServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,7 +63,7 @@ public class CreateUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("manageUser");
+        doPost(request, response);
     }
 
     /**
@@ -78,28 +77,28 @@ public class CreateUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        boolean created = false;
-//        User currentUser = (User) session.getAttribute("currentUser");
-//        String createdBy = currentUser.getEmail();
-        String email = request.getParameter("email").trim();
-        String name = request.getParameter("name").trim();
-        String password = request.getParameter("password").trim();
-        String phoneNumber = request.getParameter("phoneNumber").trim();
-        String avatar = request.getParameter("avatar").trim();
-        int roleId = Integer.parseInt(request.getParameter("roleId"));
-        if (!email.isBlank() && !name.isBlank() && !password.isBlank() && !phoneNumber.isBlank()) {
-            // Tạo đối tượng User mới
-            User user = new User(email, name, roleId, password, phoneNumber, avatar, "admin", LocalDateTime.now(), false);
+        String seasonName = request.getParameter("seasonName");
+        String startDate = request.getParameter("startDate");
+        String endDate = request.getParameter("endDate");
+        if (!seasonName.isBlank() && !startDate.isBlank() && !endDate.isBlank()) {
+            try {
+                Date start = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
+                Date end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
 
-            // Lưu người dùng vào cơ sở dữ liệu
-            created = UserDAO.getINSTANCE().createUser(user);
+                if (end.after(start)) {
+                    Season season = new Season(seasonName, start, end);
+                    SeasonDAO.getINSTANCE().createSeason(season);
+                    response.sendRedirect(request.getContextPath() + "/manageSeason?message=Season+created+successfully!");
+                    return;
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/manageSeason?message=End+date+must+be+after+start+date!");
+                    return;
+                }
+            } catch (ParseException ex) {
+                Logger.getLogger(CreateSeasonServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        if(created) {
-            response.sendRedirect("manageUser?userCreated=" + created);
-        } else {
-            response.sendRedirect("manageUser?userCreated=" + created);
-        }
+        request.getRequestDispatcher("/manageSeason").forward(request, response);
     }
 
     /**

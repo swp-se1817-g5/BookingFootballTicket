@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageUser;
+package controllers.manage_user;
 
 import com.google.gson.JsonObject;
 import dal.RoleDAO;
@@ -41,7 +41,6 @@ public class ManageUserServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -72,6 +71,10 @@ public class ManageUserServlet extends HttpServlet {
             if (page < 1) {
                 page = 1;
             }
+        }
+        if(request.getParameter("userCreated") != null){
+            boolean created = Boolean.parseBoolean(request.getParameter("userCreated"));
+            request.setAttribute("created", created);
         }
         ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
         ArrayList<User> users = UserDAO.getINSTANCE().getUsers((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
@@ -110,7 +113,6 @@ public class ManageUserServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
         ArrayList<User> users;
         int noOfRecords;
         int noOfPages;
