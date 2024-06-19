@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageSeason;
+package controllers.manage_season;
 
 import dal.SeasonDAO;
 import java.io.IOException;
@@ -12,19 +12,17 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
 import models.Season;
 
 /**
  *
  * @author Vinh
  */
-@WebServlet(name = "CreateSeason", urlPatterns = {"/createSeason"})
-public class CreateSeasonServlet extends HttpServlet {
+@WebServlet(name = "ManageSeason", urlPatterns = {"/manageSeason"})
+public class ManageSeasonServlet extends HttpServlet {
+
+    private static final int RECORDS_PER_PAGE = 10;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,14 +37,13 @@ public class CreateSeasonServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateSeasonServlet</title>");
+            out.println("<title>Servlet ManageSeasonServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateSeasonServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageSeasonServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,7 +61,19 @@ public class CreateSeasonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+        int page = 1;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        ArrayList<Season> seasons = SeasonDAO.getINSTANCE().getSeasons((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
+        int noOfRecords = SeasonDAO.getINSTANCE().getNoOfRecords();
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
+
+        request.setAttribute("seasons", seasons);
+        request.setAttribute("noOfPages", noOfPages);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("noOfRecords", noOfRecords);
+        request.getRequestDispatcher("views/manageSeason.jsp").forward(request, response);
     }
 
     /**
@@ -78,28 +87,7 @@ public class CreateSeasonServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String seasonName = request.getParameter("seasonName");
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-        if (!seasonName.isBlank() && !startDate.isBlank() && !endDate.isBlank()) {
-            try {
-                Date start = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
-                Date end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
-
-                if (end.after(start)) {
-                    Season season = new Season(seasonName, start, end);
-                    SeasonDAO.getINSTANCE().createSeason(season);
-                    response.sendRedirect(request.getContextPath() + "/manageSeason?message=Season+created+successfully!");
-                    return;
-                } else {
-                    response.sendRedirect(request.getContextPath() + "/manageSeason?message=End+date+must+be+after+start+date!");
-                    return;
-                }
-            } catch (ParseException ex) {
-                Logger.getLogger(CreateSeasonServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        request.getRequestDispatcher("/manageSeason").forward(request, response);
+        doGet(request, response);
     }
 
     /**
