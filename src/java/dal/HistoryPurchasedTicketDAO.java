@@ -13,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.HistoryPurchasedTicket;
 import models.MatchSeat;
-import models.News;
 import models.Season;
 import models.User;
 
