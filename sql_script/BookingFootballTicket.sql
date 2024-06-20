@@ -1,10 +1,10 @@
 USE master;
 GO
 
-CREATE DATABASE BookingFootballTickett;
+CREATE DATABASE BookingFootballTicket;
 GO
 
-USE BookingFootballTickett;
+USE BookingFootballTicket;
 GO
 
 -- Table Role

@@ -481,55 +481,109 @@
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function () {
                                             const svg = document.getElementById('svgStadium');
-
                                             const paths = svg.querySelectorAll('path');
+                                            const items = document.querySelectorAll('.item');
 
 
-
+                                            // Add initial classes to all paths
                                             paths.forEach(function (path) {
                                                 var sectionName = path.getAttribute('data-section');
-                                                path.classList.add(sectionName);
+                                                path.classList.add(sectionName, 'clicked');
                                             });
 
-                                            // Thiết lập màu mặc định cho tất cả các phần tử khi trang tải xong
-                                            paths.forEach(function (path) {
-                                                var sectionName = path.getAttribute('data-section');
-                                                path.classList.add(sectionName);
-                                            });
-
-                                            paths.forEach(function (path) {
-                                                path.classList.add('clicked');
-                                            });
-
+                                            // Add event listeners to all paths
                                             paths.forEach(function (path) {
                                                 path.addEventListener('mouseenter', function () {
                                                     var sectionName = this.getAttribute('data-section');
-                                                    var sections = document.querySelectorAll('path[data-section="' + sectionName + '"]');
-                                                    sections.forEach(function (item) {
-                                                        item.classList.add('hovered', sectionName);
-                                                    });
+                                                    document.querySelectorAll('path[data-section="' + sectionName + '"]')
+                                                            .forEach(item => item.classList.add('hovered', sectionName));
                                                 });
 
                                                 path.addEventListener('mouseleave', function () {
                                                     var sectionName = this.getAttribute('data-section');
-                                                    var sections = document.querySelectorAll('path[data-section="' + sectionName + '"]');
-                                                    sections.forEach(function (item) {
-                                                        if (!item.classList.contains('clicked')) {
-                                                            item.classList.remove('hovered', sectionName);
-                                                        }
-                                                    });
+                                                    document.querySelectorAll('path[data-section="' + sectionName + '"]')
+                                                            .forEach(item => {
+                                                                if (!item.classList.contains('clicked')) {
+                                                                    item.classList.remove('hovered', sectionName);
+                                                                }
+                                                            });
                                                 });
 
                                                 path.addEventListener('click', function () {
                                                     var sectionName = this.getAttribute('data-section');
-                                                    var sections = document.querySelectorAll('path[data-section="' + sectionName + '"]');
-                                                    sections.forEach(function (item) {
-                                                        item.classList.toggle('clicked');
-                                                        item.classList.remove('hovered'); // Remove hovered class when clicked
-                                                    });
+                                                    document.querySelectorAll('path[data-section="' + sectionName + '"]')
+                                                            .forEach(item => {
+                                                                item.classList.toggle('clicked');
+
+                                                                // Check if the path has the class 'clicked' and log a message
+                                                                if (item.classList.contains('clicked')) {
+                                                                    items.forEach(item => {
+                                                                        const itemTicketType = item.getAttribute('data-ticket-type');
+                                                                        if (itemTicketType === sectionName) {
+                                                                            item.style.display = 'block';
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    items.forEach(item => {
+                                                                        const itemTicketType = item.getAttribute('data-ticket-type');
+                                                                        if (itemTicketType === sectionName) {
+                                                                            item.style.display = 'none';
+                                                                        }
+                                                                    });
+                                                                }
+                                                            });
                                                 });
                                             });
                                         });
+
+
+
+//                                        document.addEventListener('DOMContentLoaded', function () {
+//                                            const svg = document.getElementById('svgStadium');
+//                                            const paths = svg.querySelectorAll('path');
+//                                            const items = document.querySelectorAll('.item');
+//
+//                                            // Function to reset the display of all paths and ticket items
+//                                            function resetDisplay() {
+//                                                paths.forEach(path => {
+//                                                    path.style.display = 'block'; // Ensure all paths are visible
+//                                                });
+//                                                items.forEach(item => {
+//                                                    item.style.display = 'block'; // Ensure all ticket items are visible
+//                                                });
+//                                            }
+//
+//                                            // Function to show matching paths and ticket items based on data-section and data-ticket-type
+//                                            function filterDisplay(ticketType) {
+//                                                paths.forEach(path => {
+//                                                    const sectionName = path.getAttribute('data-section');
+//                                                    if (sectionName !== ticketType) {
+//                                                        path.style.display = 'none';
+//                                                    }
+//                                                });
+//                                                items.forEach(item => {
+//                                                    const itemTicketType = item.getAttribute('data-ticket-type');
+//                                                    if (itemTicketType !== ticketType) {
+//                                                        item.style.display = 'none';
+//                                                    }
+//                                                });
+//                                            }
+//
+//                                            // Add click event listener to each path
+//                                            paths.forEach(path => {
+//                                                path.addEventListener('click', function () {
+//                                                    // Get the data-section from the clicked path
+//                                                    const ticketType = this.getAttribute('data-section');
+//
+//                                                    // Reset display and then filter based on the ticket type
+//                                                    //resetDisplay();
+//                                                    filterDisplay(ticketType);
+//                                                });
+//                                            });
+//
+//                                            // Show all paths and ticket items by default
+//                                            //resetDisplay();
+//                                        });
 
 
 
@@ -788,13 +842,24 @@
                                     </div>
                                 </div>
                                 <div class="listing-holder hidden-s-view">
-                                    <c:forEach items="${seatByMatch}" var="seat">
+                                    <c:forEach items="${seatByMatch}" var="seatMatch">
                                         <div class="listing-inner">
-                                            <div class="item trigger_category-3" data-section="category-3" data-sort-original="1" data-sort-section="1" data-sort-price="772.50" data-sort-availability="2" data-delivery="0" data-ticket-type="Category 3" data-preference="0" data-product="282867" data-event_id="10019" style="border-color:#86A8BF">
+                                            <div class="item trigger_category-3" 
+                                                 data-section="${seatMatch.seatarea.seatClass.seatClassName}" 
+                                                 data-sort-original="1" 
+                                                 data-sort-section="1" 
+                                                 data-sort-price="772.50" 
+                                                 data-sort-availability="2" 
+                                                 data-delivery="0" 
+                                                 data-ticket-type="${seatMatch.seatarea.seatClass.seatClassName}" 
+                                                 data-preference="0" 
+                                                 data-product="282867" 
+                                                 data-event_id="10019"
+                                                 style="border-color:#86A8BF">
                                                 <div class="overlay" style="background-color:#86A8BF;"></div>
                                                 <div class="seat">
                                                     <div class="div_ticket-type">
-                                                        ${seat.availability}
+                                                        ${seatMatch.seatarea.stand.standName}${seatMatch.seatarea.seatName}
                                                     </div>
                                                     <div></div>
                                                 </div><div class="availability">
@@ -811,7 +876,7 @@
                                                     <div class="info">
                                                         <div>Others</div>
                                                     </div>
-                                                </div><div class="price">&pound;772.50 </div><div class="book" data-ripple="true" data-alert-text="Selling Fast!" data-type="hot">
+                                                </div><div class="price">${seatMatch.price}&#8363;</div><div class="book" data-ripple="true" data-alert-text="Selling Fast!" data-type="hot">
                                                     <a href="#ticketSummary" data-toggle="modal">Book now</a>
                                                 </div>
                                             </div>
