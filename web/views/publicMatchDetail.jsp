@@ -22,6 +22,15 @@
         <meta property="og:image" content="https://www.footballticketpad.com/assets/ftp-logo.png" />
         <meta name="google-site-verification" content="O7lp3hSrStK1vKzEa9v7j3rzLLYzUpjqsSwBuQXMjNg" />
         <link rel="stylesheet" href="https://www.footballticketpad.com/assets/frontend/2018/css/pages/team-page.css">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <!-- jQuery và Bootstrap JavaScript -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
         <style type="text/css">
             .availability {
                 z-index: 6 !important;
@@ -174,6 +183,27 @@
                 }
             }
 
+            .match-details .left {
+                font-weight: 600;
+                margin-bottom: 5px;
+                font-size: 16px;
+                line-height: 20px;
+                display: inline-block;
+                padding-right: 25px;
+                vertical-align: top;
+                width: calc(50% - 25px);
+            }
+            .match-details .right {
+                font-weight: 600;
+                margin-bottom: 5px;
+                font-size: 16px;
+                line-height: 20px;
+                display: inline-block;
+                padding-right: 25px;
+                vertical-align: top;
+                width: calc(50% - 25px);
+            }
+
         </style>
         <link rel="stylesheet" type="text/css" href="/map/167/style.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap">
@@ -202,54 +232,80 @@
 
     <body class="template-fixture buy">
         <%@include file="header1.jsp" %>
-        <div class="container">
+        <div class="container-fluid">
+
+
+
+
+
             <input type="hidden" name="ticketMultiCap" id="ticketMultiCap" value="Ticket(s)">
             <div class="content" id="test">
                 <div class="team-page fixture">
-                    <div class="listing-modal">
-                        <div class="overlay"></div>
-                        <div class="inner">
-                            <div class="modal" id="ticketSummary">
-                                <div data-close-search class="close"><span class="ftp-close"></span></div>
-                                <div class="heading">Ticket summary</div>
-                                <div class="match-details">
-                                    <div class="left">
-                                        <div class="bold">Germany vs Scotland</div>
-                                        <div class="grey">in</div>
-                                        <div class="item">UEFA EURO 2024</div>
-                                        <div class="grey">at</div>
-                                        <div class="item"> Allianz Arena </div>
-                                        <div class="grey">on</div>
-                                        <div class="item">Fri 14th June 2024 : 9:00pm</div>
-                                    </div>
-                                    <div class="right">
-                                        <div class="item ticketType"></div>
-                                        <div class="item ticketBlock"></div>
-                                        <div class="bold ticketIndiv"><span id="qty">0</span> tickets at &pound;<span id="priceIndiv"></span> each</div>
-                                        <div class="bold ticketSum">Sub Total price &pound;<span id="sum"></span></div>
-                                        <div class="bold ticketAtt">
-                                            Best value tickets
-                                            Unrestricted view
+
+                    <%-- start modal summary--%>
+                    <!-- Modal -->
+                    <div class="modal fade" id="ticketSummary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document" style="
+                             top: 50px;
+                             max-width: 750px;
+                             width: 100%;
+                             margin: 0 auto;
+                             padding: 10px;
+                             ">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Ticket summary</h5>
+                                    <div data-dismiss="modal" aria-label="Close" data-close-search class="close"><span class="ftp-close"></span></div>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="margin: 0 54px 0 54px;">
+                                    <div class="match-details">
+                                        <div class="left">
+                                            <div class="bold">Germany vs Scotland</div>
+                                            <div class="grey">in</div>
+                                            <div class="item">UEFA EURO 2024</div>
+                                            <div class="grey">at</div>
+                                            <div class="item"> Allianz Arena </div>
+                                            <div class="grey">on</div>
+                                            <div class="item">Fri 14th June 2024 : 9:00pm</div>
                                         </div>
-                                        <div class="features" id="restrictions">
+                                        <div class="right">
+                                            <div class="item ticketType"></div>
+                                            <div class="item ticketBlock"></div>
+                                            <div class="bold ticketIndiv"><span id="qty">0</span> tickets at &pound;<span id="priceIndiv"></span> each</div>
+                                            <div class="bold ticketSum">Sub Total price &pound;<span id="sum"></span></div>
+                                            <div class="bold ticketAtt">
+                                                Best value tickets
+                                                Unrestricted view
+                                            </div>
+                                            <div class="features" id="restrictions">
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="number-of-tickets">
+                                        <div class="heading">Number of tickets</div>
+                                        <div class="info">Please review the number of tickets selected</div>
+                                        <select name="number_of_tickets" id="number_of_tickets">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+                                        <span class="ftp-down-chevron"></span>
+                                    </div>
+                                    <div class="whyDisabled text grey">
+                                    </div>
+                                    <input type="hidden" class="checkout_product" id="checkout_product">
+                                    <input type="hidden" class="checkout_eventId" id="checkout_eventId">
                                 </div>
-                                <div class="number-of-tickets">
-                                    <div class="heading">Number of tickets</div>
-                                    <div class="info">Please review the number of tickets selected</div>
-                                    <select name="number_of_tickets" id>
-                                    </select>
-                                    <span class="ftp-down-chevron"></span>
+                                <div class="modal-footer">
+                                    <div style="float: center;" class="c2a_btn" id="checkout" action="https://www.footballticketpad.com/checkout">Checkout</div>
                                 </div>
-                                <div class="whyDisabled text grey">
-                                </div>
-                                <input type="hidden" value class="checkout_product">
-                                <input type="hidden" value class="checkout_eventId">
-                                <div style="float: center;" class="c2a_btn" id="checkout" action="https://www.footballticketpad.com/checkout">Checkout</div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="team-header" style="border-color:#a2a2a2">
                         <div class="inner">
                             <div class="left">
@@ -535,57 +591,6 @@
                                                 });
                                             });
                                         });
-
-
-
-//                                        document.addEventListener('DOMContentLoaded', function () {
-//                                            const svg = document.getElementById('svgStadium');
-//                                            const paths = svg.querySelectorAll('path');
-//                                            const items = document.querySelectorAll('.item');
-//
-//                                            // Function to reset the display of all paths and ticket items
-//                                            function resetDisplay() {
-//                                                paths.forEach(path => {
-//                                                    path.style.display = 'block'; // Ensure all paths are visible
-//                                                });
-//                                                items.forEach(item => {
-//                                                    item.style.display = 'block'; // Ensure all ticket items are visible
-//                                                });
-//                                            }
-//
-//                                            // Function to show matching paths and ticket items based on data-section and data-ticket-type
-//                                            function filterDisplay(ticketType) {
-//                                                paths.forEach(path => {
-//                                                    const sectionName = path.getAttribute('data-section');
-//                                                    if (sectionName !== ticketType) {
-//                                                        path.style.display = 'none';
-//                                                    }
-//                                                });
-//                                                items.forEach(item => {
-//                                                    const itemTicketType = item.getAttribute('data-ticket-type');
-//                                                    if (itemTicketType !== ticketType) {
-//                                                        item.style.display = 'none';
-//                                                    }
-//                                                });
-//                                            }
-//
-//                                            // Add click event listener to each path
-//                                            paths.forEach(path => {
-//                                                path.addEventListener('click', function () {
-//                                                    // Get the data-section from the clicked path
-//                                                    const ticketType = this.getAttribute('data-section');
-//
-//                                                    // Reset display and then filter based on the ticket type
-//                                                    //resetDisplay();
-//                                                    filterDisplay(ticketType);
-//                                                });
-//                                            });
-//
-//                                            // Show all paths and ticket items by default
-//                                            //resetDisplay();
-//                                        });
-
-
 
                                     </script>
                                     </defs>
