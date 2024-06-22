@@ -76,9 +76,9 @@ public class UpdateMatchServlet extends HttpServlet {
             Match match = new Match();
             match.setMatchId(matchId);
             match.setType(MatchDAO.INSTANCE.getMatchTypeById(typeString));
-            match.setStatus(MatchDAO.INSTANCE.getMatchStatusById(statusString));
-            match.setTeam1(FootballClubDAO.INSTANCE.getFootballClubbyID(fc1Id));
-            match.setTeam2(FootballClubDAO.INSTANCE.getFootballClubbyID(fc2Id));
+            match.setStatus(MatchDAO.INSTANCE.getMatchStatusById("1"));
+            match.setTeam1(FootballClubDAO.getInstance().getFootballClubbyID(fc1Id));
+            match.setTeam2(FootballClubDAO.getInstance().getFootballClubbyID(fc2Id));
             match.setTime(time);
 
             updated = MatchDAO.INSTANCE.updateMatch(match);

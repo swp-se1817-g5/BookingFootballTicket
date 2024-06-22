@@ -179,7 +179,8 @@
                                     <a href="/uefa-euro-2024/uefa-euro-2024-final">
                                         <div class="text">UEFA Euro 2024 Final</div>
                                     </a>
-                                </li></ul>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="/teams" class="has-child">Top Teams</a>
@@ -335,7 +336,7 @@
                                 <li><a href="/leagues"><div class="text view-all">View all leagues ></div></a></li>
                             </ul>
                         </li>
-                        
+
                         <li><a href="./about">About Us</a></li>
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
@@ -365,17 +366,17 @@
                                                 </a>
                                             </li>
                                             <c:if test="${sessionScope.currentUser != null}">
-                                            <li>
-                                                <a href="./logout">
-                                                    Logout
-                                                </a>
-                                            </li>
+                                                <li>
+                                                    <a href="./logout">
+                                                        Logout
+                                                    </a>
+                                                </li>
                                             </c:if>
                                         </ul>
                                     </li>
-        </c:when>
-    </c:choose>
-</ul>
+                                </c:when>
+                            </c:choose>
+                        </ul>
 
 
 
@@ -1417,7 +1418,7 @@
                                                                                                                                             <div class="tickets-left">Limited stock remaining!</div>
                                                                                                                                         </div>
                                                                                                                                     </a>
-                                                                                                                                    
+
                                                                                                                             </div>
                                                                                                                         </div>
                                                                                                                         <div class="item">
@@ -1736,21 +1737,21 @@
                                                                                                                                                                                     <%
                                                                                                                                                                                      }
                                                                                                                                                                                     %> 
-                                                                                                                                                                                    
+
                                                                                                                                                                                     <%
     Boolean changePassword = (Boolean) session.getAttribute("changePassword");
     if (changePassword != null) {
         session.removeAttribute("changePassword");
-%>  
-        <script type="text/javascript">
-            window.onload = function () {
-                showLoginPopup("Change password successfully!");
-            }
-        </script>
-<%
-    }
-%>
-                                                                                                                                                                                    
+                                                                                                                                                                                    %>  
+                                                                                                                                                                                    <script type="text/javascript">
+                                                                                                                                                                                        window.onload = function () {
+                                                                                                                                                                                            showLoginPopup("Change password successfully!");
+                                                                                                                                                                                        }
+                                                                                                                                                                                    </script>
+                                                                                                                                                                                    <%
+                                                                                                                                                                                        }
+                                                                                                                                                                                    %>
+
                                                                                                                                                                                     <%
                                                                                                                                                                                     Boolean isFirstLogin = (Boolean) request.getAttribute("isFirstLogin");
                                                                                                                                                                                     if (isFirstLogin != null && isFirstLogin) {
@@ -1785,7 +1786,7 @@
                                                                                                                                                                                             });
                                                                                                                                                                                         }
                                                                                                                                                                                     </script>
-                                                                                                                                                                                    
+
                                                                                                                                                                                     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                                                                                                                                                                                     <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="277d7fe9745a504718d895ab-text/javascript"></script>
                                                                                                                                                                                     <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="277d7fe9745a504718d895ab-text/javascript"></script>

@@ -74,13 +74,11 @@ public class ManageNewsServlet extends HttpServlet {
         String go = request.getParameter("go");
         if (!isNullOrBlank(go)) {
             if (go.equals("search")) {
-                String valueSearch = request.getParameter("valueSearch");
+                String valueSearch = request.getParameter("valueSearch").trim();
                 listNews = NewsDAO.getInstance().search(valueSearch);
                 if (!listNews.isEmpty()) {
                     session.setAttribute("getListNews", listNews);
-
                 }
-                request.getRequestDispatcher("views/manageNews.jsp").forward(request, response);
             }
         } else {
             listNews = NewsDAO.getInstance().getlistNews();
@@ -101,8 +99,8 @@ public class ManageNewsServlet extends HttpServlet {
                 request.setAttribute(DELETED, session.getAttribute(DELETED));
                 session.removeAttribute(DELETED);
             }
-            request.getRequestDispatcher("views/manageNews.jsp").forward(request, response);
         }
+        request.getRequestDispatcher("views/manageNews.jsp").forward(request, response);
     }
 
     /**
@@ -129,6 +127,5 @@ public class ManageNewsServlet extends HttpServlet {
         return "Short description";
     }
 // </editor-fold>
-
 
 }

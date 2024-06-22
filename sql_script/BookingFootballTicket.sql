@@ -166,9 +166,22 @@ CREATE TABLE SeasonSeat(
 GO
 
 -- Table HistoryPurchasedTicket
-CREATE TABLE HistoryPurchasedTicket (
-	ticketId INT PRIMARY KEY IDENTITY (1,1),
+CREATE TABLE HistoryPurchasedTicketMatchSeat (
+	ticketMatchSeatId INT PRIMARY KEY IDENTITY (1,1),
 	matchSeatId INT,
+    email VARCHAR(50),
+	qrCode VARCHAR(255),
+	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+	price DECIMAL(10, 2),
+	quantity INT,
+	[status] BIT,
+	createdBy VARCHAR(50),
+    FOREIGN KEY (matchSeatId) REFERENCES MatchSeat(matchSeatId),
+    FOREIGN KEY (email) REFERENCES [User](email)
+);
+GO
+CREATE TABLE HistoryPurchasedTicketSeasonSeat (
+	ticketSeasonSeatId INT PRIMARY KEY IDENTITY (1,1),
 	seasonSeatId INT,
     email VARCHAR(50),
 	qrCode VARCHAR(255),
@@ -177,9 +190,6 @@ CREATE TABLE HistoryPurchasedTicket (
 	quantity INT,
 	[status] BIT,
 	createdBy VARCHAR(50),
-	--updatedBy VARCHAR(50) NULL,
-	--lastUpdatedDate DATETIME2 NULL,
-    FOREIGN KEY (matchSeatId) REFERENCES MatchSeat(matchSeatId),
 	FOREIGN KEY (seasonSeatId) REFERENCES SeasonSeat(seasonSeatId),
     FOREIGN KEY (email) REFERENCES [User](email)
 );

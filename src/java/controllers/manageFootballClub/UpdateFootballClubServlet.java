@@ -1,3 +1,7 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ */
 package controllers.manageFootballClub;
 
 import dal.FootballClubDAO;
@@ -13,40 +17,50 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import models.FootballClub;
 
-@WebServlet(name = "CreateFootballClubServlet", urlPatterns = {"/createFootballClub"})
+/**
+ *
+ * @author admin
+ */
+@WebServlet(name = "UpdateFootballClubServlet", urlPatterns = {"/updateFootballClub"})
 @MultipartConfig
-public class CreateFootballClubServlet extends HttpServlet {
-
+public class UpdateFootballClubServlet extends HttpServlet {
     private static final String IMAGE_FOLDER = "/images/footballclubs/";
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.sendRedirect("manageFootballClub");
     }
 
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        boolean fcCreated = false;
+        boolean fcUpdated = false;
         try {
-            Part part = request.getPart("image");
-        
+                Part part = request.getPart("image");
+                int clubIb = Integer.parseInt(request.getParameter("clubId"));
                 String img = part == null ? "" : handleFileUpload(part, request);
                 String clubName = request.getParameter("clubName").trim();
                 String description = request.getParameter("description");
                 description = description == null ? "" : description.trim();
                 FootballClub fc = new FootballClub();
+                fc.setClubId(clubIb);
                 fc.setClubName(clubName);
                 fc.setImg(img);
                 fc.setDescription(description);
-                fcCreated = FootballClubDAO.getInstance().createFootballClub(fc);
+                fcUpdated = FootballClubDAO.getInstance().updateFootballClub(fc);
             
         } catch (IOException | ServletException e) {
             e.printStackTrace();
         }
-        response.sendRedirect("manageFootballClub?fcCreated=" + fcCreated);
-
+        response.sendRedirect("manageFootballClub?fcUpdated=" + fcUpdated);
     }
 
     private String handleFileUpload(Part part, HttpServletRequest request) throws ServletException, IOException {
@@ -64,8 +78,14 @@ public class CreateFootballClubServlet extends HttpServlet {
         return imagePath;
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
-        return "Servlet for creating a football club with image upload functionality.";
-    }
+        return "Short description";
+    }// </editor-fold>
+
 }

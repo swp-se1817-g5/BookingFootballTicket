@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.homePage;
+package controllers.manage_season;
 
-import dal.FootballClubDAO;
-import dal.MatchDAO;
 import dal.SeasonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,13 +12,19 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.mail.Session;
+import models.Season;
 
 /**
  *
  * @author nguye
  */
-@WebServlet(name = "ManageHomePageServlet", urlPatterns = {"/homePage"})
-public class ManageHomePageServlet extends HttpServlet {
+@WebServlet(name = "UpdateSeasonServlet", urlPatterns = {"/updateSeason"})
+public class UpdateSeasonServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,13 +39,14 @@ public class ManageHomePageServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageHomePageServlet</title>");
+            out.println("<title>Servlet UpdateSeasonServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageHomePageServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateSeasonServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,11 +64,7 @@ public class ManageHomePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getFootballClubs", FootballClubDAO.INSTANCE.getFootballClubs(""));
-        request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
-        request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -77,7 +78,25 @@ public class ManageHomePageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String seasonId_raw = request.getParameter("seasonId");
+        String seasonName = request.getParameter("seasonName");
+        String startDate_raw = request.getParameter("startDate");
+        String endDate_raw = request.getParameter("endDate");
+        HttpSession session = request.getSession();
+        try {
+            int seasonId = Integer.parseInt(seasonId_raw);
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDate_raw);
+            Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDate_raw);
+            if (endDate.after(startDate)) {
+                Season season = new Season(seasonId,seasonName, startDate, endDate, "CanhDuong");
+                session.setAttribute("updated", SeasonDAO.getINSTANCE().updateSeason(season));
+            } else {
+                session.setAttribute("updated", "false");
+            }
+            response.sendRedirect("manageSeason");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

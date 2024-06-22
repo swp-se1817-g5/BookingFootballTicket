@@ -80,24 +80,17 @@ public class NewsDAO {
         return list;
     }
 
-    public static void main(String[] args) {
-        ArrayList<News> list = NewsDAO.getInstance().getlistNews();
-        for (News news : list) {
-            System.out.println(news.toString());
-
-        }
-    }
+//    
     //Search by 
 
     public ArrayList<News> search(String value) {
         ArrayList<News> list = new ArrayList<>();
-        String SQL_QUERY_SEARCH_NEWS = "SELECT * FROM News WHERE mainTitle LIKE '%" + value + "%' OR title LIKE '%" + value + "%' OR  mainContent LIKE '%" + value + "%' OR  content LIKE '%" + value + "%' OR createdBy LIKE '%" + value + "%' OR updatedBy LIKE '%" + value + "%'";
+        String SQL_QUERY_SEARCH_NEWS = "SELECT * FROM News WHERE title LIKE '%" + value +"%' OR  content LIKE '%" + value + "%' OR createdBy LIKE '%" + value + "%' OR updatedBy LIKE '%" + value + "%'";
         try {
             ps = connect.prepareStatement(SQL_QUERY_SEARCH_NEWS);
             rs = ps.executeQuery();
             while (rs.next()) {
                 News n = new News();
-                n.setNewsId(rs.getInt(NEWS_ID));
                 n.setTitle(rs.getString(TITLE));
                 n.setContent(rs.getString(CONTENT));
                 n.setCreateBy(rs.getString(CREATED_BY));
@@ -110,6 +103,12 @@ public class NewsDAO {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+    public static void main(String[] args) {
+        ArrayList<News> list = NewsDAO.getInstance().search("Title 1");
+        for (News news : list) {
+            System.out.println(news.toString());
+        }
     }
 //  Create a news
 
