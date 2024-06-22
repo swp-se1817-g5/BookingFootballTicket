@@ -273,11 +273,11 @@ Author     : admin
                 <%@include file="dashboardHeader.jsp" %>
                 <!-- Navbar End -->
                 <div class="container-fluid">
-                    <div class="table-responsive">
+                    <div class="table-responsive-md">
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><h2>Manage <b>Football Club</b></h2></div>
+                                    <div class="col-sm-4"><h2><b>Football Club</b> Management</h2></div>
 
                                     <div class="col-sm-4 searchh">
                                         <form action="manageFootballClub" method="get" id="searchForm">
@@ -289,25 +289,25 @@ Author     : admin
 
                                     </div>
                                     <div class="col-sm-4 createe">
-                                        <a href="#createModal" data-toggle="modal" class="btn btn-success"><i class="material-icons">&#xE147;</i> <span>Add New Club</span></a>
+                                        <a href="#createModal" data-toggle="modal" class="btn btn-success d-flex align-items-center"><i class="material-icons">&#xE147;</i><i> </i><span>Create Football Club</span></a>
                                     </div>
                                 </div>
                             </div>
                             <table class="table table-striped table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Image<i class="fa "></i></th>
-                                        <th>Club</th>
-                                        <th>Description<i class="fa "></i></th>
-                                        <th>Actions</th>
+                                        <th width="10%">#</th>
+                                        <th width="15%">Image</th>
+                                        <th width="20%">Football Club Name</th>
+                                        <th>Description</th>
+                                        <th width="10%">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${requestScope.footballClubs}" var="o">
                                         <tr>
                                             <td>${o.clubId}</td>
-                                            <td><img src="${o.img}" width="80px" height="80px" alt="football club"/></td>
+                                            <td><img class="img-responsive" src="${o.img}" style="width: 80px; height: auto" alt="football club"/></td>
                                             <td>${o.clubName}</td>
                                             <td>${o.description}</td>
                                             <td>
@@ -384,6 +384,11 @@ Author     : admin
                                 <label>Club Name</label>
                                 <input id="clubName" name="clubName" maxlength="50" type="text" class="form-control" required>
                                 <span id="clubNameError" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="description" name="description" maxlength="255" type="text" class="form-control"></textarea>
+                                <span id="descriptionError" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="modal-footer">

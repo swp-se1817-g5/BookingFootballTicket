@@ -8,6 +8,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import models.MatchSeat;
 import models.SeatArea;
+import models.SeatClass;
+import models.Stand;
 
 /**
  *
@@ -33,19 +35,23 @@ public class MatchSeatDAO {
         ArrayList<MatchSeat> matchSeats = new ArrayList<>();
         String sql = """
                      SELECT 
-                     mt.matchSeatId,
-                     mt.matchId,
-                     mt.seatId,
-                     mt.availability,
+                     ms.matchSeatId,
+                     ms.matchId,
+                     ms.seatId,
+                     ms.availability,
                      sa.seatId,
                      st.standId as standId,
                      st.standName as standName,
                      sa.seatName,
-                     sa.price,
+                     ms.price,
+                     sc.price as seatClassPrice,
+                     sc.seatClassId,
+                     sc.seatClassName,
                      sa.quantity
-                     FROM MatchSeat mt
-                     join SeatArea sa on sa.seatId = mt.seatId
+                     FROM MatchSeat ms
+                     join SeatArea sa on sa.seatId = ms.seatId
                      join Stand st on st.standId = sa.standId
+                     join SeatClass sc on sc.seatClassId = sa.seatClassId
                      WHERE matchId = ? """;
 
         try (PreparedStatement ps = con.prepareStatement(sql);) {
@@ -54,6 +60,11 @@ public class MatchSeatDAO {
             while (rs.next()) {
                 MatchSeat matchSeat = new MatchSeat();
                 SeatArea seat = new SeatArea();
+                SeatClass seatClass = new SeatClass();
+                Stand stand = new Stand();
+                
+                stand.setStandId(rs.getInt("standId"));
+                stand.setStandName(rs.getString("standName"));
 
                 matchSeat.setMatchSeatId(rs.getInt("matchSeatId"));
 
@@ -61,8 +72,16 @@ public class MatchSeatDAO {
 
                 seat.setSeatId(rs.getInt("seatId"));
                 seat.setSeatName(rs.getString("seatName"));
-                seat.setPrice(rs.getBigDecimal("price"));
+
+                seatClass.setPrice(rs.getBigDecimal("seatClassPrice"));
+                seatClass.setSeatClassId(rs.getInt("seatClassId"));
+                seatClass.setSeatClassName(rs.getString("seatClassName"));
                 seat.setQuantity(rs.getInt("quantity"));
+                
+                seat.setSeatClass(seatClass);
+                seat.setStand(stand);
+                
+                matchSeat.setPrice(rs.getBigDecimal("price"));
                 matchSeat.setSeatarea(seat);
                 matchSeat.setAvailability(rs.getInt("availability"));
                 matchSeats.add(matchSeat);
@@ -73,6 +92,6 @@ public class MatchSeatDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(INSTANCE.getMatchSeatbyMatch(2).toString());
+        System.out.println(INSTANCE.getMatchSeatbyMatch(3).toString());
     }
 }

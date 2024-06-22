@@ -79,7 +79,7 @@ public class ManageFootballClubServlet extends HttpServlet {
         String search = request.getParameter("search");
         search = search == null ? "" : search.trim();
         
-        int totalRecords = FootballClubDAO.INSTANCE.gettotalRecords(search);
+        int totalRecords = FootballClubDAO.getInstance().gettotalRecords(search);
         int endPage = (totalRecords / numOfRecords);
         if (totalRecords % numOfRecords != 0 || totalRecords == 0) {
             endPage++;
@@ -97,7 +97,7 @@ public class ManageFootballClubServlet extends HttpServlet {
         request.setAttribute("endPage", endPage);
         request.setAttribute("pageIndex", pageIndex);
         request.setAttribute("search", search);
-        request.setAttribute("footballClubs", FootballClubDAO.INSTANCE.paggingFootballClubs(pageIndex, numOfRecords, search));
+        request.setAttribute("footballClubs", FootballClubDAO.getInstance().paggingFootballClubs(pageIndex, numOfRecords, search));
         request.getRequestDispatcher("views/manageFootballClub.jsp").forward(request, response);
     }
 

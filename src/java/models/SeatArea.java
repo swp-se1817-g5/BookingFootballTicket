@@ -15,30 +15,21 @@ public class SeatArea {
     private int seatId;
     private String seatName;
     private Stand stand;
-    private BigDecimal price;
+    private SeatClass seatClass;
     private int quantity;
+    private boolean isActive;
+
     public SeatArea() {
     }
 
-
-    public SeatArea(int seatId, String seatName, Stand stand, BigDecimal price, int quantity) {
+    public SeatArea(int seatId, String seatName, Stand stand, SeatClass seatClass, int quantity, boolean isActive) {
         this.seatId = seatId;
         this.seatName = seatName;
         this.stand = stand;
-        this.price = price;
+        this.seatClass = seatClass;
         this.quantity = quantity;
+        this.isActive = isActive;
     }
-    
-    
-    public String getSeatName() {
-        return seatName;
-    }
-
-    public void setSeatName(String seatName) {
-        this.seatName = seatName;
-    }
-    
-   
 
     public int getSeatId() {
         return seatId;
@@ -46,6 +37,14 @@ public class SeatArea {
 
     public void setSeatId(int seatId) {
         this.seatId = seatId;
+    }
+
+    public String getSeatName() {
+        return seatName;
+    }
+
+    public void setSeatName(String seatName) {
+        this.seatName = seatName;
     }
 
     public Stand getStand() {
@@ -56,12 +55,12 @@ public class SeatArea {
         this.stand = stand;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public SeatClass getSeatClass() {
+        return seatClass;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setSeatClass(SeatClass seatClass) {
+        this.seatClass = seatClass;
     }
 
     public int getQuantity() {
@@ -71,4 +70,18 @@ public class SeatArea {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
+
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
+    @Override
+    public String toString() {
+        return "SeatArea{" + "seatId=" + seatId + ", seatName=" + seatName + ", stand=" + stand + ", seatClass=" + seatClass + ", quantity=" + quantity + ", isActive=" + isActive + '}';
+    }
+
 }

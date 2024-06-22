@@ -28,7 +28,6 @@ public class SeatAreaDAO {
                      st.standId as standId,
                      st.standName as standName,
                      sa.seatName,
-                     sa.price,
                      sa.quantity
                      FROM [SeatArea] sa
                      JOIN Stand st on st.standId = sa.standId
@@ -44,7 +43,6 @@ public class SeatAreaDAO {
                 stand.setStandName(rs.getString("standName"));
                 seat.setSeatId(rs.getInt("seatId"));
                 seat.setSeatName(rs.getString("seatName"));
-                seat.setPrice(rs.getBigDecimal("price"));
                 seat.setQuantity(rs.getInt("quantity"));
                 seat.setStand(stand);
                 seats.add(seat);
