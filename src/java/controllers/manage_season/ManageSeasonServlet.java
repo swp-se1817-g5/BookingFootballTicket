@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageStand;
+package controllers.manage_season;
 
-import dal.StandDAO;
+import dal.SeasonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +13,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import models.Stand;
+import java.util.ArrayList;
+import models.Season;
 
 /**
  *
- * @author admin
+ * @author Vinh
  */
-@WebServlet(name = "CreateStandServlet", urlPatterns = {"/createStand"})
-public class CreateStandServlet extends HttpServlet {
+@WebServlet(name = "ManageSeason", urlPatterns = {"/manageSeason"})
+public class ManageSeasonServlet extends HttpServlet {
+
+    private static final int RECORDS_PER_PAGE = 10;
+    private static final String UPDATED = "updated";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,14 +39,13 @@ public class CreateStandServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateStandServlet</title>");
+            out.println("<title>Servlet ManageSeasonServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateStandServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageSeasonServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +63,24 @@ public class CreateStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("manageStand");
+        HttpSession session = request.getSession();
+        int page = 1;
+        if (request.getParameter("page") != null) {
+            page = Integer.parseInt(request.getParameter("page"));
+        }
+        ArrayList<Season> seasons = SeasonDAO.getINSTANCE().getSeasons((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
+        int noOfRecords = SeasonDAO.getINSTANCE().getNoOfRecords();
+        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
+
+        request.setAttribute("seasons", seasons);
+        request.setAttribute("noOfPages", noOfPages);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("noOfRecords", noOfRecords);
+        if (session.getAttribute(UPDATED) != null) {
+            request.setAttribute(UPDATED, session.getAttribute(UPDATED));
+            session.removeAttribute(UPDATED);
+        }
+        request.getRequestDispatcher("views/manageSeason.jsp").forward(request, response);
     }
 
     /**
@@ -74,18 +94,7 @@ public class CreateStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        boolean created = false;
-        try {
-            String standName = request.getParameter("standName").trim();
-        Stand stand = new Stand();
-      
-        stand.setStandName(standName);
-        created = StandDAO.INSTANCE.createStand(stand);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        response.sendRedirect("manageStand?standCreated=" + created);
-
+        doGet(request, response);
     }
 
     /**

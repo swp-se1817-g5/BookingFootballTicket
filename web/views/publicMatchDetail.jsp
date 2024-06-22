@@ -22,6 +22,15 @@
         <meta property="og:image" content="https://www.footballticketpad.com/assets/ftp-logo.png" />
         <meta name="google-site-verification" content="O7lp3hSrStK1vKzEa9v7j3rzLLYzUpjqsSwBuQXMjNg" />
         <link rel="stylesheet" href="https://www.footballticketpad.com/assets/frontend/2018/css/pages/team-page.css">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <!-- jQuery và Bootstrap JavaScript -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
         <style type="text/css">
             .availability {
                 z-index: 6 !important;
@@ -174,6 +183,27 @@
                 }
             }
 
+            .match-details .left {
+                font-weight: 600;
+                margin-bottom: 5px;
+                font-size: 16px;
+                line-height: 20px;
+                display: inline-block;
+                padding-right: 25px;
+                vertical-align: top;
+                width: calc(50% - 25px);
+            }
+            .match-details .right {
+                font-weight: 600;
+                margin-bottom: 5px;
+                font-size: 16px;
+                line-height: 20px;
+                display: inline-block;
+                padding-right: 25px;
+                vertical-align: top;
+                width: calc(50% - 25px);
+            }
+
         </style>
         <link rel="stylesheet" type="text/css" href="/map/167/style.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap">
@@ -202,54 +232,80 @@
 
     <body class="template-fixture buy">
         <%@include file="header1.jsp" %>
-        <div class="container">
+        <div class="container-fluid">
+
+
+
+
+
             <input type="hidden" name="ticketMultiCap" id="ticketMultiCap" value="Ticket(s)">
             <div class="content" id="test">
                 <div class="team-page fixture">
-                    <div class="listing-modal">
-                        <div class="overlay"></div>
-                        <div class="inner">
-                            <div class="modal" id="ticketSummary">
-                                <div data-close-search class="close"><span class="ftp-close"></span></div>
-                                <div class="heading">Ticket summary</div>
-                                <div class="match-details">
-                                    <div class="left">
-                                        <div class="bold">Germany vs Scotland</div>
-                                        <div class="grey">in</div>
-                                        <div class="item">UEFA EURO 2024</div>
-                                        <div class="grey">at</div>
-                                        <div class="item"> Allianz Arena </div>
-                                        <div class="grey">on</div>
-                                        <div class="item">Fri 14th June 2024 : 9:00pm</div>
-                                    </div>
-                                    <div class="right">
-                                        <div class="item ticketType"></div>
-                                        <div class="item ticketBlock"></div>
-                                        <div class="bold ticketIndiv"><span id="qty">0</span> tickets at &pound;<span id="priceIndiv"></span> each</div>
-                                        <div class="bold ticketSum">Sub Total price &pound;<span id="sum"></span></div>
-                                        <div class="bold ticketAtt">
-                                            Best value tickets
-                                            Unrestricted view
+
+                    <%-- start modal summary--%>
+                    <!-- Modal -->
+                    <div class="modal fade" id="ticketSummary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document" style="
+                             top: 50px;
+                             max-width: 750px;
+                             width: 100%;
+                             margin: 0 auto;
+                             padding: 10px;
+                             ">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Ticket summary</h5>
+                                    <div data-dismiss="modal" aria-label="Close" data-close-search class="close"><span class="ftp-close"></span></div>
+                                    </button>
+                                </div>
+                                <div class="modal-body" style="margin: 0 54px 0 54px;">
+                                    <div class="match-details">
+                                        <div class="left">
+                                            <div class="bold">Germany vs Scotland</div>
+                                            <div class="grey">in</div>
+                                            <div class="item">UEFA EURO 2024</div>
+                                            <div class="grey">at</div>
+                                            <div class="item"> Allianz Arena </div>
+                                            <div class="grey">on</div>
+                                            <div class="item">Fri 14th June 2024 : 9:00pm</div>
                                         </div>
-                                        <div class="features" id="restrictions">
+                                        <div class="right">
+                                            <div class="item ticketType"></div>
+                                            <div class="item ticketBlock"></div>
+                                            <div class="bold ticketIndiv"><span id="qty">0</span> tickets at &pound;<span id="priceIndiv"></span> each</div>
+                                            <div class="bold ticketSum">Sub Total price &pound;<span id="sum"></span></div>
+                                            <div class="bold ticketAtt">
+                                                Best value tickets
+                                                Unrestricted view
+                                            </div>
+                                            <div class="features" id="restrictions">
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="number-of-tickets">
+                                        <div class="heading">Number of tickets</div>
+                                        <div class="info">Please review the number of tickets selected</div>
+                                        <select name="number_of_tickets" id="number_of_tickets">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                        </select>
+                                        <span class="ftp-down-chevron"></span>
+                                    </div>
+                                    <div class="whyDisabled text grey">
+                                    </div>
+                                    <input type="hidden" class="checkout_product" id="checkout_product">
+                                    <input type="hidden" class="checkout_eventId" id="checkout_eventId">
                                 </div>
-                                <div class="number-of-tickets">
-                                    <div class="heading">Number of tickets</div>
-                                    <div class="info">Please review the number of tickets selected</div>
-                                    <select name="number_of_tickets" id>
-                                    </select>
-                                    <span class="ftp-down-chevron"></span>
+                                <div class="modal-footer">
+                                    <div style="float: center;" class="c2a_btn" id="checkout" action="https://www.footballticketpad.com/checkout">Checkout</div>
                                 </div>
-                                <div class="whyDisabled text grey">
-                                </div>
-                                <input type="hidden" value class="checkout_product">
-                                <input type="hidden" value class="checkout_eventId">
-                                <div style="float: center;" class="c2a_btn" id="checkout" action="https://www.footballticketpad.com/checkout">Checkout</div>
                             </div>
                         </div>
                     </div>
+
+
                     <div class="team-header" style="border-color:#a2a2a2">
                         <div class="inner">
                             <div class="left">
@@ -481,57 +537,60 @@
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function () {
                                             const svg = document.getElementById('svgStadium');
-
                                             const paths = svg.querySelectorAll('path');
+                                            const items = document.querySelectorAll('.item');
 
 
-
+                                            // Add initial classes to all paths
                                             paths.forEach(function (path) {
                                                 var sectionName = path.getAttribute('data-section');
-                                                path.classList.add(sectionName);
+                                                path.classList.add(sectionName, 'clicked');
                                             });
 
-                                            // Thiết lập màu mặc định cho tất cả các phần tử khi trang tải xong
-                                            paths.forEach(function (path) {
-                                                var sectionName = path.getAttribute('data-section');
-                                                path.classList.add(sectionName);
-                                            });
-
-                                            paths.forEach(function (path) {
-                                                path.classList.add('clicked');
-                                            });
-
+                                            // Add event listeners to all paths
                                             paths.forEach(function (path) {
                                                 path.addEventListener('mouseenter', function () {
                                                     var sectionName = this.getAttribute('data-section');
-                                                    var sections = document.querySelectorAll('path[data-section="' + sectionName + '"]');
-                                                    sections.forEach(function (item) {
-                                                        item.classList.add('hovered', sectionName);
-                                                    });
+                                                    document.querySelectorAll('path[data-section="' + sectionName + '"]')
+                                                            .forEach(item => item.classList.add('hovered', sectionName));
                                                 });
 
                                                 path.addEventListener('mouseleave', function () {
                                                     var sectionName = this.getAttribute('data-section');
-                                                    var sections = document.querySelectorAll('path[data-section="' + sectionName + '"]');
-                                                    sections.forEach(function (item) {
-                                                        if (!item.classList.contains('clicked')) {
-                                                            item.classList.remove('hovered', sectionName);
-                                                        }
-                                                    });
+                                                    document.querySelectorAll('path[data-section="' + sectionName + '"]')
+                                                            .forEach(item => {
+                                                                if (!item.classList.contains('clicked')) {
+                                                                    item.classList.remove('hovered', sectionName);
+                                                                }
+                                                            });
                                                 });
 
                                                 path.addEventListener('click', function () {
                                                     var sectionName = this.getAttribute('data-section');
-                                                    var sections = document.querySelectorAll('path[data-section="' + sectionName + '"]');
-                                                    sections.forEach(function (item) {
-                                                        item.classList.toggle('clicked');
-                                                        item.classList.remove('hovered'); // Remove hovered class when clicked
-                                                    });
+                                                    document.querySelectorAll('path[data-section="' + sectionName + '"]')
+                                                            .forEach(item => {
+                                                                item.classList.toggle('clicked');
+
+                                                                // Check if the path has the class 'clicked' and log a message
+                                                                if (item.classList.contains('clicked')) {
+                                                                    items.forEach(item => {
+                                                                        const itemTicketType = item.getAttribute('data-ticket-type');
+                                                                        if (itemTicketType === sectionName) {
+                                                                            item.style.display = 'block';
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    items.forEach(item => {
+                                                                        const itemTicketType = item.getAttribute('data-ticket-type');
+                                                                        if (itemTicketType === sectionName) {
+                                                                            item.style.display = 'none';
+                                                                        }
+                                                                    });
+                                                                }
+                                                            });
                                                 });
                                             });
                                         });
-
-
 
                                     </script>
                                     </defs>
@@ -788,13 +847,24 @@
                                     </div>
                                 </div>
                                 <div class="listing-holder hidden-s-view">
-                                    <c:forEach items="${seatByMatch}" var="seat">
+                                    <c:forEach items="${seatByMatch}" var="seatMatch">
                                         <div class="listing-inner">
-                                            <div class="item trigger_category-3" data-section="category-3" data-sort-original="1" data-sort-section="1" data-sort-price="772.50" data-sort-availability="2" data-delivery="0" data-ticket-type="Category 3" data-preference="0" data-product="282867" data-event_id="10019" style="border-color:#86A8BF">
+                                            <div class="item trigger_category-3" 
+                                                 data-section="${seatMatch.seatarea.seatClass.seatClassName}" 
+                                                 data-sort-original="1" 
+                                                 data-sort-section="1" 
+                                                 data-sort-price="772.50" 
+                                                 data-sort-availability="2" 
+                                                 data-delivery="0" 
+                                                 data-ticket-type="${seatMatch.seatarea.seatClass.seatClassName}" 
+                                                 data-preference="0" 
+                                                 data-product="282867" 
+                                                 data-event_id="10019"
+                                                 style="border-color:#86A8BF">
                                                 <div class="overlay" style="background-color:#86A8BF;"></div>
                                                 <div class="seat">
                                                     <div class="div_ticket-type">
-                                                        ${seat.availability}
+                                                        ${seatMatch.seatarea.stand.standName}${seatMatch.seatarea.seatName}
                                                     </div>
                                                     <div></div>
                                                 </div><div class="availability">
@@ -811,7 +881,7 @@
                                                     <div class="info">
                                                         <div>Others</div>
                                                     </div>
-                                                </div><div class="price">&pound;772.50 </div><div class="book" data-ripple="true" data-alert-text="Selling Fast!" data-type="hot">
+                                                </div><div class="price">${seatMatch.price}&#8363;</div><div class="book" data-ripple="true" data-alert-text="Selling Fast!" data-type="hot">
                                                     <a href="#ticketSummary" data-toggle="modal">Book now</a>
                                                 </div>
                                             </div>

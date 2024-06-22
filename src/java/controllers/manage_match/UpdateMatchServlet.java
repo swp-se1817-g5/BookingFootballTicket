@@ -50,36 +50,35 @@ public class UpdateMatchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
         boolean updated = false;
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-        // Validate and parse session attributes
-        String updatedBy = (String) session.getAttribute("userName");
         // Retrieve and validate parameters
+        String matchIdString = request.getParameter("matchId");
         String fc1IdString = request.getParameter("fc1Id");
         String fc2IdString = request.getParameter("fc2Id");
-        String seasonString = request.getParameter("season");
         String typeString = request.getParameter("type");
+        String statusString = request.getParameter("status");
         String startTimeString = request.getParameter("startTime");
-        if (fc1IdString == null || fc2IdString == null || seasonString == null || typeString == null || startTimeString == null) {
+        if (fc1IdString == null || fc2IdString == null || typeString == null || startTimeString == null) {
             throw new IllegalArgumentException("Missing parameters");
         }
         // Parse and validate the date time parameter
         LocalDateTime time;
         int fc1Id;
         int fc2Id;
+        int matchId;
+        time = LocalDateTime.parse(startTimeString, formatter);
 
         try {
-            time = LocalDateTime.parse(startTimeString, formatter);
             fc1Id = Integer.parseInt(fc1IdString);
             fc2Id = Integer.parseInt(fc2IdString);
+            matchId = Integer.parseInt(matchIdString);
             Match match = new Match();
-            match.setUpdatedBy(updatedBy);
-            match.setSeason(SeasonDAO.getINSTANCE().getSeasonbyID(seasonString));
+            match.setMatchId(matchId);
             match.setType(MatchDAO.INSTANCE.getMatchTypeById(typeString));
             match.setStatus(MatchDAO.INSTANCE.getMatchStatusById("1"));
-            match.setTeam1(FootballClubDAO.INSTANCE.getFootballClubbyID(fc1Id));
-            match.setTeam2(FootballClubDAO.INSTANCE.getFootballClubbyID(fc2Id));
+            match.setTeam1(FootballClubDAO.getInstance().getFootballClubbyID(fc1Id));
+            match.setTeam2(FootballClubDAO.getInstance().getFootballClubbyID(fc2Id));
             match.setTime(time);
 
             updated = MatchDAO.INSTANCE.updateMatch(match);

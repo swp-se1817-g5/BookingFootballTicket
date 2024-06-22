@@ -17,16 +17,18 @@ import models.FootballClub;
  */
 public class FootballClubDAO {
 
-    public static FootballClubDAO INSTANCE = new FootballClubDAO();
+    private static FootballClubDAO instance;
     private Connection con;
     private PreparedStatement ps;
 
     private FootballClubDAO() {
-        if (INSTANCE == null) {
-            con = new DBContext().connect;
-        } else {
-            INSTANCE = this;
-        }
+        con = new DBContext().connect;
+    }
+    
+    public static FootballClubDAO getInstance() {
+        if(instance == null)
+            instance = new FootballClubDAO();
+        return instance;
     }
 
     public ArrayList<FootballClub> getFootballClubs(String clubName) {
@@ -60,12 +62,12 @@ public class FootballClubDAO {
 
     public boolean createFootballClub(FootballClub fc) {
         boolean created = false;
-        String sql = "INSERT INTO FootballClub (clubName, img, createdBy) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO FootballClub (clubName, img, description) VALUES (?, ?, ?)";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, fc.getClubName());
             ps.setString(2, fc.getImg());
-            ps.setString(3, fc.getCreatedBy());
+            ps.setString(3, fc.getDescription());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 created = true;
@@ -78,12 +80,12 @@ public class FootballClubDAO {
         return created;
     }
 
-    public boolean deleteFootballClub(int footballClubId) {
+    public boolean deleteFootballClub(int clubId) {
         boolean deleted = false;
-        String sql = "update FootballClub set isDeleted = 1 where footballClubId = ?";
+        String sql = "update FootballClub set isDeleted = 1 where clubId = ?";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, footballClubId);
+            ps.setInt(1, clubId);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 deleted = true;
@@ -96,8 +98,20 @@ public class FootballClubDAO {
 
     public boolean updateFootballClub(FootballClub fc) {
         boolean updated = false;
-        String sql = "update FootballClub set  where footballClubId = ?";
-
+        String sql = "update FootballClub set [img] = ?, clubName = ?, [description] = ?  where clubId = ?";
+        try{
+            ps = con.prepareStatement(sql);
+            ps.setString(1, fc.getImg());
+            ps.setString(2, fc.getClubName());
+            ps.setString(3, fc.getDescription());
+            ps.setInt(4, fc.getClubId());
+            int rowsAffected = ps.executeUpdate();
+            if(rowsAffected > 0) 
+                updated = true;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return updated;
     }
 
@@ -162,7 +176,7 @@ public class FootballClubDAO {
 
     public int gettotalRecords(String search) {
         int quantity = 0;
-        String query = "SELECT COUNT(*) FROM [FootballClub] where footballClub like ? ";
+        String query = "SELECT COUNT(*) FROM [FootballClub] where clubName like ? ";
         try {
             ps = con.prepareStatement(query);
             ps.setString(1, "%" + search + "%");
@@ -177,7 +191,6 @@ public class FootballClubDAO {
     }
 
     public static void main(String[] args) {
-
     }
 
 }

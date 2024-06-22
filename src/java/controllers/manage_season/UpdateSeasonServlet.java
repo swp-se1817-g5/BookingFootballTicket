@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageUser;
+package controllers.manage_season;
 
-import dal.UserDAO;
+import dal.SeasonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,18 +13,18 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import models.User;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.mail.Session;
+import models.Season;
 
 /**
  *
- * @author Vinh
+ * @author nguye
  */
-@WebServlet(name = "CreateUser", urlPatterns = {"/createUser"})
-public class CreateUserServlet extends HttpServlet {
+@WebServlet(name = "UpdateSeasonServlet", urlPatterns = {"/updateSeason"})
+public class UpdateSeasonServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +43,10 @@ public class CreateUserServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateUserServlet</title>");
+            out.println("<title>Servlet UpdateSeasonServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateUserServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateSeasonServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,7 +64,7 @@ public class CreateUserServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("manageUser");
+        processRequest(request, response);
     }
 
     /**
@@ -78,27 +78,24 @@ public class CreateUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String seasonId_raw = request.getParameter("seasonId");
+        String seasonName = request.getParameter("seasonName");
+        String startDate_raw = request.getParameter("startDate");
+        String endDate_raw = request.getParameter("endDate");
         HttpSession session = request.getSession();
-        boolean created = false;
-//        User currentUser = (User) session.getAttribute("currentUser");
-//        String createdBy = currentUser.getEmail();
-        String email = request.getParameter("email").trim();
-        String name = request.getParameter("name").trim();
-        String password = request.getParameter("password").trim();
-        String phoneNumber = request.getParameter("phoneNumber").trim();
-        String avatar = request.getParameter("avatar").trim();
-        int roleId = Integer.parseInt(request.getParameter("roleId"));
-        if (!email.isBlank() && !name.isBlank() && !password.isBlank() && !phoneNumber.isBlank()) {
-            // Tạo đối tượng User mới
-            User user = new User(email, name, roleId, password, phoneNumber, avatar, "admin", LocalDateTime.now(), false);
-
-            // Lưu người dùng vào cơ sở dữ liệu
-            created = UserDAO.getINSTANCE().createUser(user);
-        }
-        if(created) {
-            response.sendRedirect("manageUser?userCreated=" + created);
-        } else {
-            response.sendRedirect("manageUser?userCreated=" + created);
+        try {
+            int seasonId = Integer.parseInt(seasonId_raw);
+            Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDate_raw);
+            Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDate_raw);
+            if (endDate.after(startDate)) {
+                Season season = new Season(seasonId,seasonName, startDate, endDate, "CanhDuong");
+                session.setAttribute("updated", SeasonDAO.getINSTANCE().updateSeason(season));
+            } else {
+                session.setAttribute("updated", "false");
+            }
+            response.sendRedirect("manageSeason");
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
 

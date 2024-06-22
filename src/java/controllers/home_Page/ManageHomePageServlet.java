@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageStand;
+package controllers.home_Page;
 
-import dal.StandDAO;
+import dal.FootballClubDAO;
+import dal.MatchDAO;
+import dal.SeasonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,15 +14,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import models.Stand;
 
 /**
  *
- * @author admin
+ * @author nguye
  */
-@WebServlet(name = "CreateStandServlet", urlPatterns = {"/createStand"})
-public class CreateStandServlet extends HttpServlet {
+@WebServlet(name = "ManageHomePageServlet", urlPatterns = {"/homePage"})
+public class ManageHomePageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,14 +35,13 @@ public class CreateStandServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateStandServlet</title>");
+            out.println("<title>Servlet ManageHomePageServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateStandServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageHomePageServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +59,11 @@ public class CreateStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("manageStand");
+        request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
+        request.setAttribute("getFootballClubs", FootballClubDAO.INSTANCE.getFootballClubs(""));
+        request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
+        request.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
+        request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
     }
 
     /**
@@ -74,18 +77,7 @@ public class CreateStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        boolean created = false;
-        try {
-            String standName = request.getParameter("standName").trim();
-        Stand stand = new Stand();
-      
-        stand.setStandName(standName);
-        created = StandDAO.INSTANCE.createStand(stand);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        response.sendRedirect("manageStand?standCreated=" + created);
-
+        processRequest(request, response);
     }
 
     /**
@@ -98,4 +90,7 @@ public class CreateStandServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public static void main(String[] args) {
+        System.out.println(MatchDAO.INSTANCE.getMatches());
+    }
 }
