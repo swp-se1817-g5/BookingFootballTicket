@@ -42,28 +42,24 @@ public class CreateFootballClubServlet extends HttpServlet {
             throws ServletException, IOException {
         boolean fcCreated = false;
         HttpSession session = request.getSession();
-        String errorMessage = null;
-
         try {
             Part filePart = request.getPart("image");
             if (filePart != null && filePart.getSize() > 0) {
                 String img = handleFileUpload(filePart);
                 String clubName = request.getParameter("clubName").trim();
-                User user = (User) session.getAttribute("currentUser");
                 String description = request.getParameter("description");
                 description = description == null ? "" : description.trim();
-
                 FootballClub fc = new FootballClub();
                 fc.setClubName(clubName);
                 fc.setImg(img);
-                fc.setCreatedBy(user.getEmail());
                 fc.setDescription(description);
-                fcCreated = FootballClubDAO.INSTANCE.createFootballClub(fc);
+                fcCreated = FootballClubDAO.getInstance().createFootballClub(fc);
             }
         } catch (IOException | ServletException e) {
             e.printStackTrace();
         }
         session.setAttribute("fcCreated", fcCreated);
+        response.sendRedirect("manageFootballClub?fcCreated=" + fcCreated);
 
     }
 
