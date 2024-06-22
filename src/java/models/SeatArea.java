@@ -17,15 +17,9 @@ public class SeatArea {
     private Stand stand;
     private BigDecimal price;
     private int quantity;
-<<<<<<< HEAD
-    private String createdBy;
-    private LocalDateTime createdDate;
-    private String updatedBy;
-    private LocalDateTime lastUpdatedDate;
+
     
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
-=======
->>>>>>> 2c1da679cb6d15041b306d4e66f3a3c3092627ba
+
 
     public SeatArea() {
     }
@@ -82,46 +76,5 @@ public class SeatArea {
         this.quantity = quantity;
     }
 
-<<<<<<< HEAD
-    public String getCreatedBy() {
-        return createdBy;
-    }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-    }
-
-    public LocalDateTime getCreatedDate() {
-        return createdDate;
-    }
-    
-    public String getCreatedDateFormat(){
-        return createdDate != null ? createdDate.format(formatter) : null ;
-    }
-
-    public void setCreatedDate(LocalDateTime createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-    public LocalDateTime getLastUpdatedDate() {
-        return lastUpdatedDate;
-    }
-    public String getLastUpdatedDateFormat(){
-        return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
-    }
-
-    public void setLastUpdatedDate(LocalDateTime lastUpdatedDate) {
-        this.lastUpdatedDate = lastUpdatedDate;
-    }
-
-=======
->>>>>>> 2c1da679cb6d15041b306d4e66f3a3c3092627ba
 }
