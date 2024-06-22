@@ -19,7 +19,7 @@ public class GmailLoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        GetGmail gg = new GetGmail();
+        getGmail gg = new getGmail();
         String code = request.getParameter("code");
         String error = request.getParameter("error");
         

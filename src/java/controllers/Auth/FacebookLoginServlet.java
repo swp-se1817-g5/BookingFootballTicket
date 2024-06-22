@@ -35,8 +35,8 @@ public class FacebookLoginServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String code = request.getParameter("code");
-        String accessToken = GetFacebook.getToken(code);
-        FacebookUser accFb = GetFacebook.getUserInfo(accessToken);
+        String accessToken = getFacebook.getToken(code);
+        FacebookUser accFb = getFacebook.getUserInfo(accessToken);
         User userExist = UserDAO.INSTANCE.getUserByEmail(accFb.getEmail());
         if (Objects.isNull(userExist)) {
             // If user does not exist, redirect to register page

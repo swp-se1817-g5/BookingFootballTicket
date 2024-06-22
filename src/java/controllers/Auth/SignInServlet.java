@@ -23,12 +23,18 @@ public class SignInServlet extends HttpServlet {
         HttpSession session = request.getSession();
         String email = (String) session.getAttribute("emailSave");
         String password = (String) session.getAttribute("passSave");
+        String redirectURL = request.getParameter("redirectURL");
 
         if (email != null && password != null) {
             request.setAttribute("emailValid", email);
             request.setAttribute("passValid", password);
         }
 
+        if (redirectURL == null || redirectURL.isEmpty()) {
+            redirectURL = request.getHeader("Referer");
+        }
+
+        request.setAttribute("redirectURL", redirectURL);
         request.getRequestDispatcher("views/login.jsp").forward(request, response);
     }
 
@@ -38,6 +44,8 @@ public class SignInServlet extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String remember = request.getParameter("remember_me");
+        String redirectURL = request.getParameter("redirectURL");
+
         System.out.println("remember = " + remember);
         UserDAO userDAO = UserDAO.INSTANCE;
         HttpSession session = request.getSession();
@@ -58,10 +66,14 @@ public class SignInServlet extends HttpServlet {
             }
 
             // Popup
-            request.setAttribute("isFirstLogin", true);
+            session.setAttribute("isFirstLogin", true);
 
-            // Redirect to home page or check anything before redirect to home page
-            request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
+            // Redirect to the original URL
+            if (redirectURL != null && !redirectURL.isEmpty()) {
+                response.sendRedirect(redirectURL);
+            } else {
+                response.sendRedirect("homePage");
+            }
         } else {
             // If not exists, throw message to view to display
             request.setAttribute("errorMessage", "Email or password may be wrong! Please try again!");
