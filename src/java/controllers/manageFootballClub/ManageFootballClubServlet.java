@@ -12,7 +12,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -21,7 +20,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "ManageFootballClubServlet", urlPatterns = {"/manageFootballClub"})
 public class ManageFootballClubServlet extends HttpServlet {
 
-    private final int numOfRecords = 2;
+    private final int NUM_OF_RECORDS = 5;
     private int pageIndex = 1;
 
     /**
@@ -80,8 +79,8 @@ public class ManageFootballClubServlet extends HttpServlet {
         search = search == null ? "" : search.trim();
         
         int totalRecords = FootballClubDAO.getInstance().gettotalRecords(search);
-        int endPage = (totalRecords / numOfRecords);
-        if (totalRecords % numOfRecords != 0 || totalRecords == 0) {
+        int endPage = (totalRecords / NUM_OF_RECORDS);
+        if (totalRecords % NUM_OF_RECORDS != 0 || totalRecords == 0) {
             endPage++;
         }
         
@@ -97,7 +96,7 @@ public class ManageFootballClubServlet extends HttpServlet {
         request.setAttribute("endPage", endPage);
         request.setAttribute("pageIndex", pageIndex);
         request.setAttribute("search", search);
-        request.setAttribute("footballClubs", FootballClubDAO.getInstance().paggingFootballClubs(pageIndex, numOfRecords, search));
+        request.setAttribute("footballClubs", FootballClubDAO.getInstance().paggingFootballClubs(pageIndex, NUM_OF_RECORDS, search));
         request.getRequestDispatcher("views/manageFootballClub.jsp").forward(request, response);
     }
 

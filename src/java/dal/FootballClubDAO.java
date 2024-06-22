@@ -17,7 +17,7 @@ import models.FootballClub;
  */
 public class FootballClubDAO {
 
-    public static FootballClubDAO instance;
+    private static FootballClubDAO instance;
     private Connection con;
     private PreparedStatement ps;
 
@@ -80,12 +80,12 @@ public class FootballClubDAO {
         return created;
     }
 
-    public boolean deleteFootballClub(int footballClubId) {
+    public boolean deleteFootballClub(int clubId) {
         boolean deleted = false;
-        String sql = "update FootballClub set isDeleted = 1 where footballClubId = ?";
+        String sql = "update FootballClub set isDeleted = 1 where clubId = ?";
         try {
             ps = con.prepareStatement(sql);
-            ps.setInt(1, footballClubId);
+            ps.setInt(1, clubId);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 deleted = true;
@@ -98,8 +98,20 @@ public class FootballClubDAO {
 
     public boolean updateFootballClub(FootballClub fc) {
         boolean updated = false;
-        String sql = "update FootballClub set  where footballClubId = ?";
-
+        String sql = "update FootballClub set [img] = ?, clubName = ?, [description] = ?  where clubId = ?";
+        try{
+            ps = con.prepareStatement(sql);
+            ps.setString(1, fc.getImg());
+            ps.setString(2, fc.getClubName());
+            ps.setString(3, fc.getDescription());
+            ps.setInt(4, fc.getClubId());
+            int rowsAffected = ps.executeUpdate();
+            if(rowsAffected > 0) 
+                updated = true;
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return updated;
     }
 
@@ -179,7 +191,6 @@ public class FootballClubDAO {
     }
 
     public static void main(String[] args) {
-
     }
 
 }

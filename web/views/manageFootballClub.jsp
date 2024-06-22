@@ -277,9 +277,9 @@ Author     : admin
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><h2><b>Football Club</b> Management</h2></div>
+                                    <div class="col-sm-12"><h2><b>Football Club</b> Management</h2></div>
 
-                                    <div class="col-sm-4 searchh">
+                                    <div class="col-sm-9 searchh">
                                         <form action="manageFootballClub" method="get" id="searchForm">
                                             <div class="search-box">
                                                 <i class="material-icons">&#xE8B6;</i>
@@ -288,8 +288,8 @@ Author     : admin
                                         </form>
 
                                     </div>
-                                    <div class="col-sm-4 createe">
-                                        <a href="#createModal" data-toggle="modal" class="btn btn-success d-flex align-items-center"><i class="material-icons">&#xE147;</i><i> </i><span>Create Football Club</span></a>
+                                    <div class="col-sm-3 createe">
+                                        <a href="#createModal" data-toggle="modal" class="btn btn-success d-flex align-items-center justify-content-between"><i class="material-icons">&#xE147;</i><span></span><span>Create Football Club</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -307,11 +307,11 @@ Author     : admin
                                     <c:forEach items="${requestScope.footballClubs}" var="o">
                                         <tr>
                                             <td>${o.clubId}</td>
-                                            <td><img class="img-responsive" src="${o.img}" style="width: 80px; height: auto" alt="football club"/></td>
+                                            <td height="80px"><img class="img-responsive" src="${o.img}" style="width: auto; height: 80px" alt="football club"/></td>
                                             <td>${o.clubName}</td>
                                             <td>${o.description}</td>
                                             <td>
-                                                <a href="#updateFCModal" onclick="update('${o.clubId}', '${o.clubName}')" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
+                                                <a href="#updateFCModal" onclick="update('${o.clubId}', '${o.clubName}','${o.description}','${o.img}')" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
                                                 <a href="#"  class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                             </td>
                                         </tr>
@@ -319,7 +319,7 @@ Author     : admin
 
                                 </tbody>
                             </table>
-                            <div class="clearfix">
+                            <div class="clearfix d-flex justify-content-md-start">
                                 <ul class="pagination">
                                     <c:forEach begin="1" end="${requestScope.endPage}" var="i" >
                                         <li class="page-item ${pageIndex == i ? 'active': '' }"><a href="manageFootballClub?pageIndex=${i}&search=${search}" class="page-link">${i}</a></li>
@@ -344,7 +344,13 @@ Author     : admin
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Images</label>
-                                <input name="image" type="file" accept="image/*" class="form-control" required>
+                                <div class="d-flex justify-content-center">
+                                    
+                                     <img id="imagePreviewInput" src="#" alt="Your Image"  style="display: none; width: auto; height: 200px">
+                                </div>
+                                </br>
+                               
+                                <input id="imageUploadInput" name="image" type="file" accept="image/*" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Football Club Name</label>
@@ -370,7 +376,7 @@ Author     : admin
         <div id="updateFCModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="updateStand" id="updateFootballClubForm" method="post">
+                    <form action="updateFootballClub" id="updateFootballClubForm" enctype="multipart/form-data" method="post">
                         <div class="modal-header">						
                             <h4 class="modal-title">Update Football Club</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -379,6 +385,15 @@ Author     : admin
                             <div class="form-group">
                                 <label>Club ID</label>
                                 <input id="clubId" name="clubId" readonly type="number" class="form-control" required>
+                            </div>
+                             <div class="form-group">
+                                <label>Images</label>
+                                </br>
+                                <div class="d-flex justify-content-center">
+                                    <img  id="img" height="200px" width="auto" class="img-responsive" alt="Your Image"/>
+                                </div>
+                                </br>
+                                <input id="imageUpload" name="image" type="file" accept="image/*" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Club Name</label>
@@ -418,11 +433,11 @@ Author     : admin
                     var toast = $('#toastNotification');
                     if (updated === "true") {
                         toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Stand updated successfully.');
+                        toast.find('#toastMessage').text('Football Club updated successfully.');
                         toast.addClass('success').removeClass('error');
                     } else if (updated === "false") {
                         toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to update stand.');
+                        toast.find('#toastMessage').text('Failed to update Football Club!');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
@@ -440,7 +455,7 @@ Author     : admin
                         toast.addClass('success').removeClass('error');
                     } else if (created === "false") {
                         toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to create Football Club.');
+                        toast.find('#toastMessage').text('Failed to create Football Club!');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
@@ -454,11 +469,11 @@ Author     : admin
                     var toast = $('#toastNotification');
                     if (deleted === "true") {
                         toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Stand deleted successfully.');
+                        toast.find('#toastMessage').text('Football Club deleted successfully.');
                         toast.addClass('success').removeClass('error');
                     } else if (deleted === "false") {
                         toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to delete stand.');
+                        toast.find('#toastMessage').text('Failed to delete Football Club!');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
@@ -530,9 +545,11 @@ Author     : admin
                     location.href = 'deleteStand?standId=' + standId;
             }
 
-            function update(clubId, clubName) {
+            function update(clubId, clubName, description, img) {
                 document.getElementById('clubId').value = clubId;
                 document.getElementById('clubName').value = clubName;
+                document.getElementById('description').value = description;
+                document.getElementById('img').src = img;
 
 
                 $('#clubNameError').text('');
@@ -542,6 +559,33 @@ Author     : admin
 
             }
 
+        </script>
+        
+        <!<!-- Script for image preview -->
+        <script>
+        document.getElementById('imageUpload').addEventListener('change', function(event) {
+            const [file] = event.target.files;
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('img').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        </script>
+          <script>
+        document.getElementById('imageUploadInput').addEventListener('change', function(event) {
+            const [file] = event.target.files;
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreviewInput').src = e.target.result;
+                    document.getElementById('imagePreviewInput').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
         </script>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
