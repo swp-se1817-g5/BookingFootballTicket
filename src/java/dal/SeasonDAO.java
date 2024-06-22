@@ -169,7 +169,7 @@ public class SeasonDAO {
     }
 
     public static void main(String[] args) {
-// 
+        System.out.println(INSTANCE.getSeasonbyID("1").toString());
     }
 
 }

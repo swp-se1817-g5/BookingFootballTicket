@@ -41,8 +41,6 @@ public class CreateMatchServlet extends HttpServlet {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
         try {
-            // Validate and parse session attributes
-            String createdBy = (String) session.getAttribute("userName");
             // Retrieve and validate parameters
             String fc1IdString = request.getParameter("fc1Id");
             String fc2IdString = request.getParameter("fc2Id");
@@ -63,8 +61,6 @@ public class CreateMatchServlet extends HttpServlet {
             fc2Id = Integer.parseInt(fc2IdString);
 
             Match match = new Match();
-            match.setCreatedBy(createdBy);
-            match.setUpdatedBy(createdBy);
             match.setSeason(SeasonDAO.getINSTANCE().getSeasonbyID(seasonString));
             match.setType(MatchDAO.INSTANCE.getMatchTypeById(typeString));
             match.setStatus(MatchDAO.INSTANCE.getMatchStatusById("1"));
