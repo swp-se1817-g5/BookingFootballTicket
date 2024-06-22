@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Manage User</title>
+        <title>Manage Season</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -184,6 +184,9 @@
                 display: flex;
                 justify-content: right;
             }
+            table.table tbody tr:hover {
+                background-color: #f2f2f2;
+            }
             .toast {
                 position: fixed;
                 bottom: 20px;
@@ -199,10 +202,12 @@
                 background-color: #dc3545;
                 color: white;
             }
-            table.table tbody tr:hover {
-                background-color: #f2f2f2;
-            }
         </style>
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
     </head>
     <body>
         <div class="container-fluid position-relative bg-white d-flex p-0">
@@ -241,7 +246,7 @@
                                 <a href="manageFootballClub" class="dropdown-item ">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item active">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item">Manage Stand</a>
-                                      <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
+                                <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
                                 <a href="manageNews" class="dropdown-item">Manage News</a>
                             </div>
@@ -281,7 +286,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-4 createe">
-                                        <a href="#createSeasonModal" class="btn btn-success"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Season</span></a>
+                                        <a href="#createSeasonModal" class="btn btn-success d-flex align-items-center"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create New Season</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -317,9 +322,7 @@
                                             <td>${s.updatedBy}</td>
                                             <td>${s.lastUpdatedDate}</td>
                                             <td>
-                                                <a href="editSeason.jsp?seasonId=${s.seasonId}" class="edit" title="Edit" data-toggle="tooltip">
-                                                    <i class="material-icons">&#xE254;</i>
-                                                </a>
+                                                <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
                                                 <a href="deleteSeason?seasonId=${s.seasonId}" class="delete" title="Delete" data-toggle="tooltip">
                                                     <i class="material-icons">&#xE872;</i>
                                                 </a>
@@ -380,6 +383,42 @@
                             </div>
                         </div>
                     </div>
+                    <c:forEach items="${requestScope.seasons}" var="s">
+                        <div id="updateSeason${s.seasonId}" class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="updateSeason" method="post" onsubmit="return validateForm()">
+                                        <div class="modal-header">						
+                                            <h4 class="modal-title">Update Season</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input name="seasonId" type="hidden" value="${s.seasonId}">
+                                            <div class="form-group">
+                                                <label>Season Name</label>
+                                                <input id="seasonName" name="seasonName" type="text" class="form-control" required oninput="validateForm()" value="${s.seasonName}">
+                                                <div id="seasonNameError" style="color: red;"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Start Date</label>
+                                                <input id="startDate" name="startDate" type="date" class="form-control" required oninput="validateForm()" value="${s.startDate}">
+                                                <div id="startDateError" style="color: red;"></div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>End Date</label>
+                                                <input id="endDate" name="endDate" type="date" class="form-control" required oninput="validateForm()" value="${s.endDate}">
+                                                <div id="endDateError" style="color: red;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
+                                            <input type="submit" class="btn btn-success" value="Add">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>
@@ -388,7 +427,6 @@
     <div class="toast" id="toastNotification" data-delay="3000">
         <div class="toast-header">
             <strong class="mr-auto" id="toastTitle"></strong>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
         </div>
         <div class="toast-body" id="toastMessage"></div>
     </div>
@@ -402,11 +440,11 @@
                 var toast = $('#toastNotification');
                 if (updated === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Stand updated successfully.');
+                    toast.find('#toastMessage').text('Season updated successfully.');
                     toast.addClass('success').removeClass('error');
                 } else if (updated === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to update stand.');
+                    toast.find('#toastMessage').text('Failed to update season.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');

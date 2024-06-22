@@ -12,11 +12,10 @@ import java.time.format.DateTimeFormatter;
  *
  * @author admin
  */
-public class HistoryPurchasedTicket {
+public class HistoryPurchasedTicketMatchSeat {
 
     private int ticketId;
     private MatchSeat matchSeatId;
-    private Season seasonSeatedId;
     private User email;
     private String qrCode;
     private BigDecimal price;
@@ -26,13 +25,12 @@ public class HistoryPurchasedTicket {
     private LocalDateTime createdDate;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
-    public HistoryPurchasedTicket() {
+    public HistoryPurchasedTicketMatchSeat() {
     }
 
-    public HistoryPurchasedTicket(int ticketId, MatchSeat matchSeatId, Season seasonSeatedId, User email, String qrCode, BigDecimal price, int quantity, boolean status, String createdBy, LocalDateTime createdDate) {
+    public HistoryPurchasedTicketMatchSeat(int ticketId, MatchSeat matchSeatId, User email, String qrCode, BigDecimal price, int quantity, boolean status, String createdBy, LocalDateTime createdDate) {
         this.ticketId = ticketId;
         this.matchSeatId = matchSeatId;
-        this.seasonSeatedId = seasonSeatedId;
         this.email = email;
         this.qrCode = qrCode;
         this.price = price;
@@ -56,14 +54,6 @@ public class HistoryPurchasedTicket {
 
     public void setMatchSeatId(MatchSeat matchSeatId) {
         this.matchSeatId = matchSeatId;
-    }
-
-    public Season getSeasonSeatedId() {
-        return seasonSeatedId;
-    }
-
-    public void setSeasonSeatedId(Season seasonSeatedId) {
-        this.seasonSeatedId = seasonSeatedId;
     }
 
     public User getEmail() {
@@ -114,8 +104,6 @@ public class HistoryPurchasedTicket {
         this.createdBy = createdBy;
     }
 
-   
-
     public String getCreatedDate() {
         return createdDate != null ? createdDate.format(formatter) : null;
     }
@@ -126,9 +114,7 @@ public class HistoryPurchasedTicket {
 
     @Override
     public String toString() {
-        return "HistoryPurchasedTicket{" + "ticketId=" + ticketId + ", matchSeatId=" + matchSeatId + ", seasonSeatedId=" + seasonSeatedId + ", email=" + email + ", qrCode=" + qrCode + ", price=" + price + ", quantity=" + quantity + ", status=" + status + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", formatter=" + formatter + '}';
+        return "HistoryPurchasedTicketMatchSeat{" + "ticketId=" + ticketId + ", matchSeatId=" + matchSeatId + ", email=" + email + ", qrCode=" + qrCode + ", price=" + price + ", quantity=" + quantity + ", status=" + status + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", formatter=" + formatter + '}';
     }
-
-    
 
 }

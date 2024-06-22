@@ -90,4 +90,7 @@ public class ManageHomePageServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    public static void main(String[] args) {
+        System.out.println(MatchDAO.INSTANCE.getMatches());
+    }
 }

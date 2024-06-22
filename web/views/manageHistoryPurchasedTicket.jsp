@@ -246,9 +246,10 @@ Author     : duong
                                 <a href="manageFootballClub" class="dropdown-item">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item ">Manage Stand</a>
+                                <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
-                                <a href="manageNews" class="dropdown-item ">Manage News</a>
-                                <a href="manageHistoryPurchasedTicket" class="dropdown-item active">Manage History Purchased Ticket</a>
+                                <a href="manageNews" class="dropdown-item">Manage News</a>
+                                <a href="manageHistoryPurchasedTicket" class="dropdown-item active">Manage Ticket</a>
                             </div>
                         </div>
                         <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
@@ -335,7 +336,7 @@ Author     : duong
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><a href="manageNews"><h2>News <b>Management</b></h2></a></div>
+                                    <div class="col-sm-4"><a href="manageHistoryPurchasedTicket"><h2>History Purchased Ticket <b>Management</b></h2></a></div>
 
                                     <div class="col-sm-4 searchh">
                                         <div class="search-box" id="searchForm">
@@ -355,9 +356,6 @@ Author     : duong
                                             });
                                         });
                                     </script>
-                                    <div class="col-sm-4 createe">
-                                        <a href="#createNewsModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create News</span></a>
-                                    </div>
                                 </div>
                             </div>
                             <table class="table table-striped table-hover table-bordered">
@@ -365,62 +363,16 @@ Author     : duong
                                     <tr>
                                         <th>#</th>
                                         <th>Match Seat</th>
-                                        <th>Email</th>
-                                        <th>createDate</th>
+                                        <th>Season Seat</th>
+                                        <th>email</th>
                                         <th>Price</th>
                                         <th>Quantity</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${sessionScope.getListNews}" var="n" varStatus="status">
-                                        <tr style="word-break: break-word">
-                                            <td>${status.count}</td>
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(n.title) > 30}">
-                                                        ${fn:substring(n.title, 0, 30)}...
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        ${n.title}
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </td>
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${fn:length(n.content) > 50}">
-                                                        ${fn:substring(n.content, 0, 50)}...
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        ${n.content}
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </td>
-                                            <c:if test=""></c:if>
-                                            <c:choose>
-                                                <c:when test="${n.status == 0}">
-                                                    <td>Rejected</td>
-                                                </c:when>
-                                                <c:when test="${n.status == 1}">
-                                                    <td>Pending</td>
-                                                </c:when>
-                                                <c:when test="${n.status == 2}">
-                                                    <td>Approved</td>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <td>Unknown</td>
-                                                </c:otherwise>
-                                            </c:choose>
-                                            <c:if test="${n.state=='false'}"><td>Hide</td></c:if>
-                                            <c:if test="${n.state=='true'}"><td>Show</td></c:if>
-                                                <td>
-                                                    <a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
-                                                <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
-                                                <a onclick="return confirmDelete(${n.newsId})" href = "deleteNews?newsId=${n.newsId}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
+
                                 </tbody>
                             </table>
                             <script>
@@ -433,51 +385,11 @@ Author     : duong
                 </div>      
             </div>      
         </div>      
-        <!--------------------------------------------------------------------------------------------------------------------------------------------->
-<!--        <div id="createNewsModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <form action="createNewNews" method="post" enctype="multipart/form-data">
-                        <div class="modal-header">						
-                            <h4 class="modal-title">Create News</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label>Title</label>
-                                <textarea name="title" class="form-control" required rows="2"></textarea>
-                            </div>
-                            <div class="form-group" style="word-break: break-word">
-                                <label>Content</label>
-                                <textarea name="content" class="form-control" rows="5" required></textarea>
-                            </div>
-                            <div class="form-group" style="word-break: break-word">
-                                <label>Image</label>
-                                <br>
-                                <input type="file" name="image"><br>
-                            </div>
-                            <div class="form-group" style="word-break: break-word">
-                                <label>Conclusion</label>
-                                <textarea name="conclusion" class="form-control" rows="5" required></textarea>
-                            </div>
-                            <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
-                                <label>State</label>
-                                <input name="state" type="radio" required checked value="1">Show
-                                <input name="state" type="radio" required value="0">Hide
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>-->
+
         <!--------------------------------------------------------------------------------------------------------------------------------------------->
 
-        <c:forEach items="${sessionScope.getListNews}" var="n">
-            <div id="viewDetailsNews${n.newsId}" class="modal fade">
+        <%--<c:forEach items="${sessionScope.getListNews}" var="n">--%>
+<!--            <div id="viewDetailsNews${n.newsId}" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">			
@@ -526,117 +438,8 @@ Author     : duong
                         </div>
                     </div>
                 </div>
-            </div>
-        </c:forEach>
-        <!--------------------------------------------------------------------------------------------------------------------------------------------->
-        <%--<c:forEach items="${sessionScope.getListNews}" var="n">--%>
-<!--            <div id="updateNews${n.newsId}" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="updateNews" method="post" enctype="multipart/form-data">
-                            <div class="modal-header">						
-                                <h4 class="modal-title">Update News</h4>
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            </div>
-                            <div class="modal-body">					
-                                <div class="form-group">
-                                    <label>News ID</label>
-                                    <input name="newsId" class="form-control" value="${n.newsId}" readonly>
-                                </div>
-                                <div class="form-group">
-                                    <label>Title</label>
-                                    <input name="title" class="form-control" value="${n.title}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Content</label>
-                                    <input name="content" class="form-control" value="${n.content}">
-                                </div>
-                                <div class="form-group">
-                                    <label>Image</label><br>
-                                    <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
-                                </div>
-                                <div class="form-group" style="word-break: break-word">
-                                    <input type="file" name="image">
-                                    <input type="hidden" name="currentImage" value="${n.image}">
-                                </div>
-                                <div class="form-group">
-                                    <label>State</label>
-                                    <input name="state" type="radio" required value="1" ${n.state == 'true' ? 'checked' :''}>Show
-                                    <input name="state" type="radio" required value="0" ${n.state == 'false' ? 'checked' :''}>Hide
-                                </div>
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    <input name="status" type="radio" required value="0" ${n.status == 0 ? 'checked' :''}>Reject
-                                    <input name="status" type="radio" required value="2" ${n.status == 2 ? 'checked' :''}>Approve
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-success" value="Add">
-                            </div>
-                        </form>
-                    </div>
-                </div>
             </div>-->
         <%--</c:forEach>--%>
-<!--        <script>
-            const now = new Date().toISOString().slice(0, 16);
-            document.getElementById('datetimeInput1').setAttribute('min', now);
-            document.getElementById('datetimeInput2').setAttribute('min', now);
-        </script>-->
-        <div class="toast" id="updateToast" data-delay="3000">
-            <div class="toast-header">
-                <strong class="mr-auto" id="toastTitle"></strong>
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
-            </div>
-            <div class="toast-body" id="toastMessage"></div>
-        </div>
-<!--        <script>
-            $(document).ready(function () {
-                var actions = {
-                    updated: '<%= request.getAttribute("updated") %>',
-                    created: '<%= request.getAttribute("created") %>',
-                    deleted: '<%= request.getAttribute("deleted") %>'
-                };
-
-                for (var action in actions) {
-                    var status = actions[action];
-                    if (status !== 'null' && status !== '') {
-                        var toast = $('#updateToast');
-                        var title, message, classToAdd, classToRemove;
-
-                        switch (action) {
-                            case 'updated':
-                                title = status !== "0" ? 'Success' : 'Error';
-                                message = status !== "0" ? 'News updated successfully.' : 'Failed to update news.';
-                                classToAdd = status !== "0" ? 'success' : 'error';
-                                classToRemove = status !== "0" ? 'error' : 'success';
-                                break;
-                            case 'created':
-                                title = status !== "0" ? 'Success' : 'Error';
-                                message = status !== "0" ? 'News created successfully.' : 'Failed to create news.';
-                                classToAdd = status !== "0" ? 'success' : 'error';
-                                classToRemove = status !== "0" ? 'error' : 'success';
-                                break;
-                            case 'deleted':
-                                title = status !== "0" ? 'Success' : 'Error';
-                                message = status !== "0" ? 'News deleted successfully.' : 'Failed to delete news.';
-                                classToAdd = status !== "0" ? 'success' : 'error';
-                                classToRemove = status !== "0" ? 'error' : 'success';
-                                break;
-
-                        }
-
-                        toast.find('#toastTitle').text(title);
-                        toast.find('#toastMessage').text(message);
-                        toast.addClass(classToAdd).removeClass(classToRemove);
-                        toast.toast('show');
-                    }
-                }
-            });
-
-        </script>-->
-
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

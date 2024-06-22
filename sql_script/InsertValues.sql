@@ -1,4 +1,4 @@
-USE BookingFootballTickett;
+USE BookingFootballTicket;
 GO
 
 -- Insert values into Role table
@@ -44,7 +44,7 @@ GO
 
 -- Insert values into Match table
 INSERT INTO Match (team1, team2, seasonId, [startTime], statusId, matchTypeId, createdBy) VALUES
-(2, 1, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com');
+(1, 2, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com');
 GO
 
 -- Insert values into Stand table
@@ -141,24 +141,18 @@ GO
 -- GO
 
 -- Insert values into HistoryPurchasedTicket table
- INSERT INTO HistoryPurchasedTicket (matchSeatId,seasonSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
-(1,1,'user1@example.com', 'QRCode1', 50.00, 1, 1, 'admin@example.com'),
-(2,1,'user2@example.com', 'QRCode2', 40.00, 2, 1, 'admin@example.com');
+ INSERT INTO HistoryPurchasedTicketMatchSeat(matchSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
+(1,'user1@example.com', 'QRCode1', 50.00, 1, 1, 'admin@example.com'),
+(2,'user2@example.com', 'QRCode2', 40.00, 2, 1, 'admin@example.com');
 GO
-
--- Insert values into Payment table
-/*INSERT INTO Payment (email, ticketId, price) VALUES
-('user1@example.com', 1, 50.00),
-('user2@example.com', 2, 80.00);
+-- Insert values into HistoryPurchasedTicket table
+ INSERT INTO HistoryPurchasedTicketSeasonSeat(seasonSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
+(1,'user1@example.com', 'QRCode1', 50.00, 1, 1, 'admin@example.com'),
+(2,'user2@example.com', 'QRCode2', 40.00, 2, 1, 'admin@example.com');
 GO
-*/
 -- Insert values into News table
 INSERT INTO News (title, content, createdBy) VALUES
 ('Title 1','Content 1', 'admin@example.com'),
 ('Title 2', 'Content 2', 'admin@example.com');
 GO
-Select * from MatchSeat
-Select * from Match
-Select * from SeatArea
-Select * from SeasonSeat
-Select * from HistoryPurchasedTicket
+
