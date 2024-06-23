@@ -15,6 +15,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import models.News;
+import models.NewsState;
+import models.NewsStatus;
 
 /**
  *
@@ -71,6 +73,9 @@ public class ManageNewsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         ArrayList<News> listNews;
+        ArrayList<NewsStatus> listStatus;
+        ArrayList<NewsState> listState;
+
         String go = request.getParameter("go");
         if (!isNullOrBlank(go)) {
             if (go.equals("search")) {
@@ -82,9 +87,12 @@ public class ManageNewsServlet extends HttpServlet {
             }
         } else {
             listNews = NewsDAO.getInstance().getlistNews();
-            if (!listNews.isEmpty()) {
+            listStatus = NewsDAO.getInstance().getListStatus();
+            listState = NewsDAO.getInstance().getListState();
+            if (!listNews.isEmpty() || !listState.isEmpty() || !listStatus.isEmpty()) {
                 session.setAttribute("getListNews", listNews);
-                out.print(listNews.toString());
+                session.setAttribute("getListState", listState);
+                session.setAttribute("getListStatus", listStatus);
             }
 
             if (session.getAttribute(CREATED) != null) {
@@ -127,5 +135,4 @@ public class ManageNewsServlet extends HttpServlet {
         return "Short description";
     }
 // </editor-fold>
-
 }

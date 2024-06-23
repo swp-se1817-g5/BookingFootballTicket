@@ -11,8 +11,8 @@ GO
 -- Insert values into User table
 INSERT INTO [User] (email, [name], roleId, [hashedPassword], phoneNumber, avatar, createdBy) VALUES
 ('admin@example.com', 'Admin User', 1, 'hashed_password_admin', '1234567890', 'Images/avatar/avatar1.jpg', 'admin@example.com'),
-('user1@example.com', 'User ', 2, 'hashed_password_user1', '0987654321', 'Images/avatar/avatar2.jpg', 'admin@example.com'),
-('user2@example.com', 'Staff', 3, 'hashed_password_user2', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com');
+('user1@example.com', 'User 1', 2, 'hashed_password_user1', '0987654321', 'Images/avatar/avatar2.jpg', 'admin@example.com'),
+('user2@example.com', 'Staff User', 3, 'hashed_password_user2', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com');
 GO
 
 -- Insert values into FootballClub table
@@ -57,72 +57,74 @@ GO
 
 -- Insert values into SeatClass table
 INSERT INTO SeatClass (seatClassName, price) VALUES
-('fans-side', '150000'),
-('standard', '50000'),
-('vip-stand', '200000'),
-('on-roof', '60000'),
-('under-roof', '70000');
+('fans-side', 150000),
+('standard', 50000),
+('vip-stand', 200000),
+('on-roof', 60000),
+('under-roof', 70000);
 GO
 
 -- Stand A
-INSERT INTO SeatArea (standId, seatName, quantity) VALUES
-(1, '1', 200),
-(1, '2', 250),
-(1, '3', 100),
-(1, '4', 150 ),
-(1, '5', 100 ),
-(1, '6', 150 ),
-(1, '7', 200 ),
-(1, '8', 250 ),
-(1, '9', 100 ),
-(1, '10', 150 ),
-(1, '11', 100 ),
-(1, '12', 150 ),
-(1, '13', 50 ),
-(1, '14', 50),
-(1, '15', 50),
-(1, '16', 50);
+INSERT INTO SeatArea (standId, seatClassId, seatName, quantity) VALUES
+(1, 1, '1', 200),
+(1, 1, '2', 250),
+(1, 1, '3', 100),
+(1, 1, '4', 150 ),
+(1, 2, '5', 100 ),
+(1, 2, '6', 150 ),
+(1, 2, '7', 200 ),
+(1, 2, '8', 250 ),
+(1, 3, '9', 100 ),
+(1, 3, '10', 150 ),
+(1, 3, '11', 100 ),
+(1, 3, '12', 150 ),
+(1, 4, '13', 50 ),
+(1, 4, '14', 50),
+(1, 4, '15', 50),
+(1, 4, '16', 50);
 
 -- Stand B
-INSERT INTO SeatArea (standId, seatName, quantity) VALUES
-(2, '1', 200),
-(2, '2', 250),
-(2, '3', 100),
-(2, '4', 150),
-(2, '5', 100),
-(2, '6', 150),
-(2, '7', 200),
-(2, '8', 250),
-(2, '9', 100),
-(2, '10', 150),
-(2, '11', 100),
-(2, '12', 150),
-(2, '13', 50),
-(2, '14', 50),
-(2, '15', 50),
-(2, '16', 50);
+INSERT INTO SeatArea (standId, seatClassId, seatName, quantity) VALUES
+(2, 1, '1', 200),
+(2, 1, '2', 250),
+(2, 1, '3', 100),
+(2, 1, '4', 150),
+(2, 2, '5', 100),
+(2, 2, '6', 150),
+(2, 2, '7', 200),
+(2, 2, '8', 250),
+(2, 3, '9', 100),
+(2, 3, '10', 150),
+(2, 3, '11', 100),
+(2, 3, '12', 150),
+(2, 4, '13', 50),
+(2, 4, '14', 50),
+(2, 4, '15', 50),
+(2, 4, '16', 50);
 
 -- Stand C
-INSERT INTO SeatArea (standId, seatName, quantity) VALUES
-(3, '1', 200),
-(3, '2', 250),
-(3, '3', 200),
-(3, '4', 250),
-(3, '5', 200),
-(3, '6', 250),
-(3, '7', 200),
-(3, '8', 250);
+INSERT INTO SeatArea (standId, seatClassId, seatName, quantity) VALUES
+(3, 1, '1', 200),
+(3, 1, '2', 250),
+(3, 2, '3', 200),
+(3, 2, '4', 250),
+(3, 3, '5', 200),
+(3, 3, '6', 250),
+(3, 4, '7', 200),
+(3, 4, '8', 250);
 
 -- Stand D
-INSERT INTO SeatArea (standId, seatName, quantity) VALUES
-(4, '1', 200),
-(4, '2', 250),
-(4, '3', 200),
-(4, '4', 250),
-(4, '5', 200),
-(4, '6', 250),
-(4, '7', 200),
-(4, '8', 250);
+INSERT INTO SeatArea (standId, seatClassId, seatName, quantity) VALUES
+(4, 1, '1', 200),
+(4, 1, '2', 250),
+(4, 2, '3', 200),
+(4, 2, '4', 250),
+(4, 3, '5', 200),
+(4, 3, '6', 250),
+(4, 4, '7', 200),
+(4, 4, '8', 250);
+GO
+
 -- Assuming SeatArea and Season tables have some existing data with seatId and seasonId values
 INSERT INTO SeasonSeat (seatId, seasonId, price, availability)
 VALUES 
@@ -132,27 +134,35 @@ VALUES
     (4, 2, 250.00, 10);
 GO
 
-
-
--- Insert values into MatchSeat table
--- INSERT INTO MatchSeat (matchId, seatId, [availability], createdBy) VALUES
--- (1, 1, 100, 'admin@example.com'),
--- (1, 2, 150, 'admin@example.com');
--- GO
-
--- Insert values into HistoryPurchasedTicket table
- INSERT INTO HistoryPurchasedTicketMatchSeat(matchSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
-(1,'user1@example.com', 'QRCode1', 50.00, 1, 1, 'admin@example.com'),
-(2,'user2@example.com', 'QRCode2', 40.00, 2, 1, 'admin@example.com');
+-- Insert values into HistoryPurchasedTicketMatchSeat table
+INSERT INTO HistoryPurchasedTicketMatchSeat (matchSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
+(1, 'user1@example.com', 'QRCode1', 50.00, 1, 1, 'admin@example.com'),
+(2, 'user2@example.com', 'QRCode2', 40.00, 2, 1, 'admin@example.com');
 GO
--- Insert values into HistoryPurchasedTicket table
- INSERT INTO HistoryPurchasedTicketSeasonSeat(seasonSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
-(1,'user1@example.com', 'QRCode1', 50.00, 1, 1, 'admin@example.com'),
-(2,'user2@example.com', 'QRCode2', 40.00, 2, 1, 'admin@example.com');
+
+-- Insert values into HistoryPurchasedTicketSeasonSeat table
+INSERT INTO HistoryPurchasedTicketSeasonSeat (seasonSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
+(1, 'user1@example.com', 'QRCode1', 50.00, 1, 1, 'admin@example.com'),
+(2, 'user2@example.com', 'QRCode2', 40.00, 2, 1, 'admin@example.com');
 GO
 -- Insert values into News table
-INSERT INTO News (title, content, createdBy) VALUES
-('Title 1','Content 1', 'admin@example.com'),
-('Title 2', 'Content 2', 'admin@example.com');
-GO
 
+INSERT INTO NewsStatus(statusName) VALUES
+('Rejected'),
+('Pending'),
+('Approved');
+GO
+-- Insert values into News table
+INSERT INTO NewsState(stateName) VALUES
+('Hide'),
+('Show');
+GO
+-- Insert values into News table
+INSERT INTO News (title, content,stateId,statusId, createdBy) VALUES
+('Title 1', 'Content 1',1,1, 'admin@example.com'),
+('Title 2', 'Content 2',1,1, 'admin@example.com'),
+('Title 3', 'Content 1',2,2, 'admin@example.com'),
+('Title 4', 'Content 2',2,2, 'admin@example.com'),
+('Title 5', 'Content 1',1,3, 'admin@example.com'),
+('Title 6', 'Content 2',1,3, 'admin@example.com');
+GO

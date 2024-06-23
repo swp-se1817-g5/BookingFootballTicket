@@ -45,7 +45,7 @@ GO
 -- Table FootballClub
 CREATE TABLE FootballClub (
 	clubId INT PRIMARY KEY IDENTITY (1,1),
-	clubName NVARCHAR(100) unique NOT NULL,
+	clubName NVARCHAR(100) UNIQUE NOT NULL,
 	img VARCHAR(255),
     Description VARCHAR(255),
 	createdBy VARCHAR(50),
@@ -111,7 +111,7 @@ GO
 -- Table Stand
 CREATE TABLE Stand (
 	standId INT PRIMARY KEY IDENTITY (1,1),
-	standName NVARCHAR(50) unique NOT NULL,
+	standName NVARCHAR(50) UNIQUE NOT NULL,
 	createdBy VARCHAR(50),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
 	updatedBy VARCHAR(50),
@@ -120,16 +120,16 @@ CREATE TABLE Stand (
 );
 GO
 
---Table SeatClass
-	CREATE TABLE SeatClass (
+-- Table SeatClass
+CREATE TABLE SeatClass (
     seatClassId INT PRIMARY KEY IDENTITY (1,1),
     seatClassName NVARCHAR(50),
     price DECIMAL(10, 2)
 );
 GO
 
---Table SeatArea
-    CREATE TABLE SeatArea (
+-- Table SeatArea
+CREATE TABLE SeatArea (
     seatId INT PRIMARY KEY IDENTITY (1,1),
     standId INT,
 	seatClassId INT,
@@ -153,7 +153,7 @@ CREATE TABLE MatchSeat(
 );
 GO
 
--- Table MatchSeason
+-- Table SeasonSeat
 CREATE TABLE SeasonSeat(
 	seasonSeatId INT PRIMARY KEY IDENTITY (1,1),
 	seatId INT,
@@ -165,7 +165,7 @@ CREATE TABLE SeasonSeat(
 );
 GO
 
--- Table HistoryPurchasedTicket
+-- Table HistoryPurchasedTicketMatchSeat
 CREATE TABLE HistoryPurchasedTicketMatchSeat (
 	ticketMatchSeatId INT PRIMARY KEY IDENTITY (1,1),
 	matchSeatId INT,
@@ -180,6 +180,8 @@ CREATE TABLE HistoryPurchasedTicketMatchSeat (
     FOREIGN KEY (email) REFERENCES [User](email)
 );
 GO
+
+-- Table HistoryPurchasedTicketSeasonSeat
 CREATE TABLE HistoryPurchasedTicketSeasonSeat (
 	ticketSeasonSeatId INT PRIMARY KEY IDENTITY (1,1),
 	seasonSeatId INT,
@@ -195,20 +197,22 @@ CREATE TABLE HistoryPurchasedTicketSeasonSeat (
 );
 GO
 
--- Table Payment
-/*CREATE TABLE Payment (
-	paymentId INT PRIMARY KEY IDENTITY (1,1),
-	email VARCHAR(50),
-	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-	isDeleted BIT DEFAULT 0,
-	ticketId INT,
-	price DECIMAL(10, 2),
-	date DATETIME2 DEFAULT CURRENT_TIMESTAMP,
-	FOREIGN KEY (email) REFERENCES [User](email),
-	FOREIGN KEY (ticketId) REFERENCES HistoryPurchasedTicket(ticketId)
+-- Table StatusNews
+CREATE TABLE NewsStatus (
+   statusId INT PRIMARY KEY IDENTITY(1,1),
+   statusName NVARCHAR(30),
+   isDeleted BIT DEFAULT 0
 );
 GO
-*/
+
+-- Table StateNews
+CREATE TABLE NewsState (
+   stateId INT PRIMARY KEY IDENTITY(1,1),
+   stateName NVARCHAR(30),
+   isDeleted BIT DEFAULT 0
+);
+GO
+
 -- Table News
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
@@ -220,11 +224,11 @@ CREATE TABLE News (
     createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
     updatedBy VARCHAR(50) NULL,
     lastUpdatedDate DATETIME2 NULL,
-    [status] INT DEFAULT 1,
-    [state] BIT DEFAULT 0,
+	postOn DATETIME2 NULL,
     isDeleted BIT DEFAULT 0,
+	statusId INT,
+	stateId INT,
+	FOREIGN KEY (statusId) REFERENCES NewsStatus(statusId),
+	FOREIGN KEY (stateId) REFERENCES NewsState(stateId)
 );
 GO
-
-
-
