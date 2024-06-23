@@ -72,6 +72,7 @@ public class UpdateStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        
         boolean updated = false;
         try {
              int standId = Integer.parseInt(request.getParameter("standId"));

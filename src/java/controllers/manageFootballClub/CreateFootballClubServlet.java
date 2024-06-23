@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import models.FootballClub;
+import models.User;
 
 @WebServlet(name = "CreateFootballClubServlet", urlPatterns = {"/createFootballClub"})
 @MultipartConfig
@@ -28,18 +29,22 @@ public class CreateFootballClubServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         boolean fcCreated = false;
+        
         try {
             Part part = request.getPart("image");
         
-                String img = part == null ? "" : handleFileUpload(part, request);
+                String img = (part != null && part.getSize() > 0 ) ? handleFileUpload(part, request) : "" ;
                 String clubName = request.getParameter("clubName").trim();
                 String description = request.getParameter("description");
                 description = description == null ? "" : description.trim();
+                User user = (User)session.getAttribute("currentUser");
                 FootballClub fc = new FootballClub();
                 fc.setClubName(clubName);
                 fc.setImg(img);
                 fc.setDescription(description);
+                fc.setCreatedBy(user.getEmail());
                 fcCreated = FootballClubDAO.getInstance().createFootballClub(fc);
             
         } catch (IOException | ServletException e) {
