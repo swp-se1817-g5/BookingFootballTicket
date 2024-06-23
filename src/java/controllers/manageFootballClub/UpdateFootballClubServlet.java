@@ -16,6 +16,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import models.FootballClub;
+import models.User;
 
 /**
  *
@@ -42,19 +43,27 @@ public class UpdateFootballClubServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         boolean fcUpdated = false;
         try {
-                Part part = request.getPart("image");
+                
+                
                 int clubIb = Integer.parseInt(request.getParameter("clubId"));
-                String img = part == null ? "" : handleFileUpload(part, request);
+                FootballClub f = FootballClubDAO.getInstance().getFootballClubbyID(clubIb);
+                Part part = request.getPart("image");
+                String img = f.getImg();
+                if(part != null && part.getSize() > 0)
+                    img = handleFileUpload(part, request);
                 String clubName = request.getParameter("clubName").trim();
                 String description = request.getParameter("description");
                 description = description == null ? "" : description.trim();
+                User user = (User)session.getAttribute("currentUser");
                 FootballClub fc = new FootballClub();
                 fc.setClubId(clubIb);
                 fc.setClubName(clubName);
                 fc.setImg(img);
                 fc.setDescription(description);
+                fc.setUpdatedBy(user.getEmail());
                 fcUpdated = FootballClubDAO.getInstance().updateFootballClub(fc);
             
         } catch (IOException | ServletException e) {
