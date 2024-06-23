@@ -14,7 +14,6 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-
         <!-- Favicon -->
         <link href="img/favicon.ico" rel="icon">
 
@@ -36,30 +35,11 @@
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
-        <!-- Favicon -->
-        <link href="img/favicon.ico" rel="icon">
 
-        <!-- Google Web Fonts -->
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-        <!-- Icon Font Stylesheet -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-        <!-- Libraries Stylesheet -->
-        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-        <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
-        <!-- Customized Bootstrap Stylesheet -->
-        <link href="css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Template Stylesheet -->
-        <link href="css/style.css" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>  
         <style>
             body {
                 color: #566787;
@@ -140,7 +120,7 @@
                 font-size: 19px;
             }
             .pagination {
-                float: right;
+                float: left;
                 margin: 0 0 5px;
             }
             .pagination li a {
@@ -170,11 +150,6 @@
             .pagination li i {
                 font-size: 16px;
                 padding-top: 6px
-            }
-            .hint-text {
-                float: left;
-                margin-top: 6px;
-                font-size: 95%;
             }
             .searchh {
                 display: flex;
@@ -241,7 +216,7 @@
                                 <a href="manageFootballClub" class="dropdown-item ">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item">Manage Stand</a>
-                                      <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
+                                <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
                                 <a href="manageNews" class="dropdown-item">Manage News</a>
                             </div>
@@ -273,47 +248,41 @@
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4">
-                                        <div class="input-group">
-                                            <div class="input-group-prepend">
-                                                <label class="input-group-text" for="roleFilter">Filter</label>
-                                            </div>
-                                            <select class="custom-select" id="roleFilter" name="roleFilter">
-                                                <option value="0">All Roles</option>
-                                                <c:forEach items="${roles}" var="role">
-                                                    <c:if test="${role.roleId != 1}">
-                                                        <option value="${role.roleId}">${role.roleName}</option>
-                                                    </c:if>
-                                                </c:forEach>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4 searchh">
+                                    <div class="col-sm-9 searchh">
                                         <!-- Button to open the search modal -->
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchUserModal">
                                             Open Search
                                         </button>
                                     </div>
-                                    <div class="col-sm-4 createe">
-                                        <a href="#createUserModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
+                                    <div class="col-sm-3 createe">
+                                        <a type="button" href="#createUserModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fafa-plus-circle me-2">&#xE147;</i> <span>Add New User</span></a>
                                     </div>
                                 </div>
                             </div>
-                            <c:if test="${not empty requestScope.message}">
-                                <div class="alert alert-warning">${requestScope.message}</div>
-                            </c:if>
-                            <c:if test="${not empty param.message}">
-                                <div class="alert alert-warning">${param.message}</div>
-                            </c:if>
                             <div class="table-responsive">
                                 <table id="userTable" class="table table-striped table-hover table-bordered">
                                     <thead>
                                         <tr>
                                             <th>Email</th>
                                             <th>Name</th>
-                                            <th>Role</th>
                                             <th>Phone Number</th>
-                                            <th>Avatar<i class="fa "></i></th>
+                                            <th>
+                                                <select class="custom-select" id="roleFilterHeader" name="roleFilterHeader" onchange="filterByRole()">
+                                                    <option value="0">All Roles</option>
+                                                    <c:forEach items="${roles}" var="role">
+                                                        <c:if test="${role.roleId != 1}">
+                                                            <option value="${role.roleId}">${role.roleName}</option>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </select>
+                                            </th>
+                                            <th>Status
+                                                <select class="custom-select" id="statusFilterHeader" name="statusFilterHeader" onchange="filterByStatus()">
+                                                    <option value="0">All Status</option>
+                                                    <option value="true">Actived</option>
+                                                    <option value="false">InActived</option>
+                                                </select>
+                                            </th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -323,15 +292,17 @@
                                                 <tr>
                                                     <td>${o.email}</td>
                                                     <td>${o.name}</td>
+                                                    <td>${o.phoneNumber}</td>
                                                     <c:forEach items="${requestScope.roles}" var="r">
                                                         <c:if test="${r.roleId eq o.roleId}">
                                                             <td>${r.roleName}</td>
                                                         </c:if>
                                                     </c:forEach>
-                                                    <td>${o.phoneNumber}</td>
-                                                    <td><img src="${o.avatar}" alt="Avatar" style="max-width: 100px; max-height: 100px;"></td>
+                                                    <td>${o.status ? "Active" : "Inactive"}</td>
                                                     <td>
-                                                        <a href="#" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
+                                                        <a href="#userDetailModal" class="view" title="View" onclick="showUserDetails('${o.email}', '${o.name}', '${o.phoneNumber}', '${o.roleId}', ${o.status}, '${o.avatar}')" data-toggle="modal">
+                                                            <i class="material-icons">&#xE417;</i>
+                                                        </a>
                                                         <a href="editUser.jsp?email=${o.email}" class="edit" title="Edit" data-toggle="tooltip">
                                                             <i class="material-icons">&#xE254;</i>
                                                         </a>
@@ -346,8 +317,7 @@
                                 </table>
                             </div>
                             <div class="clearfix" >
-                                <div class="hint-text">Showing <strong>${requestScope.users.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>
-                                <ul class="pagination">
+                                <ul class="pagination" >
                                     <c:if test="${page > 1}">
                                         <li class="page-item"><a href="manageUser?page=${page - 1}" class="page-link"><</a></li>
                                         </c:if>    
@@ -363,7 +333,55 @@
                             </div>
                         </div>
                     </div>
-
+                    <!-- User Detail Modal -->
+                    <div class="modal fade" id="userDetailModal">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <form id="updateUserForm" name="updateUserForm" action="updateUser" method="post">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="userDetailModalLabel">User Details</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="detailEmail">Email</label>
+                                            <input type="text" class="form-control" id="detailEmail" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="detailName">Name</label>
+                                            <input type="text" class="form-control" id="detailName" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="detailPhoneNumber">Phone Number</label>
+                                            <input type="text" class="form-control" id="detailPhoneNumber" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="detailRole">Role</label>
+                                            <input type="text" class="form-control" id="detailRole" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="detailStatus">Status</label>
+                                            <input type="text" class="form-control" id="detailStatus" readonly>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="detailAvatar">Avatar</label>
+                                            <div height="80px">
+                                                <img class="img-responsive" class ="avatarPreview" src="" style="width: auto; height: 80px" alt="Avatar"/>
+                                            </div>
+                                            <input type="file" class="form-control" id="detailAvatar" name="avatar" accept="image/*">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-primary" >Save</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Create User Modal -->
                     <div id="createUserModal" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -535,6 +553,16 @@
         });
 
     </script>
+    <script>
+        function showUserDetails(email, name, phoneNumber, roleid, status, avatar) {
+            document.getElementById('detailEmail').value = email.trim();
+            document.getElementById('detailName').value = name.trim();
+            document.getElementById('detailPhoneNumber').value = phoneNumber;
+            document.getElementById('detailRole').value = roleid === 2 ? "User" : (roleid === 3 ? "Staff" : "");
+            document.getElementById('detailStatus').value = status ? "Active" : "Inactive";
+            document.getElementById('detailAvatar').src = avatar;
+        }
+    </script>
     <!--script for create and update-->
     <script>
         $(document).ready(function () {
@@ -593,7 +621,7 @@
                 var reader = new FileReader();
                 reader.onload = function (e) {
                     $('#avatarPreview').attr('src', e.target.result);
-                }
+                };
                 reader.readAsDataURL(input.files[0]); // Convert image to base64 string
             }
         }
@@ -688,10 +716,9 @@
             validatePassword();
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#roleFilter').change(function () {
+            $('#roleFilterHeader').change(function () {
                 var roleId = $(this).val();
                 $.ajax({
                     type: 'POST',
@@ -741,7 +768,7 @@
     <script src="lib/tempusdominus/js/moment.min.js"></script>
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </html>
