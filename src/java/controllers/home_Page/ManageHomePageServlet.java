@@ -60,7 +60,7 @@ public class ManageHomePageServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getFootballClubs", FootballClubDAO.INSTANCE.getFootballClubs(""));
+        request.setAttribute("getFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
         request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
         request.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
         request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
