@@ -77,8 +77,8 @@ public class UserDAO {
 
     public boolean addUser(User user) {
         System.out.println(user);
-        String sql = "INSERT INTO [User](email, name, roleId, hashedPassword, phoneNumber, avatar, createdBy, updatedBy, status)"
-                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [User](email, name, roleId, hashedPassword, phoneNumber, avatar, createdBy, updatedBy)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         boolean added = false;
         try {
             checkConnection();
@@ -91,7 +91,6 @@ public class UserDAO {
             ps.setString(6, user.getAvatar());
             ps.setString(7, user.getCreatedBy());
             ps.setString(8, user.getUpdatedBy());
-            ps.setBoolean(9, user.isStatus());
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -286,7 +285,7 @@ public class UserDAO {
             ps.setString(7, user.getCreatedBy());
             ps.setString(8, null);
             ps.setString(9, null);
-            ps.setBoolean(10, false);
+            ps.setBoolean(10, true);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 added = true;
@@ -539,7 +538,7 @@ public class UserDAO {
         ArrayList<User> users = new ArrayList<>();
         try {
             checkConnection();
-            String sql = "SELECT * FROM [dbo].[User] WHERE roleId = ? AND status = 1";
+            String sql = "SELECT * FROM [dbo].[User] WHERE roleId = ?";
             ps = con.prepareStatement(sql);
             ps.setInt(1, roleId);
             rs = ps.executeQuery();
@@ -563,4 +562,32 @@ public class UserDAO {
         }
         return users;
     }
+//    public ArrayList<User> getUserbyStatus(boolean status) {
+//        ArrayList<User> users = new ArrayList<>();
+//        try {
+//            checkConnection();
+//            String sql = "SELECT * FROM [dbo].[User] WHERE status = ?";
+//            ps = con.prepareStatement(sql);
+//            ps.setInt(1, roleId);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                User u = new User();
+//                u.setEmail(rs.getString(1));
+//                u.setName(rs.getString(2));
+//                u.setRoleId(rs.getInt(3));
+//                u.setHashedPassword(rs.getString(4));
+//                u.setPhoneNumber(rs.getString(5));
+//                u.setAvatar(rs.getString(6));
+//                u.setCreatedBy(rs.getString(7));
+//                u.setCreatedDate(rs.getTimestamp(8).toLocalDateTime());
+//                u.setUpdatedBy(rs.getString(9));
+//                Timestamp updatedTimestamp = rs.getTimestamp(10);
+//                u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+//                users.add(u);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return users;
+//    }
 }
