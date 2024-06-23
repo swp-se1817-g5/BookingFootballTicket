@@ -14,7 +14,7 @@
         <link rel="canonical" href="https://www.footballticketpad.com/terms-conditions" />
         <link rel="alternate" hreflang="x-default" href="https://www.footballticketpad.com/terms-conditions" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Terms & Conditions | Football Ticket Pad</title>
+        <title>About Us</title>
         <meta name="description" content="Take a look at Football Ticket Pad's terms and conditions. Information about delivery, restrictions and payment is available here.">
         <meta name="keywords" content>
         <meta name="author" content>
@@ -345,7 +345,9 @@
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
-                        <li><a data-auth="login" href="http://localhost:8080/BookingFootballTicket/login">Login</a></li>
+                        
+                        <li><a data-auth="login" href="login?redirectURL=${pageContext.request.requestURL}">Login</a></li>
+
                         <li class="sell"><a data-quick-list="search" data-disabled class="sell" href="#">sell</a></li>
                         <div class="cart user-nav">
                             <a href="#">

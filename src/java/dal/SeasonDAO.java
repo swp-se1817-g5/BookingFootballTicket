@@ -5,14 +5,7 @@
 package dal;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.*;
@@ -27,15 +20,6 @@ public class SeasonDAO {
     private Connection con;
     private PreparedStatement ps;
     private ResultSet rs;
-    private static final String SQL_QUERY_UPDATE_SEASON = "UPDATE [Season]\n"
-            + "   SET [seasonName] = \n"
-            + "      ,[startDate] = \n"
-            + "      ,[endDate] = \n"
-            + " WHERE seasonId = ";
-    private static final String SEASON_NAME = "seasonName";
-    private static final String START_DATE = "startDate";
-    private static final String END_DATE = "endDate";
-    private static final String UPDATED_BY = "updateBy";
 
     private SeasonDAO() {
         if (INSTANCE == null) {
@@ -179,30 +163,13 @@ public class SeasonDAO {
         return 0;
     }
 
-    public int updateSeason(Season season) {
-        int n = 0;
-        String sql = "UPDATE [Season]"
-                + "   SET [seasonName] = ?"
-                + "      ,[startDate] = ?"
-                + "      ,[endDate] = ?"
-                + "      ,[updatedBy] = ?"
-                + " WHERE seasonId = ?";
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, season.getSeasonName());
-            ps.setDate(2, new java.sql.Date(season.getStartDate().getTime()));
-            ps.setDate(3, new java.sql.Date(season.getEndDate().getTime()));
-            ps.setString(4, season.getUpdatedBy());
-            ps.setInt(5, season.getSeasonId());
-            n = ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return n;
-    }
-
     public static void main(String[] args) {
-        System.out.println(INSTANCE.getSeasonbyID("1").toString());
+        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons(0, 5);
+        for (Season season : seasons) {
+            System.out.println(season.toString());
+        }
+//        Season s = SeasonDAO.INSTANCE.getSeasonbyID("1");
+//        System.out.println(s.toString());
     }
 
 }
