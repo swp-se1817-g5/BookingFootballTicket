@@ -15,14 +15,14 @@ public class User {
     private LocalDateTime createdDate;
     private String updatedBy;
     private LocalDateTime lastUpdatedDate;
-    private boolean isDeleted;
+    private boolean status;
 
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy-MM-dd / HH:mm:ss");
 
     public User() {
     }
 
-    public User(String email, String name, int roleId, String hashedPassword, String phoneNumber, String avatar, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean isDeleted) {
+    public User(String email, String name, int roleId, String hashedPassword, String phoneNumber, String avatar, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean status) {
         this.email = email;
         this.name = name;
         this.roleId = roleId;
@@ -33,10 +33,10 @@ public class User {
         this.createdDate = createdDate;
         this.updatedBy = updatedBy;
         this.lastUpdatedDate = lastUpdatedDate;
-        this.isDeleted = isDeleted;
+        this.status = status;
     }
 
-    public User(String email, String name, int roleId, String hashedPassword, String phoneNumber, String avatar, String createdBy, LocalDateTime createdDate, boolean isDeleted) {
+    public User(String email, String name, int roleId, String hashedPassword, String phoneNumber, String avatar, String createdBy, LocalDateTime createdDate, boolean status) {
         this.email = email;
         this.name = name;
         this.roleId = roleId;
@@ -45,10 +45,8 @@ public class User {
         this.avatar = avatar;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
-        this.isDeleted = isDeleted;
+        this.status = status;
     }
-
-    
 
     public String getFormattedLastUpdatedDate() {
         return lastUpdatedDate != null ? lastUpdatedDate.format(formatter) : null;
@@ -134,28 +132,17 @@ public class User {
         this.lastUpdatedDate = lastUpdatedDate;
     }
 
-    public boolean isIsDeleted() {
-        return isDeleted;
+    public boolean isStatus() {
+        return status;
     }
 
-    public void setIsDeleted(boolean isDeleted) {
-        this.isDeleted = isDeleted;
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        return "User{"
-                + "email='" + email + '\''
-                + ", name='" + name + '\''
-                + ", roleId=" + roleId
-                + ", hashedPassword='" + hashedPassword + '\''
-                + ", phoneNumber='" + phoneNumber + '\''
-                + ", avatar='" + avatar + '\''
-                + ", createdBy='" + createdBy + '\''
-                + ", createdDate=" + createdDate
-                + ", updatedBy='" + updatedBy + '\''
-                + ", lastUpdatedDate=" + lastUpdatedDate
-                + ", isDeleted=" + isDeleted
-                + '}';
+        return "User{" + "email=" + email + ", name=" + name + ", roleId=" + roleId + ", hashedPassword=" + hashedPassword + ", phoneNumber=" + phoneNumber + ", avatar=" + avatar + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", lastUpdatedDate=" + lastUpdatedDate + ", status=" + status + '}';
     }
+
 }

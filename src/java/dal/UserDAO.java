@@ -35,7 +35,7 @@ public class UserDAO {
         ArrayList<User> users = new ArrayList<>();
         try {
             checkConnection();
-            String sql = "select * from [dbo].[User] where isDeleted = 0";
+            String sql = "select * from [dbo].[User] where status = 1";
             ps = con.prepareStatement(sql);
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -50,7 +50,7 @@ public class UserDAO {
                 u.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 u.setUpdatedBy(rs.getString("updatedBy"));
                 u.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
-                u.setIsDeleted(rs.getBoolean("isDeleted"));
+                u.setStatus(rs.getBoolean("status"));
                 users.add(u);
             }
         } catch (SQLException e) {
@@ -77,8 +77,8 @@ public class UserDAO {
 
     public boolean addUser(User user) {
         System.out.println(user);
-        String sql = "INSERT INTO [User](email, name, roleId, hashedPassword, phoneNumber, avatar, createdBy, updatedBy, isDeleted)"
-                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO [User](email, name, roleId, hashedPassword, phoneNumber, avatar, createdBy, updatedBy)"
+                + " VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         boolean added = false;
         try {
             checkConnection();
@@ -91,7 +91,6 @@ public class UserDAO {
             ps.setString(6, user.getAvatar());
             ps.setString(7, user.getCreatedBy());
             ps.setString(8, user.getUpdatedBy());
-            ps.setBoolean(9, user.isIsDeleted());
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -118,7 +117,7 @@ public class UserDAO {
     }
 
     public User getUserByEmail(String email) {
-        String sql = "SELECT * FROM [User] WHERE email = ? AND isDeleted = 0";
+        String sql = "SELECT * FROM [User] WHERE email = ? AND status = 1";
         User user = null;
         try {
             checkConnection();
@@ -137,7 +136,7 @@ public class UserDAO {
                 user.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 user.setUpdatedBy(rs.getString("updatedBy"));
                 user.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
-                user.setIsDeleted(rs.getBoolean("isDeleted"));
+                user.setStatus(rs.getBoolean("status"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -164,7 +163,7 @@ public class UserDAO {
     }
 
     public boolean updateUserInformation(User user) {
-        String sql = "UPDATE [User] SET roleId = ?, [hashedPassword] = ?, phoneNumber = ?, avatar = ?, name = ?, updatedBy = ?, lastUpdatedDate = ?, isDeleted = ? WHERE email = ?";
+        String sql = "UPDATE [User] SET roleId = ?, [hashedPassword] = ?, phoneNumber = ?, avatar = ?, name = ?, updatedBy = ?, lastUpdatedDate = ?, status = ? WHERE email = ?";
         boolean updated = false;
         try {
             checkConnection();
@@ -176,7 +175,7 @@ public class UserDAO {
             ps.setString(5, user.getName());
             ps.setString(6, user.getUpdatedBy());
             ps.setObject(7, user.getLastUpdatedDate());
-            ps.setBoolean(8, user.isIsDeleted());
+            ps.setBoolean(8, user.isStatus());
             ps.setString(9, user.getEmail());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -191,7 +190,7 @@ public class UserDAO {
 
     public boolean deleteUser(String email) {
         boolean deleted = false;
-        String sql = "UPDATE [User] SET isDeleted = 1 WHERE email = ?";
+        String sql = "UPDATE [User] SET status = 1 WHERE email = ?";
         try {
             checkConnection();
             PreparedStatement ps = con.prepareStatement(sql);
@@ -245,7 +244,7 @@ public class UserDAO {
         ArrayList<User> users = new ArrayList<>();
         try {
             checkConnection();
-            String sql = "SELECT * FROM [dbo].[User] WHERE " + searchType + " LIKE ? AND isDeleted = 0";
+            String sql = "SELECT * FROM [dbo].[User] WHERE " + searchType + " LIKE ? AND status = 1";
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + keyword + "%");
             rs = ps.executeQuery();
@@ -271,7 +270,7 @@ public class UserDAO {
     }
 
     public boolean createUser(User user) {
-        String sql = "INSERT INTO [dbo].[User] (roleId, name, hashedpassword, email, phoneNumber, avatar, createdBy, updatedBy, lastUpdatedDate, isDeleted) "
+        String sql = "INSERT INTO [dbo].[User] (roleId, name, hashedpassword, email, phoneNumber, avatar, createdBy, updatedBy, lastUpdatedDate, status) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         boolean added = false;
         try {
@@ -286,7 +285,7 @@ public class UserDAO {
             ps.setString(7, user.getCreatedBy());
             ps.setString(8, null);
             ps.setString(9, null);
-            ps.setBoolean(10, false);
+            ps.setBoolean(10, true);
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 added = true;
@@ -299,7 +298,7 @@ public class UserDAO {
     }
 
     public boolean updateUser(User user) {
-        String sql = "UPDATE [dbo].[User] SET roleId = ?, hashedpassword = ?, phoneNumber = ?, avatar = ?, name = ?, updatedBy = ?, lastUpdatedDate = ? WHERE email = ? and isDeleted = 0";
+        String sql = "UPDATE [dbo].[User] SET roleId = ?, hashedpassword = ?, phoneNumber = ?, avatar = ?, name = ?, updatedBy = ?, lastUpdatedDate = ?, status = ? WHERE email = ?";
         boolean updated = false;
         user.setLastUpdatedDate(LocalDateTime.now());
         try {
@@ -314,7 +313,8 @@ public class UserDAO {
             LocalDateTime currentTime = LocalDateTime.now();
             user.setLastUpdatedDate(currentTime);
             ps.setTimestamp(7, Timestamp.valueOf(currentTime));
-            ps.setString(8, user.getEmail());
+            ps.setBoolean(8, user.isStatus());
+            ps.setString(9, user.getEmail());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 updated = true;
@@ -328,7 +328,7 @@ public class UserDAO {
 
     public ArrayList<User> getUsers(int offset, int noOfRecords) {
         ArrayList<User> users = new ArrayList<>();
-        String query = "SELECT * FROM [User] WHERE [isDeleted] = 0 AND [roleId] <> 1 ORDER BY email OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String query = "SELECT * FROM [User] WHERE [roleId] <> 1 ORDER BY email OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, offset);
@@ -347,6 +347,7 @@ public class UserDAO {
                     u.setUpdatedBy(rs.getString(9));
                     Timestamp updatedTimestamp = rs.getTimestamp(10);
                     u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+                    u.setStatus(rs.getBoolean(11));
                     users.add(u);
                 }
             }
@@ -379,7 +380,7 @@ public class UserDAO {
 
     public ArrayList<User> searchUsers(String email, String name, String phoneNumber, int roleId) {
         ArrayList<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM [User] WHERE isDeleted = 0";
+        String sql = "SELECT * FROM [User] WHERE status = 1";
         sql += " AND email LIKE ?";
         sql += " AND name LIKE ?";
         sql += " AND roleId = ?";
@@ -417,7 +418,7 @@ public class UserDAO {
 
     public User getUserByPhone(String phone) {
         User user = null;
-        String sql = "SELECT * FROM [User] WHERE phoneNumber = ? AND isDeleted = 0";
+        String sql = "SELECT * FROM [User] WHERE phoneNumber = ? AND status = 1";
         try {
             checkConnection();
             PreparedStatement ps = con.prepareStatement(sql);
@@ -435,7 +436,7 @@ public class UserDAO {
                 user.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 user.setUpdatedBy(rs.getString("updatedBy"));
                 user.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
-                user.setIsDeleted(rs.getBoolean("isDeleted"));
+                user.setStatus(rs.getBoolean("status"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -445,7 +446,7 @@ public class UserDAO {
 
     public ArrayList<User> getUsersByRoleId(int roleId, int offset, int noOfRecords) {
         ArrayList<User> users = new ArrayList<>();
-        String query = "SELECT * FROM [User] WHERE [roleId] = ? AND [isDeleted] = 0 ORDER BY email OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String query = "SELECT * FROM [User] WHERE [roleId] = ? AND [status] = 1 ORDER BY email OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, roleId);
@@ -508,7 +509,7 @@ public class UserDAO {
         ArrayList<User> users = new ArrayList<>();
         try {
             checkConnection();
-            String sql = "SELECT * FROM [dbo].[User] WHERE name LIKE ? AND isDeleted = 0";
+            String sql = "SELECT * FROM [dbo].[User] WHERE name LIKE ? AND status = 1";
             ps = con.prepareStatement(sql);
             ps.setString(1, "%" + keyword + "%");
             rs = ps.executeQuery();
@@ -537,7 +538,7 @@ public class UserDAO {
         ArrayList<User> users = new ArrayList<>();
         try {
             checkConnection();
-            String sql = "SELECT * FROM [dbo].[User] WHERE roleId = ? AND isDeleted = 0";
+            String sql = "SELECT * FROM [dbo].[User] WHERE roleId = ?";
             ps = con.prepareStatement(sql);
             ps.setInt(1, roleId);
             rs = ps.executeQuery();
@@ -561,4 +562,32 @@ public class UserDAO {
         }
         return users;
     }
+//    public ArrayList<User> getUserbyStatus(boolean status) {
+//        ArrayList<User> users = new ArrayList<>();
+//        try {
+//            checkConnection();
+//            String sql = "SELECT * FROM [dbo].[User] WHERE status = ?";
+//            ps = con.prepareStatement(sql);
+//            ps.setInt(1, roleId);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                User u = new User();
+//                u.setEmail(rs.getString(1));
+//                u.setName(rs.getString(2));
+//                u.setRoleId(rs.getInt(3));
+//                u.setHashedPassword(rs.getString(4));
+//                u.setPhoneNumber(rs.getString(5));
+//                u.setAvatar(rs.getString(6));
+//                u.setCreatedBy(rs.getString(7));
+//                u.setCreatedDate(rs.getTimestamp(8).toLocalDateTime());
+//                u.setUpdatedBy(rs.getString(9));
+//                Timestamp updatedTimestamp = rs.getTimestamp(10);
+//                u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+//                users.add(u);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return users;
+//    }
 }

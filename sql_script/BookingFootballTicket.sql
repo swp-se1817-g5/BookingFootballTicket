@@ -26,7 +26,7 @@ CREATE TABLE [User] (
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
 	updatedBy VARCHAR(50),
 	lastUpdatedDate DATETIME2 Null,
-	isDeleted BIT DEFAULT 0,
+	status BIT DEFAULT 1,
 	FOREIGN KEY (roleId) REFERENCES Role(roleId)
 );
 GO
