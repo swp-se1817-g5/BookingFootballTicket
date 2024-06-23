@@ -5,12 +5,7 @@
 package dal;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.*;
@@ -169,7 +164,12 @@ public class SeasonDAO {
     }
 
     public static void main(String[] args) {
-// 
+        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons(0, 5);
+        for (Season season : seasons) {
+            System.out.println(season.toString());
+        }
+//        Season s = SeasonDAO.INSTANCE.getSeasonbyID("1");
+//        System.out.println(s.toString());
     }
 
 }

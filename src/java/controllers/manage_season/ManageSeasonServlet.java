@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import models.Season;
 
@@ -23,6 +24,7 @@ import models.Season;
 public class ManageSeasonServlet extends HttpServlet {
 
     private static final int RECORDS_PER_PAGE = 10;
+    private static final String UPDATED = "updated";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -61,6 +63,7 @@ public class ManageSeasonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
@@ -73,6 +76,10 @@ public class ManageSeasonServlet extends HttpServlet {
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
         request.setAttribute("noOfRecords", noOfRecords);
+        if (session.getAttribute(UPDATED) != null) {
+            request.setAttribute(UPDATED, session.getAttribute(UPDATED));
+            session.removeAttribute(UPDATED);
+        }
         request.getRequestDispatcher("views/manageSeason.jsp").forward(request, response);
     }
 

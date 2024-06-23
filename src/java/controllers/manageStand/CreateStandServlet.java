@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import models.Stand;
-import models.User;
 
 /**
  *
@@ -75,16 +74,16 @@ public class CreateStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
         boolean created = false;
-        User user = (User) session.getAttribute("currentUser");
-        String createdBy = user.getEmail();
-        String standName = request.getParameter("standName").trim();
+        try {
+            String standName = request.getParameter("standName").trim();
         Stand stand = new Stand();
-        stand.setCreatedBy(createdBy);
+      
         stand.setStandName(standName);
         created = StandDAO.INSTANCE.createStand(stand);
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         response.sendRedirect("manageStand?standCreated=" + created);
 
     }

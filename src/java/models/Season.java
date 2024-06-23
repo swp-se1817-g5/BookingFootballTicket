@@ -47,6 +47,14 @@ public class Season {
         this.startDate = startDate;
         this.endDate = endDate;
     }
+
+    public Season(int seasonId,String seasonName, Date startDate, Date endDate, String updatedBy) {
+        this.seasonId = seasonId;
+        this.seasonName = seasonName;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.updatedBy = updatedBy;
+    }
     
 
     public int getSeasonId() {

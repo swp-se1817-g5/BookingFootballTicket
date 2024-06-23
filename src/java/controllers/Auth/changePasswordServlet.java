@@ -101,7 +101,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
                 } else {
                     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
                     dao.changePass(email, hashedPassword);
-                    request.setAttribute("changePassword", true);
+                    session.setAttribute("changePassword", true);
                     response.sendRedirect("homePage");
                     return; 
                 }

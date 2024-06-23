@@ -21,7 +21,7 @@ import models.Season;
 
 /**
  *
- * @author Vinh
+ * @author AD
  */
 @WebServlet(name = "CreateSeason", urlPatterns = {"/createSeason"})
 public class CreateSeasonServlet extends HttpServlet {

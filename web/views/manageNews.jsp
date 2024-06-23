@@ -246,9 +246,10 @@ Author     : duong
                                 <a href="manageFootballClub" class="dropdown-item">Manage Football Club</a>
                                 <a href="manageSeason" class="dropdown-item">Manage Season</a>
                                 <a href="manageStand" class="dropdown-item ">Manage Stand</a>
-                                      <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
+                                <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
                                 <a href="manageNews" class="dropdown-item active">Manage News</a>
+                                <a href="manageHistoryPurchasedTicket" class="dropdown-item ">Manage Ticket</a>
                             </div>
                         </div>
                         <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
@@ -336,43 +337,67 @@ Author     : duong
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-sm-4"><a href="manageNews"><h2>News <b>Management</b></h2></a></div>
-
                                     <div class="col-sm-4 searchh">
                                         <div class="search-box" id="searchForm">
                                             <a><i class="material-icons">&#xE8B6;</i></a>
                                             <input id="valueSearch" type="text" class="form-control" placeholder="Search...">
                                         </div>
                                     </div>
-
                                     <script>
                                         $(document).ready(function () {
                                             $('#valueSearch').keypress(function (event) {
                                                 if (event.keyCode === 13) { // 13 is the Enter key
                                                     event.preventDefault(); // Prevent the default form submission
                                                     var valueSearch = document.getElementById('valueSearch').value;
-                                                    location.href = "manageNews?go=search&valueSearch=" + encodeURIComponent(valueSearch);
+                                                    $.ajax({
+                                                        url: "manageNews",
+                                                        type: "GET",
+                                                        data: {
+                                                            go: "search",
+                                                            valueSearch: valueSearch
+                                                        },
+                                                        success: function (data) {
+                                                            // Cập nhật bảng tin tức bằng kết quả tìm kiếm
+                                                            $('#newsTableBody').html($(data).find('#newsTableBody').html());
+                                                        },
+                                                        error: function () {
+                                                            alert("Error occurred while searching for news.");
+                                                        }
+                                                    });
                                                 }
                                             });
                                         });
                                     </script>
+
                                     <div class="col-sm-4 createe">
-                                        <a href="#createNewsModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create News</span></a>
+                                        <a href="#createNewsModal" class="btn btn-success d-flex align-items-center" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create News</span></a>
                                     </div>
                                 </div>
                             </div>
                             <table class="table table-striped table-hover table-bordered">
                                 <thead>
-                                    <tr>
+                                    <tr class="text-center">
                                         <th>#</th>
                                         <th>Title</th>
                                         <th>Content</th>
-                                        <th>Status</th>
-                                        <th>State</th>
+                                        <th>
+                                            <select class="form-select border-0">
+                                                <option>Status</option>
+                                                <option>Pending</option>
+                                                <option>Approved</option>
+                                            </select>
+                                        </th>
+                                        <th>  <select class="form-select border-0">
+                                                <option>State</option>
+                                                <option>Show</option>
+                                                <option>Hide</option>
+                                            </select>
+                                        </th>
                                         <th>Action</th>
 
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="newsTableBody">
                                     <c:forEach items="${sessionScope.getListNews}" var="n" varStatus="status">
                                         <tr style="word-break: break-word">
                                             <td>${status.count}</td>
@@ -483,11 +508,11 @@ Author     : duong
                             <h4 class="modal-title">View Details</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <div class="modal-body">					
-                            <div class="form-group">
-                                <label>News ID</label>
-                                <input name="newsId" class="form-control" value="${n.newsId}" readonly>
-                            </div>
+                        <div class="modal-body">	
+                            <!--                            <div class="form-group">
+                                                            <label>News ID</label>
+                                                            <input name="newsId" class="form-control" value="${n.newsId}" readonly>
+                                                        </div>-->
                             <div class="form-group">
                                 <label>Title</label>
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.title}</p>
@@ -538,10 +563,7 @@ Author     : duong
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <div class="modal-body">					
-                                <div class="form-group">
-                                    <label>News ID</label>
-                                    <input name="newsId" class="form-control" value="${n.newsId}" readonly>
-                                </div>
+                                <input name="newsId" class="form-control" value="${n.newsId}" type="hidden">
                                 <div class="form-group">
                                     <label>Title</label>
                                     <input name="title" class="form-control" value="${n.title}">
@@ -550,19 +572,12 @@ Author     : duong
                                     <label>Content</label>
                                     <input name="content" class="form-control" value="${n.content}">
                                 </div>
-<<<<<<< HEAD
-                                <div class="form-group" style="word-break: break-word">
-                                    <label>Image</label>
-                                    <br>
-                                    <input type="file" name="image"><br>
-=======
-                                 <div class="form-group">
-                                <label>Image</label><br>
-                                <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
-                            </div>
+                                <div class="form-group">
+                                    <label>Image</label><br>
+                                    <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
+                                </div>
                                 <div class="form-group" style="word-break: break-word">
                                     <input type="file" name="image">
->>>>>>> 2c1da679cb6d15041b306d4e66f3a3c3092627ba
                                     <input type="hidden" name="currentImage" value="${n.image}">
                                 </div>
                                 <div class="form-group">
@@ -593,7 +608,6 @@ Author     : duong
         <div class="toast" id="updateToast" data-delay="3000">
             <div class="toast-header">
                 <strong class="mr-auto" id="toastTitle"></strong>
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
             </div>
             <div class="toast-body" id="toastMessage"></div>
         </div>
@@ -630,7 +644,6 @@ Author     : duong
                                 classToAdd = status !== "0" ? 'success' : 'error';
                                 classToRemove = status !== "0" ? 'error' : 'success';
                                 break;
-
                         }
 
                         toast.find('#toastTitle').text(title);

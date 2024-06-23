@@ -17,10 +17,10 @@ import org.apache.http.client.fluent.Request;
  *
  * @author AD
  */
-public class GetFacebook {
+public class getFacebook {
 
     // Private constructor to prevent instantiation
-    GetFacebook() {
+    getFacebook() {
         throw new IllegalStateException("Utility class");
     }
 

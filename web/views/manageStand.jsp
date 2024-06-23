@@ -277,7 +277,7 @@ Author     : admin
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><h2>Manage <b>Stand</b></h2></div>
+                                    <div class="col-sm-4"><h2><b>Stand</b> Management</h2></div>
 
                                     <div class="col-sm-4 searchh">
                                         <form action="manageStand" method="get" id="searchForm">
@@ -289,7 +289,7 @@ Author     : admin
 
                                     </div>
                                     <div class="col-sm-4 createe">
-                                        <a href="#createStandModal" class="btn btn-success"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create Stand</span></a>
+                                        <a href="#createStandModal" class="btn btn-success d-flex align-items-center"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create Stand</span></a>
                                     </div>
                                 </div>
                             </div>

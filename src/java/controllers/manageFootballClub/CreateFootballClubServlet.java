@@ -11,97 +11,57 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.FootballClub;
-import models.User;
 
 @WebServlet(name = "CreateFootballClubServlet", urlPatterns = {"/createFootballClub"})
-@MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 10, // 10 MB
-        maxFileSize = 1024 * 1024 * 50, // 50 MB
-        maxRequestSize = 1024 * 1024 * 100 // 100 MB
-)
+@MultipartConfig
 public class CreateFootballClubServlet extends HttpServlet {
 
-    private static final Logger LOGGER = Logger.getLogger(CreateFootballClubServlet.class.getName());
-    private static final String IMAGE_FOLDER = "images/footballclubs";
+    private static final String IMAGE_FOLDER = "/images/footballclubs/";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("views/manageFootballClub.jsp");
+        response.sendRedirect("manageFootballClub");
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         boolean fcCreated = false;
-        HttpSession session = request.getSession();
-        String errorMessage = null;
-
         try {
-            Part filePart = request.getPart("image");
-            if (filePart != null && filePart.getSize() > 0) {
-                String img = handleFileUpload(filePart);
+            Part part = request.getPart("image");
+        
+                String img = part == null ? "" : handleFileUpload(part, request);
                 String clubName = request.getParameter("clubName").trim();
-                User user = (User) session.getAttribute("currentUser");
                 String description = request.getParameter("description");
                 description = description == null ? "" : description.trim();
-
                 FootballClub fc = new FootballClub();
                 fc.setClubName(clubName);
                 fc.setImg(img);
-                fc.setCreatedBy(user.getEmail());
                 fc.setDescription(description);
-                fcCreated = FootballClubDAO.INSTANCE.createFootballClub(fc);
-            }
+                fcCreated = FootballClubDAO.getInstance().createFootballClub(fc);
+            
         } catch (IOException | ServletException e) {
             e.printStackTrace();
         }
-        session.setAttribute("fcCreated", fcCreated);
+        response.sendRedirect("manageFootballClub?fcCreated=" + fcCreated);
 
     }
 
-    private String handleFileUpload(Part filePart) throws IOException {
-        String fileName = getFileName(filePart);
-        if (fileName == null) {
-            throw new IOException("Invalid file name.");
-        }
-
-        String storePath = getServletContext().getRealPath("/" + IMAGE_FOLDER);
-        File uploads = new File(storePath);
-        if (!uploads.exists()) {
-            Files.createDirectories(uploads.toPath());
-        }
-
-        File file = new File(uploads, fileName);
-
-        try (InputStream input = filePart.getInputStream(); FileOutputStream output = new FileOutputStream(file)) {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            while ((bytesRead = input.read(buffer)) != -1) {
-                output.write(buffer, 0, bytesRead);
+    private String handleFileUpload(Part part, HttpServletRequest request) throws ServletException, IOException {
+        String imagePath = null;    
+        if ((part != null) && (!part.getSubmittedFileName().trim().isEmpty()) && (part.getSubmittedFileName() != null)) {
+            String path = request.getServletContext().getRealPath(IMAGE_FOLDER);
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdirs();
             }
-        }
-
-        return IMAGE_FOLDER + "/" + fileName;
-    }
-
-    private String getFileName(Part part) {
-        String contentDisposition = part.getHeader("content-disposition");
-        if (contentDisposition != null) {
-            for (String content : contentDisposition.split(";")) {
-                if (content.trim().startsWith("filename")) {
-                    return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
-                }
-            }
-        }
-        return null;
+            File image = new File(dir, part.getSubmittedFileName());
+            part.write(image.getAbsolutePath());
+            imagePath = request.getContextPath() + IMAGE_FOLDER + image.getName();
+        } 
+        return imagePath;
     }
 
     @Override

@@ -186,135 +186,31 @@
     </head>
     <body>
 
-            <div class="container-fluid position-relative bg-white d-flex p-0">
+        <div class="container-fluid position-relative bg-white d-flex p-0">
 
-                <!-- Spinner Start -->
-                <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-                    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                        <span class="sr-only">Loading...</span>
-                    </div>
+            <!-- Spinner Start -->
+            <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                    <span class="sr-only">Loading...</span>
                 </div>
-                <!-- Spinner End -->
-
-                <!-- Sidebar Start -->
-                <div class="sidebar pe-4 pb-3">
-                    <nav class="navbar bg-light navbar-light">
-                        <a href="index.html" class="navbar-brand mx-4 mb-3">
-                            <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHBOARD</h3>
-                        </a>
-                        <div class="d-flex align-items-center ms-4 mb-4">
-                            <div class="position-relative">
-                                <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                            </div>
-                            <div class="ms-3">
-                                <h6 class="mb-0">Jhon Doe</h6>
-                                <span>Admin</span>
-                            </div>
-                        </div>
-                        <div class="navbar-nav w-100">
-                            <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Managers</a>
-                                <div class="dropdown-menu bg-transparent border-0">
-                                    <a href="manageUser" class="dropdown-item">Manage User</a>
-                                    <a href="manageMatch" class="dropdown-item active">Manage Match</a>
-                                    <a href="manageFootballClub" class="dropdown-item">Manage Football Club</a>
-                                    <a href="manageSeason" class="dropdown-item">Manage Season</a>
-                                    <a href="manageStand" class="dropdown-item">Manage Stand</a>
-                                    <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
-                                    <a href="manageRole" class="dropdown-item">Manage Role</a>
-                                    <a href="manageNews" class="dropdown-item">Manage News</a>
-                                </div>
-                            </div>
-                            <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
-                            <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-                            <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
-                            <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                                <div class="dropdown-menu bg-transparent border-0">
-                                    <a href="signin.html" class="dropdown-item">Sign In</a>
-                                    <a href="signup.html" class="dropdown-item">Sign Up</a>
-                                    <a href="404.html" class="dropdown-item">404 Error</a>
-                                    <a href="blank.html" class="dropdown-item">Blank Page</a>
-                                </div>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-                <!-- Sidebar End -->
-
-            
+            </div>
+            <!-- Spinner End -->
+            <%@include file="side-bar.jsp" %>
             <div class="content">
-                <!-- Navbar Start -->
-                <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                    <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                        <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-                    </a>
-                    <a href="#" class="sidebar-toggler flex-shrink-0">
-                        <i class="fa fa-bars"></i>
-                    </a>
-                    <form class="d-none d-md-flex ms-4">
-                        <input class="form-control border-0" type="search" placeholder="Search">
-                    </form>
-                    <div class="navbar-nav align-items-center ms-auto">
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fa fa-envelope me-lg-2"></i>
-                                <span class="d-none d-lg-inline-flex">Message</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">
-                                    <div class="d-flex align-items-center">
-                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                        <div class="ms-2">
-                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                            <small>15 minutes ago</small>
-                                        </div>
-                                    </div>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item text-center">See all message</a>
-                            </div>
-                        </div>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <i class="fa fa-bell me-lg-2"></i>
-                                <span class="d-none d-lg-inline-flex">Notificatin</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">
-                                    <h6 class="fw-normal mb-0">Profile updated</h6>
-                                    <small>15 minutes ago</small>
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item text-center">See all notifications</a>
-                            </div>
-                        </div>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                <span class="d-none d-lg-inline-flex">John Doe</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">My Profile</a>
-                                <a href="#" class="dropdown-item">Settings</a>
-                                <a href="#" class="dropdown-item">Log Out</a>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-                <!-- Navbar End -->
+                <%@include file="header2.jsp" %>
 
                 <%-- Manage Table --%>
                 <div class="container-fluid pt-4 px-4">
                     <div class="table-responsive">
-                        <div class="table-wrapper">
+                        <div class="table-wrapper card">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4 createe">
-                                        <a href="#createMatchModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Match</span></a>
+
+                                    <div class="col-md-4">
+                                        <input class="form-control radius-md" type="search" id="myInput" onkeyup="filterTable()" placeholder="Search for name of football club..." title="Type in a name">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <a type="button" href="#createMatchModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i>Add New Match</a>
                                     </div>
                                 </div>
                             </div>
@@ -325,15 +221,31 @@
                                         <th>FC-1</th>
                                         <th>FC-2</th>
                                         <th>Start time</th>
-                                        <th>Season</th>
-                                        <th>Status</th>
-                                        <th>Type</th>
-                                        <th>Create By</th>
-                                        <th>Create Date</th>
-                                        <th>Last Update By</th>
-                                        <th>Last Update Date</th>
+                                        <th>
+                                            <select class="form-select border-0" id="seasonSelect" onchange="filterTable()">
+                                                <option selected value="All">All season</option>
+                                                <c:forEach items="${requestScope.seasons}" var="s">
+                                                    <option value="${s.seasonName}">${s.seasonName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            <select class="form-select border-0" id="statusSelect" onchange="filterTable()">
+                                                <option selected value="All">All status</option>
+                                                <c:forEach items="${requestScope.statusList}" var="s">
+                                                    <option value="${s.matchStatusName}">${s.matchStatusName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            <select class="form-select border-0" id="typeSelect" onchange="filterTable()">
+                                                <option selected value="All">All type</option>
+                                                <c:forEach items="${requestScope.types}" var="t">
+                                                    <option value="${t.name}">${t.name}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
                                         <th>Actions</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -346,16 +258,12 @@
                                             <td>${o.season.seasonName}</td>
                                             <td>${o.status.matchStatusName}</td>
                                             <td>${o.type.name}</td>
-                                            <td>${o.createdBy}</td>
-                                            <td>${o.createdDate}</td>
-                                            <td>${o.updatedBy}</td>
-                                            <td>${o.lastUpdatedDate}</td>
                                             <td>
-                                                <a onclick="update('${o.matchId}', '${o.team1.clubId}', '${o.team2.clubId}', '${o.time}', '${o.season.seasonId}', '${o.status.matchStatusId}', '${o.type.typeId}')" href="#updateMatchModal" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
-                                                <a onclick="doDelete(${o.matchId})" href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                                <a onclick="update('${o.matchId}', '${o.team1.clubId}', '${o.team2.clubId}', '${o.time}', '${o.season.seasonId}', '${o.status.matchStatusId}', '${o.type.typeId}')" href="#updateMatchModal" class="edit" title="Edit" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
+                                                <a onclick="doDelete(${o.matchId})" href="#" class="delete" title="Cancel" data-toggle="tooltip"><i class="fa fa-times-circle"></i></a>
                                             </td>
                                         </tr>
-                                    </c:forEach>  
+                                    </c:forEach>
                                 </tbody>
                             </table>
                         </div>
@@ -482,7 +390,7 @@
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Update">
+                            <input type="submit" class="btn btn-success" value="Save">
                         </div>
                     </form>
                 </div>
@@ -499,6 +407,60 @@
         </div>
 
         <script>
+
+            function filterTable() {
+                var input, filterName, seasonSelect, filterSeason, statusSelect, filterStatus, typeSelect, filterType, table, tr, td, i, j;
+                input = document.getElementById("myInput");
+                filterName = input.value.toUpperCase();
+                seasonSelect = document.getElementById("seasonSelect");
+                filterSeason = seasonSelect.value.toUpperCase();
+                statusSelect = document.getElementById("statusSelect");
+                filterStatus = statusSelect.value.toUpperCase();
+                typeSelect = document.getElementById("typeSelect");
+                filterType = typeSelect.value.toUpperCase();
+                table = document.querySelector("table");
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
+                    tr[i].style.display = "none"; // Mặc định ẩn hàng
+
+                    td = tr[i].getElementsByTagName("td");
+                    if (td) {
+                        var match = true;
+
+                        // Kiểm tra tên đội bóng
+                        if (filterName !== "") {
+                            var found = false;
+                            for (j = 1; j <= 2; j++) { // FC-1 và FC-2
+                                if (td[j].textContent.toUpperCase().indexOf(filterName) > -1) {
+                                    found = true;
+                                    break;
+                                }
+                            }
+                            if (!found)
+                                match = false;
+                        }
+
+                        // Kiểm tra mùa giải
+                        if (filterSeason !== "ALL" && td[4].textContent.toUpperCase() !== filterSeason) {
+                            match = false;
+                        }
+
+                        // Kiểm tra trạng thái
+                        if (filterStatus !== "ALL" && td[5].textContent.toUpperCase() !== filterStatus) {
+                            match = false;
+                        }
+
+                        // Kiểm tra loại trận đấu
+                        if (filterType !== "ALL" && td[6].textContent.toUpperCase() !== filterType) {
+                            match = false;
+                        }
+
+                        if (match)
+                            tr[i].style.display = "";
+                    }
+                }
+            }
             $(document).ready(function () {
                 var updated = '<%= request.getAttribute("updated") %>';
                 if (updated !== 'null' && updated !== '') {
@@ -554,6 +516,10 @@
         </script>
         <script type="text/javascript">
             function doDelete(matchId) {
+            <c:forEach var="match" items="${matches}">
+                <c:if test="${match.matchId == matchId}">
+                </c:if>
+            </c:forEach>
                 if (confirm("Do you want to delete Match with id = " + matchId))
                     location.href = 'deleteMatch?matchId=' + matchId;
             }
@@ -612,7 +578,7 @@
                 // Validate football club IDs
                 if (fc1Id === fc2Id) {
                     document.getElementById("errorFC").innerText = "Football club must be different";
-                    isValid = false;
+                    return false;
                 }
 
                 // Validate datetime
@@ -646,6 +612,7 @@
                 // Validate football club IDs
                 if (fc1Id === fc2Id) {
                     document.getElementById("errorFC2").innerText = "Football club must be different";
+                    return false;
                     isValid = false;
                 }
 

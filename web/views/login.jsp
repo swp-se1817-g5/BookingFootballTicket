@@ -64,6 +64,7 @@
                             <p style="color:red">${errorMessage}</p>
                         </c:if>
                         <form class="contact-bx" action="login" method="post">
+                            <input type="hidden" name="redirectURL" value="${redirectURL}">
                             <div class="row placeani">
                                 <div class="col-lg-12">
                                     <div class="form-group">
@@ -93,7 +94,7 @@
                                             Remember me!
                                         </label>
 
-<!--                                        <a href="views/forgetPassword.jsp" class="ml-auto">Forgot Password?</a>-->
+                                        <!--                                        <a href="views/forgetPassword.jsp" class="ml-auto">Forgot Password?</a>-->
 
                                         <a href="requestPassword" class="ml-auto">Forgot Password?</a>
 
@@ -135,14 +136,14 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <%
-    String successMess = (String) request.getAttribute("successMess");
-    if (successMess != null) {
+            String successMess = (String) request.getAttribute("successMess");
+            if (successMess != null) {
         %>
         <div class="alert alert-success" role="alert">
-            <%= successMess %>
+            <%= successMess%>
         </div>
         <%
-        }
+            }
         %>
 
     </body>
