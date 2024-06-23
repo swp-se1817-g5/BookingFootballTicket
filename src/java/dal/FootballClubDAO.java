@@ -62,12 +62,13 @@ public class FootballClubDAO {
 
     public boolean createFootballClub(FootballClub fc) {
         boolean created = false;
-        String sql = "INSERT INTO FootballClub (clubName, img, description) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO FootballClub (clubName, img, description, createdBy) VALUES (?, ?, ?, ?)";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, fc.getClubName());
             ps.setString(2, fc.getImg());
             ps.setString(3, fc.getDescription());
+            ps.setString(4, fc.getCreatedBy());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 created = true;
@@ -98,13 +99,14 @@ public class FootballClubDAO {
 
     public boolean updateFootballClub(FootballClub fc) {
         boolean updated = false;
-        String sql = "update FootballClub set [img] = ?, clubName = ?, [description] = ?  where clubId = ?";
+        String sql = "update FootballClub set [img] = ?, clubName = ?, [description] = ?, updatedBy = ?  where clubId = ?";
         try{
             ps = con.prepareStatement(sql);
             ps.setString(1, fc.getImg());
             ps.setString(2, fc.getClubName());
             ps.setString(3, fc.getDescription());
-            ps.setInt(4, fc.getClubId());
+            ps.setString(4, fc.getUpdatedBy());
+            ps.setInt(5, fc.getClubId());
             int rowsAffected = ps.executeUpdate();
             if(rowsAffected > 0) 
                 updated = true;

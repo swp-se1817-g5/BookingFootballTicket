@@ -7,7 +7,7 @@ Author     : admin
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Bootstrap Simple Data Table</title>
@@ -311,8 +311,8 @@ Author     : admin
                                             <td>${o.clubName}</td>
                                             <td>${o.description}</td>
                                             <td>
-                                                <a href="#updateFCModal" onclick="update('${o.clubId}', '${o.clubName}','${o.description}','${o.img}')" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
-                                                <a href="#"  class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                                <a href="#updateFCModal" onclick="update('${o.clubId}', '${o.clubName}', '${o.description}', '${o.img}', '${o.createdBy}', '${o.createdDate}', '${o.updatedBy}', '${o.lastUpdatedDate}')" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
+                                                <a href="#" onclick="doDelete('${o.clubId}')"  class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -323,7 +323,7 @@ Author     : admin
                                 <ul class="pagination">
                                     <c:forEach begin="1" end="${requestScope.endPage}" var="i" >
                                         <li class="page-item ${pageIndex == i ? 'active': '' }"><a href="manageFootballClub?pageIndex=${i}&search=${search}" class="page-link">${i}</a></li>
-                                    </c:forEach>
+                                        </c:forEach>
                                 </ul>
                             </div>
                         </div>
@@ -338,18 +338,18 @@ Author     : admin
                 <div class="modal-content">
                     <form action="createFootballClub" id="createFootballClubForm" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add New Club</h4>
+                            <h4 class="modal-title">Create Football Club</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Images</label>
+                                <label>Image</label>
                                 <div class="d-flex justify-content-center">
-                                    
-                                     <img id="imagePreviewInput" src="#" alt="Your Image"  style="display: none; width: auto; height: 200px">
+
+                                    <img id="imagePreviewInput" src="#" alt="Your Image"  style="display: none; width: auto; height: 200px">
                                 </div>
                                 </br>
-                               
+
                                 <input id="imageUploadInput" name="image" type="file" accept="image/*" class="form-control">
                             </div>
                             <div class="form-group">
@@ -386,7 +386,7 @@ Author     : admin
                                 <label>Club ID</label>
                                 <input id="clubId" name="clubId" readonly type="number" class="form-control" required>
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label>Images</label>
                                 </br>
                                 <div class="d-flex justify-content-center">
@@ -405,6 +405,27 @@ Author     : admin
                                 <textarea id="description" name="description" maxlength="255" type="text" class="form-control"></textarea>
                                 <span id="descriptionError" class="text-danger"></span>
                             </div>
+                              <div class="row">
+                               <div class="form-group col-sm-6">
+                                <label>Created By</label>
+                                <input id="createdBy" readonly="" class="form-control">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Created Date</label>
+                                <input id="createdDate" readonly="" class="form-control">
+                            </div> 
+                            </div>
+                            <div class="row">
+                            <div class="form-group col-sm-6">
+                                <label>Updated By</label>
+                                <input id="updatedBy" readonly="" class="form-control">
+                            </div>
+                            <div class="form-group col-sm-6">
+                                <label>Last Updated Date</label>
+                                <input id="lastUpdatedDate" readonly="" class="form-control">
+                            </div>    
+                            </div>
+                            
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -428,7 +449,7 @@ Author     : admin
         <script>
             //update
             $(document).ready(function () {
-                var updated = '<%= request.getAttribute("updated") %>';
+                var updated = '<%= request.getAttribute("updated")%>';
                 if (updated !== 'null' && updated !== '') {
                     var toast = $('#toastNotification');
                     if (updated === "true") {
@@ -446,7 +467,7 @@ Author     : admin
 
             //create
             $(document).ready(function () {
-                var created = '<%= request.getAttribute("created") %>';
+                var created = '<%= request.getAttribute("created")%>';
                 if (created !== 'null' && created !== '') {
                     var toast = $('#toastNotification');
                     if (created === "true") {
@@ -464,7 +485,7 @@ Author     : admin
 
             //delete
             $(document).ready(function () {
-                var deleted = '<%= request.getAttribute("deleted") %>';
+                var deleted = '<%= request.getAttribute("deleted")%>';
                 if (deleted !== 'null' && deleted !== '') {
                     var toast = $('#toastNotification');
                     if (deleted === "true") {
@@ -498,11 +519,10 @@ Author     : admin
                     var clubName = $('#clubNameInput').val().trim();
                     var emptyClubName = clubName === "";
                     var duplicate = clubs.some(club => club.clubName === clubName);
-                    if(emptyClubName) {
-                       $('#clubNameInputError').text('Can not be empty or blank!');
-                        event.preventDefault(); 
-                    }
-                    else if (duplicate) {
+                    if (emptyClubName) {
+                        $('#clubNameInputError').text('Can not be empty or blank!');
+                        event.preventDefault();
+                    } else if (duplicate) {
                         $('#clubNameInputError').text('Club already exists. Please choose a different name.');
                         event.preventDefault();
                     } else {
@@ -540,16 +560,21 @@ Author     : admin
                 });
             });
 
-            function doDelete(standId) {
-                if (confirm("Do you want to delete stand with id = " + standId))
-                    location.href = 'deleteStand?standId=' + standId;
+            function doDelete(clubId) {
+                if (confirm("Do you want to delete Football Club with id = " + clubId))
+                    location.href = 'deleteFootballClub?clubId=' + clubId;
             }
 
-            function update(clubId, clubName, description, img) {
+            function update(clubId, clubName, description, img, createdBy, createdDate, updatedBy, lastUpdatedDate) {
                 document.getElementById('clubId').value = clubId;
                 document.getElementById('clubName').value = clubName;
                 document.getElementById('description').value = description;
                 document.getElementById('img').src = img;
+                
+                document.getElementById('createdBy').value = createdBy;
+                document.getElementById('createdDate').value = createdDate;
+                document.getElementById('updatedBy').value = updatedBy;
+                document.getElementById('lastUpdatedDate').value = lastUpdatedDate;
 
 
                 $('#clubNameError').text('');
@@ -560,32 +585,32 @@ Author     : admin
             }
 
         </script>
-        
+
         <!<!-- Script for image preview -->
         <script>
-        document.getElementById('imageUpload').addEventListener('change', function(event) {
-            const [file] = event.target.files;
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('img').src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+            document.getElementById('imageUpload').addEventListener('change', function (event) {
+                const [file] = event.target.files;
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('img').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
         </script>
-          <script>
-        document.getElementById('imageUploadInput').addEventListener('change', function(event) {
-            const [file] = event.target.files;
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('imagePreviewInput').src = e.target.result;
-                    document.getElementById('imagePreviewInput').style.display = 'block';
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+        <script>
+            document.getElementById('imageUploadInput').addEventListener('change', function (event) {
+                const [file] = event.target.files;
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (e) {
+                        document.getElementById('imagePreviewInput').src = e.target.result;
+                        document.getElementById('imagePreviewInput').style.display = 'block';
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
         </script>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
