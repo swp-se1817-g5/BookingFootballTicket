@@ -115,6 +115,23 @@ public class UserDAO {
         }
         return null;
     }
+    
+    public int getRoleID(String email) {
+        int roleID = -1;
+        String query = "SELECT roleId FROM [User] WHERE email = ?";
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    roleID = rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return roleID;
+    }
 
     public User getUserByEmail(String email) {
         String sql = "SELECT * FROM [User] WHERE email = ? AND status = 1";
@@ -253,7 +270,7 @@ public class UserDAO {
     }
 
     public boolean createUser(User user) {
-        String sql = "INSERT INTO [dbo].[User] (roleId, name, hashedpassword, email, phoneNumber, avatar, createdBy, updatedBy, lastUpdatedDate, status) "
+        String sql = "INSERT INTO [dbo].[User] (roleId, name, hashedPassword, email, phoneNumber, avatar, createdBy, updatedBy, lastUpdatedDate, status) "
                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         boolean added = false;
         try {
@@ -261,7 +278,7 @@ public class UserDAO {
             ps = con.prepareStatement(sql);
             ps.setInt(1, user.getRoleId());
             ps.setString(2, user.getName());
-            ps.setString(3, user.getHashedPassword());
+            ps.setString(3, BCrypt.hashpw(user.getHashedPassword(), BCrypt.gensalt()));
             ps.setString(4, user.getEmail());
             ps.setString(5, user.getPhoneNumber());
             ps.setString(6, user.getAvatar());

@@ -177,6 +177,28 @@ public class SeasonDAO {
         return deleted;
     }
 
+    public int updateSeason(Season season) {
+        int n = 0;
+        String sql = "UPDATE [Season]"
+                + "   SET [seasonName] = ?"
+                + "      ,[startDate] = ?"
+                + "      ,[endDate] = ?"
+                + "      ,[updatedBy] = ?"
+                + " WHERE seasonId = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, season.getSeasonName());
+            ps.setDate(2, new java.sql.Date(season.getStartDate().getTime()));
+            ps.setDate(3, new java.sql.Date(season.getEndDate().getTime()));
+            ps.setString(4, season.getUpdatedBy());
+            ps.setInt(5, season.getSeasonId());
+            n = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return n;
+    }
+
     public static void main(String[] args) {
         ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons(0, 5);
         for (Season season : seasons) {

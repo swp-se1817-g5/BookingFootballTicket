@@ -7,6 +7,7 @@ package models;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  *
@@ -15,12 +16,18 @@ import java.time.format.DateTimeFormatter;
 public class HistoryPurchasedTicketMatchSeat {
 
     private int ticketId;
-    private MatchSeat matchSeatId;
-    private User email;
+    private String team1;
+    private String team2;
+    private Date startTime;
+    private String seasonName;
+    private String seatName;
+    private int quantity;
+    private String standName;
+    private String seatClassName;
+    private String email;
     private String qrCode;
     private BigDecimal price;
-    private int quantity;
-    private boolean status;
+    private TicketStatus statusId;
     private String createdBy;
     private LocalDateTime createdDate;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -28,14 +35,20 @@ public class HistoryPurchasedTicketMatchSeat {
     public HistoryPurchasedTicketMatchSeat() {
     }
 
-    public HistoryPurchasedTicketMatchSeat(int ticketId, MatchSeat matchSeatId, User email, String qrCode, BigDecimal price, int quantity, boolean status, String createdBy, LocalDateTime createdDate) {
+    public HistoryPurchasedTicketMatchSeat(int ticketId, String team1, String team2, Date startTime, String seasonName, String seatName, int quantity, String standName, String seatClassName, String email, String qrCode, BigDecimal price, TicketStatus statusId, String createdBy, LocalDateTime createdDate) {
         this.ticketId = ticketId;
-        this.matchSeatId = matchSeatId;
+        this.team1 = team1;
+        this.team2 = team2;
+        this.startTime = startTime;
+        this.seasonName = seasonName;
+        this.seatName = seatName;
+        this.quantity = quantity;
+        this.standName = standName;
+        this.seatClassName = seatClassName;
         this.email = email;
         this.qrCode = qrCode;
         this.price = price;
-        this.quantity = quantity;
-        this.status = status;
+        this.statusId = statusId;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
     }
@@ -48,19 +61,75 @@ public class HistoryPurchasedTicketMatchSeat {
         this.ticketId = ticketId;
     }
 
-    public MatchSeat getMatchSeatId() {
-        return matchSeatId;
+    public String getTeam1() {
+        return team1;
     }
 
-    public void setMatchSeatId(MatchSeat matchSeatId) {
-        this.matchSeatId = matchSeatId;
+    public void setTeam1(String team1) {
+        this.team1 = team1;
     }
 
-    public User getEmail() {
+    public String getTeam2() {
+        return team2;
+    }
+
+    public void setTeam2(String team2) {
+        this.team2 = team2;
+    }
+
+    public Date getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getSeasonName() {
+        return seasonName;
+    }
+
+    public void setSeasonName(String seasonName) {
+        this.seasonName = seasonName;
+    }
+
+    public String getSeatName() {
+        return seatName;
+    }
+
+    public void setSeatName(String seatName) {
+        this.seatName = seatName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getStandName() {
+        return standName;
+    }
+
+    public void setStandName(String standName) {
+        this.standName = standName;
+    }
+
+    public String getSeatClassName() {
+        return seatClassName;
+    }
+
+    public void setSeatClassName(String seatClassName) {
+        this.seatClassName = seatClassName;
+    }
+
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(User email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -80,20 +149,12 @@ public class HistoryPurchasedTicketMatchSeat {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public TicketStatus getStatusId() {
+        return statusId;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setStatusId(TicketStatus statusId) {
+        this.statusId = statusId;
     }
 
     public String getCreatedBy() {
@@ -114,7 +175,24 @@ public class HistoryPurchasedTicketMatchSeat {
 
     @Override
     public String toString() {
-        return "HistoryPurchasedTicketMatchSeat{" + "ticketId=" + ticketId + ", matchSeatId=" + matchSeatId + ", email=" + email + ", qrCode=" + qrCode + ", price=" + price + ", quantity=" + quantity + ", status=" + status + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", formatter=" + formatter + '}';
+        return "HistoryPurchasedTicketMatchSeat{\n"
+                + "ticketId=" + ticketId + ",\n"
+                + "team1=" + team1 + ",\n"
+                + "team2=" + team2 + ",\n"
+                + "startTime=" + startTime + ",\n"
+                + "seasonName=" + seasonName + ",\n"
+                + "seatName=" + seatName + ",\n"
+                + "quantity=" + quantity + ",\n"
+                + "standName=" + standName + ",\n"
+                + "seatClassName=" + seatClassName + ",\n"
+                + "email=" + email + ",\n"
+                + "qrCode=" + qrCode + ",\n"
+                + "price=" + price + ",\n"
+                + "statusId=" + statusId + ",\n"
+                + "createdBy=" + createdBy + ",\n"
+                + "createdDate=" + createdDate + ",\n"
+                + "formatter=" + formatter + '\n'
+                + '}';
     }
 
 }
