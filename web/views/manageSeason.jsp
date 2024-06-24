@@ -302,10 +302,6 @@
                                         <th>Season Name</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
-                                        <th>Created By</th>
-                                        <th>Created Date</th>
-                                        <th>Last Updated By</th>
-                                        <th>Last Updated Date</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -316,10 +312,6 @@
                                             <td>${s.seasonName}</td>
                                             <td>${s.startDate}</td>
                                             <td>${s.endDate}</td>
-                                            <td>${s.createdBy}</td>
-                                            <td>${s.createdDate}</td>
-                                            <td>${s.updatedBy}</td>
-                                            <td>${s.lastUpdatedDate}</td>
                                             <td>
                                                 <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
                                                 <a href="" onclick="doDelete('${o.seasonId}')" class="delete" title="Delete" data-toggle="tooltip">
