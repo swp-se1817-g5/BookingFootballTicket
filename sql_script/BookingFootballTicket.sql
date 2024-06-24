@@ -164,35 +164,53 @@ CREATE TABLE SeasonSeat(
 	FOREIGN KEY (seasonId ) REFERENCES Season(seasonId)
 );
 GO
-
+-- Table StatusNews
+CREATE TABLE TicketStatus (
+   statusId INT PRIMARY KEY IDENTITY(1,1),
+   statusName NVARCHAR(30),
+   isDeleted BIT DEFAULT 0
+);
+GO
 -- Table HistoryPurchasedTicketMatchSeat
 CREATE TABLE HistoryPurchasedTicketMatchSeat (
 	ticketMatchSeatId INT PRIMARY KEY IDENTITY (1,1),
-	matchSeatId INT,
+	team1 NVARCHAR(100),
+	team2 NVARCHAR(100),
+	startTime DATETIME2,
+	seasonName NVARCHAR(50),
+	seatName NVARCHAR(50),
+	quantity INT,
+	standName NVARCHAR(50),
+	seatClassName NVARCHAR(50),
     email VARCHAR(50),
 	qrCode VARCHAR(255),
-	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
 	price DECIMAL(10, 2),
-	quantity INT,
-	[status] BIT,
+	statusId INT,
 	createdBy VARCHAR(50),
-    FOREIGN KEY (matchSeatId) REFERENCES MatchSeat(matchSeatId),
+	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (statusId) REFERENCES TicketStatus(statusId),
     FOREIGN KEY (email) REFERENCES [User](email)
 );
 GO
 
 -- Table HistoryPurchasedTicketSeasonSeat
 CREATE TABLE HistoryPurchasedTicketSeasonSeat (
-	ticketSeasonSeatId INT PRIMARY KEY IDENTITY (1,1),
-	seasonSeatId INT,
+	ticketMatchSeatId INT PRIMARY KEY IDENTITY (1,1),
+	team1 NVARCHAR(100),
+	team2 NVARCHAR(100),
+	startTime DATETIME2,
+	seasonName NVARCHAR(50),
+	seatName NVARCHAR(50),
+	quantity INT,
+	standName NVARCHAR(50),
+	seatClassName NVARCHAR(50),
     email VARCHAR(50),
 	qrCode VARCHAR(255),
-	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
 	price DECIMAL(10, 2),
-	quantity INT,
-	[status] BIT,
+	statusId INT,
 	createdBy VARCHAR(50),
-	FOREIGN KEY (seasonSeatId) REFERENCES SeasonSeat(seasonSeatId),
+	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (statusId) REFERENCES TicketStatus(statusId),
     FOREIGN KEY (email) REFERENCES [User](email)
 );
 GO
