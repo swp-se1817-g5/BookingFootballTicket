@@ -60,8 +60,8 @@ public class SignInServlet extends HttpServlet {
         UserDAO userDAO = UserDAO.INSTANCE;
         HttpSession session = request.getSession();
 
-        // Set session timeout to 1 hour (3600 seconds)
-        session.setMaxInactiveInterval(3600);
+        // Set session timeout to 24 hours
+        session.setMaxInactiveInterval(88230);
 
         // Authenticate user by email and plaintext password
         User user = userDAO.authenticateUser(email, password);
@@ -81,11 +81,17 @@ public class SignInServlet extends HttpServlet {
             // Popup
             session.setAttribute("isFirstLogin", true);
 
-            // Redirect to the original URL
-            if (redirectURL != null && !redirectURL.isEmpty()) {
-                response.sendRedirect(redirectURL);
+            // Check roleID and redirect accordingly
+            int roleID = UserDAO.INSTANCE.getRoleID(user.getEmail());
+            if (roleID == 1 || roleID == 3) {
+                response.sendRedirect("manageUser");
             } else {
-                response.sendRedirect("homePage");
+                // Redirect to the original URL or home page
+                if (redirectURL != null && !redirectURL.isEmpty()) {
+                    response.sendRedirect(redirectURL);
+                } else {
+                    response.sendRedirect("homePage");
+                }
             }
         } else {
             // If not exists, throw message to view to display
