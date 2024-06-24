@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package profile;
+package controllers.user_access;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author AD
  */
-@WebServlet(name="ProfileServlet", urlPatterns={"/ProfileServlet"})
+@WebServlet(name="ProfileServlet", urlPatterns={"/userProfile"})
 public class ProfileServlet extends HttpServlet {
    
     /** 
@@ -55,7 +55,7 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("views/viewProfile.jsp").forward(request, response);
+        request.getRequestDispatcher("views/userProfile.jsp").forward(request, response);
     } 
 
     /** 
