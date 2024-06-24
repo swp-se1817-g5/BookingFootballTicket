@@ -162,6 +162,42 @@ public class SeasonDAO {
         }
         return 0;
     }
+    public boolean deleteSeason(int seasonId) {
+        boolean deleted = false;
+        String sql = "UPDATE [Season] SET isDeleted = 1 WHERE seasonId = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, seasonId);
+            if (ps.executeUpdate() > 0) {
+                deleted = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
+
+    public int updateSeason(Season season) {
+        int n = 0;
+        String sql = "UPDATE [Season]"
+                + "   SET [seasonName] = ?"
+                + "      ,[startDate] = ?"
+                + "      ,[endDate] = ?"
+                + "      ,[updatedBy] = ?"
+                + " WHERE seasonId = ?";
+        try {
+            ps = con.prepareStatement(sql);
+            ps.setString(1, season.getSeasonName());
+            ps.setDate(2, new java.sql.Date(season.getStartDate().getTime()));
+            ps.setDate(3, new java.sql.Date(season.getEndDate().getTime()));
+            ps.setString(4, season.getUpdatedBy());
+            ps.setInt(5, season.getSeasonId());
+            n = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return n;
+    }
 
     public static void main(String[] args) {
         ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons(0, 5);

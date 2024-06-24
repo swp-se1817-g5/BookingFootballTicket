@@ -15,12 +15,22 @@ public class SignInServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // This method is currently not used
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        // Check if the user is already logged in
+        if (currentUser != null) {
+            // Redirect to the home page or another appropriate page
+            response.sendRedirect("homePage");
+            return;
+        }
+
         String email = (String) session.getAttribute("emailSave");
         String password = (String) session.getAttribute("passSave");
         String redirectURL = request.getParameter("redirectURL");
@@ -50,6 +60,9 @@ public class SignInServlet extends HttpServlet {
         UserDAO userDAO = UserDAO.INSTANCE;
         HttpSession session = request.getSession();
 
+        // Set session timeout to 24 hours
+        session.setMaxInactiveInterval(88230);
+
         // Authenticate user by email and plaintext password
         User user = userDAO.authenticateUser(email, password);
 
@@ -68,11 +81,17 @@ public class SignInServlet extends HttpServlet {
             // Popup
             session.setAttribute("isFirstLogin", true);
 
-            // Redirect to the original URL
-            if (redirectURL != null && !redirectURL.isEmpty()) {
-                response.sendRedirect(redirectURL);
+            // Check roleID and redirect accordingly
+            int roleID = UserDAO.INSTANCE.getRoleID(user.getEmail());
+            if (roleID == 1 || roleID == 3) {
+                response.sendRedirect("manageUser");
             } else {
-                response.sendRedirect("homePage");
+                // Redirect to the original URL or home page
+                if (redirectURL != null && !redirectURL.isEmpty()) {
+                    response.sendRedirect(redirectURL);
+                } else {
+                    response.sendRedirect("homePage");
+                }
             }
         } else {
             // If not exists, throw message to view to display

@@ -51,8 +51,8 @@ public class GmailLoginServlet extends HttpServlet {
             session.setAttribute("currentUser", userExist);
         }
         
-        request.setAttribute("isFirstLogin", true);
-        request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
+        // Redirect to the home page
+        response.sendRedirect(request.getContextPath() + "/homePage");
     }
 
     private void returnValueBefore(HttpServletRequest request, HttpServletResponse response, String name,

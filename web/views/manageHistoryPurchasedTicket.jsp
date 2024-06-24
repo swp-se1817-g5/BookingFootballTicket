@@ -271,64 +271,6 @@ Author     : duong
             <!-- Sidebar End -->
 
             <div class="content">
-                <!-- Navbar Start -->
-                <!--                <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
-                                    <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                                        <h2 class="text-primary mb-0"><i class="fa fa-hashtag"></i></h2>
-                                    </a>
-                                    <a href="#" class="sidebar-toggler flex-shrink-0">
-                                        <i class="fa fa-bars"></i>
-                                    </a>
-                                    <form class="d-none d-md-flex ms-4">
-                                        <input class="form-control border-0" type="search" placeholder="Search">
-                                    </form>
-                                    <div class="navbar-nav align-items-center ms-auto">
-                                        <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                                <i class="fa fa-envelope me-lg-2"></i>
-                                                <span class="d-none d-lg-inline-flex">Message</span>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                                <a href="#" class="dropdown-item">
-                                                    <div class="d-flex align-items-center">
-                                                        <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                                        <div class="ms-2">
-                                                            <h6 class="fw-normal mb-0">Jhon send you a message</h6>
-                                                            <small>15 minutes ago</small>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                                <hr class="dropdown-divider">
-                                                <a href="#" class="dropdown-item text-center">See all message</a>
-                                            </div>
-                                        </div>
-                                        <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                                <i class="fa fa-bell me-lg-2"></i>
-                                                <span class="d-none d-lg-inline-flex">Notificatin</span>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                                <a href="#" class="dropdown-item">
-                                                    <h6 class="fw-normal mb-0">Profile updated</h6>
-                                                    <small>15 minutes ago</small>
-                                                </a>
-                                                <hr class="dropdown-divider">
-                                                <a href="#" class="dropdown-item text-center">See all notifications</a>
-                                            </div>
-                                        </div>
-                                        <div class="nav-item dropdown">
-                                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                                <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                                                <span class="d-none d-lg-inline-flex">John Doe</span>
-                                            </a>
-                                            <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                                                <a href="#" class="dropdown-item">My Profile</a>
-                                                <a href="#" class="dropdown-item">Settings</a>
-                                                <a href="#" class="dropdown-item">Log Out</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </nav>-->
                 <%@include file="dashboardHeader.jsp" %>
                 <!-- Navbar End -->
                 <div class="container-fluid">
@@ -341,7 +283,7 @@ Author     : duong
                                     <div class="col-sm-4 searchh">
                                         <div class="search-box" id="searchForm">
                                             <a><i class="material-icons">&#xE8B6;</i></a>
-                                            <input id="valueSearch" type="text" class="form-control" placeholder="Search...">
+                                            <input id="valueSearch" type="text" class="form-control" placeholder="Search&hellip;">
                                         </div>
                                     </div>
 
@@ -351,7 +293,7 @@ Author     : duong
                                                 if (event.keyCode === 13) { // 13 is the Enter key
                                                     event.preventDefault(); // Prevent the default form submission
                                                     var valueSearch = document.getElementById('valueSearch').value;
-                                                    location.href = "manageNews?go=search&valueSearch=" + encodeURIComponent(valueSearch);
+                                                    location.href = "manageHistoryPurchasedTicket?go=search&valueSearch=" + encodeURIComponent(valueSearch);
                                                 }
                                             });
                                         });
@@ -362,24 +304,48 @@ Author     : duong
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Match Seat</th>
-                                        <th>Season Seat</th>
-                                        <th>email</th>
-                                        <th>Price</th>
+                                        <th>Team 1</th>
+                                        <th>Team 2</th>
+                                        <th>
+                                            <select class="form-select border-0" id="statusSelect" onchange="filterTable()">
+                                                <option selected value="All">All Season</option>
+                                                <c:forEach items="${getListSeason}" var="season">
+                                                    <option value="">${season.seasonName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            <select class="form-select border-0" id="statusSelect" onchange="filterTable()">
+                                                <option selected value="All">All Seat Class</option>
+                                                <c:forEach items="${getListSeatClass}" var="seatClass">
+                                                    <option value="">${seatClass.seatClassName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
+                                        <th>Stand</th>
                                         <th>Quantity</th>
+                                        <th>Price</th>
                                         <th>Status</th>
-
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    <c:forEach items="${getListHistoryPurchasedTicketMatchSeat}" var="ticketMatchSeat" varStatus="status">
+                                        <tr>
+                                            <td>${status.count}</td>
+                                            <td>${ticketMatchSeat.team1}</td>
+                                            <td>${ticketMatchSeat.team2}</td>
+                                            <td>${ticketMatchSeat.seasonName}</td>
+                                            <td>${ticketMatchSeat.seatClassName}</td>
+                                            <td>${ticketMatchSeat.standName}</td>
+                                            <td>${ticketMatchSeat.quantity}</td>
+                                            <td>${ticketMatchSeat.price}</td>
+                                            <td>${ticketMatchSeat.statusId.statusName}</td>
+                                            <td><a href="#viewDetailsTicket${ticketMatchSeat.ticketId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a></td>
+                                        </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
-                            <script>
-                                function confirmDelete(newsId) {
-                                    return confirm("Are you sure you want to delete newsId = " + newsId);
-                                }
-                            </script>
                         </div>
                     </div> 
                 </div>      
@@ -388,8 +354,8 @@ Author     : duong
 
         <!--------------------------------------------------------------------------------------------------------------------------------------------->
 
-        <%--<c:forEach items="${sessionScope.getListNews}" var="n">--%>
-<!--            <div id="viewDetailsNews${n.newsId}" class="modal fade">
+        <c:forEach items="${getListHistoryPurchasedTicketMatchSeat}" var="ticketMatchSeat" varStatus="status">
+            <div id="viewDetailsTicket${ticketMatchSeat.ticketId}" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">			
@@ -398,48 +364,38 @@ Author     : duong
                         </div>
                         <div class="modal-body">					
                             <div class="form-group">
-                                <label>News ID</label>
-                                <input name="newsId" class="form-control" value="${n.newsId}" readonly>
+                                <label>Ticket Id</label>    
+                                <input name="newsId" class="form-control" value="${ticketMatchSeat.ticketId}" readonly>
                             </div>
                             <div class="form-group">
-                                <label>Title</label>
-                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.title}</p>
+                                <label>Start Time</label>
+                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.startTime}</p>
                             </div>
                             <div class="form-group">
-                                <label>Content</label>
-                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.content}</p>
+                                <label>Seat</label>
+                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.seatName}</p>
                             </div>
                             <div class="form-group">
-                                <label>Image</label><br>
-                                <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
+                                <label>Email</label>
+                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.email}</p>
                             </div>
                             <div class="form-group">
-                                <label>Conclusion</label>
-                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.conclusion}</p>
+                                <label>QR Code</label>
+                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.qrCode}</p>
                             </div>
                             <div class="form-group">
                                 <label>Create Date</label>
-                                <input type="datetime-local" name="createDate" class="form-control" value="${n.createdDate}" readonly>
+                                <input type="datetime-local" name="createDate" class="form-control" value="${ticketMatchSeat.createdDate}" readonly>
                             </div>
-
                             <div class="form-group">
                                 <label>Create By</label>
-                                <input name="createBy" class="form-control" value="${n.createBy}" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Last Update Date</label>
-                                <input type="datetime-local" name="lastUpdateDate" class="form-control" style="border: none" value="${n.lastUpdateDate}" readonly>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Update By</label>
-                                <input name="updateBy" class="form-control" value="${n.updateBy}" readonly>
+                                <input name="createBy" class="form-control" value="${ticketMatchSeat.createdBy}" readonly>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>-->
-        <%--</c:forEach>--%>
+            </div>
+        </c:forEach>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>

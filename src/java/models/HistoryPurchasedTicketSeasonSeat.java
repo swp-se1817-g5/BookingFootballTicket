@@ -114,7 +114,18 @@ public class HistoryPurchasedTicketSeasonSeat {
 
     @Override
     public String toString() {
-        return "HistoryPurchaseTicketSeasonSeat{" + "ticketId=" + ticketId + ", seasonSeatedId=" + seasonSeatedId + ", email=" + email + ", qrCode=" + qrCode + ", price=" + price + ", quantity=" + quantity + ", status=" + status + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", formatter=" + formatter + '}';
+        return "HistoryPurchaseTicketSeasonSeat{"
+                + "\n    ticketId=" + ticketId
+                + "\n    seasonSeatedId=" + seasonSeatedId
+                + "\n    email=" + email
+                + "\n    qrCode=" + qrCode
+                + "\n    price=" + price
+                + "\n    quantity=" + quantity
+                + "\n    status=" + status
+                + "\n    createdBy=" + createdBy
+                + "\n    createdDate=" + createdDate
+                + "\n    formatter=" + formatter
+                + "\n}";
     }
 
 }

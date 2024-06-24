@@ -72,15 +72,16 @@ public class UpdateStandServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        
+        HttpSession session = request.getSession();
         boolean updated = false;
         try {
-             int standId = Integer.parseInt(request.getParameter("standId"));
-      
+            int standId = Integer.parseInt(request.getParameter("standId"));
             String standName = request.getParameter("standName").trim();
+            User user = (User)session.getAttribute("currentUser");
             Stand stand = new Stand();
             stand.setStandId(standId);
             stand.setStandName(standName);
+            stand.setUpdatedBy(user.getEmail());
             updated = StandDAO.INSTANCE.updateStand(stand);
         } catch (Exception e) {
             e.printStackTrace();

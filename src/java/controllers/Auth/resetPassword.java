@@ -107,14 +107,7 @@ public class resetPassword extends HttpServlet {
     throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String confirmPassword = request.getParameter("confirm_password");
-        //validate password...
-        if(!password.equals(confirmPassword)) {
-            request.setAttribute("mess", "Confirm password must be same password !");
-            request.setAttribute("email", email);
-            request.getRequestDispatcher("views/changePassReset.jsp").forward(request, response);
-            return;
-        }
+
         HttpSession session = request.getSession();
         String tokenStr = (String) session.getAttribute("token");
         TokenForgetPassword tokenForgetPassword = DAOToken.getTokenPassword(tokenStr);
