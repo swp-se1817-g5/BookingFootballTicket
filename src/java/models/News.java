@@ -20,10 +20,11 @@ public class News {
     private String conclusion;
     private String createBy;
     private LocalDateTime createdDate;
+    private LocalDateTime postOn;
     private String updateBy;
     private LocalDateTime lastUpdateDate;
-    private int status;
-    private boolean state;
+    private NewsStatus statusId;
+    private NewsState stateId;
     private boolean isDeleted;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -31,16 +32,16 @@ public class News {
     public News() {
     }
 
-    public News(String title, String content, String image, String conclusion, String createBy, int status, boolean state) {
+    public News(String title, String content, String image, String conclusion, String createBy, NewsStatus statusId, NewsState stateId) {
         this.title = title;
         this.content = content;
         this.image = image;
         this.conclusion = conclusion;
         this.createBy = createBy;
-        this.status = status;
-        this.state = state;
+        this.statusId = statusId;
+        this.stateId = stateId;
     }
-
+    
     public String getCreatedDate() {
         return createdDate != null ? createdDate.format(formatter) : null;
     }
@@ -65,6 +66,14 @@ public class News {
         this.lastUpdateDate = lastUpdateDate;
     }
 
+    public String getPostOn() {
+        return postOn != null ? postOn.format(formatter) : null;
+    }
+
+    public void setPostOn(LocalDateTime postOn) {
+        this.postOn = postOn;
+    }
+
     public int getNewsId() {
         return newsId;
     }
@@ -85,6 +94,10 @@ public class News {
         return content;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public String getImage() {
         return image;
     }
@@ -101,10 +114,6 @@ public class News {
         this.conclusion = conclusion;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
     public String getCreateBy() {
         return createBy;
     }
@@ -113,20 +122,20 @@ public class News {
         this.createBy = createBy;
     }
 
-    public int getStatus() {
-        return status;
+    public NewsStatus getStatusId() {
+        return statusId;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setStatusId(NewsStatus statusId) {
+        this.statusId = statusId;
     }
 
-    public boolean isState() {
-        return state;
+    public NewsState getStateId() {
+        return stateId;
     }
 
-    public void setState(boolean state) {
-        this.state = state;
+    public void setStateId(NewsState stateId) {
+        this.stateId = stateId;
     }
 
     public boolean isIsDeleted() {
@@ -136,10 +145,24 @@ public class News {
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
-
     @Override
     public String toString() {
-        return "News{" + "newsId=" + newsId + ", title=" + title + ", content=" + content + ", image=" + image + ", conclusion=" + conclusion + ", createBy=" + createBy + ", createdDate=" + createdDate + ", updateBy=" + updateBy + ", lastUpdateDate=" + lastUpdateDate + ", status=" + status + ", state=" + state + ", isDeleted=" + isDeleted + ", formatter=" + formatter + '}';
+        return "News{" + "\n"
+                + "newsId=" + newsId + ",\n"
+                + "title=" + title + ",\n"
+                + "content=" + content + ",\n"
+                + "image=" + image + ",\n"
+                + "conclusion=" + conclusion + ",\n"
+                + "createBy=" + createBy + ",\n"
+                + "createdDate=" + createdDate + ",\n"
+                + "postOn=" + postOn + ",\n"
+                + "updateBy=" + updateBy + ",\n"
+                + "lastUpdateDate=" + lastUpdateDate + ",\n"
+                + "statusId=" + statusId + ",\n"
+                + "stateId=" + stateId + ",\n"
+                + "isDeleted=" + isDeleted + ",\n"
+                + "formatter=" + formatter + '\n'
+                + '}';
     }
 
 }

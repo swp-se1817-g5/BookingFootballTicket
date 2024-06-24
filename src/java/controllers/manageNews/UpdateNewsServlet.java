@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import models.News;
+import models.NewsState;
+import models.NewsStatus;
 import models.User;
 
 /**
@@ -79,16 +81,14 @@ public class UpdateNewsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        String statusId_raw = request.getParameter("statusId");
+        String stateId_raw = request.getParameter("stateId");
         try {
             int newsId = Integer.parseInt(request.getParameter("newsId"));
             String title = request.getParameter("title");
             String content = request.getParameter("content");
-            int stateRaw = Integer.parseInt(request.getParameter("state"));
-            boolean state = false;
-            int status = Integer.parseInt(request.getParameter("status"));
-            if (stateRaw == 1) {
-                state = true;
-            }
+            int statusId = Integer.parseInt(statusId_raw);
+            int stateId = Integer.parseInt(stateId_raw);
             Part part = request.getPart("image");
             String currentImage = request.getParameter("currentImage");
             String imagePath = null;
@@ -100,7 +100,6 @@ public class UpdateNewsServlet extends HttpServlet {
                 if (!dir.exists()) {
                     dir.mkdirs();
                 }
-
                 File image = new File(dir, part.getSubmittedFileName());
                 part.write(image.getAbsolutePath());
                 imagePath = request.getContextPath() + "/images/news/" + image.getName();
@@ -109,8 +108,12 @@ public class UpdateNewsServlet extends HttpServlet {
             news.setTitle(title);
             news.setContent(content);
             news.setImage(imagePath);
-            news.setStatus(status);
-            news.setState(state);
+            NewsStatus newsStatus = new NewsStatus();
+            newsStatus.setStatusId(statusId);
+            news.setStatusId(newsStatus);
+            NewsState newsState = new NewsState();
+            newsState.setStateId(stateId);
+            news.setStateId(newsState);
             news.setNewsId(newsId);
 //            User createdBy_raw = (User) session.getAttribute("currentUser");
 //            news.setUpdateBy(createdBy_raw.getEmail());

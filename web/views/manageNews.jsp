@@ -343,32 +343,6 @@ Author     : duong
                                             <input id="valueSearch" type="text" class="form-control" placeholder="Search...">
                                         </div>
                                     </div>
-                                    <script>
-                                        $(document).ready(function () {
-                                            $('#valueSearch').keypress(function (event) {
-                                                if (event.keyCode === 13) { // 13 is the Enter key
-                                                    event.preventDefault(); // Prevent the default form submission
-                                                    var valueSearch = document.getElementById('valueSearch').value;
-                                                    $.ajax({
-                                                        url: "manageNews",
-                                                        type: "GET",
-                                                        data: {
-                                                            go: "search",
-                                                            valueSearch: valueSearch
-                                                        },
-                                                        success: function (data) {
-                                                            // Cập nhật bảng tin tức bằng kết quả tìm kiếm
-                                                            $('#newsTableBody').html($(data).find('#newsTableBody').html());
-                                                        },
-                                                        error: function () {
-                                                            alert("Error occurred while searching for news.");
-                                                        }
-                                                    });
-                                                }
-                                            });
-                                        });
-                                    </script>
-
                                     <div class="col-sm-4 createe">
                                         <a href="#createNewsModal" class="btn btn-success d-flex align-items-center" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create News</span></a>
                                     </div>
@@ -381,20 +355,22 @@ Author     : duong
                                         <th>Title</th>
                                         <th>Content</th>
                                         <th>
-                                            <select class="form-select border-0">
-                                                <option>Status</option>
-                                                <option>Pending</option>
-                                                <option>Approved</option>
+                                            <select class="form-select border-0" id="statusSelect" onchange="filterTable()">
+                                                <option selected value="All">All Status</option>
+                                                <c:forEach items="${sessionScope.getListStatus}" var="listStatus">
+                                                    <option>${listStatus.statusName}</option>
+                                                </c:forEach>
                                             </select>
                                         </th>
-                                        <th>  <select class="form-select border-0">
-                                                <option>State</option>
-                                                <option>Show</option>
-                                                <option>Hide</option>
+                                        <th>  
+                                            <select class="form-select border-0" id="stateSelect" onchange="filterTable()">
+                                                <option selected value="All">All State</option>
+                                                <c:forEach items="${sessionScope.getListState}" var="listState">
+                                                    <option>${listState.stateName}</option>
+                                                </c:forEach>
                                             </select>
                                         </th>
                                         <th>Action</th>
-
                                     </tr>
                                 </thead>
                                 <tbody id="newsTableBody">
@@ -421,25 +397,10 @@ Author     : duong
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
-                                            <c:if test=""></c:if>
-                                            <c:choose>
-                                                <c:when test="${n.status == 0}">
-                                                    <td>Rejected</td>
-                                                </c:when>
-                                                <c:when test="${n.status == 1}">
-                                                    <td>Pending</td>
-                                                </c:when>
-                                                <c:when test="${n.status == 2}">
-                                                    <td>Approved</td>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <td>Unknown</td>
-                                                </c:otherwise>
-                                            </c:choose>
-                                            <c:if test="${n.state=='false'}"><td>Hide</td></c:if>
-                                            <c:if test="${n.state=='true'}"><td>Show</td></c:if>
-                                                <td>
-                                                    <a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
+                                            <td>${n.statusId.statusName}</td>
+                                            <td>${n.stateId.stateName}</td>
+                                            <td>
+                                                <!--<a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>-->
                                                 <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
                                                 <a onclick="return confirmDelete(${n.newsId})" href = "deleteNews?newsId=${n.newsId}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                             </td>
@@ -486,8 +447,8 @@ Author     : duong
                             </div>
                             <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
                                 <label>State</label>
-                                <input name="state" type="radio" required checked value="1">Show
-                                <input name="state" type="radio" required value="0">Hide
+                                <input name="stateId" type="radio" required checked value="2">Show
+                                <input name="stateId" type="radio" required value="1">Hide
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -500,8 +461,8 @@ Author     : duong
         </div>
         <!--------------------------------------------------------------------------------------------------------------------------------------------->
 
-        <c:forEach items="${sessionScope.getListNews}" var="n">
-            <div id="viewDetailsNews${n.newsId}" class="modal fade">
+        <%--<c:forEach items="${sessionScope.getListNews}" var="n">--%>
+<!--            <div id="viewDetailsNews${n.newsId}" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">			
@@ -509,10 +470,10 @@ Author     : duong
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">	
-                            <!--                            <div class="form-group">
+                                                        <div class="form-group">
                                                             <label>News ID</label>
                                                             <input name="newsId" class="form-control" value="${n.newsId}" readonly>
-                                                        </div>-->
+                                                        </div>
                             <div class="form-group">
                                 <label>Title</label>
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.title}</p>
@@ -550,8 +511,8 @@ Author     : duong
                         </div>
                     </div>
                 </div>
-            </div>
-        </c:forEach>
+            </div>-->
+        <%--</c:forEach>--%>
         <!--------------------------------------------------------------------------------------------------------------------------------------------->
         <c:forEach items="${sessionScope.getListNews}" var="n">
             <div id="updateNews${n.newsId}" class="modal fade">
@@ -582,13 +543,19 @@ Author     : duong
                                 </div>
                                 <div class="form-group">
                                     <label>State</label>
-                                    <input name="state" type="radio" required value="1" ${n.state == 'true' ? 'checked' :''}>Show
-                                    <input name="state" type="radio" required value="0" ${n.state == 'false' ? 'checked' :''}>Hide
+                                    <select name="stateId">
+                                        <c:forEach items="${sessionScope.getListState}" var="listState">
+                                            <option value="${listState.stateId}" ${ listState.stateName eq n.stateId.stateName ? "selected" : ""}>${listState.stateName}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Status</label>
-                                    <input name="status" type="radio"  value="0" ${n.status == 0 ? 'checked' :''}>Reject
-                                    <input name="status" type="radio"  value="2" ${n.status == 2 ? 'checked' :''}>Approve
+                                    <select name="statusId">
+                                        <c:forEach items="${sessionScope.getListStatus}" var="listStatus">
+                                            <option value="${listStatus.statusId}" ${listStatus.statusName eq n.statusId.statusName ? "selected" : ""}>${listStatus.statusName}</option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -613,43 +580,103 @@ Author     : duong
         </div>
         <script>
             $(document).ready(function () {
-                var actions = {
-                    updated: '<%= request.getAttribute("updated") %>',
-                    created: '<%= request.getAttribute("created") %>',
-                    deleted: '<%= request.getAttribute("deleted") %>'
-                };
+                var statusValue = 'All'; // Giá trị mặc định cho dropdown status
+                var stateValue = 'All';  // Giá trị mặc định cho dropdown state
 
-                for (var action in actions) {
-                    var status = actions[action];
-                    if (status !== 'null' && status !== '') {
-                        var toast = $('#updateToast');
-                        var title, message, classToAdd, classToRemove;
+                // Sự kiện input cho ô tìm kiếm
+                $('#valueSearch').on('input', function () {
+                    var valueSearch = $(this).val();
+                    // Gọi hàm thực hiện AJAX để tìm kiếm và cập nhật bảng tin tức
+                    updateNewsTable(valueSearch, statusValue, stateValue);
+                });
 
-                        switch (action) {
-                            case 'updated':
-                                title = status !== "0" ? 'Success' : 'Error';
-                                message = status !== "0" ? 'News updated successfully.' : 'Failed to update news.';
-                                classToAdd = status !== "0" ? 'success' : 'error';
-                                classToRemove = status !== "0" ? 'error' : 'success';
-                                break;
-                            case 'created':
-                                title = status !== "0" ? 'Success' : 'Error';
-                                message = status !== "0" ? 'News created successfully.' : 'Failed to create news.';
-                                classToAdd = status !== "0" ? 'success' : 'error';
-                                classToRemove = status !== "0" ? 'error' : 'success';
-                                break;
-                            case 'deleted':
-                                title = status !== "0" ? 'Success' : 'Error';
-                                message = status !== "0" ? 'News deleted successfully.' : 'Failed to delete news.';
-                                classToAdd = status !== "0" ? 'success' : 'error';
-                                classToRemove = status !== "0" ? 'error' : 'success';
-                                break;
+                // Sự kiện change cho dropdown filter
+                $('#statusSelect, #stateSelect').change(function () {
+                    statusValue = $('#statusSelect').val();
+                    stateValue = $('#stateSelect').val();
+                    // Gọi hàm filter table để lọc và hiển thị dòng phù hợp trong bảng
+                    filterTable();
+                });
+
+                // Hàm filter table
+                function filterTable() {
+                    $('#newsTableBody tr').each(function () {
+                        var statusText = $(this).find('td:eq(3)').text().trim(); // Lấy text của cột Status (index 3)
+                        var stateText = $(this).find('td:eq(4)').text().trim();  // Lấy text của cột State (index 4)
+
+                        var showRow = (statusValue === "All" || statusText === statusValue) &&
+                                (stateValue === "All" || stateText === stateValue);
+
+                        $(this).toggle(showRow);
+                    });
+                }
+
+                // Hàm AJAX để tìm kiếm và cập nhật bảng tin tức
+                function updateNewsTable(valueSearch, statusValue, stateValue) {
+                    $.ajax({
+                        url: "manageNews",
+                        type: "GET",
+                        data: {
+                            go: "search",
+                            valueSearch: valueSearch,
+                            status: statusValue,
+                            state: stateValue
+                        },
+                        success: function (data) {
+                            // Cập nhật bảng tin tức bằng kết quả từ AJAX
+                            $('#newsTableBody').html($(data).find('#newsTableBody').html());
+                            // Sau khi cập nhật bảng, cần cập nhật lại giá trị của dropdown
+                            $('#statusSelect').val(statusValue);
+                            $('#stateSelect').val(stateValue);
+                            // Hiển thị toast thông báo nếu có
+                            showUpdateToast();
+                        },
+                        error: function () {
+                            alert("Error occurred while searching for news.");
                         }
+                    });
+                }
 
-                        toast.find('#toastTitle').text(title);
-                        toast.find('#toastMessage').text(message);
-                        toast.addClass(classToAdd).removeClass(classToRemove);
-                        toast.toast('show');
+                // Hàm hiển thị toast thông báo
+                function showUpdateToast() {
+                    var actions = {
+                        updated: '<%= request.getAttribute("updated")%>',
+                        created: '<%= request.getAttribute("created")%>',
+                        deleted: '<%= request.getAttribute("deleted")%>'
+                    };
+
+                    for (var action in actions) {
+                        var status = actions[action];
+                        if (status !== 'null' && status !== '') {
+                            var toast = $('#updateToast');
+                            var title, message, classToAdd, classToRemove;
+
+                            switch (action) {
+                                case 'updated':
+                                    title = status !== "0" ? 'Success' : 'Error';
+                                    message = status !== "0" ? 'News updated successfully.' : 'Failed to update news.';
+                                    classToAdd = status !== "0" ? 'success' : 'error';
+                                    classToRemove = status !== "0" ? 'error' : 'success';
+                                    break;
+                                case 'created':
+                                    title = status !== "0" ? 'Success' : 'Error';
+                                    message = status !== "0" ? 'News created successfully.' : 'Failed to create news.';
+                                    classToAdd = status !== "0" ? 'success' : 'error';
+                                    classToRemove = status !== "0" ? 'error' : 'success';
+                                    break;
+                                case 'deleted':
+                                    title = status !== "0" ? 'Success' : 'Error';
+                                    message = status !== "0" ? 'News deleted successfully.' : 'Failed to delete news.';
+                                    classToAdd = status !== "0" ? 'success' : 'error';
+                                    classToRemove = status !== "0" ? 'error' : 'success';
+                                    break;
+                            }
+
+                            toast.find('#toastTitle').text(title);
+                            toast.find('#toastMessage').text(message);
+                            toast.addClass(classToAdd).removeClass(classToRemove);
+                            toast.toast('show');
+                        }
                     }
                 }
             });

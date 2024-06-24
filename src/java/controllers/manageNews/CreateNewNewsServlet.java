@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.io.File;
 import models.News;
+import models.NewsState;
+import models.NewsStatus;
 import models.User;
 
 /**
@@ -81,6 +83,7 @@ public class CreateNewNewsServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
+        String stateId_raw = request.getParameter("stateId");
         try {
 //            User createdByRaw = (User) session.getAttribute("currentUser");
             User createdByRaw = new User();
@@ -88,12 +91,10 @@ public class CreateNewNewsServlet extends HttpServlet {
             String title = request.getParameter("title");
             String content = request.getParameter("content");
             String conclusion = request.getParameter("conclusion");
-            int status = 1;
-            int stateRaw = Integer.parseInt(request.getParameter("state"));
-            boolean state = false;
-            if (stateRaw == 1) {
-                state = true;
-            }
+            NewsStatus newsStatus = new NewsStatus();
+            newsStatus.setStatusId(2);
+            NewsState newsState = new NewsState();
+            newsState.setStateId(Integer.parseInt(stateId_raw));
             Part part = request.getPart("image");
             String imagePath = null;
             if ((part == null) || (part.getSubmittedFileName().trim().isEmpty()) || (part.getSubmittedFileName() == null)) {
@@ -108,7 +109,7 @@ public class CreateNewNewsServlet extends HttpServlet {
                 File image = new File(dir, part.getSubmittedFileName());
                 part.write(image.getAbsolutePath());
                 imagePath = request.getContextPath() + "/images/news/" + image.getName();
-                News news = new News(title, content, imagePath, conclusion, createdByRaw.getEmail(), status, state);
+                News news = new News(title, content, imagePath, conclusion, createdByRaw.getEmail(), newsStatus, newsState);
                 session.setAttribute("created", NewsDAO.getInstance().createNews(news));
             }
         } catch (IllegalArgumentException e) {
