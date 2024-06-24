@@ -115,7 +115,6 @@
                                 </div>
                             </div>
                             <div class="col-lg-12 m-b30">
-<!--                                <div class="g-recaptcha" data-sitekey="6LclxPQpAAAAALAIzyzMH1wx8hB8Rf6pusVeI7lg"></div>
                                 <div style="color: red" id="error"></div>-->
                                 <button name="submit" type="submit" value="Submit" class="btn button-md">Register</button>
                             </div>

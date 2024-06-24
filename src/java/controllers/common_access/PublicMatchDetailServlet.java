@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.publicMatchDetail;
+package controllers.common_access;
 
 import dal.FootballClubDAO;
 import dal.MatchDAO;
