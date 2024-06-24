@@ -133,18 +133,25 @@ VALUES
     (3, 2, 200.00, 20),
     (4, 2, 250.00, 10);
 GO
-
--- Insert values into HistoryPurchasedTicketMatchSeat table
-INSERT INTO HistoryPurchasedTicketMatchSeat (matchSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
-(1, 'user1@example.com', 'QRCode1', 50.00, 1, 1, 'admin@example.com'),
-(2, 'user2@example.com', 'QRCode2', 40.00, 2, 1, 'admin@example.com');
+-- Insert vào b?ng TicketStatus
+INSERT INTO TicketStatus (statusName) 
+VALUES 
+('Still validated'),
+('Expire');
 GO
+-- Insert values into HistoryPurchasedTicketMatchSeat table
+INSERT INTO HistoryPurchasedTicketMatchSeat (team1, team2, startTime, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy)
+VALUES 
+('Team A', 'Team B', '2024-07-01 18:00:00', 'Season 2024', 'Seat 1A', 2, 'Stand A', 'Class A', 'user1@example.com', 'QR12345', 100.00, 1, 'admin'),
+('Team C', 'Team D', '2024-08-01 19:00:00', 'Season 2024', 'Seat 2B', 1, 'Stand B', 'Class B', 'user2@example.com', 'QR67890', 30.00, 2, 'admin');
+
 
 -- Insert values into HistoryPurchasedTicketSeasonSeat table
-INSERT INTO HistoryPurchasedTicketSeasonSeat (seasonSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
+/*INSERT INTO HistoryPurchasedTicketSeasonSeat (seasonSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
 (1, 'user1@example.com', 'QRCode1', 50.00, 1, 1, 'admin@example.com'),
 (2, 'user2@example.com', 'QRCode2', 40.00, 2, 1, 'admin@example.com');
 GO
+*/
 -- Insert values into News table
 
 INSERT INTO NewsStatus(statusName) VALUES

@@ -50,6 +50,10 @@ public class ManageHistoryPurchasedTicketServlet extends HttpServlet {
         }
     }
 
+    public boolean isNullOrBlank(String str) {
+        return str == null || str.trim().isEmpty();
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -62,7 +66,24 @@ public class ManageHistoryPurchasedTicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("getListHistoryPurchasedTicket", HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat());
+        ArrayList<HistoryPurchasedTicketMatchSeat> getListHistoryPurchasedTicketMatchSeat;
+        String go = request.getParameter("go");
+        if (!isNullOrBlank(go)) {
+            if (go.equals("search")) {
+                String valueSearch = request.getParameter("valueSearch").trim();
+                getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().Search(valueSearch);
+                if (!getListHistoryPurchasedTicketMatchSeat.isEmpty()) {
+                    request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
+                }
+            }
+        } else {
+            getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
+            request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
+            request.setAttribute("getListSeason", SeasonDAO.getINSTANCE().getAllseason());
+            request.setAttribute("getListSeatClass", SeatClassDAO);
+            
+        }
+
         request.getRequestDispatcher("views/manageHistoryPurchasedTicket.jsp").forward(request, response);
     }
 
@@ -89,4 +110,8 @@ public class ManageHistoryPurchasedTicketServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public static void main(String[] args) {
+        System.out.println(HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat());
+    }
 }
