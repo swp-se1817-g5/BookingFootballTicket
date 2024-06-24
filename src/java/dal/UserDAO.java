@@ -188,21 +188,22 @@ public class UserDAO {
         return updated;
     }
 
-    public boolean deleteUser(String email) {
-        boolean deleted = false;
-        String sql = "UPDATE [User] SET status = 1 WHERE email = ?";
+    public boolean InActiveUser(String email) {
+        boolean changed = false;
+        String sql = "UPDATE [User] SET status = 0 WHERE email = ?";
         try {
             checkConnection();
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, email);
             if (ps.executeUpdate() > 0) {
-                deleted = true;
+                changed = true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return deleted;
+        return changed;
     }
+    
 
     public void changePass(String email, String hashedPassword) throws SQLException {
         String sql = "UPDATE [User] SET hashedPassword = ? WHERE email = ?";
@@ -543,6 +544,21 @@ public class UserDAO {
             e.printStackTrace();
         }
         return users;
+    }
+    public boolean ActiveUser(String email) {
+        boolean changed = false;
+        String sql = "UPDATE [User] SET status = 1 WHERE email = ?";
+        try {
+            checkConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            if (ps.executeUpdate() > 0) {
+                changed = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return changed;
     }
 //    public ArrayList<User> getUserbyStatus(boolean status) {
 //        ArrayList<User> users = new ArrayList<>();

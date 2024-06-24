@@ -303,9 +303,17 @@
                                                         <a href="#userDetailModal" class="view" title="View" onclick="update('${o.email}', '${o.name}', '${o.phoneNumber}', '${o.avatar}', '${o.roleId}', '${o.status}', '${o.createdBy}', '${o.createdDate}', '${o.updatedBy}', '${o.lastUpdatedDate}')" data-toggle="modal">
                                                             <i class="fa fa-eye" style="color: gray;"></i>
                                                         </a>
-                                                        <a href="deleteUser?email=${o.email}" class="delete" title="Delete" data-toggle="tooltip">
+                                                        <c:if test="${o.status == true}">
+                                                            <a href="changestatusUser?email=${o.email}" class="inactive" title="InActive" data-toggle="tooltip">
                                                             <i class="fa fa-times-circle"></i>
                                                         </a>
+                                                        </c:if>
+                                                        <c:if test="${o.status == false}">
+                                                            <a href="changestatusUser?email=${o.email}" class="active" title="Active" data-toggle="tooltip">
+                                                                <i class="fa fa-check-circle-o" style="color: green;"></i>
+                                                        </a>
+                                                        </c:if>
+                                                        
                                                     </td>
                                                 </tr>
                                             </c:if>
@@ -346,33 +354,33 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="detailEmail">Email</label>
-                                            <input type="text" class="form-control" id="detailEmail" name="email" required>
+                                            <input type="text" class="form-control" id="detailEmail" name="detailEmail" required>
                                             <div id="emailDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailName">Name</label>
-                                            <input type="text" class="form-control" id="detailName" name="name1" required>
+                                            <input type="text" class="form-control" id="detailName" name="detailName" required>
                                             <div id="nameDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailPhoneNumber">Phone Number</label>
-                                            <input type="text" class="form-control" id="detailPhoneNumber" name="phoneNumber1" required>
+                                            <input type="text" class="form-control" id="detailPhoneNumber" name="detailPhoneNumber" required>
                                             <div id="phoneNumberDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailRole">Role</label>
-                                            <input type="text" class="form-control" id="detailRole" name="role" readonly>
+                                            <input type="text" class="form-control" id="detailRole" name="detailRole" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailStatus">Status</label>
-                                            <input type="text" class="form-control" id="detailStatus" name="status" readonly>
+                                            <input type="text" class="form-control" id="detailStatus" name="detailStatus" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailAvatar">Avatar</label>
                                             <div height="80px">
                                                 <img class="img-responsive avatarPreview" src="" style="width: auto; height: 80px" alt="Avatar"/>
                                             </div>
-                                            <input type="file" class="form-control" id="detailAvatar" name="avatar" accept="image/*" onchange="previewAvatar(event)">
+                                            <input type="file" class="form-control" id="detailAvatar" name="detailAvatar" accept="image/*" onchange="previewAvatar(event)">
                                         </div>
                                         <div class="row">
                                             <div class="form-group col-sm-6">
@@ -517,7 +525,11 @@
         </div>
         <div class="toast-body" id="toastMessage"></div>
     </div>
-
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
     <!-- script for toast notification -->
     <script>
         function filterByStatus() {
@@ -527,8 +539,8 @@
             table = document.getElementById("userTable");
             tr = table.getElementsByTagName("tr");
 
-            for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
-                tr[i].style.display = "none"; // Mặc định ẩn hàng
+            for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+                tr[i].style.display = "none"; // Hide the row by default
 
                 td = tr[i].getElementsByTagName("td");
                 if (td.length > 0) {
@@ -542,70 +554,40 @@
                 }
             }
         }
-        //update
+
+        // Show toast notification based on action status
         $(document).ready(function () {
+            function showToast(action, message) {
+                var toast = $('#toastNotification');
+                toast.find('#toastTitle').text(action === "true" ? 'Success' : 'Error');
+                toast.find('#toastMessage').text(message);
+                toast.toggleClass('success', action === "true").toggleClass('error', action !== "true");
+                toast.toast('show');
+            }
+
             var updated = '<%= request.getAttribute("updated")%>';
             if (updated !== 'null' && updated !== '') {
-                var toast = $('#toastNotification');
-                if (updated === "true") {
-                    toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('User updated successfully.');
-                    toast.addClass('success').removeClass('error');
-                } else if (updated === "false") {
-                    toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to update user.');
-                    toast.addClass('error').removeClass('success');
-                }
-                toast.toast('show');
+                showToast(updated, updated === "true" ? 'User updated successfully.' : 'Failed to update user.');
             }
-        });
 
-        //create
-        $(document).ready(function () {
             var created = '<%= request.getAttribute("created")%>';
             if (created !== 'null' && created !== '') {
-                var toast = $('#toastNotification');
-                if (created === "true") {
-                    toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('User created successfully.');
-                    toast.addClass('success').removeClass('error');
-                } else if (created === "false") {
-                    toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to create User.');
-                    toast.addClass('error').removeClass('success');
-                }
-                toast.toast('show');
+                showToast(created, created === "true" ? 'User created successfully.' : 'Failed to create user.');
             }
-        });
 
-        //delete
-        $(document).ready(function () {
             var deleted = '<%= request.getAttribute("deleted")%>';
             if (deleted !== 'null' && deleted !== '') {
-                var toast = $('#toastNotification');
-                if (deleted === "true") {
-                    toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('User deleted successfully.');
-                    toast.addClass('success').removeClass('error');
-                } else if (deleted === "false") {
-                    toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to delete user.');
-                    toast.addClass('error').removeClass('success');
-                }
-                toast.toast('show');
+                showToast(deleted, deleted === "true" ? 'User deleted successfully.' : 'Failed to delete user.');
             }
         });
 
-    </script>
-    <script>
         function update(email, name, phoneNumber, img, roleid, status, createdBy, createdDate, updatedBy, lastUpdatedDate) {
             document.getElementById('detailEmail').value = email;
             document.getElementById('detailName').value = name;
             document.getElementById('detailPhoneNumber').value = phoneNumber;
-            document.getElementById('detailRole').value = roleid; // Assuming roleid is meant to be displayed here
-            document.getElementById('detailStatus').value = status; // Assuming status is meant to be displayed here
+            document.getElementById('detailRole').value = roleid;
+            document.getElementById('detailStatus').value = status;
 
-            // Set image source for avatar preview
             var avatarImg = document.querySelector('.avatarPreview');
             avatarImg.src = img;
 
@@ -614,17 +596,14 @@
             document.getElementById('updatedBy').value = updatedBy;
             document.getElementById('lastUpdatedDate').value = lastUpdatedDate;
 
-            // Clear any previous error messages
             $('#emailDetailError').text('');
             $('#nameDetailError').text('');
             $('#phoneNumberDetailError').text('');
         }
-    </script>
-    <!--script for create and update-->
-    <script>
+
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
-            // Convert the users list from JSP to a JavaScript array
+
             var users = [];
         <c:forEach items="${users}" var="user">
             users.push({email: "${user.email}", name: "${user.name}"});
@@ -644,7 +623,7 @@
 
             // Check for duplicate email before submitting the update form
             $('#updateUserForm').submit(function (event) {
-                var email = $('#emailInput').val().trim();
+                var email = $('#detailEmail').val().trim();
                 var duplicate = users.some(user => user.email === email);
                 if (duplicate) {
                     $('#emailDetailError').text('Email already exists. Please choose a different email.');
@@ -654,24 +633,45 @@
                 }
             });
 
-            function deleteUser(email) {
-                if (confirm("Do you want to delete user with email = " + email))
-                    location.href = 'deleteUser?email=' + email;
-            }
+            $('input[name="avatar"]').change(function () {
+                previewImage(this);
+            });
 
-            function updateUser(email, name) {
-                document.getElementById('email').value = email;
-                document.getElementById('name').value = name;
-                $('#emailDetailError').text('');
-            }
+            $('#roleFilterHeader').change(function () {
+                var roleId = $(this).val();
+                $.ajax({
+                    type: 'POST',
+                    url: 'manageUser',
+                    data: {roleId: roleId},
+                    success: function (data) {
+                        $('#userTable tbody').html(data.html);
+                        $('.pagination').html(data.pagination);
+                        $('.hint-text strong').text(data.usersCount);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+
+            $('#searchForm').on('submit', function (event) {
+                $.ajax({
+                    type: 'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function (data) {
+                        $('#searchUserModal').modal('hide');
+                        $('#userTable tbody').html(data.html);
+                        $('.pagination').html(data.pagination);
+                        $('.hint-text strong').text(data.usersCount);
+                    },
+                    error: function (xhr, status, error) {
+                        $('#error-message').text("Error: " + xhr.responseText);
+                    }
+                });
+            });
         });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    </script>
-    <script>
+
         // Function to preview image from URL
         function previewImage(input) {
             if (input.files && input.files[0]) {
@@ -679,18 +679,10 @@
                 reader.onload = function (e) {
                     $('#avatarPreview').attr('src', e.target.result);
                 };
-                reader.readAsDataURL(input.files[0]); // Convert image to base64 string
+                reader.readAsDataURL(input.files[0]);
             }
         }
 
-        // Event listener for file input change
-        $(document).ready(function () {
-            $('input[name="avatar"]').change(function () {
-                previewImage(this);
-            });
-        });
-    </script>
-    <script>
         function previewAvatar(event) {
             const reader = new FileReader();
             reader.onload = function () {
@@ -699,9 +691,8 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         }
-    </script>
-    <%--Validate Create--%>
-    <script>
+
+        // Validate Create Form
         function validateEmail() {
             var email = $('[name="email"]').val().trim();
             var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
@@ -790,51 +781,75 @@
         $('[name="password"]').on('input', function () {
             validatePassword();
         });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('#roleFilterHeader').change(function () {
-                var roleId = $(this).val();
-                $.ajax({
-                    type: 'POST',
-                    url: 'manageUser',
-                    data: {roleId: roleId},
-                    success: function (data) {
-                        $('#userTable tbody').html(data.html);
-                        $('.pagination').html(data.pagination);
-                        $('.hint-text strong').text(data.usersCount);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('#searchForm').on('submit', function (event) {
-                event.preventDefault(); // Prevent the form from submitting via the browser
 
-                $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    success: function (data) {
-                        $('#searchUserModal').modal('hide'); // Hide the modal on success
-                        $('#userTable tbody').html(data.html);
-                        $('.pagination').html(data.pagination);
-                        $('.hint-text strong').text(data.usersCount);
-                    },
-                    error: function (xhr, status, error) {
-                        $('#error-message').text("Error: " + xhr.responseText);
-                    }
-                });
-            });
+        // Validate Update Form Fields on Input
+        $('#updateUserForm input[name="detailEmail"]').on('input', function () {
+            validateUpdateEmail();
+        });
+        $('#updateUserForm input[name="detailName"]').on('input', function () {
+            validateUpdateName();
+        });
+        $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
+            validateUpdatePhoneNumber();
+        });
+
+        function validateUpdateEmail() {
+            var email = $('#updateUserForm input[name="detailEmail"]').val().trim();
+            var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+            if (email === '') {
+                $('#emailDetailError').text('Email is required.');
+                return false;
+            } else if (!emailPattern.test(email)) {
+                $('#emailDetailError').text('Invalid email format.');
+                return false;
+            } else {
+                $('#emailDetailError').text('');
+                return true;
+            }
+        }
+
+        function validateUpdateName() {
+            var name = $('#updateUserForm input[name="detailName"]').val().trim();
+            if (name === '') {
+                $('#nameDetailError').text('Name is required.');
+                return false;
+            } else {
+                $('#nameDetailError').text('');
+                return true;
+            }
+        }
+
+        function validateUpdatePhoneNumber() {
+            var phoneNumber = $('#updateUserForm input[name="detailPhoneNumber"]').val().trim();
+            var phonePattern = /^[0-9]{10}$/;
+            if (phoneNumber === '') {
+                $('#phoneNumberDetailError').text('Phone number is required.');
+                return false;
+            } else if (!phonePattern.test(phoneNumber)) {
+                $('#phoneNumberDetailError').text('Invalid phone number format.');
+                return false;
+            } else {
+                $('#phoneNumberDetailError').text('');
+                return true;
+            }
+        }
+
+        function validateUpdateForm() {
+            var emailValid = validateUpdateEmail();
+            var nameValid = validateUpdateName();
+            var phoneNumberValid = validateUpdatePhoneNumber();
+            return emailValid && nameValid && phoneNumberValid;
+        }
+
+        $('#updateUserForm').submit(function (event) {
+            if (!validateUpdateForm()) {
+                event.preventDefault();
+            }
         });
     </script>
+
     <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/chart/chart.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
@@ -843,7 +858,5 @@
     <script src="lib/tempusdominus/js/moment.min.js"></script>
     <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </html>

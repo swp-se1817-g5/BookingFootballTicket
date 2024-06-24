@@ -162,6 +162,20 @@ public class SeasonDAO {
         }
         return 0;
     }
+    public boolean deleteSeason(int seasonId) {
+        boolean deleted = false;
+        String sql = "UPDATE [Season] SET isDeleted = 1 WHERE seasonId = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, seasonId);
+            if (ps.executeUpdate() > 0) {
+                deleted = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return deleted;
+    }
 
     public static void main(String[] args) {
         ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons(0, 5);
