@@ -153,7 +153,7 @@ public class RegisterServlet extends HttpServlet {
     }
 
     private void returnValueBefore(HttpServletRequest request, HttpServletResponse response, String name, String email, String phoneNumber) {
-        request.setAttribute("phoneNumber", phoneNumber);
+        request.setAttribute("phone", phoneNumber);
         request.setAttribute("name", name);
         request.setAttribute("email", email);
     }

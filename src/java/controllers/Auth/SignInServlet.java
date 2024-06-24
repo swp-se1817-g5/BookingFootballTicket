@@ -63,41 +63,56 @@ public class SignInServlet extends HttpServlet {
         // Set session timeout to 24 hours
         session.setMaxInactiveInterval(88230);
 
-        // Authenticate user by email and plaintext password
-        User user = userDAO.authenticateUser(email, password);
+        boolean emailExists = userDAO.checkEmailExist(email);
 
-        // If user exists, set in session, maybe set email and password or user
-        if (user != null) {
-            session.setAttribute("currentUser", user);
-
-            if (remember != null && remember.equals("on")) {
-                session.setAttribute("emailSave", email);
-                session.setAttribute("passSave", password);
-            } else {
-                session.removeAttribute("emailSave");
-                session.removeAttribute("passSave");
-            }
-
-            // Popup
-            session.setAttribute("isFirstLogin", true);
-
-            // Check roleID and redirect accordingly
-            int roleID = UserDAO.INSTANCE.getRoleID(user.getEmail());
-            if (roleID == 1 || roleID == 3) {
-                response.sendRedirect("manageUser");
-            } else {
-                // Redirect to the original URL or home page
-                if (redirectURL != null && !redirectURL.isEmpty()) {
-                    response.sendRedirect(redirectURL);
-                } else {
-                    response.sendRedirect("homePage");
-                }
-            }
-        } else {
-            // If not exists, throw message to view to display
-            request.setAttribute("errorMessage", "Email or password may be wrong! Please try again!");
+        if (!emailExists) {
+            // Email does not exist in the database
+            request.setAttribute("errorMessage", "Email not registered!");
+            returnValueBefore(request, response, email, null); // Set email value
             request.getRequestDispatcher("views/login.jsp").forward(request, response);
+        } else {
+            // Authenticate user by email and plaintext password
+            User user = userDAO.authenticateUser(email, password);
+
+            if (user != null) {
+                // Password correct, set user in session
+                session.setAttribute("currentUser", user);
+
+                if (remember != null && remember.equals("on")) {
+                    session.setAttribute("emailSave", email);
+                    session.setAttribute("passSave", password);
+                } else {
+                    session.removeAttribute("emailSave");
+                    session.removeAttribute("passSave");
+                }
+
+                // Popup
+                session.setAttribute("isFirstLogin", true);
+
+                // Check roleID and redirect accordingly
+                int roleID = UserDAO.INSTANCE.getRoleID(user.getEmail());
+                if (roleID == 1 || roleID == 3) {
+                    response.sendRedirect("manageUser");
+                } else {
+                    // Redirect to the original URL or home page
+                    if (redirectURL != null && !redirectURL.isEmpty()) {
+                        response.sendRedirect(redirectURL);
+                    } else {
+                        response.sendRedirect("homePage");
+                    }
+                }
+            } else {
+                // If password is incorrect, show error message and return to login page
+                request.setAttribute("errorMessage", "Wrong password! Please try again.");
+                returnValueBefore(request, response, email, null); // Set email value
+                request.getRequestDispatcher("views/login.jsp").forward(request, response);
+            }
         }
+    }
+
+    private void returnValueBefore(HttpServletRequest request, HttpServletResponse response, String email, String password) {
+        request.setAttribute("emailValid", email);
+        request.setAttribute("password", password);
     }
 
     @Override

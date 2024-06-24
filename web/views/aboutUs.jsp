@@ -341,7 +341,7 @@
                                 <li><a href="/leagues"><div class="text view-all">View all leagues ></div></a></li>
                             </ul>
                         </li>
-                        <li><a href="https://www.footballticketpad.com/contact-us">Contact Us</a></li>
+                        <li><a href="./about">About Us</a></li>
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
@@ -937,7 +937,7 @@
             <div class="inner">
                 <div class="left">
                     <div class="details">
-                        <h1>Terms & Conditions</h1>
+                        <h1>About Us</h1>
                         <nav class="breadcrumb hidden-mobile">
                             <ul>
                                 <li><a href="./homePage">Home</a></li><li>About Us</li>

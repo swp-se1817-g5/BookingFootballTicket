@@ -278,7 +278,6 @@
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><h2>Manage <b>Season</b></h2></div>
                                     <div class="col-sm-4 searchh">
                                         <div class="search-box">
                                             <i class="material-icons">&#xE8B6;</i>
