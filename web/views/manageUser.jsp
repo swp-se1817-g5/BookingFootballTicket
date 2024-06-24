@@ -6,7 +6,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Manage User</title>
@@ -255,7 +255,7 @@
                                         </button>
                                     </div>
                                     <div class="col-sm-3 createe">
-                                        <a type="button" href="#createUserModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fafa-plus-circle me-2">&#xE147;</i> <span>Add New User</span></a>
+                                        <a type="button" href="#createUserModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Add New User</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -267,7 +267,7 @@
                                             <th>Name</th>
                                             <th>Phone Number</th>
                                             <th>
-                                                <select class="custom-select" id="roleFilterHeader" name="roleFilterHeader" onchange="filterByRole()">
+                                                <select class="form-select border-0" id="roleFilterHeader" name="roleFilterHeader" onchange="filterByRole()">
                                                     <option value="0">All Roles</option>
                                                     <c:forEach items="${roles}" var="role">
                                                         <c:if test="${role.roleId != 1}">
@@ -276,11 +276,11 @@
                                                     </c:forEach>
                                                 </select>
                                             </th>
-                                            <th>Status
-                                                <select class="custom-select" id="statusFilterHeader" name="statusFilterHeader" onchange="filterByStatus()">
+                                            <th>
+                                                <select class="form-select border-0" id="statusFilterHeader" name="statusFilterHeader" onchange="filterByStatus()">
                                                     <option value="0">All Status</option>
-                                                    <option value="true">Actived</option>
-                                                    <option value="false">InActived</option>
+                                                    <option value="true">Active</option>
+                                                    <option value="false">InActive</option>
                                                 </select>
                                             </th>
                                             <th>Actions</th>
@@ -300,14 +300,11 @@
                                                     </c:forEach>
                                                     <td>${o.status ? "Active" : "Inactive"}</td>
                                                     <td>
-                                                        <a href="#userDetailModal" class="view" title="View" onclick="showUserDetails('${o.email}', '${o.name}', '${o.phoneNumber}', '${o.roleId}', ${o.status}, '${o.avatar}')" data-toggle="modal">
-                                                            <i class="material-icons">&#xE417;</i>
-                                                        </a>
-                                                        <a href="editUser.jsp?email=${o.email}" class="edit" title="Edit" data-toggle="tooltip">
-                                                            <i class="material-icons">&#xE254;</i>
+                                                        <a href="#userDetailModal" class="view" title="View" onclick="update('${o.email}', '${o.name}', '${o.phoneNumber}', '${o.avatar}', '${o.roleId}', '${o.status}', '${o.createdBy}', '${o.createdDate}', '${o.updatedBy}', '${o.lastUpdatedDate}')" data-toggle="modal">
+                                                            <i class="fa fa-eye" style="color: gray;"></i>
                                                         </a>
                                                         <a href="deleteUser?email=${o.email}" class="delete" title="Delete" data-toggle="tooltip">
-                                                            <i class="material-icons">&#xE872;</i>
+                                                            <i class="fa fa-times-circle"></i>
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -316,18 +313,20 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="clearfix" >
-                                <ul class="pagination" >
+                            <div class="clearfix">
+                                <ul class="pagination">
                                     <c:if test="${page > 1}">
-                                        <li class="page-item"><a href="manageUser?page=${page - 1}" class="page-link"><</a></li>
-                                        </c:if>    
+                                        <li class="page-item"><a href="manageUser?page=1" class="page-link">First</a></li>
+                                        <li class="page-item"><a href="manageUser?page=${page - 1}" class="page-link">Previous</a></li>
+                                        </c:if>
                                         <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
                                         <li class="page-item ${pageNumber eq currentPage ? 'active' : ''}">
                                             <a href="manageUser?page=${pageNumber}" class="page-link">${pageNumber}</a>
                                         </li>
                                     </c:forEach>
                                     <c:if test="${page < noOfPages}">
-                                        <li class="page-item"><a href="manageUser?page=${page + 1}" class="page-link">></a></li>
+                                        <li class="page-item"><a href="manageUser?page=${page + 1}" class="page-link">Next</a></li>
+                                        <li class="page-item"><a href="manageUser?page=${noOfPages}" class="page-link">Last</a></li>
                                         </c:if>
                                 </ul>
                             </div>
@@ -337,7 +336,7 @@
                     <div class="modal fade" id="userDetailModal">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form id="updateUserForm" name="updateUserForm" action="updateUser" method="post">
+                                <form id="updateUserForm" name="updateUserForm" action="updateUser" method="post" enctype="multipart/form-data">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="userDetailModalLabel">User Details</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -347,35 +346,58 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="detailEmail">Email</label>
-                                            <input type="text" class="form-control" id="detailEmail" required>
+                                            <input type="text" class="form-control" id="detailEmail" name="email" required>
+                                            <div id="emailDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailName">Name</label>
-                                            <input type="text" class="form-control" id="detailName" required>
+                                            <input type="text" class="form-control" id="detailName" name="name1" required>
+                                            <div id="nameDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailPhoneNumber">Phone Number</label>
-                                            <input type="text" class="form-control" id="detailPhoneNumber" required>
+                                            <input type="text" class="form-control" id="detailPhoneNumber" name="phoneNumber1" required>
+                                            <div id="phoneNumberDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailRole">Role</label>
-                                            <input type="text" class="form-control" id="detailRole" readonly>
+                                            <input type="text" class="form-control" id="detailRole" name="role" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailStatus">Status</label>
-                                            <input type="text" class="form-control" id="detailStatus" readonly>
+                                            <input type="text" class="form-control" id="detailStatus" name="status" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailAvatar">Avatar</label>
                                             <div height="80px">
-                                                <img class="img-responsive" class ="avatarPreview" src="" style="width: auto; height: 80px" alt="Avatar"/>
+                                                <img class="img-responsive avatarPreview" src="" style="width: auto; height: 80px" alt="Avatar"/>
                                             </div>
-                                            <input type="file" class="form-control" id="detailAvatar" name="avatar" accept="image/*">
+                                            <input type="file" class="form-control" id="detailAvatar" name="avatar" accept="image/*" onchange="previewAvatar(event)">
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                                <label>Created By</label>
+                                                <input id="createdBy" readonly="" class="form-control">
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label>Created Date</label>
+                                                <input id="createdDate" readonly="" class="form-control">
+                                            </div> 
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-sm-6">
+                                                <label>Updated By</label>
+                                                <input id="updatedBy" readonly="" class="form-control">
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label>Last Updated Date</label>
+                                                <input id="lastUpdatedDate" readonly="" class="form-control">
+                                            </div>    
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-primary" >Save</button>
+                                        <button type="submit" class="btn btn-primary">Save</button>
                                     </div>
                                 </form>
                             </div>
@@ -498,9 +520,31 @@
 
     <!-- script for toast notification -->
     <script>
+        function filterByStatus() {
+            var statusSelect, filterStatus, table, tr, td, i;
+            statusSelect = document.getElementById("statusFilterHeader");
+            filterStatus = statusSelect.value.toUpperCase();
+            table = document.getElementById("userTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
+                tr[i].style.display = "none"; // Mặc định ẩn hàng
+
+                td = tr[i].getElementsByTagName("td");
+                if (td.length > 0) {
+                    var status = td[4].textContent.toUpperCase();
+
+                    if (filterStatus === "0" || // "All Status" selected
+                            (filterStatus === "TRUE" && status === "ACTIVE") ||
+                            (filterStatus === "FALSE" && status === "INACTIVE")) {
+                        tr[i].style.display = "";
+                    }
+                }
+            }
+        }
         //update
         $(document).ready(function () {
-            var updated = '<%= request.getAttribute("updated") %>';
+            var updated = '<%= request.getAttribute("updated")%>';
             if (updated !== 'null' && updated !== '') {
                 var toast = $('#toastNotification');
                 if (updated === "true") {
@@ -518,7 +562,7 @@
 
         //create
         $(document).ready(function () {
-            var created = '<%= request.getAttribute("created") %>';
+            var created = '<%= request.getAttribute("created")%>';
             if (created !== 'null' && created !== '') {
                 var toast = $('#toastNotification');
                 if (created === "true") {
@@ -536,7 +580,7 @@
 
         //delete
         $(document).ready(function () {
-            var deleted = '<%= request.getAttribute("deleted") %>';
+            var deleted = '<%= request.getAttribute("deleted")%>';
             if (deleted !== 'null' && deleted !== '') {
                 var toast = $('#toastNotification');
                 if (deleted === "true") {
@@ -554,13 +598,26 @@
 
     </script>
     <script>
-        function showUserDetails(email, name, phoneNumber, roleid, status, avatar) {
-            document.getElementById('detailEmail').value = email.trim();
-            document.getElementById('detailName').value = name.trim();
+        function update(email, name, phoneNumber, img, roleid, status, createdBy, createdDate, updatedBy, lastUpdatedDate) {
+            document.getElementById('detailEmail').value = email;
+            document.getElementById('detailName').value = name;
             document.getElementById('detailPhoneNumber').value = phoneNumber;
-            document.getElementById('detailRole').value = roleid === 2 ? "User" : (roleid === 3 ? "Staff" : "");
-            document.getElementById('detailStatus').value = status ? "Active" : "Inactive";
-            document.getElementById('detailAvatar').src = avatar;
+            document.getElementById('detailRole').value = roleid; // Assuming roleid is meant to be displayed here
+            document.getElementById('detailStatus').value = status; // Assuming status is meant to be displayed here
+
+            // Set image source for avatar preview
+            var avatarImg = document.querySelector('.avatarPreview');
+            avatarImg.src = img;
+
+            document.getElementById('createdBy').value = createdBy;
+            document.getElementById('createdDate').value = createdDate;
+            document.getElementById('updatedBy').value = updatedBy;
+            document.getElementById('lastUpdatedDate').value = lastUpdatedDate;
+
+            // Clear any previous error messages
+            $('#emailDetailError').text('');
+            $('#nameDetailError').text('');
+            $('#phoneNumberDetailError').text('');
         }
     </script>
     <!--script for create and update-->
@@ -590,10 +647,10 @@
                 var email = $('#emailInput').val().trim();
                 var duplicate = users.some(user => user.email === email);
                 if (duplicate) {
-                    $('#emailInputError').text('Email already exists. Please choose a different email.');
+                    $('#emailDetailError').text('Email already exists. Please choose a different email.');
                     event.preventDefault();
                 } else {
-                    $('#emailInputError').text('');
+                    $('#emailDetailError').text('');
                 }
             });
 
@@ -605,7 +662,7 @@
             function updateUser(email, name) {
                 document.getElementById('email').value = email;
                 document.getElementById('name').value = name;
-                $('#UseremailError').text('');
+                $('#emailDetailError').text('');
             }
         });
     </script>
@@ -633,6 +690,16 @@
             });
         });
     </script>
+    <script>
+        function previewAvatar(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const output = document.querySelector('.avatarPreview');
+                output.src = reader.result;
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
     <%--Validate Create--%>
     <script>
         function validateEmail() {
@@ -640,12 +707,15 @@
             var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
             if (email === '') {
                 $('#emailError').text('Email is required.');
+                $('#emailDetailError').text('Email is required.');
                 return false;
             } else if (!emailPattern.test(email)) {
                 $('#emailError').text('Invalid email format.');
+                $('#emailDetailError').text('Invalid email format.');
                 return false;
             } else {
                 $('#emailError').text('');
+                $('#emailDetailError').text('');
                 return true;
             }
         }
@@ -654,9 +724,11 @@
             var name = $('[name="name"]').val().trim();
             if (name === '') {
                 $('#nameError').text('Name is required.');
+                $('#nameDetailError').text('Name is required.');
                 return false;
             } else {
                 $('#nameError').text('');
+                $('#nameDetailError').text('');
                 return true;
             }
         }
@@ -666,12 +738,15 @@
             var phonePattern = /^[0-9]{10}$/;
             if (phoneNumber === '') {
                 $('#phoneNumberError').text('Phone number is required.');
+                $('#phoneNumberDetailError').text('Phone number is required.');
                 return false;
             } else if (!phonePattern.test(phoneNumber)) {
                 $('#phoneNumberError').text('Invalid phone number format.');
+                $('#phoneNumberDetailError').text('Invalid phone number format.');
                 return false;
             } else {
                 $('#phoneNumberError').text('');
+                $('#phoneNumberDetailError').text('');
                 return true;
             }
         }

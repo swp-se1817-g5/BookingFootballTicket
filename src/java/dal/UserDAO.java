@@ -298,23 +298,22 @@ public class UserDAO {
     }
 
     public boolean updateUser(User user) {
-        String sql = "UPDATE [dbo].[User] SET roleId = ?, hashedpassword = ?, phoneNumber = ?, avatar = ?, name = ?, updatedBy = ?, lastUpdatedDate = ?, status = ? WHERE email = ?";
+        String sql = "UPDATE [dbo].[User] SET roleId = ?, phoneNumber = ?, avatar = ?, name = ?, updatedBy = ?, lastUpdatedDate = ?, status = ? WHERE email = ?";
         boolean updated = false;
         user.setLastUpdatedDate(LocalDateTime.now());
         try {
             checkConnection();
             ps = con.prepareStatement(sql);
             ps.setInt(1, user.getRoleId());
-            ps.setString(2, user.getHashedPassword());
-            ps.setString(3, user.getPhoneNumber());
-            ps.setString(4, user.getAvatar());
-            ps.setString(5, user.getName());
-            ps.setString(6, user.getUpdatedBy());
+            ps.setString(2, user.getPhoneNumber());
+            ps.setString(3, user.getAvatar());
+            ps.setString(4, user.getName());
+            ps.setString(5, user.getUpdatedBy());
             LocalDateTime currentTime = LocalDateTime.now();
             user.setLastUpdatedDate(currentTime);
-            ps.setTimestamp(7, Timestamp.valueOf(currentTime));
-            ps.setBoolean(8, user.isStatus());
-            ps.setString(9, user.getEmail());
+            ps.setTimestamp(6, Timestamp.valueOf(currentTime));
+            ps.setBoolean(7, user.isStatus());
+            ps.setString(8, user.getEmail());
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 updated = true;
@@ -446,7 +445,7 @@ public class UserDAO {
 
     public ArrayList<User> getUsersByRoleId(int roleId, int offset, int noOfRecords) {
         ArrayList<User> users = new ArrayList<>();
-        String query = "SELECT * FROM [User] WHERE [roleId] = ? AND [status] = 1 ORDER BY email OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String query = "SELECT * FROM [User] WHERE [roleId] = ? ORDER BY email OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, roleId);
@@ -466,6 +465,7 @@ public class UserDAO {
                     u.setUpdatedBy(rs.getString(9));
                     Timestamp updatedTimestamp = rs.getTimestamp(10);
                     u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+                    u.setStatus(rs.getBoolean(11));
                     users.add(u);
                 }
             }
