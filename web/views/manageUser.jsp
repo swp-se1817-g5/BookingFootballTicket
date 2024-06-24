@@ -575,9 +575,9 @@
                 showToast(created, created === "true" ? 'User created successfully.' : 'Failed to create user.');
             }
 
-            var deleted = '<%= request.getAttribute("deleted")%>';
-            if (deleted !== 'null' && deleted !== '') {
-                showToast(deleted, deleted === "true" ? 'User deleted successfully.' : 'Failed to delete user.');
+            var changed = '<%= request.getAttribute("changed")%>';
+            if (changed !== 'null' && changed !== '') {
+                showToast(changed, changed === "true" ? 'User changed status successfully.' : 'Failed to changed status user.');
             }
         });
 

@@ -323,7 +323,7 @@
                                             <td>${s.lastUpdatedDate}</td>
                                             <td>
                                                 <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
-                                                <a href="deleteSeason?seasonId=${s.seasonId}" class="delete" title="Delete" data-toggle="tooltip">
+                                                <a href="" onclick="doDelete('${o.seasonId}')" class="delete" title="Delete" data-toggle="tooltip">
                                                     <i class="material-icons">&#xE872;</i>
                                                 </a>
                                             </td>
@@ -458,11 +458,11 @@
                 var toast = $('#toastNotification');
                 if (created === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Football Club created successfully.');
+                    toast.find('#toastMessage').text('Season created successfully.');
                     toast.addClass('success').removeClass('error');
                 } else if (created === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to create Football Club.');
+                    toast.find('#toastMessage').text('Failed to create Season.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -476,11 +476,11 @@
                 var toast = $('#toastNotification');
                 if (deleted === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Stand deleted successfully.');
+                    toast.find('#toastMessage').text('Season deleted successfully.');
                     toast.addClass('success').removeClass('error');
                 } else if (deleted === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to delete stand.');
+                    toast.find('#toastMessage').text('Failed to delete season.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -533,9 +533,9 @@
 
         });
 
-        function deleteUser(userId) {
-            if (confirm("Do you want to delete user with ID = " + userId))
-                location.href = 'deleteUser?userId=' + userId;
+        function deleteSeason(seasonId) {
+            if (confirm("Do you want to delete season with ID = " + seasonId))
+                location.href = 'deleteSeason?seasonId=${s.seasonId}' + seasonId;
         }
 
         function updateUser(userId, userName) {
