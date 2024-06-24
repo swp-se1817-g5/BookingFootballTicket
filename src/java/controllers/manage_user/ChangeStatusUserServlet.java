@@ -60,7 +60,7 @@ public class ChangeStatusUserServlet extends HttpServlet {
         boolean changed = false;
         try {
             String email = request.getParameter("email");
-            User user = UserDAO.getINSTANCE().getUserByEmail(email);
+            User user = UserDAO.getINSTANCE().getAllUserByEmail(email);
             if(user.isStatus()){
                 changed = UserDAO.getINSTANCE().InActiveUser(email);
             }else{

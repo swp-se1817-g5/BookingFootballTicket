@@ -577,32 +577,31 @@ public class UserDAO {
         }
         return changed;
     }
-//    public ArrayList<User> getUserbyStatus(boolean status) {
-//        ArrayList<User> users = new ArrayList<>();
-//        try {
-//            checkConnection();
-//            String sql = "SELECT * FROM [dbo].[User] WHERE status = ?";
-//            ps = con.prepareStatement(sql);
-//            ps.setInt(1, roleId);
-//            rs = ps.executeQuery();
-//            while (rs.next()) {
-//                User u = new User();
-//                u.setEmail(rs.getString(1));
-//                u.setName(rs.getString(2));
-//                u.setRoleId(rs.getInt(3));
-//                u.setHashedPassword(rs.getString(4));
-//                u.setPhoneNumber(rs.getString(5));
-//                u.setAvatar(rs.getString(6));
-//                u.setCreatedBy(rs.getString(7));
-//                u.setCreatedDate(rs.getTimestamp(8).toLocalDateTime());
-//                u.setUpdatedBy(rs.getString(9));
-//                Timestamp updatedTimestamp = rs.getTimestamp(10);
-//                u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
-//                users.add(u);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return users;
-//    }
+    public User getAllUserByEmail(String email) {
+        String sql = "SELECT * FROM [User] WHERE email = ?";
+        User user = null;
+        try {
+            checkConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User();
+                user.setEmail(rs.getString("email"));
+                user.setName(rs.getString("name"));
+                user.setRoleId(rs.getInt("roleId"));
+                user.setHashedPassword(rs.getString("hashedPassword"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setCreatedBy(rs.getString("createdBy"));
+                user.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                user.setUpdatedBy(rs.getString("updatedBy"));
+                user.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
+                user.setStatus(rs.getBoolean("status"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 }
