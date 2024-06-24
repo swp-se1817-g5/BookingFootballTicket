@@ -15,12 +15,22 @@ public class SignInServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // This method is currently not used
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        User currentUser = (User) session.getAttribute("currentUser");
+
+        // Check if the user is already logged in
+        if (currentUser != null) {
+            // Redirect to the home page or another appropriate page
+            response.sendRedirect("homePage");
+            return;
+        }
+
         String email = (String) session.getAttribute("emailSave");
         String password = (String) session.getAttribute("passSave");
         String redirectURL = request.getParameter("redirectURL");
@@ -49,6 +59,9 @@ public class SignInServlet extends HttpServlet {
         System.out.println("remember = " + remember);
         UserDAO userDAO = UserDAO.INSTANCE;
         HttpSession session = request.getSession();
+
+        // Set session timeout to 1 hour (3600 seconds)
+        session.setMaxInactiveInterval(3600);
 
         // Authenticate user by email and plaintext password
         User user = userDAO.authenticateUser(email, password);
