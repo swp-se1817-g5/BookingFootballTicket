@@ -1,8 +1,4 @@
-<%-- 
-    Document   : manageRole
-    Created on : May 26, 2024, 10:53:13 AM
-    Author     : Vinh
---%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -273,19 +269,16 @@
                 <!-- Navbar Start -->
                 <%@include file="dashboardHeader.jsp" %>
                 <!-- Navbar End -->
-                <div class="container-fluid">
+                <div class="container-fluid container-fluid pt-4 px-4">
                     <div class="table-responsive">
-                        <div class="table-wrapper">
+                        <div class="table-wrapper card">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4 searchh">
-                                        <div class="search-box">
-                                            <i class="material-icons">&#xE8B6;</i>
-                                            <input type="text" class="form-control" placeholder="Search by name&hellip;">
-                                        </div>
+                                    <div class="col-md-4 ">
+                                        <input type="search" class="form-control radius-md" id="myInput" onkeyup="filterTable()" placeholder="Search by name&hellip;">
                                     </div>
-                                    <div class="col-sm-4 createe">
-                                        <a href="#createSeasonModal" class="btn btn-success d-flex align-items-center"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create New Season</span></a>
+                                    <div class="col-md-8">
+                                        <a type="button" href="#createSeasonModal" class="btn btn-success m-2 float-right"  data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create New Season</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -302,6 +295,10 @@
                                         <th>Season Name</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
+                                        <th>Created By</th>
+                                        <th>Created Date</th>
+                                        <th>Last Updated By</th>
+                                        <th>Last Updated Date</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -312,18 +309,22 @@
                                             <td>${s.seasonName}</td>
                                             <td>${s.startDate}</td>
                                             <td>${s.endDate}</td>
+                                            <td>${s.createdBy}</td>
+                                            <td>${s.createdDate}</td>
+                                            <td>${s.updatedBy}</td>
+                                            <td>${s.lastUpdatedDate}</td>
                                             <td>
-                                                <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
-                                                <a href="" onclick="doDelete('${o.seasonId}')" class="delete" title="Delete" data-toggle="tooltip">
-                                                    <i class="material-icons">&#xE872;</i>
+                                                <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
+                                                <a onclick="doDelete(${s.seasonId})" class="delete" title="Cancel" data-toggle="tooltip">
+                                                    <i class="fa fa-times-circle"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
-                            <div class="clearfix">
-                                <div class="hint-text">Showing <strong>${requestScope.seasons.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>
+                            <div class="clearfix d-flex justify-content-md-start"">
+<!--                                <div class="hint-text">Showing <strong>${requestScope.seasons.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>-->
                                 <ul class="pagination">
                                     <c:if test="${page > 1}">
                                         <li class="page-item"><a href="manageSeason?page=${page - 1}" class="page-link"><</a></li>
@@ -403,7 +404,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                            <input type="submit" class="btn btn-success" value="Add">
+                                            <input type="submit" class="btn btn-success" value="Save">
                                         </div>
                                     </form>
                                 </div>
@@ -418,6 +419,7 @@
     <div class="toast" id="toastNotification" data-delay="3000">
         <div class="toast-header">
             <strong class="mr-auto" id="toastTitle"></strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
         </div>
         <div class="toast-body" id="toastMessage"></div>
     </div>
@@ -426,7 +428,7 @@
     <script>
         //update
         $(document).ready(function () {
-            var updated = '<%= request.getAttribute("updated") %>';
+            var updated = '<%= request.getAttribute("updated")%>';
             if (updated !== 'null' && updated !== '') {
                 var toast = $('#toastNotification');
                 if (updated === "true") {
@@ -444,16 +446,16 @@
 
         //create
         $(document).ready(function () {
-            var created = '<%= request.getAttribute("created") %>';
+            var created = '<%= request.getAttribute("created")%>';
             if (created !== 'null' && created !== '') {
                 var toast = $('#toastNotification');
                 if (created === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Season created successfully.');
+                    toast.find('#toastMessage').text('Football Club created successfully.');
                     toast.addClass('success').removeClass('error');
                 } else if (created === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to create Season.');
+                    toast.find('#toastMessage').text('Failed to create Football Club.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -462,16 +464,16 @@
 
         //delete
         $(document).ready(function () {
-            var deleted = '<%= request.getAttribute("deleted") %>';
+            var deleted = '<%= request.getAttribute("deleted")%>';
             if (deleted !== 'null' && deleted !== '') {
                 var toast = $('#toastNotification');
                 if (deleted === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Season deleted successfully.');
+                    toast.find('#toastMessage').text('Stand deleted successfully.');
                     toast.addClass('success').removeClass('error');
                 } else if (deleted === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to delete season.');
+                    toast.find('#toastMessage').text('Failed to delete stand.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -523,6 +525,40 @@
 
 
         });
+
+        function deleteUser(userId) {
+            if (confirm("Do you want to delete user with ID = " + userId))
+                location.href = 'deleteUser?userId=' + userId;
+        }
+
+        function updateUser(userId, userName) {
+            document.getElementById('clubId').value = clubId;
+            document.getElementById('clubName').value = clubName;
+
+
+            $('#clubNameError').text('');
+        }
+
+        function doDelete(seasonId) {
+        <c:forEach var="season" items="${seasons}">
+            <c:if test="${season.seasonId == seasonId}">
+            alert("chão");
+            </c:if>
+        </c:forEach>
+            if (confirm("Do you want to delete Season with id = " + seasonId))
+                location.href = 'deleteSeason?seasonId=' + seasonId;
+        }
+
+        function doDelete(seasonId) {
+        <c:forEach var="season" items="${seasons}">
+            <c:if test="${season.seasonId == seasonId}">
+            alert("chão");
+            </c:if>
+        </c:forEach>
+            if (confirm("Do you want to delete Season id = " + seasonId))
+                location.href = 'deleteSeason?seasonId=' + seasonId;
+        }
+
 
         function deleteSeason(seasonId) {
             if (confirm("Do you want to delete season with ID = " + seasonId))
