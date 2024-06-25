@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,7 +47,7 @@
         <!-- STYLESHEETS ============================================= -->
         <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
         <link class="skin" rel="stylesheet" type="text/css" href="assets/css/color/color-1.css">
-
+        
     </head>
     <body id="bg">
         <div class="page-wraper">
@@ -78,9 +79,8 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Password</label>
-                                            <input name="password" type="password"
-                                                   value="${passValid}" 
-                                                   required class="form-control">
+                                            <input id="password" name="password" type="password" value="${passValid}" required class="form-control">                                   
+                                            <i id="togglePassword" class="fa fa-eye-slash" aria-hidden="true" style="cursor: pointer;"></i>  
                                         </div>
                                     </div>
                                 </div>
@@ -93,9 +93,6 @@
                                                style="margin-left: 5px; font-weight: 400;" for="remember_me">
                                             Remember me!
                                         </label>
-
-                                        <!--                                        <a href="views/forgetPassword.jsp" class="ml-auto">Forgot Password?</a>-->
-
                                         <a href="requestPassword" class="ml-auto">Forgot Password?</a>
 
                                     </div>
@@ -108,7 +105,7 @@
                                     <h6>Login with Social media</h6>
                                     <div class="d-flex">
                                         <a class="btn flex-fill m-r5 facebook" href="https://www.facebook.com/v19.0/dialog/oauth?fields=id,name,email&client_id=2789778564531786&redirect_uri=http://localhost:8080/BookingFootballTicket/loginFB"><i class="fa fa-facebook"></i>Facebook</a>
-                                        <a class="btn flex-fill m-l5 google-plus" href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/BookingFootballTicket/gmail&response_type=code&client_id=710226049781-g37fdin0lmq797dniqao07fsr27oj20j.apps.googleusercontent.com&approval_prompt=force"><i class="fa fa-google-plus"></i>Google</a>
+                                        <a class="btn flex-fill m-l5 google-plus" href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/BookingFootballTicket/gmail&response_type=code&client_id=710226049781-g37fdin0lmq797dniqao07fsr27oj20j.apps.googleusercontent.com&approval_prompt=force"><i class="fa fa-google"></i>Google</a>
                                     </div>
                                 </div>
                             </div>
@@ -133,6 +130,15 @@
         <script src="assets/js/functions.js"></script>
         <script src="assets/js/contact.js"></script>
         <script src='assets/vendors/switcher/switcher.js'></script>
+        <script>
+            document.getElementById('togglePassword').addEventListener('click', function () {
+                const passwordInput = document.getElementById('password');
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye-slash');
+                this.classList.toggle('fa-eye');
+            });
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <%
