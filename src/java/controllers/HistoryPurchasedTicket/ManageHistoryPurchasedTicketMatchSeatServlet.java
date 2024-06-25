@@ -7,6 +7,8 @@ package controllers.HistoryPurchasedTicket;
 import dal.HistoryPurchasedTicketDAO;
 import dal.MatchDAO;
 import dal.SeasonDAO;
+import dal.SeatClassDAO;
+import dal.StandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -21,8 +23,8 @@ import models.HistoryPurchasedTicketMatchSeat;
  *
  * @author nguye
  */
-@WebServlet(name = "ManageHistoryPuchasedTicketServlet", urlPatterns = {"/manageHistoryPurchasedTicket"})
-public class ManageHistoryPurchasedTicketServlet extends HttpServlet {
+@WebServlet(name = "ManageHistoryPurchasedTicketMatchSeatServlet", urlPatterns = {"/manageHistoryPurchasedTicketMatchSeat"})
+public class ManageHistoryPurchasedTicketMatchSeatServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -80,8 +82,9 @@ public class ManageHistoryPurchasedTicketServlet extends HttpServlet {
             getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
             request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
             request.setAttribute("getListSeason", SeasonDAO.getINSTANCE().getAllseason());
-            request.setAttribute("getListSeatClass", SeatClassDAO);
-            
+            request.setAttribute("getListSeatClass", SeatClassDAO.getInstance().getListSeatClass());
+            request.setAttribute("getListStand", StandDAO.INSTANCE.getStands(""));
+            request.setAttribute("getListStatus", HistoryPurchasedTicketDAO.getInstance().getListTicketStatus());
         }
 
         request.getRequestDispatcher("views/manageHistoryPurchasedTicket.jsp").forward(request, response);
@@ -111,7 +114,4 @@ public class ManageHistoryPurchasedTicketServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public static void main(String[] args) {
-        System.out.println(HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat());
-    }
 }

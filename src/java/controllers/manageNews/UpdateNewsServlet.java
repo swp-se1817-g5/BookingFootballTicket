@@ -87,6 +87,7 @@ public class UpdateNewsServlet extends HttpServlet {
             int newsId = Integer.parseInt(request.getParameter("newsId"));
             String title = request.getParameter("title");
             String content = request.getParameter("content");
+            String conclusion = request.getParameter("conclusion");
             int statusId = Integer.parseInt(statusId_raw);
             int stateId = Integer.parseInt(stateId_raw);
             Part part = request.getPart("image");
@@ -107,6 +108,7 @@ public class UpdateNewsServlet extends HttpServlet {
             News news = NewsDAO.getInstance().getNewsByNewsId(newsId);
             news.setTitle(title);
             news.setContent(content);
+            news.setConclusion(conclusion);
             news.setImage(imagePath);
             NewsStatus newsStatus = new NewsStatus();
             newsStatus.setStatusId(statusId);

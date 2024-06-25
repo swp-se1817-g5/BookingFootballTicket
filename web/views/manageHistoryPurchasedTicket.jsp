@@ -202,12 +202,22 @@ Author     : duong
                 background-color: #dc3545;
                 color: white;
             }
+            .btn-custom {
+            position: relative;
+        }
+        .btn-custom .btn-icon {
+            transition: transform 0.3s ease;
+            position: absolute;
+            left: 5px;
+        }
+        .btn-custom.active .btn-icon {
+            transform: rotate(90deg);
+        }
+            }
         </style>
-        <script>
-            $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            });
-        </script>
+
+
+
     </head>
     <body>
         <div class="container-fluid position-relative bg-white d-flex p-0">
@@ -278,66 +288,81 @@ Author     : duong
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><a href="manageHistoryPurchasedTicket"><h2>History Purchased Ticket <b>Management</b></h2></a></div>
-
+                                    <div class="col-sm-4"><a href="manageHistoryPurchasedTicketMatchSeat"><h2>History Purchased Ticket <b>Management</b></h2></a></div>
                                     <div class="col-sm-4 searchh">
                                         <div class="search-box" id="searchForm">
-                                            <a><i class="material-icons">&#xE8B6;</i></a>
+                                            <a onclick="searchTickets()"><i class="material-icons">&#xE8B6;</i></a>
                                             <input id="valueSearch" type="text" class="form-control" placeholder="Search&hellip;">
                                         </div>
                                     </div>
-
-                                    <script>
-                                        $(document).ready(function () {
-                                            $('#valueSearch').keypress(function (event) {
-                                                if (event.keyCode === 13) { // 13 is the Enter key
-                                                    event.preventDefault(); // Prevent the default form submission
-                                                    var valueSearch = document.getElementById('valueSearch').value;
-                                                    location.href = "manageHistoryPurchasedTicket?go=search&valueSearch=" + encodeURIComponent(valueSearch);
-                                                }
-                                            });
-                                        });
-                                    </script>
+                                    <div class="col">
+                                        <button id="toggleButton" class="btn btn-primary btn-custom">
+                                            Manage History Purchased Ticket Season Seat
+                                            <i class="btn-icon fas fa-caret-right"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <table class="table table-striped table-hover table-bordered">
-                                <thead>
+                                <thead class="text-center">
                                     <tr>
                                         <th>#</th>
-                                        <th>Team 1</th>
-                                        <th>Team 2</th>
                                         <th>
-                                            <select class="form-select border-0" id="statusSelect" onchange="filterTable()">
+                                            <select class="form-select border-0" id="seasonSelect">
                                                 <option selected value="All">All Season</option>
                                                 <c:forEach items="${getListSeason}" var="season">
-                                                    <option value="">${season.seasonName}</option>
+                                                    <option value="${season.seasonName}">${season.seasonName}</option>
                                                 </c:forEach>
                                             </select>
                                         </th>
                                         <th>
-                                            <select class="form-select border-0" id="statusSelect" onchange="filterTable()">
-                                                <option selected value="All">All Seat Class</option>
-                                                <c:forEach items="${getListSeatClass}" var="seatClass">
-                                                    <option value="">${seatClass.seatClassName}</option>
+                                            <select class="form-select border-0" id="standSelect">
+                                                <option selected value="All">All Stand</option>
+                                                <c:forEach items="${getListStand}" var="stand">
+                                                    <option value="${stand.standName}">${stand.standName}</option>
                                                 </c:forEach>
                                             </select>
                                         </th>
-                                        <th>Stand</th>
-                                        <th>Quantity</th>
-                                        <th>Price</th>
-                                        <th>Status</th>
+                                        <th>
+                                            <select class="form-select border-0" id="seatClassSelect">
+                                                <option selected value="All">All Seat Class</option>
+                                                <c:forEach items="${getListSeatClass}" var="seatClass">
+                                                    <option value="${seatClass.seatClassName}">${seatClass.seatClassName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
+                                        <th>
+                                            Seat
+                                            <i class="fa fa-sort" id="sortSeat" data-column="4" data-order="asc"></i>
+                                        </th>
+                                        <th>
+                                            Quantity
+                                            <i class="fa fa-sort" id="sortQuantity" data-column="5" data-order="asc"></i>
+                                        </th>
+                                        <th>
+                                            Price
+                                            <i class="fa fa-sort" id="sortPrice" data-column="6" data-order="asc"></i>
+                                        </th>
+
+                                        <th>
+                                            <select class="form-select border-0" id="statusSelect">
+                                                <option selected value="All">Status</option>
+                                                <c:forEach items="${getListStatus}" var="status">
+                                                    <option value="${status.statusName}">${status.statusName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${getListHistoryPurchasedTicketMatchSeat}" var="ticketMatchSeat" varStatus="status">
-                                        <tr>
+                                        <tr class="text-center">
                                             <td>${status.count}</td>
-                                            <td>${ticketMatchSeat.team1}</td>
-                                            <td>${ticketMatchSeat.team2}</td>
                                             <td>${ticketMatchSeat.seasonName}</td>
-                                            <td>${ticketMatchSeat.seatClassName}</td>
                                             <td>${ticketMatchSeat.standName}</td>
+                                            <td>${ticketMatchSeat.seatClassName}</td>
+                                            <td>${ticketMatchSeat.seatName}</td>
                                             <td>${ticketMatchSeat.quantity}</td>
                                             <td>${ticketMatchSeat.price}</td>
                                             <td>${ticketMatchSeat.statusId.statusName}</td>
@@ -347,8 +372,8 @@ Author     : duong
                                 </tbody>
                             </table>
                         </div>
-                    </div> 
-                </div>      
+                    </div>
+                </div>    
             </div>      
         </div>      
 
@@ -358,13 +383,13 @@ Author     : duong
             <div id="viewDetailsTicket${ticketMatchSeat.ticketId}" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">			
+                        <div class="modal-header">
                             <h4 class="modal-title">View Details</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
-                        <div class="modal-body">					
+                        <div class="modal-body">
                             <div class="form-group">
-                                <label>Ticket Id</label>    
+                                <label>Ticket Id</label>
                                 <input name="newsId" class="form-control" value="${ticketMatchSeat.ticketId}" readonly>
                             </div>
                             <div class="form-group">
@@ -372,16 +397,8 @@ Author     : duong
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.startTime}</p>
                             </div>
                             <div class="form-group">
-                                <label>Seat</label>
-                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.seatName}</p>
-                            </div>
-                            <div class="form-group">
                                 <label>Email</label>
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.email}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>QR Code</label>
-                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.qrCode}</p>
                             </div>
                             <div class="form-group">
                                 <label>Create Date</label>
@@ -396,6 +413,137 @@ Author     : duong
                 </div>
             </div>
         </c:forEach>
+        <script>
+            $(document).ready(function () {
+                var seasonValue = 'All'; // Giá trị mặc định cho dropdown season
+                var seatClassValue = 'All'; // Giá trị mặc định cho dropdown seat class
+                var standValue = 'All'; // Giá trị mặc định cho dropdown stand
+                var statusValue = 'All'; // Giá trị mặc định cho dropdown status
+
+                // Sự kiện change cho các dropdown filter
+                $('#seasonSelect, #seatClassSelect, #standSelect, #statusSelect').change(function () {
+                    seasonValue = $('#seasonSelect').val();
+                    seatClassValue = $('#seatClassSelect').val();
+                    standValue = $('#standSelect').val();
+                    statusValue = $('#statusSelect').val();
+                    
+                    
+                      
+    console.log("Season value:", seasonValue);
+    console.log("Stand value:", standValue);
+    console.log("Seat class value:", seatClassValue);
+    console.log("Status value:", statusValue);
+                    filterTable();
+                });
+
+                // Sự kiện click để sắp xếp bảng
+                $('#sortQuantity, #sortPrice, #sortSeat').click(function () {
+                    sortTable($(this).data('column'), $(this).data('order'));
+                    $(this).data('order', $(this).data('order') === 'asc' ? 'desc' : 'asc');
+                });
+
+                // Sự kiện khi người dùng nhập vào ô tìm kiếm
+                $('#valueSearch').keyup(function () {
+                    var searchText = $(this).val().toLowerCase();
+                    if (searchText.trim().length > 0) {
+                        searchTable(searchText);
+                    } else {
+                        filterTable();
+                    }
+                });
+
+                // Hàm lọc bảng dữ liệu
+                function filterTable() {
+                    $('table tbody tr').each(function () {
+                        var row = $(this);
+                        var show = true;
+
+                        if (seasonValue !== 'All' && row.find('td:eq(1)').text() !== seasonValue) {
+                            show = false;
+                        }
+                        if (standValue !== 'All' && row.find('td:eq(2)').text() !== standValue) {
+                            show = false;
+                        }
+                        if (seatClassValue !== 'All' && row.find('td:eq(3)').text() !== seatClassValue) {
+                            show = false;
+                        }
+                        if (statusValue !== 'All' && row.find('td:eq(7)').text() !== statusValue) {
+                            show = false;
+                        }
+
+                        if (show) {
+                            row.show();
+                        } else {
+                            row.hide();
+                        }
+                    });
+                }
+
+                // Hàm sắp xếp bảng dữ liệu
+                function sortTable(column, order) {
+                    var rows = $('table tbody tr').get();
+
+                    rows.sort(function (a, b) {
+                        var A = $(a).children('td').eq(column).text().toUpperCase();
+                        var B = $(b).children('td').eq(column).text().toUpperCase();
+
+                        if (column === 4 || column === 5 || column === 6) {
+                            A = parseFloat(A);
+                            B = parseFloat(B);
+                        }
+
+                        if (order === 'asc') {
+                            return (A > B) ? 1 : ((A < B) ? -1 : 0);
+                        } else {
+                            return (A < B) ? 1 : ((A > B) ? -1 : 0);
+                        }
+                    });
+
+                    $.each(rows, function (index, row) {
+                        $('table').children('tbody').append(row);
+                    });
+                }
+
+                // Hàm tìm kiếm trong bảng dữ liệu
+                function searchTable(searchText) {
+                    $('table tbody tr').each(function () {
+                        var row = $(this);
+                        var text = row.text().toLowerCase();
+                        var match = text.indexOf(searchText) > -1;
+                        row.toggle(match);
+                    });
+                }
+            });
+
+            // Hàm gửi yêu cầu AJAX để tìm kiếm
+            function searchTickets() {
+                var searchText = $('#valueSearch').val();
+                $.ajax({
+                    type: 'GET',
+                    url: 'manageHistoryPurchasedTicketMatchSeat',
+                    data: {searchText: searchText},
+                    success: function (response) {
+                        $('table tbody').html(response); // Cập nhật lại nội dung tbody của bảng
+                    },
+                    error: function (e) {
+                        console.log('Error: ', e);
+                    }
+                });
+            }
+             $('#toggleButton').click(function() {
+                // Lấy URL hiện tại
+                var currentUrl = window.location.href;
+
+                // Kiểm tra và thay đổi URL và icon
+                if (currentUrl.includes('manageHistoryPurchasedTicketSeasonSeat')) {
+                    window.location.href = 'manageHistoryPurchasedTicketMatchSeat';
+                    $('#toggleButton').html('Manage History Purchased Ticket Match Seat <i class="btn-icon fas fa-caret-right"></i>');
+                } else {
+                    window.location.href = 'manageHistoryPurchasedTicketSeasonSeat';
+                    $('#toggleButton').html('Manage History Purchased Ticket Season Seat <i class="btn-icon fas fa-caret-right"></i>');
+                }
+            });
+        </script>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
