@@ -29,8 +29,7 @@ public class getGmail {
                                 .add("code", code)
                                 .add("grant_type", IconstantGmail.GMAIL_GRANT_TYPE)
                                 .build()
-                )
-                .execute().returnContent().asString();
+                ).execute().returnContent().asString();
 
         JsonObject jobj = new Gson().fromJson(response, JsonObject.class);
 

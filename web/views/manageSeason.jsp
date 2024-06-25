@@ -273,19 +273,16 @@
                 <!-- Navbar Start -->
                 <%@include file="dashboardHeader.jsp" %>
                 <!-- Navbar End -->
-                <div class="container-fluid">
+                <div class="container-fluid container-fluid pt-4 px-4">
                     <div class="table-responsive">
-                        <div class="table-wrapper">
+                        <div class="table-wrapper card">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4 searchh">
-                                        <div class="search-box">
-                                            <i class="material-icons">&#xE8B6;</i>
-                                            <input type="text" class="form-control" placeholder="Search by name&hellip;">
-                                        </div>
+                                    <div class="col-md-4 ">
+                                            <input type="search" class="form-control radius-md" id="myInput" onkeyup="filterTable()" placeholder="Search by name&hellip;">
                                     </div>
-                                    <div class="col-sm-4 createe">
-                                        <a href="#createSeasonModal" class="btn btn-success d-flex align-items-center"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create New Season</span></a>
+                                    <div class="col-md-8">
+                                        <a type="button" href="#createSeasonModal" class="btn btn-success m-2 float-right"  data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create New Season</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -321,17 +318,17 @@
                                             <td>${s.updatedBy}</td>
                                             <td>${s.lastUpdatedDate}</td>
                                             <td>
-                                                <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
-                                                <a href="deleteSeason?seasonId=${s.seasonId}" class="delete" title="Delete" data-toggle="tooltip">
-                                                    <i class="material-icons">&#xE872;</i>
+                                                <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
+                                                <a onclick="doDelete(${s.seasonId})" class="delete" title="Cancel" data-toggle="tooltip">
+                                                    <i class="fa fa-times-circle"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
-                            <div class="clearfix">
-                                <div class="hint-text">Showing <strong>${requestScope.seasons.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>
+                            <div class="clearfix d-flex justify-content-md-start"">
+<!--                                <div class="hint-text">Showing <strong>${requestScope.seasons.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>-->
                                 <ul class="pagination">
                                     <c:if test="${page > 1}">
                                         <li class="page-item"><a href="manageSeason?page=${page - 1}" class="page-link"><</a></li>
@@ -423,12 +420,13 @@
         </div>
     </body>
     <!-- toast notification -->
-    <div class="toast" id="toastNotification" data-delay="3000">
-        <div class="toast-header">
-            <strong class="mr-auto" id="toastTitle"></strong>
+        <div class="toast" id="toastNotification" data-delay="3000">
+            <div class="toast-header">
+                <strong class="mr-auto" id="toastTitle"></strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
         </div>
-        <div class="toast-body" id="toastMessage"></div>
-    </div>
 
     <!-- script for toast notification -->
     <script>
@@ -544,6 +542,16 @@
 
             $('#clubNameError').text('');
         }
+        
+        function doDelete(seasonId) {
+            <c:forEach var="season" items="${seasons}">
+                <c:if test="${season.seasonId == seasonId}">
+                alert("chão");
+                </c:if>
+            </c:forEach>
+                if (confirm("Do you want to delete Season with id = " + seasonId))
+                    location.href = 'deleteSeason?seasonId=' + seasonId;
+            }
     </script>
     <script>
         $(document).ready(function () {
