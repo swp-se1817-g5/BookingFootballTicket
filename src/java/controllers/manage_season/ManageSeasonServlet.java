@@ -68,6 +68,12 @@ public class ManageSeasonServlet extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
+        if(request.getParameter("created") != null){
+            request.setAttribute("created", request.getParameter("created"));
+        }
+        if(request.getParameter("deleted") != null){
+            request.setAttribute("deleted", request.getParameter("deleted"));
+        }
         ArrayList<Season> seasons = SeasonDAO.getINSTANCE().getSeasons((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
         int noOfRecords = SeasonDAO.getINSTANCE().getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
