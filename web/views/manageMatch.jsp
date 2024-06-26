@@ -219,7 +219,7 @@
             <!-- Spinner End -->
             <%@include file="side-bar.jsp" %>
             <div class="content">
-                <%@include file="header2.jsp" %>
+                <%@include file="dashboardHeader.jsp" %>
 
                 <%-- Manage Table --%>
                 <div class="container-fluid">
@@ -232,7 +232,7 @@
                                         <input class="form-control radius-md" type="search" id="myInput" onkeyup="filterTable()" placeholder="Search for name of football club..." title="Type in a name">
                                     </div>
                                     <div class="col-md-8">
-                                        <a type="button" href="#createMatchModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i>Add New Match</a>
+                                        <a type="button" href="#createMatchModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i>Create Match</a>
                                     </div>
                                 </div>
                             </div>

@@ -74,7 +74,8 @@ public class CreateMatchServlet extends HttpServlet {
             throw new IllegalArgumentException("Invalid date time format", e);
         }
 
-        response.sendRedirect("manageMatch?created=" + created);
+        session.setAttribute("createMatch", created);
+        response.sendRedirect("manageMatch");
     }
 
     @Override
