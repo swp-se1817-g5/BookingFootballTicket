@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "ManageFootballClubServlet", urlPatterns = {"/manageFootballClub"})
 public class ManageFootballClubServlet extends HttpServlet {
 
-    private final int NUM_OF_RECORDS = 5;
+    private final int NUM_OF_RECORDS = 2;
     private int pageIndex = 1;
 
     /**
