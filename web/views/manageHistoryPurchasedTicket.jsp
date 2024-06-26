@@ -213,7 +213,6 @@ Author     : duong
         .btn-custom.active .btn-icon {
             transform: rotate(90deg);
         }
-            }
         </style>
 
 
