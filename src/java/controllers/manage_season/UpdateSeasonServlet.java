@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.mail.Session;
 import models.Season;
+import models.User;
 
 /**
  *
@@ -83,15 +84,14 @@ public class UpdateSeasonServlet extends HttpServlet {
         String startDate_raw = request.getParameter("startDate");
         String endDate_raw = request.getParameter("endDate");
         HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("currentUser");
         try {
             int seasonId = Integer.parseInt(seasonId_raw);
             Date startDate = new SimpleDateFormat("yyyy-MM-dd").parse(startDate_raw);
             Date endDate = new SimpleDateFormat("yyyy-MM-dd").parse(endDate_raw);
             if (endDate.after(startDate)) {
-                Season season = new Season(seasonId,seasonName, startDate, endDate, "CanhDuong");
+                Season season = new Season(seasonId, seasonName, startDate, endDate, user.getEmail());
                 session.setAttribute("updated", SeasonDAO.getINSTANCE().updateSeason(season));
-            } else {
-                session.setAttribute("updated", "false");
             }
             response.sendRedirect("manageSeason");
         } catch (ParseException e) {
