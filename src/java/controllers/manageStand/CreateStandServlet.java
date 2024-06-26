@@ -85,7 +85,7 @@ public class CreateStandServlet extends HttpServlet {
             Stand stand = new Stand();
             stand.setStandName(standName);
             stand.setCreatedBy(user.getEmail());
-            created = StandDAO.INSTANCE.createStand(stand);
+            created = StandDAO.getInstance().createStand(stand);
         } catch (Exception e) {
             e.printStackTrace();
         }
