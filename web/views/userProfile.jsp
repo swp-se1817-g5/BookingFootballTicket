@@ -114,7 +114,7 @@
                     nameError.classList.remove("valid");
                     nameError.classList.add("error");
                 } else {
-                    nameError.textContent = "Valid name.";
+                    nameError.textContent = "";
                     nameError.classList.remove("error");
                     nameError.classList.add("valid");
                 }
@@ -125,11 +125,11 @@
                 var phoneError = document.getElementById("phoneError");
                 var phoneRegex = /^0[3-9][0-9]{8}$/;
                 if (!phoneRegex.test(phoneNumber)) {
-                    phoneError.textContent = "Invalid phone number format. It should follow Vietnamese phone number format.";
+                    phoneError.textContent = "Invalid phone number format. It should follow VN phone number format.";
                     phoneError.classList.remove("valid");
                     phoneError.classList.add("error");
                 } else {
-                    phoneError.textContent = "Valid phone number.";
+                    phoneError.textContent = "";
                     phoneError.classList.remove("error");
                     phoneError.classList.add("valid");
                 }

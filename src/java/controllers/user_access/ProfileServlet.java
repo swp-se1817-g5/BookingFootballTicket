@@ -42,19 +42,11 @@ public class ProfileServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //PrintWriter out = response.getWriter();
-        //out.print("hehe");
         HttpSession session = request.getSession();
-           //     out.print("hehe");
-
         boolean isUserChangeSuccess = false;
 
         try {
-             //       out.print("hehe");
-
             Part part = request.getPart("avatar");
-    //    out.print("hehe");
-
             String img = (part != null && part.getSize() > 0) ? handleFileUpload(part, request) : "";
             String name = request.getParameter("name").trim();
             String mobile = request.getParameter("mobile").trim();
