@@ -5,8 +5,9 @@
 package controllers.HistoryPurchasedTicket;
 
 import dal.HistoryPurchasedTicketDAO;
-import dal.MatchDAO;
 import dal.SeasonDAO;
+import dal.SeatClassDAO;
+import dal.StandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,13 +17,14 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import models.HistoryPurchasedTicketMatchSeat;
+import models.HistoryPurchasedTicketSeasonSeat;
 
 /**
  *
  * @author nguye
  */
-@WebServlet(name = "ManageHistoryPuchasedTicketServlet", urlPatterns = {"/manageHistoryPurchasedTicket"})
-public class ManageHistoryPurchasedTicketServlet extends HttpServlet {
+@WebServlet(name = "ManageHistoryPuchasedTicketSeasonSeatServlet", urlPatterns = {"/manageHistoryPurchasedTicketSeasonSeat"})
+public class ManageHistoryPurchasedTicketSeasonSeatServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +43,10 @@ public class ManageHistoryPurchasedTicketServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageHistoryPuchasedTicketServlet</title>");
+            out.println("<title>Servlet ManageHistoryPuchasedTicketServletSeasonSeat</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageHistoryPuchasedTicketServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageHistoryPuchasedTicketServletSeasonSeat at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,25 +68,26 @@ public class ManageHistoryPurchasedTicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<HistoryPurchasedTicketMatchSeat> getListHistoryPurchasedTicketMatchSeat;
+        ArrayList<HistoryPurchasedTicketSeasonSeat> getListHistoryPurchasedTicketSeasonSeat;
         String go = request.getParameter("go");
         if (!isNullOrBlank(go)) {
             if (go.equals("search")) {
                 String valueSearch = request.getParameter("valueSearch").trim();
-                getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().Search(valueSearch);
-                if (!getListHistoryPurchasedTicketMatchSeat.isEmpty()) {
-                    request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
+                getListHistoryPurchasedTicketSeasonSeat = HistoryPurchasedTicketDAO.getInstance().SearchSeasonSeat(valueSearch);
+                if (!getListHistoryPurchasedTicketSeasonSeat.isEmpty()) {
+                    request.setAttribute("getListHistoryPurchasedTicketSeasonSeat", getListHistoryPurchasedTicketSeasonSeat);
                 }
             }
         } else {
-            getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
-            request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
+            getListHistoryPurchasedTicketSeasonSeat = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketSeasonSeat();
+            request.setAttribute("getListHistoryPurchasedTicketSeasonSeat", getListHistoryPurchasedTicketSeasonSeat);
             request.setAttribute("getListSeason", SeasonDAO.getINSTANCE().getAllseason());
-            request.setAttribute("getListSeatClass", SeatClassDAO);
-            
+            request.setAttribute("getListSeatClass", SeatClassDAO.getInstance().getListSeatClass());
+            request.setAttribute("getListStand", StandDAO.INSTANCE.getStands(""));
+            request.setAttribute("getListStatus", HistoryPurchasedTicketDAO.getInstance().getListTicketStatus());
         }
 
-        request.getRequestDispatcher("views/manageHistoryPurchasedTicket.jsp").forward(request, response);
+        request.getRequestDispatcher("views/manageHistoryPurchasedTicketSeasonSeat.jsp").forward(request, response);
     }
 
     /**
@@ -111,7 +114,4 @@ public class ManageHistoryPurchasedTicketServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public static void main(String[] args) {
-        System.out.println(HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat());
-    }
 }

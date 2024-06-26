@@ -1,4 +1,10 @@
-<!doctype html>
+<%-- 
+    Document   : instructionsBuyTickets
+    Created on : Jun 25, 2024, 11:57:40 PM
+    Author     : AD
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html class="no-js" lang="en-GB">
     <head>
@@ -8,7 +14,7 @@
         <link rel="canonical" href="https://www.footballticketpad.com/terms-conditions" />
         <link rel="alternate" hreflang="x-default" href="https://www.footballticketpad.com/terms-conditions" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Terms & Conditions</title>
+        <title>Instructions For Buy Tickets </title>
         <meta name="description" content="Take a look at Football Ticket Pad's terms and conditions. Information about delivery, restrictions and payment is available here.">
         <meta name="keywords" content>
         <meta name="author" content>
@@ -335,7 +341,7 @@
                                 <li><a href="/leagues"><div class="text view-all">View all leagues ></div></a></li>
                             </ul>
                         </li>
-                        <li><a href="https://www.footballticketpad.com/contact-us">Contact Us</a></li>
+                        <li><a href="./about">About Us</a></li>
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
@@ -359,7 +365,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="./InstructionsForBuyTickets">
+                                                <a href="">
                                                     Instructions For Buy Tickets 
                                                 </a>
                                             </li>
@@ -964,10 +970,10 @@
             <div class="inner">
                 <div class="left">
                     <div class="details">
-                        <h1>Terms & Conditions</h1>
+                        <h1>Instructions For Buy Tickets</h1>
                         <nav class="breadcrumb hidden-mobile">
                             <ul>
-                                <li><a href="./homePage">Home</a></li><li>Terms & Conditions</li>
+                                <li><a href="./homePage">Home</a></li><li>Instructions For Buy Tickets</li>
                             </ul>
                         </nav>
                     </div>
@@ -979,10 +985,10 @@
         <div class="section">
             <div class="inner">
                 <div class="text">
-                    <p><H2>Terms and condition</H2></p>
-                    <p> 1. BookingFootballTicket does not charge any fees when paying by credit or debit card.</p>
-                    <p> 2. Your bank or credit/debit card company may add transaction fees and we are not responsible for any additional fees from the bank or credit/debit card company your debt.</p>
-                    <p> 3. Immediately after receiving the customer's payment via bank transfer, we will contact you to confirm information and support ticket delivery according to contractual agreement or direct agreement with the customer. If the delivery commitment time has passed and the customer has not received the product, they can contact hotline: 0819215525 for assistance.</p>
+                    <p><H2>Instructions For Buy Tickets</H2></p>
+                    <p> 1. Customers refer to ticket information through the BookingFootballTicket website and place an order.</p>
+                    <p> 2. Each customer corresponds to 01 account, with each phone number, email, ID card/CCCD/Passport, bank account, IP address of different login device, can buy a specified number of tickets for each match.</p>
+                    <p> 3. For ticket purchases without logging in, please pay at the counter.</p>
                     <p>&nbsp;</p>
                 </div>
             </div>
@@ -990,7 +996,7 @@
     </div>
     <style type="text/css">
         .template-generic-page .content .section .inner .text {
-            color: #353535 !important;
+            color:Â #353535 !important;
             line-height: 28px;
             font-size: 16px;
         }
@@ -1205,3 +1211,4 @@
 
 <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="8ffda3b6bf364c1cf05a777d-|49" defer></script></body>
 </html>
+

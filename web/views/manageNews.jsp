@@ -249,7 +249,7 @@ Author     : duong
                                 <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
                                 <a href="manageNews" class="dropdown-item active">Manage News</a>
-                                <a href="manageHistoryPurchasedTicket" class="dropdown-item ">Manage Ticket</a>
+                                <a href="manageHistoryPurchasedTicketMatchSeat" class="dropdown-item ">Manage Ticket</a>
                             </div>
                         </div>
                         <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
@@ -296,6 +296,7 @@ Author     : duong
                                         <th>#</th>
                                         <th>Title</th>
                                         <th>Content</th>
+                                        <th>Conclusion</th>
                                         <th>
                                             <select class="form-select border-0" id="statusSelect" onchange="filterTable()">
                                                 <option selected value="All">All Status</option>
@@ -339,6 +340,16 @@ Author     : duong
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${fn:length(n.conclusion) > 50}">
+                                                        ${fn:substring(n.conclusion, 0, 50)}...
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${n.conclusion}
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                             <td>${n.statusId.statusName}</td>
                                             <td>${n.stateId.stateName}</td>
                                             <td>
@@ -377,6 +388,10 @@ Author     : duong
                             <div class="form-group" style="word-break: break-word">
                                 <label>Content</label>
                                 <textarea name="content" class="form-control" rows="5" required></textarea>
+                            </div>
+                             <div class="form-group" style="word-break: break-word">
+                                <label>Conclusion</label>
+                                <textarea name="conclusion" class="form-control" rows="5" required></textarea>
                             </div>
                             <div class="form-group" style="word-break: break-word">
                                 <label>Image</label>
@@ -474,6 +489,10 @@ Author     : duong
                                 <div class="form-group">
                                     <label>Content</label>
                                     <input name="content" class="form-control" value="${n.content}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Conclusion</label>
+                                    <input name="conclusion" class="form-control" value="${n.conclusion}">
                                 </div>
                                 <div class="form-group">
                                     <label>Image</label><br>

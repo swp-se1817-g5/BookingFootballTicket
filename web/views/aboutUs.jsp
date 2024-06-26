@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html class="no-js" lang="en-GB">
     <head>
@@ -345,9 +346,42 @@
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
-                        
-                        <li><a data-auth="login" href="login?redirectURL=${pageContext.request.requestURL}">Login</a></li>
-
+                        <ul>
+                            <c:choose>
+                                <c:when test="${sessionScope.currentUser==null}">
+                                    <li><a data-auth="login" href="./login">Login</a></li>
+                                    </c:when>
+                                    <c:when test="${sessionScope.currentUser!=null}">
+                                    <li>
+                                        <a data-auth="profile" class="has-child">Profile</a>
+                                        <ul class="advanced" style="min-width: 195px; right: 0;">
+                                            <li>
+                                                <a href="./ProfileServlet">
+                                                    View Profile
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="./changepass">
+                                                    Change Password
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="./InstructionsForBuyTickets">
+                                                    Instructions For Buy Tickets 
+                                                </a>
+                                            </li>
+                                            <c:if test="${sessionScope.currentUser != null}">
+                                                <li>
+                                                    <a href="./logout">
+                                                        Logout
+                                                    </a>
+                                                </li>
+                                            </c:if>
+                                        </ul>
+                                    </li>
+                                </c:when>
+                            </c:choose>
+                        </ul>
                         <li class="sell"><a data-quick-list="search" data-disabled class="sell" href="#">sell</a></li>
                         <div class="cart user-nav">
                             <a href="#">

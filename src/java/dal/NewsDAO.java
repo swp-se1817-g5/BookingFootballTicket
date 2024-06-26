@@ -180,6 +180,7 @@ public class NewsDAO {
         String sql = "UPDATE [News]"
                 + "   SET [title] = ?"
                 + "      ,[content] = ?"
+                + "      ,[conclusion] = ?"
                 + "      ,[image] = ?"
                 + "      ,[statusId] = ?"
                 + "      ,[stateId] = ?"
@@ -189,11 +190,12 @@ public class NewsDAO {
             ps = connect.prepareStatement(sql);
             ps.setString(1, news.getTitle());
             ps.setString(2, news.getContent());
-            ps.setString(3, news.getImage());
-            ps.setInt(4, news.getStatusId().getStatusId());
-            ps.setInt(5, news.getStateId().getStateId());
-            ps.setString(6, news.getUpdateBy());
-            ps.setInt(7, news.getNewsId());
+            ps.setString(3, news.getConclusion());
+            ps.setString(4, news.getImage());
+            ps.setInt(5, news.getStatusId().getStatusId());
+            ps.setInt(6, news.getStateId().getStateId());
+            ps.setString(7, news.getUpdateBy());
+            ps.setInt(8, news.getNewsId());
             m = ps.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);

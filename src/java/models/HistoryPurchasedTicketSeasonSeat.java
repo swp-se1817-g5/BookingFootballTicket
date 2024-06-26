@@ -7,37 +7,52 @@ package models;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 /**
  *
- * @author nguye
+ * @author admin
  */
 public class HistoryPurchasedTicketSeasonSeat {
 
     private int ticketId;
-    private SeasonSeat seasonSeatedId;
-    private User email;
+    private String team1;
+    private String team2;
+    private Date startDate;
+    private Date endDate;
+    private String seasonName;
+    private String seatName;
+    private int quantity;
+    private String standName;
+    private String seatClassName;
+    private String email;
     private String qrCode;
     private BigDecimal price;
-    private int quantity;
-    private boolean status;
+    private TicketStatus statusId;
     private String createdBy;
     private LocalDateTime createdDate;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
-    public HistoryPurchasedTicketSeasonSeat(int ticketId, SeasonSeat seasonSeatedId, User email, String qrCode, BigDecimal price, int quantity, boolean status, String createdBy, LocalDateTime createdDate) {
+    public HistoryPurchasedTicketSeasonSeat() {
+    }
+
+    public HistoryPurchasedTicketSeasonSeat(int ticketId, String team1, String team2, Date startDate, Date endDate, String seasonName, String seatName, int quantity, String standName, String seatClassName, String email, String qrCode, BigDecimal price, TicketStatus statusId, String createdBy, LocalDateTime createdDate) {
         this.ticketId = ticketId;
-        this.seasonSeatedId = seasonSeatedId;
+        this.team1 = team1;
+        this.team2 = team2;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.seasonName = seasonName;
+        this.seatName = seatName;
+        this.quantity = quantity;
+        this.standName = standName;
+        this.seatClassName = seatClassName;
         this.email = email;
         this.qrCode = qrCode;
         this.price = price;
-        this.quantity = quantity;
-        this.status = status;
+        this.statusId = statusId;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
-    }
-
-    public HistoryPurchasedTicketSeasonSeat() {
     }
 
     public int getTicketId() {
@@ -48,19 +63,83 @@ public class HistoryPurchasedTicketSeasonSeat {
         this.ticketId = ticketId;
     }
 
-    public SeasonSeat getSeasonSeatedId() {
-        return seasonSeatedId;
+    public String getTeam1() {
+        return team1;
     }
 
-    public void setSeasonSeatedId(SeasonSeat seasonSeatedId) {
-        this.seasonSeatedId = seasonSeatedId;
+    public void setTeam1(String team1) {
+        this.team1 = team1;
     }
 
-    public User getEmail() {
+    public String getTeam2() {
+        return team2;
+    }
+
+    public void setTeam2(String team2) {
+        this.team2 = team2;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getSeasonName() {
+        return seasonName;
+    }
+
+    public void setSeasonName(String seasonName) {
+        this.seasonName = seasonName;
+    }
+
+    public String getSeatName() {
+        return seatName;
+    }
+
+    public void setSeatName(String seatName) {
+        this.seatName = seatName;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getStandName() {
+        return standName;
+    }
+
+    public void setStandName(String standName) {
+        this.standName = standName;
+    }
+
+    public String getSeatClassName() {
+        return seatClassName;
+    }
+
+    public void setSeatClassName(String seatClassName) {
+        this.seatClassName = seatClassName;
+    }
+
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(User email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -80,20 +159,12 @@ public class HistoryPurchasedTicketSeasonSeat {
         this.price = price;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public TicketStatus getStatusId() {
+        return statusId;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setStatusId(TicketStatus statusId) {
+        this.statusId = statusId;
     }
 
     public String getCreatedBy() {
@@ -114,18 +185,25 @@ public class HistoryPurchasedTicketSeasonSeat {
 
     @Override
     public String toString() {
-        return "HistoryPurchaseTicketSeasonSeat{"
-                + "\n    ticketId=" + ticketId
-                + "\n    seasonSeatedId=" + seasonSeatedId
-                + "\n    email=" + email
-                + "\n    qrCode=" + qrCode
-                + "\n    price=" + price
-                + "\n    quantity=" + quantity
-                + "\n    status=" + status
-                + "\n    createdBy=" + createdBy
-                + "\n    createdDate=" + createdDate
-                + "\n    formatter=" + formatter
-                + "\n}";
+        return "HistoryPurchasedTicketSeasonSeat{\n"
+                + "ticketId=" + ticketId + ",\n"
+                + "team1=" + team1 + ",\n"
+                + "team2=" + team2 + ",\n"
+                + "startDate=" + startDate + ",\n"
+                + "endDate=" + endDate + ",\n"
+                + "seasonName=" + seasonName + ",\n"
+                + "seatName=" + seatName + ",\n"
+                + "quantity=" + quantity + ",\n"
+                + "standName=" + standName + ",\n"
+                + "seatClassName=" + seatClassName + ",\n"
+                + "email=" + email + ",\n"
+                + "qrCode=" + qrCode + ",\n"
+                + "price=" + price + ",\n"
+                + "statusId=" + statusId + ",\n"
+                + "createdBy=" + createdBy + ",\n"
+                + "createdDate=" + createdDate + ",\n"
+                + "formatter=" + formatter + "\n"
+                + '}';
     }
 
 }

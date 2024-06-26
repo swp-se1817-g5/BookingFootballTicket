@@ -2,9 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manage_season;
+package controllers.HistoryPurchasedTicket;
 
+import dal.HistoryPurchasedTicketDAO;
+import dal.MatchDAO;
 import dal.SeasonDAO;
+import dal.SeatClassDAO;
+import dal.StandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,19 +16,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import models.Season;
+import java.util.ArrayList;
+import models.HistoryPurchasedTicketMatchSeat;
 
 /**
  *
- * @author AD
+ * @author nguye
  */
-@WebServlet(name = "CreateSeason", urlPatterns = {"/createSeason"})
-public class CreateSeasonServlet extends HttpServlet {
+@WebServlet(name = "ManageHistoryPurchasedTicketMatchSeatServlet", urlPatterns = {"/manageHistoryPurchasedTicketMatchSeat"})
+public class ManageHistoryPurchasedTicketMatchSeatServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,16 +39,21 @@ public class CreateSeasonServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateSeasonServlet</title>");
+            out.println("<title>Servlet ManageHistoryPuchasedTicketServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateSeasonServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ManageHistoryPuchasedTicketServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
+    }
+
+    public boolean isNullOrBlank(String str) {
+        return str == null || str.trim().isEmpty();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,7 +68,26 @@ public class CreateSeasonServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doPost(request, response);
+        ArrayList<HistoryPurchasedTicketMatchSeat> getListHistoryPurchasedTicketMatchSeat;
+        String go = request.getParameter("go");
+        if (!isNullOrBlank(go)) {
+            if (go.equals("search")) {
+                String valueSearch = request.getParameter("valueSearch").trim();
+                getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().SearchMatchSeat(valueSearch);
+                if (!getListHistoryPurchasedTicketMatchSeat.isEmpty()) {
+                    request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
+                }
+            }
+        } else {
+            getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
+            request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
+            request.setAttribute("getListSeason", SeasonDAO.getINSTANCE().getAllseason());
+            request.setAttribute("getListSeatClass", SeatClassDAO.getInstance().getListSeatClass());
+            request.setAttribute("getListStand", StandDAO.INSTANCE.getStands(""));
+            request.setAttribute("getListStatus", HistoryPurchasedTicketDAO.getInstance().getListTicketStatus());
+        }
+
+        request.getRequestDispatcher("views/manageHistoryPurchasedTicketMatchSeat.jsp").forward(request, response);
     }
 
     /**
@@ -77,31 +101,7 @@ public class CreateSeasonServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String seasonName = request.getParameter("seasonName");
-        String startDate = request.getParameter("startDate");
-        String endDate = request.getParameter("endDate");
-
-        if (!seasonName.isBlank() && !startDate.isBlank() && !endDate.isBlank()) {
-            try {
-                Date start = new SimpleDateFormat("yyyy-MM-dd").parse(startDate);
-                Date end = new SimpleDateFormat("yyyy-MM-dd").parse(endDate);
-
-                if (end.after(start)) {
-                    Season season = new Season(seasonName, start, end);
-                    SeasonDAO.getINSTANCE().createSeason(season);
-                    request.setAttribute("created", "true");
-                } else {
-                    request.setAttribute("created", "false");
-                    request.setAttribute("message", "End date must be after start date!");
-                }
-            } catch (ParseException ex) {
-                Logger.getLogger(CreateSeasonServlet.class.getName()).log(Level.SEVERE, null, ex);
-                request.setAttribute("created", "false");
-            }
-        } else {
-            request.setAttribute("created", "false");
-        }
-        request.getRequestDispatcher("/manageSeason").forward(request, response);
+        processRequest(request, response);
     }
 
     /**

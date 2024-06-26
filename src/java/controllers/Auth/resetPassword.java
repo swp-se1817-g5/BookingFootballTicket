@@ -146,7 +146,7 @@ public class resetPassword extends HttpServlet {
 
     // Set the current user in session and redirect to home
     session.setAttribute("currentUser", DAOUser.getUserByEmail(email));
-//  session.setAttribute("mess", "Reset password successfully!");
+// session.setAttribute("mess", "Reset password successfully!");
     session.setAttribute("resetPassword", true);
     response.sendRedirect("homePage");
 }
