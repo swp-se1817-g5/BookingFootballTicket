@@ -65,7 +65,8 @@ public class SeasonDAO {
         return seasons;
     }
 
-    public void createSeason(Season season) {
+    public boolean createSeason(Season season) {
+        boolean created = false;
         String sql = "INSERT INTO [dbo].[Season]\n"
                 + "           ([seasonName]\n"
                 + "           ,[startDate]\n"
@@ -84,10 +85,14 @@ public class SeasonDAO {
             ps.setString(5, null);
             ps.setString(6, null);
             ps.setBoolean(7, false);
-            rs = ps.executeQuery();
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                created = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return created;
     }
 
     public Season getSeasonbyID(String seasonID) {
