@@ -191,52 +191,7 @@
             <!-- Spinner End -->
 
             <!-- Sidebar Start -->
-            <div class="sidebar pe-4 pb-3">
-                <nav class="navbar bg-light navbar-light">
-                    <a href="index.html" class="navbar-brand mx-4 mb-3">
-                        <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHBOARD</h3>
-                    </a>
-                    <div class="d-flex align-items-center ms-4 mb-4">
-                        <div class="position-relative">
-                            <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                        </div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">Jhon Doe</h6>
-                            <span>Admin</span>
-                        </div>
-                    </div>
-                    <div class="navbar-nav w-100">
-                        <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Managers</a>
-                            <div class="dropdown-menu bg-transparent border-0">
-                                <a href="manageUser" class="dropdown-item active">Manage User</a>
-                                <a href="manageMatch" class="dropdown-item">Manage Match</a>
-                                <a href="manageFootballClub" class="dropdown-item ">Manage Football Club</a>
-                                <a href="manageSeason" class="dropdown-item">Manage Season</a>
-                                <a href="manageStand" class="dropdown-item">Manage Stand</a>
-                                <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
-                                <a href="manageRole" class="dropdown-item">Manage Role</a>
-                                <a href="manageNews" class="dropdown-item">Manage News</a>
-                            </div>
-                        </div>
-                        <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
-                        <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-                        <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
-                        <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                            <div class="dropdown-menu bg-transparent border-0">
-                                <a href="signin.html" class="dropdown-item">Sign In</a>
-                                <a href="signup.html" class="dropdown-item">Sign Up</a>
-                                <a href="404.html" class="dropdown-item">404 Error</a>
-                                <a href="blank.html" class="dropdown-item">Blank Page</a>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
+            <%@include file="side-bar.jsp" %>
             <!-- Sidebar End -->
 
             <div class="content">
@@ -248,14 +203,29 @@
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-9 searchh">
-                                        <!-- Button to open the search modal -->
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchUserModal">
-                                            Open Search
-                                        </button>
-                                    </div>
-                                    <div class="col-sm-3 createe">
-                                        <a type="button" href="#createUserModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Add New User</span></a>
+                                    <div class="col-md-4 searchh">
+                                        <!-- Search User Form -->
+                                        <div>
+                                            <form id="searchForm" name="searchForm" action="searchUser" method="post">
+                                                <div class="body">					
+                                                    <div class="form-row">
+                                                        <div class="form-group col-md-11">
+                                                            <a><i class="material-icons">&#xE8B6;</i></a>
+                                                            <input id="valueSearch" name="valueSearch" type="text" class="form-control" placeholder="Search...">
+                                                        </div>
+                                                        <div class="form-group col-md-1 align-self-end">
+                                                            <input type="submit" class="btn btn-success" value="Search">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div id="error-message" style="color: red;"></div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>  
+                                    <div class="col-md-8 createe d-flex align-items-center justify-content-end">
+                                        <a type="button" href="#createUserModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create User</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -305,12 +275,12 @@
                                                         </a>
                                                         <c:if test="${o.status == true}">
                                                             <a href="#" class="inactive" title="InActive" data-toggle="tooltip" onclick="changeStatus('${o.email}')">
-                                                                <i class="fas fa-user-times" style="color: red;"></i>
+                                                                <i class="fas fa-toggle-on status-icon active" style="color: green;"></i>
                                                             </a>
                                                         </c:if>
                                                         <c:if test="${o.status == false}">
                                                             <a href="#" class="active" title="Active" data-toggle="tooltip" onclick="changeStatus('${o.email}')">
-                                                                <i class="fas fa-user-check" style="color: green;"></i>
+                                                                <i class="fas fa-toggle-off status-icon active"></i>
                                                             </a>
                                                         </c:if>
                                                     </td>
@@ -343,7 +313,7 @@
                     <div class="modal fade" id="userDetailModal">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="updateUser" method="post">
+                                <form action="updateUser" method="post" enctype="multipart/form-data">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="userDetailModalLabel">User Details</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -440,52 +410,6 @@
                                     <div class="modal-footer">
                                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
                                         <input type="submit" class="btn btn-success" value="Add">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Search User Modal -->
-                    <div id="searchUserModal" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <form id="searchForm" name="searchForm" action="searchUser" method="post">
-                                    <div class="modal-header">						
-                                        <h4 class="modal-title">Search User</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                    </div>
-                                    <div class="modal-body">					
-                                        <div class="form-row">
-                                            <div class="form-group col-md-3">
-                                                <label for="searchEmail">Email</label>
-                                                <input name="searchEmail" type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-3">
-                                                <label for="searchName">Name</label>
-                                                <input name="searchName" type="text" class="form-control">
-                                            </div>
-                                            <div class="form-group col-md-3">
-                                                <label for="searchRoleId">User Role</label>
-                                                <select name="searchRoleId" class="form-control">
-                                                    <c:forEach items="${roles}" var="role">
-                                                        <c:if test="${role.roleId != 1}">
-                                                            <option value="${role.roleId}">${role.roleName}</option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-3">
-                                                <label for="searchPhoneNumber">Phone Number</label>
-                                                <input name="searchPhoneNumber" type="text" class="form-control">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <div id="error-message" style="color: red;"></div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-success" value="Search">
                                     </div>
                                 </form>
                             </div>
@@ -594,268 +518,273 @@
 
         <script>
             $(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-
-                var users = [];
+            $('[data-toggle="tooltip"]').tooltip();
+                    var users = [];
             <c:forEach items="${users}" var="user">
-                users.push({email: "${user.email}"});
+            users.push({email: "${user.email}"});
             </c:forEach>
 
-                // Check for duplicate email before submitting the create form
-                $('#createUserForm').submit(function (event) {
-                    var email = $('#emailInput').val().trim();
+            // Check for duplicate email before submitting the create form
+            $('#createUserForm').submit(function (event) {
+            var email = $('#emailInput').val().trim();
                     var emptyEmail = email === '';
                     var duplicate = users.some(user => user.email === email);
                     if (emptyEmail) {
-                        $('#emailError').text('Can not be empty or blank!');
-                        event.preventDefault();
-                    } else if (duplicate) {
-                        $('#emailError').text('Email already exists. Please choose a different email.');
-                        event.preventDefault();
-                    } else {
-                        $('#emailError').text('');
-                    }
-                });
-
-                // Check for duplicate email before submitting the update form
-                $('#updateUserForm').submit(function (event) {
-                    var email = $('#detailEmail').val().trim();
+            $('#emailError').text('Can not be empty or blank!');
+                    event.preventDefault();
+            } else if (duplicate) {
+            $('#emailError').text('Email already exists. Please choose a different email.');
+                    event.preventDefault();
+            } else {
+            $('#emailError').text('');
+            }
+            });
+                    // Check for duplicate email before submitting the update form
+                    $('#updateUserForm').submit(function (event) {
+            var email = $('#detailEmail').val().trim();
                     var originalEmail = users.find(users => user.email === email);
                     var duplicate = users.some(user => user.email === email);
                     if (email !== originalEmail.email && duplicate) {
-                        $('#emailDetailError').text('Email already exists. Please choose a different email.');
-                        event.preventDefault();
-                    } else {
-                        $('#emailDetailError').text('');
-                    }
-                });
-
-                $('#roleFilterHeader').change(function () {
-                    var roleId = $(this).val();
-                    $.ajax({
-                        type: 'POST',
-                        url: 'manageUser',
-                        data: {roleId: roleId},
-                        success: function (data) {
-                            $('#userTable tbody').html(data.html);
-                            $('.pagination').html(data.pagination);
-                            $('.hint-text strong').text(data.usersCount);
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(xhr.responseText);
-                        }
-                    });
-                });
-
-                $('#searchForm').on('submit', function (event) {
-                    $.ajax({
-                        type: 'POST',
-                        url: $(this).attr('action'),
-                        data: $(this).serialize(),
-                        success: function (data) {
-                            $('#searchUserModal').modal('hide');
-                            $('#userTable tbody').html(data.html);
-                            $('.pagination').html(data.pagination);
-                            $('.hint-text strong').text(data.usersCount);
-                        },
-                        error: function (xhr, status, error) {
-                            $('#error-message').text("Error: " + xhr.responseText);
-                        }
-                    });
-                });
+            $('#emailDetailError').text('Email already exists. Please choose a different email.');
+                    event.preventDefault();
+            } else {
+            $('#emailDetailError').text('');
+            }
             });
         </script>
         <script>
-            function update(email, name, phoneNumber, img, roleid, status) {
-                document.getElementById('email').value = email;
-                document.getElementById('name').value = name;
-                document.getElementById('phoneNumber').value = phoneNumber;
-                document.getElementById('role').value = roleid === "2" ? "User" : "Staff"  ;
-                document.getElementById('status').value = status === "true" ? "Active":"InActive";
+                    $(document).ready(function() {
+            $('#searchForm').on('submit', function(event) {
+            event.preventDefault(); // Ngăn chặn gửi biểu mẫu mặc định
 
-                var avatarImg = document.querySelector('.avatarPreview');
-                avatarImg.src = img;
-
-                $('#emailDetailError').text('');
-                $('#nameDetailError').text('');
-                $('#phoneNumberDetailError').text('');
+                    var searchValue = $('#valueSearch').val().trim();
+                    if (searchValue === '') {
+            $('#error-message').text("Search field cannot be empty.");
+                    return;
+            } else {
+            $('#error-message').text(""); // Clear any previous error message
             }
+
+            $.ajax({
+            type: 'POST',
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function(data) {
+                    $('#searchUserModal').modal('hide');
+                            $('#userTable tbody').html(data.html);
+                            $('.pagination').html(data.pagination);
+                            $('.hint-text strong').text(data.usersCount);
+                    },
+                    error: function(xhr, status, error) {
+                    $('#error-message').text("Error: " + xhr.responseText);
+                    }
+            });
+            });
+            });
+                    $('#roleFilterHeader').change(function () {
+            var roleId = $(this).val();
+                    $.ajax({
+                    type: 'POST',
+                            url: 'manageUser',
+                            data: {roleId: roleId},
+                            success: function (data) {
+                            $('#userTable tbody').html(data.html);
+                                    $('.pagination').html(data.pagination);
+                                    $('.hint-text strong').text(data.usersCount);
+                            },
+                            error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            }
+                    });
+            });
+        </script>
+        <script>
+                    function update(email, name, phoneNumber, img, roleid, status) {
+                    document.getElementById('email').value = email;
+                            document.getElementById('name').value = name;
+                            document.getElementById('phoneNumber').value = phoneNumber;
+                            document.getElementById('role').value = roleid === "2" ? "User" : "Staff";
+                            document.getElementById('status').value = status === "true" ? "Active" : "InActive";
+                            var avatarImg = document.querySelector('.avatarPreview');
+                            avatarImg.src = img;
+                            $('#emailDetailError').text('');
+                            $('#nameDetailError').text('');
+                            $('#phoneNumberDetailError').text('');
+                    }
             function changeStatus(email) {
-                if (confirm("Do you want to change the status of this user with email = " + email)) {
-                    location.href = 'changestatusUser?email=' + email;
-                }
+            if (confirm("Do you want to change the status of this user with email = " + email)) {
+            location.href = 'changestatusUser?email=' + email;
+            }
             }
             $('input[name="avatarInput"]').change(function () {
-                previewImage(this);
+            previewImage(this);
             });
-            // Function to preview image from URL
-            function previewImage(input) {
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        $('#avatarPreview').attr('src', e.target.result);
-                    };
-                    reader.readAsDataURL(input.files[0]);
-                }
-            }
+                    // Function to preview image from URL
+                            function previewImage(input) {
+                            if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+                                    reader.onload = function (e) {
+                                    $('#avatarPreview').attr('src', e.target.result);
+                                    };
+                                    reader.readAsDataURL(input.files[0]);
+                            }
+                            }
 
-            function previewAvatar(event) {
-                const reader = new FileReader();
-                reader.onload = function () {
-                    const output = document.querySelector('.avatarPreview');
-                    output.src = reader.result;
-                };
-                reader.readAsDataURL(event.target.files[0]);
-            }
+                    function previewAvatar(event) {
+                    const reader = new FileReader();
+                            reader.onload = function () {
+                            const output = document.querySelector('.avatarPreview');
+                                    output.src = reader.result;
+                            };
+                            reader.readAsDataURL(event.target.files[0]);
+                    }
         </script>
         <script>
 
-            // Validate Create Form
-            function validateEmail() {
-                var email = $('[name="emailInput"]').val().trim();
-                var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-                if (email === '') {
+                    // Validate Create Form
+                    function validateEmail() {
+                    var email = $('[name="emailInput"]').val().trim();
+                            var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                            if (email === '') {
                     $('#emailError').text('Email is required.');
-                    return false;
-                } else if (!emailPattern.test(email)) {
+                            return false;
+                    } else if (!emailPattern.test(email)) {
                     $('#emailError').text('Invalid email format.');
-                    return false;
-                } else {
+                            return false;
+                    } else {
                     $('#emailError').text('');
-                    return true;
-                }
-            }
+                            return true;
+                    }
+                    }
 
-            function validateName() {
-                var name = $('[name="nameInput"]').val().trim();
-                if (name === '') {
+                    function validateName() {
+                    var name = $('[name="nameInput"]').val().trim();
+                            if (name === '') {
                     $('#nameError').text('Name is required.');
-                    return false;
-                } else {
+                            return false;
+                    } else {
                     $('#nameError').text('');
-                    return true;
-                }
-            }
+                            return true;
+                    }
+                    }
 
-            function validatePhoneNumber() {
-                var phoneNumber = $('[name="phoneNumberInput"]').val().trim();
-                var phonePattern = /^[0-9]{10}$/;
-                if (phoneNumber === '') {
+                    function validatePhoneNumber() {
+                    var phoneNumber = $('[name="phoneNumberInput"]').val().trim();
+                            var phonePattern = /^[0-9]{10}$/;
+                            if (phoneNumber === '') {
                     $('#phoneNumberError').text('Phone number is required.');
-                    return false;
-                } else if (!phonePattern.test(phoneNumber)) {
+                            return false;
+                    } else if (!phonePattern.test(phoneNumber)) {
                     $('#phoneNumberError').text('Invalid phone number format.');
-                    return false;
-                } else {
+                            return false;
+                    } else {
                     $('#phoneNumberError').text('');
-                    return true;
-                }
-            }
+                            return true;
+                    }
+                    }
 
-            function validatePassword() {
-                var password = $('[name="passwordInput"]').val().trim();
-                var passwordPattern = /^(?=.*[0-9])(?=.*[A-Z]).{8,20}$/;
-                if (password === '') {
+                    function validatePassword() {
+                    var password = $('[name="passwordInput"]').val().trim();
+                            var passwordPattern = /^(?=.*[0-9])(?=.*[A-Z]).{8,20}$/;
+                            if (password === '') {
                     $('#passwordError').text('Password is required.');
-                    return false;
-                } else if (password.length < 8 || password.length > 20) {
+                            return false;
+                    } else if (password.length < 8 || password.length > 20) {
                     $('#passwordError').text('Password must be between 8 and 20 characters long.');
-                    return false;
-                } else if (!passwordPattern.test(password)) {
+                            return false;
+                    } else if (!passwordPattern.test(password)) {
                     $('#passwordError').text('Password must contain at least one digit and one uppercase letter.');
-                    return false;
-                } else {
+                            return false;
+                    } else {
                     $('#passwordError').text('');
-                    return true;
-                }
-            }
+                            return true;
+                    }
+                    }
 
-            function validateForm() {
-                var emailValid = validateEmail();
-                var nameValid = validateName();
-                var phoneNumberValid = validatePhoneNumber();
-                var passwordValid = validatePassword();
-                return emailValid && nameValid && phoneNumberValid && passwordValid;
-            }
+                    function validateForm() {
+                    var emailValid = validateEmail();
+                            var nameValid = validateName();
+                            var phoneNumberValid = validatePhoneNumber();
+                            var passwordValid = validatePassword();
+                            return emailValid && nameValid && phoneNumberValid && passwordValid;
+                    }
 
 // Validate fields on input
-            $('[name="emailInput"]').on('input', function () {
-                validateEmail();
-            });
-            $('[name="nameInput"]').on('input', function () {
-                validateName();
-            });
-            $('[name="phoneNumberInput"]').on('input', function () {
-                validatePhoneNumber();
-            });
-            $('[name="passwordInput"]').on('input', function () {
-                validatePassword();
-            });
-
+                    $('[name="emailInput"]').on('input', function () {
+                    validateEmail();
+                    });
+                            $('[name="nameInput"]').on('input', function () {
+                    validateName();
+                    });
+                            $('[name="phoneNumberInput"]').on('input', function () {
+                    validatePhoneNumber();
+                    });
+                            $('[name="passwordInput"]').on('input', function () {
+                    validatePassword();
+                    });
 // Validate Update Form Fields on Input
-            $('#updateUserForm input[name="detailEmail"]').on('input', function () {
-                validateUpdateEmail();
-            });
-            $('#updateUserForm input[name="detailName"]').on('input', function () {
-                validateUpdateName();
-            });
-            $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
-                validateUpdatePhoneNumber();
-            });
+                            $('#updateUserForm input[name="detailEmail"]').on('input', function () {
+                    validateUpdateEmail();
+                    });
+                            $('#updateUserForm input[name="detailName"]').on('input', function () {
+                    validateUpdateName();
+                    });
+                            $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
+                    validateUpdatePhoneNumber();
+                    });
+                            function validateUpdateEmail() {
+                            var email = $('#updateUserForm input[name="detailEmail"]').val().trim();
+                                    var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                                    if (email === '') {
+                            $('#emailDetailError').text('Email is required.');
+                                    return false;
+                            } else if (!emailPattern.test(email)) {
+                            $('#emailDetailError').text('Invalid email format.');
+                                    return false;
+                            } else {
+                            $('#emailDetailError').text('');
+                                    return true;
+                            }
+                            }
 
-            function validateUpdateEmail() {
-                var email = $('#updateUserForm input[name="detailEmail"]').val().trim();
-                var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-                if (email === '') {
-                    $('#emailDetailError').text('Email is required.');
-                    return false;
-                } else if (!emailPattern.test(email)) {
-                    $('#emailDetailError').text('Invalid email format.');
-                    return false;
-                } else {
-                    $('#emailDetailError').text('');
-                    return true;
-                }
-            }
-
-            function validateUpdateName() {
-                var name = $('#updateUserForm input[name="detailName"]').val().trim();
-                if (name === '') {
+                    function validateUpdateName() {
+                    var name = $('#updateUserForm input[name="detailName"]').val().trim();
+                            if (name === '') {
                     $('#nameDetailError').text('Name is required.');
-                    return false;
-                } else {
+                            return false;
+                    } else {
                     $('#nameDetailError').text('');
-                    return true;
-                }
-            }
+                            return true;
+                    }
+                    }
 
-            function validateUpdatePhoneNumber() {
-                var phoneNumber = $('#updateUserForm input[name="detailPhoneNumber"]').val().trim();
-                var phonePattern = /^[0-9]{10}$/;
-                if (phoneNumber === '') {
+                    function validateUpdatePhoneNumber() {
+                    var phoneNumber = $('#updateUserForm input[name="detailPhoneNumber"]').val().trim();
+                            var phonePattern = /^[0-9]{10}$/;
+                            if (phoneNumber === '') {
                     $('#phoneNumberDetailError').text('Phone number is required.');
-                    return false;
-                } else if (!phonePattern.test(phoneNumber)) {
+                            return false;
+                    } else if (!phonePattern.test(phoneNumber)) {
                     $('#phoneNumberDetailError').text('Invalid phone number format.');
-                    return false;
-                } else {
+                            return false;
+                    } else {
                     $('#phoneNumberDetailError').text('');
-                    return true;
-                }
-            }
+                            return true;
+                    }
+                    }
 
-            function validateUpdateForm() {
-                var emailValid = validateUpdateEmail();
-                var nameValid = validateUpdateName();
-                var phoneNumberValid = validateUpdatePhoneNumber();
-                return emailValid && nameValid && phoneNumberValid;
-            }
+                    function validateUpdateForm() {
+                    var emailValid = validateUpdateEmail();
+                            var nameValid = validateUpdateName();
+                            var phoneNumberValid = validateUpdatePhoneNumber();
+                            return emailValid && nameValid && phoneNumberValid;
+                    }
 
-            $('#updateUserForm').submit(function (event) {
-                if (!validateUpdateForm()) {
+                    $('#updateUserForm').submit(function (event) {
+                    if (!validateUpdateForm()) {
                     event.preventDefault();
-                }
-            });
+                    }
+                    });
         </script>
 
         <!-- JavaScript Libraries -->

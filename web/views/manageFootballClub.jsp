@@ -235,10 +235,10 @@ Author     : admin
 
                                     <div class="col-md-4">
                                         <form action="manageFootballClub" method="get" id="searchForm">
-                                           
-                                              
-                                                <input id="searchInputForm" type="text" name="search" class="form-control radius-md" placeholder="Search by name&hellip;">
-                                           
+
+
+                                            <input id="searchInputForm" value="${requestScope.search}" type="text" name="search" class="form-control radius-md" placeholder="Search by name&hellip;">
+
                                         </form>
 
                                     </div>
@@ -257,7 +257,7 @@ Author     : admin
                                         <th width="10%">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="footballClubs">
                                     <c:forEach items="${requestScope.footballClubs}" var="o">
                                         <tr>
                                             <td>${o.clubId}</td>
@@ -277,7 +277,7 @@ Author     : admin
                                 <ul class="pagination">
                                     <c:forEach begin="1" end="${requestScope.endPage}" var="i" >
                                         <li class="page-item ${pageIndex == i ? 'active': '' }"><a href="manageFootballClub?pageIndex=${i}&search=${search}" class="page-link">${i}</a></li>
-                                        </c:forEach>
+                                    </c:forEach>
                                 </ul>
                             </div>
                         </div>
@@ -359,27 +359,27 @@ Author     : admin
                                 <textarea id="description" name="description" maxlength="255" type="text" class="form-control"></textarea>
                                 <span id="descriptionError" class="text-danger"></span>
                             </div>
-                              <div class="row">
-                               <div class="form-group col-sm-6">
-                                <label>Created By</label>
-                                <input id="createdBy" readonly="" class="form-control">
-                            </div>
-                            <div class="form-group col-sm-6">
-                                <label>Created Date</label>
-                                <input id="createdDate" readonly="" class="form-control">
-                            </div> 
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label>Created By</label>
+                                    <input id="createdBy" readonly="" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>Created Date</label>
+                                    <input id="createdDate" readonly="" class="form-control">
+                                </div> 
                             </div>
                             <div class="row">
-                            <div class="form-group col-sm-6">
-                                <label>Updated By</label>
-                                <input id="updatedBy" readonly="" class="form-control">
+                                <div class="form-group col-sm-6">
+                                    <label>Updated By</label>
+                                    <input id="updatedBy" readonly="" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>Last Updated Date</label>
+                                    <input id="lastUpdatedDate" readonly="" class="form-control">
+                                </div>    
                             </div>
-                            <div class="form-group col-sm-6">
-                                <label>Last Updated Date</label>
-                                <input id="lastUpdatedDate" readonly="" class="form-control">
-                            </div>    
-                            </div>
-                            
+
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -457,6 +457,30 @@ Author     : admin
 
         </script>
 
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                // Bắt sự kiện khi người dùng nhập liệu vào ô search
+                $("#searchInputForm").on("keyup", function () {
+                    var searchValue = $(this).val(); // Lấy giá trị từ ô search
+
+                    // Gửi yêu cầu Ajax
+                    $.ajax({
+                        url: "manageFootballClub", // URL của Servlet xử lý Ajax (cần thay đổi nếu khác)
+                        type: "GET",
+                      
+                        data: {
+                            search: searchValue // Dữ liệu gửi đi là giá trị search
+                        },
+                        success: function (data) {
+                            // Cập nhật phần tử có id là footballClubs với dữ liệu trả về từ Ajax
+                            $("#footballClubs").html($(data).find('#footballClubs').html());
+                        }
+                    });
+                });
+            });
+        </script>
+
         <!--script for create and update-->
         <script>
             $(document).ready(function () {
@@ -524,7 +548,7 @@ Author     : admin
                 document.getElementById('clubName').value = clubName;
                 document.getElementById('description').value = description;
                 document.getElementById('img').src = img;
-                
+
                 document.getElementById('createdBy').value = createdBy;
                 document.getElementById('createdDate').value = createdDate;
                 document.getElementById('updatedBy').value = updatedBy;

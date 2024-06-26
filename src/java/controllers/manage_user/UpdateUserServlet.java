@@ -8,11 +8,14 @@ import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import models.User;
 
 /**
@@ -20,7 +23,14 @@ import models.User;
  * @author Vinh
  */
 @WebServlet(name = "UpdateUserServlet", urlPatterns = {"/updateUser"})
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+    maxFileSize = 1024 * 1024 * 10,      // 10MB
+    maxRequestSize = 1024 * 1024 * 50    // 50MB
+)
 public class UpdateUserServlet extends HttpServlet {
+
+    private static final String IMAGE_FOLDER = "/images/avatars/";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -93,9 +103,11 @@ public class UpdateUserServlet extends HttpServlet {
         if (phoneNumber != null) {
             phoneNumber = phoneNumber.trim();
         }
-
-        String avatar = request.getParameter("detailAvatar");
-
+        Part part = request.getPart("detailAvatar");
+        String avatar = currentUser.getAvatar();
+        if (part != null && part.getSize() > 0) {
+            avatar = handleFileUpload(part, request);
+        }
         // Check if the necessary parameters are present and not blank
         if (email != null && !email.isBlank() && name != null && !name.isBlank() && phoneNumber != null && !phoneNumber.isBlank()) {
             User user = UserDAO.getINSTANCE().getUserByEmail(email);
@@ -107,6 +119,21 @@ public class UpdateUserServlet extends HttpServlet {
             updated = UserDAO.getINSTANCE().updateUser(user);
         }
         response.sendRedirect("manageUser?updated=" + updated);
+    }
+
+    private String handleFileUpload(Part part, HttpServletRequest request) throws ServletException, IOException {
+        String imagePath = null;
+        if ((part != null) && (!part.getSubmittedFileName().trim().isEmpty()) && (part.getSubmittedFileName() != null)) {
+            String path = request.getServletContext().getRealPath(IMAGE_FOLDER);
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File image = new File(dir, part.getSubmittedFileName());
+            part.write(image.getAbsolutePath());
+            imagePath = request.getContextPath() + IMAGE_FOLDER + image.getName();
+        }
+        return imagePath;
     }
 
     /**

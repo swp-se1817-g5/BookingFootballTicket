@@ -158,11 +158,11 @@ public class ManageUserServlet extends HttpServlet {
                 if (user.isStatus()) {
                     htmlResponse.append("<a href=\"#\" class=\"inactive\" title=\"InActive\" data-toggle=\"tooltip\" ")
                             .append("onclick=\"changeStatus('").append(user.getEmail()).append("', event)\">")
-                            .append("<i class=\"fas fa-user-times\" style=\"color: red;\"></i></a>");
+                            .append("<i class=\"fas fa-toggle-on status-icon active\" style=\"color: green;\"></i></a>");
                 } else {
                     htmlResponse.append("<a href=\"#\" class=\"active\" title=\"Active\" data-toggle=\"tooltip\" ")
                             .append("onclick=\"changeStatus('").append(user.getEmail()).append("', event)\">")
-                            .append("<i class=\"fas fa-user-check\" style=\"color: green;\"></i></a>");
+                            .append("<i class=\"fas fa-toggle-off status-icon active\"></i></a>");
                 }
                 htmlResponse.append("</td>");
                 htmlResponse.append("</tr>");

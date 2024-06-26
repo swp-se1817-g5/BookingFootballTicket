@@ -63,7 +63,7 @@ public class DeleteNewsServlet extends HttpServlet {
         int newsId;
         try {
             newsId = Integer.parseInt(request.getParameter("newsId"));
-            session.setAttribute("deleted", NewsDAO.getInstance().deleteNews(newsId));
+            session.setAttribute("newsDeleted", NewsDAO.getInstance().deleteNews(newsId));
         } catch (NumberFormatException e) {
             e.printStackTrace();
         }
