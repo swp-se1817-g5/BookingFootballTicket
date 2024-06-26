@@ -13,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -56,6 +57,7 @@ public class DeleteFootballClubServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+        HttpSession session = request.getSession();
         boolean fcDeleted = false;
         try {
             int clubId = Integer.parseInt(request.getParameter("clubId"));
@@ -63,7 +65,8 @@ public class DeleteFootballClubServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        response.sendRedirect("manageFootballClub?fcDeleted=" + fcDeleted);
+        session.setAttribute("fcDeleted", fcDeleted);
+        response.sendRedirect("manageFootballClub");
         
         
     } 

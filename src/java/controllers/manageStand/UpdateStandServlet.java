@@ -82,7 +82,7 @@ public class UpdateStandServlet extends HttpServlet {
             stand.setStandId(standId);
             stand.setStandName(standName);
             stand.setUpdatedBy(user.getEmail());
-            updated = StandDAO.INSTANCE.updateStand(stand);
+            updated = StandDAO.getInstance().updateStand(stand);
         } catch (Exception e) {
             e.printStackTrace();
         }

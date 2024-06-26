@@ -72,7 +72,7 @@ public class ManageStandServlet extends HttpServlet {
         }
         String search = request.getParameter("search") == null ? "" : request.getParameter("search").trim() ;
         
-        request.setAttribute("stands", StandDAO.INSTANCE.getStands(search));
+        request.setAttribute("stands", StandDAO.getInstance().getStands(search));
         request.setAttribute("url", "manageStand");
         request.getRequestDispatcher("views/manageStand.jsp").forward(request, response);
         

@@ -65,7 +65,8 @@ public class SeasonDAO {
         return seasons;
     }
 
-    public void createSeason(Season season) {
+    public boolean createSeason(Season season) {
+        boolean created = false;
         String sql = "INSERT INTO [dbo].[Season]\n"
                 + "           ([seasonName]\n"
                 + "           ,[startDate]\n"
@@ -84,10 +85,14 @@ public class SeasonDAO {
             ps.setString(5, null);
             ps.setString(6, null);
             ps.setBoolean(7, false);
-            rs = ps.executeQuery();
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                created = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return created;
     }
 
     public Season getSeasonbyID(String seasonID) {
@@ -162,6 +167,7 @@ public class SeasonDAO {
         }
         return 0;
     }
+
     public boolean deleteSeason(int seasonId) {
         boolean deleted = false;
         String sql = "UPDATE [Season] SET isDeleted = 1 WHERE seasonId = ?";
@@ -177,8 +183,8 @@ public class SeasonDAO {
         return deleted;
     }
 
-    public int updateSeason(Season season) {
-        int n = 0;
+    public boolean updateSeason(Season season) {
+        boolean n = false;
         String sql = "UPDATE [Season]"
                 + "   SET [seasonName] = ?"
                 + "      ,[startDate] = ?"
@@ -192,7 +198,7 @@ public class SeasonDAO {
             ps.setDate(3, new java.sql.Date(season.getEndDate().getTime()));
             ps.setString(4, season.getUpdatedBy());
             ps.setInt(5, season.getSeasonId());
-            n = ps.executeUpdate();
+            n = ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
         }

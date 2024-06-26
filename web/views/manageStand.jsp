@@ -245,7 +245,7 @@ Author     : admin
                             <table class="table table-striped table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>ID</th>
                                         <th>Stand Name</th>
                                         <th>Actions</th>
                                     </tr>

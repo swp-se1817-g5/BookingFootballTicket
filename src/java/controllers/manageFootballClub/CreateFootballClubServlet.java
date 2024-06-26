@@ -34,7 +34,6 @@ public class CreateFootballClubServlet extends HttpServlet {
 
         try {
             Part part = request.getPart("image");
-
             String img = (part != null && part.getSize() > 0) ? handleFileUpload(part, request) : "";
             String clubName = request.getParameter("clubName").trim();
             String description = request.getParameter("description");
@@ -51,7 +50,8 @@ public class CreateFootballClubServlet extends HttpServlet {
         } catch (IOException | ServletException e) {
             e.printStackTrace();
         }
-        response.sendRedirect("manageFootballClub?fcCreated=" + fcCreated);
+        session.setAttribute("fcCreated", fcCreated);
+        response.sendRedirect("manageFootballClub");
 
     }
 
