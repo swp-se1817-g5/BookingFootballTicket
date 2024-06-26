@@ -899,6 +899,8 @@
             console.log("Performing search with keyword: ", document.getElementById("searchKeyword").value.trim());
             // Sau đó bạn có thể thực hiện các hành động khác như gửi request lên server, cập nhật giao diện, vv...
         }
+        
+        
     </script>
 
     <!-- JavaScript Libraries -->
