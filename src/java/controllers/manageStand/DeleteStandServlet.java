@@ -60,7 +60,7 @@ public class DeleteStandServlet extends HttpServlet {
         boolean deleted = false;
         try {
             int standId = Integer.parseInt(request.getParameter("standId"));
-            deleted = StandDAO.INSTANCE.deleteStand(standId);
+            deleted = StandDAO.getInstance().deleteStand(standId);
         } catch (Exception e) {
             e.printStackTrace();
         }

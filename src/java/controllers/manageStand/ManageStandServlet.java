@@ -47,13 +47,7 @@ public class ManageStandServlet extends HttpServlet {
         }
     } 
     
-    
-//    private void testUser(HttpServletRequest request) throws ServletException, IOException{
-//        HttpSession session = request.getSession();
-//        User user = new User();
-//        user.setEmail("quachthekiet@gmail.com");
-//        session.setAttribute("currentUser", user);
-//    }
+
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
@@ -66,7 +60,7 @@ public class ManageStandServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-//        testUser(request);
+
         if(request.getParameter("standCreated") != null) {
             request.setAttribute("created", "true".equals(request.getParameter("standCreated")));
         }
@@ -78,8 +72,8 @@ public class ManageStandServlet extends HttpServlet {
         }
         String search = request.getParameter("search") == null ? "" : request.getParameter("search").trim() ;
         
-        request.setAttribute("stands", StandDAO.INSTANCE.getStands(search));
-       
+        request.setAttribute("stands", StandDAO.getInstance().getStands(search));
+        request.setAttribute("url", "manageStand");
         request.getRequestDispatcher("views/manageStand.jsp").forward(request, response);
         
     } 

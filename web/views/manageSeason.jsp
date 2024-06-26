@@ -505,11 +505,11 @@
                 var toast = $('#toastNotification');
                 if (deleted === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Stand deleted successfully.');
+                    toast.find('#toastMessage').text('Season deleted successfully.');
                     toast.addClass('success').removeClass('error');
                 } else if (deleted === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to delete stand.');
+                    toast.find('#toastMessage').text('Failed to delete season.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -899,6 +899,8 @@
             console.log("Performing search with keyword: ", document.getElementById("searchKeyword").value.trim());
             // Sau đó bạn có thể thực hiện các hành động khác như gửi request lên server, cập nhật giao diện, vv...
         }
+        
+        
     </script>
 
     <!-- JavaScript Libraries -->

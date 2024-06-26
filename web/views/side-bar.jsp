@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -34,13 +35,14 @@
                         <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Managers</a>
                         <div class="dropdown-menu bg-transparent border-0">
                             <a href="manageUser" class="dropdown-item">Manage User</a>
-                            <a href="manageMatch" class="dropdown-item active">Manage Match</a>
-                            <a href="manageFootballClub" class="dropdown-item">Manage Football Club</a>
+                            <a href="manageMatch" class="dropdown-item ">Manage Match</a>
+                            <a href="manageFootballClub" class="dropdown-item ${requestScope.url == "manageFootballClub" ? "active" : " "}">Manage Football Club</a>
                             <a href="manageSeason" class="dropdown-item">Manage Season</a>
-                            <a href="manageStand" class="dropdown-item">Manage Stand</a>
+                            <a href="manageStand" class="dropdown-item ${requestScope.url == "manageStand" ? "active" : " "}">Manage Stand</a>
                             <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
                             <a href="manageRole" class="dropdown-item">Manage Role</a>
                             <a href="manageNews" class="dropdown-item">Manage News</a>
+                            <a href="manageHistoryPurchasedTicketMatchSeat" class="dropdown-item">Manage History Purchased Ticket</a>
                         </div>
                     </div>
                     <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
