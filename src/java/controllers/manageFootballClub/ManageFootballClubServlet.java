@@ -97,6 +97,8 @@ public class ManageFootballClubServlet extends HttpServlet {
         request.setAttribute("pageIndex", pageIndex);
         request.setAttribute("search", search);
         request.setAttribute("footballClubs", FootballClubDAO.getInstance().paggingFootballClubs(pageIndex, NUM_OF_RECORDS, search));
+        request.setAttribute("url", "manageFootballClub");
+        
         request.getRequestDispatcher("views/manageFootballClub.jsp").forward(request, response);
     }
 

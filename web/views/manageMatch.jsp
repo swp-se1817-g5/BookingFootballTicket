@@ -239,7 +239,7 @@
                             <table class="table table-striped table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>ID</th>
                                         <th>FC-1</th>
                                         <th>FC-2</th>
                                         <th>Start time</th>

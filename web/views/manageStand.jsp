@@ -220,52 +220,7 @@ Author     : admin
             <!-- Spinner End -->
 
             <!-- Sidebar Start -->
-            <div class="sidebar pe-4 pb-3">
-                <nav class="navbar bg-light navbar-light">
-                    <a href="index.html" class="navbar-brand mx-4 mb-3">
-                        <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHBOARD</h3>
-                    </a>
-                    <div class="d-flex align-items-center ms-4 mb-4">
-                        <div class="position-relative">
-                            <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                        </div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">Jhon Doe</h6>
-                            <span>Admin</span>
-                        </div>
-                    </div>
-                    <div class="navbar-nav w-100">
-                        <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Managers</a>
-                            <div class="dropdown-menu bg-transparent border-0">
-                                <a href="manageUser" class="dropdown-item">Manage User</a>
-                                <a href="manageMatch" class="dropdown-item">Manage Match</a>
-                                <a href="manageFootballClub" class="dropdown-item">Manage Football Club</a>
-                                <a href="manageSeason" class="dropdown-item">Manage Season</a>
-                                <a href="manageStand" class="dropdown-item active">Manage Stand</a>
-                                      <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
-                                <a href="manageRole" class="dropdown-item">Manage Role</a>
-                                <a href="manageNews" class="dropdown-item">Manage News</a>
-                            </div>
-                        </div>
-                        <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
-                        <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-                        <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
-                        <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                            <div class="dropdown-menu bg-transparent border-0">
-                                <a href="signin.html" class="dropdown-item">Sign In</a>
-                                <a href="signup.html" class="dropdown-item">Sign Up</a>
-                                <a href="404.html" class="dropdown-item">404 Error</a>
-                                <a href="blank.html" class="dropdown-item">Blank Page</a>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
+            <%@include file="side-bar.jsp" %>
             <!-- Sidebar End -->
 
             <div class="content">
@@ -277,19 +232,13 @@ Author     : admin
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><h2><b>Stand</b> Management</h2></div>
-
-                                    <div class="col-sm-4 searchh">
+                                    <div class="col-md-4">
                                         <form action="manageStand" method="get" id="searchForm">
-                                            <div class="search-box">
-                                                <i class="material-icons">&#xE8B6;</i>
-                                                <input id="searchInputForm" name="search" type="text" class="form-control" placeholder="Search by name&hellip;">
-                                            </div>
+                                            <input id="searchInputForm" name="search" type="text" class="form-control radius-md" placeholder="Search by name&hellip;">
                                         </form>
-
                                     </div>
-                                    <div class="col-sm-4 createe">
-                                        <a href="#createStandModal" class="btn btn-success d-flex align-items-center"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create Stand</span></a>
+                                    <div class="col-sm-8">
+                                        <a type="button" href="#createStandModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create Stand</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -307,9 +256,8 @@ Author     : admin
                                             <td>${o.standId}</td>
                                             <td>${o.standName}</td>
                                             <td>
-                                                <a onclick="viewDetail('${o.standId}', '${o.standName}', '${o.createdBy}', '${o.createdDate}', '${o.updatedBy}', '${o.lastUpdatedDate}')" href="#viewDetailModal" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
-                                                <a onclick="update('${o.standId}', '${o.standName}')"  href="#updateStandModal" class="edit" title="E'${o.standId}', '${o.standName}'dit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
-                                                <a onclick="doDelete(${o.standId})" href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
+                                                <a onclick="update('${o.standId}', '${o.standName}', '${o.createdBy}', '${o.createdDate}', '${o.updatedBy}', '${o.lastUpdatedDate}')"  href="#updateStandModal" class="edit" title="E'${o.standId}', '${o.standName}'dit" data-toggle="modal"><i class="fa fa-eye" style="color: grey"></i></a>
+                                                <a onclick="doDelete(${o.standId})" href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="fa fa-times-circle"></i></a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -321,50 +269,6 @@ Author     : admin
                 </div>      
             </div>      
         </div>    
-
-        <div id="viewDetailModal" class="modal fade">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">						
-                        <h4 class="modal-title">Stand Information</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label>Stand ID</label>
-                            <input id="standDetailId" readonly type="number" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Stand Name</label>
-                            <input id="standDetailName" maxlength="50" type="text" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Created By</label>
-                            <input id="createdBy" readonly="" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Created Date</label>
-                            <input id="createdDate" readonly="" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Updated By</label>
-                            <input id="updatedBy" readonly="" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Last Updated Date</label>
-                            <input id="lastUpdatedDate" readonly="" class="form-control" required>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer">
-                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                    </div>
-
-                </div>
-            </div>
-        </div>        
-
-
         <div id="createStandModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -379,15 +283,6 @@ Author     : admin
                                 <input id="standNameInput" name="standName" type="text" class="form-control" maxlength="50" required>
                                 <span id="standNameInputError" class="text-danger"></span> 
                             </div>
-                            <!--                            <div class="form-group">
-                                                            <label>Price (VND)</label>
-                                                            <input name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Quantity (Seat)</label>
-                                                            <input name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
-                                                        </div>-->
-
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -418,16 +313,26 @@ Author     : admin
                                 <input id="standName" name="standName" maxlength="50" type="text" class="form-control" required>
                                 <span id="standNameError" class="text-danger"></span>
                             </div>
-                            <!--                            <div class="form-group">
-                                                            <label>Price (VND)</label>
-                                                            <input id="price" name="price" type="number" min="0" max="10000000" step="any" class="form-control" required>
-                                                            <span id="priceError" class="text-danger"></span>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label>Quantity (Seat)</label>
-                                                            <input id="quantity" name="quantity" type="number" class="form-control" min="0" max="10000" step="1" required>
-                                                            <span id="quantityError" class="text-danger"></span>
-                                                        </div>-->
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label>Created By</label>
+                                    <input id="createdBy" readonly="" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>Created Date</label>
+                                    <input id="createdDate" readonly="" class="form-control">
+                                </div> 
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-sm-6">
+                                    <label>Updated By</label>
+                                    <input id="updatedBy" readonly="" class="form-control">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>Last Updated Date</label>
+                                    <input id="lastUpdatedDate" readonly="" class="form-control">
+                                </div>    
+                            </div>
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -452,7 +357,7 @@ Author     : admin
         <script>
             //update
             $(document).ready(function () {
-                var updated = '<%= request.getAttribute("updated") %>';
+                var updated = '<%= request.getAttribute("updated")%>';
                 if (updated !== 'null' && updated !== '') {
                     var toast = $('#toastNotification');
                     if (updated === "true") {
@@ -470,7 +375,7 @@ Author     : admin
 
             //create
             $(document).ready(function () {
-                var created = '<%= request.getAttribute("created") %>';
+                var created = '<%= request.getAttribute("created")%>';
                 if (created !== 'null' && created !== '') {
                     var toast = $('#toastNotification');
                     if (created === "true") {
@@ -488,7 +393,7 @@ Author     : admin
 
             //delete
             $(document).ready(function () {
-                var deleted = '<%= request.getAttribute("deleted") %>';
+                var deleted = '<%= request.getAttribute("deleted")%>';
                 if (deleted !== 'null' && deleted !== '') {
                     var toast = $('#toastNotification');
                     if (deleted === "true") {
@@ -519,9 +424,9 @@ Author     : admin
 
                 // Check for duplicate stand name and empty before submitting the create form
                 $('#createStandForm').submit(function (event) {
-                    var standName = $('#standNameInput').val().trim();
+                    var standName = $('#standNameInput').val().trim().toLowerCase();
                     var empty = standName === "";
-                    var duplicate = stands.some(stand => stand.standName === standName);
+                    var duplicate = stands.some(stand => stand.standName.toLowerCase() === standName);
                     if (empty) {
                         $('#standNameInputError').text('Can not be empty or blank!');
                         event.preventDefault();
@@ -536,14 +441,14 @@ Author     : admin
                 // Check for duplicate stand name before submitting the update form
                 $('#updateStandForm').submit(function (event) {
                     var standId = $('#standId').val();
-                    var standName = $('#standName').val().trim();
+                    var standName = $('#standName').val().trim().toLowerCase();
                     var empty = standName === "";
                     var originalStand = stands.find(stand => stand.standId == standId);
-                    var duplicate = stands.some(stand => stand.standName === standName && stand.standId != standId);
+                    var duplicate = stands.some(stand => stand.standName.toLowerCase() === standName && stand.standId != standId);
                     if (empty) {
                         $('#standNameError').text('Can not be empty or blank!');
                         event.preventDefault();
-                    } else if (standName !== originalStand.standName && duplicate) {
+                    } else if (standName !== originalStand.standName.toLowerCase() && duplicate) {
                         $('#standNameError').text('Stand name already exists. Please choose a different name.');
                         event.preventDefault();
                     } else {
@@ -561,30 +466,22 @@ Author     : admin
                 });
             });
 
-            function viewDetail(standId, standName, createdBy, createdDate, updatedBy, lastUpdatedDate) {
-                document.getElementById('standDetailId').value = standId;
-                document.getElementById('standDetailName').value = standName;
-                document.getElementById('createdBy').value = createdBy;
-                document.getElementById('createdDate').value = createdDate;
-                document.getElementById('updatedBy').value = updatedBy;
-                document.getElementById('lastUpdatedDate').value = lastUpdatedDate;
-            }
-
             function doDelete(standId) {
                 if (confirm("Do you want to delete stand with id = " + standId))
                     location.href = 'deleteStand?standId=' + standId;
             }
 
-            function update(standId, standName, price, quantity) {
+            function update(standId, standName, createdBy, createdDate, updatedBy, lastUpdatedDate) {
                 document.getElementById('standId').value = standId;
                 document.getElementById('standName').value = standName;
-                document.getElementById('price').value = price;
-                document.getElementById('quantity').value = quantity;
+                document.getElementById('createdBy').value = createdBy;
+                document.getElementById('createdDate').value = createdDate;
+                document.getElementById('updatedBy').value = updatedBy;
+                document.getElementById('lastUpdatedDate').value = lastUpdatedDate;
+
                 // Clear error messages when opening the modal
-                $('#standIdError').text('');
                 $('#standNameError').text('');
-                $('#priceError').text('');
-                $('#quantityError').text('');
+
             }
         </script>
 
