@@ -313,9 +313,6 @@
                                     <img src="https://www.footballticketpad.com/uploads/Germany.png" alt="Germany" />
                                     <img src="https://www.footballticketpad.com/uploads/scotland-hd-logo-124124.png" alt="Scotland" />
                                 </div><div class="details">
-
-
-
                                     <h1>Germany vs Scotland</h1>
                                     <nav class="breadcrumb hidden-s-view">
                                         <ul>
@@ -539,7 +536,8 @@
                                             const svg = document.getElementById('svgStadium');
                                             const paths = svg.querySelectorAll('path');
                                             const items = document.querySelectorAll('.item');
-
+                                            const priceFilter = document.getElementById('priceFilter');
+                                            const availabilityFilter = document.getElementById('availabilityFilter');
 
                                             // Add initial classes to all paths
                                             paths.forEach(function (path) {
@@ -568,31 +566,59 @@
                                                 path.addEventListener('click', function () {
                                                     var sectionName = this.getAttribute('data-section');
                                                     document.querySelectorAll('path[data-section="' + sectionName + '"]')
-                                                            .forEach(item => {
-                                                                item.classList.toggle('clicked');
+                                                            .forEach(item => item.classList.toggle('clicked'));
 
-                                                                // Check if the path has the class 'clicked' and log a message
-                                                                if (item.classList.contains('clicked')) {
-                                                                    items.forEach(item => {
-                                                                        const itemTicketType = item.getAttribute('data-ticket-type');
-                                                                        if (itemTicketType === sectionName) {
-                                                                            item.style.display = 'block';
-                                                                        }
-                                                                    });
-                                                                } else {
-                                                                    items.forEach(item => {
-                                                                        const itemTicketType = item.getAttribute('data-ticket-type');
-                                                                        if (itemTicketType === sectionName) {
-                                                                            item.style.display = 'none';
-                                                                        }
-                                                                    });
-                                                                }
-                                                            });
+                                                    // Filter and sort items based on the clicked path and filters
+                                                    applyFilters();
                                                 });
                                             });
-                                        });
 
+                                            // Add event listeners to filters
+                                            priceFilter.addEventListener('change', applyFilters);
+                                            availabilityFilter.addEventListener('change', applyFilters);
+
+                                            function applyFilters() {
+                                                // Get the currently clicked sections
+                                                const clickedSections = Array.from(paths).filter(path => path.classList.contains('clicked'))
+                                                        .map(path => path.getAttribute('data-section'));
+                                                // Filter and sort items based on the clicked sections and selected filters
+                                                filterAndSortSeats(clickedSections, priceFilter.value, availabilityFilter.value);
+                                            }
+
+                                            function filterAndSortSeats(sectionNames, priceOrder, availabilityOrder) {
+                                                // Filter items based on the selected sections
+                                                let filteredItems = Array.from(items).filter(item => {
+                                                    const itemTicketType = item.getAttribute('data-ticket-type');
+                                                    return sectionNames.includes(itemTicketType);
+                                                });
+
+                                                // Sort items by price if a sorting order is selected
+                                                if (priceOrder !== 'none') {
+                                                    filteredItems.sort((a, b) => {
+                                                        const priceA = parseInt(a.getAttribute('data-sort-price'));
+                                                        const priceB = parseInt(b.getAttribute('data-sort-price'));
+                                                        return priceOrder === 'asc' ? priceA - priceB : priceB - priceA;
+                                                    });
+                                                }
+
+                                                // Sort items by availability if a sorting order is selected
+                                                if (availabilityOrder !== 'none') {
+                                                    filteredItems.sort((a, b) => {
+                                                        const availabilityA = parseInt(a.getAttribute('data-sort-availability'));
+                                                        const availabilityB = parseInt(b.getAttribute('data-sort-availability'));
+                                                        return availabilityOrder === 'asc' ? availabilityA - availabilityB : availabilityB - availabilityA;
+                                                    });
+                                                }
+
+                                                // Display filtered and sorted items
+                                                items.forEach(item => item.style.display = 'none');
+                                                filteredItems.forEach(item => item.style.display = 'block');
+                                            }
+                                        });
                                     </script>
+
+
+
                                     </defs>
                                     <%--Stand C--%>
                                     <path data-section="fans-side" data-block="4" data-tags="" d="M294,405s-43.585,33.376-66.465,76.174l-81.853-34.1S175,395.162,251.139,344.783Z"/>
@@ -790,62 +816,7 @@
                                 </div>
                             </div>
                             <div class="right waiting-listing">
-                                <div class="listing-sort hidden-s-view">
-                                    <div class="number-of-seats">
-                                        <select name="number_of_seats" id="number_of_seats">
-                                            <option value="-1"> Select Tickets</option >
-                                            <option value="1"> 1 Ticket</option >
-                                            <option value="2"> 2 Ticket</option >
-                                            <option value="3"> 3 Ticket</option >
-                                            <option value="4"> 4 Ticket</option >
-                                            <option value="5"> 5+ Ticket</option >
-                                        </select>
-                                        <span class="ftp-down-chevron"></span>
-                                    </div>
-                                    <div class="seated-together">
-                                        <div class="title">Seated together</div>
-                                        <label class="switch">
-                                            <input type="checkbox" name="seated_together" class="switch_preference">
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </div>
-                                    <div class="filters_btn" id="show_filters">
-                                        <span class="ftp-filters"></span>
-                                        Filters
-                                        <span class="ftp-down-chevron"></span>
-                                    </div>
-                                    <div class="filters-modal">
-                                        <div class="inner">
-                                            <span class="ftp-close"></span>
-                                            <div class="title">Filter tickets</div>
-                                            <div class="half-width">
-                                                <label for>Seat features</label>
-                                                <select name="seating_section" id="seating_section" class="seating_section_web">
-                                                    <option value="any">Any</option>
-                                                    <option value="category-1">Category 1</option>
-                                                    <option value="category-2">Category 2</option>
-                                                    <option value="category-3">Category 3</option>
-                                                    <option value="longside-lower-tier">Longside Lower Tier</option>
-                                                    <option value="prime-seats">Prime Seats</option>
-                                                    <option value="shortside-upper-tier">Shortside Upper Tier</option>
-                                                </select>
-                                                <span class="ftp-down-chevron"></span>
-                                            </div>
-                                            <div class="half-width">
-                                                <label for>Delivery Options</label>
-                                                <select name="delivery_option" id="delivery_option">
-                                                    <option value="-1">Select</option>
-                                                    <option value="0">Mail</option>
-                                                    <option value="1">Collect on match day</option>
-                                                </select>
-                                                <span class="ftp-down-chevron"></span>
-                                            </div>
-                                            <div class="full-width">
-                                                <div class="c2a_btn">Apply filters</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                 <div class="listing-holder hidden-s-view">
                                     <c:forEach items="${seatByMatch}" var="seatMatch">
                                         <div class="listing-inner">
@@ -853,8 +824,8 @@
                                                  data-section="${seatMatch.seatarea.seatClass.seatClassName}" 
                                                  data-sort-original="1" 
                                                  data-sort-section="1" 
-                                                 data-sort-price="772.50" 
-                                                 data-sort-availability="2" 
+                                                 data-sort-price="${seatMatch.price}" 
+                                                 data-sort-availability="${seatMatch.availability}" 
                                                  data-delivery="0" 
                                                  data-ticket-type="${seatMatch.seatarea.seatClass.seatClassName}" 
                                                  data-preference="0" 
@@ -869,14 +840,8 @@
                                                     <div></div>
                                                 </div><div class="availability">
                                                     <div class="quantity" style="color:red">
-                                                        only <span>2</span>
-                                                        ticket(s) <div class="showIcons">
-                                                            <span class="icons">
-                                                                <img src="../assets/svg/mobile_download.svg" alt="Mobile Download" height="20px" width="auto">
-                                                                <div class="arrow-left"></div>
-                                                                <span class="toolTipText">Mobile tickets</span>
-                                                            </span>
-                                                        </div>
+                                                        only <span>${seatMatch.availability}</span>
+                                                        ticket(s) availability
                                                     </div>
                                                     <div class="info">
                                                         <div>Others</div>

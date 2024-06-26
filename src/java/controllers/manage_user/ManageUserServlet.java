@@ -75,6 +75,14 @@ public class ManageUserServlet extends HttpServlet {
             boolean created = Boolean.parseBoolean(request.getParameter("userCreated"));
             request.setAttribute("created", created);
         }
+        if (request.getParameter("updated") != null) {
+            boolean updated = Boolean.parseBoolean(request.getParameter("updated"));
+            request.setAttribute("updated", updated);
+        }
+        if (request.getParameter("changed") != null) {
+            boolean changed = Boolean.parseBoolean(request.getParameter("changed"));
+            request.setAttribute("changed", changed);
+        }
         ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
         ArrayList<User> users = UserDAO.getINSTANCE().getUsers((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
         int noOfRecords = UserDAO.getINSTANCE().getNoOfRecords();
@@ -139,17 +147,24 @@ public class ManageUserServlet extends HttpServlet {
                 htmlResponse.append("<td>").append(status).append("</td>");
                 htmlResponse.append("<td>");
                 htmlResponse.append("<a href=\"#userDetailModal\" class=\"view\" title=\"View\" ")
-                        .append("onclick=\"showUserDetails('")
+                        .append("onclick=\"update('")
                         .append(user.getEmail()).append("', '")
                         .append(user.getName()).append("', '")
                         .append(user.getPhoneNumber()).append("', '")
-                        .append(user.getRoleId()).append("', ")
-                        .append(user.isStatus()).append(", '")
-                        .append(user.getAvatar()).append("')\" ")
-                        .append("data-toggle=\"modal\"><i class=\"material-icons\">&#xE417;</i></a>");
-                htmlResponse.append("<a href=\"updateUser.jsp?email=").append(user.getEmail()).append("\" class=\"edit\" title=\"Edit\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE254;</i></a>");
-                htmlResponse.append("<a href=\"deleteUser?email=").append(user.getEmail()).append("\" class=\"delete\" title=\"Delete\" data-toggle=\"tooltip\"><i class=\"material-icons\">&#xE872;</i></a>");
-                htmlResponse.append("</td>");   
+                        .append(user.getAvatar()).append("', '")
+                        .append(user.getRoleId()).append("', '")
+                        .append(user.isStatus()).append("')\" ")
+                        .append("data-toggle=\"modal\"><i class=\"fa fa-eye\" style=\"color: gray;\"></i></a>");
+                if (user.isStatus()) {
+                    htmlResponse.append("<a href=\"#\" class=\"inactive\" title=\"InActive\" data-toggle=\"tooltip\" ")
+                            .append("onclick=\"changeStatus('").append(user.getEmail()).append("', event)\">")
+                            .append("<i class=\"fas fa-user-times\" style=\"color: red;\"></i></a>");
+                } else {
+                    htmlResponse.append("<a href=\"#\" class=\"active\" title=\"Active\" data-toggle=\"tooltip\" ")
+                            .append("onclick=\"changeStatus('").append(user.getEmail()).append("', event)\">")
+                            .append("<i class=\"fas fa-user-check\" style=\"color: green;\"></i></a>");
+                }
+                htmlResponse.append("</td>");
                 htmlResponse.append("</tr>");
             }
         }
@@ -158,18 +173,18 @@ public class ManageUserServlet extends HttpServlet {
         pagination.append("<ul class='pagination'>");
         if (page > 1) {
             pagination.append("<li class='page-item'><a href='manageUser?page=1' data-page='1' class='page-link'>First</a></li>");
-            pagination.append("<li class='page-item'><a href='manageUser?page=${page - 1}' data-page='" + (page - 1) + "' class='page-link'>Previous</a></li>");
+            pagination.append("<li class='page-item'><a href='manageUser?page=${page - 1}' data-page='").append(page - 1).append("' class='page-link'>Previous</a></li>");
         }
         for (int i = 1; i <= noOfPages; i++) {
             if (i == page) {
-                pagination.append("<li class='page-item active'><a href='manageUser?page=${pageNumber}' data-page='" + i + "' class='page-link'>" + i + "</a></li>");
+                pagination.append("<li class='page-item active'><a href='manageUser?page=${pageNumber}' data-page='").append(i).append("' class='page-link'>").append(i).append("</a></li>");
             } else {
-                pagination.append("<li class='page-item'><a href='manageUser?page=${pageNumber}' data-page='" + i + "' class='page-link'>" + i + "</a></li>");
+                pagination.append("<li class='page-item'><a href='manageUser?page=${pageNumber}' data-page='").append(i).append("' class='page-link'>").append(i).append("</a></li>");
             }
         }
         if (page < noOfPages) {
-            pagination.append("<li class='page-item'><a href='manageUser?page=${page + 1}' data-page='" + (page + 1) + "' class='page-link'>Next</a></li>");
-            pagination.append("<li class='page-item'><a href='manageUser?page=${noOfPages}' data-page='" + noOfPages + "' class='page-link'>Last</a></li>");
+            pagination.append("<li class='page-item'><a href='manageUser?page=${page + 1}' data-page='").append(page).append(1).append("' class='page-link'>Next</a></li>");
+            pagination.append("<li class='page-item'><a href='manageUser?page=${noOfPages}' data-page='").append(noOfPages).append("' class='page-link'>Last</a></li>");
         }
         pagination.append("</ul>");
         response.setContentType("application/json");
@@ -177,9 +192,9 @@ public class ManageUserServlet extends HttpServlet {
         jsonResponse.addProperty("html", htmlResponse.toString());
         jsonResponse.addProperty("pagination", pagination.toString());
         jsonResponse.addProperty("usersCount", users.size()); // Số lượng người dùng trong trang hiện tại
-        PrintWriter out = response.getWriter();
-        out.println(jsonResponse.toString());
-        out.close();
+        try (PrintWriter out = response.getWriter()) {
+            out.println(jsonResponse.toString());
+        }
     }
 
     private String getRoleName(int roleId) {

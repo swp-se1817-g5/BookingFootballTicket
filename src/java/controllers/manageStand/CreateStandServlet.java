@@ -78,14 +78,14 @@ public class CreateStandServlet extends HttpServlet {
         boolean created = false;
         HttpSession session = request.getSession();
         try {
-            
+
             String standName = request.getParameter("standName").trim();
-            User user = (User)session.getAttribute("currentUser");
+            User user = (User) session.getAttribute("currentUser");
+            
             Stand stand = new Stand();
-      
-        stand.setStandName(standName);
-        stand.setCreatedBy(user.getEmail());
-        created = StandDAO.INSTANCE.createStand(stand);
+            stand.setStandName(standName);
+            stand.setCreatedBy(user.getEmail());
+            created = StandDAO.INSTANCE.createStand(stand);
         } catch (Exception e) {
             e.printStackTrace();
         }
