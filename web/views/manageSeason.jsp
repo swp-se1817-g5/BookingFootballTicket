@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -50,6 +49,7 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
@@ -198,6 +198,11 @@
                 background-color: #dc3545;
                 color: white;
             }
+            #seasonTable th {
+                text-align: center;
+                font-weight: bold;
+            }
+
         </style>
         <script>
             $(document).ready(function () {
@@ -269,9 +274,9 @@
                 <!-- Navbar Start -->
                 <%@include file="dashboardHeader.jsp" %>
                 <!-- Navbar End -->
-                <div class="container-fluid container-fluid pt-4 px-4">
+                <div class="container-fluid">
                     <div class="table-responsive">
-                        <div class="table-wrapper card">
+                        <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-md-4 ">
@@ -281,25 +286,54 @@
                                         <a type="button" href="#createSeasonModal" class="btn btn-success m-2 float-right"  data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create New Season</span></a>
                                     </div>
                                 </div>
-                            </div>
-                            <c:if test="${not empty requestScope.message}">
-                                <div class="alert alert-warning">${requestScope.message}</div>
-                            </c:if>
-                            <c:if test="${not empty param.message}">
-                                <div class="alert alert-warning">${param.message}</div>
-                            </c:if>
+                            </div>                          
                             <table id="seasonTable" class="table table-striped table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Season ID</th>
-                                        <th>Season Name</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Created By</th>
-                                        <th>Created Date</th>
-                                        <th>Last Updated By</th>
-                                        <th>Last Updated Date</th>
-                                        <th>Actions</th>
+                                        <th style="font-size: 14px;">Season ID</th>
+                                        <th style="font-size: 14px;">
+                                            <select class="form-select border-0 align-middle" id="seasonSelect" onchange="filterTable()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
+                                                <option selected value="All">All season</option>
+                                                <c:forEach items="${requestScope.seasons}" var="s">
+                                                    <option value="${s.seasonName}" style="font-weight: bold; font-size: 14px;">${s.seasonName}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
+                                        <th style="font-size: 14px;">
+                                            Start Date 
+                                            <i class="fa fa-sort" onclick="sortTable('startDate')"></i>
+                                        </th>
+                                        <th style="font-size: 14px;">
+                                            End Date 
+                                            <i class="fa fa-sort" onclick="sortTable('endDate')"></i>
+                                        </th>
+                                        <th style="font-size: 14px;">
+
+                                            <select class="form-select border-0 align-middle" id="createdBySelect" onchange="filterCreatedBy()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
+                                                <option selected value="All">Created by</option>
+                                                <c:forEach items="${requestScope.createdByList}" var="createdBy">
+                                                    <option value="${createdBy}">${createdBy}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
+                                        <th style="font-size: 14px;">
+                                            Created Date 
+                                            <i class="fa fa-sort" onclick="sortTable('createdDate')"></i>
+                                        </th>
+                                        <th style="font-size: 14px;">
+
+                                            <select class="form-select border-0 align-middle" id="updatedBySelect" onchange="filterUpdatedBy()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
+                                                <option selected value="All">Last Updated By</option>
+                                                <c:forEach items="${requestScope.updatedByList}" var="updatedBy">
+                                                    <option value="${updatedBy}">${updatedBy}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
+                                        <th style="font-size: 14px;">
+                                            Last Updated Date 
+                                            <i class="fa fa-sort" onclick="sortTable('lastUpdatedDate')"></i>
+                                        </th>
+                                        <th style="font-size: 14px;">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -324,7 +358,6 @@
                                 </tbody>
                             </table>
                             <div class="clearfix d-flex justify-content-md-start"">
-<!--                                <div class="hint-text">Showing <strong>${requestScope.seasons.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>-->
                                 <ul class="pagination">
                                     <c:if test="${page > 1}">
                                         <li class="page-item"><a href="manageSeason?page=${page - 1}" class="page-link"><</a></li>
@@ -424,8 +457,11 @@
         <div class="toast-body" id="toastMessage"></div>
     </div>
 
+
+
     <!-- script for toast notification -->
     <script>
+
         //update
         $(document).ready(function () {
             var updated = '<%= request.getAttribute("updated")%>';
@@ -451,11 +487,11 @@
                 var toast = $('#toastNotification');
                 if (created === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Football Club created successfully.');
+                    toast.find('#toastMessage').text('Season created successfully.');
                     toast.addClass('success').removeClass('error');
                 } else if (created === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to create Football Club.');
+                    toast.find('#toastMessage').text('Failed to create season.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -481,73 +517,166 @@
         });
 
     </script>
+
+    <script>
+        function sortTable(column) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchCount = 0;
+            table = document.getElementById("seasonTable");
+            switching = true;
+            dir = "asc"; // Set the sorting direction to ascending
+
+            while (switching) {
+                switching = false;
+                rows = table.rows;
+
+                // Loop through all table rows (except the headers)
+                for (i = 1; i < (rows.length - 1); i++) {
+                    shouldSwitch = false;
+                    x = rows[i].getElementsByTagName("TD")[getColumnIndex(column)];
+                    y = rows[i + 1].getElementsByTagName("TD")[getColumnIndex(column)];
+
+                    // Check if the two rows should switch place, based on the direction, asc or desc
+                    if (dir === "asc") {
+                        if (compareValues(column, x.innerHTML, y.innerHTML) > 0) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir === "desc") {
+                        if (compareValues(column, x.innerHTML, y.innerHTML) < 0) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    // If a switch has been marked, make the switch and mark that a switch has been done
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchCount++;
+                } else {
+                    // If no switching has been done AND the direction is "asc", set the direction to "desc" and run the loop again
+                    if (switchCount === 0 && dir === "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        function getColumnIndex(column) {
+            switch (column) {
+                case 'startDate':
+                    return 2;
+                case 'endDate':
+                    return 3;
+                case 'createdDate':
+                    return 5;
+                case 'lastUpdatedDate':
+                    return 7;
+                default:
+                    return -1;
+            }
+        }
+
+        function compareValues(column, val1, val2) {
+            if (column === 'createdDate' || column === 'lastUpdatedDate') {
+                return parseDateTime(val1) - parseDateTime(val2);
+            } else {
+                return parseDate(val1) - parseDate(val2);
+            }
+        }
+
+        function parseDate(dateStr) {
+            var parts = dateStr.split('-');
+            return new Date(
+                    parseInt(parts[0], 10), // Year
+                    parseInt(parts[1], 10) - 1, // Month (0-based index)
+                    parseInt(parts[2], 10) // Day
+                    );
+        }
+
+        function parseDateTime(dateTimeStr) {
+            var parts = dateTimeStr.split(' / ');
+            var datePart = parts[0].split('-');
+            var timePart = parts[1].split(':');
+
+            return new Date(
+                    parseInt(datePart[2], 10) + 2000, // Year
+                    parseInt(datePart[1], 10) - 1, // Month (0-based index)
+                    parseInt(datePart[0], 10), // Day
+                    parseInt(timePart[0], 10), // Hour
+                    parseInt(timePart[1], 10), // Minute
+                    parseInt(timePart[2], 10) // Second
+                    );
+        }
+
+        // Hàm filterTable để lọc dữ liệu và hiển thị biểu tượng selected
+        function filterTable() {
+            var select = document.getElementById("seasonSelect");
+            var selectedValue = select.value.toLowerCase(); // Lấy giá trị được chọn và chuyển về chữ thường
+
+            var table = document.getElementById("seasonTable");
+            var rows = table.getElementsByTagName("tr");
+
+            // Lặp qua từng hàng của bảng để ẩn hoặc hiển thị dựa trên giá trị đã chọn
+            for (var i = 1; i < rows.length; i++) {
+                var seasonNameCell = rows[i].getElementsByTagName("td")[1]; // Cột Season Name (vị trí 1 trong mảng các td)
+                if (seasonNameCell) {
+                    var seasonName = seasonNameCell.textContent || seasonNameCell.innerText;
+                    if (selectedValue === "all" || seasonName.toLowerCase().indexOf(selectedValue) > -1) {
+                        rows[i].style.display = ""; // Hiển thị hàng nếu giá trị được chọn là "All" hoặc tên mùa phù hợp
+                    } else {
+                        rows[i].style.display = "none"; // Ẩn hàng nếu không phù hợp với giá trị được chọn
+                    }
+                }
+            }
+        }
+
+        function filterCreatedBy() {
+            var select = document.getElementById("createdBySelect");
+            var selectedValue = select.value.toLowerCase(); // Lấy giá trị được chọn và chuyển về chữ thường
+
+            var table = document.getElementById("seasonTable");
+            var rows = table.getElementsByTagName("tr");
+
+            // Lặp qua từng hàng của bảng để ẩn hoặc hiển thị dựa trên giá trị đã chọn
+            for (var i = 1; i < rows.length; i++) {
+                var createdByCell = rows[i].getElementsByTagName("td")[4]; // Cột Created By (vị trí 4 trong mảng các td)
+                if (createdByCell) {
+                    var createdBy = createdByCell.textContent || createdByCell.innerText;
+                    if (selectedValue === "all" || createdBy.toLowerCase().indexOf(selectedValue) > -1) {
+                        rows[i].style.display = ""; // Hiển thị hàng nếu giá trị được chọn là "All" hoặc Created By phù hợp
+                    } else {
+                        rows[i].style.display = "none"; // Ẩn hàng nếu không phù hợp với giá trị được chọn
+                    }
+                }
+            }
+        }
+
+        function filterUpdatedBy() {
+            var select = document.getElementById("updatedBySelect");
+            var selectedValue = select.value.toLowerCase(); // Lấy giá trị được chọn và chuyển về chữ thường
+
+            var table = document.getElementById("seasonTable");
+            var rows = table.getElementsByTagName("tr");
+
+            // Lặp qua từng hàng của bảng để ẩn hoặc hiển thị dựa trên giá trị đã chọn
+            for (var i = 1; i < rows.length; i++) {
+                var updatedByCell = rows[i].getElementsByTagName("td")[6]; // Cột Last Updated By (vị trí 6 trong mảng các td)
+                if (updatedByCell) {
+                    var updatedBy = updatedByCell.textContent || updatedByCell.innerText;
+                    if (selectedValue === "all" || updatedBy.toLowerCase().indexOf(selectedValue) > -1) {
+                        rows[i].style.display = ""; // Hiển thị hàng nếu giá trị được chọn là "All" hoặc Last Updated By phù hợp
+                    } else {
+                        rows[i].style.display = "none"; // Ẩn hàng nếu không phù hợp với giá trị được chọn
+                    }
+                }
+            }
+        }
+    </script>
+
     <!--script for create and update-->
     <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-
-            // Convert the stands list from JSP to a JavaScript array
-            var clubs = [];
-        <c:forEach items="${footballClubs}" var="club">
-            clubs.push({clubId: "${club.clubId}", clubName: "${club.clubName}"});
-        </c:forEach>
-
-            // Check for duplicate stand name before submitting the create form
-            $('#createUserForm').submit(function (event) {
-                var clubName = $('#clubNameInput').val().trim();
-                var duplicate = clubs.some(club => club.clubName === clubName);
-
-                if (duplicate) {
-                    $('#clubNameInputError').text('Club already exists. Please choose a different name.');
-                    event.preventDefault();
-                } else {
-                    $('#clubNameInputError').text('');
-                }
-            });
-
-            // Check for duplicate club name before submitting the update form
-            $('#updateFootballClubForm').submit(function (event) {
-                var clubId = $('#clubId').val();
-                var clubName = $('#clubName').val().trim();
-
-                var originalClub = clubs.find(club => club.clubId == clubId);
-
-                var duplicate = clubs.some(club => club.clubName === clubName && club.clubId != clubId);
-                console.log(duplicate);
-
-                if (clubName !== originalClub.clubName && duplicate) {
-                    $('#clubNameError').text('Club already exists. Please choose a different name');
-                    event.preventDefault();
-                } else {
-                    $('#clubNameError').text('');
-                }
-            });
-
-
-        });
-
-        function deleteUser(userId) {
-            if (confirm("Do you want to delete user with ID = " + userId))
-                location.href = 'deleteUser?userId=' + userId;
-        }
-
-        function updateUser(userId, userName) {
-            document.getElementById('clubId').value = clubId;
-            document.getElementById('clubName').value = clubName;
-
-
-            $('#clubNameError').text('');
-        }
-
-        function doDelete(seasonId) {
-        <c:forEach var="season" items="${seasons}">
-            <c:if test="${season.seasonId == seasonId}">
-            alert("chão");
-            </c:if>
-        </c:forEach>
-            if (confirm("Do you want to delete Season with id = " + seasonId))
-                location.href = 'deleteSeason?seasonId=' + seasonId;
-        }
 
         function doDelete(seasonId) {
         <c:forEach var="season" items="${seasons}">
@@ -559,93 +688,170 @@
                 location.href = 'deleteSeason?seasonId=' + seasonId;
         }
 
+        function validateForm() {
+            var seasonNameInput = document.getElementById("seasonName");
+            var seasonName = seasonNameInput.value.trim(); // Lấy giá trị và loại bỏ khoảng trắng đầu cuối
 
-        function deleteSeason(seasonId) {
-            if (confirm("Do you want to delete season with ID = " + seasonId))
-                location.href = 'deleteSeason?seasonId=${s.seasonId}' + seasonId;
-        }
+            // Kiểm tra nếu seasonName chỉ chứa khoảng trắng
+            if (seasonName === "") {
+                document.getElementById("seasonNameError").innerText = "Season Name cannot be empty.";
+                return false;
+            }
 
-        function updateUser(userId, userName) {
-            document.getElementById('clubId').value = clubId;
-            document.getElementById('clubName').value = clubName;
+            // Kiểm tra nếu seasonName đã tồn tại
+            var existingSeasonNames = [
+        <c:forEach items="${requestScope.seasons}" var="s" varStatus="loop">
+            "${s.seasonName}"<c:if test="${!loop.last}">,</c:if>
+        </c:forEach>
+            ];
 
+            for (var i = 0; i < existingSeasonNames.length; i++) {
+                if (existingSeasonNames[i].toLowerCase() === seasonName.toLowerCase()) {
+                    document.getElementById("seasonNameError").innerText = "Season Name already exists. Please choose another.";
+                    return false;
+                }
+            }
 
-            $('#clubNameError').text('');
+            // Reset error message if validation passes
+            document.getElementById("seasonNameError").innerText = "";
+
+            return true; // Allow form submission
         }
     </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+
+            // Set min attribute for Start Date to today's date
+            document.getElementById('startDate').min = today;
+
+            // Set min attribute for End Date to today's date
+            document.getElementById('endDate').min = today;
+
+            // Validate on form submission
+            document.querySelector('form').addEventListener('submit', function (event) {
+                var startDate = document.getElementById('startDate').value;
+                var endDate = document.getElementById('endDate').value;
+
+                if (startDate < today || endDate < today) {
+                    alert('Please select a date equal to or after today.');
+                    event.preventDefault(); // Prevent form submission
+                }
+            });
+        });
+    </script>
+
     <script>
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
+
         // Hàm validateSearchForm để kiểm tra giá trị nhập vào ô search
         function validateSearchForm() {
             const searchType = document.getElementById("searchType").value;
-            const keyword = document.getElementById("searchKeyword").value;
+            const keyword = document.getElementById("searchKeyword").value.trim(); // Lấy giá trị và loại bỏ khoảng trắng đầu cuối
             let isValid = true;
             let errorMessage = "";
 
+            // Validate based on search type
             switch (searchType) {
-                case "userId":
-                    if (!/^\d+$/.test(keyword)) {
+                case "seasonName":
+                    // No specific validation needed for season name
+                    break;
+                case "startDate":
+                case "endDate":
+                case "createdBy":
+                case "updatedBy":
+                    // Validate if keyword is empty for date and string fields
+                    if (keyword === "") {
                         isValid = false;
-                        errorMessage = "User ID must be a positive integer.";
+                        errorMessage = "Please enter a keyword to search.";
                     }
                     break;
+                case "createdDate":
+                case "lastUpdatedDate":
+                    // Validate if keyword is a valid date (YYYY-MM-DD format)
+                    if (!isValidDate(keyword)) {
+                        isValid = false;
+                        errorMessage = "Please enter a valid date in YYYY-MM-DD format.";
+                    }
+                    break;
+                default:
+                    // Handle default case or additional search types
+                    break;
             }
+
+            // Display error message if validation fails
             const errorMessageElement = document.getElementById("error-message");
             if (!isValid) {
                 errorMessageElement.textContent = errorMessage;
-                document.getElementById("searchKeyword").value = "";
-                document.getElementById("searchKeyword").focus();
+                // Không cần xóa giá trị khi không hợp lệ để người dùng có thể tiếp tục nhập liệu
+                // document.getElementById("searchKeyword").value = "";
+                // document.getElementById("searchKeyword").focus();
             } else {
                 errorMessageElement.textContent = "";
             }
-            return isValid;
+
+            // Thực hiện hàm tìm kiếm (điều này có thể là gọi hàm khác để xử lý dữ liệu tìm kiếm)
+            performSearch();
         }
-        document.getElementById("searchKeyword").addEventListener("input", function () {
+
+        // Hàm kiểm tra ngày hợp lệ (YYYY-MM-DD)
+        function isValidDate(dateString) {
+            // Regex pattern for YYYY-MM-DD date format
+            const pattern = /^\d{4}-\d{2}-\d{2}$/;
+            return pattern.test(dateString);
+        }
+
+        // Xử lý sự kiện khi thay đổi loại tìm kiếm
+        document.getElementById("searchType").addEventListener("input", function () {
+            var searchType = this.value;
+            var keywordInput = document.getElementById("searchKeyword");
+
+            // Ẩn hiện ô nhập keyword hoặc dropdown select dựa trên loại tìm kiếm được chọn
+            switch (searchType) {
+                case "seasonName":
+                case "startDate":
+                case "endDate":
+                case "createdBy":
+                case "updatedBy":
+                    keywordInput.style.display = "block";
+                    keywordInput.setAttribute("type", "text");
+                    keywordInput.setAttribute("required", "required");
+                    break;
+                case "createdDate":
+                case "lastUpdatedDate":
+                    keywordInput.style.display = "block";
+                    keywordInput.setAttribute("type", "date");
+                    keywordInput.setAttribute("required", "required");
+                    break;
+                default:
+                    keywordInput.style.display = "block"; // Có thể điều chỉnh cho phù hợp với yêu cầu cụ thể
+                    keywordInput.setAttribute("type", "text");
+                    keywordInput.removeAttribute("required");
+                    break;
+            }
+
+            // Gọi hàm validateSearchForm() ngay khi thay đổi loại tìm kiếm
             validateSearchForm();
         });
 
-        document.getElementById("searchType").addEventListener("change", function () {
-            var searchType = this.value;
-            var keywordInput = document.getElementById("searchKeyword");
-            var keywordSelect = document.getElementById("roleIdSelect");
-
-            if (searchType === "roleId") {
-                keywordInput.style.display = "none";
-                keywordInput.removeAttribute("required");
-                keywordSelect.style.display = "block";
-                keywordInput.setAttribute("name", "key");
-                keywordSelect.setAttribute("name", "keyword");
-            } else {
-                keywordInput.style.display = "block";
-                keywordInput.setAttribute("required", "required");
-                keywordSelect.style.display = "none";
-                keywordInput.setAttribute("name", "keyword");
-            }
+        // Sự kiện khi người dùng nhập liệu vào ô tìm kiếm
+        document.getElementById("searchKeyword").addEventListener("input", function () {
+            // Gọi hàm validateSearchForm() khi người dùng nhập liệu vào ô tìm kiếm
+            validateSearchForm();
         });
-    </script>
-    <script>
-        // Function to preview image from URL
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
 
-                reader.onload = function (e) {
-                    $('#avatarPreview').attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]); // Convert image to base64 string
-            }
+        // Hàm thực hiện tìm kiếm (thay bằng hàm của bạn để xử lý dữ liệu tìm kiếm)
+        function performSearch() {
+            // Đây là nơi bạn có thể gọi hàm hoặc xử lý dữ liệu tìm kiếm
+            // Ví dụ:
+            console.log("Performing search with keyword: ", document.getElementById("searchKeyword").value.trim());
+            // Sau đó bạn có thể thực hiện các hành động khác như gửi request lên server, cập nhật giao diện, vv...
         }
-
-        // Event listener for file input change
-        $(document).ready(function () {
-            $('input[name="avatar"]').change(function () {
-                previewImage(this);
-            });
-        });
     </script>
+
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
