@@ -42,6 +42,104 @@
         <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app.js?v=1.4" type="92a57d65b99f90d20b5c8e41-text/javascript"></script>
         <link rel="stylesheet" type="text/css" href="/map/167/style.css">
         <link rel="stylesheet" type="text/css" href="/assets/frontend/2018/css/cookieconsent.min.css" />
+
+
+
+        <style>
+            body {
+                margin-top: 20px;
+                background-color: #f2f6fc;
+                color: #69707a;
+            }
+            .img-account-profile {
+                height: 17rem;
+            }
+            .rounded-circle {
+                border-radius: 50% !important;
+            }
+            .card {
+            }
+            .card .card-header {
+                font-weight: 500;
+            }
+            .card-header:first-child {
+                border-radius: 0.35rem 0.35rem 0 0;
+            }
+            .card-header {
+                padding: 1rem 1.35rem;
+                margin-bottom: 0;
+                background-color: rgba(33, 40, 50, 0.03);
+                border-bottom: 1px solid rgba(33, 40, 50, 0.125);
+            }
+            .form-control, .dataTable-input {
+                display: block;
+                width: 100%;
+                padding: 0.875rem 1.125rem;
+                font-size: 0.875rem;
+                font-weight: 400;
+                line-height: 1;
+                color: #69707a;
+                background-color: #fff;
+                background-clip: padding-box;
+                border: 1px solid #c5ccd6;
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                appearance: none;
+                border-radius: 0.35rem;
+                transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            }
+            .nav-borders .nav-link.active {
+                color: #0061f2;
+                border-bottom-color: #0061f2;
+            }
+            .nav-borders .nav-link {
+                color: #69707a;
+                border-bottom-width: 0.125rem;
+                border-bottom-style: solid;
+                border-bottom-color: transparent;
+                padding-top: 0.5rem;
+                padding-bottom: 0.5rem;
+                padding-left: 0;
+                padding-right: 0;
+                margin-left: 1rem;
+                margin-right: 1rem;
+            }
+        </style>
+        <script>
+            function validateName() {
+                var name = document.getElementById("name").value;
+                var nameError = document.getElementById("nameError");
+                if (name.trim() === "") {
+                    nameError.textContent = "Name cannot be null or empty.";
+                    nameError.classList.remove("valid");
+                    nameError.classList.add("error");
+                } else {
+                    nameError.textContent = "";
+                    nameError.classList.remove("error");
+                    nameError.classList.add("valid");
+                }
+            }
+
+            function validatePhoneNumber() {
+                var phoneNumber = document.getElementById("phoneNumber").value;
+                var phoneError = document.getElementById("phoneError");
+                var phoneRegex = /^0[3-9][0-9]{8}$/;
+                if (!phoneRegex.test(phoneNumber)) {
+                    phoneError.textContent = "Invalid phone number format. It should follow VN phone number format.";
+                    phoneError.classList.remove("valid");
+                    phoneError.classList.add("error");
+                } else {
+                    phoneError.textContent = "";
+                    phoneError.classList.remove("error");
+                    phoneError.classList.add("valid");
+                }
+            }
+
+            document.addEventListener("DOMContentLoaded", function () {
+                document.getElementById("name").addEventListener("input", validateName);
+                document.getElementById("phoneNumber").addEventListener("input", validatePhoneNumber);
+            });
+        </script>
     </head>
 
     <body class="dashboard">
@@ -77,81 +175,48 @@
                 </div>
                 <div class="hidden-below-m-view">
                     <div class="section seller">
-                        <div class="panel">
+                        <div class="panel" style="width: 1000px;">
                             <div class="heading">Edit details</div>
                             <div class="body">
-                                <form class="seller-form" method="post" id="form_edit_details" action="https://www.footballticketpad.com/account/info">
-                                    <div class="full-width" style="background-color: white;">
-                                        <div class="half-width">
-                                                <div>
-                                                    <label>Name</label>
-                                                    <input type="text" name="firstname" value="${sessionScope.currentUser.name}" required />
-                                                    <p class="error"></p>
-                                                </div>
-                                                <div>
-                                                    <label>Email</label>
-                                                    <input type="email" name="email" value="thuatthuat098@gmail.com" required readonly/>
-                                                    <p class="error"></p>
-                                                </div>
-                                                <div class="tel-no">
-                                                    <label for="tel_no">Mobile Number</label>
-                                                    <input type="text" name="telephone" value="0943626825" />
-                                                    <p class="error"></p>
-                                                </div>
-                                                <div>
-                                                    <label>Role</label>
-                                                    <input type="text" name="role" value="user" readonly/>
-                                                    <p class="error"></p>
-                                                </div>
-                                                <label>Email</label>
-                                                <input type="email" name="email" value="thuatthuat098@gmail.com" required />
+                                <form class="seller-form" method="post" id="form_edit_details" action="userProfile" enctype="multipart/form-data">
+                                    <div class="inner" style="background-color: white;">
+                                        <div class="left half-width">
+                                            <div>
+                                                <label>Name*</label><span id="nameError"></span><br/>
+                                                <input id="name" type="text" name="name" value="${user.name}" required />
                                                 <p class="error"></p>
-                                        </div>
-                                        <div class="half-with">
-                                            <div class="submit">
-                                                <button type="submit" class="c2a_btn save_data" formId="form_edit_details">Save</button>
+                                            </div>
+                                            <div>
+                                                <label>Email</label>
+                                                <input type="email" name="email" value="${user.email}" required readonly/>
+                                                <p class="error"></p>
+                                            </div>
+                                            <div class="tel-no">
+                                                <label for="tel_no">Mobile Number*</label><span id="phoneError"></span><br/>
+                                                <input id="phoneNumber" type="text" name="mobile" value="${user.phoneNumber}" />
+                                                <p class="error"></p>
+                                            </div>
+                                            <div>
+                                                <label>Role</label>
+                                                <input type="text" name="role" value="${user.roleId}" readonly/>
+                                                <p class="error"></p>
                                             </div>
                                         </div>
-                                    </div>
-
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="section seller">
-                        <div class="panel">
-                            <div class="heading">Security</div>
-                            <div class="body">
-                                <form class="seller-form" id="form_update_security" method="post" action="https://www.footballticketpad.com/account/seller-security">
-                                    <input type="hidden" name="_token" value="huzioONgvzJlks4RH5uurLDQ7tx0heQEZGOKtp7R">
-                                    <div class="full-width">
-                                        <div class="sub-heading">Change password</div>
-                                    </div>
-                                    <div class="full-width">
-                                        <div class="half-width">
-                                            <label>Current Password</label>
-                                            <input type="password" name="current_password" required />
-                                            <p class="error"></p>
-                                        </div>
-                                    </div>
-                                    <div class="full-width">
-                                        <div class="half-width">
-                                            <label>New Password</label>
-                                            <input type="password" name="new_password" required />
-                                            <p class="error"></p>
-                                        </div>
-                                        <div class="half-width">
-                                            <label> Repeat new password</label>
-                                            <input type="password" name="confirm_new_password" required />
-                                            <p class="error"></p>
-                                        </div>
-                                    </div>
-                                    <div class="full-with">
-                                        <div class="half-width">
-                                            <p class="success-message"></p>
-                                        </div>
-                                        <div class="half-width submit">
-                                            <button type="submit" class="c2a_btn save_data" formId="form_update_security">Save</button>
+                                        <div class="right half-width float-right text-center">
+                                            <div class="card mb-4 mb-xl-0">
+                                                <div class="card-body text-center" style="margin-left: 100px;">
+                                                    <!-- Profile picture image-->
+                                                    <img class="img-account-profile rounded-circle mb-2" src="${user.avatar}" alt="">
+                                                    <!-- Profile picture help block-->
+                                                    <div class="small font-italic text-muted mb-4">JPG or PNG no larger than 5 MB</div>
+                                                    <!-- Profile picture upload button-->
+                                                    <input id="imageUploadInput" name="avatar" type="file" accept="image/*" class="form-control">
+                                                </div>
+                                                <p class="error"></p>
+                                            </div>
+                                            <div class="submit" style="display: flex; justify-content: right;">
+                                                <button type="submit" class="c2a_btn save_data" formId="form_edit_details">Save</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
