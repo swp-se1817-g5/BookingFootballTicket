@@ -188,6 +188,8 @@ CREATE TABLE HistoryPurchasedTicketMatchSeat (
 	statusId INT,
 	createdBy VARCHAR(50),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+	matchSeatId INT,
+	FOREIGN KEY (matchSeatId) REFERENCES MatchSeat(matchSeatId),
 	FOREIGN KEY (statusId) REFERENCES TicketStatus(statusId),
     FOREIGN KEY (email) REFERENCES [User](email)
 );
@@ -198,7 +200,8 @@ CREATE TABLE HistoryPurchasedTicketSeasonSeat (
 	ticketMatchSeatId INT PRIMARY KEY IDENTITY (1,1),
 	team1 NVARCHAR(100),
 	team2 NVARCHAR(100),
-	startTime DATETIME2,
+	startDate DATETIME2,
+	endDate DATETIME2,
 	seasonName NVARCHAR(50),
 	seatName NVARCHAR(50),
 	quantity INT,
@@ -210,6 +213,8 @@ CREATE TABLE HistoryPurchasedTicketSeasonSeat (
 	statusId INT,
 	createdBy VARCHAR(50),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+	matchSeatId INT,
+	FOREIGN KEY (matchSeatId) REFERENCES MatchSeat(matchSeatId),
 	FOREIGN KEY (statusId) REFERENCES TicketStatus(statusId),
     FOREIGN KEY (email) REFERENCES [User](email)
 );

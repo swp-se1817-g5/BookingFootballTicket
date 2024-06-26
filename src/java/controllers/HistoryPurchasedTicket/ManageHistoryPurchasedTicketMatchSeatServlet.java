@@ -73,7 +73,7 @@ public class ManageHistoryPurchasedTicketMatchSeatServlet extends HttpServlet {
         if (!isNullOrBlank(go)) {
             if (go.equals("search")) {
                 String valueSearch = request.getParameter("valueSearch").trim();
-                getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().Search(valueSearch);
+                getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().SearchMatchSeat(valueSearch);
                 if (!getListHistoryPurchasedTicketMatchSeat.isEmpty()) {
                     request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
                 }
@@ -87,7 +87,7 @@ public class ManageHistoryPurchasedTicketMatchSeatServlet extends HttpServlet {
             request.setAttribute("getListStatus", HistoryPurchasedTicketDAO.getInstance().getListTicketStatus());
         }
 
-        request.getRequestDispatcher("views/manageHistoryPurchasedTicket.jsp").forward(request, response);
+        request.getRequestDispatcher("views/manageHistoryPurchasedTicketMatchSeat.jsp").forward(request, response);
     }
 
     /**

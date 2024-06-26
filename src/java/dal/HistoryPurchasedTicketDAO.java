@@ -30,7 +30,7 @@ public class HistoryPurchasedTicketDAO {
     private final Connection connect;
     // Define constants for the string literals
     private static final String SQL_QUERY_GET_LIST_HISTORY_PURCHASED_TICKET_MATCH_SEAT = "Select hptms.*,ticketStatus.statusName from HistoryPurchasedTicketMatchSeat hptms JOIN TicketStatus ticketStatus ON ticketStatus.statusId = hptms.statusId";
-    private static final String SQL_QUERY_GET_LIST_HISTORY_PURCHASED_TICKET_SEASON_SEAT = "SELECT * FROM HistoryPurchasedTicketSeasonSeat";
+    private static final String SQL_QUERY_GET_LIST_HISTORY_PURCHASED_TICKET_SEASON_SEAT = "Select hptss.*,ticketStatus.statusName from HistoryPurchasedTicketSeasonSeat hptss JOIN TicketStatus ticketStatus ON ticketStatus.statusId = hptss.statusId";
     private static final String SQL_QUERY_GET_LIST_TICKET_STATUS = "SELECT * FROM TicketStatus";
     private static final String TICKET_MATCHSEAT_ID = "ticketMatchSeatId";
     private static final String TICKET_SEASON_ID = "ticketSeasonSeatId";
@@ -53,6 +53,8 @@ public class HistoryPurchasedTicketDAO {
     private static final String SEAT_CLASS_NAME = "seatClassName";
     private static final String TICKET_STATUS_ID = "statusId";
     private static final String TICKET_STATUS_NAME = "statusName";
+    private static final String START_DATE = "startDate";
+    private static final String END_DATE = "endDate";
 
     private HistoryPurchasedTicketDAO() {
         // Private constructor to prevent instantiation
@@ -107,7 +109,7 @@ public class HistoryPurchasedTicketDAO {
     }
 
     // Search of HistoryPurchasedTicketMatchSeat
-    public ArrayList<HistoryPurchasedTicketMatchSeat> Search(String value) {
+    public ArrayList<HistoryPurchasedTicketMatchSeat> SearchMatchSeat(String value) {
         ArrayList<HistoryPurchasedTicketMatchSeat> list = new ArrayList<>();
         String sql = "SELECT hptms.*, ticketStatus.statusName "
                 + "FROM HistoryPurchasedTicketMatchSeat hptms "
@@ -116,6 +118,7 @@ public class HistoryPurchasedTicketDAO {
                 + "OR hptms.seatClassName LIKE '%" + value + "%' "
                 + "OR hptms.team1 LIKE '%" + value + "%' "
                 + "OR hptms.team2 LIKE '%" + value + "%' "
+                + "OR hptms.email LIKE '%" + value + "%' "
                 + "OR hptms.standName LIKE '%" + value + "%'";
 
         try {
@@ -149,10 +152,9 @@ public class HistoryPurchasedTicketDAO {
         return list;
     }
 
-    public static void main(String[] args) {
-        System.out.println(HistoryPurchasedTicketDAO.getInstance().Search("Sum"));
-    }
-
+//    public static void main(String[] args) {
+//        System.out.println(HistoryPurchasedTicketDAO.getInstance().Search("user1"));
+//    }
     // Get list all of HistoryPurchasedTicketMatchSeat
     public ArrayList<HistoryPurchasedTicketSeasonSeat> getlistHistoryPurchasedTicketSeasonSeat() {
         ArrayList<HistoryPurchasedTicketSeasonSeat> list = new ArrayList<>();
@@ -161,20 +163,73 @@ public class HistoryPurchasedTicketDAO {
             rs = ps.executeQuery();
             while (rs.next()) {
                 HistoryPurchasedTicketSeasonSeat historyPurchasedTicketSeasonSeat = new HistoryPurchasedTicketSeasonSeat();
-                historyPurchasedTicketSeasonSeat.setTicketId(rs.getInt(TICKET_SEASON_ID));
-                SeasonSeat seasonSeat = new SeasonSeat();
-                seasonSeat.setSeasonSeatId(rs.getInt(SEASON_SEAT_ID));
-                historyPurchasedTicketSeasonSeat.setSeasonSeatedId(seasonSeat);
-                User user = new User();
-                user.setEmail(EMAIL);
-                historyPurchasedTicketSeasonSeat.setEmail(user);
+                historyPurchasedTicketSeasonSeat.setTicketId(rs.getInt(TICKET_MATCHSEAT_ID));
+                historyPurchasedTicketSeasonSeat.setTeam1(rs.getString(TEAM_1));
+                historyPurchasedTicketSeasonSeat.setTeam2(rs.getString(TEAM_2));
+                historyPurchasedTicketSeasonSeat.setStartDate(rs.getDate(START_DATE));
+                historyPurchasedTicketSeasonSeat.setEndDate(rs.getDate(END_DATE));
+                historyPurchasedTicketSeasonSeat.setSeasonName(rs.getString(SEASON_NAME));
+                historyPurchasedTicketSeasonSeat.setSeatName(rs.getString(SEAT_NAME));
+                historyPurchasedTicketSeasonSeat.setQuantity(rs.getInt(QUANTITY));
+                historyPurchasedTicketSeasonSeat.setStandName(rs.getString(STAND_NAME));
+                historyPurchasedTicketSeasonSeat.setSeatClassName(rs.getString(SEAT_CLASS_NAME));
+                historyPurchasedTicketSeasonSeat.setEmail(rs.getString(EMAIL));
                 historyPurchasedTicketSeasonSeat.setQrCode(rs.getString(QRCODE));
                 historyPurchasedTicketSeasonSeat.setPrice(rs.getBigDecimal(PRICE));
-                historyPurchasedTicketSeasonSeat.setQuantity(rs.getInt(QUANTITY));
-                historyPurchasedTicketSeasonSeat.setStatus(rs.getBoolean(STATUS_ID));
+                TicketStatus ticketStatus = new TicketStatus();
+                ticketStatus.setStatusId(rs.getInt(STATUS_ID));
+                ticketStatus.setStatusName(rs.getString(STATUS_NAME));
+                historyPurchasedTicketSeasonSeat.setStatusId(ticketStatus);
                 historyPurchasedTicketSeasonSeat.setCreatedBy(rs.getString(CREATED_BY));
                 historyPurchasedTicketSeasonSeat.setCreatedDate(rs.getTimestamp(CREATED_DATE) != null ? rs.getTimestamp(CREATED_DATE).toLocalDateTime() : null);
+                list.add(historyPurchasedTicketSeasonSeat);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+//    public static void main(String[] args) {
+//        System.out.println(HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketSeasonSeat());
+//    }
 
+    public ArrayList<HistoryPurchasedTicketSeasonSeat> SearchSeasonSeat(String value) {
+        ArrayList<HistoryPurchasedTicketSeasonSeat> list = new ArrayList<>();
+        String sql = "SELECT hptss.*, ticketStatus.statusName "
+                + "FROM HistoryPurchasedTicketMatchSeat hptss "
+                + "JOIN TicketStatus ticketStatus ON ticketStatus.statusId = hptss.statusId "
+                + "WHERE hptss.seasonName LIKE '%" + value + "%' "
+                + "OR hptss.seatClassName LIKE '%" + value + "%' "
+                + "OR hptss.team1 LIKE '%" + value + "%' "
+                + "OR hptss.team2 LIKE '%" + value + "%' "
+                + "OR hptss.email LIKE '%" + value + "%' "
+                + "OR hptss.createdBy LIKE '%" + value + "%' "
+                + "OR hptss.standName LIKE '%" + value + "%'";
+
+        try {
+            ps = connect.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                HistoryPurchasedTicketSeasonSeat historyPurchasedTicketSeasonSeat = new HistoryPurchasedTicketSeasonSeat();
+                historyPurchasedTicketSeasonSeat.setTicketId(rs.getInt(TICKET_MATCHSEAT_ID));
+                historyPurchasedTicketSeasonSeat.setTeam1(rs.getString(TEAM_1));
+                historyPurchasedTicketSeasonSeat.setTeam2(rs.getString(TEAM_2));
+                historyPurchasedTicketSeasonSeat.setStartDate(rs.getDate(START_DATE));
+                historyPurchasedTicketSeasonSeat.setEndDate(rs.getDate(END_DATE));
+                historyPurchasedTicketSeasonSeat.setSeasonName(rs.getString(SEASON_NAME));
+                historyPurchasedTicketSeasonSeat.setSeatName(rs.getString(SEAT_NAME));
+                historyPurchasedTicketSeasonSeat.setQuantity(rs.getInt(QUANTITY));
+                historyPurchasedTicketSeasonSeat.setStandName(rs.getString(STAND_NAME));
+                historyPurchasedTicketSeasonSeat.setSeatClassName(rs.getString(SEAT_CLASS_NAME));
+                historyPurchasedTicketSeasonSeat.setEmail(rs.getString(EMAIL));
+                historyPurchasedTicketSeasonSeat.setQrCode(rs.getString(QRCODE));
+                historyPurchasedTicketSeasonSeat.setPrice(rs.getBigDecimal(PRICE));
+                TicketStatus ticketStatus = new TicketStatus();
+                ticketStatus.setStatusId(rs.getInt(STATUS_ID));
+                ticketStatus.setStatusName(rs.getString(STATUS_NAME));
+                historyPurchasedTicketSeasonSeat.setStatusId(ticketStatus);
+                historyPurchasedTicketSeasonSeat.setCreatedBy(rs.getString(CREATED_BY));
+                historyPurchasedTicketSeasonSeat.setCreatedDate(rs.getTimestamp(CREATED_DATE) != null ? rs.getTimestamp(CREATED_DATE).toLocalDateTime() : null);
                 list.add(historyPurchasedTicketSeasonSeat);
             }
         } catch (SQLException ex) {

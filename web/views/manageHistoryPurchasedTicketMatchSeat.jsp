@@ -259,7 +259,7 @@ Author     : duong
                                 <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
                                 <a href="manageRole" class="dropdown-item">Manage Role</a>
                                 <a href="manageNews" class="dropdown-item">Manage News</a>
-                                <a href="manageHistoryPurchasedTicket" class="dropdown-item active">Manage Ticket</a>
+                                <a href="manageHistoryPurchasedTicketMatchSeat" class="dropdown-item active">Manage Ticket</a>
                             </div>
                         </div>
                         <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
@@ -292,12 +292,12 @@ Author     : duong
                                     <div class="col-sm-4 searchh">
                                         <div class="search-box" id="searchForm">
                                             <a onclick="searchTickets()"><i class="material-icons">&#xE8B6;</i></a>
-                                            <input id="valueSearch" type="text" class="form-control" placeholder="Search&hellip;">
+                                            <input id="valueSearch" type="text" class="form-control" placeholder="Search by email&hellip;">
                                         </div>
                                     </div>
-                                    <div class="col">
-                                        <button id="toggleButton" class="btn btn-primary btn-custom">
-                                            Manage History Purchased Ticket Season Seat
+                                    <div class="col-sm-4 d-flex justify-content-end">
+                                         <button id="toggleButton" class="btn btn-primary btn-custom d-flex align-items-center">
+                                        Ticket Season Seat
                                             <i class="btn-icon fas fa-caret-right"></i>
                                         </button>
                                     </div>
@@ -352,6 +352,14 @@ Author     : duong
                                                 </c:forEach>
                                             </select>
                                         </th>
+                                        <th class="d-none">
+                                            <select class="form-select border-0" id="emailSelect">
+                                                <option selected value="All"></option>
+                                                <c:forEach items="${getListHistoryPurchasedTicketMatchSeat}" var="ticketMatchSeat" >
+                                                    <option value="${ticketMatchSeat.email}">${ticketMatchSeat.email}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -366,6 +374,7 @@ Author     : duong
                                             <td>${ticketMatchSeat.quantity}</td>
                                             <td>${ticketMatchSeat.price}</td>
                                             <td>${ticketMatchSeat.statusId.statusName}</td>
+                                            <td class="d-none">${ticketMatchSeat.email}></td>
                                             <td><a href="#viewDetailsTicket${ticketMatchSeat.ticketId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a></td>
                                         </tr>
                                     </c:forEach>
@@ -391,6 +400,14 @@ Author     : duong
                             <div class="form-group">
                                 <label>Ticket Id</label>
                                 <input name="newsId" class="form-control" value="${ticketMatchSeat.ticketId}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label>Team 1</label>
+                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.team1}</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Team 2</label>
+                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.team2}</p>
                             </div>
                             <div class="form-group">
                                 <label>Start Time</label>
@@ -419,20 +436,14 @@ Author     : duong
                 var seatClassValue = 'All'; // Giá trị mặc định cho dropdown seat class
                 var standValue = 'All'; // Giá trị mặc định cho dropdown stand
                 var statusValue = 'All'; // Giá trị mặc định cho dropdown status
-
-                // Sự kiện change cho các dropdown filter
-                $('#seasonSelect, #seatClassSelect, #standSelect, #statusSelect').change(function () {
+                var emailValue = 'All';
+        // Sự kiện change cho các dropdown filter
+                $('#seasonSelect, #seatClassSelect, #standSelect, #statusSelect, #emailSelect').change(function () {
                     seasonValue = $('#seasonSelect').val();
                     seatClassValue = $('#seatClassSelect').val();
                     standValue = $('#standSelect').val();
                     statusValue = $('#statusSelect').val();
-                    
-                    
-                      
-    console.log("Season value:", seasonValue);
-    console.log("Stand value:", standValue);
-    console.log("Seat class value:", seatClassValue);
-    console.log("Status value:", statusValue);
+                    emailValue = $('#emailSelect').val();
                     filterTable();
                 });
 
@@ -468,6 +479,9 @@ Author     : duong
                             show = false;
                         }
                         if (statusValue !== 'All' && row.find('td:eq(7)').text() !== statusValue) {
+                            show = false;
+                        }
+                        if (emailValue !== 'All' && row.find('td:eq(8)').text() !== emailValue) {
                             show = false;
                         }
 
@@ -537,15 +551,14 @@ Author     : duong
                 // Kiểm tra và thay đổi URL và icon
                 if (currentUrl.includes('manageHistoryPurchasedTicketSeasonSeat')) {
                     window.location.href = 'manageHistoryPurchasedTicketMatchSeat';
-                    $('#toggleButton').html('Manage History Purchased Ticket Match Seat <i class="btn-icon fas fa-caret-right"></i>');
+                    $('#toggleButton').html('Ticket Match Seat <i class="btn-icon fas fa-caret-right"></i>');
                 } else {
                     window.location.href = 'manageHistoryPurchasedTicketSeasonSeat';
-                    $('#toggleButton').html('Manage History Purchased Ticket Season Seat <i class="btn-icon fas fa-caret-right"></i>');
+                    $('#toggleButton').html('Ticket Season Seat <i class="btn-icon fas fa-caret-right"></i>');
                 }
             });
         </script>
         <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="lib/chart/chart.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
