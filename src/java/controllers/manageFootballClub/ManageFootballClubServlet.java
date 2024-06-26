@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -61,18 +62,22 @@ public class ManageFootballClubServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        if (request.getParameter("fcCreated") != null) {
-            request.setAttribute("created", "true".equals(request.getParameter("fcCreated")));
+        HttpSession session = request.getSession();
+        if (session.getAttribute("fcCreated") != null) {
+            request.setAttribute("created", (boolean)session.getAttribute("fcCreated"));
+            session.removeAttribute("fcCreated");
         }
 
 
-        if (request.getParameter("fcUpdated") != null) {
-            request.setAttribute("updated", "true".equals(request.getParameter("fcUpdated")));
+        if (session.getAttribute("fcUpdated") != null) {
+            request.setAttribute("updated", (boolean)session.getAttribute("fcUpdated"));
+            session.removeAttribute("fcUpdated");
 
 
         }
-        if (request.getParameter("fcDeleted") != null) {
-            request.setAttribute("deleted", "true".equals(request.getParameter("fcDeleted")));
+        if (session.getAttribute("fcDeleted") != null) {
+            request.setAttribute("deleted", (boolean)session.getAttribute("fcDeleted"));
+            session.removeAttribute("fcDeleted");
         }
         
         String search = request.getParameter("search");
