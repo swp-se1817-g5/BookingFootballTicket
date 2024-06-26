@@ -120,7 +120,7 @@ public class UpdateNewsServlet extends HttpServlet {
 //            User createdBy_raw = (User) session.getAttribute("currentUser");
 //            news.setUpdateBy(createdBy_raw.getEmail());
             news.setUpdateBy("duongnche173192@fpt.edu.vn");
-            session.setAttribute("updated", NewsDAO.getInstance().updateNews(news));
+            session.setAttribute("newsUpdated", NewsDAO.getInstance().updateNews(news));
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
         }

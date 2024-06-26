@@ -69,7 +69,8 @@ public class UpdateFootballClubServlet extends HttpServlet {
         } catch (IOException | ServletException e) {
             e.printStackTrace();
         }
-        response.sendRedirect("manageFootballClub?fcUpdated=" + fcUpdated);
+        session.setAttribute("fcUpdated", fcUpdated);
+        response.sendRedirect("manageFootballClub");
     }
 
     private String handleFileUpload(Part part, HttpServletRequest request) throws ServletException, IOException {

@@ -221,56 +221,9 @@ Author     : duong
             <!-- Spinner End -->
 
             <!-- Sidebar Start -->
-            <div class="sidebar pe-4 pb-3">
-                <nav class="navbar bg-light navbar-light">
-                    <a href="index.html" class="navbar-brand mx-4 mb-3">
-                        <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHBOARD</h3>
-                    </a>
-                    <div class="d-flex align-items-center ms-4 mb-4">
-                        <div class="position-relative">
-                            <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                            <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
-                        </div>
-                        <div class="ms-3">
-                            <h6 class="mb-0">Jhon Doe</h6>
-                            <span>Admin</span>
-                        </div>
-                    </div>
-                    <div class="navbar-nav w-100">
-                        <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Managers</a>
-                            <div class="dropdown-menu bg-transparent border-0">
-                                <a href="manageUser" class="dropdown-item">Manage User</a>
-                                <a href="manageMatch" class="dropdown-item">Manage Match</a>
-                                <a href="manageFootballClub" class="dropdown-item">Manage Football Club</a>
-                                <a href="manageSeason" class="dropdown-item">Manage Season</a>
-                                <a href="manageStand" class="dropdown-item ">Manage Stand</a>
-                                <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
-                                <a href="manageRole" class="dropdown-item">Manage Role</a>
-                                <a href="manageNews" class="dropdown-item active">Manage News</a>
-                                <a href="manageHistoryPurchasedTicketMatchSeat" class="dropdown-item ">Manage Ticket</a>
-                            </div>
-                        </div>
-                        <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
-                        <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
-                        <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
-                        <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
-                        <div class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                            <div class="dropdown-menu bg-transparent border-0">
-                                <a href="signin.html" class="dropdown-item">Sign In</a>
-                                <a href="signup.html" class="dropdown-item">Sign Up</a>
-                                <a href="404.html" class="dropdown-item">404 Error</a>
-                                <a href="blank.html" class="dropdown-item">Blank Page</a>
-                            </div>
-                        </div>
-                    </div>
-                </nav>
-            </div>
-            <!-- Sidebar End -->
-
-            <div class="content">
+            <jsp:include page="side-bar.jsp"></jsp:include>
+                <!-- Sidebar End -->
+                <div class="content">
                 <%@include file="dashboardHeader.jsp" %>
                 <!-- Navbar End -->
                 <div class="container-fluid">
@@ -363,7 +316,7 @@ Author     : duong
                             </table>
                             <script>
                                 function confirmDelete(newsId) {
-                                    return confirm("Are you sure you want to delete newsId = " + newsId);
+                                    return confirm("Are you sure want to delete newsId = " + newsId + " ?");
                                 }
                             </script>
                         </div>
@@ -389,7 +342,7 @@ Author     : duong
                                 <label>Content</label>
                                 <textarea name="content" class="form-control" rows="5" required></textarea>
                             </div>
-                             <div class="form-group" style="word-break: break-word">
+                            <div class="form-group" style="word-break: break-word">
                                 <label>Conclusion</label>
                                 <textarea name="conclusion" class="form-control" rows="5" required></textarea>
                             </div>
@@ -528,12 +481,7 @@ Author     : duong
                 </div>
             </div>
         </c:forEach>
-        <script>
-            const now = new Date().toISOString().slice(0, 16);
-            document.getElementById('datetimeInput1').setAttribute('min', now);
-            document.getElementById('datetimeInput2').setAttribute('min', now);
-        </script>
-        <div class="toast" id="updateToast" data-delay="3000">
+        <div class="toast" id="toastNotification" data-delay="3000">
             <div class="toast-header">
                 <strong class="mr-auto" id="toastTitle"></strong>
             </div>
@@ -562,8 +510,8 @@ Author     : duong
                 // Hàm filter table
                 function filterTable() {
                     $('#newsTableBody tr').each(function () {
-                        var statusText = $(this).find('td:eq(3)').text().trim(); // Lấy text của cột Status (index 3)
-                        var stateText = $(this).find('td:eq(4)').text().trim();  // Lấy text của cột State (index 4)
+                        var statusText = $(this).find('td:eq(4)').text().trim(); // Lấy text của cột Status (index 3)
+                        var stateText = $(this).find('td:eq(5)').text().trim();  // Lấy text của cột State (index 4)
 
                         var showRow = (statusValue === "All" || statusText === statusValue) &&
                                 (stateValue === "All" || stateText === stateValue);
@@ -599,47 +547,64 @@ Author     : duong
                 }
 
                 // Hàm hiển thị toast thông báo
-                function showUpdateToast() {
-                    var actions = {
-                        updated: '<%= request.getAttribute("updated")%>',
-                        created: '<%= request.getAttribute("created")%>',
-                        deleted: '<%= request.getAttribute("deleted")%>'
-                    };
-
-                    for (var action in actions) {
-                        var status = actions[action];
-                        if (status !== 'null' && status !== '') {
-                            var toast = $('#updateToast');
-                            var title, message, classToAdd, classToRemove;
-
-                            switch (action) {
-                                case 'updated':
-                                    title = status !== "0" ? 'Success' : 'Error';
-                                    message = status !== "0" ? 'News updated successfully.' : 'Failed to update news.';
-                                    classToAdd = status !== "0" ? 'success' : 'error';
-                                    classToRemove = status !== "0" ? 'error' : 'success';
-                                    break;
-                                case 'created':
-                                    title = status !== "0" ? 'Success' : 'Error';
-                                    message = status !== "0" ? 'News created successfully.' : 'Failed to create news.';
-                                    classToAdd = status !== "0" ? 'success' : 'error';
-                                    classToRemove = status !== "0" ? 'error' : 'success';
-                                    break;
-                                case 'deleted':
-                                    title = status !== "0" ? 'Success' : 'Error';
-                                    message = status !== "0" ? 'News deleted successfully.' : 'Failed to delete news.';
-                                    classToAdd = status !== "0" ? 'success' : 'error';
-                                    classToRemove = status !== "0" ? 'error' : 'success';
-                                    break;
-                            }
-
-                            toast.find('#toastTitle').text(title);
-                            toast.find('#toastMessage').text(message);
-                            toast.addClass(classToAdd).removeClass(classToRemove);
-                            toast.toast('show');
+                //update
+                $(document).ready(function () {
+                    var updated = '<%= request.getAttribute("updated")%>';
+                    if (updated !== 'null' && updated !== '') {
+                        var toast = $('#toastNotification');
+                        if (updated === "true") {
+                            toast.find('#toastTitle').text('Success');
+                            toast.find('#toastMessage').text('News updated successfully.');
+                            toast.addClass('success').removeClass('error');
+                        } else if (updated === "false") {
+                            toast.find('#toastTitle').text('Error');
+                            toast.find('#toastMessage').text('Failed to update News!');
+                            toast.addClass('error').removeClass('success');
                         }
+
+                        toast.toast('show');
+                        // Chuyển hướng sau khi hiển thị thông báo
+                        setTimeout(function () {
+                            window.location.href = 'manageNews';
+                        }, 3000); // Chờ 3000ms (3 giây) trước khi chuyển hướng
                     }
-                }
+                });
+
+                //create
+                $(document).ready(function () {
+                    var created = '<%= request.getAttribute("created")%>';
+                    if (created !== 'null' && created !== '') {
+                        var toast = $('#toastNotification');
+                        if (created === "true") {
+                            toast.find('#toastTitle').text('Success');
+                            toast.find('#toastMessage').text('News created successfully.');
+                            toast.addClass('success').removeClass('error');
+                        } else if (created === "false") {
+                            toast.find('#toastTitle').text('Error');
+                            toast.find('#toastMessage').text('Failed to create News!');
+                            toast.addClass('error').removeClass('success');
+                        }
+                        toast.toast('show');
+                    }
+                });
+
+                //delete
+                $(document).ready(function () {
+                    var deleted = '<%= request.getAttribute("deleted")%>';
+                    if (deleted !== 'null' && deleted !== '') {
+                        var toast = $('#toastNotification');
+                        if (deleted === "true") {
+                            toast.find('#toastTitle').text('Success');
+                            toast.find('#toastMessage').text('News deleted successfully.');
+                            toast.addClass('success').removeClass('error');
+                        } else if (deleted === "false") {
+                            toast.find('#toastTitle').text('Error');
+                            toast.find('#toastMessage').text('Failed to delete News!');
+                            toast.addClass('error').removeClass('success');
+                        }
+                        toast.toast('show');
+                    }
+                });
             });
 
         </script>

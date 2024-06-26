@@ -25,10 +25,6 @@ import models.NewsStatus;
 @WebServlet(name = "ManageNewsServlet", urlPatterns = {"/manageNews"})
 public class ManageNewsServlet extends HttpServlet {
 
-    private static final String CREATED = "created";
-    private static final String UPDATED = "updated";
-    private static final String DELETED = "deleted";
-
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -95,17 +91,17 @@ public class ManageNewsServlet extends HttpServlet {
                 session.setAttribute("getListStatus", listStatus);
             }
 
-            if (session.getAttribute(CREATED) != null) {
-                request.setAttribute(CREATED, session.getAttribute(CREATED));
-                session.removeAttribute(CREATED);
+            if (session.getAttribute("newsCreated") != null) {
+                request.setAttribute("created", session.getAttribute("newsCreated"));
+                session.removeAttribute("created");
             }
-            if (session.getAttribute(UPDATED) != null) {
-                request.setAttribute(UPDATED, session.getAttribute(UPDATED));
-                session.removeAttribute(UPDATED);
+            if (session.getAttribute("newsUpdated") != null) {
+                request.setAttribute("updated", session.getAttribute("newsUpdated"));
+                session.removeAttribute("updated");
             }
-            if (session.getAttribute(DELETED) != null) {
-                request.setAttribute(DELETED, session.getAttribute(DELETED));
-                session.removeAttribute(DELETED);
+            if (session.getAttribute("newsDeleted") != null) {
+                request.setAttribute("deleted", session.getAttribute("newsDeleted"));
+                session.removeAttribute("deleted");
             }
         }
         request.getRequestDispatcher("views/manageNews.jsp").forward(request, response);

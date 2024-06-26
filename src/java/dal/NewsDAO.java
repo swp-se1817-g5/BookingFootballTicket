@@ -147,8 +147,8 @@ public class NewsDAO {
 //    }
 //  Create a news
 
-    public int createNews(News news) {
-        int n = 0;
+    public boolean createNews(News news) {
+        boolean n = false;
         String sql = "INSERT INTO [News] ([title],[content],[image],[conclusion],[statusId],[stateId],[createdBy]) VALUES(?,?,?,?,?,?,?)";
         try {
             ps = connect.prepareStatement(sql);
@@ -159,7 +159,7 @@ public class NewsDAO {
             ps.setInt(5, news.getStatusId().getStatusId());
             ps.setInt(6, news.getStateId().getStateId());
             ps.setString(7, news.getCreateBy());
-            n = ps.executeUpdate();
+            n = ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -175,8 +175,8 @@ public class NewsDAO {
 //    }
 
 // Update news
-    public int updateNews(News news) {
-        int m = 0;
+    public boolean updateNews(News news) {
+        boolean m = false;
         String sql = "UPDATE [News]"
                 + "   SET [title] = ?"
                 + "      ,[content] = ?"
@@ -196,7 +196,7 @@ public class NewsDAO {
             ps.setInt(6, news.getStateId().getStateId());
             ps.setString(7, news.getUpdateBy());
             ps.setInt(8, news.getNewsId());
-            m = ps.executeUpdate();
+            m = ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -212,8 +212,8 @@ public class NewsDAO {
 //    }
 //Delete news
 
-    public int deleteNews(int newsId) {
-        int i = 0;
+    public boolean deleteNews(int newsId) {
+        boolean m = false;
         String sql = "UPDATE [News]"
                 + "   SET[isDeleted] = ?"
                 + " WHERE newsId =?";
@@ -221,11 +221,11 @@ public class NewsDAO {
             ps = connect.prepareStatement(sql);
             ps.setInt(1, 1);
             ps.setInt(2, newsId);
-            i = ps.executeUpdate();
+            m = ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return i;
+        return m;
     }
 //    public static void main(String[] args) {
 //        System.out.println(NewsDAO.getInstance().deleteNews(5));

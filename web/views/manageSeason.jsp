@@ -222,7 +222,7 @@
             <!-- Spinner End -->
 
             <!-- Sidebar Start -->
-            <%@include file="side-bar.jsp" %>
+            <%@include file="side-bar.jsp"%>
             <!-- Sidebar End -->
 
             <div class="content">
@@ -854,6 +854,8 @@
             console.log("Performing search with keyword: ", document.getElementById("searchKeyword").value.trim());
             // Sau đó bạn có thể thực hiện các hành động khác như gửi request lên server, cập nhật giao diện, vv...
         }
+
+
     </script>
 
     <!-- JavaScript Libraries -->

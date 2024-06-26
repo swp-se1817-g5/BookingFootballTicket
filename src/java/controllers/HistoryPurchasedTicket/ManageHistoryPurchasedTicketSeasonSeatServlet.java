@@ -83,7 +83,7 @@ public class ManageHistoryPurchasedTicketSeasonSeatServlet extends HttpServlet {
             request.setAttribute("getListHistoryPurchasedTicketSeasonSeat", getListHistoryPurchasedTicketSeasonSeat);
             request.setAttribute("getListSeason", SeasonDAO.getINSTANCE().getAllseason());
             request.setAttribute("getListSeatClass", SeatClassDAO.getInstance().getListSeatClass());
-            request.setAttribute("getListStand", StandDAO.INSTANCE.getStands(""));
+            request.setAttribute("getListStand", StandDAO.getInstance().getStands(""));
             request.setAttribute("getListStatus", HistoryPurchasedTicketDAO.getInstance().getListTicketStatus());
         }
 

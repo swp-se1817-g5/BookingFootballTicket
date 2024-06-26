@@ -42,6 +42,7 @@
                             <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
                             <a href="manageRole" class="dropdown-item">Manage Role</a>
                             <a href="manageNews" class="dropdown-item">Manage News</a>
+                            <a href="manageHistoryPurchasedTicketMatchSeat" class="dropdown-item">Manage History Purchased Ticket</a>
                         </div>
                     </div>
                     <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
