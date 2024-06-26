@@ -220,7 +220,6 @@ public class UserDAO {
         }
         return changed;
     }
-    
 
     public boolean checkEmailExist(String email) {
         String sql = "SELECT COUNT(*) FROM [User] WHERE email = ?";
@@ -395,22 +394,17 @@ public class UserDAO {
         return new ArrayList<>(users.subList(start, end));
     }
 
-    public ArrayList<User> searchUsers(String email, String name, String phoneNumber, int roleId) {
+    public ArrayList<User> searchUsers(String valueSearch) {
         ArrayList<User> users = new ArrayList<>();
         String sql = "SELECT * FROM [User] WHERE status = 1";
         sql += " AND email LIKE ?";
-        sql += " AND name LIKE ?";
-        sql += " AND roleId = ?";
-        sql += " AND phoneNumber LIKE ?";
-        String Email = (email != null) ? email : "";
-        String Name = (name != null) ? name : "";
-        String PhoneNumber = (phoneNumber != null) ? phoneNumber : "";
+        sql += " OR name LIKE ?";
+        sql += " OR phoneNumber LIKE ?";
         try {
             ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + Email + "%");
-            ps.setString(2, "%" + Name + "%");
-            ps.setInt(3, roleId);
-            ps.setString(4, "%" + PhoneNumber + "%");
+            ps.setString(1, "%" + valueSearch + "%");
+            ps.setString(2, "%" + valueSearch + "%");
+            ps.setString(3, "%" + valueSearch + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 User u = new User();
@@ -515,7 +509,7 @@ public class UserDAO {
 //        } catch (SQLException ex) {
 //            Logger.getLogger(UserDAO.class.getName()).log(Level.SEVERE, null, ex);
 //        }
-        ArrayList<User> users = UserDAO.INSTANCE.searchUsers(null, "user", null, 1);
+        ArrayList<User> users = UserDAO.INSTANCE.searchUsers("u");
         System.out.println(users.toString());
 //        User u = UserDAO.INSTANCE.getUserbyID("1");
 //        System.out.println(u);
@@ -580,6 +574,7 @@ public class UserDAO {
         }
         return users;
     }
+
     public boolean ActiveUser(String email) {
         boolean changed = false;
         String sql = "UPDATE [User] SET status = 1 WHERE email = ?";
@@ -595,6 +590,7 @@ public class UserDAO {
         }
         return changed;
     }
+
     public User getAllUserByEmail(String email) {
         String sql = "SELECT * FROM [User] WHERE email = ?";
         User user = null;

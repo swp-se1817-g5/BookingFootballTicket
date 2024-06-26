@@ -110,7 +110,7 @@ public class CreateNewNewsServlet extends HttpServlet {
                 part.write(image.getAbsolutePath());
                 imagePath = request.getContextPath() + "/images/news/" + image.getName();
                 News news = new News(title, content, imagePath, conclusion, createdByRaw.getEmail(), newsStatus, newsState);
-                session.setAttribute("created", NewsDAO.getInstance().createNews(news));
+                session.setAttribute("newsCreated", NewsDAO.getInstance().createNews(news));
             }
         } catch (IllegalArgumentException e) {
             e.printStackTrace();

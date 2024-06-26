@@ -76,10 +76,7 @@ public class SearchUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email").trim();
-        String name = request.getParameter("name").trim();
-        String phoneNumber = request.getParameter("phoneNumber").trim();
-        int roleId = Integer.parseInt(request.getParameter("roleId"));
+        String valueSearch = request.getParameter("valueSearch").trim().toLowerCase();
 
         int page = 1;
         if (request.getParameter("page") != null) {
@@ -89,11 +86,7 @@ public class SearchUserServlet extends HttpServlet {
             }
         }
         int pageSize = 10;
-        email = (email != null) ? email : "";
-        name = (name != null) ? name : "";
-        phoneNumber = (phoneNumber != null) ? phoneNumber : "";
-
-        ArrayList<User> users = UserDAO.getINSTANCE().searchUsers(email, name, phoneNumber, roleId);
+        ArrayList<User> users = UserDAO.getINSTANCE().searchUsers(valueSearch);
         int totalUsers = users.size();
         int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
         ArrayList<User> paginatedUsers = UserDAO.getINSTANCE().getPaginatedUsers(users, page, pageSize);
@@ -101,7 +94,7 @@ public class SearchUserServlet extends HttpServlet {
         StringBuilder htmlResponse = new StringBuilder();
         for (User user : paginatedUsers) {
             String roleName = getRoleName(user.getRoleId());
-            String status = user.isStatus() ? "Active" : "Inactive";
+            String status = user.isStatus() ?  "InActive": "Active";
 
                 htmlResponse.append("<tr>");
                 htmlResponse.append("<td>").append(user.getEmail()).append("</td>");
@@ -119,14 +112,14 @@ public class SearchUserServlet extends HttpServlet {
                         .append(user.getRoleId()).append("', '")
                         .append(user.isStatus()).append("')\" ")
                         .append("data-toggle=\"modal\"><i class=\"fa fa-eye\" style=\"color: gray;\"></i></a>");
-                if (user.isStatus()) {
+                if (!user.isStatus()) {
                     htmlResponse.append("<a href=\"#\" class=\"inactive\" title=\"InActive\" data-toggle=\"tooltip\" ")
                             .append("onclick=\"changeStatus('").append(user.getEmail()).append("', event)\">")
-                            .append("<i class=\"fas fa-user-times\" style=\"color: red;\"></i></a>");
+                            .append("<i class=\"fas fa-toggle-on status-icon active\" style=\"color: green;\"></i></a>");
                 } else {
                     htmlResponse.append("<a href=\"#\" class=\"active\" title=\"Active\" data-toggle=\"tooltip\" ")
                             .append("onclick=\"changeStatus('").append(user.getEmail()).append("', event)\">")
-                            .append("<i class=\"fas fa-user-check\" style=\"color: green;\"></i></a>");
+                            .append("<i class=\"fas fa-toggle-off status-icon active\"></i></a>");
                 }
                 htmlResponse.append("</td>");
                 htmlResponse.append("</tr>");

@@ -80,6 +80,7 @@ public class CreateSeasonServlet extends HttpServlet {
         String seasonName = request.getParameter("seasonName");
         String startDate = request.getParameter("startDate");
         String endDate = request.getParameter("endDate");
+        boolean created = false;
 
         if (!seasonName.isBlank() && !startDate.isBlank() && !endDate.isBlank()) {
             try {
@@ -88,20 +89,20 @@ public class CreateSeasonServlet extends HttpServlet {
 
                 if (end.after(start)) {
                     Season season = new Season(seasonName, start, end);
-                    SeasonDAO.getINSTANCE().createSeason(season);
-                    request.setAttribute("created", "true");
+                    created = SeasonDAO.getINSTANCE().createSeason(season);
+                    response.sendRedirect("manageSeason?created=" + created);
+                    return;
                 } else {
-                    request.setAttribute("created", "false");
                     request.setAttribute("message", "End date must be after start date!");
                 }
             } catch (ParseException ex) {
                 Logger.getLogger(CreateSeasonServlet.class.getName()).log(Level.SEVERE, null, ex);
-                request.setAttribute("created", "false");
+                request.setAttribute("message", "Invalid date format!");
             }
         } else {
-            request.setAttribute("created", "false");
+            request.setAttribute("message", "All fields are required!");
         }
-        request.getRequestDispatcher("/manageSeason").forward(request, response);
+        response.sendRedirect("manageSeason?created=" + created);
     }
 
     /**
