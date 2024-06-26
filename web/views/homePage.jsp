@@ -9,7 +9,7 @@
         <link rel="canonical" href="https://www.footballticketpad.com" />
         <link rel="alternate" hreflang="x-default" href="https://www.footballticketpad.com" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Football Tickets | Premier League Tickets | Football Ticket Pad</title>
+        <title>Booking Football Tickets</title>
         <meta name="description" content="We have football tickets for every event imaginable, Premier League Tickets, Champions League Tickets, La Liga Tickets and many more! Buy football tickets securely here!">
         <meta name="keywords" content="Football Ticket Pad">
         <meta name="author" content>

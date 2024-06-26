@@ -31,22 +31,22 @@ public class CreateFootballClubServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         boolean fcCreated = false;
-        
+
         try {
             Part part = request.getPart("image");
-        
-                String img = (part != null && part.getSize() > 0 ) ? handleFileUpload(part, request) : "" ;
-                String clubName = request.getParameter("clubName").trim();
-                String description = request.getParameter("description");
-                description = description == null ? "" : description.trim();
-                User user = (User)session.getAttribute("currentUser");
-                FootballClub fc = new FootballClub();
-                fc.setClubName(clubName);
-                fc.setImg(img);
-                fc.setDescription(description);
-                fc.setCreatedBy(user.getEmail());
-                fcCreated = FootballClubDAO.getInstance().createFootballClub(fc);
+            String img = (part != null && part.getSize() > 0) ? handleFileUpload(part, request) : "";
+            String clubName = request.getParameter("clubName").trim();
+            String description = request.getParameter("description");
+            description = description == null ? "" : description.trim();
+            User user = (User) session.getAttribute("currentUser");
             
+            FootballClub fc = new FootballClub();
+            fc.setClubName(clubName);
+            fc.setImg(img);
+            fc.setDescription(description);
+            fc.setCreatedBy(user.getEmail());
+            fcCreated = FootballClubDAO.getInstance().createFootballClub(fc);
+
         } catch (IOException | ServletException e) {
             e.printStackTrace();
         }
@@ -55,7 +55,7 @@ public class CreateFootballClubServlet extends HttpServlet {
     }
 
     private String handleFileUpload(Part part, HttpServletRequest request) throws ServletException, IOException {
-        String imagePath = null;    
+        String imagePath = null;
         if ((part != null) && (!part.getSubmittedFileName().trim().isEmpty()) && (part.getSubmittedFileName() != null)) {
             String path = request.getServletContext().getRealPath(IMAGE_FOLDER);
             File dir = new File(path);
@@ -65,7 +65,7 @@ public class CreateFootballClubServlet extends HttpServlet {
             File image = new File(dir, part.getSubmittedFileName());
             part.write(image.getAbsolutePath());
             imagePath = request.getContextPath() + IMAGE_FOLDER + image.getName();
-        } 
+        }
         return imagePath;
     }
 

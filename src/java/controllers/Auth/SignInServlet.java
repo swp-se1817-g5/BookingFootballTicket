@@ -56,7 +56,6 @@ public class SignInServlet extends HttpServlet {
         String remember = request.getParameter("remember_me");
         String redirectURL = request.getParameter("redirectURL");
 
-        System.out.println("remember = " + remember);
         UserDAO userDAO = UserDAO.INSTANCE;
         HttpSession session = request.getSession();
 
@@ -101,6 +100,7 @@ public class SignInServlet extends HttpServlet {
                         response.sendRedirect("homePage");
                     }
                 }
+
             } else {
                 // If password is incorrect, show error message and return to login page
                 request.setAttribute("errorMessage", "Wrong password! Please try again.");

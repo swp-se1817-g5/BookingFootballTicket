@@ -81,12 +81,12 @@ public class CreateUserServlet extends HttpServlet {
         boolean created = false;
         User currentUser = (User) session.getAttribute("currentUser");
         String createdBy = currentUser.getEmail();
-        String email = request.getParameter("email").trim();
-        String name = request.getParameter("name").trim();
-        String password = request.getParameter("password").trim();
-        String phoneNumber = request.getParameter("phoneNumber").trim();
-        String avatar = request.getParameter("avatar");
-        int roleId = Integer.parseInt(request.getParameter("roleId"));
+        String email = request.getParameter("emailInput").trim();
+        String name = request.getParameter("nameInput").trim();
+        String password = request.getParameter("passwordInput").trim();
+        String phoneNumber = request.getParameter("phoneNumberInput").trim();
+        String avatar = request.getParameter("avatarInput");
+        int roleId = Integer.parseInt(request.getParameter("roleIdinput"));
         if (!email.isBlank() && !name.isBlank() && !password.isBlank() && !phoneNumber.isBlank()) {
             User user = new User(email, name, roleId, password, phoneNumber, avatar, createdBy, LocalDateTime.now(), false);
 

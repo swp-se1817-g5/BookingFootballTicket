@@ -73,7 +73,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Password</label>
+                                            <label>New Password</label>
                                             <input name="password" type="password" id="password" required="" class="form-control">
                                         </div>
                                     </div>

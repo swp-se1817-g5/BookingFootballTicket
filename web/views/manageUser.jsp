@@ -298,22 +298,21 @@
                                                             <td>${r.roleName}</td>
                                                         </c:if>
                                                     </c:forEach>
-                                                    <td>${o.status ? "Active" : "Inactive"}</td>
+                                                    <td>${o.status ? "Active" : "InActive"}</td>
                                                     <td>
-                                                        <a href="#userDetailModal" class="view" title="View" onclick="update('${o.email}', '${o.name}', '${o.phoneNumber}', '${o.avatar}', '${o.roleId}', '${o.status}', '${o.createdBy}', '${o.createdDate}', '${o.updatedBy}', '${o.lastUpdatedDate}')" data-toggle="modal">
+                                                        <a href="#userDetailModal" class="view" title="View" onclick="update('${o.email}', '${o.name}', '${o.phoneNumber}', '${o.avatar}', '${o.roleId}', '${o.status}')" data-toggle="modal">
                                                             <i class="fa fa-eye" style="color: gray;"></i>
                                                         </a>
                                                         <c:if test="${o.status == true}">
-                                                            <a href="changestatusUser?email=${o.email}" class="inactive" title="InActive" data-toggle="tooltip">
-                                                            <i class="fa fa-times-circle"></i>
-                                                        </a>
+                                                            <a href="#" class="inactive" title="InActive" data-toggle="tooltip" onclick="changeStatus('${o.email}')">
+                                                                <i class="fas fa-user-times" style="color: red;"></i>
+                                                            </a>
                                                         </c:if>
                                                         <c:if test="${o.status == false}">
-                                                            <a href="changestatusUser?email=${o.email}" class="active" title="Active" data-toggle="tooltip">
-                                                                <i class="fa fa-check-circle-o" style="color: green;"></i>
-                                                        </a>
+                                                            <a href="#" class="active" title="Active" data-toggle="tooltip" onclick="changeStatus('${o.email}')">
+                                                                <i class="fas fa-user-check" style="color: green;"></i>
+                                                            </a>
                                                         </c:if>
-                                                        
                                                     </td>
                                                 </tr>
                                             </c:if>
@@ -344,7 +343,7 @@
                     <div class="modal fade" id="userDetailModal">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form id="updateUserForm" name="updateUserForm" action="updateUser" method="post" enctype="multipart/form-data">
+                                <form action="updateUser" method="post">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="userDetailModalLabel">User Details</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -354,53 +353,33 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="detailEmail">Email</label>
-                                            <input type="text" class="form-control" id="detailEmail" name="detailEmail" required>
+                                            <input type="text" class="form-control" id="email" name="detailEmail" required>
                                             <div id="emailDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailName">Name</label>
-                                            <input type="text" class="form-control" id="detailName" name="detailName" required>
+                                            <input type="text" class="form-control" id="name" name="detailName" required>
                                             <div id="nameDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailPhoneNumber">Phone Number</label>
-                                            <input type="text" class="form-control" id="detailPhoneNumber" name="detailPhoneNumber" required>
+                                            <input type="text" class="form-control" id="phoneNumber" name="detailPhoneNumber" required>
                                             <div id="phoneNumberDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailRole">Role</label>
-                                            <input type="text" class="form-control" id="detailRole" name="detailRole" readonly>
+                                            <input type="text" class="form-control" id="role" name="detailRole" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailStatus">Status</label>
-                                            <input type="text" class="form-control" id="detailStatus" name="detailStatus" readonly>
+                                            <input type="text" class="form-control" id="status" name="detailStatus" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label for="detailAvatar">Avatar</label>
                                             <div height="80px">
                                                 <img class="img-responsive avatarPreview" src="" style="width: auto; height: 80px" alt="Avatar"/>
                                             </div>
-                                            <input type="file" class="form-control" id="detailAvatar" name="detailAvatar" accept="image/*" onchange="previewAvatar(event)">
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label>Created By</label>
-                                                <input id="createdBy" readonly="" class="form-control">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label>Created Date</label>
-                                                <input id="createdDate" readonly="" class="form-control">
-                                            </div> 
-                                        </div>
-                                        <div class="row">
-                                            <div class="form-group col-sm-6">
-                                                <label>Updated By</label>
-                                                <input id="updatedBy" readonly="" class="form-control">
-                                            </div>
-                                            <div class="form-group col-sm-6">
-                                                <label>Last Updated Date</label>
-                                                <input id="lastUpdatedDate" readonly="" class="form-control">
-                                            </div>    
+                                            <input type="file" class="form-control" id="avatar" name="detailAvatar" accept="image/*" onchange="previewAvatar(event)">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -423,16 +402,16 @@
                                     <div class="modal-body">					
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input name="email" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" required>
+                                            <input name="emailInput" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" required>
                                             <div id="emailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input name="name" type="text" class="form-control" required>
+                                            <input name="nameInput" type="text" class="form-control" required>
                                         </div>
                                         <div class="form-group">
-                                            <label for="role">User Role</label>
-                                            <select name="roleId" class="form-control" required>
+                                            <label for="roleInput">User Role</label>
+                                            <select name="roleIdInput" class="form-control" required>
                                                 <c:forEach items="${roles}" var="role">
                                                     <c:if test="${role.roleId != 1}">
                                                         <option value="${role.roleId}">${role.roleName}</option>
@@ -442,17 +421,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input name="password" type="password" class="form-control" required>
+                                            <input name="passwordInput" type="password" class="form-control" required>
                                             <div id="passwordError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label>Phone Number</label>
-                                            <input name="phoneNumber" type="text" class="form-control" pattern="[0-9]{10}" required>
+                                            <input name="phoneNumberInput" type="text" class="form-control" pattern="[0-9]{10}" required>
                                             <div id="phoneNumberError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="avatar">Avatar</label>
-                                            <input name="avatar" type="file" accept="image/*" class="form-control" required>
+                                            <label for="avatarInput">Avatar</label>
+                                            <input name="avatarInput" type="file" accept="image/*" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <img id="avatarPreview" src="" alt="Avatar Preview" style="max-width: 200px; max-height: 200px;">
@@ -466,7 +445,6 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Search User Modal -->
                     <div id="searchUserModal" class="modal fade">
                         <div class="modal-dialog">
@@ -479,16 +457,16 @@
                                     <div class="modal-body">					
                                         <div class="form-row">
                                             <div class="form-group col-md-3">
-                                                <label for="email">Email</label>
-                                                <input name="email" type="text" class="form-control">
+                                                <label for="searchEmail">Email</label>
+                                                <input name="searchEmail" type="text" class="form-control">
                                             </div>
                                             <div class="form-group col-md-3">
-                                                <label for="name">Name</label>
-                                                <input name="name" type="text" class="form-control">
+                                                <label for="searchName">Name</label>
+                                                <input name="searchName" type="text" class="form-control">
                                             </div>
                                             <div class="form-group col-md-3">
-                                                <label for="roleId">User Role</label>
-                                                <select name="roleId" class="form-control">
+                                                <label for="searchRoleId">User Role</label>
+                                                <select name="searchRoleId" class="form-control">
                                                     <c:forEach items="${roles}" var="role">
                                                         <c:if test="${role.roleId != 1}">
                                                             <option value="${role.roleId}">${role.roleName}</option>
@@ -497,8 +475,8 @@
                                                 </select>
                                             </div>
                                             <div class="form-group col-md-3">
-                                                <label for="phoneNumber">Phone Number</label>
-                                                <input name="phoneNumber" type="text" class="form-control">
+                                                <label for="searchPhoneNumber">Phone Number</label>
+                                                <input name="searchPhoneNumber" type="text" class="form-control">
                                             </div>
                                         </div>
                                         <div class="form-group">
@@ -516,347 +494,380 @@
                 </div>
             </div>
         </div>
-    </body>
-    <!-- toast notification -->
-    <div class="toast" id="toastNotification" data-delay="3000">
-        <div class="toast-header">
-            <strong class="mr-auto" id="toastTitle"></strong>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+
+        <!-- toast notification -->
+        <div class="toast" id="toastNotification" data-delay="3000">
+            <div class="toast-header">
+                <strong class="mr-auto" id="toastTitle"></strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
         </div>
-        <div class="toast-body" id="toastMessage"></div>
-    </div>
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-    </script>
-    <!-- script for toast notification -->
-    <script>
-        function filterByStatus() {
-            var statusSelect, filterStatus, table, tr, td, i;
-            statusSelect = document.getElementById("statusFilterHeader");
-            filterStatus = statusSelect.value.toUpperCase();
-            table = document.getElementById("userTable");
-            tr = table.getElementsByTagName("tr");
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
 
-            for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
-                tr[i].style.display = "none"; // Hide the row by default
+        <!-- script for toast notification -->
+        <script>
+            function filterByStatus() {
+                var statusSelect, filterStatus, table, tr, td, i;
+                statusSelect = document.getElementById("statusFilterHeader");
+                filterStatus = statusSelect.value.toUpperCase();
+                table = document.getElementById("userTable");
+                tr = table.getElementsByTagName("tr");
 
-                td = tr[i].getElementsByTagName("td");
-                if (td.length > 0) {
-                    var status = td[4].textContent.toUpperCase();
+                for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+                    tr[i].style.display = "none"; // Hide the row by default
 
-                    if (filterStatus === "0" || // "All Status" selected
-                            (filterStatus === "TRUE" && status === "ACTIVE") ||
-                            (filterStatus === "FALSE" && status === "INACTIVE")) {
-                        tr[i].style.display = "";
+                    td = tr[i].getElementsByTagName("td");
+                    if (td.length > 0) {
+                        var status = td[4].textContent.toUpperCase();
+
+                        if (filterStatus === "0" || // "All Status" selected
+                                (filterStatus === "TRUE" && status === "ACTIVE") ||
+                                (filterStatus === "FALSE" && status === "INACTIVE")) {
+                            tr[i].style.display = "";
+                        }
                     }
                 }
             }
-        }
-
-        // Show toast notification based on action status
-        $(document).ready(function () {
-            function showToast(action, message) {
-                var toast = $('#toastNotification');
-                toast.find('#toastTitle').text(action === "true" ? 'Success' : 'Error');
-                toast.find('#toastMessage').text(message);
-                toast.toggleClass('success', action === "true").toggleClass('error', action !== "true");
-                toast.toast('show');
-            }
-
-            var updated = '<%= request.getAttribute("updated")%>';
-            if (updated !== 'null' && updated !== '') {
-                showToast(updated, updated === "true" ? 'User updated successfully.' : 'Failed to update user.');
-            }
-
-            var created = '<%= request.getAttribute("created")%>';
-            if (created !== 'null' && created !== '') {
-                showToast(created, created === "true" ? 'User created successfully.' : 'Failed to create user.');
-            }
-
-            var changed = '<%= request.getAttribute("changed")%>';
-            if (changed !== 'null' && changed !== '') {
-                showToast(changed, changed === "true" ? 'User changed status successfully.' : 'Failed to changed status user.');
-            }
-        });
-
-        function update(email, name, phoneNumber, img, roleid, status, createdBy, createdDate, updatedBy, lastUpdatedDate) {
-            document.getElementById('detailEmail').value = email;
-            document.getElementById('detailName').value = name;
-            document.getElementById('detailPhoneNumber').value = phoneNumber;
-            document.getElementById('detailRole').value = roleid;
-            document.getElementById('detailStatus').value = status;
-
-            var avatarImg = document.querySelector('.avatarPreview');
-            avatarImg.src = img;
-
-            document.getElementById('createdBy').value = createdBy;
-            document.getElementById('createdDate').value = createdDate;
-            document.getElementById('updatedBy').value = updatedBy;
-            document.getElementById('lastUpdatedDate').value = lastUpdatedDate;
-
-            $('#emailDetailError').text('');
-            $('#nameDetailError').text('');
-            $('#phoneNumberDetailError').text('');
-        }
-
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-
-            var users = [];
-        <c:forEach items="${users}" var="user">
-            users.push({email: "${user.email}", name: "${user.name}"});
-        </c:forEach>
-
-            // Check for duplicate email before submitting the create form
-            $('#createUserForm').submit(function (event) {
-                var email = $('#email').val().trim();
-                var duplicate = users.some(user => user.email === email);
-                if (duplicate) {
-                    $('#emailError').text('Email already exists. Please choose a different email.');
-                    event.preventDefault();
-                } else {
-                    $('#emailError').text('');
+        </script>
+        <!-- script for toast notification -->
+        <script>
+            //update
+            $(document).ready(function () {
+                var updated = '<%= request.getAttribute("updated")%>';
+                if (updated !== 'null' && updated !== '') {
+                    var toast = $('#toastNotification');
+                    if (updated === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('User updated successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (updated === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to update user!');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
                 }
             });
 
-            // Check for duplicate email before submitting the update form
-            $('#updateUserForm').submit(function (event) {
-                var email = $('#detailEmail').val().trim();
-                var duplicate = users.some(user => user.email === email);
-                if (duplicate) {
-                    $('#emailDetailError').text('Email already exists. Please choose a different email.');
-                    event.preventDefault();
-                } else {
-                    $('#emailDetailError').text('');
+            //create
+            $(document).ready(function () {
+                var created = '<%= request.getAttribute("created")%>';
+                if (created !== 'null' && created !== '') {
+                    var toast = $('#toastNotification');
+                    if (created === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('User created successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (created === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to create user!');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
                 }
             });
 
-            $('input[name="avatar"]').change(function () {
+            //delete
+            $(document).ready(function () {
+                var deleted = '<%= request.getAttribute("changed")%>';
+                if (deleted !== 'null' && deleted !== '') {
+                    var toast = $('#toastNotification');
+                    if (deleted === "true") {
+                        toast.find('#toastTitle').text('Success');
+                        toast.find('#toastMessage').text('User change status successfully.');
+                        toast.addClass('success').removeClass('error');
+                    } else if (deleted === "false") {
+                        toast.find('#toastTitle').text('Error');
+                        toast.find('#toastMessage').text('Failed to change status user!');
+                        toast.addClass('error').removeClass('success');
+                    }
+                    toast.toast('show');
+                }
+            });
+
+        </script>
+
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+
+                var users = [];
+            <c:forEach items="${users}" var="user">
+                users.push({email: "${user.email}"});
+            </c:forEach>
+
+                // Check for duplicate email before submitting the create form
+                $('#createUserForm').submit(function (event) {
+                    var email = $('#emailInput').val().trim();
+                    var emptyEmail = email === '';
+                    var duplicate = users.some(user => user.email === email);
+                    if (emptyEmail) {
+                        $('#emailError').text('Can not be empty or blank!');
+                        event.preventDefault();
+                    } else if (duplicate) {
+                        $('#emailError').text('Email already exists. Please choose a different email.');
+                        event.preventDefault();
+                    } else {
+                        $('#emailError').text('');
+                    }
+                });
+
+                // Check for duplicate email before submitting the update form
+                $('#updateUserForm').submit(function (event) {
+                    var email = $('#detailEmail').val().trim();
+                    var originalEmail = users.find(users => user.email === email);
+                    var duplicate = users.some(user => user.email === email);
+                    if (email !== originalEmail.email && duplicate) {
+                        $('#emailDetailError').text('Email already exists. Please choose a different email.');
+                        event.preventDefault();
+                    } else {
+                        $('#emailDetailError').text('');
+                    }
+                });
+
+                $('#roleFilterHeader').change(function () {
+                    var roleId = $(this).val();
+                    $.ajax({
+                        type: 'POST',
+                        url: 'manageUser',
+                        data: {roleId: roleId},
+                        success: function (data) {
+                            $('#userTable tbody').html(data.html);
+                            $('.pagination').html(data.pagination);
+                            $('.hint-text strong').text(data.usersCount);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                });
+
+                $('#searchForm').on('submit', function (event) {
+                    $.ajax({
+                        type: 'POST',
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        success: function (data) {
+                            $('#searchUserModal').modal('hide');
+                            $('#userTable tbody').html(data.html);
+                            $('.pagination').html(data.pagination);
+                            $('.hint-text strong').text(data.usersCount);
+                        },
+                        error: function (xhr, status, error) {
+                            $('#error-message').text("Error: " + xhr.responseText);
+                        }
+                    });
+                });
+            });
+        </script>
+        <script>
+            function update(email, name, phoneNumber, img, roleid, status) {
+                document.getElementById('email').value = email;
+                document.getElementById('name').value = name;
+                document.getElementById('phoneNumber').value = phoneNumber;
+                document.getElementById('role').value = roleid === "2" ? "User" : "Staff"  ;
+                document.getElementById('status').value = status === "true" ? "Active":"InActive";
+
+                var avatarImg = document.querySelector('.avatarPreview');
+                avatarImg.src = img;
+
+                $('#emailDetailError').text('');
+                $('#nameDetailError').text('');
+                $('#phoneNumberDetailError').text('');
+            }
+            function changeStatus(email) {
+                if (confirm("Do you want to change the status of this user with email = " + email)) {
+                    location.href = 'changestatusUser?email=' + email;
+                }
+            }
+            $('input[name="avatarInput"]').change(function () {
                 previewImage(this);
             });
+            // Function to preview image from URL
+            function previewImage(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#avatarPreview').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
 
-            $('#roleFilterHeader').change(function () {
-                var roleId = $(this).val();
-                $.ajax({
-                    type: 'POST',
-                    url: 'manageUser',
-                    data: {roleId: roleId},
-                    success: function (data) {
-                        $('#userTable tbody').html(data.html);
-                        $('.pagination').html(data.pagination);
-                        $('.hint-text strong').text(data.usersCount);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
-                });
-            });
-
-            $('#searchForm').on('submit', function (event) {
-                $.ajax({
-                    type: 'POST',
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    success: function (data) {
-                        $('#searchUserModal').modal('hide');
-                        $('#userTable tbody').html(data.html);
-                        $('.pagination').html(data.pagination);
-                        $('.hint-text strong').text(data.usersCount);
-                    },
-                    error: function (xhr, status, error) {
-                        $('#error-message').text("Error: " + xhr.responseText);
-                    }
-                });
-            });
-        });
-
-        // Function to preview image from URL
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#avatarPreview').attr('src', e.target.result);
+            function previewAvatar(event) {
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const output = document.querySelector('.avatarPreview');
+                    output.src = reader.result;
                 };
-                reader.readAsDataURL(input.files[0]);
+                reader.readAsDataURL(event.target.files[0]);
             }
-        }
+        </script>
+        <script>
 
-        function previewAvatar(event) {
-            const reader = new FileReader();
-            reader.onload = function () {
-                const output = document.querySelector('.avatarPreview');
-                output.src = reader.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
-
-        // Validate Create Form
-        function validateEmail() {
-            var email = $('[name="email"]').val().trim();
-            var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-            if (email === '') {
-                $('#emailError').text('Email is required.');
-                $('#emailDetailError').text('Email is required.');
-                return false;
-            } else if (!emailPattern.test(email)) {
-                $('#emailError').text('Invalid email format.');
-                $('#emailDetailError').text('Invalid email format.');
-                return false;
-            } else {
-                $('#emailError').text('');
-                $('#emailDetailError').text('');
-                return true;
+            // Validate Create Form
+            function validateEmail() {
+                var email = $('[name="emailInput"]').val().trim();
+                var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                if (email === '') {
+                    $('#emailError').text('Email is required.');
+                    return false;
+                } else if (!emailPattern.test(email)) {
+                    $('#emailError').text('Invalid email format.');
+                    return false;
+                } else {
+                    $('#emailError').text('');
+                    return true;
+                }
             }
-        }
 
-        function validateName() {
-            var name = $('[name="name"]').val().trim();
-            if (name === '') {
-                $('#nameError').text('Name is required.');
-                $('#nameDetailError').text('Name is required.');
-                return false;
-            } else {
-                $('#nameError').text('');
-                $('#nameDetailError').text('');
-                return true;
+            function validateName() {
+                var name = $('[name="nameInput"]').val().trim();
+                if (name === '') {
+                    $('#nameError').text('Name is required.');
+                    return false;
+                } else {
+                    $('#nameError').text('');
+                    return true;
+                }
             }
-        }
 
-        function validatePhoneNumber() {
-            var phoneNumber = $('[name="phoneNumber"]').val().trim();
-            var phonePattern = /^[0-9]{10}$/;
-            if (phoneNumber === '') {
-                $('#phoneNumberError').text('Phone number is required.');
-                $('#phoneNumberDetailError').text('Phone number is required.');
-                return false;
-            } else if (!phonePattern.test(phoneNumber)) {
-                $('#phoneNumberError').text('Invalid phone number format.');
-                $('#phoneNumberDetailError').text('Invalid phone number format.');
-                return false;
-            } else {
-                $('#phoneNumberError').text('');
-                $('#phoneNumberDetailError').text('');
-                return true;
+            function validatePhoneNumber() {
+                var phoneNumber = $('[name="phoneNumberInput"]').val().trim();
+                var phonePattern = /^[0-9]{10}$/;
+                if (phoneNumber === '') {
+                    $('#phoneNumberError').text('Phone number is required.');
+                    return false;
+                } else if (!phonePattern.test(phoneNumber)) {
+                    $('#phoneNumberError').text('Invalid phone number format.');
+                    return false;
+                } else {
+                    $('#phoneNumberError').text('');
+                    return true;
+                }
             }
-        }
 
-        function validatePassword() {
-            var password = $('[name="password"]').val().trim();
-            var passwordPattern = /^(?=.*[0-9])(?=.*[A-Z]).{8,20}$/;
-            if (password === '') {
-                $('#passwordError').text('Password is required.');
-                return false;
-            } else if (password.length < 8 || password.length > 20) {
-                $('#passwordError').text('Password must be between 8 and 20 characters long.');
-                return false;
-            } else if (!passwordPattern.test(password)) {
-                $('#passwordError').text('Password must contain at least one digit and one uppercase letter.');
-                return false;
-            } else {
-                $('#passwordError').text('');
-                return true;
+            function validatePassword() {
+                var password = $('[name="passwordInput"]').val().trim();
+                var passwordPattern = /^(?=.*[0-9])(?=.*[A-Z]).{8,20}$/;
+                if (password === '') {
+                    $('#passwordError').text('Password is required.');
+                    return false;
+                } else if (password.length < 8 || password.length > 20) {
+                    $('#passwordError').text('Password must be between 8 and 20 characters long.');
+                    return false;
+                } else if (!passwordPattern.test(password)) {
+                    $('#passwordError').text('Password must contain at least one digit and one uppercase letter.');
+                    return false;
+                } else {
+                    $('#passwordError').text('');
+                    return true;
+                }
             }
-        }
 
-        function validateForm() {
-            var emailValid = validateEmail();
-            var nameValid = validateName();
-            var phoneNumberValid = validatePhoneNumber();
-            var passwordValid = validatePassword();
-            return emailValid && nameValid && phoneNumberValid && passwordValid;
-        }
-
-        // Validate fields on input
-        $('[name="email"]').on('input', function () {
-            validateEmail();
-        });
-        $('[name="name"]').on('input', function () {
-            validateName();
-        });
-        $('[name="phoneNumber"]').on('input', function () {
-            validatePhoneNumber();
-        });
-        $('[name="password"]').on('input', function () {
-            validatePassword();
-        });
-
-        // Validate Update Form Fields on Input
-        $('#updateUserForm input[name="detailEmail"]').on('input', function () {
-            validateUpdateEmail();
-        });
-        $('#updateUserForm input[name="detailName"]').on('input', function () {
-            validateUpdateName();
-        });
-        $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
-            validateUpdatePhoneNumber();
-        });
-
-        function validateUpdateEmail() {
-            var email = $('#updateUserForm input[name="detailEmail"]').val().trim();
-            var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-            if (email === '') {
-                $('#emailDetailError').text('Email is required.');
-                return false;
-            } else if (!emailPattern.test(email)) {
-                $('#emailDetailError').text('Invalid email format.');
-                return false;
-            } else {
-                $('#emailDetailError').text('');
-                return true;
+            function validateForm() {
+                var emailValid = validateEmail();
+                var nameValid = validateName();
+                var phoneNumberValid = validatePhoneNumber();
+                var passwordValid = validatePassword();
+                return emailValid && nameValid && phoneNumberValid && passwordValid;
             }
-        }
 
-        function validateUpdateName() {
-            var name = $('#updateUserForm input[name="detailName"]').val().trim();
-            if (name === '') {
-                $('#nameDetailError').text('Name is required.');
-                return false;
-            } else {
-                $('#nameDetailError').text('');
-                return true;
+// Validate fields on input
+            $('[name="emailInput"]').on('input', function () {
+                validateEmail();
+            });
+            $('[name="nameInput"]').on('input', function () {
+                validateName();
+            });
+            $('[name="phoneNumberInput"]').on('input', function () {
+                validatePhoneNumber();
+            });
+            $('[name="passwordInput"]').on('input', function () {
+                validatePassword();
+            });
+
+// Validate Update Form Fields on Input
+            $('#updateUserForm input[name="detailEmail"]').on('input', function () {
+                validateUpdateEmail();
+            });
+            $('#updateUserForm input[name="detailName"]').on('input', function () {
+                validateUpdateName();
+            });
+            $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
+                validateUpdatePhoneNumber();
+            });
+
+            function validateUpdateEmail() {
+                var email = $('#updateUserForm input[name="detailEmail"]').val().trim();
+                var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                if (email === '') {
+                    $('#emailDetailError').text('Email is required.');
+                    return false;
+                } else if (!emailPattern.test(email)) {
+                    $('#emailDetailError').text('Invalid email format.');
+                    return false;
+                } else {
+                    $('#emailDetailError').text('');
+                    return true;
+                }
             }
-        }
 
-        function validateUpdatePhoneNumber() {
-            var phoneNumber = $('#updateUserForm input[name="detailPhoneNumber"]').val().trim();
-            var phonePattern = /^[0-9]{10}$/;
-            if (phoneNumber === '') {
-                $('#phoneNumberDetailError').text('Phone number is required.');
-                return false;
-            } else if (!phonePattern.test(phoneNumber)) {
-                $('#phoneNumberDetailError').text('Invalid phone number format.');
-                return false;
-            } else {
-                $('#phoneNumberDetailError').text('');
-                return true;
+            function validateUpdateName() {
+                var name = $('#updateUserForm input[name="detailName"]').val().trim();
+                if (name === '') {
+                    $('#nameDetailError').text('Name is required.');
+                    return false;
+                } else {
+                    $('#nameDetailError').text('');
+                    return true;
+                }
             }
-        }
 
-        function validateUpdateForm() {
-            var emailValid = validateUpdateEmail();
-            var nameValid = validateUpdateName();
-            var phoneNumberValid = validateUpdatePhoneNumber();
-            return emailValid && nameValid && phoneNumberValid;
-        }
-
-        $('#updateUserForm').submit(function (event) {
-            if (!validateUpdateForm()) {
-                event.preventDefault();
+            function validateUpdatePhoneNumber() {
+                var phoneNumber = $('#updateUserForm input[name="detailPhoneNumber"]').val().trim();
+                var phonePattern = /^[0-9]{10}$/;
+                if (phoneNumber === '') {
+                    $('#phoneNumberDetailError').text('Phone number is required.');
+                    return false;
+                } else if (!phonePattern.test(phoneNumber)) {
+                    $('#phoneNumberDetailError').text('Invalid phone number format.');
+                    return false;
+                } else {
+                    $('#phoneNumberDetailError').text('');
+                    return true;
+                }
             }
-        });
-    </script>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/chart/chart.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="js/main.js"></script>
+            function validateUpdateForm() {
+                var emailValid = validateUpdateEmail();
+                var nameValid = validateUpdateName();
+                var phoneNumberValid = validateUpdatePhoneNumber();
+                return emailValid && nameValid && phoneNumberValid;
+            }
+
+            $('#updateUserForm').submit(function (event) {
+                if (!validateUpdateForm()) {
+                    event.preventDefault();
+                }
+            });
+        </script>
+
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/chart/chart.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
 </html>

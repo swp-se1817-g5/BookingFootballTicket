@@ -14,15 +14,17 @@ import models.Stand;
  */
 public class StandDAO {
 
-    public static StandDAO INSTANCE = new StandDAO();
+    private static StandDAO instance = new StandDAO();
     private Connection con;
 
     private StandDAO() {
-        if (INSTANCE == null) {
-            con = new DBContext().connect;
-        } else {
-            INSTANCE = this;
-        }
+        con = new DBContext().connect;
+    }
+    
+    public static StandDAO getInstance(){
+        if(instance == null)
+            instance = new StandDAO();
+        return instance;
     }
 
     public ArrayList<Stand> getStands(String standName) {

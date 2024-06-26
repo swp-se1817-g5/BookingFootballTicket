@@ -307,32 +307,32 @@
                                             End Date 
                                             <i class="fa fa-sort" onclick="sortTable('endDate')"></i>
                                         </th>
-                                        <th style="font-size: 14px;">
+                                        <!--                                        <th style="font-size: 14px;">
+                                        
+                                                                                    <select class="form-select border-0 align-middle" id="createdBySelect" onchange="filterCreatedBy()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
+                                                                                        <option selected value="All">Created by</option>
+                                        <c:forEach items="${requestScope.createdByList}" var="createdBy">
+                                            <option value="${createdBy}">${createdBy}</option>
+                                        </c:forEach>
+                                    </select>
+                                </th>
+                                <th style="font-size: 14px;">
+                                    Created Date 
+                                    <i class="fa fa-sort" onclick="sortTable('createdDate')"></i>
+                                </th>
+                                <th style="font-size: 14px;">
 
-                                            <select class="form-select border-0 align-middle" id="createdBySelect" onchange="filterCreatedBy()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
-                                                <option selected value="All">Created by</option>
-                                                <c:forEach items="${requestScope.createdByList}" var="createdBy">
-                                                    <option value="${createdBy}">${createdBy}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </th>
-                                        <th style="font-size: 14px;">
-                                            Created Date 
-                                            <i class="fa fa-sort" onclick="sortTable('createdDate')"></i>
-                                        </th>
-                                        <th style="font-size: 14px;">
-
-                                            <select class="form-select border-0 align-middle" id="updatedBySelect" onchange="filterUpdatedBy()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
-                                                <option selected value="All">Last Updated By</option>
-                                                <c:forEach items="${requestScope.updatedByList}" var="updatedBy">
-                                                    <option value="${updatedBy}">${updatedBy}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </th>
-                                        <th style="font-size: 14px;">
-                                            Last Updated Date 
-                                            <i class="fa fa-sort" onclick="sortTable('lastUpdatedDate')"></i>
-                                        </th>
+                                    <select class="form-select border-0 align-middle" id="updatedBySelect" onchange="filterUpdatedBy()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
+                                        <option selected value="All">Last Updated By</option>
+                                        <c:forEach items="${requestScope.updatedByList}" var="updatedBy">
+                                            <option value="${updatedBy}">${updatedBy}</option>
+                                        </c:forEach>
+                                    </select>
+                                </th>
+                                <th style="font-size: 14px;">
+                                    Last Updated Date 
+                                    <i class="fa fa-sort" onclick="sortTable('lastUpdatedDate')"></i>
+                                </th>-->
                                         <th style="font-size: 14px;">Actions</th>
                                     </tr>
                                 </thead>
@@ -343,10 +343,10 @@
                                             <td>${s.seasonName}</td>
                                             <td>${s.startDate}</td>
                                             <td>${s.endDate}</td>
-                                            <td>${s.createdBy}</td>
+<!--                                            <td>${s.createdBy}</td>
                                             <td>${s.createdDate}</td>
                                             <td>${s.updatedBy}</td>
-                                            <td>${s.lastUpdatedDate}</td>
+                                            <td>${s.lastUpdatedDate}</td>-->
                                             <td>
                                                 <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
                                                 <a onclick="doDelete(${s.seasonId})" class="delete" title="Cancel" data-toggle="tooltip">
@@ -505,11 +505,11 @@
                 var toast = $('#toastNotification');
                 if (deleted === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Stand deleted successfully.');
+                    toast.find('#toastMessage').text('Season deleted successfully.');
                     toast.addClass('success').removeClass('error');
                 } else if (deleted === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to delete stand.');
+                    toast.find('#toastMessage').text('Failed to delete season.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -673,6 +673,27 @@
                 }
             }
         }
+
+        function validateSeasonDates(startDate, endDate) {
+            var table = document.getElementById("seasonTable");
+            var rows = table.getElementsByTagName("tr");
+            var latestEndDate = null;
+
+            for (var i = 1; i < rows.length; i++) {
+                var cells = rows[i].getElementsByTagName("td");
+                var existingEndDate = new Date(cells[3].innerText);
+
+                if (!latestEndDate || existingEndDate > latestEndDate) {
+                    latestEndDate = existingEndDate;
+                }
+            }
+
+            if (latestEndDate && new Date(startDate) <= latestEndDate) {
+                return false; // Start date is not after the latest end date
+            }
+            return true; // Valid start date
+        }
+
     </script>
 
     <!--script for create and update-->
@@ -692,10 +713,18 @@
             var seasonNameInput = document.getElementById("seasonName");
             var seasonName = seasonNameInput.value.trim(); // Lấy giá trị và loại bỏ khoảng trắng đầu cuối
 
+            var startDateInput = document.getElementById("startDate");
+            var endDateInput = document.getElementById("endDate");
+
+            var startDate = startDateInput.value;
+            var endDate = endDateInput.value;
+
+            var valid = true;
+
             // Kiểm tra nếu seasonName chỉ chứa khoảng trắng
             if (seasonName === "") {
                 document.getElementById("seasonNameError").innerText = "Season Name cannot be empty.";
-                return false;
+                valid = false;
             }
 
             // Kiểm tra nếu seasonName đã tồn tại
@@ -708,14 +737,34 @@
             for (var i = 0; i < existingSeasonNames.length; i++) {
                 if (existingSeasonNames[i].toLowerCase() === seasonName.toLowerCase()) {
                     document.getElementById("seasonNameError").innerText = "Season Name already exists. Please choose another.";
-                    return false;
+                    valid = false;
                 }
             }
 
             // Reset error message if validation passes
-            document.getElementById("seasonNameError").innerText = "";
+            if (valid) {
+                document.getElementById("seasonNameError").innerText = "";
+            }
 
-            return true; // Allow form submission
+            // Kiểm tra nếu ngày bắt đầu lớn hơn ngày kết thúc
+            if (new Date(startDate) > new Date(endDate)) {
+                document.getElementById("startDateError").innerText = "Start date cannot be later than end date.";
+                document.getElementById("endDateError").innerText = "End date cannot be earlier than start date.";
+                valid = false;
+            } else {
+                document.getElementById("startDateError").innerText = "";
+                document.getElementById("endDateError").innerText = "";
+            }
+
+            // Kiểm tra thời gian bắt đầu hợp lệ
+            if (!validateSeasonDates(startDate, endDate)) {
+                document.getElementById("startDateError").innerText = "The start date must be after the end date of the latest season.";
+                valid = false;
+            } else {
+                document.getElementById("startDateError").innerText = "";
+            }
+
+            return valid;
         }
     </script>
 
@@ -850,6 +899,8 @@
             console.log("Performing search with keyword: ", document.getElementById("searchKeyword").value.trim());
             // Sau đó bạn có thể thực hiện các hành động khác như gửi request lên server, cập nhật giao diện, vv...
         }
+        
+        
     </script>
 
     <!-- JavaScript Libraries -->
