@@ -187,10 +187,10 @@ INSERT INTO NewsState(stateName) VALUES
 GO
 -- Insert values into News table
 INSERT INTO News (title, content,stateId,statusId, createdBy) VALUES
-('Title 1', 'Content 1',1,1, 'admin@example.com'),
-('Title 2', 'Content 2',1,1, 'admin@example.com'),
-('Title 3', 'Content 1',2,2, 'admin@example.com'),
-('Title 4', 'Content 2',2,2, 'admin@example.com'),
+('Austria and England win their groups', 'As the group stage of Euro 2024 concludes, the tournament has already seen its fair share of drama, surprises, and heartbreaks. Groups C and D, in particular, have delivered intense football action, leaving fans and pundits with much to discuss. Here’s a detailed look at the outcomes and narratives emerging from these groups.',1,1, 'admin@example.com'),
+('Hungary and Italy in waiting room after finishing third', 'The European Championship 2024 group stage came to an electrifying conclusion as the final matches in Groups A and B brought unexpected twists and turns. The outcomes of these matches not only determined the teams advancing to the knockout stages but also showcased some intense football drama.Group A',1,1, 'admin@example.com'),
+('Portugal third team to win first two matches', 'Portugal joins Germany and Spain as the third team to win their first two matches in Euro 2024. The tournament heats up with intense competition as teams vie for knockout stage spots.',2,2, 'admin@example.com'),
+('Poor performances cost England favourites status', 'Germany and France are the new shared favourites to win the Euro 2024. England dropped a bit below them, while Spain is the real dark horse of the tournament.',2,2, 'admin@example.com'),
 ('Title 5', 'Content 1',1,3, 'admin@example.com'),
 ('Title 6', 'Content 2',1,3, 'admin@example.com');
 GO

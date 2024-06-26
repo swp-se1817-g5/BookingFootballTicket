@@ -269,8 +269,8 @@ Author     : duong
                 </nav>
             </div>
             <!-- Sidebar End -->
-
-            <div class="content">
+            <jsp:include page="side-bar.jsp"></jsp:include>
+                <div class="content">
                 <%@include file="dashboardHeader.jsp" %>
                 <!-- Navbar End -->
                 <div class="container-fluid">
@@ -363,7 +363,7 @@ Author     : duong
                             </table>
                             <script>
                                 function confirmDelete(newsId) {
-                                    return confirm("Are you sure you want to delete newsId = " + newsId);
+                                    return confirm("Are you sure want to delete newsId = " + newsId + " ?");
                                 }
                             </script>
                         </div>
@@ -389,7 +389,7 @@ Author     : duong
                                 <label>Content</label>
                                 <textarea name="content" class="form-control" rows="5" required></textarea>
                             </div>
-                             <div class="form-group" style="word-break: break-word">
+                            <div class="form-group" style="word-break: break-word">
                                 <label>Conclusion</label>
                                 <textarea name="conclusion" class="form-control" rows="5" required></textarea>
                             </div>
