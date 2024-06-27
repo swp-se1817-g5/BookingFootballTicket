@@ -250,7 +250,7 @@
                             <table id="seasonTable" class="table table-striped table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th style="font-size: 14px;">Season ID</th>
+                                        <th style="font-size: 14px; width: 80px;">Season ID</th>
                                         <th style="font-size: 14px;">Season Name</th>
 
                                         <th style="font-size: 14px;">
