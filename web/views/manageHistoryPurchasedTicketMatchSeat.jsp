@@ -203,16 +203,16 @@ Author     : duong
                 color: white;
             }
             .btn-custom {
-            position: relative;
-        }
-        .btn-custom .btn-icon {
-            transition: transform 0.3s ease;
-            position: absolute;
-            left: 5px;
-        }
-        .btn-custom.active .btn-icon {
-            transform: rotate(90deg);
-        }
+                position: relative;
+            }
+            .btn-custom .btn-icon {
+                transition: transform 0.3s ease;
+                position: absolute;
+                left: 5px;
+            }
+            .btn-custom.active .btn-icon {
+                transform: rotate(90deg);
+            }
         </style>
 
 
@@ -230,7 +230,7 @@ Author     : duong
             <!-- Spinner End -->
 
             <!-- Sidebar Start -->
-           <%@include file="side-bar.jsp"%>
+            <%@include file="side-bar.jsp"%>
             <!-- Sidebar End -->
 
             <div class="content">
@@ -241,16 +241,13 @@ Author     : duong
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><a href="manageHistoryPurchasedTicketMatchSeat"><h2>History Purchased Ticket <b>Management</b></h2></a></div>
                                     <div class="col-sm-4 searchh">
-                                        <div class="search-box" id="searchForm">
-                                            <a onclick="searchTickets()"><i class="material-icons">&#xE8B6;</i></a>
+                                        <a onclick="searchTickets()" class="d-none"><i class="material-icons">&#xE8B6;</i></a>
                                             <input id="valueSearch" type="text" class="form-control" placeholder="Search by email&hellip;">
-                                        </div>
                                     </div>
-                                    <div class="col-sm-4 d-flex justify-content-end">
-                                         <button id="toggleButton" class="btn btn-primary btn-custom d-flex align-items-center">
-                                        Ticket Season Seat
+                                    <div class="col-sm-8 d-flex justify-content-end">
+                                        <button id="toggleButton" class="btn btn-primary btn-custom d-flex align-items-center">
+                                            Ticket Season Seat
                                             <i class="btn-icon fas fa-caret-right"></i>
                                         </button>
                                     </div>
@@ -328,7 +325,7 @@ Author     : duong
                                             <td>${ticketMatchSeat.price}</td>
                                             <td>${ticketMatchSeat.statusId.statusName}</td>
                                             <td class="d-none">${ticketMatchSeat.email}></td>
-                                            <td><a href="#viewDetailsTicket${ticketMatchSeat.ticketId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a></td>
+                                            <td><a href="#viewDetailsTicket${ticketMatchSeat.ticketId}" class="view" title="View" data-toggle="modal"><i class="material-icons" style="color: gray">&#xE417;</i></a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -390,7 +387,7 @@ Author     : duong
                 var standValue = 'All'; // Giá trị mặc định cho dropdown stand
                 var statusValue = 'All'; // Giá trị mặc định cho dropdown status
                 var emailValue = 'All';
-        // Sự kiện change cho các dropdown filter
+                // Sự kiện change cho các dropdown filter
                 $('#seasonSelect, #seatClassSelect, #standSelect, #statusSelect, #emailSelect').change(function () {
                     seasonValue = $('#seasonSelect').val();
                     seatClassValue = $('#seatClassSelect').val();
@@ -497,7 +494,7 @@ Author     : duong
                     }
                 });
             }
-             $('#toggleButton').click(function() {
+            $('#toggleButton').click(function () {
                 // Lấy URL hiện tại
                 var currentUrl = window.location.href;
 

@@ -202,6 +202,28 @@ Author     : duong
                 background-color: #dc3545;
                 color: white;
             }
+            th:nth-child(1), td:nth-child(1) {
+                width: 5%;
+            }
+            th:nth-child(2), td:nth-child(2) {
+                width: 20%;
+            }
+            th:nth-child(3), td:nth-child(3) {
+                width: 20%;
+            }
+            th:nth-child(4), td:nth-child(4) {
+                width: 20%;
+            }
+            th:nth-child(5), td:nth-child(5) {
+                width: 15%;
+            }
+            th:nth-child(6), td:nth-child(6) {
+                width: 10%;
+            }
+            th:nth-child(7), td:nth-child(7) {
+                width: 10%;
+            }
+
         </style>
         <script>
             $(document).ready(function () {
@@ -231,14 +253,10 @@ Author     : duong
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><a href="manageNews"><h2>News <b>Management</b></h2></a></div>
-                                    <div class="col-sm-4 searchh">
-                                        <div class="search-box" id="searchForm">
-                                            <a><i class="material-icons">&#xE8B6;</i></a>
-                                            <input id="valueSearch" type="text" class="form-control" placeholder="Search...">
-                                        </div>
+                                    <div class="col-sm-4">
+                                        <input id="valueSearch" type="text" class="form-control radius-md"placeholder="Search...">
                                     </div>
-                                    <div class="col-sm-4 createe">
+                                    <div class="col-sm-8 createe">
                                         <a href="#createNewsModal" class="btn btn-success d-flex align-items-center" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create News</span></a>
                                     </div>
                                 </div>
@@ -306,7 +324,7 @@ Author     : duong
                                             <td>${n.statusId.statusName}</td>
                                             <td>${n.stateId.stateName}</td>
                                             <td>
-                                                <!--<a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>-->
+                                                <a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
                                                 <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
                                                 <a onclick="return confirmDelete(${n.newsId})" href = "deleteNews?newsId=${n.newsId}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                             </td>
@@ -371,8 +389,8 @@ Author     : duong
         </div>
         <!--------------------------------------------------------------------------------------------------------------------------------------------->
 
-        <%--<c:forEach items="${sessionScope.getListNews}" var="n">--%>
-<!--            <div id="viewDetailsNews${n.newsId}" class="modal fade">
+        <c:forEach items="${sessionScope.getListNews}" var="n">
+            <div id="viewDetailsNews${n.newsId}" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">			
@@ -380,10 +398,10 @@ Author     : duong
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">	
-                                                        <div class="form-group">
-                                                            <label>News ID</label>
-                                                            <input name="newsId" class="form-control" value="${n.newsId}" readonly>
-                                                        </div>
+                            <div class="form-group">
+                                <label>News ID</label>
+                                <input name="newsId" class="form-control" value="${n.newsId}" readonly>
+                            </div>
                             <div class="form-group">
                                 <label>Title</label>
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.title}</p>
@@ -421,8 +439,8 @@ Author     : duong
                         </div>
                     </div>
                 </div>
-            </div>-->
-        <%--</c:forEach>--%>
+            </div>
+        </c:forEach>
         <!--------------------------------------------------------------------------------------------------------------------------------------------->
         <c:forEach items="${sessionScope.getListNews}" var="n">
             <div id="updateNews${n.newsId}" class="modal fade">
@@ -526,7 +544,7 @@ Author     : duong
                         url: "manageNews",
                         type: "GET",
                         data: {
-                            go: "search",
+//                            go: "search",
                             valueSearch: valueSearch,
                             status: statusValue,
                             state: stateValue
@@ -561,12 +579,6 @@ Author     : duong
                             toast.find('#toastMessage').text('Failed to update News!');
                             toast.addClass('error').removeClass('success');
                         }
-
-                        toast.toast('show');
-                        // Chuyển hướng sau khi hiển thị thông báo
-                        setTimeout(function () {
-                            window.location.href = 'manageNews';
-                        }, 3000); // Chờ 3000ms (3 giây) trước khi chuyển hướng
                     }
                 });
 

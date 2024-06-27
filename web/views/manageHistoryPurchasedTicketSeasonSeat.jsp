@@ -203,16 +203,15 @@
                 color: white;
             }
             .btn-custom {
-            position: relative;
-        }
-        .btn-custom .btn-icon {
-            transition: transform 0.3s ease;
-            position: absolute;
-            left: 5px;
-        }
-        .btn-custom.active .btn-icon {
-            transform: rotate(90deg);
-        }
+                position: relative;
+            }
+            .btn-custom .btn-icon {
+                transition: transform 0.3s ease;
+                position: absolute;
+                left: 5px;
+            }
+            .btn-custom.active .btn-icon {
+                transform: rotate(90deg);
             }
         </style>
 
@@ -242,16 +241,13 @@
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><a href="manageHistoryPurchasedTicketSeasonSeat"><h2>History Purchased Ticket <b>Management</b></h2></a></div>
                                     <div class="col-sm-4 searchh">
-                                        <div class="search-box" id="searchForm">
-                                            <a onclick="searchTickets()"><i class="material-icons">&#xE8B6;</i></a>
-                                            <input id="valueSearch" type="text" class="form-control" placeholder="Search by email&hellip;">
-                                        </div>
+                                        <a onclick="searchTickets()" class="d-none"><i class="material-icons">&#xE8B6;</i></a>
+                                        <input id="valueSearch" type="text" class="form-control" placeholder="Search by email&hellip;">
                                     </div>
-                                    <div class="col-sm-4 d-flex justify-content-end">
-                                         <button id="toggleButton" class="btn btn-primary btn-custom d-flex align-items-center">
-                                        Ticket Match Seat <i class="btn-icon fas fa-caret-right"></i>
+                                    <div class="col-sm-8 d-flex justify-content-end">
+                                        <button id="toggleButton" class="btn btn-primary btn-custom d-flex align-items-center">
+                                            Ticket Match Seat <i class="btn-icon fas fa-caret-right"></i>
                                         </button>
                                     </div>
                                 </div>
@@ -328,7 +324,7 @@
                                             <td>${ticketSeasonSeat.price}</td>
                                             <td>${ticketSeasonSeat.statusId.statusName}</td>
                                             <td class="d-none">${ticketSeasonSeat.email}></td>
-                                            <td><a href="#viewDetailsTicket${ticketSeasonSeat.ticketId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a></td>
+                                            <td><a href="#viewDetailsTicket${ticketSeasonSeat.ticketId}" class="view" title="View" data-toggle="modal"><i class="material-icons" style="color: gray">&#xE417;</i></a></td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -359,7 +355,7 @@
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketSeasonSeat.startDate}</p>
                             </div>
                             <div class="form-group">
-                               <label>End Date</label>
+                                <label>End Date</label>
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketSeasonSeat.endDate}</p>
                             </div>
                             <div class="form-group">
@@ -386,7 +382,7 @@
                 var standValue = 'All'; // Giá trị mặc định cho dropdown stand
                 var statusValue = 'All'; // Giá trị mặc định cho dropdown status
                 var emailValue = 'All';
-        // Sự kiện change cho các dropdown filter
+                // Sự kiện change cho các dropdown filter
                 $('#seasonSelect, #seatClassSelect, #standSelect, #statusSelect, #emailSelect').change(function () {
                     seasonValue = $('#seasonSelect').val();
                     seatClassValue = $('#seatClassSelect').val();
@@ -493,7 +489,7 @@
                     }
                 });
             }
-             $('#toggleButton').click(function() {
+            $('#toggleButton').click(function () {
                 // Lấy URL hiện tại
                 var currentUrl = window.location.href;
 
