@@ -210,8 +210,8 @@
                                                 <div class="body">					
                                                     <div class="form-row">
                                                         <div class="form-group col-md-11">
-                                                            <a><i class="material-icons">&#xE8B6;</i></a>
-                                                            <input id="valueSearch" name="valueSearch" type="text" class="form-control" placeholder="Search...">
+<!--                                                            <a><i class="material-icons">&#xE8B6;</i></a>-->
+                                                            <input id="valueSearch" name="valueSearch" type="text" class="form-control" placeholder="Search by email, name, ...">
                                                         </div>
                                                         <div class="form-group col-md-1 align-self-end">
                                                             <input type="submit" class="btn btn-success" value="Search">
