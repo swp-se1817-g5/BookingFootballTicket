@@ -11,28 +11,36 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author thuat
  */
-
 @WebServlet(name = "ManageMatchServlet", urlPatterns = {"/manageMatch"})
 public class ManageMatchServlet extends HttpServlet {
-    private static final String ACTION_1 = "created";
-    private static final String ACTION_2 = "updated";
-    private static final String ACTION_3 = "deleted";
+
+    private static final String ACTION_1 = "createMatch";
+    private static final String ACTION_2 = "updateMatch";
+    private static final String ACTION_3 = "deleteMatch";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        if (request.getParameter(ACTION_1) != null) {
-            request.setAttribute(ACTION_1, "true".equals(request.getParameter(ACTION_1)));
-        } else if (request.getParameter(ACTION_2) != null) {
-            request.setAttribute(ACTION_2, "true".equals(request.getParameter(ACTION_2)));
-        } else if (request.getParameter(ACTION_3) != null) {
-            request.setAttribute(ACTION_3, "true".equals(request.getParameter(ACTION_3)));
+        HttpSession session = request.getSession();
+        if (session.getAttribute(ACTION_1) != null) {
+            request.setAttribute("created", (boolean) session.getAttribute(ACTION_1));
+            session.removeAttribute(ACTION_1);
+        }
+
+        if (session.getAttribute(ACTION_2) != null) {
+            request.setAttribute("updated", (boolean) session.getAttribute(ACTION_2));
+            session.removeAttribute(ACTION_2);
+
+        }
+        if (session.getAttribute(ACTION_3) != null) {
+            request.setAttribute("deleted", (boolean) session.getAttribute(ACTION_3));
+            session.removeAttribute(ACTION_3);
         }
 
         request.setAttribute("matches", MatchDAO.INSTANCE.getMatches());

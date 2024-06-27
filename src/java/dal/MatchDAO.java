@@ -182,6 +182,64 @@ public class MatchDAO {
         return matches;
     }
 
+    public Match getMatcheById(String matchId) {
+        updateMatchStatus();
+        Match match = new Match();
+        String sql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
+                + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
+                + "s.startDate AS seasonStartDate, s.endDate AS seasonEndDate, m.[startTime] AS matchTime, ms.statusId AS matchStatusId, "
+                + "ms.statusName AS matchStatusName, mt.TypeId AS typeId, mt.[name] AS typeName, "
+                + "m.isDeleted "
+                + "FROM Match m "
+                + "JOIN FootballClub fc1 ON m.team1 = fc1.clubId "
+                + "JOIN FootballClub fc2 ON m.team2 = fc2.clubId "
+                + "JOIN Season s ON m.seasonId = s.seasonId "
+                + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
+                + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
+                + "WHERE m.isDeleted = 0 and m.matchId = "
+                + matchId;
+        try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                FootballClub team1 = new FootballClub();
+                FootballClub team2 = new FootballClub();
+                Season season = new Season();
+                MatchStatus matchStatus = new MatchStatus();
+                MatchType matchType = new MatchType();
+
+                match.setMatchId(rs.getInt("matchId"));
+                match.setTime(rs.getTimestamp("matchTime").toLocalDateTime());
+
+                team1.setClubId(rs.getInt("team1Id"));
+                team1.setClubName(rs.getString("team1Name"));
+                team1.setImg(rs.getString("team1Img"));
+                match.setTeam1(team1);
+
+                team2.setClubId(rs.getInt("team2Id"));
+                team2.setClubName(rs.getString("team2Name"));
+                team2.setImg(rs.getString("team2Img"));
+                match.setTeam2(team2);
+
+                season.setSeasonId(rs.getInt("seasonId"));
+                season.setSeasonName(rs.getString("seasonName"));
+                season.setStartDate(rs.getDate("seasonStartDate"));
+                season.setEndDate(rs.getDate("seasonEndDate"));
+                match.setSeason(season);
+
+                matchStatus.setMatchStatusId(rs.getInt("matchStatusId"));
+                matchStatus.setMatchStatusName(rs.getString("matchStatusName"));
+                match.setStatus(matchStatus);
+
+                matchType.setTypeId(rs.getInt("typeId"));
+                matchType.setName(rs.getString("typeName"));
+                match.setType(matchType);
+                
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error getting matches", e);
+        }
+        return match;
+    }
+
     public boolean createMatch(Match match) {
         boolean created = false;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
@@ -226,14 +284,9 @@ public class MatchDAO {
             LOGGER.log(Level.SEVERE, "Error updating match status", e);
         }
     }
+
     public static void main(String[] args) {
-        Match m = INSTANCE.getMatches().get(2);
-        m.setStatus(INSTANCE.getMatchStatusById("2"));
-        
-        if(INSTANCE.updateMatch(m)) {
-            System.out.println("hehe");
-        } else {
-            System.out.println("hoho");
-        }
+        Match m = INSTANCE.getMatcheById("2");
+        System.out.println(m.getTeam2().getClubName());
     }
 }

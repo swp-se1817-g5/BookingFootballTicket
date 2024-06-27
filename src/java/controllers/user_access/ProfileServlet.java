@@ -44,22 +44,26 @@ public class ProfileServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         boolean isUserChangeSuccess = false;
+        User currentUser = (User) session.getAttribute("currentUser");
+        User updateUser = UserDAO.getINSTANCE().getUserByEmail(currentUser.getEmail());
 
         try {
             Part part = request.getPart("avatar");
-            String img = (part != null && part.getSize() > 0) ? handleFileUpload(part, request) : "";
+            String img = (part != null && part.getSize() > 0) ? handleFileUpload(part, request) : updateUser.getAvatar();
             String name = request.getParameter("name").trim();
             String mobile = request.getParameter("mobile").trim();
-            User currentUser = (User) session.getAttribute("currentUser");
-            currentUser.setName(name);
-            currentUser.setPhoneNumber(mobile);
-            currentUser.setAvatar(img);
-            isUserChangeSuccess = UserDAO.getINSTANCE().updateUser(currentUser);
+
+            updateUser.setName(name);
+            updateUser.setPhoneNumber(mobile);
+            if (img.trim() != null) {
+                updateUser.setAvatar(img);
+            }
+            isUserChangeSuccess = UserDAO.getINSTANCE().updateUser(updateUser);
 
         } catch (IOException | ServletException e) {
             e.printStackTrace();
         }
-        
+
         doGet(request, response);
     }
 
