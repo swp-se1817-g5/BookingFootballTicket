@@ -285,7 +285,7 @@
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-md-4">
-                                        <input type="text" class="form-control radius-md" id="valueSearch" placeholder="Search by Season Name">
+                                        <input type="text" class="form-control radius-md" value="${requestScope.search}" id="searchInputForm" placeholder="Search by Season Name">
                                     </div>
                                     <div class="col-md-8">
                                         <a type="button" href="#createSeasonModal" class="btn btn-success m-2 float-right"  data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create New Season</span></a>
@@ -335,7 +335,7 @@
                                         <th style="font-size: 14px;">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody id="seasonTableBody">
+                                <tbody id="seasonNameSearch">
                                     <c:forEach items="${requestScope.seasons}" var="s">
                                         <c:set var="startDateStr" value="${s.startDate}" />
                                         <c:set var="endDateStr" value="${s.endDate}" />
@@ -462,9 +462,30 @@
         <div class="toast-body" id="toastMessage"></div>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+                                        $(document).ready(function () {
+                                            // Bắt sự kiện khi người dùng nhập liệu vào ô search
+                                            $("#searchInputForm").on("keyup", function () {
+                                                var searchValue = $(this).val(); // Lấy giá trị từ ô search
 
+                                                // Gửi yêu cầu Ajax
+                                                $.ajax({
+                                                    url: "manageSeason", // URL của Servlet xử lý Ajax (cần thay đổi nếu khác)
+                                                    type: "GET",
 
-    <!-- script for toast notification -->
+                                                    data: {
+                                                        search: searchValue // Dữ liệu gửi đi là giá trị search
+                                                    },
+                                                    success: function (data) {
+                                                        // Cập nhật phần tử có id là season với dữ liệu trả về từ Ajax
+                                                        $("#seasonNameSearch").html($(data).find('#seasonNameSearch').html());
+                                                    }
+                                                });
+                                            });
+                                        });
+    </script>
+
     <script>
 
         //update
@@ -772,37 +793,6 @@
                 }
             });
         });
-
-
-        $(document).ready(function () {
-            // Sự kiện input cho ô tìm kiếm
-            $('#valueSearch').on('input', function () {
-                var seasonName = $(this).val().trim();
-                updateSeasonTable(seasonName);
-            });
-
-            // Hàm AJAX để tìm kiếm và cập nhật bảng mùa
-            function updateSeasonTable(seasonName) {
-                $.ajax({
-                    url: "manageSeason", // Đường dẫn đến servlet hoặc controller xử lý tìm kiếm mùa
-                    type: "GET", // Hoặc POST tùy vào cách bạn cấu hình máy chủ
-                    data: {
-                        go: "search",
-                        seasonName: seasonName
-                    },
-                    success: function (data) {
-                        // Cập nhật bảng mùa bằng kết quả từ AJAX
-                        $('#seasonTableBody').html($(data).find('#seasonTableBody').html());
-                        // Hiển thị toast thông báo nếu cần thiết
-                        showUpdateToast();
-                    },
-                    error: function () {
-                        alert("Error occurred while searching for seasons.");
-                    }
-                });
-            }
-        });
-
     </script>
 
     <!-- JavaScript Libraries -->

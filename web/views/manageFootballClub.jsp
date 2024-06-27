@@ -273,11 +273,11 @@ Author     : admin
 
                                 </tbody>
                             </table>
-                            <div class="clearfix d-flex justify-content-md-start">
+                            <div class="clearfix d-flex justify-content-md-start" id="pagination">
                                 <ul class="pagination">
                                     <c:forEach begin="1" end="${requestScope.endPage}" var="i" >
-                                        <li class="page-item ${pageIndex == i ? 'active': '' }"><a href="manageFootballClub?pageIndex=${i}&search=${search}" class="page-link">${i}</a></li>
-                                    </c:forEach>
+                                        <li class="page-item ${pageIndex == i ? 'active': '' }"><a href="#" class="page-link"  data-page="${i}">${i}</a></li>
+                                        </c:forEach>
                                 </ul>
                             </div>
                         </div>
@@ -460,15 +460,37 @@ Author     : admin
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
             $(document).ready(function () {
+                function loadPage(pageIndex, searchValue) {
+                    $.ajax({
+                        url: "manageFootballClub", // URL của Servlet xử lý Ajax
+                        type: "GET",
+                        data: {
+                            pageIndex: pageIndex,
+                            search: searchValue
+                        },
+                        success: function (data) {
+                            $("#footballClubs").html($(data).find('#footballClubs').html());
+                            $("#pagination").html($(data).find('#pagination').html());
+                        }
+                    });
+                }
+                $(document).on("click", ".page-link", function (e) {
+                    e.preventDefault();
+                    var pageIndex = $(this).attr("data-page");
+                    var searchValue = $("#searchInputForm").val().trim();
+                    loadPage(pageIndex, searchValue);
+                });
                 // Bắt sự kiện khi người dùng nhập liệu vào ô search
                 $("#searchInputForm").on("keyup", function () {
-                    var searchValue = $(this).val(); // Lấy giá trị từ ô search
+                    var searchValue = $(this).val().trim(); // Lấy giá trị từ ô search
+                    
+                    loadPage($(this).attr("data-page"), searchValue);
 
                     // Gửi yêu cầu Ajax
                     $.ajax({
                         url: "manageFootballClub", // URL của Servlet xử lý Ajax (cần thay đổi nếu khác)
                         type: "GET",
-                      
+
                         data: {
                             search: searchValue // Dữ liệu gửi đi là giá trị search
                         },
