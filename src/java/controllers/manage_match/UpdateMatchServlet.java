@@ -50,6 +50,8 @@ public class UpdateMatchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
         boolean updated = false;
         DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
         // Retrieve and validate parameters
@@ -86,8 +88,9 @@ public class UpdateMatchServlet extends HttpServlet {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid date time format", e);
         }
+        session.setAttribute("updateMatch", updated);
 
-        response.sendRedirect("manageMatch?updated=" + updated);
+        response.sendRedirect("manageMatch");
     }
 
     /**
