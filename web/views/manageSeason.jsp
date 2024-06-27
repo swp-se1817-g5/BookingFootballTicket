@@ -243,7 +243,7 @@
                                 </div>
                             </div>                          
                             <table id="seasonTable" class="table table-striped table-hover table-bordered">
-                                <thead>
+                                <thead class="text-content">
                                     <tr>
                                         <th style="font-size: 14px;">Season ID</th>
                                         <th style="font-size: 14px;">
@@ -293,7 +293,7 @@
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${requestScope.seasons}" var="s">
-                                        <tr>
+                                        <tr class="text-content">
                                             <td>${s.seasonId}</td>
                                             <td>${s.seasonName}</td>
                                             <td>${s.startDate}</td>
@@ -367,7 +367,7 @@
                         <div id="updateSeason${s.seasonId}" class="modal fade">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <form action="updateSeason" method="post" onsubmit="return validateForm()">
+                                    <form action="updateSeason" method="post">
                                         <div class="modal-header">						
                                             <h4 class="modal-title">Update Season</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
