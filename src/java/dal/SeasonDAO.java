@@ -65,7 +65,8 @@ public class SeasonDAO {
         return seasons;
     }
 
-    public void createSeason(Season season) {
+    public boolean createSeason(Season season) {
+        boolean created = false;
         String sql = "INSERT INTO [dbo].[Season]\n"
                 + "           ([seasonName]\n"
                 + "           ,[startDate]\n"
@@ -84,10 +85,14 @@ public class SeasonDAO {
             ps.setString(5, null);
             ps.setString(6, null);
             ps.setBoolean(7, false);
-            rs = ps.executeQuery();
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                created = true;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return created;
     }
 
     public Season getSeasonbyID(String seasonID) {
@@ -122,13 +127,14 @@ public class SeasonDAO {
         return s;
     }
 
-    public ArrayList<Season> getSeasons(int offset, int noOfRecords) {
+    public ArrayList<Season> getSeasons(int offset, int noOfRecords, String search) {
         ArrayList<Season> seasons = new ArrayList<>();
-        String query = "SELECT * FROM [dbo].[Season] WHERE [isDeleted] = 0 ORDER BY seasonId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+        String query = "SELECT * FROM [dbo].[Season] WHERE [isDeleted] = 0 AND [seasonName] LIKE ? ORDER BY seasonId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
 
         try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, offset);
-            ps.setInt(2, noOfRecords);
+            ps.setString(1, "%" + search + "%");
+            ps.setInt(2, offset);
+            ps.setInt(3, noOfRecords);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Season s = new Season();
@@ -151,11 +157,14 @@ public class SeasonDAO {
         return seasons;
     }
 
-    public int getNoOfRecords() {
-        String query = "SELECT COUNT(*) FROM [Season]";
-        try (PreparedStatement ps = con.prepareStatement(query); ResultSet rs = ps.executeQuery()) {
-            if (rs.next()) {
-                return rs.getInt(1);
+    public int getNoOfRecords(String search) {
+        String query = "SELECT COUNT(*) FROM [Season] WHERE [isDeleted] = 0 AND [seasonName] LIKE ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, "%" + search + "%");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -201,12 +210,12 @@ public class SeasonDAO {
     }
 
     public static void main(String[] args) {
-        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons(0, 5);
-        for (Season season : seasons) {
-            System.out.println(season.toString());
-        }
-//        Season s = SeasonDAO.INSTANCE.getSeasonbyID("1");
-//        System.out.println(s.toString());
+//        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons(0, 5);
+//        for (Season season : seasons) {
+//            System.out.println(season.toString());
+//        }
+////        Season s = SeasonDAO.INSTANCE.getSeasonbyID("1");
+////        System.out.println(s.toString());
     }
 
 }

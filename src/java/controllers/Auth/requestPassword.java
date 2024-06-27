@@ -14,7 +14,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
 import models.TokenForgetPassword;
 import models.User;
 
@@ -75,7 +74,7 @@ public class requestPassword extends HttpServlet {
     throws ServletException, IOException {
         UserDAO daoUser = new UserDAO();
         String email = request.getParameter("email");
-        //email co ton tai trong db
+        //
         User user = daoUser.getUserByEmail(email);
         if(user == null) {
             request.setAttribute("messEr", "You have not registered for this email !!");
@@ -90,14 +89,15 @@ public class requestPassword extends HttpServlet {
         TokenForgetPassword newTokenForget = new TokenForgetPassword(
                 user.getEmail(), false, token, service.expireDateTime());
         
-        //send link to this email
         TokenForgetDAO daoToken = new TokenForgetDAO();
+        //
         boolean isInsert = daoToken.insertTokenForget(newTokenForget);
         if(!isInsert) {
             request.setAttribute("mess", "Have error in server !");
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             return;
         }
+        //
         boolean isSend = service.sendEmail(email, linkReset, user.getName());
         if(!isSend) {
             request.setAttribute("mess", "Can not send request !");

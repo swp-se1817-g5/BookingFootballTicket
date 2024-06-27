@@ -178,7 +178,7 @@ public class FootballClubDAO {
 
     public int gettotalRecords(String search) {
         int quantity = 0;
-        String query = "SELECT COUNT(*) FROM [FootballClub] where clubName like ? ";
+        String query = "SELECT COUNT(*) FROM [FootballClub] where clubName like ? and isDeleted = 0";
         try {
             ps = con.prepareStatement(query);
             ps.setString(1, "%" + search + "%");
