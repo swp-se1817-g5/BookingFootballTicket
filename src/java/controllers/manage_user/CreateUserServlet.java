@@ -8,15 +8,15 @@ import dal.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.sql.SQLException;
+import jakarta.servlet.http.Part;
+import java.io.File;
 import java.time.LocalDateTime;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import models.User;
 
 /**
@@ -24,8 +24,13 @@ import models.User;
  * @author Vinh
  */
 @WebServlet(name = "CreateUser", urlPatterns = {"/createUser"})
+@MultipartConfig(
+    fileSizeThreshold = 1024 * 1024 * 2, // 2MB
+    maxFileSize = 1024 * 1024 * 10,      // 10MB
+    maxRequestSize = 1024 * 1024 * 50    // 50MB
+)
 public class CreateUserServlet extends HttpServlet {
-
+    private static final String IMAGE_FOLDER = "/images/avatars/";
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -85,14 +90,32 @@ public class CreateUserServlet extends HttpServlet {
         String name = request.getParameter("nameInput").trim();
         String password = request.getParameter("passwordInput").trim();
         String phoneNumber = request.getParameter("phoneNumberInput").trim();
-        String avatar = request.getParameter("avatarInput");
-        int roleId = Integer.parseInt(request.getParameter("roleIdinput"));
+        Part part  = request.getPart("avatarInput");
+        String avatar = "";
+        if (part != null && part.getSize() > 0) {
+            avatar = handleFileUpload(part, request);
+        }
+        int roleId = Integer.parseInt(request.getParameter("roleIdInput"));
         if (!email.isBlank() && !name.isBlank() && !password.isBlank() && !phoneNumber.isBlank()) {
             User user = new User(email, name, roleId, password, phoneNumber, avatar, createdBy, LocalDateTime.now(), false);
 
             created = UserDAO.getINSTANCE().createUser(user);
         }
         response.sendRedirect("manageUser?userCreated=" + created);
+    }
+    private String handleFileUpload(Part part, HttpServletRequest request) throws ServletException, IOException {
+        String imagePath = null;
+        if ((part != null) && (!part.getSubmittedFileName().trim().isEmpty()) && (part.getSubmittedFileName() != null)) {
+            String path = request.getServletContext().getRealPath(IMAGE_FOLDER);
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File image = new File(dir, part.getSubmittedFileName());
+            part.write(image.getAbsolutePath());
+            imagePath = request.getContextPath() + IMAGE_FOLDER + image.getName();
+        }
+        return imagePath;
     }
 
     /**

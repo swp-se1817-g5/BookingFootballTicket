@@ -364,7 +364,7 @@
                     <div id="createUserModal" class="modal fade">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form id="createUserForm" name="createUserForm" action="createUser" method="post">
+                                <form id="createUserForm" name="createUserForm" action="createUser" method="post" enctype="multipart/form-data">
                                     <div class="modal-header">						
                                         <h4 class="modal-title">Create User</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -378,6 +378,7 @@
                                         <div class="form-group">
                                             <label>Name</label>
                                             <input name="nameInput" type="text" class="form-control" required>
+                                            <div id="nameError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="roleInput">User Role</label>
@@ -646,10 +647,10 @@
                     var email = $('[name="emailInput"]').val().trim();
                             var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
                             if (email === '') {
-                    $('#emailError').text('Email is required.');
+                    $('#emailError').text('Email is required. Please enter your email address.');
                             return false;
                     } else if (!emailPattern.test(email)) {
-                    $('#emailError').text('Invalid email format.');
+                    $('#emailError').text('Invalid email format. Please enter a valid email address (e.g., user@example.com).');
                             return false;
                     } else {
                     $('#emailError').text('');
@@ -660,7 +661,7 @@
                     function validateName() {
                     var name = $('[name="nameInput"]').val().trim();
                             if (name === '') {
-                    $('#nameError').text('Name is required.');
+                    $('#nameError').text('Name is required. Please enter your full name.');
                             return false;
                     } else {
                     $('#nameError').text('');
@@ -670,12 +671,12 @@
 
                     function validatePhoneNumber() {
                     var phoneNumber = $('[name="phoneNumberInput"]').val().trim();
-                            var phonePattern = /^[0-9]{10}$/;
+                            var phonePattern = /^0[0-9]{9}$/;
                             if (phoneNumber === '') {
-                    $('#phoneNumberError').text('Phone number is required.');
+                    $('#phoneNumberError').text('Phone number is required. Please enter your phone number.');
                             return false;
                     } else if (!phonePattern.test(phoneNumber)) {
-                    $('#phoneNumberError').text('Invalid phone number format.');
+                    $('#phoneNumberError').text('Invalid phone number format. Phone number must be 10 digits long and start with 0.');
                             return false;
                     } else {
                     $('#phoneNumberError').text('');
@@ -687,7 +688,7 @@
                     var password = $('[name="passwordInput"]').val().trim();
                             var passwordPattern = /^(?=.*[0-9])(?=.*[A-Z]).{8,20}$/;
                             if (password === '') {
-                    $('#passwordError').text('Password is required.');
+                    $('#passwordError').text('Password is required. Please enter your password.');
                             return false;
                     } else if (password.length < 8 || password.length > 20) {
                     $('#passwordError').text('Password must be between 8 and 20 characters long.');
@@ -707,39 +708,39 @@
                             var phoneNumberValid = validatePhoneNumber();
                             var passwordValid = validatePassword();
                             return emailValid && nameValid && phoneNumberValid && passwordValid;
-                    }
+                            }
 
 // Validate fields on input
                     $('[name="emailInput"]').on('input', function () {
                     validateEmail();
-                    });
+                            });
                             $('[name="nameInput"]').on('input', function () {
                     validateName();
-                    });
+                            });
                             $('[name="phoneNumberInput"]').on('input', function () {
                     validatePhoneNumber();
-                    });
+                            });
                             $('[name="passwordInput"]').on('input', function () {
                     validatePassword();
-                    });
+                            });
 // Validate Update Form Fields on Input
                             $('#updateUserForm input[name="detailEmail"]').on('input', function () {
                     validateUpdateEmail();
-                    });
+                            });
                             $('#updateUserForm input[name="detailName"]').on('input', function () {
                     validateUpdateName();
-                    });
+                            });
                             $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
                     validateUpdatePhoneNumber();
-                    });
+                            });
                             function validateUpdateEmail() {
                             var email = $('#updateUserForm input[name="detailEmail"]').val().trim();
                                     var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
                                     if (email === '') {
-                            $('#emailDetailError').text('Email is required.');
+                            $('#emailDetailError').text('Email is required. Please enter your email address.');
                                     return false;
                             } else if (!emailPattern.test(email)) {
-                            $('#emailDetailError').text('Invalid email format.');
+                            $('#emailDetailError').text('Invalid email format. Please enter a valid email address (e.g., user@example.com).');
                                     return false;
                             } else {
                             $('#emailDetailError').text('');
@@ -750,7 +751,7 @@
                     function validateUpdateName() {
                     var name = $('#updateUserForm input[name="detailName"]').val().trim();
                             if (name === '') {
-                    $('#nameDetailError').text('Name is required.');
+                    $('#nameDetailError').text('Name is required. Please enter your full name.');
                             return false;
                     } else {
                     $('#nameDetailError').text('');
@@ -760,12 +761,12 @@
 
                     function validateUpdatePhoneNumber() {
                     var phoneNumber = $('#updateUserForm input[name="detailPhoneNumber"]').val().trim();
-                            var phonePattern = /^[0-9]{10}$/;
+                            var phonePattern = /^0[0-9]{9}$/;
                             if (phoneNumber === '') {
-                    $('#phoneNumberDetailError').text('Phone number is required.');
+                    $('#phoneNumberDetailError').text('Phone number is required. Please enter your phone number.');
                             return false;
                     } else if (!phonePattern.test(phoneNumber)) {
-                    $('#phoneNumberDetailError').text('Invalid phone number format.');
+                    $('#phoneNumberDetailError').text('Invalid phone number format. Phone number must be 10 digits long and start with 0.');
                             return false;
                     } else {
                     $('#phoneNumberDetailError').text('');
