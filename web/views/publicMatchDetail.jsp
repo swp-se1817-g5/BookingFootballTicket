@@ -298,13 +298,13 @@
                         <div class="inner">
                             <div class="left">
                                 <div class="badge">
-                                    <img src="${match.team1.img}" alt="Germany" />
-                                    <img src="${match.team1.img}" alt="Scotland" />
+                                    <img src="${match.team1.img}" alt="${match.team1.clubName}" />
+                                    <img src="${match.team2.img}" alt="${match.team2.clubName}" />
                                 </div><div class="details">
                                     <h1>${match.team1.clubName} vs ${match.team2.clubName}</h1>
                                     <nav class="breadcrumb hidden-s-view">
                                         <ul>
-                                            <li><a href="/">Home</a></li>
+                                            <li><a href="./">Home</a></li>
                                             <li><a href="/group/league/uefa-euro-2024">${match.season.seasonName}</a></li>
 
                                             <li>
