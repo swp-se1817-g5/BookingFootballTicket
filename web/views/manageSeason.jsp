@@ -1,4 +1,9 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ page import="java.util.Date" %>
+<jsp:useBean id="currentDate" class="java.util.Date" scope="page" />
+<fmt:parseDate var="startDate" value="${param.startDate}" pattern="yyyy-MM-dd" />
+<fmt:parseDate var="endDate" value="${param.endDate}" pattern="yyyy-MM-dd" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -332,6 +337,10 @@
                                 </thead>
                                 <tbody id="seasonTableBody">
                                     <c:forEach items="${requestScope.seasons}" var="s">
+                                        <c:set var="startDateStr" value="${s.startDate}" />
+                                        <c:set var="endDateStr" value="${s.endDate}" />
+                                        <fmt:parseDate var="startDate" value="${startDateStr}" pattern="yyyy-MM-dd" />
+                                        <fmt:parseDate var="endDate" value="${endDateStr}" pattern="yyyy-MM-dd" />
                                         <tr>
                                             <td>${s.seasonId}</td>
                                             <td>${s.seasonName}</td>
@@ -343,9 +352,11 @@
                                             <td>${s.lastUpdatedDate}</td>-->
                                             <td>
                                                 <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
-                                                <a onclick="doDelete(${s.seasonId})" class="delete" title="Cancel" data-toggle="tooltip">
-                                                    <i class="fa fa-times-circle"></i>
-                                                </a>
+                                                    <c:if test="${currentDate.before(startDate) or currentDate.after(endDate)}">
+                                                    <a onclick="doDelete(${s.seasonId})" class="delete" title="Cancel" data-toggle="tooltip">
+                                                        <i class="fa fa-times-circle"></i>
+                                                    </a>
+                                                </c:if>
                                             </td>
                                         </tr>
                                     </c:forEach>

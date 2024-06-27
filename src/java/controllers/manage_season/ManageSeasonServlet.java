@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import models.Season;
 
@@ -68,20 +69,21 @@ public class ManageSeasonServlet extends HttpServlet {
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        if(request.getParameter("created") != null){
+        if (request.getParameter("created") != null) {
             request.setAttribute("created", request.getParameter("created"));
         }
-        if(request.getParameter("deleted") != null){
+        if (request.getParameter("deleted") != null) {
             request.setAttribute("deleted", request.getParameter("deleted"));
         }
         ArrayList<Season> seasons = SeasonDAO.getINSTANCE().getSeasons((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
         int noOfRecords = SeasonDAO.getINSTANCE().getNoOfRecords();
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
-
+        LocalDate currentDate = LocalDate.now();
         request.setAttribute("seasons", seasons);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
         request.setAttribute("noOfRecords", noOfRecords);
+        request.setAttribute("currentDate", currentDate);
         if (session.getAttribute(UPDATED) != null) {
             request.setAttribute(UPDATED, session.getAttribute(UPDATED));
             session.removeAttribute(UPDATED);
