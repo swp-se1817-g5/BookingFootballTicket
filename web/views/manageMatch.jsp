@@ -270,7 +270,7 @@
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="matches">
                                     <c:forEach items="${requestScope.matches}" var="o">
                                         <tr>
                                             <td>${o.matchId}</td>
@@ -427,186 +427,209 @@
             </div>
             <div class="toast-body" id="toastMessage"></div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
         <script>
-            function validateForm2() {
-                // Clear previous error messages
-                document.getElementById("errorFC2").innerText = "";
-                document.getElementById("datetimeError2").innerText = "";
 
-                // Get form values
-                var fc1Id2 = document.getElementById("fc1Id2").value;
-                var fc2Id2 = document.getElementById("fc2Id2").value;
-                var datetimeValue = Date(document.getElementById("datetimeInput2").value);
-                var datetimeValue_raw = datetimeValue;
+                        $(document).ready(function () {
+                            // Bắt sự kiện khi người dùng nhập liệu vào ô search
+                            $("#searchInputForm").on("keyup", function () {
+                                var searchValue = $(this).val(); // Lấy giá trị từ ô search
 
-                var isValid = true;
+                                // Gửi yêu cầu Ajax
+                                $.ajax({
+                                    url: "manageMatch", // URL của Servlet xử lý Ajax (cần thay đổi nếu khác)
+                                    type: "GET",
 
-                // Validate football club IDs
-                if (fc1Id2 === fc2Id2) {
-                    document.getElementById("errorFC2").innerText = "Football club must be different";
-                    isValid = false;
-                }
+                                    data: {
+                                        search: searchValue // Dữ liệu gửi đi là giá trị search
+                                    },
+                                    success: function (data) {
+                                        // Cập nhật phần tử có id là footballClubs với dữ liệu trả về từ Ajax
+                                        $("#matches").html($(data).find('#matches').html());
+                                    }
+                                });
+                            });
+                        });
 
-                // Validate datetime
-                for (var i = 0; i < invalidDateTimes2.length; i++) {
-                    var startTimeList = invalidDateTimes2[i];
-                    var endTimeList = new Date(startTimeList.getTime() + (300 * 60000)); // Thêm 300 phút
+                        function validateForm2() {
+                            // Clear previous error messages
+                            document.getElementById("errorFC2").innerText = "";
+                            document.getElementById("datetimeError2").innerText = "";
 
-                    if (startTimeList !== datetimeValue_raw) {
-                        if (datetimeValue >= startTimeList && datetimeValue <= endTimeList) {
-                            document.getElementById("datetimeError2").innerText = "Invalid datetime";
-                            isValid = false;
-                            break; // Không hợp lệ, dừng việc submit form
+                            // Get form values
+                            var fc1Id2 = document.getElementById("fc1Id2").value;
+                            var fc2Id2 = document.getElementById("fc2Id2").value;
+                            var datetimeValue = Date(document.getElementById("datetimeInput2").value);
+                            var datetimeValue_raw = datetimeValue;
+
+                            var isValid = true;
+
+                            // Validate football club IDs
+                            if (fc1Id2 === fc2Id2) {
+                                document.getElementById("errorFC2").innerText = "Football club must be different";
+                                isValid = false;
+                            }
+
+                            // Validate datetime
+                            for (var i = 0; i < invalidDateTimes2.length; i++) {
+                                var startTimeList = invalidDateTimes2[i];
+                                var endTimeList = new Date(startTimeList.getTime() + (300 * 60000)); // Thêm 300 phút
+
+                                if (startTimeList !== datetimeValue_raw) {
+                                    if (datetimeValue >= startTimeList && datetimeValue <= endTimeList) {
+                                        document.getElementById("datetimeError2").innerText = "Invalid datetime";
+                                        isValid = false;
+                                        break; // Không hợp lệ, dừng việc submit form
+                                    }
+                                }
+
+                            }
+
+                            // Return the validity status
+                            return isValid;
                         }
-                    }
 
-                }
+                        function validateForm() {
+                            // Clear previous error messages
+                            document.getElementById("errorFC").innerText = "";
+                            document.getElementById("datetimeError").innerText = "";
 
-                // Return the validity status
-                return isValid;
-            }
+                            // Get form values
+                            var fc1Id = document.getElementById("newFc1Id").value;
+                            var fc2Id = document.getElementById("newFc2Id").value;
+                            var datetimeValue = new Date(document.getElementById("datetimeInput").value);
 
-            function validateForm() {
-                // Clear previous error messages
-                document.getElementById("errorFC").innerText = "";
-                document.getElementById("datetimeError").innerText = "";
+                            var isValid = true;
 
-                // Get form values
-                var fc1Id = document.getElementById("newFc1Id").value;
-                var fc2Id = document.getElementById("newFc2Id").value;
-                var datetimeValue = new Date(document.getElementById("datetimeInput").value);
+                            // Validate football club IDs
+                            if (fc1Id === fc2Id) {
+                                document.getElementById("errorFC").innerText = "Football club must be different";
+                                return false;
+                            }
 
-                var isValid = true;
+                            // Validate datetime
+                            for (var i = 0; i < invalidDateTimes.length; i++) {
+                                var startTimeList = invalidDateTimes[i];
+                                var endTimeList = new Date(startTimeList.getTime() + (300 * 60000)); // Thêm 300 phút
 
-                // Validate football club IDs
-                if (fc1Id === fc2Id) {
-                    document.getElementById("errorFC").innerText = "Football club must be different";
-                    return false;
-                }
-
-                // Validate datetime
-                for (var i = 0; i < invalidDateTimes.length; i++) {
-                    var startTimeList = invalidDateTimes[i];
-                    var endTimeList = new Date(startTimeList.getTime() + (300 * 60000)); // Thêm 300 phút
-
-                    if (datetimeValue >= startTimeList && datetimeValue <= endTimeList) {
-                        document.getElementById("datetimeError").innerText = "Invalid datetime";
-                        isValid = false;
-                        break; // Không hợp lệ, dừng việc submit form
-                    }
-                }
-
-                // Return the validity status
-                return isValid;
-            }
-
-
-            function filterTable() {
-                var input, filterName, seasonSelect, filterSeason, statusSelect, filterStatus, typeSelect, filterType, table, tr, td, i, j;
-                input = document.getElementById("myInput");
-                filterName = input.value.toUpperCase();
-                seasonSelect = document.getElementById("seasonSelect");
-                filterSeason = seasonSelect.value.toUpperCase();
-                statusSelect = document.getElementById("statusSelect");
-                filterStatus = statusSelect.value.toUpperCase();
-                typeSelect = document.getElementById("typeSelect");
-                filterType = typeSelect.value.toUpperCase();
-                table = document.querySelector("table");
-                tr = table.getElementsByTagName("tr");
-
-                for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
-                    tr[i].style.display = "none"; // Mặc định ẩn hàng
-
-                    td = tr[i].getElementsByTagName("td");
-                    if (td) {
-                        var match = true;
-
-                        // Kiểm tra tên đội bóng
-                        if (filterName !== "") {
-                            var found = false;
-                            for (j = 1; j <= 2; j++) { // FC-1 và FC-2
-                                if (td[j].textContent.toUpperCase().indexOf(filterName) > -1) {
-                                    found = true;
-                                    break;
+                                if (datetimeValue >= startTimeList && datetimeValue <= endTimeList) {
+                                    document.getElementById("datetimeError").innerText = "Invalid datetime";
+                                    isValid = false;
+                                    break; // Không hợp lệ, dừng việc submit form
                                 }
                             }
-                            if (!found)
-                                match = false;
+
+                            // Return the validity status
+                            return isValid;
                         }
 
-                        // Kiểm tra mùa giải
-                        if (filterSeason !== "ALL" && td[4].textContent.toUpperCase() !== filterSeason) {
-                            match = false;
+
+                        function filterTable() {
+                            var input, filterName, seasonSelect, filterSeason, statusSelect, filterStatus, typeSelect, filterType, table, tr, td, i, j;
+                            input = document.getElementById("myInput");
+                            filterName = input.value.toUpperCase();
+                            seasonSelect = document.getElementById("seasonSelect");
+                            filterSeason = seasonSelect.value.toUpperCase();
+                            statusSelect = document.getElementById("statusSelect");
+                            filterStatus = statusSelect.value.toUpperCase();
+                            typeSelect = document.getElementById("typeSelect");
+                            filterType = typeSelect.value.toUpperCase();
+                            table = document.querySelector("table");
+                            tr = table.getElementsByTagName("tr");
+
+                            for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
+                                tr[i].style.display = "none"; // Mặc định ẩn hàng
+
+                                td = tr[i].getElementsByTagName("td");
+                                if (td) {
+                                    var match = true;
+
+                                    // Kiểm tra tên đội bóng
+                                    if (filterName !== "") {
+                                        var found = false;
+                                        for (j = 1; j <= 2; j++) { // FC-1 và FC-2
+                                            if (td[j].textContent.toUpperCase().indexOf(filterName) > -1) {
+                                                found = true;
+                                                break;
+                                            }
+                                        }
+                                        if (!found)
+                                            match = false;
+                                    }
+
+                                    // Kiểm tra mùa giải
+                                    if (filterSeason !== "ALL" && td[4].textContent.toUpperCase() !== filterSeason) {
+                                        match = false;
+                                    }
+
+                                    // Kiểm tra trạng thái
+                                    if (filterStatus !== "ALL" && td[5].textContent.toUpperCase() !== filterStatus) {
+                                        match = false;
+                                    }
+
+                                    // Kiểm tra loại trận đấu
+                                    if (filterType !== "ALL" && td[6].textContent.toUpperCase() !== filterType) {
+                                        match = false;
+                                    }
+
+                                    if (match)
+                                        tr[i].style.display = "";
+                                }
+                            }
                         }
+                        $(document).ready(function () {
+                            var updated = '<%= request.getAttribute("updated")%>';
+                            if (updated !== 'null' && updated !== '') {
+                                var toast = $('#toastNotification');
+                                if (updated === "true") {
+                                    toast.find('#toastTitle').text('Success');
+                                    toast.find('#toastMessage').text('Match updated successfully.');
+                                    toast.addClass('success').removeClass('error');
+                                } else if (updated === "false") {
+                                    toast.find('#toastTitle').text('Error');
+                                    toast.find('#toastMessage').text('Failed to update match.');
+                                    toast.addClass('error').removeClass('success');
+                                }
+                                toast.toast('show');
+                            }
+                        });
 
-                        // Kiểm tra trạng thái
-                        if (filterStatus !== "ALL" && td[5].textContent.toUpperCase() !== filterStatus) {
-                            match = false;
-                        }
+                        //create
+                        $(document).ready(function () {
+                            var created = '<%= request.getAttribute("created")%>';
+                            if (created !== 'null' && created !== '') {
+                                var toast = $('#toastNotification');
+                                if (created === "true") {
+                                    toast.find('#toastTitle').text('Success');
+                                    toast.find('#toastMessage').text('Match created successfully.');
+                                    toast.addClass('success').removeClass('error');
+                                } else if (created === "false") {
+                                    toast.find('#toastTitle').text('Error');
+                                    toast.find('#toastMessage').text('Failed to create match.');
+                                    toast.addClass('error').removeClass('success');
+                                }
+                                toast.toast('show');
+                            }
+                        });
 
-                        // Kiểm tra loại trận đấu
-                        if (filterType !== "ALL" && td[6].textContent.toUpperCase() !== filterType) {
-                            match = false;
-                        }
-
-                        if (match)
-                            tr[i].style.display = "";
-                    }
-                }
-            }
-            $(document).ready(function () {
-                var updated = '<%= request.getAttribute("updated")%>';
-                if (updated !== 'null' && updated !== '') {
-                    var toast = $('#toastNotification');
-                    if (updated === "true") {
-                        toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Match updated successfully.');
-                        toast.addClass('success').removeClass('error');
-                    } else if (updated === "false") {
-                        toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to update match.');
-                        toast.addClass('error').removeClass('success');
-                    }
-                    toast.toast('show');
-                }
-            });
-
-            //create
-            $(document).ready(function () {
-                var created = '<%= request.getAttribute("created")%>';
-                if (created !== 'null' && created !== '') {
-                    var toast = $('#toastNotification');
-                    if (created === "true") {
-                        toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Match created successfully.');
-                        toast.addClass('success').removeClass('error');
-                    } else if (created === "false") {
-                        toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to create match.');
-                        toast.addClass('error').removeClass('success');
-                    }
-                    toast.toast('show');
-                }
-            });
-
-            //delete
-            $(document).ready(function () {
-                var deleted = '<%= request.getAttribute("deleted")%>';
-                if (deleted !== 'null' && deleted !== '') {
-                    var toast = $('#toastNotification');
-                    if (deleted === "true") {
-                        toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Match deleted successfully.');
-                        toast.addClass('success').removeClass('error');
-                    } else if (deleted === "false") {
-                        toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to delete match.');
-                        toast.addClass('error').removeClass('success');
-                    }
-                    toast.toast('show');
-                }
-            });
+                        //delete
+                        $(document).ready(function () {
+                            var deleted = '<%= request.getAttribute("deleted")%>';
+                            if (deleted !== 'null' && deleted !== '') {
+                                var toast = $('#toastNotification');
+                                if (deleted === "true") {
+                                    toast.find('#toastTitle').text('Success');
+                                    toast.find('#toastMessage').text('Match deleted successfully.');
+                                    toast.addClass('success').removeClass('error');
+                                } else if (deleted === "false") {
+                                    toast.find('#toastTitle').text('Error');
+                                    toast.find('#toastMessage').text('Failed to delete match.');
+                                    toast.addClass('error').removeClass('success');
+                                }
+                                toast.toast('show');
+                            }
+                        });
         </script>
         <script type="text/javascript">
 

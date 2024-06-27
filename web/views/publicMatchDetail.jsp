@@ -29,7 +29,7 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <style type="text/css">
             .availability {
@@ -233,223 +233,102 @@
     <body class="template-fixture buy">
         <%@include file="header1.jsp" %>
         <div class="container-fluid">
-
-
-
-
-
             <input type="hidden" name="ticketMultiCap" id="ticketMultiCap" value="Ticket(s)">
             <div class="content" id="test">
                 <div class="team-page fixture">
 
-                    <%-- start modal summary--%>
                     <!-- Modal -->
                     <div class="modal fade" id="ticketSummary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document" style="
-                             top: 50px;
-                             max-width: 750px;
-                             width: 100%;
-                             margin: 0 auto;
-                             padding: 10px;
-                             ">
+                        <div class="modal-dialog" role="document" style="top: 50px; max-width: 750px; width: 100%; margin: 0 auto; padding: 10px;">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Ticket summary</h5>
-                                    <div data-dismiss="modal" aria-label="Close" data-close-search class="close"><span class="ftp-close"></span></div>
-                                    </button>
+                                    <div onchange="cancel()" data-dismiss="modal" aria-label="Close" data-close-search class="close">
+                                        <span onclick="cancel()" class="ftp-close"></span>
+                                    </div>
                                 </div>
                                 <div class="modal-body" style="margin: 0 54px 0 54px;">
                                     <div class="match-details">
                                         <div class="left">
-                                            <div class="bold">Germany vs Scotland</div>
-                                            <div class="grey">in</div>
-                                            <div class="item">UEFA EURO 2024</div>
-                                            <div class="grey">at</div>
-                                            <div class="item"> Allianz Arena </div>
-                                            <div class="grey">on</div>
-                                            <div class="item">Fri 14th June 2024 : 9:00pm</div>
+                                            <div class="bold">${match.team1.clubName} vs ${match.team2.clubName}</div>
+                                            <div class="grey" style="color: gray;">in</div>
+                                            <div class="item">${match.season.seasonName}</div>
+                                            <div class="grey" style="color: gray;">at</div>
+                                            <div class="item">My Dinh</div>
+                                            <div class="grey" style="color: gray;">on</div>
+                                            <div class="item">${date} : ${time}</div>
                                         </div>
                                         <div class="right">
-                                            <div class="item ticketType"></div>
+                                            <div class="item ticketType" id="ticketSeatStand"></div>
                                             <div class="item ticketBlock"></div>
-                                            <div class="bold ticketIndiv"><span id="qty">0</span> tickets at &pound;<span id="priceIndiv"></span> each</div>
-                                            <div class="bold ticketSum">Sub Total price &pound;<span id="sum"></span></div>
+                                            <div class="bold ticketIndiv">
+                                                <span id="qty"></span> tickets at <span id="priceIndiv"></span>&#8363; each
+                                            </div>
+                                            <div class="bold ticketSum">Sub Total price &#8363;<span id="sum"></span></div>
                                             <div class="bold ticketAtt">
-                                                Best value tickets
-                                                Unrestricted view
+                                                <span id="seatClassView"></span>
                                             </div>
-                                            <div class="features" id="restrictions">
-                                            </div>
+                                            <div class="features" id="restrictions"></div>
                                         </div>
                                     </div>
                                     <div class="number-of-tickets">
                                         <div class="heading">Number of tickets</div>
                                         <div class="info">Please review the number of tickets selected</div>
-                                        <select name="number_of_tickets" id="number_of_tickets">
+                                        <select name="number_of_tickets" id="number_of_tickets" onchange="changeTotalPrice()">
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                             <option value="4">4</option>
                                         </select>
-                                        <span class="ftp-down-chevron"></span>
                                     </div>
-                                    <div class="whyDisabled text grey">
-                                    </div>
+                                    <div class="whyDisabled text grey"></div>
                                     <input type="hidden" class="checkout_product" id="checkout_product">
                                     <input type="hidden" class="checkout_eventId" id="checkout_eventId">
                                 </div>
                                 <div class="modal-footer">
-                                    <div style="float: center;" class="c2a_btn" id="checkout" action="https://www.footballticketpad.com/checkout">Checkout</div>
+                                    <div style="float: center;" class="c2a_btn" id="checkout" action="">Checkout</div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
 
 
                     <div class="team-header" style="border-color:#a2a2a2">
                         <div class="inner">
                             <div class="left">
                                 <div class="badge">
-                                    <img src="https://www.footballticketpad.com/uploads/Germany.png" alt="Germany" />
-                                    <img src="https://www.footballticketpad.com/uploads/scotland-hd-logo-124124.png" alt="Scotland" />
+                                    <img src="${match.team1.img}" alt="Germany" />
+                                    <img src="${match.team1.img}" alt="Scotland" />
                                 </div><div class="details">
-                                    <h1>Germany vs Scotland</h1>
+                                    <h1>${match.team1.clubName} vs ${match.team2.clubName}</h1>
                                     <nav class="breadcrumb hidden-s-view">
                                         <ul>
                                             <li><a href="/">Home</a></li>
-                                            <li><a href="/group/league/uefa-euro-2024">UEFA EURO 2024</a></li>
+                                            <li><a href="/group/league/uefa-euro-2024">${match.season.seasonName}</a></li>
 
                                             <li>
-                                                Germany v Scotland Tickets
+                                                ${match.team1.clubName} v ${match.team2.clubName} Tickets
                                             </li>
                                         </ul>
-                                        <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://www.footballticketpad.com"},{"@type":"ListItem","position":2,"name":"UEFA EURO 2024","item":"https://www.footballticketpad.com/group/league/uefa-euro-2024"},{"@type":"ListItem","position":3,"name":"Germany v Scotland Tickets","item":"https://www.footballticketpad.com/uefa-euro-2024/germany-v-scotland"}]}</script> </nav>
                                 </div>
                             </div><div class="right">
-                                <div class="heading">Fri 14th June 2024</div>
+                                <div class="heading">${date}</div>
                                 <div class="recently-bought">
-                                    <div>Kick off: 9:00pm </div>
-                                    <div>Allianz Arena
-                                        Werner-Heisenberg-Allee 25,
-                                        München, Germany,
-                                        80939
+                                    <div>Kick off: ${time} </div>
+                                    <div>My Dinh stadium
                                     </div>
-                                    <div>UEFA EURO 2024</div>
+                                    <div>${match.season.seasonName}</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="ftp-alerts hidden-s-view">
-                        <div class="alert warning">
-                            <div class="inner">
-                                <div class="message">
-                                    <div class="large">Popular game, price rise expected</div>
-                                    <div class="small">Tip: Buy now and avoid paying a higher price</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="GroupPurchase-modal add-payment-modal">
-                        <div class="overlay">
-                        </div>
-                        <div class="window">
-                            <div class="heading">
-                                <div class="text">
-                                    Tickets for
-                                    <strong>
-                                        Germany
-                                    </strong>
-                                    vs
-                                    <strong>
-                                        Scotland
-                                    </strong>
-                                </div>
-                                <button class="close" type="button">
-                                    X
-                                </button>
-                            </div>
-                            <div class="modal-inner">
-                                <p>
-                                    Tickets for
-                                    <strong>
-                                        Germany
-                                    </strong>
-                                    v
-                                    <strong>
-                                        Scotland
-                                    </strong>
-                                    are available on group purchase through our corporate sales department. Please fill in the form below and a member of our VIP Sales Team will contact you with a quote!
-                                </p>
-                                <form action="https://www.footballticketpad.com/group-purchase-request" class="GroupPurchaseform" method="post">
-                                    <input name="_token" type="hidden" value="10Pn2tsJ5lFtcDlyo8Gv0sR6Ls7vnJYe4xUgRDBP">
-                                    <input id="website" name="website" type="text" value />
-                                    <input name="game" type="hidden" value="Germany v Scotland" />
-                                    <input name="event_id" type="hidden" value="10019" />
-                                    <div class="in-form">
-                                        <input name="name" placeholder="Your Name" required type="text" />
-                                    </div>
-                                    <div class="in-form">
-                                        <input name="company_name" placeholder="Company Name" required type="text" />
-                                    </div>
-                                    <div class="in-form">
-                                        <input name="email" placeholder="Your Email" required type="text" />
-                                    </div>
-                                    <div class="in-form">
-                                        <input name="tel" placeholder="Telephone/mobile" required type="text" />
-                                    </div>
-                                    <div class="in-form">
-                                        <textarea cols="6" name="message" placeholder="Message" required rows="6" style="width: 100%;">
-                                        </textarea>
-                                    </div>
 
-                                    <div class="captcha-blck pull-left columns six">
-                                        <div class="g-recaptcha" data-sitekey="6LdIM0wbAAAAALLWIkAuHRy--nhoQSJBHikrkuZF"> </div>
-                                    </div>
-                                    <div class="captcha-err-blck pull columns six" style="color:red"></div>
-                                    <div>
-                                        <input class="btn pinkbtn pull-right" type="submit" value="Submit">
-                                        </input>
-                                    </div>
-                                    <div class="post-after-response">
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     <style type="text/css">
                         #website {
                             display: none;
                         }
-                    </style> <div class="column-section hidden-s-view">
-                        <div class="inner">
-                            <div class="content-column resizer">
-                                <div class="text">
-                                    <div class="inner-content">
-
-
-                                        <h2>
-                                            Germany v Scotland Match Day Tickets
-                                        </h2>
-                                        <p>Get your Euro 2024 football tickets for Germany v Scotland&nbsp;at Allianz Arena. Tickets will be limited with Away Section tickets also available for travelling A2 fans. Be quick and book Germany v A2 tickets today!</p>
-                                    </div>
-                                </div>
-                                <div class="size-toggle">
-                                    <div>Read More</div>
-                                    <div>Read less</div>
-                                </div>
-                            </div><div class="content-column features">
-                                <div class="item">
-                                    <div class="icon"><div class="ftp-ticket"></div></div>
-                                    <h4>100% Ticket Guarantee</h4>
-                                    <div class="text">No need to worry - your tickets are guaranteed, no matter what.</div>
-                                </div><div class="item">
-                                    <div class="icon"><div class="ftp-secure"></div></div>
-                                    <h4>SSL Secure Checkout</h4>
-                                    <div class="text">We use high levels of data encryption here and do not share your data with any third party vendors!</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    </style>
                     <div class="fixture-listings disabled">
                         <div class="inner">
                             <div class="left">
@@ -530,14 +409,19 @@
                                         .cls-3, .cls-4 {
                                             fill: none;
                                         }
+                                        .cls-5 {
+                                            font-size: 45.833px;
+                                            fill: white;
+                                            font-family: "Myriad Pro";
+                                            font-weight: 800;
+                                        }
                                     </style>
                                     <script>
                                         document.addEventListener('DOMContentLoaded', function () {
                                             const svg = document.getElementById('svgStadium');
                                             const paths = svg.querySelectorAll('path');
                                             const items = document.querySelectorAll('.item');
-                                            const priceFilter = document.getElementById('priceFilter');
-                                            const availabilityFilter = document.getElementById('availabilityFilter');
+
 
                                             // Add initial classes to all paths
                                             paths.forEach(function (path) {
@@ -566,55 +450,48 @@
                                                 path.addEventListener('click', function () {
                                                     var sectionName = this.getAttribute('data-section');
                                                     document.querySelectorAll('path[data-section="' + sectionName + '"]')
-                                                            .forEach(item => item.classList.toggle('clicked'));
+                                                            .forEach(item => {
+                                                                item.classList.toggle('clicked');
 
-                                                    // Filter and sort items based on the clicked path and filters
-                                                    applyFilters();
+                                                                // Check if the path has the class 'clicked' and log a message
+                                                                if (item.classList.contains('clicked')) {
+                                                                    items.forEach(item => {
+                                                                        const itemTicketType = item.getAttribute('data-ticket-type');
+                                                                        if (itemTicketType === sectionName) {
+                                                                            item.style.display = 'block';
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    items.forEach(item => {
+                                                                        const itemTicketType = item.getAttribute('data-ticket-type');
+                                                                        if (itemTicketType === sectionName) {
+                                                                            item.style.display = 'none';
+                                                                        }
+                                                                    });
+                                                                }
+                                                            });
                                                 });
                                             });
-
-                                            // Add event listeners to filters
-                                            priceFilter.addEventListener('change', applyFilters);
-                                            availabilityFilter.addEventListener('change', applyFilters);
-
-                                            function applyFilters() {
-                                                // Get the currently clicked sections
-                                                const clickedSections = Array.from(paths).filter(path => path.classList.contains('clicked'))
-                                                        .map(path => path.getAttribute('data-section'));
-                                                // Filter and sort items based on the clicked sections and selected filters
-                                                filterAndSortSeats(clickedSections, priceFilter.value, availabilityFilter.value);
-                                            }
-
-                                            function filterAndSortSeats(sectionNames, priceOrder, availabilityOrder) {
-                                                // Filter items based on the selected sections
-                                                let filteredItems = Array.from(items).filter(item => {
-                                                    const itemTicketType = item.getAttribute('data-ticket-type');
-                                                    return sectionNames.includes(itemTicketType);
-                                                });
-
-                                                // Sort items by price if a sorting order is selected
-                                                if (priceOrder !== 'none') {
-                                                    filteredItems.sort((a, b) => {
-                                                        const priceA = parseInt(a.getAttribute('data-sort-price'));
-                                                        const priceB = parseInt(b.getAttribute('data-sort-price'));
-                                                        return priceOrder === 'asc' ? priceA - priceB : priceB - priceA;
-                                                    });
-                                                }
-
-                                                // Sort items by availability if a sorting order is selected
-                                                if (availabilityOrder !== 'none') {
-                                                    filteredItems.sort((a, b) => {
-                                                        const availabilityA = parseInt(a.getAttribute('data-sort-availability'));
-                                                        const availabilityB = parseInt(b.getAttribute('data-sort-availability'));
-                                                        return availabilityOrder === 'asc' ? availabilityA - availabilityB : availabilityB - availabilityA;
-                                                    });
-                                                }
-
-                                                // Display filtered and sorted items
-                                                items.forEach(item => item.style.display = 'none');
-                                                filteredItems.forEach(item => item.style.display = 'block');
-                                            }
                                         });
+
+                                        var pricePerTicketString = '';
+                                        function Summary(price, className, standName, seatName) {
+                                            document.getElementById('priceIndiv').innerText = price;
+                                            document.getElementById('sum').innerText = price;
+                                            document.getElementById('ticketSeatStand').innerText = standName + seatName;
+                                            document.getElementById('seatClassView').innerText = className;
+                                            pricePerTicketString = price;
+                                        }
+
+                                        function changeTotalPrice() {
+                                            var pricePerTicket = parseInt(pricePerTicketString.replace(/,/g, ''), 10);
+                                            var quantity = document.getElementById('number_of_tickets').value;
+                                            document.getElementById('sum').innerText = quantity * pricePerTicket;
+                                        }
+
+                                        function cancel() {
+                                            document.getElementById('number_of_tickets').value = 1;
+                                        }
                                     </script>
 
 
@@ -732,6 +609,12 @@
                                     <text class="maptext" x="841.125" y="115.219">16</text>
                                     <text class="maptext" x="434.126" y="246.219">11</text>
                                     <text class="maptext" x="305.125" y="284.219">12</text>
+
+
+                                    <text id="Stand_A" data-name="Stand A" class="cls-5" x="537.274" y="759.644">Stand A</text>
+                                    <text id="Stand_B" data-name="Stand B" class="cls-5" x="536.274" y="414.643">Stand B</text>
+                                    <text id="Stand_C" data-name="Stand C" class="cls-5" transform="translate(890.745 474.636) rotate(90)">Stand C</text>
+                                    <text id="Stand_D" data-name="Stand D" class="cls-5" transform="translate(358.627 667.019) rotate(-90)">Stand D</text>
                                     </svg>
 
 
@@ -741,42 +624,6 @@
                                         <div class="price"></div>
                                     </div>
 
-                                    <div class="for-s-view">
-                                        <div class="fab" id="edit_featurs_mobile">
-                                            <span class="ftp-filters"></span>
-                                        </div>
-                                        <div class="filters-modal mobile">
-                                            <div class="inner">
-                                                <span class="ftp-close"></span>
-                                                <div class="title">Filter tickets</div>
-                                                <div class="half-width">
-                                                    <label for>Seat features</label>
-                                                    <select name="seating_section_mobile" id="seating_section_mobile">
-                                                        <option value="any">Any</option>
-                                                        <option value="category-1">Category 1</option>
-                                                        <option value="category-2">Category 2</option>
-                                                        <option value="category-3">Category 3</option>
-                                                        <option value="longside-lower-tier">Longside Lower Tier</option>
-                                                        <option value="prime-seats">Prime Seats</option>
-                                                        <option value="shortside-upper-tier">Shortside Upper Tier</option>
-                                                    </select>
-                                                    <span class="ftp-down-chevron"></span>
-                                                </div>
-                                                <div class="half-width">
-                                                    <label for>Delivery Options</label>
-                                                    <select name="delivery_option_mobile" id="delivery_option_mobile">
-                                                        <option value="-1">Select</option>
-                                                        <option value="0">Mail</option>
-                                                        <option value="1">Collect on match day</option>
-                                                    </select>
-                                                    <span class="ftp-down-chevron"></span>
-                                                </div>
-                                                <div class="full-width">
-                                                    <div class="c2a_btn">Apply filters</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                 </div>
                                 <div class="seating hidden-s-view">
@@ -816,7 +663,7 @@
                                 </div>
                             </div>
                             <div class="right waiting-listing">
-                                
+
                                 <div class="listing-holder hidden-s-view">
                                     <c:forEach items="${seatByMatch}" var="seatMatch">
                                         <div class="listing-inner">
@@ -847,7 +694,7 @@
                                                         <div>Others</div>
                                                     </div>
                                                 </div><div class="price">${seatMatch.price}&#8363;</div><div class="book" data-ripple="true" data-alert-text="Selling Fast!" data-type="hot">
-                                                    <a href="#ticketSummary" data-toggle="modal">Book now</a>
+                                                    <a onclick="Summary('${seatMatch.price}', '${seatMatch.seatarea.seatClass.seatClassName}', '${seatMatch.seatarea.stand.standName}', '${seatMatch.seatarea.seatName}')" href="#ticketSummary" data-toggle="modal">Book now</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -858,39 +705,19 @@
                     </div>
                 </div>
             </div>
-            <div class="column-section force">
-                <div class="inner">
-                    <div class="inner">
-                        <div class="content-column resizer">
-                            <div class="text">
-                                <div class="inner-content">
-                                    <h2>Germany v Scotland Match Day Tickets</h2>
-                                    <p>Get your Euro 2024 football tickets for Germany v Scotland&nbsp;at Allianz Arena. Tickets will be limited with Away Section tickets also available for travelling A2 fans. Be quick and book Germany v A2 tickets today!</p>
-                                </div>
-                            </div>
-                            <div class="size-toggle">
-                                <div>Read More</div>
-                                <div>Read less</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
-</div>
-<script async type="ed1cf3913d91592aa786b287-text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"></script>
-<%@include file="footer.jsp" %>
-<script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-<script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-<script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.css">
-<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-<script async defer src="https://www.footballticketpad.com/assets/frontend/2018/js/fixtureV4-4.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-<script async defer src="https://www.footballticketpad.com/assets/frontend/2018/js/fixture-ajax.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KWDJ87" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-57128660-1" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-<script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="ed1cf3913d91592aa786b287-|49" defer></script>
+        <script async type="ed1cf3913d91592aa786b287-text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"></script>
+        <%@include file="footer.jsp" %>
+        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
+        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="ed1cf3913d91592aa786b287-text/javascript"></script>
+        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="ed1cf3913d91592aa786b287-text/javascript"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.css">
+        <script async defer src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
+        <script async defer src="https://www.footballticketpad.com/assets/frontend/2018/js/fixtureV4-4.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
+        <script async defer src="https://www.footballticketpad.com/assets/frontend/2018/js/fixture-ajax.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
+        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KWDJ87" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57128660-1" type="ed1cf3913d91592aa786b287-text/javascript"></script>
+        <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="ed1cf3913d91592aa786b287-|49" defer></script>
 
-</body>
+    </body>
 </html>

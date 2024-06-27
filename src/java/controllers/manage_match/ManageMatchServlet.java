@@ -17,9 +17,9 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author thuat
  */
-
 @WebServlet(name = "ManageMatchServlet", urlPatterns = {"/manageMatch"})
 public class ManageMatchServlet extends HttpServlet {
+
     private static final String ACTION_1 = "createMatch";
     private static final String ACTION_2 = "updateMatch";
     private static final String ACTION_3 = "deleteMatch";
@@ -29,19 +29,17 @@ public class ManageMatchServlet extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         if (session.getAttribute(ACTION_1) != null) {
-            request.setAttribute("created", (boolean)session.getAttribute(ACTION_1));
+            request.setAttribute("created", (boolean) session.getAttribute(ACTION_1));
             session.removeAttribute(ACTION_1);
         }
 
-
         if (session.getAttribute(ACTION_2) != null) {
-            request.setAttribute("updated", (boolean)session.getAttribute(ACTION_2));
+            request.setAttribute("updated", (boolean) session.getAttribute(ACTION_2));
             session.removeAttribute(ACTION_2);
-
 
         }
         if (session.getAttribute(ACTION_3) != null) {
-            request.setAttribute("deleted", (boolean)session.getAttribute(ACTION_3));
+            request.setAttribute("deleted", (boolean) session.getAttribute(ACTION_3));
             session.removeAttribute(ACTION_3);
         }
 
