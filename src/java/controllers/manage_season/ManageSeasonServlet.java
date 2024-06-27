@@ -64,28 +64,48 @@ public class ManageSeasonServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+
+        // Handle the "created" attribute
+        if (session.getAttribute("created") != null) {
+            request.setAttribute("created", (boolean) session.getAttribute("created"));
+            session.removeAttribute("created");
+        }
+        if (session.getAttribute("message") != null) {
+            request.setAttribute("message", (String) session.getAttribute("message"));
+            session.removeAttribute("message");
+        }
+
+        // Handle the "updated" attribute
+        if (session.getAttribute("updated") != null) {
+            request.setAttribute("updated", session.getAttribute("updated"));
+            session.removeAttribute("updated");
+        }
+
+        // Handle the "deleted" attribute
+        if (session.getAttribute("deleted") != null) {
+            request.setAttribute("deleted", (boolean) session.getAttribute("deleted"));
+            session.removeAttribute("deleted");
+        }
+
+        // Pagination and search handling
         int page = 1;
         if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        if(request.getParameter("created") != null){
-            request.setAttribute("created", request.getParameter("created"));
-        }
-        if(request.getParameter("deleted") != null){
-            request.setAttribute("deleted", request.getParameter("deleted"));
-        }
-        ArrayList<Season> seasons = SeasonDAO.getINSTANCE().getSeasons((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
-        int noOfRecords = SeasonDAO.getINSTANCE().getNoOfRecords();
+
+        String search = request.getParameter("search");
+        search = search == null ? "" : search.trim();
+
+        ArrayList<Season> seasons = SeasonDAO.getINSTANCE().getSeasons((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE, search);
+        int noOfRecords = SeasonDAO.getINSTANCE().getNoOfRecords(search);
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
 
         request.setAttribute("seasons", seasons);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
         request.setAttribute("noOfRecords", noOfRecords);
-        if (session.getAttribute(UPDATED) != null) {
-            request.setAttribute(UPDATED, session.getAttribute(UPDATED));
-            session.removeAttribute(UPDATED);
-        }
+        request.setAttribute("search", search);
+
         request.getRequestDispatcher("views/manageSeason.jsp").forward(request, response);
     }
 

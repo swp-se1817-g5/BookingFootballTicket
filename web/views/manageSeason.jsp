@@ -222,7 +222,52 @@
             <!-- Spinner End -->
 
             <!-- Sidebar Start -->
-            <%@include file="side-bar.jsp"%>
+            <div class="sidebar pe-4 pb-3">
+                <nav class="navbar bg-light navbar-light">
+                    <a href="index.html" class="navbar-brand mx-4 mb-3">
+                        <h3 class="text-primary"><i class="fa fa-hashtag me-2"></i>DASHBOARD</h3>
+                    </a>
+                    <div class="d-flex align-items-center ms-4 mb-4">
+                        <div class="position-relative">
+                            <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0">Jhon Doe</h6>
+                            <span>Admin</span>
+                        </div>
+                    </div>
+                    <div class="navbar-nav w-100">
+                        <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Managers</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="manageUser" class="dropdown-item">Manage User</a>
+                                <a href="manageMatch" class="dropdown-item">Manage Match</a>
+                                <a href="manageFootballClub" class="dropdown-item ">Manage Football Club</a>
+                                <a href="manageSeason" class="dropdown-item active">Manage Season</a>
+                                <a href="manageStand" class="dropdown-item">Manage Stand</a>
+                                <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
+                                <a href="manageRole" class="dropdown-item">Manage Role</a>
+                                <a href="manageNews" class="dropdown-item">Manage News</a>
+                            </div>
+                        </div>
+                        <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
+                        <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Forms</a>
+                        <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
+                        <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a>
+                        <div class="nav-item dropdown">
+                            <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
+                            <div class="dropdown-menu bg-transparent border-0">
+                                <a href="signin.html" class="dropdown-item">Sign In</a>
+                                <a href="signup.html" class="dropdown-item">Sign Up</a>
+                                <a href="404.html" class="dropdown-item">404 Error</a>
+                                <a href="blank.html" class="dropdown-item">Blank Page</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
             <!-- Sidebar End -->
 
             <div class="content">
@@ -234,8 +279,8 @@
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-md-4 ">
-                                        <input type="search" class="form-control radius-md" id="myInput" onkeyup="filterTable()" placeholder="Search by name&hellip;">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control radius-md" value="${requestScope.search}" id="searchInputForm" placeholder="Search by Season Name">
                                     </div>
                                     <div class="col-md-8">
                                         <a type="button" href="#createSeasonModal" class="btn btn-success m-2 float-right"  data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create New Season</span></a>
@@ -246,14 +291,8 @@
                                 <thead>
                                     <tr>
                                         <th style="font-size: 14px;">Season ID</th>
-                                        <th style="font-size: 14px;">
-                                            <select class="form-select border-0 align-middle" id="seasonSelect" onchange="filterTable()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
-                                                <option selected value="All">All season</option>
-                                                <c:forEach items="${requestScope.seasons}" var="s">
-                                                    <option value="${s.seasonName}" style="font-weight: bold; font-size: 14px;">${s.seasonName}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </th>
+                                        <th style="font-size: 14px;">Season Name</th>
+
                                         <th style="font-size: 14px;">
                                             Start Date 
                                             <i class="fa fa-sort" onclick="sortTable('startDate')"></i>
@@ -291,7 +330,7 @@
                                         <th style="font-size: 14px;">Actions</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="seasonNameSearch">
                                     <c:forEach items="${requestScope.seasons}" var="s">
                                         <tr>
                                             <td>${s.seasonId}</td>
@@ -412,9 +451,30 @@
         <div class="toast-body" id="toastMessage"></div>
     </div>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+                                        $(document).ready(function () {
+                                            // Bắt sự kiện khi người dùng nhập liệu vào ô search
+                                            $("#searchInputForm").on("keyup", function () {
+                                                var searchValue = $(this).val(); // Lấy giá trị từ ô search
 
+                                                // Gửi yêu cầu Ajax
+                                                $.ajax({
+                                                    url: "manageSeason", // URL của Servlet xử lý Ajax (cần thay đổi nếu khác)
+                                                    type: "GET",
 
-    <!-- script for toast notification -->
+                                                    data: {
+                                                        search: searchValue // Dữ liệu gửi đi là giá trị search
+                                                    },
+                                                    success: function (data) {
+                                                        // Cập nhật phần tử có id là season với dữ liệu trả về từ Ajax
+                                                        $("#seasonNameSearch").html($(data).find('#seasonNameSearch').html());
+                                                    }
+                                                });
+                                            });
+                                        });
+    </script>
+
     <script>
 
         //update
@@ -563,28 +623,6 @@
                     parseInt(timePart[1], 10), // Minute
                     parseInt(timePart[2], 10) // Second
                     );
-        }
-
-        // Hàm filterTable để lọc dữ liệu và hiển thị biểu tượng selected
-        function filterTable() {
-            var select = document.getElementById("seasonSelect");
-            var selectedValue = select.value.toLowerCase(); // Lấy giá trị được chọn và chuyển về chữ thường
-
-            var table = document.getElementById("seasonTable");
-            var rows = table.getElementsByTagName("tr");
-
-            // Lặp qua từng hàng của bảng để ẩn hoặc hiển thị dựa trên giá trị đã chọn
-            for (var i = 1; i < rows.length; i++) {
-                var seasonNameCell = rows[i].getElementsByTagName("td")[1]; // Cột Season Name (vị trí 1 trong mảng các td)
-                if (seasonNameCell) {
-                    var seasonName = seasonNameCell.textContent || seasonNameCell.innerText;
-                    if (selectedValue === "all" || seasonName.toLowerCase().indexOf(selectedValue) > -1) {
-                        rows[i].style.display = ""; // Hiển thị hàng nếu giá trị được chọn là "All" hoặc tên mùa phù hợp
-                    } else {
-                        rows[i].style.display = "none"; // Ẩn hàng nếu không phù hợp với giá trị được chọn
-                    }
-                }
-            }
         }
 
         function filterCreatedBy() {
@@ -744,118 +782,6 @@
                 }
             });
         });
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-
-        // Hàm validateSearchForm để kiểm tra giá trị nhập vào ô search
-        function validateSearchForm() {
-            const searchType = document.getElementById("searchType").value;
-            const keyword = document.getElementById("searchKeyword").value.trim(); // Lấy giá trị và loại bỏ khoảng trắng đầu cuối
-            let isValid = true;
-            let errorMessage = "";
-
-            // Validate based on search type
-            switch (searchType) {
-                case "seasonName":
-                    // No specific validation needed for season name
-                    break;
-                case "startDate":
-                case "endDate":
-                case "createdBy":
-                case "updatedBy":
-                    // Validate if keyword is empty for date and string fields
-                    if (keyword === "") {
-                        isValid = false;
-                        errorMessage = "Please enter a keyword to search.";
-                    }
-                    break;
-                case "createdDate":
-                case "lastUpdatedDate":
-                    // Validate if keyword is a valid date (YYYY-MM-DD format)
-                    if (!isValidDate(keyword)) {
-                        isValid = false;
-                        errorMessage = "Please enter a valid date in YYYY-MM-DD format.";
-                    }
-                    break;
-                default:
-                    // Handle default case or additional search types
-                    break;
-            }
-
-            // Display error message if validation fails
-            const errorMessageElement = document.getElementById("error-message");
-            if (!isValid) {
-                errorMessageElement.textContent = errorMessage;
-                // Không cần xóa giá trị khi không hợp lệ để người dùng có thể tiếp tục nhập liệu
-                // document.getElementById("searchKeyword").value = "";
-                // document.getElementById("searchKeyword").focus();
-            } else {
-                errorMessageElement.textContent = "";
-            }
-
-            // Thực hiện hàm tìm kiếm (điều này có thể là gọi hàm khác để xử lý dữ liệu tìm kiếm)
-            performSearch();
-        }
-
-        // Hàm kiểm tra ngày hợp lệ (YYYY-MM-DD)
-        function isValidDate(dateString) {
-            // Regex pattern for YYYY-MM-DD date format
-            const pattern = /^\d{4}-\d{2}-\d{2}$/;
-            return pattern.test(dateString);
-        }
-
-        // Xử lý sự kiện khi thay đổi loại tìm kiếm
-        document.getElementById("searchType").addEventListener("input", function () {
-            var searchType = this.value;
-            var keywordInput = document.getElementById("searchKeyword");
-
-            // Ẩn hiện ô nhập keyword hoặc dropdown select dựa trên loại tìm kiếm được chọn
-            switch (searchType) {
-                case "seasonName":
-                case "startDate":
-                case "endDate":
-                case "createdBy":
-                case "updatedBy":
-                    keywordInput.style.display = "block";
-                    keywordInput.setAttribute("type", "text");
-                    keywordInput.setAttribute("required", "required");
-                    break;
-                case "createdDate":
-                case "lastUpdatedDate":
-                    keywordInput.style.display = "block";
-                    keywordInput.setAttribute("type", "date");
-                    keywordInput.setAttribute("required", "required");
-                    break;
-                default:
-                    keywordInput.style.display = "block"; // Có thể điều chỉnh cho phù hợp với yêu cầu cụ thể
-                    keywordInput.setAttribute("type", "text");
-                    keywordInput.removeAttribute("required");
-                    break;
-            }
-
-            // Gọi hàm validateSearchForm() ngay khi thay đổi loại tìm kiếm
-            validateSearchForm();
-        });
-
-        // Sự kiện khi người dùng nhập liệu vào ô tìm kiếm
-        document.getElementById("searchKeyword").addEventListener("input", function () {
-            // Gọi hàm validateSearchForm() khi người dùng nhập liệu vào ô tìm kiếm
-            validateSearchForm();
-        });
-
-        // Hàm thực hiện tìm kiếm (thay bằng hàm của bạn để xử lý dữ liệu tìm kiếm)
-        function performSearch() {
-            // Đây là nơi bạn có thể gọi hàm hoặc xử lý dữ liệu tìm kiếm
-            // Ví dụ:
-            console.log("Performing search with keyword: ", document.getElementById("searchKeyword").value.trim());
-            // Sau đó bạn có thể thực hiện các hành động khác như gửi request lên server, cập nhật giao diện, vv...
-        }
-
-
     </script>
 
     <!-- JavaScript Libraries -->
