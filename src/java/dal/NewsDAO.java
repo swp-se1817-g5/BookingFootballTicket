@@ -29,7 +29,7 @@ public class NewsDAO {
             + "FROM News news\n"
             + "JOIN NewsStatus newsStatus ON newsStatus.statusId = news.statusId\n"
             + "JOIN NewsState newsState ON newsState.stateId = news.stateId\n"
-            + "WHERE news.isDeleted = 0;";
+            + "WHERE news.isDeleted = 0";
     private static final String SQL_QUERY_GET_LIST_NEWS_STATE = "SELECT * FROM NewsState";
     private static final String SQL_QUERY_GET_LIST_NEWS_STATUS = "SELECT * FROM NewsStatus";
     private static final String NEWS_ID = "newsId";
@@ -66,50 +66,50 @@ public class NewsDAO {
     ResultSet rs = null;
 
 // Get list all of news
-    public ArrayList<News> getlistNews() {
-        ArrayList<News> list = new ArrayList<>();
-        try {
-            ps = connect.prepareStatement(SQL_QUERY_GET_LIST_NEWS);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                News news = new News();
-                news.setNewsId(rs.getInt(NEWS_ID));
-                news.setTitle(rs.getString(TITLE));
-                news.setContent(rs.getString(CONTENT));
-                news.setImage(rs.getString(IMAGE));
-                news.setConclusion(rs.getString(CONCLUSION));
-                news.setCreateBy(rs.getString(CREATED_BY));
-                news.setCreatedDate(rs.getTimestamp(CREATED_DATE) != null ? rs.getTimestamp(CREATED_DATE).toLocalDateTime() : null);
-                news.setUpdateBy(rs.getString(UPDATED_BY));
-                news.setLastUpdateDate(rs.getTimestamp(LAST_UPDATED_DATE) != null ? rs.getTimestamp(LAST_UPDATED_DATE).toLocalDateTime() : null);
-                news.setPostOn(rs.getTimestamp(POST_ON) != null ? rs.getTimestamp(POST_ON).toLocalDateTime() : null);
-                NewsStatus newsStatus = new NewsStatus();
-                newsStatus.setStatusName(rs.getString(STATUS_NAME));
-                news.setStatusId(newsStatus);
-                NewsState newsState = new NewsState();
-                newsState.setStateName(rs.getString(STATE_NAME));
-                news.setStateId(newsState);
-                list.add(news);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return list;
-    }
+//    public ArrayList<News> getlistNews() {
+//        ArrayList<News> list = new ArrayList<>();
+//        try {
+//            ps = connect.prepareStatement(SQL_QUERY_GET_LIST_NEWS);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                News news = new News();
+//                news.setNewsId(rs.getInt(NEWS_ID));
+//                news.setTitle(rs.getString(TITLE));
+//                news.setContent(rs.getString(CONTENT));
+//                news.setImage(rs.getString(IMAGE));
+//                news.setConclusion(rs.getString(CONCLUSION));
+//                news.setCreateBy(rs.getString(CREATED_BY));
+//                news.setCreatedDate(rs.getTimestamp(CREATED_DATE) != null ? rs.getTimestamp(CREATED_DATE).toLocalDateTime() : null);
+//                news.setUpdateBy(rs.getString(UPDATED_BY));
+//                news.setLastUpdateDate(rs.getTimestamp(LAST_UPDATED_DATE) != null ? rs.getTimestamp(LAST_UPDATED_DATE).toLocalDateTime() : null);
+//                news.setPostOn(rs.getTimestamp(POST_ON) != null ? rs.getTimestamp(POST_ON).toLocalDateTime() : null);
+//                NewsStatus newsStatus = new NewsStatus();
+//                newsStatus.setStatusName(rs.getString(STATUS_NAME));
+//                news.setStatusId(newsStatus);
+//                NewsState newsState = new NewsState();
+//                newsState.setStateName(rs.getString(STATE_NAME));
+//                news.setStateId(newsState);
+//                list.add(news);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return list;
+//    }
 //
-
-    public static void main(String[] args) {
-        System.out.println(NewsDAO.getInstance().getlistNews());
-    }
+//
+//    public static void main(String[] args) {
+//        System.out.println(NewsDAO.getInstance().getlistNews());
+//    }
 
     //Search by 
-    public ArrayList<News> search(String value) {
+    public ArrayList<News> getlistNews(String value) {
         ArrayList<News> list = new ArrayList<>();
         String SQL_QUERY_SEARCH_NEWS = "SELECT news.*, newsState.stateName, newsStatus.statusName\n"
                 + "FROM News news\n"
                 + "JOIN NewsStatus newsStatus ON newsStatus.statusId = news.statusId\n"
                 + "JOIN NewsState newsState ON newsState.stateId = news.stateId"
-                + " WHERE (title LIKE '%" + value + "%' OR content LIKE '%" + value + "%' )AND news.isDeleted = 0;";
+                + " WHERE (title LIKE '%" + value + "%' OR content LIKE '%" + value + "%' )AND news.isDeleted = 0";
         try {
             ps = connect.prepareStatement(SQL_QUERY_SEARCH_NEWS);
             rs = ps.executeQuery();
@@ -140,10 +140,7 @@ public class NewsDAO {
     }
 //
 //    public static void main(String[] args) {
-//        ArrayList<News> list = NewsDAO.getInstance().search("Title ");
-//        for (News news : list) {
-//            System.out.println(news.toString());
-//        }
+//        System.out.println(NewsDAO.getInstance().getlistNews(""));
 //    }
 //  Create a news
 
@@ -202,14 +199,14 @@ public class NewsDAO {
         }
         return m;
     }
-//    public static void main(String[] args) {
-//        NewsState n1 = new NewsState();
-//        n1.setStateId(1);
-//        NewsStatus n2 = new NewsStatus();
-//        n2.setStatusId(1);
-//        News n = new News("TITLE", "CONTENT", "IMAGE", "CONCLUSION", "CREATED_BY", n2, n1);
-//        System.out.println(NewsDAO.getInstance().updateNews(n));
-//    }
+    public static void main(String[] args) {
+        NewsState n1 = new NewsState();
+        n1.setStateId(1);
+        NewsStatus n2 = new NewsStatus();
+        n2.setStatusId(1);
+        News n = new News("TITLE", "CONTENT", "IMAGE", "CONCLUSION", "CREATED_BY", n2, n1);
+        System.out.println(NewsDAO.getInstance().updateNews(n));
+    }
 //Delete news
 
     public boolean deleteNews(int newsId) {

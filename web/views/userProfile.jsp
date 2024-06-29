@@ -215,6 +215,7 @@
                                                 <p class="error"></p>
                                             </div>
                                             <div class="submit" style="display: flex; justify-content: right;">
+                                                <a href="changepass" type="submit" class="c2a_btn save_data" formId="form_edit_details" style="margin-right: 2px;">Change Password</a>
                                                 <button type="submit" class="c2a_btn save_data" formId="form_edit_details">Save</button>
                                             </div>
                                         </div>

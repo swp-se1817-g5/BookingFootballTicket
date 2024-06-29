@@ -71,38 +71,27 @@ public class ManageNewsServlet extends HttpServlet {
         ArrayList<News> listNews;
         ArrayList<NewsStatus> listStatus;
         ArrayList<NewsState> listState;
-
-        String go = request.getParameter("go");
-        if (!isNullOrBlank(go)) {
-            if (go.equals("search")) {
-                String valueSearch = request.getParameter("valueSearch").trim();
-                listNews = NewsDAO.getInstance().search(valueSearch);
-                if (!listNews.isEmpty()) {
-                    session.setAttribute("getListNews", listNews);
-                }
-            }
-        } else {
-            listNews = NewsDAO.getInstance().getlistNews();
-            listStatus = NewsDAO.getInstance().getListStatus();
-            listState = NewsDAO.getInstance().getListState();
-            if (!listNews.isEmpty() || !listState.isEmpty() || !listStatus.isEmpty()) {
-                session.setAttribute("getListNews", listNews);
-                session.setAttribute("getListState", listState);
-                session.setAttribute("getListStatus", listStatus);
-            }
-
-            if (session.getAttribute("newsCreated") != null) {
-                request.setAttribute("created", session.getAttribute("newsCreated"));
-                session.removeAttribute("created");
-            }
-            if (session.getAttribute("newsUpdated") != null) {
-                request.setAttribute("updated", session.getAttribute("newsUpdated"));
-                session.removeAttribute("updated");
-            }
-            if (session.getAttribute("newsDeleted") != null) {
-                request.setAttribute("deleted", session.getAttribute("newsDeleted"));
-                session.removeAttribute("deleted");
-            }
+        String valueSearch = request.getParameter("valueSearch");
+        valueSearch = valueSearch == null ? "" : valueSearch.trim();
+        listNews = NewsDAO.getInstance().getlistNews(valueSearch);
+        listStatus = NewsDAO.getInstance().getListStatus();
+        listState = NewsDAO.getInstance().getListState();
+        if (!listNews.isEmpty() || !listState.isEmpty() || !listStatus.isEmpty()) {
+            session.setAttribute("getListNews", listNews);
+            session.setAttribute("getListState", listState);
+            session.setAttribute("getListStatus", listStatus);
+        }
+        if (session.getAttribute("newsCreated") != null) {
+            request.setAttribute("created", session.getAttribute("newsCreated"));
+            session.removeAttribute("newsCreated");
+        }
+        if (session.getAttribute("newsUpdated") != null) {
+            request.setAttribute("updated", session.getAttribute("newsUpdated"));
+            session.removeAttribute("newsUpdated");
+        }
+        if (session.getAttribute("newsDeleted") != null) {
+            request.setAttribute("deleted", session.getAttribute("newsDeleted"));
+            session.removeAttribute("newsDeleted");
         }
         request.getRequestDispatcher("views/manageNews.jsp").forward(request, response);
     }

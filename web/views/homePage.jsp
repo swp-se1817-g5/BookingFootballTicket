@@ -86,7 +86,7 @@
     </div>
     <header id="header" class="header-top" data-mod="sticky" data-anchor="body" data-className="sticky">
         <div class="header-inner">
-            <a href="https://www.footballticketpad.com" class="logo">
+            <a href="./" class="logo">
                 <img class="black-logo" src="https://www.footballticketpad.com/assets/css/images/logo.png"></img>
             </a>
             <div class="header-right">
@@ -349,7 +349,7 @@
                                         <a data-auth="profile" class="has-child">Profile</a>
                                         <ul class="advanced" style="min-width: 195px; right: 0;">
                                             <li>
-                                                <a href="./ProfileServlet">
+                                                <a href="./userProfile">
                                                     View Profile
                                                 </a>
                                             </li>

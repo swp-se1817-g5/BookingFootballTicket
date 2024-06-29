@@ -12,6 +12,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -23,6 +24,8 @@ public class DeleteMatchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+
         boolean deleted = false;
         try {
             int matchId = Integer.parseInt(request.getParameter("matchId"));
@@ -30,7 +33,9 @@ public class DeleteMatchServlet extends HttpServlet {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Invalid date time format", e);
         }
-        response.sendRedirect("manageMatch?deleted=" + deleted);
+        session.setAttribute("deleteMatch", deleted);
+
+        response.sendRedirect("manageMatch");
     }
 
     @Override
