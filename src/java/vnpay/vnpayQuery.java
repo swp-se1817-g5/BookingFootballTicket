@@ -54,7 +54,6 @@ public class vnpayQuery extends HttpServlet {
         vnp_Params.addProperty("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.addProperty("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.addProperty("vnp_OrderInfo", vnp_OrderInfo);
-        //vnp_Params.put("vnp_TransactionNo", vnp_TransactionNo);
         vnp_Params.addProperty("vnp_TransactionDate", vnp_TransDate);
         vnp_Params.addProperty("vnp_CreateDate", vnp_CreateDate);
         vnp_Params.addProperty("vnp_IpAddr", vnp_IpAddr);

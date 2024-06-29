@@ -210,7 +210,7 @@
                                                 <div class="body">					
                                                     <div class="form-row">
                                                         <div class="form-group col-md-11">
-<!--                                                            <a><i class="material-icons">&#xE8B6;</i></a>-->
+                                                            <!--                                                            <a><i class="material-icons">&#xE8B6;</i></a>-->
                                                             <input id="valueSearch" name="valueSearch" type="text" class="form-control" placeholder="Search by email, name, ...">
                                                         </div>
                                                         <div class="form-group col-md-1 align-self-end">
@@ -223,9 +223,13 @@
                                                 </div>
                                             </form>
                                         </div>
-                                    </div>  
+                                    </div>
                                     <div class="col-md-8 createe d-flex align-items-center justify-content-end">
                                         <a type="button" href="#createUserModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create User</span></a>
+                                        <a type="button" href="/BookingFootballTicket/ExportExcel?service=export" class="btn btn-success m-2 float-right">
+                                            <i class="bi bi-file-earmark-spreadsheet"></i> 
+                                            <span>Export to Excel</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -434,6 +438,27 @@
             });
         </script>
 
+        <script>
+            // Hàm để hiển thị toast notification
+            function showToast(message) {
+                // Thiết lập nội dung của toast
+                document.getElementById('toastMessage').innerHTML = message;
+
+                // Hiển thị toast
+                $('.toast').toast('show');
+            }
+
+            // Xử lý khi tài liệu đã được tải xong (document ready)
+            $(document).ready(function () {
+                // Kiểm tra xem biến mess có giá trị không
+                var mess = "${mess}";
+                if (mess !== "") {
+                    // Hiển thị toast nếu biến mess có giá trị
+                    showToast(mess);
+                }
+            });
+        </script>
+        
         <!-- script for toast notification -->
         <script>
             function filterByStatus() {
@@ -708,31 +733,31 @@
                             var phoneNumberValid = validatePhoneNumber();
                             var passwordValid = validatePassword();
                             return emailValid && nameValid && phoneNumberValid && passwordValid;
-                            }
+                    }
 
 // Validate fields on input
                     $('[name="emailInput"]').on('input', function () {
                     validateEmail();
-                            });
+                    });
                             $('[name="nameInput"]').on('input', function () {
                     validateName();
-                            });
+                    });
                             $('[name="phoneNumberInput"]').on('input', function () {
                     validatePhoneNumber();
-                            });
+                    });
                             $('[name="passwordInput"]').on('input', function () {
                     validatePassword();
-                            });
+                    });
 // Validate Update Form Fields on Input
                             $('#updateUserForm input[name="detailEmail"]').on('input', function () {
                     validateUpdateEmail();
-                            });
+                    });
                             $('#updateUserForm input[name="detailName"]').on('input', function () {
                     validateUpdateName();
-                            });
+                    });
                             $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
                     validateUpdatePhoneNumber();
-                            });
+                    });
                             function validateUpdateEmail() {
                             var email = $('#updateUserForm input[name="detailEmail"]').val().trim();
                                     var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
@@ -799,5 +824,8 @@
         <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
         <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
         <script src="js/main.js"></script>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
+        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5zM3 12v-2h2v2zm0 1h2v2H4a1 1 0 0 1-1-1zm3 2v-2h3v2zm4 0v-2h3v1a1 1 0 0 1-1 1zm3-3h-3v-2h3zm-7 0v-2h3v2z"/>
+        </svg>
     </body>
 </html>
