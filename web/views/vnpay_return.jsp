@@ -4,9 +4,9 @@
     Author     : AD
 --%>
 
+<%@page import="Config.Config"%>
 <%@page import="java.net.URLEncoder"%>
 <%@page import="java.nio.charset.StandardCharsets"%>
-<%@page import="vnpay.Config"%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 

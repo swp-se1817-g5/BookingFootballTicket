@@ -1,15 +1,12 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 
 package vnpay;
-
+import Config.Config;
 import com.google.gson.JsonObject;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -19,14 +16,18 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
-import javax.servlet.http.HttpServlet;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
  * @author CTT VNPAY
  */
-@WebServlet(name="vnpayQuery", urlPatterns={"/vnpayQuery"})
 public class vnpayQuery extends HttpServlet {
+
+    @Override
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Command:querydr
@@ -37,7 +38,6 @@ public class vnpayQuery extends HttpServlet {
         String vnp_TmnCode = Config.vnp_TmnCode;
         String vnp_TxnRef = req.getParameter("order_id");
         String vnp_OrderInfo = "Kiem tra ket qua GD OrderId:" + vnp_TxnRef;
-        //String vnp_TransactionNo = req.getParameter("transactionNo");
         String vnp_TransDate = req.getParameter("trans_date");
         
         Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
@@ -87,4 +87,3 @@ public class vnpayQuery extends HttpServlet {
         System.out.println(response.toString());
     }
 }
-
