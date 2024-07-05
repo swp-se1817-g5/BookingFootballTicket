@@ -1,4 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+<jsp:useBean id="currentDate" class="java.util.Date" scope="page" />
+
+<fmt:parseDate var="startDate" value="${param.startDate}" pattern="yyyy-MM-dd" />
+<fmt:parseDate var="endDate" value="${param.endDate}" pattern="yyyy-MM-dd" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -199,7 +205,6 @@
                 color: white;
             }
             #seasonTable th {
-                text-align: center;
                 font-weight: bold;
             }
 
@@ -293,23 +298,29 @@
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${requestScope.seasons}" var="s">
-                                        <tr class="text-content">
-                                            <td>${s.seasonId}</td>
-                                            <td>${s.seasonName}</td>
-                                            <td>${s.startDate}</td>
-                                            <td>${s.endDate}</td>
+                                        <c:set var="startDateStr" value="${s.startDate}" />
+                                        <c:set var="endDateStr" value="${s.endDate}" />
+                                    <fmt:parseDate var="startDate" value="${startDateStr}" pattern="yyyy-MM-dd" />
+                                    <fmt:parseDate var="endDate" value="${endDateStr}" pattern="yyyy-MM-dd" />
+                                    <tr class="text-content">
+                                        <td>${s.seasonId}</td>
+                                        <td>${s.seasonName}</td>
+                                        <td>${s.startDate}</td>
+                                        <td>${s.endDate}</td>
 <!--                                            <td>${s.createdBy}</td>
-                                            <td>${s.createdDate}</td>
-                                            <td>${s.updatedBy}</td>
-                                            <td>${s.lastUpdatedDate}</td>-->
-                                            <td>
-                                                <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
+                                        <td>${s.createdDate}</td>
+                                        <td>${s.updatedBy}</td>
+                                        <td>${s.lastUpdatedDate}</td>-->
+                                        <td>
+                                            <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
+                                                <c:if test="${currentDate.before(startDate) or currentDate.after(endDate)}">
                                                 <a onclick="doDelete(${s.seasonId})" class="delete" title="Cancel" data-toggle="tooltip">
                                                     <i class="fa fa-times-circle"></i>
                                                 </a>
-                                            </td>
-                                        </tr>
-                                    </c:forEach>
+                                            </c:if>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                                 </tbody>
                             </table>
                             <div class="clearfix d-flex justify-content-md-start"">
@@ -402,6 +413,29 @@
                 </div>
             </div>
         </div>
+        <script>
+// Convert string date to Date object
+            function parseDate(dateStr) {
+                var parts = dateStr.split('-');
+                return new Date(parts[0], parts[1] - 1, parts[2]);
+            }
+
+// Iterate over each row and check the dates
+            document.querySelectorAll('tr').forEach(function (row) {
+                var startDateElem = row.querySelector('.start-date');
+                var endDateElem = row.querySelector('.end-date');
+                if (startDateElem && endDateElem) {
+                    var startDate = parseDate(startDateElem.getAttribute('data-startdate'));
+                    var endDate = parseDate(endDateElem.getAttribute('data-enddate'));
+                    if (currentDate >= startDate && currentDate <= endDate) {
+                        var deleteButton = row.querySelector('.delete');
+                        if (deleteButton) {
+                            deleteButton.style.display = 'none';
+                        }
+                    }
+                }
+            });
+        </script>
     </body>
     <!-- toast notification -->
     <div class="toast" id="toastNotification" data-delay="3000">
