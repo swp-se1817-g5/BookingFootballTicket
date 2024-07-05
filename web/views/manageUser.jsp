@@ -203,7 +203,7 @@
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-md-4 searchh">
+                                    <div class="col-md-4" >
                                         <!-- Search User Form -->
                                         <div>
                                             <form id="searchForm" name="searchForm" action="searchUser" method="post">

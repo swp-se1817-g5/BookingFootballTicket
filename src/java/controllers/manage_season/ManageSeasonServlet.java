@@ -100,7 +100,6 @@ public class ManageSeasonServlet extends HttpServlet {
         ArrayList<Season> seasons = SeasonDAO.getINSTANCE().getSeasons((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE, search);
         int noOfRecords = SeasonDAO.getINSTANCE().getNoOfRecords(search);
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
-        LocalDate currentDate = LocalDate.now();
         request.setAttribute("seasons", seasons);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
