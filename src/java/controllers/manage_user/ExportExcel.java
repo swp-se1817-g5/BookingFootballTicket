@@ -102,7 +102,7 @@ public class ExportExcel extends HttpServlet {
 
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("Users data");
-        String[] headerTitle = {"email", "name", "roleId", "phoneNumber", "status"};
+        String[] headerTitle = {"Email", "Name", "Role ID", "Phone Number", "Status", "Created Date"};
         Row headerRow = sheet.createRow(0);
         for (int i = 0; i < headerTitle.length; i++) {
             headerRow.createCell(i).setCellValue(headerTitle[i]);
@@ -115,9 +115,10 @@ public class ExportExcel extends HttpServlet {
             row.createCell(2).setCellValue(user.getRoleId());
             row.createCell(3).setCellValue(user.getPhoneNumber());
             row.createCell(4).setCellValue(user.isStatus() ? "Active" : "Inactive");
+            row.createCell(5).setCellValue(user.getCreatedDate());
             rowNum++;
         }
-        String fileName = "userData.xlsx";
+        String fileName = "usersData.xlsx";
         File excelFile = new File(directionToSave, fileName);
         try (FileOutputStream fileOut = new FileOutputStream(excelFile)) {
             workbook.write(fileOut);
