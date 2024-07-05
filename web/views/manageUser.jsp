@@ -56,8 +56,8 @@
                 box-shadow: 0 1px 1px rgba(0,0,0,.05);
             }
             .table-title {
-                padding-bottom: 0;
-                margin: 0 0 0;
+                padding-bottom: 10px;
+                margin: 0 0 10px;
                 min-width: 100%;
             }
             .table-title h2 {
@@ -203,7 +203,7 @@
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-md-4 searchh justify-content-md-between">
+                                    <div class="col-md-4 searchh">
                                         <!-- Search User Form -->
                                         <div>
                                             <form id="searchForm" name="searchForm" action="searchUser" method="post">
@@ -223,9 +223,13 @@
                                                 </div>
                                             </form>
                                         </div>
-                                    </div>  
-                                    <div class="col-md-8 createe d-flex align-items-md-start justify-content-end">
+                                    </div>
+                                    <div class="col-md-8 createe d-flex align-items-center justify-content-end">
                                         <a type="button" href="#createUserModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create User</span></a>
+                                        <a type="button" href="/BookingFootballTicket/ExportExcel?service=export" class="btn btn-success m-2 float-right">
+                                            <i class="bi bi-file-earmark-spreadsheet"></i> 
+                                            <span>Export to Excel</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -313,7 +317,7 @@
                     <div class="modal fade" id="userDetailModal">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form id="updateUserForm" action="updateUser" method="post" enctype="multipart/form-data">
+                                <form action="updateUser" method="post" enctype="multipart/form-data">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="userDetailModalLabel">User Details</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -323,7 +327,7 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="detailEmail">Email</label>
-                                            <input type="text" class="form-control" id="email" name="detailEmail" required>
+                                            <input type="text" class="form-control" id="email" name="detailEmail" readonly>
                                             <div id="emailDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
@@ -372,17 +376,17 @@
                                     <div class="modal-body">					
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input name="emailInput" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" required>
+                                            <input name="emailInput" id="emailInput" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" required>
                                             <div id="emailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input name="nameInput" type="text" class="form-control" required>
+                                            <input name="nameInput" id="nameInput" type="text" class="form-control" required>
                                             <div id="nameError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="roleInput">User Role</label>
-                                            <select name="roleIdInput" class="form-control" required>
+                                            <select name="roleIdInput" id="roleIdInput" class="form-control" required>
                                                 <c:forEach items="${roles}" var="role">
                                                     <c:if test="${role.roleId != 1}">
                                                         <option value="${role.roleId}">${role.roleName}</option>
@@ -392,17 +396,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input name="passwordInput" type="password" class="form-control" required>
+                                            <input name="passwordInput" id="passwordInput" type="password" class="form-control" required>
                                             <div id="passwordError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label>Phone Number</label>
-                                            <input name="phoneNumberInput" type="text" class="form-control" pattern="[0-9]{10}" required>
+                                            <input name="phoneNumberInput" id="phoneNumberInput" type="text" class="form-control" pattern="[0-9]{10}" required>
                                             <div id="phoneNumberError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="avatarInput">Avatar</label>
-                                            <input name="avatarInput" type="file" accept="image/*" class="form-control" required>
+                                            <input name="avatarInput" id="avatarInput" type="file" accept="image/*" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <img id="avatarPreview" src="" alt="Avatar Preview" style="max-width: 200px; max-height: 200px;">
@@ -434,6 +438,27 @@
             });
         </script>
 
+        <script>
+            // Hàm để hiển thị toast notification
+            function showToast(message) {
+                // Thiết lập nội dung của toast
+                document.getElementById('toastMessage').innerHTML = message;
+
+                // Hiển thị toast
+                $('.toast').toast('show');
+            }
+
+            // Xử lý khi tài liệu đã được tải xong (document ready)
+            $(document).ready(function () {
+                // Kiểm tra xem biến mess có giá trị không
+                var mess = "${mess}";
+                if (mess !== "") {
+                    // Hiển thị toast nếu biến mess có giá trị
+                    showToast(mess);
+                }
+            });
+        </script>
+        
         <!-- script for toast notification -->
         <script>
             function filterByStatus() {
@@ -723,6 +748,16 @@
                             $('[name="passwordInput"]').on('input', function () {
                     validatePassword();
                     });
+// Validate Update Form Fields on Input
+                            $('#updateUserForm input[name="detailEmail"]').on('input', function () {
+                    validateUpdateEmail();
+                    });
+                            $('#updateUserForm input[name="detailName"]').on('input', function () {
+                    validateUpdateName();
+                    });
+                            $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
+                    validateUpdatePhoneNumber();
+                    });
                             function validateUpdateEmail() {
                             var email = $('#updateUserForm input[name="detailEmail"]').val().trim();
                                     var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
@@ -770,17 +805,8 @@
                             var phoneNumberValid = validateUpdatePhoneNumber();
                             return emailValid && nameValid && phoneNumberValid;
                     }
-                    // Validate Update Form Fields on Input
-                    $('#updateUserForm input[name="detailEmail"]').on('input', function () {
-                    validateUpdateEmail();
-                    });
-                            $('#updateUserForm input[name="detailName"]').on('input', function () {
-                    validateUpdateName();
-                    });
-                            $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
-                    validateUpdatePhoneNumber();
-                    });
-                            $('#updateUserForm').submit(function (event) {
+
+                    $('#updateUserForm').submit(function (event) {
                     if (!validateUpdateForm()) {
                     event.preventDefault();
                     }
@@ -798,5 +824,8 @@
         <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
         <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
         <script src="js/main.js"></script>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
+        <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5zM3 12v-2h2v2zm0 1h2v2H4a1 1 0 0 1-1-1zm3 2v-2h3v2zm4 0v-2h3v1a1 1 0 0 1-1 1zm3-3h-3v-2h3zm-7 0v-2h3v2z"/>
+        </svg>
     </body>
 </html>

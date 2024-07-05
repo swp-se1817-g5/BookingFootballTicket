@@ -21,6 +21,15 @@ public class User {
 
     public User() {
     }
+    //export
+    public User(String email, String name, int roleId, String phoneNumber, boolean status,LocalDateTime createdDate) {
+        this.email = email;
+        this.name = name;
+        this.roleId = roleId;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+        this.createdDate = createdDate;
+    }
 
     public User(String email, String name, int roleId, String hashedPassword, String phoneNumber, String avatar, String createdBy, LocalDateTime createdDate, String updatedBy, LocalDateTime lastUpdatedDate, boolean status) {
         this.email = email;

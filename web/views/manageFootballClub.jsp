@@ -481,25 +481,7 @@ Author     : admin
                     loadPage(pageIndex, searchValue);
                 });
                 // Bắt sự kiện khi người dùng nhập liệu vào ô search
-                $("#searchInputForm").on("keyup", function () {
-                    var searchValue = $(this).val().trim(); // Lấy giá trị từ ô search
-                    
-                    loadPage($(this).attr("data-page"), searchValue);
-
-                    // Gửi yêu cầu Ajax
-                    $.ajax({
-                        url: "manageFootballClub", // URL của Servlet xử lý Ajax (cần thay đổi nếu khác)
-                        type: "GET",
-
-                        data: {
-                            search: searchValue // Dữ liệu gửi đi là giá trị search
-                        },
-                        success: function (data) {
-                            // Cập nhật phần tử có id là footballClubs với dữ liệu trả về từ Ajax
-                            $("#footballClubs").html($(data).find('#footballClubs').html());
-                        }
-                    });
-                });
+             
             });
         </script>
 
@@ -510,7 +492,7 @@ Author     : admin
 
                 // Convert the stands list from JSP to a JavaScript array
                 var clubs = [];
-            <c:forEach items="${footballClubs}" var="club">
+            <c:forEach items="${allFootballClubs}" var="club">
                 clubs.push({clubId: "${club.clubId}", clubName: "${club.clubName}"});
             </c:forEach>
 
@@ -580,9 +562,7 @@ Author     : admin
                 $('#clubNameError').text('');
 
             }
-            function create() {
-
-            }
+            
 
         </script>
 
