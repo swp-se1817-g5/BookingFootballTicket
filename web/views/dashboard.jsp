@@ -49,9 +49,9 @@
             </div>
             <!-- Spinner End -->
 
-           
+
             <!-- Sidebar Start -->
-             <%@include file="side-bar.jsp" %>
+            <%@include file="side-bar.jsp" %>
             <!-- Sidebar End -->
 
 
@@ -69,8 +69,9 @@
                             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                                 <i class="fa fa-chart-line fa-3x text-primary"></i>
                                 <div class="ms-3">
-                                    <p class="mb-2">Today Sale</p>
-                                    <h6 class="mb-0">$1234</h6>
+                                    <p class="mb-2">Vé Bán Được Tháng Này</p>
+                                    <h6 class="mb-0">${requestScope.totalTicketsSoldThisMonth}</h6>
+                                    <h7 class="mb-0">Vé</h7>
                                 </div>
                             </div>
                         </div>
@@ -78,8 +79,9 @@
                             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                                 <i class="fa fa-chart-bar fa-3x text-primary"></i>
                                 <div class="ms-3">
-                                    <p class="mb-2">Total Sale</p>
-                                    <h6 class="mb-0">$1234</h6>
+                                    <p class="mb-2">Tổng Vé Bán Được</p>
+                                    <h6 class="mb-0">${requestScope.totalTicketsSold}</h6>
+                                    <h7 class="mb-0">Vé</h7>
                                 </div>
                             </div>
                         </div>
@@ -87,8 +89,9 @@
                             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                                 <i class="fa fa-chart-area fa-3x text-primary"></i>
                                 <div class="ms-3">
-                                    <p class="mb-2">Today Revenue</p>
-                                    <h6 class="mb-0">$1234</h6>
+                                    <p class="mb-2">Doanh Thu Tháng Này</p>
+                                    <h6 class="mb-0">${requestScope.totalRevenueThisMonth}</h6>
+                                    <h7 class="mb-0">VND</h6>
                                 </div>
                             </div>
                         </div>
@@ -96,11 +99,13 @@
                             <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
                                 <i class="fa fa-chart-pie fa-3x text-primary"></i>
                                 <div class="ms-3">
-                                    <p class="mb-2">Total Revenue</p>
-                                    <h6 class="mb-0">$1234</h6>
+                                    <p class="mb-2">Tổng Doanh Thu</p>
+                                    <h6 class="mb-0">${requestScope.totalRevenue}</h6>
+                                    <h7 class="mb-0">VND</h6>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <!-- Sale & Revenue End -->
@@ -112,16 +117,16 @@
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-light text-center rounded p-4">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Worldwide Sales</h6>
+                                    <h6 class="mb-0">Vé Bán Được Theo Hạng</h6>
                                     <a href="">Show All</a>
                                 </div>
-                                <canvas id="worldwide-sales"></canvas>
+                                <canvas id="ticket-class-sale"></canvas>
                             </div>
                         </div>
                         <div class="col-sm-12 col-xl-6">
                             <div class="bg-light text-center rounded p-4">
                                 <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">Salse & Revenue</h6>
+                                    <h6 class="mb-0">Doanh Thu Theo Năm</h6>
                                     <a href="">Show All</a>
                                 </div>
                                 <canvas id="salse-revenue"></canvas>
@@ -136,7 +141,7 @@
                 <div class="container-fluid pt-4 px-4">
                     <div class="bg-light text-center rounded p-4">
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                            <h6 class="mb-0">Recent Salse</h6>
+                            <h6 class="mb-0"></h6>
                             <a href="">Show All</a>
                         </div>
                         <div class="table-responsive">
@@ -364,6 +369,37 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+        <script>
+            $(document).ready(function () {
+                var ctx1 = $("#ticket-class-sale").get(0).getContext("2d");
+                var myChart1 = new Chart(ctx1, {
+                    type: "bar",
+                    data: {
+                        labels: ["2018", "2019", "2020", "2021", "2022"],
+                        datasets: [{
+                                label: "USA",
+                                data: [55, 65, 60, 80, 95],
+                                backgroundColor: "rgba(0, 156, 255, .7)"
+                            },
+                            {
+                                label: "UK",
+                                data: [40, 60, 70, 55, 75],
+                                backgroundColor: "rgba(0, 156, 255, .5)"
+                            },
+                            {
+                                label: "AU",
+                                data: [45, 55, 65, 70, 60],
+                                backgroundColor: "rgba(0, 156, 255, .3)"
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                });
+            });
+        </script>
+
     </body>
 
 </html>

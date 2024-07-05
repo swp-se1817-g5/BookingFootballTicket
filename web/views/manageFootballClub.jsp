@@ -10,7 +10,7 @@ Author     : admin
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bootstrap Simple Data Table</title>
+        <title>Quản Lý</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -237,24 +237,24 @@ Author     : admin
                                         <form action="manageFootballClub" method="get" id="searchForm">
 
 
-                                            <input id="searchInputForm" value="${requestScope.search}" type="text" name="search" class="form-control radius-md" placeholder="Search by name&hellip;">
+                                            <input id="searchInputForm" value="${requestScope.search}" type="text" name="search" class="form-control radius-md" placeholder="Tìm theo tên&hellip;">
 
                                         </form>
 
                                     </div>
                                     <div class="col-md-8">
-                                        <a type="button" href="#createModal" data-toggle="modal" class="btn btn-success m-2 float-right"><i class="fa fa-plus-circle me-2"></i>Create Football Club</a>
+                                        <a type="button" href="#createModal" data-toggle="modal" class="btn btn-success m-2 float-right"><i class="fa fa-plus-circle me-2"></i>Thêm Đội Bóng</a>
                                     </div>
                                 </div>
                             </div>
                             <table class="table table-striped table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th width="10%">#</th>
-                                        <th width="15%">Image</th>
-                                        <th width="20%">Football Club Name</th>
-                                        <th>Description</th>
-                                        <th width="10%">Actions</th>
+                                        <th width="10%">ID</th>
+                                        <th width="15%">Logo</th>
+                                        <th width="20%">Tên</th>
+                                        <th>Mô Tả</th>
+                                        <th width="10%">Chức Năng</th>
                                     </tr>
                                 </thead>
                                 <tbody id="footballClubs">

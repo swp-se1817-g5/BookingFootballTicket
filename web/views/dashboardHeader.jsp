@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Dashboard Header</title>
+        <title></title>
     </head>
     <body>
         <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
@@ -29,9 +29,9 @@
                         <span class="d-none d-lg-inline-flex">${sessionScope.currentUser.name}</span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
-                        <a href="userProfile" class="dropdown-item">My Profile</a>
+                        <a href="userProfile" class="dropdown-item">Tài Khoản</a>
                         
-                        <a href="logout" class="dropdown-item">Log Out</a>
+                        <a href="logout" class="dropdown-item">Đăng Xuất</a>
                     </div>
                 </div>
             </div>
