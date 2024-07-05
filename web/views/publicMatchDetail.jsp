@@ -240,7 +240,7 @@
                     <!-- Modal -->
                     <div class="modal fade" id="ticketSummary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document" style="top: 50px; max-width: 750px; width: 100%; margin: 0 auto; padding: 10px;">
-                            <div class="modal-content">
+                            <form class="modal-content" method="" action="">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Ticket summary</h5>
                                     <div onchange="cancel()" data-dismiss="modal" aria-label="Close" data-close-search class="close">
@@ -286,9 +286,9 @@
                                     <input type="hidden" class="checkout_eventId" id="checkout_eventId">
                                 </div>
                                 <div class="modal-footer">
-                                    <div style="float: center;" class="c2a_btn" id="checkout" action="">Checkout</div>
+                                    <button type="submit" class="c2a_btn" id="checkout">Checkout</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
 
@@ -476,15 +476,15 @@
 
                                         var pricePerTicketString = '';
                                         function Summary(price, className, standName, seatName) {
-                                            document.getElementById('priceIndiv').innerText = price;
-                                            document.getElementById('sum').innerText = price;
+                                            document.getElementById('priceIndiv').innerText =  parseInt(price.replace(/,/g, ''), 0);
+                                            document.getElementById('sum').innerText = parseInt(price.replace(/,/g, ''), 0);
                                             document.getElementById('ticketSeatStand').innerText = standName + seatName;
                                             document.getElementById('seatClassView').innerText = className;
                                             pricePerTicketString = price;
                                         }
 
                                         function changeTotalPrice() {
-                                            var pricePerTicket = parseInt(pricePerTicketString.replace(/,/g, ''), 10);
+                                            var pricePerTicket = parseInt(pricePerTicketString.replace(/,/g, ''), 0);
                                             var quantity = document.getElementById('number_of_tickets').value;
                                             document.getElementById('sum').innerText = quantity * pricePerTicket;
                                         }
