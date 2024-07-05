@@ -323,7 +323,7 @@
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label for="detailEmail">Email</label>
-                                            <input type="text" class="form-control" id="email" name="detailEmail" required>
+                                            <input type="text" class="form-control" id="email" name="detailEmail" readonly>
                                             <div id="emailDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
@@ -372,17 +372,17 @@
                                     <div class="modal-body">					
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input name="emailInput" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" required>
+                                            <input name="emailInput" id="emailInput" type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" class="form-control" required>
                                             <div id="emailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input name="nameInput" type="text" class="form-control" required>
+                                            <input name="nameInput" id="nameInput" type="text" class="form-control" required>
                                             <div id="nameError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="roleInput">User Role</label>
-                                            <select name="roleIdInput" class="form-control" required>
+                                            <select name="roleIdInput" id="roleIdInput" class="form-control" required>
                                                 <c:forEach items="${roles}" var="role">
                                                     <c:if test="${role.roleId != 1}">
                                                         <option value="${role.roleId}">${role.roleName}</option>
@@ -392,17 +392,17 @@
                                         </div>
                                         <div class="form-group">
                                             <label>Password</label>
-                                            <input name="passwordInput" type="password" class="form-control" required>
+                                            <input name="passwordInput" id="passwordInput" type="password" class="form-control" required>
                                             <div id="passwordError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label>Phone Number</label>
-                                            <input name="phoneNumberInput" type="text" class="form-control" pattern="[0-9]{10}" required>
+                                            <input name="phoneNumberInput" id="phoneNumberInput" type="text" class="form-control" pattern="[0-9]{10}" required>
                                             <div id="phoneNumberError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
                                             <label for="avatarInput">Avatar</label>
-                                            <input name="avatarInput" type="file" accept="image/*" class="form-control" required>
+                                            <input name="avatarInput" id="avatarInput" type="file" accept="image/*" class="form-control" required>
                                         </div>
                                         <div class="form-group">
                                             <img id="avatarPreview" src="" alt="Avatar Preview" style="max-width: 200px; max-height: 200px;">
