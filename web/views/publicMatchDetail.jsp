@@ -493,8 +493,42 @@
                                             document.getElementById('number_of_tickets').value = 1;
                                         }
                                     </script>
+                                    
+                                    <!--vnPay-->
+                                    <script>
+                                        async function checkout() {
+                                            const amount = 100000; // Số tiền cần thanh toán (có thể lấy từ input hoặc tính toán từ giỏ hàng)
+                                            const bankCode = "NCB"; // Mã ngân hàng (tùy chỉnh theo yêu cầu)
 
+                                            const formData = new FormData();
+                                            formData.append("amount", amount);
+                                            formData.append("bankCode", bankCode);
 
+                                            try {
+                                                const response = await fetch("ajaxServlet", {
+                                                    method: "POST",
+                                                    body: formData
+                                                });
+
+                                                if (response.ok) {
+                                                    const jsonResponse = await response.json();
+                                                    if (jsonResponse.code === "00") {
+                                                        window.location.href = jsonResponse.data;
+                                                    } else {
+                                                        console.error("Error:", jsonResponse.message);
+                                                    }
+                                                } else {
+                                                    console.error("Network response was not ok.");
+                                                }
+                                            } catch (error) {
+                                                console.error("There has been a problem with your fetch operation:", error);
+                                            }
+                                        }
+
+                                        window.onload = function () {
+                                            document.getElementById("checkout").addEventListener("click", checkout);
+                                        }
+                                    </script>
 
                                     </defs>
                                     <%--Stand C--%>
