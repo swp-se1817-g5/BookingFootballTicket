@@ -63,7 +63,7 @@ public class ManageHomePageServlet extends HttpServlet {
         request.setAttribute("getFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
         request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
         request.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
-        request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
+        request.getRequestDispatcher("views/newjsp.jsp").forward(request, response);
     }
 
     /**
