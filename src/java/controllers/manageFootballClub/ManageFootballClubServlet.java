@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpSession;
 @WebServlet(name = "ManageFootballClubServlet", urlPatterns = {"/manageFootballClub"})
 public class ManageFootballClubServlet extends HttpServlet {
 
-    private final int NUM_OF_RECORDS = 2;
+    private final int NUM_OF_RECORDS = 10;
     private int pageIndex = 1;
 
     /**
@@ -97,7 +97,7 @@ public class ManageFootballClubServlet extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+        request.setAttribute("allFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
         request.setAttribute("endPage", endPage);
         request.setAttribute("pageIndex", pageIndex);
         request.setAttribute("search", search);
