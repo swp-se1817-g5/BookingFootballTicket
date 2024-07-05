@@ -29,7 +29,6 @@
         <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
         <style type="text/css">
             .availability {
@@ -240,7 +239,7 @@
                     <!-- Modal -->
                     <div class="modal fade" id="ticketSummary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document" style="top: 50px; max-width: 750px; width: 100%; margin: 0 auto; padding: 10px;">
-                            <form class="modal-content" method="" action="">
+                            <form class="modal-content" method="post" onsubmit="return checkout()">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="exampleModalLabel">Ticket summary</h5>
                                     <div onchange="cancel()" data-dismiss="modal" aria-label="Close" data-close-search class="close">
@@ -286,7 +285,7 @@
                                     <input type="hidden" class="checkout_eventId" id="checkout_eventId">
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="submit" class="c2a_btn" id="checkout">Checkout</button>
+                                    <input type="submit" class="c2a_btn" id="checkout" value="Checkout">
                                 </div>
                             </form>
                         </div>
@@ -497,7 +496,7 @@
                                     <!--vnPay-->
                                     <script>
                                         async function checkout() {
-                                            const amount = 100000; // Số tiền cần thanh toán (có thể lấy từ input hoặc tính toán từ giỏ hàng)
+                                            const amount = 130000; // Số tiền cần thanh toán (có thể lấy từ input hoặc tính toán từ giỏ hàng)
                                             const bankCode = "NCB"; // Mã ngân hàng (tùy chỉnh theo yêu cầu)
 
                                             const formData = new FormData();
