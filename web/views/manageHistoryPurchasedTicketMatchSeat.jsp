@@ -243,7 +243,7 @@ Author     : duong
                                 <div class="row">
                                     <div class="col-sm-4 searchh">
                                         <a onclick="searchTickets()" class="d-none"><i class="material-icons">&#xE8B6;</i></a>
-                                            <input id="valueSearch" type="text" class="form-control" placeholder="Search by email&hellip;">
+                                            <input id="valueSearch" type="text" class="form-control" placeholder="Search&hellip;">
                                     </div>
                                     <div class="col-sm-8 d-flex justify-content-end">
                                         <button id="toggleButton" class="btn btn-primary btn-custom d-flex align-items-center">
@@ -282,7 +282,7 @@ Author     : duong
                                             </select>
                                         </th>
                                         <th>
-                                            Seat
+                                            Seat Area
                                             <i class="fa fa-sort" id="sortSeat" data-column="4" data-order="asc"></i>
                                         </th>
                                         <th>
