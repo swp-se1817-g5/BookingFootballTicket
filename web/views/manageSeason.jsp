@@ -376,18 +376,18 @@
                                             <input name="seasonId" type="hidden" value="${s.seasonId}">
                                             <div class="form-group">
                                                 <label>Season Name</label>
-                                                <input id="seasonName" name="seasonName" type="text" class="form-control" required oninput="validateForm()" value="${s.seasonName}">
-                                                <div id="seasonNameError" style="color: red;"></div>
+                                                <input id="seasonName_update" name="seasonName" type="text" class="form-control" required  value="${s.seasonName}">
+                                                <div id="seasonNameError_update" style="color: red;"></div>
                                             </div>
                                             <div class="form-group">
                                                 <label>Start Date</label>
-                                                <input id="startDate" name="startDate" type="date" class="form-control" required oninput="validateForm()" value="${s.startDate}">
-                                                <div id="startDateError" style="color: red;"></div>
+                                                <input id="startDate_update" name="startDate" type="date" class="form-control" required value="${s.startDate}">
+                                                <div id="startDateError_update" style="color: red;"></div>
                                             </div>
                                             <div class="form-group">
                                                 <label>End Date</label>
-                                                <input id="endDate" name="endDate" type="date" class="form-control" required oninput="validateForm()" value="${s.endDate}">
-                                                <div id="endDateError" style="color: red;"></div>
+                                                <input id="endDate_update" name="endDate" type="date" class="form-control" required value="${s.endDate}">
+                                                <div id="endDateError_update" style="color: red;"></div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
@@ -403,6 +403,50 @@
             </div>
         </div>
     </body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('form[action="updateSeason"]').forEach(function (form) {
+                form.addEventListener("submit", function (event) {
+                    var seasonNameInput = form.querySelector('input[name="seasonName"]');
+                    var seasonName = seasonNameInput.value.trim();
+                    var startDateInput = form.querySelector('input[name="startDate"]');
+                    var endDateInput = form.querySelector('input[name="endDate"]');
+                    var startDate = new Date(startDateInput.value);
+                    var endDate = new Date(endDateInput.value);
+                    var seasonNameError = form.querySelector('#seasonNameError_update');
+                    var startDateError = form.querySelector('#startDateError_update');
+                    var endDateError = form.querySelector('#endDateError_update');
+
+                    // Kiểm tra tên mùa không được chỉ là khoảng trắng
+                    if (seasonName === '') {
+                        event.preventDefault(); // Ngăn không cho form submit
+                        seasonNameError.textContent = "Season Name cannot be empty.";
+                    } else {
+                        seasonNameError.textContent = ""; // Xóa thông báo lỗi nếu có
+                    }
+
+                    // Kiểm tra ngày kết thúc phải sau ngày bắt đầu
+                    if (endDate < startDate) {
+                        event.preventDefault(); // Ngăn không cho form submit
+                        endDateError.textContent = "End Date must be after Start Date.";
+                    } else {
+                        endDateError.textContent = ""; // Xóa thông báo lỗi nếu có
+                    }
+                });
+
+                form.addEventListener("reset", function () {
+                    var seasonNameError = form.querySelector('#seasonNameError_update');
+                    var startDateError = form.querySelector('#startDateError_update');
+                    var endDateError = form.querySelector('#endDateError_update');
+                    seasonNameError.textContent = ""; // Xóa thông báo lỗi khi reset form
+                    startDateError.textContent = ""; // Xóa thông báo lỗi khi reset form
+                    endDateError.textContent = ""; // Xóa thông báo lỗi khi reset form
+                });
+            });
+        });
+    </script>
+
+
     <!-- toast notification -->
     <div class="toast" id="toastNotification" data-delay="3000">
         <div class="toast-header">
@@ -411,9 +455,6 @@
         </div>
         <div class="toast-body" id="toastMessage"></div>
     </div>
-
-
-
     <!-- script for toast notification -->
     <script>
 
@@ -629,6 +670,24 @@
             }
         }
 
+
+    </script>
+
+    <script>
+        function doDelete(seasonId) {
+        <c:forEach var="season" items="${seasons}">
+            <c:if test="${season.seasonId == seasonId}">
+            alert("chão");
+            </c:if>
+        </c:forEach>
+            if (confirm("Do you want to delete Season id = " + seasonId))
+                location.href = 'deleteSeason?seasonId=' + seasonId;
+        }
+    </script>
+
+
+    <!--script for create and update-->
+    <script>
         function validateSeasonDates(startDate, endDate) {
             var table = document.getElementById("seasonTable");
             var rows = table.getElementsByTagName("tr");
@@ -648,22 +707,6 @@
             }
             return true; // Valid start date
         }
-
-    </script>
-
-    <!--script for create and update-->
-    <script>
-
-        function doDelete(seasonId) {
-        <c:forEach var="season" items="${seasons}">
-            <c:if test="${season.seasonId == seasonId}">
-            alert("chão");
-            </c:if>
-        </c:forEach>
-            if (confirm("Do you want to delete Season id = " + seasonId))
-                location.href = 'deleteSeason?seasonId=' + seasonId;
-        }
-
         function validateForm() {
             var seasonNameInput = document.getElementById("seasonName");
             var seasonName = seasonNameInput.value.trim(); // Lấy giá trị và loại bỏ khoảng trắng đầu cuối
