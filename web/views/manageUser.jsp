@@ -56,8 +56,8 @@
                 box-shadow: 0 1px 1px rgba(0,0,0,.05);
             }
             .table-title {
-                padding-bottom: 10px;
-                margin: 0 0 10px;
+                padding-bottom: 0;
+                margin: 0 0 0;
                 min-width: 100%;
             }
             .table-title h2 {
@@ -203,14 +203,14 @@
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-md-4 searchh">
+                                    <div class="col-md-4 searchh justify-content-md-between">
                                         <!-- Search User Form -->
                                         <div>
                                             <form id="searchForm" name="searchForm" action="searchUser" method="post">
                                                 <div class="body">					
                                                     <div class="form-row">
                                                         <div class="form-group col-md-11">
-<!--                                                            <a><i class="material-icons">&#xE8B6;</i></a>-->
+                                                            <!--                                                            <a><i class="material-icons">&#xE8B6;</i></a>-->
                                                             <input id="valueSearch" name="valueSearch" type="text" class="form-control" placeholder="Search by email, name, ...">
                                                         </div>
                                                         <div class="form-group col-md-1 align-self-end">
@@ -224,7 +224,7 @@
                                             </form>
                                         </div>
                                     </div>  
-                                    <div class="col-md-8 createe d-flex align-items-center justify-content-end">
+                                    <div class="col-md-8 createe d-flex align-items-md-start justify-content-end">
                                         <a type="button" href="#createUserModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create User</span></a>
                                     </div>
                                 </div>
@@ -313,7 +313,7 @@
                     <div class="modal fade" id="userDetailModal">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="updateUser" method="post" enctype="multipart/form-data">
+                                <form id="updateUserForm" action="updateUser" method="post" enctype="multipart/form-data">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="userDetailModalLabel">User Details</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -708,31 +708,21 @@
                             var phoneNumberValid = validatePhoneNumber();
                             var passwordValid = validatePassword();
                             return emailValid && nameValid && phoneNumberValid && passwordValid;
-                            }
+                    }
 
 // Validate fields on input
                     $('[name="emailInput"]').on('input', function () {
                     validateEmail();
-                            });
+                    });
                             $('[name="nameInput"]').on('input', function () {
                     validateName();
-                            });
+                    });
                             $('[name="phoneNumberInput"]').on('input', function () {
                     validatePhoneNumber();
-                            });
+                    });
                             $('[name="passwordInput"]').on('input', function () {
                     validatePassword();
-                            });
-// Validate Update Form Fields on Input
-                            $('#updateUserForm input[name="detailEmail"]').on('input', function () {
-                    validateUpdateEmail();
-                            });
-                            $('#updateUserForm input[name="detailName"]').on('input', function () {
-                    validateUpdateName();
-                            });
-                            $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
-                    validateUpdatePhoneNumber();
-                            });
+                    });
                             function validateUpdateEmail() {
                             var email = $('#updateUserForm input[name="detailEmail"]').val().trim();
                                     var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
@@ -780,8 +770,17 @@
                             var phoneNumberValid = validateUpdatePhoneNumber();
                             return emailValid && nameValid && phoneNumberValid;
                     }
-
-                    $('#updateUserForm').submit(function (event) {
+                    // Validate Update Form Fields on Input
+                    $('#updateUserForm input[name="detailEmail"]').on('input', function () {
+                    validateUpdateEmail();
+                    });
+                            $('#updateUserForm input[name="detailName"]').on('input', function () {
+                    validateUpdateName();
+                    });
+                            $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
+                    validateUpdatePhoneNumber();
+                    });
+                            $('#updateUserForm').submit(function (event) {
                     if (!validateUpdateForm()) {
                     event.preventDefault();
                     }
