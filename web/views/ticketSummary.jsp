@@ -165,7 +165,7 @@
                         </div>
                         <div class="card-body">
                             <h5 class="card-title">Thông tin người mua</h5>
-                            <form>
+                            <form action="ajaxServlet" method="POST">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label class="float-left" for="fullName">Họ và Tên*</label>
@@ -201,15 +201,20 @@
                                         <label class="float-left" for="city">Giờ diễn ra</label>
                                         <input value="${time}" type="text" class="form-control" id="city" disabled>
                                     </div>
-                                </div>
+                                </div> 
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label class="float-left" for="postcode">Khán đài</label>
-                                        <input value="${seat.seatarea.stand.standName}" type="text" class="form-control" id="postcode" disabled>
+                                        <input 
+                                            name="standName"
+                                            value="${seat.seatarea.stand.standName}" type="text" class="form-control"
+                                            id="postcode" >
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="float-left" for="city">Khu vực</label>
-                                        <input value="${seat.seatarea.seatName}" type="text" class="form-control" id="city" disabled>
+                                        <input 
+                                            name="seatName"
+                                            value="${seat.seatarea.seatName}" type="text" class="form-control" id="city" >
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -219,7 +224,9 @@
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="float-left" for="city">Số lượng</label>
-                                        <input value="${numberOfTicket}" type="text" class="form-control" id="city" disabled>
+                                        <input 
+                                            name="quantity"
+                                            value="${numberOfTicket}" type="text" class="form-control" id="city" >
                                     </div>
                                 </div>
                                 <div class="form-group mt-4">
@@ -230,7 +237,17 @@
                                         </label>
                                     </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary w-100">THANH TOÁN</button>
+                        <hr>
+                                    <input hidden
+                                            name="seatClassName"
+                                            value="${seat.seatarea.seatClass.seatClassName}" type="text"
+                                            class="form-control">
+                                    <input hidden
+                                            name="price"
+                                            value="${seat.price * numberOfTicket}" type="text" class="form-control">
+                                <button type="submit" class="btn btn-primary w-100">
+                                    THANH TOÁN
+                                </button>
                             </form>
                         </div>
                     </div>
