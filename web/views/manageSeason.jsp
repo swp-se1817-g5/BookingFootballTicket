@@ -207,7 +207,10 @@
             #seasonTable th {
                 font-weight: bold;
             }
-
+            .table thead th {
+                vertical-align: middle;
+                border-bottom: 2px solid #dee2e6;
+            }
         </style>
         <script>
             $(document).ready(function () {
@@ -240,87 +243,57 @@
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-md-4 ">
-                                        <input type="search" class="form-control radius-md" id="myInput" onkeyup="filterTable()" placeholder="Search by name&hellip;">
+                                        <input type="search" class="form-control radius-md" id="myInput" onkeyup="filterTable()" placeholder="Tìm kiếm theo tên&hellip;">
                                     </div>
                                     <div class="col-md-8">
-                                        <a type="button" href="#createSeasonModal" class="btn btn-success m-2 float-right"  data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create New Season</span></a>
+                                        <a type="button" href="#createSeasonModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Tạo Mùa Giải Mới</span></a>
                                     </div>
                                 </div>
-                            </div>                          
+                            </div>
                             <table id="seasonTable" class="table table-striped table-hover table-bordered">
                                 <thead class="text-content">
                                     <tr>
-                                        <th style="font-size: 14px;">Season ID</th>
+                                        <th style="font-size: 14px;">ID </th>
                                         <th style="font-size: 14px;">
                                             <select class="form-select border-0 align-middle" id="seasonSelect" onchange="filterTable()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
-                                                <option selected value="All">All season</option>
+                                                <option selected value="All">Tất cả mùa giải</option>
                                                 <c:forEach items="${requestScope.seasons}" var="s">
                                                     <option value="${s.seasonName}" style="font-weight: bold; font-size: 14px;">${s.seasonName}</option>
                                                 </c:forEach>
                                             </select>
                                         </th>
                                         <th style="font-size: 14px;">
-                                            Start Date 
+                                            Ngày Bắt Đầu
                                             <i class="fa fa-sort" onclick="sortTable('startDate')"></i>
                                         </th>
                                         <th style="font-size: 14px;">
-                                            End Date 
+                                            Ngày Kết Thúc
                                             <i class="fa fa-sort" onclick="sortTable('endDate')"></i>
                                         </th>
-                                        <!--                                        <th style="font-size: 14px;">
-                                        
-                                                                                    <select class="form-select border-0 align-middle" id="createdBySelect" onchange="filterCreatedBy()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
-                                                                                        <option selected value="All">Created by</option>
-                                        <c:forEach items="${requestScope.createdByList}" var="createdBy">
-                                            <option value="${createdBy}">${createdBy}</option>
-                                        </c:forEach>
-                                    </select>
-                                </th>
-                                <th style="font-size: 14px;">
-                                    Created Date 
-                                    <i class="fa fa-sort" onclick="sortTable('createdDate')"></i>
-                                </th>
-                                <th style="font-size: 14px;">
-
-                                    <select class="form-select border-0 align-middle" id="updatedBySelect" onchange="filterUpdatedBy()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
-                                        <option selected value="All">Last Updated By</option>
-                                        <c:forEach items="${requestScope.updatedByList}" var="updatedBy">
-                                            <option value="${updatedBy}">${updatedBy}</option>
-                                        </c:forEach>
-                                    </select>
-                                </th>
-                                <th style="font-size: 14px;">
-                                    Last Updated Date 
-                                    <i class="fa fa-sort" onclick="sortTable('lastUpdatedDate')"></i>
-                                </th>-->
-                                        <th style="font-size: 14px;">Actions</th>
+                                        <th style="font-size: 14px;">Hành Động</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <c:forEach items="${requestScope.seasons}" var="s">
                                         <c:set var="startDateStr" value="${s.startDate}" />
                                         <c:set var="endDateStr" value="${s.endDate}" />
-                                    <fmt:parseDate var="startDate" value="${startDateStr}" pattern="yyyy-MM-dd" />
-                                    <fmt:parseDate var="endDate" value="${endDateStr}" pattern="yyyy-MM-dd" />
-                                    <tr class="text-content">
-                                        <td>${s.seasonId}</td>
-                                        <td>${s.seasonName}</td>
-                                        <td>${s.startDate}</td>
-                                        <td>${s.endDate}</td>
-<!--                                            <td>${s.createdBy}</td>
-                                        <td>${s.createdDate}</td>
-                                        <td>${s.updatedBy}</td>
-                                        <td>${s.lastUpdatedDate}</td>-->
-                                        <td>
-                                            <a href="#updateSeason${s.seasonId}" class="edit" title="Edit" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
-                                                <c:if test="${currentDate.before(startDate) or currentDate.after(endDate)}">
-                                                <a onclick="doDelete(${s.seasonId})" class="delete" title="Cancel" data-toggle="tooltip">
-                                                    <i class="fa fa-times-circle"></i>
-                                                </a>
-                                            </c:if>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
+                                        <fmt:parseDate var="startDate" value="${startDateStr}" pattern="yyyy-MM-dd" />
+                                        <fmt:parseDate var="endDate" value="${endDateStr}" pattern="yyyy-MM-dd" />
+                                        <tr class="text-content">
+                                            <td>${s.seasonId}</td>
+                                            <td>${s.seasonName}</td>
+                                            <td>${s.startDate}</td>
+                                            <td>${s.endDate}</td>
+                                            <td>
+                                                <a href="#updateSeason${s.seasonId}" class="edit" title="Sửa" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
+                                                    <c:if test="${currentDate.before(startDate) or currentDate.after(endDate)}">
+                                                    <a onclick="doDelete(${s.seasonId})" class="delete" title="Hủy" data-toggle="tooltip">
+                                                        <i class="fa fa-times-circle"></i>
+                                                    </a>
+                                                </c:if>
+                                            </td>
+                                        </tr>
+                                    </c:forEach>
                                 </tbody>
                             </table>
                             <div class="clearfix d-flex justify-content-md-start"">
@@ -346,29 +319,29 @@
                             <div class="modal-content">
                                 <form action="createSeason" method="post" onsubmit="return validateForm()">
                                     <div class="modal-header">						
-                                        <h4 class="modal-title">Create Season</h4>
+                                        <h4 class="modal-title">Tạo Mùa Giải</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
                                     <div class="modal-body">					
                                         <div class="form-group">
-                                            <label>Season Name</label>
+                                            <label>Tên Mùa Giải</label>
                                             <input id="seasonName" name="seasonName" type="text" class="form-control" required oninput="validateForm()">
                                             <div id="seasonNameError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label>Start Date</label>
+                                            <label>Ngày Bắt Đầu</label>
                                             <input id="startDate" name="startDate" type="date" class="form-control" required oninput="validateForm()">
                                             <div id="startDateError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label>End Date</label>
+                                            <label>Ngày Kết Thúc</label>
                                             <input id="endDate" name="endDate" type="date" class="form-control" required oninput="validateForm()">
                                             <div id="endDateError" style="color: red;"></div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-success" value="Add">
+                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                                        <input type="submit" class="btn btn-success" value="Thêm">
                                     </div>
                                 </form>
                             </div>
@@ -380,30 +353,30 @@
                                 <div class="modal-content">
                                     <form action="updateSeason" method="post">
                                         <div class="modal-header">						
-                                            <h4 class="modal-title">Update Season</h4>
+                                            <h4 class="modal-title">Cập Nhật Mùa Giải</h4>
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         </div>
                                         <div class="modal-body">
                                             <input name="seasonId" type="hidden" value="${s.seasonId}">
                                             <div class="form-group">
-                                                <label>Season Name</label>
-                                                <input id="seasonName_update" name="seasonName" type="text" class="form-control" required  value="${s.seasonName}">
+                                                <label>Tên Mùa Giải</label>
+                                                <input id="seasonName_update" name="seasonName" type="text" class="form-control" required value="${s.seasonName}">
                                                 <div id="seasonNameError_update" style="color: red;"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label>Start Date</label>
+                                                <label>Ngày Bắt Đầu</label>
                                                 <input id="startDate_update" name="startDate" type="date" class="form-control" required value="${s.startDate}">
                                                 <div id="startDateError_update" style="color: red;"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label>End Date</label>
+                                                <label>Ngày Kết Thúc</label>
                                                 <input id="endDate_update" name="endDate" type="date" class="form-control" required value="${s.endDate}">
                                                 <div id="endDateError_update" style="color: red;"></div>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                            <input type="submit" class="btn btn-success" value="Save">
+                                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                                            <input type="submit" class="btn btn-success" value="Lưu">
                                         </div>
                                     </form>
                                 </div>
@@ -454,7 +427,7 @@
                     // Kiểm tra tên mùa không được chỉ là khoảng trắng
                     if (seasonName === '') {
                         event.preventDefault(); // Ngăn không cho form submit
-                        seasonNameError.textContent = "Season Name cannot be empty.";
+                        seasonNameError.textContent = "Tên mùa giải không được để trống.";
                     } else {
                         seasonNameError.textContent = ""; // Xóa thông báo lỗi nếu có
                     }
@@ -462,7 +435,7 @@
                     // Kiểm tra ngày kết thúc phải sau ngày bắt đầu
                     if (endDate < startDate) {
                         event.preventDefault(); // Ngăn không cho form submit
-                        endDateError.textContent = "End Date must be after Start Date.";
+                        endDateError.textContent = "Ngày kết thúc phải sau ngày bắt đầu.";
                     } else {
                         endDateError.textContent = ""; // Xóa thông báo lỗi nếu có
                     }
@@ -499,11 +472,11 @@
                 var toast = $('#toastNotification');
                 if (updated === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Season updated successfully.');
+                    toast.find('#toastMessage').text('Mùa giải cập nhật thành công.');
                     toast.addClass('success').removeClass('error');
                 } else if (updated === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to update season.');
+                    toast.find('#toastMessage').text('Mùa giải cập nhật thất bại.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -517,11 +490,11 @@
                 var toast = $('#toastNotification');
                 if (created === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Season created successfully.');
+                    toast.find('#toastMessage').text('Mùa giải tạo mới thành công.');
                     toast.addClass('success').removeClass('error');
                 } else if (created === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to create season.');
+                    toast.find('#toastMessage').text('Mùa giải tạo mới thất bại.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -535,11 +508,11 @@
                 var toast = $('#toastNotification');
                 if (deleted === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Season deleted successfully.');
+                    toast.find('#toastMessage').text('Mùa giải xóa thành công.');
                     toast.addClass('success').removeClass('error');
                 } else if (deleted === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to delete season.');
+                    toast.find('#toastMessage').text('Mùa giải xóa thất bại.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
@@ -714,7 +687,7 @@
             alert("chão");
             </c:if>
         </c:forEach>
-            if (confirm("Do you want to delete Season id = " + seasonId))
+            if (confirm("Bạn có muốn xóa mùa giải có id là " + seasonId + " không?"))
                 location.href = 'deleteSeason?seasonId=' + seasonId;
         }
     </script>
@@ -755,7 +728,7 @@
 
             // Kiểm tra nếu seasonName chỉ chứa khoảng trắng
             if (seasonName === "") {
-                document.getElementById("seasonNameError").innerText = "Season Name cannot be empty.";
+                document.getElementById("seasonNameError").innerText = "Tên mùa giải không được để trống.";
                 valid = false;
             }
 
@@ -768,7 +741,7 @@
 
             for (var i = 0; i < existingSeasonNames.length; i++) {
                 if (existingSeasonNames[i].toLowerCase() === seasonName.toLowerCase()) {
-                    document.getElementById("seasonNameError").innerText = "Season Name already exists. Please choose another.";
+                    document.getElementById("seasonNameError").innerText = "Tên mùa giải đã tồn tại.Hãy chọn cái tên khác.";
                     valid = false;
                 }
             }
@@ -780,8 +753,8 @@
 
             // Kiểm tra nếu ngày bắt đầu lớn hơn ngày kết thúc
             if (new Date(startDate) > new Date(endDate)) {
-                document.getElementById("startDateError").innerText = "Start date cannot be later than end date.";
-                document.getElementById("endDateError").innerText = "End date cannot be earlier than start date.";
+                document.getElementById("startDateError").innerText = "Ngày bắt đầu không thể sau ngày kết thúc.";
+                document.getElementById("endDateError").innerText = "Ngày kết thúc không thể sớm hơn ngày bắt đầu.";
                 valid = false;
             } else {
                 document.getElementById("startDateError").innerText = "";
@@ -790,7 +763,7 @@
 
             // Kiểm tra thời gian bắt đầu hợp lệ
             if (!validateSeasonDates(startDate, endDate)) {
-                document.getElementById("startDateError").innerText = "The start date must be after the end date of the latest season.";
+                document.getElementById("startDateError").innerText = "Ngày bắt đầu phải ở sau ngày kết thúc của mùa giải gần nhất.";
                 valid = false;
             } else {
                 document.getElementById("startDateError").innerText = "";
@@ -847,7 +820,7 @@
                     // Validate if keyword is empty for date and string fields
                     if (keyword === "") {
                         isValid = false;
-                        errorMessage = "Please enter a keyword to search.";
+                        errorMessage = "Hãy điền từ khóa để tìm kiếm.";
                     }
                     break;
                 case "createdDate":
@@ -855,7 +828,7 @@
                     // Validate if keyword is a valid date (YYYY-MM-DD format)
                     if (!isValidDate(keyword)) {
                         isValid = false;
-                        errorMessage = "Please enter a valid date in YYYY-MM-DD format.";
+                        errorMessage = "Hãy nhập ngày đúng với cấu trúc YYYY-MM-DD.";
                     }
                     break;
                 default:

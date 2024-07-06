@@ -23,17 +23,16 @@
                 <div class="navbar-nav w-100">
                     <a href="dashboard" class="nav-item nav-link ${requestScope.url == "dashboard" ? "active" : " "}"><i class="fa fa-tachometer-alt me-2"></i>Thống Kê</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Managers</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Quản Lý</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="manageUser" class="dropdown-item">Manage User</a>
-                            <a href="manageMatch" class="dropdown-item ">Manage Match</a>
+                            <a href="manageUser" class="dropdown-item ${requestScope.url == "manageUser" ? "active" : " "}">Quản Lý Tài Khoản</a>
+                            <a href="manageMatch" class="dropdown-item ${requestScope.url == "manageMatch" ? "active" : " "}">Quản Lý Trận Đấu</a>
                             <a href="manageFootballClub" class="dropdown-item ${requestScope.url == "manageFootballClub" ? "active" : " "}">Quản Lý Đội Bóng</a>
-                            <a href="manageSeason" class="dropdown-item">Manage Season</a>
+                            <a href="manageSeason" class="dropdown-item ${requestScope.url == "manageSeason" ? "active" : " "}">Quản Lý Mùa Giải</a>
                             <a href="manageStand" class="dropdown-item ${requestScope.url == "manageStand" ? "active" : " "}">Quản Lý Khán Đài</a>
-                            <a href="manageSeatArea" class="dropdown-item">Manage Seat Area</a>
-                            <a href="manageRole" class="dropdown-item">Manage Role</a>
-                            <a href="manageNews" class="dropdown-item">Manage News</a>
-                            <a href="manageHistoryPurchasedTicketMatchSeat" class="dropdown-item">Manage History Purchased Ticket</a>
+                            <a href="manageSeatArea" class="dropdown-item ${requestScope.url == "manageSeatArea" ? "active" : " "}">Quản Lý Khu Vực Ngồi</a>
+                            <a href="manageNews" class="dropdown-item ${requestScope.url == "manageNews" ? "active" : " "}">Quản Lý Bài Đăng</a>
+                            <a href="manageHistoryPurchasedTicketMatchSeat" class="dropdown-item ${requestScope.url == "manageHistoryPurchasedTicketMatchSeat" ? "active" : " "}">Quản Lý Lịch Sử Bán Vé</a>
                         </div>
                     </div>
                     <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>
