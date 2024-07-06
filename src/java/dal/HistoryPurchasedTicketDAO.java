@@ -56,7 +56,7 @@ public class HistoryPurchasedTicketDAO {
     private static final String START_DATE = "startDate";
     private static final String END_DATE = "endDate";
 
-    private HistoryPurchasedTicketDAO() {
+    public HistoryPurchasedTicketDAO() {
         // Private constructor to prevent instantiation
         connect = new DBContext().connect;
     }
