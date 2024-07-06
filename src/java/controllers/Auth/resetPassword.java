@@ -76,17 +76,17 @@ public class resetPassword extends HttpServlet {
             TokenForgetPassword tokenForgetPassword = DAOToken.getTokenPassword(token);
             resetService service = new resetService();
             if (tokenForgetPassword == null) {
-                request.setAttribute("messEr", "Token invalid !");
+                request.setAttribute("messEr", "Token không hợp lệ !");
                 request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
                 return;
             }
             if (tokenForgetPassword.isIsUsed()) {
-                request.setAttribute("messEr", "Token is used !");
+                request.setAttribute("messEr", "Token đã sử dụng !");
                 request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
                 return;
             }
             if (service.isExpireTime(tokenForgetPassword.getExpiryTime())) {
-                request.setAttribute("messEr", "Token is expiry time !");
+                request.setAttribute("messEr", "Token đã quá hạn !");
                 request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
                 return;
             }
@@ -121,17 +121,17 @@ public class resetPassword extends HttpServlet {
         //check token is valid, of time, of used
         resetService service = new resetService();
         if (tokenForgetPassword == null) {
-            request.setAttribute("messEr", "Token invalid !");
+            request.setAttribute("messEr", "Token không hợp lệ !");
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             return;
         }
         if (tokenForgetPassword.isIsUsed()) {
-            request.setAttribute("messEr", "Token is used !");
+            request.setAttribute("messEr", "Token đã sử dụng !");
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             return;
         }
         if (service.isExpireTime(tokenForgetPassword.getExpiryTime())) {
-            request.setAttribute("messEr", "Token is expiry time !");
+            request.setAttribute("messEr", "Token đã quá hạn !");
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             return;
         }
@@ -146,7 +146,7 @@ public class resetPassword extends HttpServlet {
             DAOUser.changePass(email, hashedPassword);
         } catch (SQLException ex) {
             Logger.getLogger(resetPassword.class.getName()).log(Level.SEVERE, null, ex);
-            request.setAttribute("messEr", "Error while changing password!");
+            request.setAttribute("messEr", "Lỗi khi đổi mật khẩu!");
             request.getRequestDispatcher("views/changePassReset.jsp").forward(request, response);
             return;
         }

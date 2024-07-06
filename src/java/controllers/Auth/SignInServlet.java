@@ -66,7 +66,7 @@ public class SignInServlet extends HttpServlet {
 
         if (!emailExists) {
             // Email does not exist in the database
-            request.setAttribute("errorMessage", "Email not registered!");
+            request.setAttribute("errorMessage", "Email chưa được đăng ký!");
             returnValueBefore(request, response, email, null); // Set email value
             request.getRequestDispatcher("views/login.jsp").forward(request, response);
         } else {
@@ -103,7 +103,7 @@ public class SignInServlet extends HttpServlet {
 
             } else {
                 // If password is incorrect, show error message and return to login page
-                request.setAttribute("errorMessage", "Wrong password! Please try again.");
+                request.setAttribute("errorMessage", "Mật khẩu sai! Vui lòng nhập lại!");
                 returnValueBefore(request, response, email, null); // Set email value
                 request.getRequestDispatcher("views/login.jsp").forward(request, response);
             }

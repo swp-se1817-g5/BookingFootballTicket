@@ -1,5 +1,6 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
     <head>
         <!-- META ============================================= -->
@@ -23,7 +24,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
 
         <!-- PAGE TITLE HERE ============================================= -->
-        <title>Forget Password </title>
+        <title>Quên mật khẩu</title>
 
         <!-- MOBILE SPECIFIC ============================================= -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,8 +57,8 @@
                 <div class="account-form-inner">
                     <div class="account-container">
                         <div class="heading-bx left">
-                            <h2 class="title-head">Forget <span>Password</span></h2>
-                            <p>Login Your Account <a href="http://localhost:8080/BookingFootballTicket/login">Click here</a></p>
+                            <h2 class="title-head">Quên <span>Mật Khẩu</span></h2>
+                            <p>Đăng nhập tài khoản của bạn <a href="http://localhost:8080/BookingFootballTicket/login">Ở đây</a></p>
                         </div>
 
                         <form action="requestPassword" method="post" class="contact-bx">
@@ -65,7 +66,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Your Email Address</label>
+                                            <label>Địa chỉ Email của bạn</label>
                                                 <input type="email" class="form-control"
                                                        name="email" 
                                                        id="email" required>
@@ -73,7 +74,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-b30">
-                                    <button name="submit" type="submit" onclick="return validateEmail();" value="Submit" class="btn button-md">Submit</button>
+                                    <button name="submit" type="submit" onclick="return validateEmail();" value="Submit" class="btn button-md">Gửi</button>
                                 </div>
                             </div>
                         </form>
