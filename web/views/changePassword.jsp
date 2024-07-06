@@ -1,3 +1,4 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -24,7 +25,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
 
         <!-- PAGE TITLE HERE ============================================= -->
-        <title>Change Password </title>
+        <title>Đổi mật khẩu </title>
 
         <!-- MOBILE SPECIFIC ============================================= -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,7 +58,7 @@
                 <div class="account-form-inner">
                     <div class="account-container">
                         <div class="heading-bx left">
-                            <h2 class="title-head">Change <span>Password</span></h2>
+                            <h2 class="title-head">Đổi <span>Mật Khẩu</span></h2>
                         </div>
 
                         <form action="changepass" method="post" class="contact-bx">
@@ -65,7 +66,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Old Password</label>
+                                            <label>Mật khẩu cũ</label>
                                             <input name="oldpassword" type="password" id="oldpassword" required="" class="form-control">
                                         </div>
                                     </div>
@@ -73,7 +74,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>New Password</label>
+                                            <label>Mật khẩu mới</label>
                                             <input name="password" type="password" id="password" required="" class="form-control">
                                         </div>
                                     </div>
@@ -81,13 +82,13 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Confirm Password</label>
+                                            <label>Nhập lại mật khẩu mới</label>
                                             <input name="confirmPassword" type="password" id="confirmPassword" required="" class="form-control">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-b30">
-                                    <button name="submit" type="submit" onclick="validateSignupForm()" value="Submit" class="btn button-md">Submit</button>
+                                    <button name="submit" type="submit" onclick="validateSignupForm()" value="Submit" class="btn button-md">Gửi</button>
                                 </div>
                             </div>
                         </form>
