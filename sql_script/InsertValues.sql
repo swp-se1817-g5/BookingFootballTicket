@@ -1,4 +1,4 @@
-USE BookingFootballTicket;
+﻿USE BookingFootballTicket;
 GO
 
 -- Insert values into Role table
@@ -23,29 +23,31 @@ GO
 
 -- Insert values into MatchStatus table
 INSERT INTO MatchStatus (statusName) VALUES
-('Scheduled'),
-('Ongoing'),
-('Completed'),
-('Cancelled');
+(N'Lên lịch'),
+(N'Đang bán'),
+(N'Đang đấu'),
+(N'Hoàn thành'),
+(N'Đã huỷ');
 GO
 
 -- Insert values into MatchType table
 INSERT INTO MatchType ([name]) VALUES
 ('Friendly'),
 ('League'),
+('Finally'),
 ('Cup');
 GO
 
 -- Insert values into Season table
 INSERT INTO Season (seasonName, startDate, endDate, createdBy) VALUES
-('Spring 2024', '2024-01-01', '2024-04-30', 'admin@example.com'),
-('Summer 2024', '2024-05-01', '2024-08-31', 'admin@example.com');
+('Laliga 2024', '2024-01-01', '2024-04-30', 'admin@example.com'),
+('Euro 2025', '2024-05-01', '2024-08-31', 'admin@example.com');
 GO
 
 -- Insert values into Match table
-INSERT INTO Match (team1, team2, seasonId, [startTime], statusId, matchTypeId, createdBy) VALUES
-(1, 2, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com');
-GO
+--INSERT INTO Match (team1, team2, seasonId, [startTime], statusId, matchTypeId, createdBy) VALUES
+--(1, 2, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com');
+--GO
 
 -- Insert values into Stand table
 INSERT INTO Stand (standName, createdBy) VALUES
@@ -133,7 +135,7 @@ VALUES
     (3, 2, 20000, 20),
     (4, 2, 25000, 10);
 GO
--- Insert v�o b?ng TicketStatus
+
 INSERT INTO TicketStatus (statusName) 
 VALUES 
 ('Still validated'),
