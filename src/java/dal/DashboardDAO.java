@@ -29,7 +29,7 @@ public class DashboardDAO {
 
     public int getTotalTicketsSold(int month, int year) {
         int total = 0;
-        String sql = "SELECT COUNT(*) FROM HistoryPurchasedTicketMatchSeat WHERE YEAR(createdDate) = ? ";
+        String sql = "SELECT SUM(quantity) FROM HistoryPurchasedTicketMatchSeat WHERE YEAR(createdDate) = ? ";
         if (month != 0) {
             sql += "AND MONTH(createdDate) = ?";
         }
@@ -51,7 +51,7 @@ public class DashboardDAO {
 
     public int countSeasonTickets(int month, int year) {
         int count = 0;
-        String sql = "SELECT COUNT(*) FROM HistoryPurchasedTicketSeasonSeat WHERE YEAR(createdDate) = ? ";
+        String sql = "SELECT Sum(quantity) FROM HistoryPurchasedTicketSeasonSeat WHERE YEAR(createdDate) = ? ";
         if (month != 0) {
             sql += "AND MONTH(createdDate) = ?";
         }
@@ -75,9 +75,9 @@ public class DashboardDAO {
         int total = 0;
         String sql = "SELECT SUM(ticket_count) AS total_tickets "
                 + "FROM ("
-                + "    SELECT COUNT(*) AS ticket_count FROM HistoryPurchasedTicketMatchSeat "
+                + "    SELECT SUM(quantity) AS ticket_count FROM HistoryPurchasedTicketMatchSeat "
                 + "    UNION ALL "
-                + "    SELECT COUNT(*) AS ticket_count FROM HistoryPurchasedTicketSeasonSeat"
+                + "    SELECT SUM(quantity) AS ticket_count FROM HistoryPurchasedTicketSeasonSeat"
                 + ") AS combined_counts";
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
@@ -157,7 +157,7 @@ public class DashboardDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(DashboardDAO.getInstance().getTotalRevenue(0, 2023));
+        System.out.println(DashboardDAO.getInstance().getTotalTicketsSold());
     }
 
 }
