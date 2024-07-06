@@ -133,167 +133,282 @@
                     </div>
                 </div>
                 <!-- Sales Chart End -->
+                <div class="container-fluid pt-4 px-4">
+                    <div class="row g-4">
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-light text-center rounded p-4">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="mb-0">Số vé bán được năm nay</h6>
+                                </div>
+                                <canvas id="ticket-year"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-xl-6">
+                            <div class="bg-light text-center rounded p-4">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="mb-0">Doanh thu năm nay</h6>
+                                </div>
+                                <canvas id="revenue-year"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-             
 
 
-            <!-- Back to Top -->
-            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-        </div>
 
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/chart/chart.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/tempusdominus/js/moment.min.js"></script>
-        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
+                <!-- Back to Top -->
+                <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+            </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $.ajax({
-                    url: 'dashboard',
-                    method: 'POST',
-                    success: function (ticketData) {
-                        var ctx1 = $("#ticket-sales").get(0).getContext("2d");
-                        var myChart1 = new Chart(ctx1, {
-                            type: "line",
-                            data: {
-                                labels: ticketData.years,
-                                datasets: [{
-                                        label: "Vé Trận",
-                                        data: ticketData.matchTickets,
-                                        backgroundColor: "rgba(0, 156, 255, .7)"
-                                    },
-                                    {
-                                        label: "Vé Mùa",
-                                        data: ticketData.seasonTickets,
-                                        backgroundColor: "rgba(0, 156, 255, .5)"
-                                    }
-                                ]
-                            },
-                            options: {
-                                responsive: true,
-                                scales: {
-                                    yAxes: [{
-                                            ticks: {
-                                                beginAtZero: true,
-                                                callback: function (value) {
-                                                    return value.toLocaleString();
-                                                }
-                                            }
-                                        }]
+            <!-- JavaScript Libraries -->
+            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="lib/chart/chart.min.js"></script>
+            <script src="lib/easing/easing.min.js"></script>
+            <script src="lib/waypoints/waypoints.min.js"></script>
+            <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+            <script src="lib/tempusdominus/js/moment.min.js"></script>
+            <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+            <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+            <!-- Template Javascript -->
+            <script src="js/main.js"></script>
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $.ajax({
+                        url: 'dashboard',
+                        method: 'POST',
+                        success: function (ticketData) {
+                            var ctx1 = $("#ticket-sales").get(0).getContext("2d");
+                            var myChart1 = new Chart(ctx1, {
+                                type: "line",
+                                data: {
+                                    labels: ticketData.years,
+                                    datasets: [{
+                                            label: "Vé Trận",
+                                            data: ticketData.matchTickets,
+                                            backgroundColor: "rgba(0, 156, 255, .7)"
+                                        },
+                                        {
+                                            label: "Vé Mùa",
+                                            data: ticketData.seasonTickets,
+                                            backgroundColor: "rgba(0, 156, 255, .5)"
+                                        }
+                                    ]
                                 },
-                                tooltips: {
-                                    callbacks: {
-                                        label: function (tooltipItem, data) {
-                                            var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-                                            var value = tooltipItem.yLabel.toLocaleString();
-                                            return datasetLabel + ': ' + value;
+                                options: {
+                                    responsive: true,
+                                    scales: {
+                                        yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true,
+                                                    callback: function (value) {
+                                                        return value.toLocaleString();
+                                                    }
+                                                }
+                                            }]
+                                    },
+                                    tooltips: {
+                                        callbacks: {
+                                            label: function (tooltipItem, data) {
+                                                var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+                                                var value = tooltipItem.yLabel.toLocaleString();
+                                                return datasetLabel + ': ' + value;
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        });
-                    },
-                    error: function (error) {
-                        console.log("Error:", error);
-                    }
+                            });
+                        },
+                        error: function (error) {
+                            console.log("Error:", error);
+                        }
+                    });
                 });
-            });
-        </script>
-        <script>
-            $(document).ready(function () {
-                $.ajax({
-                    url: 'dashboard',
-                    method: 'POST',
-                    success: function (ticketData) {
-                        var ctx2 = $("#ticket-revenue").get(0).getContext("2d");
-                        var myChart2 = new Chart(ctx2, {
-                            type: "bar",
-                            data: {
-                                labels: ticketData.years,
-                                datasets: [{
-                                        label: "Số vé đã bán",
-                                        data: ticketData.totalTickets,
-                                        backgroundColor: "rgba(0, 156, 255, .5)",
-                                        yAxisID: 'y-axis-1'
-                                    },
-                                    {
-                                        label: "Doanh thu",
-                                        data: ticketData.totalRevenue,
-                                        backgroundColor: "rgba(0, 156, 255, .3)",
-                                        yAxisID: 'y-axis-2'
-                                    }
-                                ]
-                            },
-                            options: {
-                                responsive: true,
-                                scales: {
-                                    yAxes: [{
-                                            id: 'y-axis-1',
-                                            type: 'linear',
-                                            position: 'left',
-                                            ticks: {
-                                                beginAtZero: true,
-                                                callback: function (value) {
-                                                    return value.toLocaleString();
-                                                }
-                                            },
-                                            scaleLabel: {
-                                                display: true,
-                                                labelString: 'Số vé đã bán'
-                                            }
-                                        }, {
-                                            id: 'y-axis-2',
-                                            type: 'linear',
-                                            position: 'right',
-                                            ticks: {
-                                                beginAtZero: true,
-                                                callback: function (value) {
-                                                    return value.toLocaleString() + ' VND';
-                                                }
-                                            },
-                                            scaleLabel: {
-                                                display: true,
-                                                labelString: 'Doanh thu (VND)'
-                                            },
-                                            gridLines: {
-                                                drawOnChartArea: false
-                                            }
-                                        }]
+            </script>
+            <script>
+                $(document).ready(function () {
+                    $.ajax({
+                        url: 'dashboard',
+                        method: 'POST',
+                        success: function (ticketData) {
+                            var ctx2 = $("#ticket-revenue").get(0).getContext("2d");
+                            var myChart2 = new Chart(ctx2, {
+                                type: "bar",
+                                data: {
+                                    labels: ticketData.years,
+                                    datasets: [{
+                                            label: "Số vé đã bán",
+                                            data: ticketData.totalTickets,
+                                            backgroundColor: "rgba(0, 156, 255, .5)",
+                                            yAxisID: 'y-axis-1'
+                                        },
+                                        {
+                                            label: "Doanh thu",
+                                            data: ticketData.totalRevenue,
+                                            backgroundColor: "rgba(0, 156, 255, .3)",
+                                            yAxisID: 'y-axis-2'
+                                        }
+                                    ]
                                 },
-                                tooltips: {
-                                    callbacks: {
-                                        label: function (tooltipItem, data) {
-                                            var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-                                            var value = tooltipItem.yLabel.toLocaleString();
-                                            if (datasetLabel === 'Doanh thu') {
-                                                value += ' VND';
+                                options: {
+                                    responsive: true,
+                                    scales: {
+                                        yAxes: [{
+                                                id: 'y-axis-1',
+                                                type: 'linear',
+                                                position: 'left',
+                                                ticks: {
+                                                    beginAtZero: true,
+                                                    callback: function (value) {
+                                                        return value.toLocaleString();
+                                                    }
+                                                },
+                                                scaleLabel: {
+                                                    display: true,
+                                                    labelString: 'Số vé đã bán'
+                                                }
+                                            }, {
+                                                id: 'y-axis-2',
+                                                type: 'linear',
+                                                position: 'right',
+                                                ticks: {
+                                                    beginAtZero: true,
+                                                    callback: function (value) {
+                                                        return value.toLocaleString() + ' VND';
+                                                    }
+                                                },
+                                                scaleLabel: {
+                                                    display: true,
+                                                    labelString: 'Doanh thu (VND)'
+                                                },
+                                                gridLines: {
+                                                    drawOnChartArea: false
+                                                }
+                                            }]
+                                    },
+                                    tooltips: {
+                                        callbacks: {
+                                            label: function (tooltipItem, data) {
+                                                var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+                                                var value = tooltipItem.yLabel.toLocaleString();
+                                                if (datasetLabel === 'Doanh thu') {
+                                                    value += ' VND';
+                                                }
+                                                return datasetLabel + ': ' + value;
                                             }
-                                            return datasetLabel + ': ' + value;
                                         }
                                     }
                                 }
-                            }
-                        });
-                    },
-                    error: function (error) {
-                        console.log("Error:", error);
-                    }
+                            });
+                        },
+                        error: function (error) {
+                            console.log("Error:", error);
+                        }
+                    });
                 });
-            });
-        </script>
-
-
+            </script>
+            <script>
+                $(document).ready(function () {
+                    $.ajax({
+                        url: 'dashboard',
+                        method: 'POST',
+                        success: function (ticketData) {
+                            var ctx3 = $("#ticket-year").get(0).getContext("2d");
+                            var myChart3 = new Chart(ctx3, {
+                                type: "line",
+                                data: {
+                                    labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+                                    datasets: [{
+                                            label: "Lượng vé",
+                                            fill: false,
+                                            backgroundColor: "rgba(0, 156, 255, .3)",
+                                            data: ticketData.ticketYear
+                                        }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    scales: {
+                                        yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true,
+                                                    callback: function (value) {
+                                                        return value.toLocaleString();
+                                                    }
+                                                }
+                                            }]
+                                    },
+                                    tooltips: {
+                                        callbacks: {
+                                            label: function (tooltipItem, data) {
+                                                var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+                                                var value = tooltipItem.yLabel.toLocaleString();
+                                                return datasetLabel + ': ' + value;
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            console.log("Error:", error);
+                        }
+                    });
+                });
+            </script>
+            <script>
+                $(document).ready(function () {
+                    $.ajax({
+                        url: 'dashboard',
+                        method: 'POST',
+                        success: function (ticketData) {
+                            var ctx3 = $("#revenue-year").get(0).getContext("2d");
+                            var myChart3 = new Chart(ctx3, {
+                                type: "line",
+                                data: {
+                                    labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
+                                    datasets: [{
+                                            label: "Doanh thu",
+                                            fill: false,
+                                            backgroundColor: "rgba(0, 156, 255, .3)",
+                                            data: ticketData.revenueYear
+                                        }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    scales: {
+                                        yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true,
+                                                    callback: function (value) {
+                                                        return value.toLocaleString();
+                                                    }
+                                                }
+                                            }]
+                                    },
+                                    tooltips: {
+                                        callbacks: {
+                                            label: function (tooltipItem, data) {
+                                                var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
+                                                var value = tooltipItem.yLabel.toLocaleString() + " VND";
+                                                return datasetLabel + ': ' + value;
+                                            }
+                                        }
+                                    }
+                                }
+                            });
+                        },
+                        error: function (error) {
+                            console.log("Error:", error);
+                        }
+                    });
+                });
+            </script>
     </body>
 
 </html>

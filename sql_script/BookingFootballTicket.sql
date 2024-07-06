@@ -93,7 +93,7 @@ CREATE TABLE Match (
 	team2 INT,
 	seasonId INT,
 	[startTime] DATETIME2,
-	statusId INT,
+	statusId INT default 1,
 	matchTypeId INT,
 	createdBy VARCHAR(50),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,

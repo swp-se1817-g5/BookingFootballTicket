@@ -157,7 +157,7 @@ public class DashboardDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(DashboardDAO.getInstance().getTotalTicketsSold());
+        System.out.println(DashboardDAO.getInstance().getTotalTicketsSold(1,2024));
     }
 
 }
