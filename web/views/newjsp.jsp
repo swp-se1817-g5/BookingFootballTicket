@@ -78,257 +78,249 @@
                 color: white;
                 text-decoration: none;
             }
+            .nav-icon svg#cart {
+                fill: white;
+                width: 30px;
+                height: auto;
+                margin-top: 4px;
+                margin-right: 5px;
+            }
+            .con_img {
+                position: relative;
+                text-align: center;
+                color: white; /* Màu chữ */
+            }
+
+            .con_img img {
+                width: 100%; /* Chiều ngang ảnh đầy màn hình */
+                opacity: 0.7; /* Độ mờ của ảnh */
+                z-index: 0; /* Đặt ảnh phía dưới */
+            }
+
+            .con_img .centered {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: 2; /* Đặt chữ phía trên */
+            }
+
+            .con_img::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(255, 0, 0, 0.5); /* Màu đỏ với độ mờ 0.5 */
+                z-index: 1; /* Đặt lớp phủ lên trên ảnh */
+            }
+
+
         </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-md navbar-light bg-light container">
-            <a class="navbar-brand" href="#">Logo</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="tournamentsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Tournaments
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="tournamentsDropdown">
-                            <a class="dropdown-item" href="#">Tournament 1</a>
-                            <a class="dropdown-item" href="#">Tournament 2</a>
-                            <a class="dropdown-item" href="#">Tournament 3</a>
+        <jsp:include page="header.jsp" />
+        <div>
+            <img class="img-responsive img-fluid" src="images/banner/svd.jpg" alt="alt"/>
+        </div>
+        <div class="container-fluid">
+            <div class="container mt-5">
+                <!-- Trận Đấu Sắp Diễn Ra -->
+                <div class="section-header justify-content-center">
+                    <h2 class="mb-3">Trận Đấu Sắp Diễn Ra</h2>
+                </div>
+                <div class="row">
+                    <c:forEach items="${getListMatches}" var="lm" varStatus="lmStatus">
+                        <c:set var="m" value="${getMatches[lmStatus.index]}" />
+                        <c:set var="s" value="${getAllseason[lmStatus.index]}" />
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div>
+                                        <small>TICKETS SOLD</small>
+                                        <span><p>79</p></span>
+                                    </div>
+                                    <div>
+                                        <i class="far fa-heart"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="team-logos">
+                                        <img src="${lm.team1.img}" alt="${lm.team1.clubName}">
+                                        <span>VS</span>
+                                        <img src="${lm.team2.img}" alt="${lm.team2.clubName}">
+                                    </div>
+                                    <h5 class="card-title">Europa League Final Tickets</h5>
+                                    <p class="card-text">Football Club A vs Football Club B</p>
+                                    <p class="card-text">Mỹ Đình Stadium</p>
+                                    <input type="datetime-local" value="${m.time}" readonly style="border: none; background: none">
+                                    <p class="card-text">Europa League</p>
+                                    <p class="card-text">Tickets from</p>
+                                    <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Book now</a>
+                                </div>
+                            </div>
                         </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="teamsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Đội bóng
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="teamsDropdown">
-                            <a class="dropdown-item" href="#">Team 1</a>
-                            <a class="dropdown-item" href="#">Team 2</a>
-                            <a class="dropdown-item" href="#">Team 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="newsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Tin Tức
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="newsDropdown">
-                            <a class="dropdown-item" href="#">News 1</a>
-                            <a class="dropdown-item" href="#">News 2</a>
-                            <a class="dropdown-item" href="#">News 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="matchesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Trận đấu
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="matchesDropdown">
-                            <a class="dropdown-item" href="#">Match 1</a>
-                            <a class="dropdown-item" href="#">Match 2</a>
-                            <a class="dropdown-item" href="#">Match 3</a>
-                        </div>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0 mr-3">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-                <ul class="navbar-nav">
-                    <li class="nav-item" id="login-register">
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Register</a>
-                    </li>
-                    <li class="nav-item dropdown d-none" id="user-menu">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="https://via.placeholder.com/30" class="rounded-circle" alt="User Avatar">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">Profile</a>
-                            <a class="dropdown-item" href="#">History</a>
-                            <a class="dropdown-item" href="#">Logout</a>
-                        </div>
-                    </li>
-                </ul>
+                    </c:forEach>
+                </div>
+                <div class="text-center mb-5">
+                    <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                </div>
             </div>
-        </nav>
+            <div class="con_img">
+                <img src="images/banner/b7834a87d1f84cf4aab912a3e48dde7f.jpg" alt="Ảnh của bạn">
+                <div class="centered">
+                    <h2>Nội dung chữ giữa ảnh</h2>
+                </div>
+            </div>
 
-        <div class="container mt-5">
-            <!-- Trận Đấu Sắp Diễn Ra -->
-            <div class="section-header">
-                <h2 class="mb-3">Trận Đấu Sắp Diễn Ra</h2>
-                <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
-            </div>
-            <div class="row">
-                <c:forEach items="${getListMatches}" var="lm" varStatus="lmStatus">
-                    <c:set var="m" value="${getMatches[lmStatus.index]}" />
-                    <c:set var="s" value="${getAllseason[lmStatus.index]}" />
-                    <div class="col-md-4">
+            <div class="container mt-5">
+                <!-- Các Đội Bóng Nổi Bật -->
+                <div class="section-header justify-content-center ">
+                    <h2 class="mb-3">Các Đội Bóng Nổi Bật</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 mb-4">
                         <div class="card">
-                            <div class="card-header">
-                                <div>
-                                    <small>TICKETS SOLD</small>
-                                    <span><p>79</p></span>
-                                </div>
-                                <div>
-                                    <i class="far fa-heart"></i>
-                                </div>
-                            </div>
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 1">
                             <div class="card-body">
-                                <div class="team-logos">
-                                    <img src="${lm.team1.img}" alt="${lm.team1.clubName}">
-                                    <span>VS</span>
-                                    <img src="${lm.team2.img}" alt="${lm.team2.clubName}">
-                                </div>
-                                <h5 class="card-title">Europa League Final Tickets</h5>
-                                <p class="card-text">Football Club A vs Football Club B</p>
-                                <p class="card-text">Mỹ Đình Stadium</p>
-                                <input type="datetime-local" value="${m.time}" readonly style="border: none; background: none">
-                                <p class="card-text">Europa League</p>
-                                <p class="card-text">Tickets from</p>
-                                <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Book now</a>
+                                <h5 class="card-title">Team 1</h5>
+                                <p class="card-text">Description of Team 1.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
                             </div>
                         </div>
                     </div>
-                </c:forEach>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 2">
+                            <div class="card-body">
+                                <h5 class="card-title">Team 2</h5>
+                                <p class="card-text">Description of Team 2.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 3">
+                            <div class="card-body">
+                                <h5 class="card-title">Team 3</h5>
+                                <p class="card-text">Description of Team 3.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 4">
+                            <div class="card-body">
+                                <h5 class="card-title">Team 4</h5>
+                                <p class="card-text">Description of Team 4.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mb-5">
+                    <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                </div>
             </div>
+            <div class="container mt-5">
 
-            <!-- Các Đội Bóng Nổi Bật -->
-            <div class="section-header">
-                <h2 class="mb-3">Các Đội Bóng Nổi Bật</h2>
-                <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                <!-- Các Tournament -->
+                <div class="section-header justify-content-center">
+                    <h2 class="mb-3">Các Giải Đấu</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 1">
+                            <div class="card-body">
+                                <h5 class="card-title">Tournament 1</h5>
+                                <p class="card-text">Description of Tournament 1.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 2">
+                            <div class="card-body">
+                                <h5 class="card-title">Tournament 2</h5>
+                                <p class="card-text">Description of Tournament 2.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 3">
+                            <div class="card-body">
+                                <h5 class="card-title">Tournament 3</h5>
+                                <p class="card-text">Description of Tournament 3.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 4">
+                            <div class="card-body">
+                                <h5 class="card-title">Tournament 4</h5>
+                                <p class="card-text">Description of Tournament 4.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mb-5">
+                    <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Team 1</h5>
-                            <p class="card-text">Description of Team 1.</p>
-                            <a href="#" class="btn btn-primary">Xem Thêm</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Team 2</h5>
-                            <p class="card-text">Description of Team 2.</p>
-                            <a href="#" class="btn btn-primary">Xem Thêm</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Team 3</h5>
-                            <p class="card-text">Description of Team 3.</p>
-                            <a href="#" class="btn btn-primary">Xem Thêm</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 4">
-                        <div class="card-body">
-                            <h5 class="card-title">Team 4</h5>
-                            <p class="card-text">Description of Team 4.</p>
-                            <a href="#" class="btn btn-primary">Xem Thêm</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="container mt-5">
 
-            <!-- Các Tournament -->
-            <div class="section-header">
-                <h2 class="mb-3">Các Tournament</h2>
-                <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
-            </div>
-            <div class="row">
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 1">
-                        <div class="card-body">
-                            <h5 class="card-title">Tournament 1</h5>
-                            <p class="card-text">Description of Tournament 1.</p>
-                            <a href="#" class="btn btn-primary">Xem Thêm</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Tournament 2</h5>
-                            <p class="card-text">Description of Tournament 2.</p>
-                            <a href="#" class="btn btn-primary">Xem Thêm</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Tournament 3</h5>
-                            <p class="card-text">Description of Tournament 3.</p>
-                            <a href="#" class="btn btn-primary">Xem Thêm</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3 col-sm-6 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 4">
-                        <div class="card-body">
-                            <h5 class="card-title">Tournament 4</h5>
-                            <p class="card-text">Description of Tournament 4.</p>
-                            <a href="#" class="btn btn-primary">Xem Thêm</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                <!-- Tin Tức -->
+                <div class="section-header justify-content-center">
+                    <h2 class="mb-3">Tin Tức Mới Nhất</h2>
 
-            <!-- Tin Tức -->
-            <div class="section-header">
-                <h2 class="mb-3">Tin Tức Mới Nhất</h2>
-                <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 1">
+                            <div class="card-body">
+                                <h5 class="card-title">News 1</h5>
+                                <p class="card-text">Description of News 1.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 2">
+                            <div class="card-body">
+                                <h5 class="card-title">News 2</h5>
+                                <p class="card-text">Description of News 2.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 3">
+                            <div class="card-body">
+                                <h5 class="card-title">News 3</h5>
+                                <p class="card-text">Description of News 3.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 1">
-                        <div class="card-body">
-                            <h5 class="card-title">News 1</h5>
-                            <p class="card-text">Description of News 1.</p>
-                            <a href="#" class="btn btn-primary">Xem Thêm</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 2">
-                        <div class="card-body">
-                            <h5 class="card-title">News 2</h5>
-                            <p class="card-text">Description of News 2.</p>
-                            <a href="#" class="btn btn-primary">Xem Thêm</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 3">
-                        <div class="card-body">
-                            <h5 class="card-title">News 3</h5>
-                            <p class="card-text">Description of News 3.</p>
-                            <a href="#" class="btn btn-primary">Xem Thêm</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="text-center mb-5">
+                <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
             </div>
         </div>
-
         <!-- Footer -->
         <footer class="footer">
             <div class="container">

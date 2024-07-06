@@ -243,7 +243,7 @@ Author     : duong
                                 <div class="row">
                                     <div class="col-sm-4 searchh">
                                         <a onclick="searchTickets()" class="d-none"><i class="material-icons">&#xE8B6;</i></a>
-                                            <input id="valueSearch" type="text" class="form-control" placeholder="Search&hellip;">
+                                        <input id="valueSearch" type="text" class="form-control" placeholder="Search&hellip;">
                                     </div>
                                     <div class="col-sm-8 d-flex justify-content-end">
                                         <button id="toggleButton" class="btn btn-primary btn-custom d-flex align-items-center">
@@ -361,7 +361,7 @@ Author     : duong
                             </div>
                             <div class="form-group">
                                 <label>Start Time</label>
-                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.startTime}</p>
+                                <input type="datetime-local" class="form-control" value="${ticketMatchSeat.startTime}" readonly>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>

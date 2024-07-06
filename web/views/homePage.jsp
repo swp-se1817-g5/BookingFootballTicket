@@ -1724,17 +1724,17 @@
 
                                                                                                                                                                                     </script>       
 
-<!--                                                                                                                                                                                    <script type="text/javascript">
-                                                                                                                                                                                        function showLoginPopup(message) {
-                                                                                                                                                                                            alert(message);
-                                                                                                                                                                                        }
+                                                                                                                                                                                    <!--                                                                                                                                                                                    <script type="text/javascript">
+                                                                                                                                                                                                        function showLoginPopup(message) {
+                                                                                                                                                                                                        alert(message);
+                                                                                                                                                                                                        }
+                                                                                                                                                                                    
+                                                                                                                                                                                                        window.onload = function () {
+                                                                                                                                                                                                        
+                                                                                                                                                                                                        };
+                                                                                                                                                                                                        </script>-->
 
-                                                                                                                                                                                        window.onload = function () {
-                                                                                                                                                                                        
-                                                                                                                                                                                        };
-                                                                                                                                                                                    </script>-->
 
-                      
 
                                                                                                                                                                                     <script type="text/javascript">
                                                                                                                                                                                         function showLoginPopup(message) {
@@ -1742,25 +1742,25 @@
                                                                                                                                                                                         }
 
                                                                                                                                                                                         window.onload = function () {
-                                                                                                                                                                                         <% if (session.getAttribute("isRegister") != null && (boolean) session.getAttribute("isRegister")) { %>
+                                                                                                                                                                                        <% if (session.getAttribute("isRegister") != null && (boolean) session.getAttribute("isRegister")) { %>
                                                                                                                                                                                             showLoginPopup("Register successfully !!");
-                                                                                                                                                                                            <% session.removeAttribute("isRegister"); %>
-                                                                                                                                                                                         <% }%>
-                                                                                                                                                                                            
-                                                                                                                                                                                         <% if (session.getAttribute("changePassword") != null && (boolean) session.getAttribute("changePassword")) { %>
+                                                                                                                                                                                        <% session.removeAttribute("isRegister"); %>
+                                                                                                                                                                                        <% }%>
+
+                                                                                                                                                                                        <% if (session.getAttribute("changePassword") != null && (boolean) session.getAttribute("changePassword")) { %>
                                                                                                                                                                                             showLoginPopup("Change password successfully!");
-                                                                                                                                                                                            <% session.removeAttribute("changePassword"); %>
-                                                                                                                                                                                         <% } %>
-                                                                                                                                                                                             
-                                                                                                                                                                                         <% if (session.getAttribute("isFirstLogin") != null && (boolean) session.getAttribute("isFirstLogin")) { %>
+                                                                                                                                                                                        <% session.removeAttribute("changePassword"); %>
+                                                                                                                                                                                        <% } %>
+
+                                                                                                                                                                                        <% if (session.getAttribute("isFirstLogin") != null && (boolean) session.getAttribute("isFirstLogin")) { %>
                                                                                                                                                                                             showLoginPopup("Login successfully !!");
-                                                                                                                                                                                            <% session.removeAttribute("isFirstLogin"); %>
-                                                                                                                                                                                         <% } %>
-                                                                                                                                                                                         <% if (session.getAttribute("resetPassword") != null && (boolean) session.getAttribute("resetPassword")) { %>
+                                                                                                                                                                                        <% session.removeAttribute("isFirstLogin"); %>
+                                                                                                                                                                                        <% } %>
+                                                                                                                                                                                        <% if (session.getAttribute("resetPassword") != null && (boolean) session.getAttribute("resetPassword")) { %>
                                                                                                                                                                                             showLoginPopup("Reset password successfully !!");
-                                                                                                                                                                                            <% session.removeAttribute("resetPassword"); %>
-                                                                                                                                                                                         <% } %>
-                                                                                                                                                                                             
+                                                                                                                                                                                        <% session.removeAttribute("resetPassword"); %>
+                                                                                                                                                                                        <% }%>
+
                                                                                                                                                                                         };
                                                                                                                                                                                     </script> 
 

@@ -18,7 +18,7 @@ public class HistoryPurchasedTicketMatchSeat {
     private int ticketId;
     private String team1;
     private String team2;
-    private Date startTime;
+    private LocalDateTime startTime;
     private String seasonName;
     private String seatName;
     private int quantity;
@@ -35,7 +35,7 @@ public class HistoryPurchasedTicketMatchSeat {
     public HistoryPurchasedTicketMatchSeat() {
     }
 
-    public HistoryPurchasedTicketMatchSeat(int ticketId, String team1, String team2, Date startTime, String seasonName, String seatName, int quantity, String standName, String seatClassName, String email, String qrCode, BigDecimal price, TicketStatus statusId, String createdBy, LocalDateTime createdDate) {
+    public HistoryPurchasedTicketMatchSeat(int ticketId, String team1, String team2, LocalDateTime startTime, String seasonName, String seatName, int quantity, String standName, String seatClassName, String email, String qrCode, BigDecimal price, TicketStatus statusId, String createdBy, LocalDateTime createdDate) {
         this.ticketId = ticketId;
         this.team1 = team1;
         this.team2 = team2;
@@ -77,11 +77,11 @@ public class HistoryPurchasedTicketMatchSeat {
         this.team2 = team2;
     }
 
-    public Date getStartTime() {
+    public LocalDateTime getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(Date startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 

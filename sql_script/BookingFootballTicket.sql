@@ -198,8 +198,6 @@ GO
 -- Table HistoryPurchasedTicketSeasonSeat
 CREATE TABLE HistoryPurchasedTicketSeasonSeat (
 	ticketMatchSeatId INT PRIMARY KEY IDENTITY (1,1),
-	team1 NVARCHAR(100),
-	team2 NVARCHAR(100),
 	startDate DATETIME2,
 	endDate DATETIME2,
 	seasonName NVARCHAR(50),

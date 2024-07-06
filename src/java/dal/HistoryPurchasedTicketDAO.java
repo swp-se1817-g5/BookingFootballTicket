@@ -85,7 +85,7 @@ public class HistoryPurchasedTicketDAO {
                 historyPurchasedTicketMatchSeat.setTicketId(rs.getInt(TICKET_MATCHSEAT_ID));
                 historyPurchasedTicketMatchSeat.setTeam1(rs.getString(TEAM_1));
                 historyPurchasedTicketMatchSeat.setTeam2(rs.getString(TEAM_2));
-                historyPurchasedTicketMatchSeat.setStartTime(rs.getDate(START_TIME));
+                historyPurchasedTicketMatchSeat.setStartTime(rs.getTimestamp(START_TIME).toLocalDateTime());
                 historyPurchasedTicketMatchSeat.setSeasonName(rs.getString(SEASON_NAME));
                 historyPurchasedTicketMatchSeat.setSeatName(rs.getString(SEAT_NAME));
                 historyPurchasedTicketMatchSeat.setQuantity(rs.getInt(QUANTITY));
@@ -129,7 +129,7 @@ public class HistoryPurchasedTicketDAO {
                 historyPurchasedTicketMatchSeat.setTicketId(rs.getInt(TICKET_MATCHSEAT_ID));
                 historyPurchasedTicketMatchSeat.setTeam1(rs.getString(TEAM_1));
                 historyPurchasedTicketMatchSeat.setTeam2(rs.getString(TEAM_2));
-                historyPurchasedTicketMatchSeat.setStartTime(rs.getDate(START_TIME));
+                historyPurchasedTicketMatchSeat.setStartTime(rs.getTimestamp(START_TIME).toLocalDateTime());
                 historyPurchasedTicketMatchSeat.setSeasonName(rs.getString(SEASON_NAME));
                 historyPurchasedTicketMatchSeat.setSeatName(rs.getString(SEAT_NAME));
                 historyPurchasedTicketMatchSeat.setQuantity(rs.getInt(QUANTITY));
@@ -164,8 +164,6 @@ public class HistoryPurchasedTicketDAO {
             while (rs.next()) {
                 HistoryPurchasedTicketSeasonSeat historyPurchasedTicketSeasonSeat = new HistoryPurchasedTicketSeasonSeat();
                 historyPurchasedTicketSeasonSeat.setTicketId(rs.getInt(TICKET_MATCHSEAT_ID));
-                historyPurchasedTicketSeasonSeat.setTeam1(rs.getString(TEAM_1));
-                historyPurchasedTicketSeasonSeat.setTeam2(rs.getString(TEAM_2));
                 historyPurchasedTicketSeasonSeat.setStartDate(rs.getDate(START_DATE));
                 historyPurchasedTicketSeasonSeat.setEndDate(rs.getDate(END_DATE));
                 historyPurchasedTicketSeasonSeat.setSeasonName(rs.getString(SEASON_NAME));
@@ -212,8 +210,6 @@ public class HistoryPurchasedTicketDAO {
             while (rs.next()) {
                 HistoryPurchasedTicketSeasonSeat historyPurchasedTicketSeasonSeat = new HistoryPurchasedTicketSeasonSeat();
                 historyPurchasedTicketSeasonSeat.setTicketId(rs.getInt(TICKET_MATCHSEAT_ID));
-                historyPurchasedTicketSeasonSeat.setTeam1(rs.getString(TEAM_1));
-                historyPurchasedTicketSeasonSeat.setTeam2(rs.getString(TEAM_2));
                 historyPurchasedTicketSeasonSeat.setStartDate(rs.getDate(START_DATE));
                 historyPurchasedTicketSeasonSeat.setEndDate(rs.getDate(END_DATE));
                 historyPurchasedTicketSeasonSeat.setSeasonName(rs.getString(SEASON_NAME));
