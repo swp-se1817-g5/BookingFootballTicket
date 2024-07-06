@@ -8,7 +8,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.HistoryPurchasedTicketMatchSeat;
@@ -249,6 +253,30 @@ public class HistoryPurchasedTicketDAO {
             e.printStackTrace();
         }
         return list;
+    }
+
+    List<HistoryPurchasedTicketMatchSeat> paggingTickets(int pageIndex, int pageSize, String startDate, String endDate) {
+        List<HistoryPurchasedTicketMatchSeat> tickets = new ArrayList<>();
+        String sql = "SELECT *\n"
+                + "FROM HistoryPurchasedTicketMatchSeat\n"
+                + "WHERE startTime BETWEEN ? AND ?\n"
+                + "ORDER BY createdDate DESC"
+                + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
+       
+        try {
+            ps = connect.prepareStatement(sql);
+            ps.setTimestamp(1, Timestamp.valueOf(startDate));
+            ps.setTimestamp(2, Timestamp.valueOf(endDate));
+            ps.setInt(3, (pageIndex - 1) * pageSize);
+            ps.setInt(4, pageSize);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {                
+                
+            }
+        } catch (Exception e) {
+        }
+
+        return tickets;
     }
 //    public static void main(String[] args) {
 ////        System.out.println(HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat());
