@@ -339,6 +339,7 @@
                         <li class="double-block">
                             <a href="tel:+44 (0)20 71508525">Call us</a><a href="mailto:info@footballticketpad.com">Email us</a>
                         </li>
+                        
                         <ul>
                             <c:choose>
                                 <c:when test="${sessionScope.currentUser==null}">
