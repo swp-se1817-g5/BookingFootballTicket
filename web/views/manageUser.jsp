@@ -9,7 +9,7 @@
 <html lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Manage User</title>
+        <title>Quản lý</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -56,8 +56,6 @@
                 box-shadow: 0 1px 1px rgba(0,0,0,.05);
             }
             .table-title {
-                padding-bottom: 10px;
-                margin: 0 0 10px;
                 min-width: 100%;
             }
             .table-title h2 {
@@ -177,6 +175,10 @@
             table.table tbody tr:hover {
                 background-color: #f2f2f2;
             }
+            .table thead th {
+                vertical-align: middle;
+                border-bottom: 2px solid #dee2e6;
+            }
         </style>
     </head>
     <body>
@@ -203,7 +205,7 @@
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-md-4" >
+                                    <div class="col-md-4">
                                         <!-- Search User Form -->
                                         <div>
                                             <form id="searchForm" name="searchForm" action="searchUser" method="post">
@@ -211,10 +213,10 @@
                                                     <div class="form-row">
                                                         <div class="form-group col-md-11">
                                                             <!--                                                            <a><i class="material-icons">&#xE8B6;</i></a>-->
-                                                            <input id="valueSearch" name="valueSearch" type="text" class="form-control" placeholder="Search by email, name, ...">
+                                                            <input id="valueSearch" name="valueSearch" type="text" class="form-control" placeholder="Tìm kiếm bằng email, tên, ...">
                                                         </div>
                                                         <div class="form-group col-md-1 align-self-end">
-                                                            <input type="submit" class="btn btn-success" value="Search">
+                                                            <input type="submit" class="btn btn-success" value="Tìm kiếm">
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -225,10 +227,10 @@
                                         </div>
                                     </div>
                                     <div class="col-md-8 createe d-flex align-items-center justify-content-end">
-                                        <a type="button" href="#createUserModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create User</span></a>
+                                        <a type="button" href="#createUserModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Tạo người dùng</span></a>
                                         <a type="button" href="/BookingFootballTicket/ExportExcel?service=export" class="btn btn-success m-2 float-right">
                                             <i class="bi bi-file-earmark-spreadsheet"></i> 
-                                            <span>Export to Excel</span>
+                                            <span>Xuất file Excel</span>
                                         </a>
                                     </div>
                                 </div>
@@ -237,12 +239,12 @@
                                 <table id="userTable" class="table table-striped table-hover table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Email</th>
-                                            <th>Name</th>
-                                            <th>Phone Number</th>
+                                            <th style="font-weight: bold; font-size: 14px;">Email</th>
+                                            <th style="font-weight: bold; font-size: 14px; ">Tên</th>
+                                            <th style="font-weight: bold; font-size: 14px; ">Số điện thoại</th>
                                             <th>
-                                                <select class="form-select border-0" id="roleFilterHeader" name="roleFilterHeader" onchange="filterByRole()">
-                                                    <option value="0">All Roles</option>
+                                                <select class="form-select border-0" id="roleFilterHeader" name="roleFilterHeader" onchange="filterByRole()" style="font-weight: bold; font-size: 14px; ">
+                                                    <option value="0">Tất cả vai trò</option>
                                                     <c:forEach items="${roles}" var="role">
                                                         <c:if test="${role.roleId != 1}">
                                                             <option value="${role.roleId}">${role.roleName}</option>
@@ -251,13 +253,13 @@
                                                 </select>
                                             </th>
                                             <th>
-                                                <select class="form-select border-0" id="statusFilterHeader" name="statusFilterHeader" onchange="filterByStatus()">
-                                                    <option value="0">All Status</option>
-                                                    <option value="true">Active</option>
-                                                    <option value="false">InActive</option>
+                                                <select class="form-select border-0" id="statusFilterHeader" name="statusFilterHeader" onchange="filterByStatus()" style="font-weight: bold; font-size: 14px; ">
+                                                    <option value="0">Tất cả trạng thái</option>
+                                                    <option value="true">Kích hoạt</option>
+                                                    <option value="false">Không kích hoạt</option>
                                                 </select>
                                             </th>
-                                            <th>Actions</th>
+                                            <th style="font-weight: bold; font-size: 14px; ">Hành động</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -272,18 +274,18 @@
                                                             <td>${r.roleName}</td>
                                                         </c:if>
                                                     </c:forEach>
-                                                    <td>${o.status ? "Active" : "InActive"}</td>
+                                                    <td>${o.status ? "Kích hoạt" : "Không kích hoạt"}</td>
                                                     <td>
-                                                        <a href="#userDetailModal" class="view" title="View" onclick="update('${o.email}', '${o.name}', '${o.phoneNumber}', '${o.avatar}', '${o.roleId}', '${o.status}')" data-toggle="modal">
+                                                        <a href="#userDetailModal" class="view" title="Xem" onclick="update('${o.email}', '${o.name}', '${o.phoneNumber}', '${o.avatar}', '${o.roleId}', '${o.status}')" data-toggle="modal">
                                                             <i class="fa fa-eye" style="color: gray;"></i>
                                                         </a>
                                                         <c:if test="${o.status == true}">
-                                                            <a href="#" class="inactive" title="InActive" data-toggle="tooltip" onclick="changeStatus('${o.email}')">
+                                                            <a href="#" class="inactive" title="Không kích hoạt" data-toggle="tooltip" onclick="changeStatus('${o.email}')">
                                                                 <i class="fas fa-toggle-on status-icon active" style="color: green;"></i>
                                                             </a>
                                                         </c:if>
                                                         <c:if test="${o.status == false}">
-                                                            <a href="#" class="active" title="Active" data-toggle="tooltip" onclick="changeStatus('${o.email}')">
+                                                            <a href="#" class="active" title="Kích hoạt" data-toggle="tooltip" onclick="changeStatus('${o.email}')">
                                                                 <i class="fas fa-toggle-off status-icon active"></i>
                                                             </a>
                                                         </c:if>
@@ -297,8 +299,8 @@
                             <div class="clearfix">
                                 <ul class="pagination">
                                     <c:if test="${page > 1}">
-                                        <li class="page-item"><a href="manageUser?page=1" class="page-link">First</a></li>
-                                        <li class="page-item"><a href="manageUser?page=${page - 1}" class="page-link">Previous</a></li>
+                                        <li class="page-item"><a href="manageUser?page=1" class="page-link">Đầu tiên</a></li>
+                                        <li class="page-item"><a href="manageUser?page=${page - 1}" class="page-link">Trước</a></li>
                                         </c:if>
                                         <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
                                         <li class="page-item ${pageNumber eq currentPage ? 'active' : ''}">
@@ -306,8 +308,8 @@
                                         </li>
                                     </c:forEach>
                                     <c:if test="${page < noOfPages}">
-                                        <li class="page-item"><a href="manageUser?page=${page + 1}" class="page-link">Next</a></li>
-                                        <li class="page-item"><a href="manageUser?page=${noOfPages}" class="page-link">Last</a></li>
+                                        <li class="page-item"><a href="manageUser?page=${page + 1}" class="page-link">Tiếp</a></li>
+                                        <li class="page-item"><a href="manageUser?page=${noOfPages}" class="page-link">Cuối cùng</a></li>
                                         </c:if>
                                 </ul>
                             </div>
@@ -317,9 +319,9 @@
                     <div class="modal fade" id="userDetailModal">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="updateUser" method="post" enctype="multipart/form-data">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="userDetailModalLabel">User Details</h5>
+                                <form action="updateUser" method="post" enctype="multipart/form-data" id="updateUserForm">
+                                    <div class="modal-header">  
+                                        <h5 class="modal-title" id="userDetailModalLabel">Chi tiết người dùng</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -331,25 +333,25 @@
                                             <div id="emailDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="detailName">Name</label>
+                                            <label for="detailName">Tên</label>
                                             <input type="text" class="form-control" id="name" name="detailName" required>
                                             <div id="nameDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="detailPhoneNumber">Phone Number</label>
+                                            <label for="detailPhoneNumber">Số điện thoại</label>
                                             <input type="text" class="form-control" id="phoneNumber" name="detailPhoneNumber" required>
                                             <div id="phoneNumberDetailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="detailRole">Role</label>
+                                            <label for="detailRole">Vai trò</label>
                                             <input type="text" class="form-control" id="role" name="detailRole" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label for="detailStatus">Status</label>
+                                            <label for="detailStatus">Trạng thái</label>
                                             <input type="text" class="form-control" id="status" name="detailStatus" readonly>
                                         </div>
                                         <div class="form-group">
-                                            <label for="detailAvatar">Avatar</label>
+                                            <label for="detailAvatar">Ảnh đại diện</label>
                                             <div height="80px">
                                                 <img class="img-responsive avatarPreview" src="" style="width: auto; height: 80px" alt="Avatar"/>
                                             </div>
@@ -357,8 +359,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                        <button type="submit" class="btn btn-primary">Lưu</button>
                                     </div>
                                 </form>
                             </div>
@@ -370,7 +372,7 @@
                             <div class="modal-content">
                                 <form id="createUserForm" name="createUserForm" action="createUser" method="post" enctype="multipart/form-data">
                                     <div class="modal-header">						
-                                        <h4 class="modal-title">Create User</h4>
+                                        <h4 class="modal-title">Tạo người dùng</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     </div>
                                     <div class="modal-body">					
@@ -380,12 +382,12 @@
                                             <div id="emailError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label>Name</label>
+                                            <label>Tên</label>
                                             <input name="nameInput" id="nameInput" type="text" class="form-control" required>
                                             <div id="nameError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="roleInput">User Role</label>
+                                            <label for="roleInput">Vai trò</label>
                                             <select name="roleIdInput" id="roleIdInput" class="form-control" required>
                                                 <c:forEach items="${roles}" var="role">
                                                     <c:if test="${role.roleId != 1}">
@@ -395,17 +397,17 @@
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>Password</label>
+                                            <label>Mật khẩu</label>
                                             <input name="passwordInput" id="passwordInput" type="password" class="form-control" required>
                                             <div id="passwordError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label>Phone Number</label>
+                                            <label>Số điện thoại</label>
                                             <input name="phoneNumberInput" id="phoneNumberInput" type="text" class="form-control" pattern="[0-9]{10}" required>
                                             <div id="phoneNumberError" style="color: red;"></div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="avatarInput">Avatar</label>
+                                            <label for="avatarInput">Ảnh đại diện</label>
                                             <input name="avatarInput" id="avatarInput" type="file" accept="image/*" class="form-control" required>
                                         </div>
                                         <div class="form-group">
@@ -413,8 +415,8 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                        <input type="submit" class="btn btn-success" value="Add">
+                                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                                        <input type="submit" class="btn btn-success" value="Thêm">
                                     </div>
                                 </form>
                             </div>
@@ -458,7 +460,7 @@
                 }
             });
         </script>
-        
+
         <!-- script for toast notification -->
         <script>
             function filterByStatus() {
@@ -468,72 +470,73 @@
                 table = document.getElementById("userTable");
                 tr = table.getElementsByTagName("tr");
 
-                for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
-                    tr[i].style.display = "none"; // Hide the row by default
+                for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
+                    tr[i].style.display = "none"; // Ẩn hàng theo mặc định
 
                     td = tr[i].getElementsByTagName("td");
                     if (td.length > 0) {
                         var status = td[4].textContent.toUpperCase();
 
-                        if (filterStatus === "0" || // "All Status" selected
-                                (filterStatus === "TRUE" && status === "ACTIVE") ||
-                                (filterStatus === "FALSE" && status === "INACTIVE")) {
+                        if (filterStatus === "0" || // Chọn "Tất cả trạng thái"
+                                (filterStatus === "TRUE" && status === "KÍCH HOẠT") ||
+                                (filterStatus === "FALSE" && status === "KHÔNG KÍCH HOẠT")) {
                             tr[i].style.display = "";
                         }
                     }
                 }
             }
         </script>
+
         <!-- script for toast notification -->
         <script>
-            //update
+            // Cập nhật
             $(document).ready(function () {
                 var updated = '<%= request.getAttribute("updated")%>';
                 if (updated !== 'null' && updated !== '') {
                     var toast = $('#toastNotification');
                     if (updated === "true") {
-                        toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('User updated successfully.');
+                        toast.find('#toastTitle').text('Thành công');
+                        toast.find('#toastMessage').text('Cập nhật người dùng thành công.');
                         toast.addClass('success').removeClass('error');
                     } else if (updated === "false") {
-                        toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to update user!');
+                        toast.find('#toastTitle').text('Lỗi');
+                        toast.find('#toastMessage').text('Cập nhật người dùng thất bại!');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
                 }
             });
 
-            //create
+            // Tạo mới
             $(document).ready(function () {
                 var created = '<%= request.getAttribute("created")%>';
                 if (created !== 'null' && created !== '') {
                     var toast = $('#toastNotification');
                     if (created === "true") {
-                        toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('User created successfully.');
+                        toast.find('#toastTitle').text('Thành công');
+                        toast.find('#toastMessage').text('Tạo người dùng thành công.');
                         toast.addClass('success').removeClass('error');
                     } else if (created === "false") {
-                        toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to create user!');
+                        toast.find('#toastTitle').text('Lỗi');
+                        toast.find('#toastMessage').text('Tạo người dùng thất bại!');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
                 }
             });
 
-            //delete
+            // Xóa
             $(document).ready(function () {
                 var deleted = '<%= request.getAttribute("changed")%>';
                 if (deleted !== 'null' && deleted !== '') {
                     var toast = $('#toastNotification');
                     if (deleted === "true") {
-                        toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('User change status successfully.');
+                        toast.find('#toastTitle').text('Thành công');
+                        toast.find('#toastMessage').text('Thay đổi trạng thái người dùng thành công.');
                         toast.addClass('success').removeClass('error');
                     } else if (deleted === "false") {
-                        toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to change status user!');
+                        toast.find('#toastTitle').text('Lỗi');
+                        toast.find('#toastMessage').text('Thay đổi trạng thái người dùng thất bại!');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
@@ -544,273 +547,291 @@
 
         <script>
             $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-                    var users = [];
+                $('[data-toggle="tooltip"]').tooltip();
+                var users = [];
             <c:forEach items="${users}" var="user">
-            users.push({email: "${user.email}"});
+                users.push({email: "${user.email}"});
             </c:forEach>
 
-            // Check for duplicate email before submitting the create form
-            $('#createUserForm').submit(function (event) {
-            var email = $('#emailInput').val().trim();
+                // Kiểm tra email trùng lặp trước khi gửi biểu mẫu tạo mới
+                $('#createUserForm').submit(function (event) {
+                    var email = $('#emailInput').val().trim();
                     var emptyEmail = email === '';
                     var duplicate = users.some(user => user.email === email);
                     if (emptyEmail) {
-            $('#emailError').text('Can not be empty or blank!');
-                    event.preventDefault();
-            } else if (duplicate) {
-            $('#emailError').text('Email already exists. Please choose a different email.');
-                    event.preventDefault();
-            } else {
-            $('#emailError').text('');
-            }
-            });
-                    // Check for duplicate email before submitting the update form
-                    $('#updateUserForm').submit(function (event) {
-            var email = $('#detailEmail').val().trim();
+                        $('#emailError').text('Email không được để trống hoặc trống!');
+                        event.preventDefault();
+                    } else if (duplicate) {
+                        $('#emailError').text('Email đã tồn tại. Vui lòng chọn email khác.');
+                        event.preventDefault();
+                    } else {
+                        $('#emailError').text('');
+                    }
+                });
+
+                // Kiểm tra email trùng lặp trước khi gửi biểu mẫu cập nhật
+                $('#updateUserForm').submit(function (event) {
+                    var email = $('#detailEmail').val().trim();
                     var originalEmail = users.find(users => user.email === email);
                     var duplicate = users.some(user => user.email === email);
                     if (email !== originalEmail.email && duplicate) {
-            $('#emailDetailError').text('Email already exists. Please choose a different email.');
-                    event.preventDefault();
-            } else {
-            $('#emailDetailError').text('');
-            }
+                        $('#emailDetailError').text('Email đã tồn tại. Vui lòng chọn email khác.');
+                        event.preventDefault();
+                    } else {
+                        $('#emailDetailError').text('');
+                    }
+                });
             });
         </script>
         <script>
-                    $(document).ready(function() {
-            $('#searchForm').on('submit', function(event) {
-            event.preventDefault(); // Ngăn chặn gửi biểu mẫu mặc định
+            $(document).ready(function () {
+                $('#searchForm').on('submit', function (event) {
+                    event.preventDefault(); // Ngăn chặn gửi biểu mẫu mặc định
 
                     var searchValue = $('#valueSearch').val().trim();
                     if (searchValue === '') {
-            $('#error-message').text("Search field cannot be empty.");
-                    return;
-            } else {
-            $('#error-message').text(""); // Clear any previous error message
-            }
+                        $('#error-message').text("Trường tìm kiếm không được để trống.");
+                        return;
+                    } else {
+                        $('#error-message').text(""); // Xóa thông báo lỗi trước đó
+                    }
 
-            $.ajax({
-            type: 'POST',
-                    url: $(this).attr('action'),
-                    data: $(this).serialize(),
-                    success: function(data) {
-                    $('#searchUserModal').modal('hide');
+                    $.ajax({
+                        type: 'POST',
+                        url: $(this).attr('action'),
+                        data: $(this).serialize(),
+                        success: function (data) {
+                            $('#searchUserModal').modal('hide');
                             $('#userTable tbody').html(data.html);
                             $('.pagination').html(data.pagination);
                             $('.hint-text strong').text(data.usersCount);
-                    },
-                    error: function(xhr, status, error) {
-                    $('#error-message').text("Error: " + xhr.responseText);
-                    }
+                        },
+                        error: function (xhr, status, error) {
+                            $('#error-message').text("Lỗi: " + xhr.responseText);
+                        }
+                    });
+                });
             });
-            });
-            });
-                    $('#roleFilterHeader').change(function () {
-            var roleId = $(this).val();
-                    $.ajax({
+
+            $('#roleFilterHeader').change(function () {
+                var roleId = $(this).val();
+                $.ajax({
                     type: 'POST',
-                            url: 'manageUser',
-                            data: {roleId: roleId},
-                            success: function (data) {
-                            $('#userTable tbody').html(data.html);
-                                    $('.pagination').html(data.pagination);
-                                    $('.hint-text strong').text(data.usersCount);
-                            },
-                            error: function (xhr, status, error) {
-                            console.error(xhr.responseText);
-                            }
-                    });
+                    url: 'manageUser',
+                    data: {roleId: roleId},
+                    success: function (data) {
+                        $('#userTable tbody').html(data.html);
+                        $('.pagination').html(data.pagination);
+                        $('.hint-text strong').text(data.usersCount);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
             });
         </script>
         <script>
-                    function update(email, name, phoneNumber, img, roleid, status) {
-                    document.getElementById('email').value = email;
-                            document.getElementById('name').value = name;
-                            document.getElementById('phoneNumber').value = phoneNumber;
-                            document.getElementById('role').value = roleid === "2" ? "User" : "Staff";
-                            document.getElementById('status').value = status === "true" ? "Active" : "InActive";
-                            var avatarImg = document.querySelector('.avatarPreview');
-                            avatarImg.src = img;
-                            $('#emailDetailError').text('');
-                            $('#nameDetailError').text('');
-                            $('#phoneNumberDetailError').text('');
-                    }
+            function update(email, name, phoneNumber, img, roleid, status) {
+                document.getElementById('email').value = email;
+                document.getElementById('name').value = name;
+                document.getElementById('phoneNumber').value = phoneNumber;
+                document.getElementById('role').value = roleid === "2" ? "Người dùng" : "Nhân viên";
+                document.getElementById('status').value = status === "true" ? "Kích hoạt" : "Không kích hoạt";
+                var avatarImg = document.querySelector('.avatarPreview');
+                avatarImg.src = img;
+                $('#emailDetailError').text('');
+                $('#nameDetailError').text('');
+                $('#phoneNumberDetailError').text('');
+            }
+
             function changeStatus(email) {
-            if (confirm("Do you want to change the status of this user with email = " + email)) {
-            location.href = 'changestatusUser?email=' + email;
+                if (confirm("Bạn có muốn thay đổi trạng thái của người dùng có email = " + email + " không?")) {
+                    location.href = 'changestatusUser?email=' + email;
+                }
             }
-            }
-            $('input[name="avatarInput"]').change(function () {
-            previewImage(this);
-            });
-                    // Function to preview image from URL
-                            function previewImage(input) {
-                            if (input.files && input.files[0]) {
-                            var reader = new FileReader();
-                                    reader.onload = function (e) {
-                                    $('#avatarPreview').attr('src', e.target.result);
-                                    };
-                                    reader.readAsDataURL(input.files[0]);
-                            }
-                            }
 
-                    function previewAvatar(event) {
-                    const reader = new FileReader();
-                            reader.onload = function () {
-                            const output = document.querySelector('.avatarPreview');
-                                    output.src = reader.result;
-                            };
-                            reader.readAsDataURL(event.target.files[0]);
-                    }
+            $('input[name="avatarInput"]').change(function () {
+                previewImage(this);
+            });
+
+            // Function to preview image from URL
+            function previewImage(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#avatarPreview').attr('src', e.target.result);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            function previewAvatar(event) {
+                const reader = new FileReader();
+                reader.onload = function () {
+                    const output = document.querySelector('.avatarPreview');
+                    output.src = reader.result;
+                };
+                reader.readAsDataURL(event.target.files[0]);
+            }
         </script>
         <script>
-
-                    // Validate Create Form
-                    function validateEmail() {
-                    var email = $('[name="emailInput"]').val().trim();
-                            var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-                            if (email === '') {
-                    $('#emailError').text('Email is required. Please enter your email address.');
-                            return false;
-                    } else if (!emailPattern.test(email)) {
-                    $('#emailError').text('Invalid email format. Please enter a valid email address (e.g., user@example.com).');
-                            return false;
-                    } else {
+            // Validate biểu mẫu tạo mới
+            function validateEmail() {
+                var email = $('[name="emailInput"]').val().trim();
+                var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                if (email === '') {
+                    $('#emailError').text('Email là bắt buộc. Vui lòng nhập địa chỉ email của bạn.');
+                    return false;
+                } else if (!emailPattern.test(email)) {
+                    $('#emailError').text('Định dạng email không hợp lệ. Vui lòng nhập một địa chỉ email hợp lệ (ví dụ: user@example.com).');
+                    return false;
+                } else {
                     $('#emailError').text('');
-                            return true;
-                    }
-                    }
+                    return true;
+                }
+            }
 
-                    function validateName() {
-                    var name = $('[name="nameInput"]').val().trim();
-                            if (name === '') {
-                    $('#nameError').text('Name is required. Please enter your full name.');
-                            return false;
-                    } else {
+            function validateName() {
+                var name = $('[name="nameInput"]').val().trim();
+                if (name === '') {
+                    $('#nameError').text('Tên là bắt buộc. Vui lòng nhập tên đầy đủ của bạn.');
+                    return false;
+                } else {
                     $('#nameError').text('');
-                            return true;
-                    }
-                    }
+                    return true;
+                }
+            }
 
-                    function validatePhoneNumber() {
-                    var phoneNumber = $('[name="phoneNumberInput"]').val().trim();
-                            var phonePattern = /^0[0-9]{9}$/;
-                            if (phoneNumber === '') {
-                    $('#phoneNumberError').text('Phone number is required. Please enter your phone number.');
-                            return false;
-                    } else if (!phonePattern.test(phoneNumber)) {
-                    $('#phoneNumberError').text('Invalid phone number format. Phone number must be 10 digits long and start with 0.');
-                            return false;
-                    } else {
+            function validatePhoneNumber() {
+                var phoneNumber = $('[name="phoneNumberInput"]').val().trim();
+                var phonePattern = /^0[0-9]{9}$/;
+                if (phoneNumber === '') {
+                    $('#phoneNumberError').text('Số điện thoại là bắt buộc. Vui lòng nhập số điện thoại của bạn.');
+                    return false;
+                } else if (!phonePattern.test(phoneNumber)) {
+                    $('#phoneNumberError').text('Định dạng số điện thoại không hợp lệ. Số điện thoại phải có 10 chữ số và bắt đầu bằng 0.');
+                    return false;
+                } else {
                     $('#phoneNumberError').text('');
-                            return true;
-                    }
-                    }
+                    return true;
+                }
+            }
 
-                    function validatePassword() {
-                    var password = $('[name="passwordInput"]').val().trim();
-                            var passwordPattern = /^(?=.*[0-9])(?=.*[A-Z]).{8,20}$/;
-                            if (password === '') {
-                    $('#passwordError').text('Password is required. Please enter your password.');
-                            return false;
-                    } else if (password.length < 8 || password.length > 20) {
-                    $('#passwordError').text('Password must be between 8 and 20 characters long.');
-                            return false;
-                    } else if (!passwordPattern.test(password)) {
-                    $('#passwordError').text('Password must contain at least one digit and one uppercase letter.');
-                            return false;
-                    } else {
+            function validatePassword() {
+                var password = $('[name="passwordInput"]').val().trim();
+                var passwordPattern = /^(?=.*[0-9])(?=.*[A-Z]).{8,20}$/;
+                if (password === '') {
+                    $('#passwordError').text('Mật khẩu là bắt buộc. Vui lòng nhập mật khẩu của bạn.');
+                    return false;
+                } else if (password.length < 8 || password.length > 20) {
+                    $('#passwordError').text('Mật khẩu phải từ 8 đến 20 ký tự.');
+                    return false;
+                } else if (!passwordPattern.test(password)) {
+                    $('#passwordError').text('Mật khẩu phải chứa ít nhất một chữ số và một chữ cái viết hoa.');
+                    return false;
+                } else {
                     $('#passwordError').text('');
-                            return true;
-                    }
-                    }
+                    return true;
+                }
+            }
 
-                    function validateForm() {
-                    var emailValid = validateEmail();
-                            var nameValid = validateName();
-                            var phoneNumberValid = validatePhoneNumber();
-                            var passwordValid = validatePassword();
-                            return emailValid && nameValid && phoneNumberValid && passwordValid;
-                    }
+            function validateForm() {
+                var emailValid = validateEmail();
+                var nameValid = validateName();
+                var phoneNumberValid = validatePhoneNumber();
+                var passwordValid = validatePassword();
+                return emailValid && nameValid && phoneNumberValid && passwordValid;
+            }
 
-// Validate fields on input
-                    $('[name="emailInput"]').on('input', function () {
-                    validateEmail();
-                    });
-                            $('[name="nameInput"]').on('input', function () {
-                    validateName();
-                    });
-                            $('[name="phoneNumberInput"]').on('input', function () {
-                    validatePhoneNumber();
-                    });
-                            $('[name="passwordInput"]').on('input', function () {
-                    validatePassword();
-                    });
-// Validate Update Form Fields on Input
-                            $('#updateUserForm input[name="detailEmail"]').on('input', function () {
-                    validateUpdateEmail();
-                    });
-                            $('#updateUserForm input[name="detailName"]').on('input', function () {
-                    validateUpdateName();
-                    });
-                            $('#updateUserForm input[name="detailPhoneNumber"]').on('input', function () {
-                    validateUpdatePhoneNumber();
-                    });
-                            function validateUpdateEmail() {
-                            var email = $('#updateUserForm input[name="detailEmail"]').val().trim();
-                                    var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-                                    if (email === '') {
-                            $('#emailDetailError').text('Email is required. Please enter your email address.');
-                                    return false;
-                            } else if (!emailPattern.test(email)) {
-                            $('#emailDetailError').text('Invalid email format. Please enter a valid email address (e.g., user@example.com).');
-                                    return false;
-                            } else {
-                            $('#emailDetailError').text('');
-                                    return true;
-                            }
-                            }
+            // Validate fields on input
+            $('[name="emailInput"]').on('input', function () {
+                validateEmail();
+            });
+            $('[name="nameInput"]').on('input', function () {
+                validateName();
+            });
+            $('[name="phoneNumberInput"]').on('input', function () {
+                validatePhoneNumber();
+            });
+            $('[name="passwordInput"]').on('input', function () {
+                validatePassword();
+            });
+        </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var updateUserForm = document.getElementById('updateUserForm');
+                var emailInput = updateUserForm.querySelector('input[name="detailEmail"]');
+                var nameInput = updateUserForm.querySelector('input[name="detailName"]');
+                var phoneNumberInput = updateUserForm.querySelector('input[name="detailPhoneNumber"]');
+                var emailError = document.getElementById('emailDetailError');
+                var nameError = document.getElementById('nameDetailError');
+                var phoneNumberError = document.getElementById('phoneNumberDetailError');
 
-                    function validateUpdateName() {
-                    var name = $('#updateUserForm input[name="detailName"]').val().trim();
-                            if (name === '') {
-                    $('#nameDetailError').text('Name is required. Please enter your full name.');
-                            return false;
+                // Validate email on input
+                emailInput.addEventListener('input', function () {
+                    var email = emailInput.value.trim();
+                    var emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+                    if (email === '') {
+                        emailError.textContent = 'Email là bắt buộc. Vui lòng nhập địa chỉ email của bạn.';
+                    } else if (!emailPattern.test(email)) {
+                        emailError.textContent = 'Định dạng email không hợp lệ. Vui lòng nhập một địa chỉ email hợp lệ (ví dụ: user@example.com).';
                     } else {
-                    $('#nameDetailError').text('');
-                            return true;
+                        emailError.textContent = '';
                     }
-                    }
+                });
 
-                    function validateUpdatePhoneNumber() {
-                    var phoneNumber = $('#updateUserForm input[name="detailPhoneNumber"]').val().trim();
-                            var phonePattern = /^0[0-9]{9}$/;
-                            if (phoneNumber === '') {
-                    $('#phoneNumberDetailError').text('Phone number is required. Please enter your phone number.');
-                            return false;
+                // Validate name on input
+                nameInput.addEventListener('input', function () {
+                    var name = nameInput.value.trim();
+                    if (name === '') {
+                        nameError.textContent = 'Tên là bắt buộc. Vui lòng nhập tên đầy đủ của bạn.';
+                    } else {
+                        nameError.textContent = '';
+                    }
+                });
+
+                // Validate phone number on input
+                phoneNumberInput.addEventListener('input', function () {
+                    var phoneNumber = phoneNumberInput.value.trim();
+                    var phonePattern = /^0[0-9]{9}$/;
+                    if (phoneNumber === '') {
+                        phoneNumberError.textContent = 'Số điện thoại là bắt buộc. Vui lòng nhập số điện thoại của bạn.';
                     } else if (!phonePattern.test(phoneNumber)) {
-                    $('#phoneNumberDetailError').text('Invalid phone number format. Phone number must be 10 digits long and start with 0.');
-                            return false;
+                        phoneNumberError.textContent = 'Định dạng số điện thoại không hợp lệ. Số điện thoại phải có 10 chữ số và bắt đầu bằng 0.';
                     } else {
-                    $('#phoneNumberDetailError').text('');
-                            return true;
+                        phoneNumberError.textContent = '';
                     }
+                });
+
+                // Validate form on submit
+                updateUserForm.addEventListener('submit', function (event) {
+                    var emailValid = emailInput.value.trim() !== '' && /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(emailInput.value.trim());
+                    var nameValid = nameInput.value.trim() !== '';
+                    var phoneNumberValid = phoneNumberInput.value.trim() !== '' && /^0[0-9]{9}$/.test(phoneNumberInput.value.trim());
+
+                    if (!emailValid) {
+                        event.preventDefault(); // Ngăn không cho form submit
+                        emailError.textContent = 'Vui lòng điền đầy đủ và đúng định dạng email.';
                     }
 
-                    function validateUpdateForm() {
-                    var emailValid = validateUpdateEmail();
-                            var nameValid = validateUpdateName();
-                            var phoneNumberValid = validateUpdatePhoneNumber();
-                            return emailValid && nameValid && phoneNumberValid;
+                    if (!nameValid) {
+                        event.preventDefault(); // Ngăn không cho form submit
+                        nameError.textContent = 'Vui lòng điền tên của bạn.';
                     }
 
-                    $('#updateUserForm').submit(function (event) {
-                    if (!validateUpdateForm()) {
-                    event.preventDefault();
+                    if (!phoneNumberValid) {
+                        event.preventDefault(); // Ngăn không cho form submit
+                        phoneNumberError.textContent = 'Vui lòng điền số điện thoại hợp lệ.';
                     }
-                    });
+                });
+
+                // Reset errors on form reset
+                updateUserForm.addEventListener('reset', function () {
+                    emailError.textContent = '';
+                    nameError.textContent = '';
+                    phoneNumberError.textContent = '';
+                });
+            });
         </script>
 
         <!-- JavaScript Libraries -->

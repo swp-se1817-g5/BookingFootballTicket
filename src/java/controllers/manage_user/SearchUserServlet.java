@@ -94,7 +94,7 @@ public class SearchUserServlet extends HttpServlet {
         StringBuilder htmlResponse = new StringBuilder();
         for (User user : paginatedUsers) {
             String roleName = getRoleName(user.getRoleId());
-            String status = user.isStatus() ?  "InActive": "Active";
+            String status = user.isStatus() ?  "Không Kích Hoạt": "Kích Hoạt";
 
                 htmlResponse.append("<tr>");
                 htmlResponse.append("<td>").append(user.getEmail()).append("</td>");

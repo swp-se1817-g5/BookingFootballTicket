@@ -104,6 +104,7 @@ public class ManageSeasonServlet extends HttpServlet {
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
         request.setAttribute("noOfRecords", noOfRecords);
+        request.setAttribute("url", "manageSeason");
         request.setAttribute("search", search);
         request.getRequestDispatcher("views/manageSeason.jsp").forward(request, response);
     }
