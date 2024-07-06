@@ -124,7 +124,7 @@ GO
 CREATE TABLE SeatClass (
     seatClassId INT PRIMARY KEY IDENTITY (1,1),
     seatClassName NVARCHAR(50),
-    price DECIMAL(10, 2)
+    price DECIMAL(10, 0)
 );
 GO
 
@@ -146,7 +146,7 @@ CREATE TABLE MatchSeat(
 	matchSeatId INT PRIMARY KEY IDENTITY (1,1),
 	matchId INT,
 	seatId INT,
-	price DECIMAL(10, 2),
+	price DECIMAL(10, 0),
 	[availability] INT,
 	FOREIGN KEY (matchId) REFERENCES Match(matchId),
 	FOREIGN KEY (seatId ) REFERENCES SeatArea(seatId)
@@ -158,7 +158,7 @@ CREATE TABLE SeasonSeat(
 	seasonSeatId INT PRIMARY KEY IDENTITY (1,1),
 	seatId INT,
 	seasonId INT,
-	price DECIMAL(10, 2),
+	price DECIMAL(10, 0),
 	[availability] INT,
 	FOREIGN KEY (seatId) REFERENCES SeatArea(seatId),
 	FOREIGN KEY (seasonId ) REFERENCES Season(seasonId)
@@ -184,7 +184,7 @@ CREATE TABLE HistoryPurchasedTicketMatchSeat (
 	seatClassName NVARCHAR(50),
     email VARCHAR(50),
 	qrCode VARCHAR(255),
-	price DECIMAL(10, 2),
+	price DECIMAL(10, 0),
 	statusId INT,
 	createdBy VARCHAR(50),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
@@ -209,7 +209,7 @@ CREATE TABLE HistoryPurchasedTicketSeasonSeat (
 	seatClassName NVARCHAR(50),
     email VARCHAR(50),
 	qrCode VARCHAR(255),
-	price DECIMAL(10, 2),
+	price DECIMAL(10, 0),
 	statusId INT,
 	createdBy VARCHAR(50),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,

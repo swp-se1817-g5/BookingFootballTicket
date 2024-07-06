@@ -133,9 +133,10 @@
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 </form>
+                
                 <ul class="navbar-nav">
                     <li class="nav-item" id="login-register">
-                        <a class="nav-link" href="#">Login</a>
+                        <a class="nav-link" href="./login">Login</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Register</a>
@@ -151,6 +152,7 @@
                         </div>
                     </li>
                 </ul>
+                
             </div>
         </nav>
 
