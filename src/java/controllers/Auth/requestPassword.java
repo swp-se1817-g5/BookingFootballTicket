@@ -77,7 +77,7 @@ public class requestPassword extends HttpServlet {
         //
         User user = daoUser.getUserByEmail(email);
         if(user == null) {
-            request.setAttribute("messEr", "You have not registered for this email !!");
+            request.setAttribute("messEr", "Bạn chưa đăng ký email này!");
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             return;
         }
@@ -93,18 +93,18 @@ public class requestPassword extends HttpServlet {
         //
         boolean isInsert = daoToken.insertTokenForget(newTokenForget);
         if(!isInsert) {
-            request.setAttribute("mess", "Have error in server !");
+            request.setAttribute("mess", "Có lỗi ở máy chủ!");
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             return;
         }
         //
         boolean isSend = service.sendEmail(email, linkReset, user.getName());
         if(!isSend) {
-            request.setAttribute("mess", "Can not send request !");
+            request.setAttribute("mess", "Không thể gửi yêu cầu!");
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             return;
         }
-        request.setAttribute("mess", "Check your email !");
+        request.setAttribute("mess", "Kiểm tra Email của bạn !");
         request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
     }
 

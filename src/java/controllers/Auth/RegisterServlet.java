@@ -66,23 +66,23 @@ public class RegisterServlet extends HttpServlet {
         }
 
         if (name.isEmpty() || password.isEmpty() || email.isEmpty() || phoneNumber.isEmpty()) {
-            request.setAttribute("errorMessage", "All fields are required!");
+            request.setAttribute("errorMessage", "Tất cả các trường là bắt buộc!");
             returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (!Validate.isValidName(name)) {
-            request.setAttribute("errorMessage", "Name invalid!");
+            request.setAttribute("errorMessage", "Tên không hợp lệ!");
             returnValueBefore(request, response, null, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (!Validate.isValidPhoneNumber(phoneNumber)) {
-            String messPhone = "Phone Number invalid!";
+            String messPhone = "Số điện thoại không hợp lệ!";
             if (!phoneNumber.startsWith("0") && phoneNumber.length() == 10 && Validate.isNumber(phoneNumber)) {
-                messPhone = "Phone must start with 0";
+                messPhone = "Số điện thoại bắt buộc phải bắt đầu bằng 0!";
             }
             request.setAttribute("errorMessage", messPhone);
             returnValueBefore(request, response, name, email, null);
@@ -91,7 +91,7 @@ public class RegisterServlet extends HttpServlet {
         }
 
         if (!Validate.isValidEmail(email)) {
-            request.setAttribute("errorMessage", "Email invalid!");
+            request.setAttribute("errorMessage", "Email không hợp lệ!");
             returnValueBefore(request, response, name, null, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
@@ -99,28 +99,28 @@ public class RegisterServlet extends HttpServlet {
 
         User userExists = userDAO.getUserByEmail(email);
         if (userExists != null) {
-            request.setAttribute("errorMessage", "Email already exists!");
+            request.setAttribute("errorMessage", "Email đã tồn tại!");
             returnValueBefore(request, response, name, null, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (!Validate.isValidPassword(password)) {
-            request.setAttribute("errorMessage", "Password needs at least 8 characters, 1 normal character, 1 uppercase character, 1 numeric character!");
+            request.setAttribute("errorMessage", "Mật khẩu cần ít nhất 8 kí tự, 1 kí tự thường, 1 kí tự in hoa, 1 kí tự số!");
             returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (!password.equals(confirmPassword)) {
-            request.setAttribute("errorMessage", "Confirm password does not match password!");
+            request.setAttribute("errorMessage", "Mật khẩu nhập lại không khớp!");
             returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (termsAndConditions == null) {
-            request.setAttribute("errorMessage", "Please agree with our Terms and Conditions and Privacy Statement");
+            request.setAttribute("errorMessage", "Vui lòng đồng ý với điều khoản và điều lệ của chúng tôi!");
             returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
@@ -143,7 +143,7 @@ public class RegisterServlet extends HttpServlet {
         newUser.setCreatedDate(now);
 
         status = userDAO.addUser(newUser);
-        successMessage = "Registered successfully!";
+        successMessage = "Đăng ký thành công!";
         HttpSession session = request.getSession();
         session.setAttribute("successMessage", successMessage);
         session.setAttribute("currentUser", userDAO.getUserByEmail(email));
