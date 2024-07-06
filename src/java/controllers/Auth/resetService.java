@@ -61,14 +61,14 @@ public class resetService {
             msg.setFrom(from);
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
             msg.setSubject("BookingFootballTicket", "UTF-8");
-            String content = "<h1>Hello, "+ name +" ! </h1>"+"<p>Click the link to reset your password."
-                    + "<a href="+link+">Click here</a></p>";
+            String content = "<h1>Xin chào "+ name +" , </h1>"+"<p>Vui lòng bấm vào đường link để đặt lại mật khẩu của bạn."
+                    + "<a href="+link+">Ở đây</a></p>";
             msg.setContent(content, "text/html; charset=UTF-8");
             Transport.send(msg);
-            System.out.println("Send successfully");
+            System.out.println("Gửi thành công!");
             return true;
         } catch (Exception e) {
-            System.out.println("Send error");
+            System.out.println("Lỗi!");
             System.out.println(e);
             return false;
         }

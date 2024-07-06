@@ -1,9 +1,3 @@
-<%-- 
-    Document   : newjsp
-    Created on : Jul 5, 2024, 2:46:50 PM
-    Author     : thuat
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -114,6 +108,22 @@
                 height: 100%;
                 background-color: rgba(255, 0, 0, 0.5); /* Màu đỏ với độ mờ 0.5 */
                 z-index: 1; /* Đặt lớp phủ lên trên ảnh */
+            }
+
+            .toast {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                min-width: 200px;
+                z-index: 10000;
+            }
+            .toast.success .toast-header {
+                background-color: #28a745;
+                color: white;
+            }
+            .toast.error .toast-header {
+                background-color: #dc3545;
+                color: white;
             }
 
 
@@ -328,7 +338,62 @@
             </div>
         </footer>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <!-- Toast Notification -->
+        <div class="toast" id="toastNotification" data-delay="3000" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="mr-auto" id="toastTitle"></strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+            </div>
+            <div class="toast-body" id="toastMessage"></div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                var toast = $('#toastNotification');
+
+                // Function to show toast notification
+                function showToast(title, message, type) {
+                    toast.find('#toastTitle').text(title);
+                    toast.find('#toastMessage').text(message);
+                    toast.removeClass('success error').addClass(type);
+
+                    // Show the toast
+                    toast.toast('show');
+                }
+
+                // Check session attributes and show toast if set
+            <% if (session.getAttribute("isRegister") != null && (boolean) session.getAttribute("isRegister")) { %>
+                showToast('Thành công', 'Đăng ký thành công!', 'success');
+                setTimeout(function () {
+                    toast.toast('hide');
+                }, 3000); // 3000 milliseconds = 3 seconds
+            <% session.removeAttribute("isRegister"); %>
+            <% } %>
+
+            <% if (session.getAttribute("changePassword") != null && (boolean) session.getAttribute("changePassword")) { %>
+                showToast('Thành công', 'Đổi mật khẩu thành công!', 'success');
+                setTimeout(function () {
+                    toast.toast('hide');
+                }, 3000); // 3000 milliseconds = 3 seconds
+            <% session.removeAttribute("changePassword"); %>
+            <% } %>
+
+            <% if (session.getAttribute("isFirstLogin") != null && (boolean) session.getAttribute("isFirstLogin")) { %>
+                showToast('Thành công', 'Đăng nhập thành công!', 'success');
+                setTimeout(function () {
+                    toast.toast('hide');
+                }, 3000); // 3000 milliseconds = 3 seconds
+            <% session.removeAttribute("isFirstLogin"); %>
+            <% } %>
+
+            <% if (session.getAttribute("resetPassword") != null && (boolean) session.getAttribute("resetPassword")) { %>
+                showToast('Thành công', 'Đặt lại mật khẩu thành công!', 'success');
+                setTimeout(function () {
+                    toast.toast('hide');
+                }, 3000); // 3000 milliseconds = 3 seconds
+            <% session.removeAttribute("resetPassword"); %>
+            <% }%>
+            });
+        </script>
     </body>
 </html>

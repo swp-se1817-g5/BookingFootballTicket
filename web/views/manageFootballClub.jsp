@@ -292,12 +292,12 @@ Author     : admin
                 <div class="modal-content">
                     <form action="createFootballClub" id="createFootballClubForm" method="post" enctype="multipart/form-data">
                         <div class="modal-header">
-                            <h4 class="modal-title">Create Football Club</h4>
+                            <h4 class="modal-title">Thêm Đội Bóng</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Image</label>
+                                <label>Logo</label>
                                 <div class="d-flex justify-content-center">
 
                                     <img id="imagePreviewInput" src="#" alt="Your Image"  style="display: none; width: auto; height: 200px">
@@ -307,19 +307,19 @@ Author     : admin
                                 <input id="imageUploadInput" name="image" type="file" accept="image/*" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label>Football Club Name</label>
+                                <label>Tên</label>
                                 <input id="clubNameInput" name="clubName" type="text" class="form-control" maxlength="50" required>
                                 <span id="clubNameInputError" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Mô Tả</label>
                                 <textarea id="descriptionInput" name="description" type="text" class="form-control" maxlength="255"></textarea>
                                 <span id="descriptionInputError" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Create">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ">
+                            <input type="submit" class="btn btn-success" value="Lưu">
                         </div>
                     </form>
                 </div>
@@ -332,16 +332,16 @@ Author     : admin
                 <div class="modal-content">
                     <form action="updateFootballClub" id="updateFootballClubForm" enctype="multipart/form-data" method="post">
                         <div class="modal-header">						
-                            <h4 class="modal-title">Update Football Club</h4>
+                            <h4 class="modal-title">Cập Nhật Đội Bóng</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Club ID</label>
+                                <label>ID</label>
                                 <input id="clubId" name="clubId" readonly type="number" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Images</label>
+                                <label>Logo</label>
                                 </br>
                                 <div class="d-flex justify-content-center">
                                     <img  id="img" height="200px" width="auto" class="img-responsive" alt="Your Image"/>
@@ -350,40 +350,40 @@ Author     : admin
                                 <input id="imageUpload" name="image" type="file" accept="image/*" class="form-control">
                             </div>
                             <div class="form-group">
-                                <label>Club Name</label>
+                                <label>Tên</label>
                                 <input id="clubName" name="clubName" maxlength="50" type="text" class="form-control" required>
                                 <span id="clubNameError" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label>Description</label>
+                                <label>Mô Tả</label>
                                 <textarea id="description" name="description" maxlength="255" type="text" class="form-control"></textarea>
                                 <span id="descriptionError" class="text-danger"></span>
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label>Created By</label>
+                                    <label>Người Tạo</label>
                                     <input id="createdBy" readonly="" class="form-control">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label>Created Date</label>
+                                    <label>Ngày Tạo</label>
                                     <input id="createdDate" readonly="" class="form-control">
                                 </div> 
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label>Updated By</label>
+                                    <label>Người Cập Nhật Cuối</label>
                                     <input id="updatedBy" readonly="" class="form-control">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label>Last Updated Date</label>
+                                    <label>Ngày Cập Nhật Cuối</label>
                                     <input id="lastUpdatedDate" readonly="" class="form-control">
                                 </div>    
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Update">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ">
+                            <input type="submit" class="btn btn-success" value="Lưu">
                         </div>
                     </form>
                 </div>

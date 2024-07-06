@@ -1,5 +1,6 @@
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,7 +35,7 @@
                 <div class="account-form-inner">
                     <div class="account-container">
                         <div class="heading-bx left">
-                            <h2 class="title-head">Sign Up <span>Now</span></h2>
+                            <h2 class="title-head">Đăng <span>Ký</span></h2>
                             <p>Login Your Account <a href="./login">Click here</a></p>
                         </div>
                         <c:if test="${not empty errorMessage}">
@@ -45,7 +46,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label ${registerEmail != null ? "hidden" : ""}>Your Name</label>
+                                            <label ${registerEmail != null ? "hidden" : ""}>Họ và Tên</label>
                                             <input value="${name}" class="form-control"
                                                    ${registerEmail != null ? "hidden" : ""}
                                                    name="name" id="name" required>
@@ -74,7 +75,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                                            <label for="phoneNumber" class="form-label">Số điện thoại</label>
                                             <input type="text" value="${phone}" class="form-control"
                                                    name="phoneNumber" id="phoneNumber"
                                                    required>
@@ -86,7 +87,7 @@
                                         <div class="input-group">
                                             <input type="password" class="form-control" name="password"
                                                    id="password" required>
-                                            <label for="password" class="form-label">Password</label>
+                                            <label for="password" class="form-label">Mật khẩu</label>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +97,7 @@
                                             <input type="password" class="form-control" name="confirmPassword"
                                                    id="confirmPassword"
                                                    required>
-                                            <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                            <label for="confirmPassword" class="form-label">Nhập lại mật khẩu</label>
                                         </div>
                                     </div>
                                 </div>
@@ -106,9 +107,9 @@
                                                value="terms-and-conditions" name="iAgree"
                                                id="iAgree" required>
                                         <label class="form-check-label text-secondary fs-5" for="iAgree" style="font-weight: 400;">
-                                            I agree to the <a href="./term"
+                                            Đồng ý với <a href="./term"
                                                               class="link-primary text-decoration-none text-info">
-                                                terms and conditions!
+                                                điều khoản và điều lệ!
                                             </a>
                                         </label>
                                     </div>
@@ -116,10 +117,10 @@
                                 <div class="col-lg-12 m-b30">
                                     <div class="g-recaptcha" data-sitekey="6LewHgEqAAAAAM2B3lhHY6yT54lRyRRTL2fwZLqV"></div>
                                     <div style="color: red" id="error"></div>
-                                    <button name="submit" type="submit" value="Submit" class="btn button-md">Register</button>
+                                    <button name="submit" type="submit" value="Submit" class="btn button-md">Đăng ký</button>
                                 </div>
                                 <div class="col-lg-12">
-                                    <h6>Register with Social media</h6>
+                                    <h6>Đăng ký với</h6>
                                     <div class="d-flex">
                                         <a class="btn flex-fill m-r5 facebook" href="https://www.facebook.com/v19.0/dialog/oauth?fields=id,name,email&client_id=2789778564531786&redirect_uri=http://localhost:8080/BookingFootballTicket/loginFB"><i class="fa fa-facebook"></i>Facebook</a>
                                         <a class="btn flex-fill m-l5 google-plus" href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/BookingFootballTicket/gmail&response_type=code&client_id=710226049781-g37fdin0lmq797dniqao07fsr27oj20j.apps.googleusercontent.com&approval_prompt=force"><i class="fa fa-google"></i>Google</a>
@@ -153,7 +154,7 @@
                 var error = document.getElementById("error");
                 const response = grecaptcha.getResponse();
                 if (response.length === 0) {
-                    error.textContent = "Please verify that you are not a robot!";
+                    error.textContent = "Vui lòng xác thực nếu bạn không phải là người máy!";
                     return false; // Prevent form submission
                 }
                 return true; // Allow form submission

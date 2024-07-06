@@ -247,7 +247,7 @@ Author     : admin
                                     <tr>
                                         <th>ID</th>
                                         <th>Tên Khán Đài</th>
-                                        <th>Chỉnh Sửa</th>
+                                        <th>Chức Năng</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -285,7 +285,7 @@ Author     : admin
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Đóng">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ">
                             <input type="submit" class="btn btn-success" value="Lưu">
                         </div>
                     </form>
@@ -335,7 +335,7 @@ Author     : admin
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Đóng">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ">
                             <input type="submit" class="btn btn-success" value="Lưu">
                         </div>
                     </form>

@@ -97,7 +97,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
 
                 // So sánh mật khẩu đã băm từ cơ sở dữ liệu với mật khẩu băm từ mật khẩu cũ nhập vào từ người dùng
                 if (!BCrypt.checkpw(oldpass, hashedPasswordFromDB)) { 
-                    request.setAttribute("messEr", "OldPassword Error!");
+                    request.setAttribute("messEr", "Sai mật khẩu cũ!");
                 } else {
                     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
                     dao.changePass(email, hashedPassword);
