@@ -1,10 +1,5 @@
-<%-- 
-    Document   : header.jsp
-    Created on : Jul 6, 2024, 1:01:38 AM
-    Author     : nguye
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <div class="text-center bg-dark text-white p-3">Trang web bán vé đá bóng số một trực tuyến của sân vận động Mỹ Đình</div>
 <nav class="navbar navbar-expand-md navbar-light bg-light container-fluid fixed-top border-bottom">
@@ -72,10 +67,30 @@
                     <a class="nav-link pt-3" href="#">Tin Tức</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link pt-3" href="#">Hướng dẫn</a>
+                    <a class="nav-link pt-3" href="./InstructionsForBuyTickets">Hướng dẫn mua vé</a>
                 </li>
-                <li class="nav-item d-flex">
-                    <a class="nav-link pt-3" href="#">Đăng nhập/</a><a class="nav-link pt-3" href="#">Đăng kí</a>
+                <li class="nav-item">
+                    <a class="nav-link pt-3" href="./about">Về chúng tôi</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle pt-3" href="#" id="loginDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tài khoản
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="loginDropdown">
+                        <c:choose>
+                            <c:when test="${sessionScope.currentUser == null}">
+                                <a class="dropdown-item" data-auth="login" href="./login">Đăng nhập</a>
+                            </c:when>
+                            <c:when test="${sessionScope.currentUser != null}">
+                                <a class="dropdown-item" data-auth="profile" href="#">Thông tin tài khoản</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="./changepass">Đổi mật khẩu</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="./logout">Đăng xuất</a>
+                            </c:when>
+                        </c:choose>
+                    </div>
                 </li>
                 <li class="nav-item dropdown d-none" id="user-menu">
                     <a class="nav-link dropdown-toggle pt-3" href="#" id="userDropdown" role="button"
@@ -85,6 +100,5 @@
                 </li>
             </ul>
         </div>
-
     </div>
 </nav>
