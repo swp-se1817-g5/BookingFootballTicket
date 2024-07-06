@@ -10,10 +10,10 @@
     </filter>
     <filter-mapping>
         <filter-name>AuthenticationAdminFilter</filter-name>
-<!--        <url-pattern>/manageStand</url-pattern>
+        <url-pattern>/manageStand</url-pattern>
         <url-pattern>/deleteStand</url-pattern>
         <url-pattern>/manageFootballClub</url-pattern>
-        <url-pattern>/deleteFootballClub</url-pattern>-->
+        <url-pattern>/deleteFootballClub</url-pattern>
     </filter-mapping>
     
     <filter>

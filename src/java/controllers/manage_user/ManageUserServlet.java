@@ -93,6 +93,7 @@ public class ManageUserServlet extends HttpServlet {
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
         request.setAttribute("noOfRecords", noOfRecords);
+        request.setAttribute("url", "manageUser");
         request.getRequestDispatcher("views/manageUser.jsp").forward(request, response);
     }
 
@@ -137,7 +138,7 @@ public class ManageUserServlet extends HttpServlet {
         for (User user : users) {
             if (user.getRoleId() != 1) {
                 String roleName = getRoleName(user.getRoleId());
-                String status = user.isStatus() ? "Active" : "Inactive";
+                String status = user.isStatus() ? "Kích hoạt" : "Không kích hoạt";
 
                 htmlResponse.append("<tr>");
                 htmlResponse.append("<td>").append(user.getEmail()).append("</td>");
