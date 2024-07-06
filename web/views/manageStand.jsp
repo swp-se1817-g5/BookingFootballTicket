@@ -10,7 +10,7 @@ Author     : admin
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Bootstrap Simple Data Table</title>
+        <title>Quản Lý</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -234,11 +234,11 @@ Author     : admin
                                 <div class="row">
                                     <div class="col-md-4">
                                         <form action="manageStand" method="get" id="searchForm">
-                                            <input id="searchInputForm" name="search" type="text" class="form-control radius-md" placeholder="Search by name&hellip;">
+                                            <input id="searchInputForm" name="search" type="text" class="form-control radius-md" placeholder="Tìm theo tên&hellip;">
                                         </form>
                                     </div>
                                     <div class="col-sm-8">
-                                        <a type="button" href="#createStandModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Create Stand</span></a>
+                                        <a type="button" href="#createStandModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Thêm Khán Đài</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -246,8 +246,8 @@ Author     : admin
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Stand Name</th>
-                                        <th>Actions</th>
+                                        <th>Tên Khán Đài</th>
+                                        <th>Chỉnh Sửa</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -279,14 +279,14 @@ Author     : admin
                         </div>
                         <div class="modal-body">	
                             <div class="form-group">
-                                <label>Stand Name</label>
+                                <label>Tên Khán Đài</label>
                                 <input id="standNameInput" name="standName" type="text" class="form-control" maxlength="50" required>
                                 <span id="standNameInputError" class="text-danger"></span> 
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Create">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Đóng">
+                            <input type="submit" class="btn btn-success" value="Lưu">
                         </div>
                     </form>
                 </div>
@@ -299,44 +299,44 @@ Author     : admin
                 <div class="modal-content">
                     <form id="updateStandForm" action="updateStand" method="post">
                         <div class="modal-header">						
-                            <h4 class="modal-title">Update Stand</h4>
+                            <h4 class="modal-title">Cập Nhật Khán Đài</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Stand ID</label>
+                                <label>ID</label>
                                 <input id="standId" name="standId" readonly type="number" class="form-control" required>
                                 <span id="standIdError" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label>Stand Name</label>
+                                <label>Tên Khán Đài</label>
                                 <input id="standName" name="standName" maxlength="50" type="text" class="form-control" required>
                                 <span id="standNameError" class="text-danger"></span>
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label>Created By</label>
+                                    <label>Người Thêm</label>
                                     <input id="createdBy" readonly="" class="form-control">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label>Created Date</label>
+                                    <label>Ngày Thêm</label>
                                     <input id="createdDate" readonly="" class="form-control">
                                 </div> 
                             </div>
                             <div class="row">
                                 <div class="form-group col-sm-6">
-                                    <label>Updated By</label>
+                                    <label>Người Cập Nhật Cuối</label>
                                     <input id="updatedBy" readonly="" class="form-control">
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <label>Last Updated Date</label>
+                                    <label>Ngày Cập Nhật Cuối</label>
                                     <input id="lastUpdatedDate" readonly="" class="form-control">
                                 </div>    
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Update">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Đóng">
+                            <input type="submit" class="btn btn-success" value="Lưu">
                         </div>
                     </form>
                 </div>
@@ -361,12 +361,12 @@ Author     : admin
                 if (updated !== 'null' && updated !== '') {
                     var toast = $('#toastNotification');
                     if (updated === "true") {
-                        toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Stand updated successfully.');
+                        toast.find('#toastTitle').text('Thành Công');
+                        toast.find('#toastMessage').text('Cập nhật thành công.');
                         toast.addClass('success').removeClass('error');
                     } else if (updated === "false") {
-                        toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to update stand.');
+                        toast.find('#toastTitle').text('Lỗi');
+                        toast.find('#toastMessage').text('Cập nhật thất bại.');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
@@ -379,12 +379,12 @@ Author     : admin
                 if (created !== 'null' && created !== '') {
                     var toast = $('#toastNotification');
                     if (created === "true") {
-                        toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Stand created successfully.');
+                        toast.find('#toastTitle').text('Thành Công');
+                        toast.find('#toastMessage').text('Thêm thành công.');
                         toast.addClass('success').removeClass('error');
                     } else if (created === "false") {
-                        toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to create stand.');
+                        toast.find('#toastTitle').text('Lỗi');
+                        toast.find('#toastMessage').text('Thêm thất bại');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
@@ -397,12 +397,12 @@ Author     : admin
                 if (deleted !== 'null' && deleted !== '') {
                     var toast = $('#toastNotification');
                     if (deleted === "true") {
-                        toast.find('#toastTitle').text('Success');
-                        toast.find('#toastMessage').text('Stand deleted successfully.');
+                        toast.find('#toastTitle').text('Thành Công');
+                        toast.find('#toastMessage').text('Xoá thành công.');
                         toast.addClass('success').removeClass('error');
                     } else if (deleted === "false") {
-                        toast.find('#toastTitle').text('Error');
-                        toast.find('#toastMessage').text('Failed to delete stand.');
+                        toast.find('#toastTitle').text('Lỗi');
+                        toast.find('#toastMessage').text('Xoá thất bại.');
                         toast.addClass('error').removeClass('success');
                     }
                     toast.toast('show');
@@ -428,10 +428,10 @@ Author     : admin
                     var empty = standName === "";
                     var duplicate = stands.some(stand => stand.standName.toLowerCase() === standName);
                     if (empty) {
-                        $('#standNameInputError').text('Can not be empty or blank!');
+                        $('#standNameInputError').text('Vui lòng nhập thông tin, không được để chống!');
                         event.preventDefault();
                     } else if (duplicate) {
-                        $('#standNameInputError').text('Stand name already exists. Please choose a different name.');
+                        $('#standNameInputError').text('Khán đài đã tồn tại, vui lòng chọn tên khác!');
                         event.preventDefault();
                     } else {
                         $('#standNameInputError').text('');
@@ -446,10 +446,10 @@ Author     : admin
                     var originalStand = stands.find(stand => stand.standId == standId);
                     var duplicate = stands.some(stand => stand.standName.toLowerCase() === standName && stand.standId != standId);
                     if (empty) {
-                        $('#standNameError').text('Can not be empty or blank!');
+                        $('#standNameError').text('Vui lòng nhập thông tin, không được để chống!');
                         event.preventDefault();
                     } else if (standName !== originalStand.standName.toLowerCase() && duplicate) {
-                        $('#standNameError').text('Stand name already exists. Please choose a different name.');
+                        $('#standNameError').text('Khán đài đã tồn tại, vui lòng chọn tên khác!');
                         event.preventDefault();
                     } else {
                         $('#standNameError').text('');

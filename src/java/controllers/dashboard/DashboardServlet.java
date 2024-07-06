@@ -2,12 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.common_access;
+package controllers.dashboard;
 
-import dal.FootballClubDAO;
-import dal.MatchDAO;
-import dal.MatchSeatDAO;
-import dal.SeasonDAO;
+import dal.DashboardDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,16 +12,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.format.DateTimeFormatter;
-import models.Match;
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
 
 /**
  *
- * @author thuat
+ * @author admin
  */
-@WebServlet(name = "PublicMatchDetailServlet", urlPatterns = {"/matchDetail"})
-public class PublicMatchDetailServlet extends HttpServlet {
+@WebServlet(name = "DashboardServlet", urlPatterns = {"/dashboard"})
+public class DashboardServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +40,10 @@ public class PublicMatchDetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PublicMatchDetailServlet</title>");
+            out.println("<title>Servlet DashboardServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet PublicMatchDetailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DashboardServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,27 +61,24 @@ public class PublicMatchDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id_string = request.getParameter("matchId");
-        int id = 1;
-        try {
-            id = Integer.parseInt(id_string);
-        } catch (Exception e) {
-        }
-        Match match = MatchDAO.INSTANCE.getMatcheById(id_string);
-        String dateTimeString = match.getTime();
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, inputFormatter);
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-        String date = dateTime.toLocalDate().format(dateFormatter);
-        String time = dateTime.toLocalTime().format(timeFormatter);
-
-        request.setAttribute("date", date);
-        request.setAttribute("time", time);
-        request.setAttribute("match", match);
-        request.setAttribute("seatByMatch", MatchSeatDAO.INSTANCE.getMatchSeatbyMatch(id));
-        request.getRequestDispatcher("views/newjsp1.jsp").forward(request, response);
+        LocalDate now = LocalDate.now();
+        int monthNow = now.getMonthValue();
+        int yearNow = now.getYear();
+    
+        request.setAttribute("totalRevenueThisMonth", convertNumber(DashboardDAO.getInstance().getTotalRevenue(monthNow, yearNow)));
+        request.setAttribute("totalRevenue",convertNumber(DashboardDAO.getInstance().getTotalRevenue()));
+        request.setAttribute("totalTicketsSoldThisMonth", convertNumber(new BigDecimal(DashboardDAO.getInstance().getTotalTicketsSold(monthNow, yearNow))));
+        request.setAttribute("totalTicketsSold", convertNumber(new BigDecimal(DashboardDAO.getInstance().getTotalTicketsSold())));
+        request.setAttribute("url", "dashboard");
+        request.getRequestDispatcher("views/dashboard.jsp").forward(request, response);
     }
+
+    private String convertNumber(BigDecimal number) {
+        DecimalFormat formatter = new DecimalFormat("#,###");
+        return formatter.format(number);
+    }
+    
+    
 
     /**
      * Handles the HTTP <code>POST</code> method.
