@@ -151,11 +151,16 @@
                 height: 50px; /* Điều chỉnh chiều cao logo tùy ý */
                 margin-right: 10px;
             }
+            .headerr {
+                margin-bottom: 160px;
+            }
         </style>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
-        <div class="container mt-5">
+        <div class="headerr">
+            <jsp:include page="header.jsp" />
+        </div>
+        <div class="container">
             <div class="row border-custom pb-3 mb-3">
                 <div class="col-md-2 text-center team-logos badge">
                     <img src="${match.team1.img}" alt="${match.team1.clubName}" />
