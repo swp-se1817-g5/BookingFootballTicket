@@ -333,9 +333,7 @@
         </div>
         <!-- Footer -->
         <footer class="footer">
-            <div class="container">
-                <p>&copy; 2024 Your Website. All rights reserved.</p>
-            </div>
+            <jsp:include page="footer.jsp"/>
         </footer>
 
         <!-- Toast Notification -->
@@ -350,17 +348,14 @@
         <script>
             $(document).ready(function () {
                 var toast = $('#toastNotification');
-
                 // Function to show toast notification
                 function showToast(title, message, type) {
                     toast.find('#toastTitle').text(title);
                     toast.find('#toastMessage').text(message);
                     toast.removeClass('success error').addClass(type);
-
                     // Show the toast
                     toast.toast('show');
                 }
-
                 // Check session attributes and show toast if set
             <% if (session.getAttribute("isRegister") != null && (boolean) session.getAttribute("isRegister")) { %>
                 showToast('Thành công', 'Đăng ký thành công!', 'success');
