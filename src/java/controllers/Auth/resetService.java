@@ -73,7 +73,7 @@ public class resetService {
             return false;
         }
     }
-    public boolean sendEmailQr(String to, String qrCodeData, String name) {
+    public boolean sendEmailQr(String to, String qrCode, String name) {
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
@@ -97,7 +97,7 @@ public class resetService {
             msg.setFrom(from);
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
             msg.setSubject("BookingFootballTicket", "UTF-8");
-            String content = "<h1>Xin chào " + name + ", </h1>" + "<p>" + qrCodeData + "</p>";
+            String content = "<h1>Xin chào " + name + ", </h1>" + "<p>" + qrCode + "</p>";
             msg.setContent(content, "text/html; charset=UTF-8");
             Transport.send(msg);
             System.out.println("Gửi thành công!");
