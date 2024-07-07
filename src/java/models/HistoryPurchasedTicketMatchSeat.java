@@ -7,7 +7,7 @@ package models;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
+
 
 /**
  *
@@ -31,6 +31,7 @@ public class HistoryPurchasedTicketMatchSeat {
     private String createdBy;
     private LocalDateTime createdDate;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yy");
 
     public HistoryPurchasedTicketMatchSeat() {
     }
@@ -83,6 +84,9 @@ public class HistoryPurchasedTicketMatchSeat {
 
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
+    }
+    public String getStartTimeConverted(){
+        return startTime != null ? timeFormatter.format(startTime) : null;
     }
 
     public String getSeasonName() {
