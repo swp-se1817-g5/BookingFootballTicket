@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
  *
  * @author nguye
  */
-//@WebServlet(name = "ManageHomePageServlet", urlPatterns = {"/homePage"})
+@WebServlet(name = "ManageHomePageServlet", urlPatterns = {"/homePage"})
 public class ManageHomePageServlet extends HttpServlet {
 
     /**
@@ -64,7 +64,7 @@ public class ManageHomePageServlet extends HttpServlet {
         request.setAttribute("getFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
         request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
         request.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
-        request.setAttribute("getListNews", NewsDAO.getInstance().getlistNews(""));
+        request.setAttribute("getListNews", NewsDAO.getInstance().getlistNewsInHomePage(""));
         request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
     }
 

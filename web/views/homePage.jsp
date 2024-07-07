@@ -295,38 +295,42 @@
                 <!-- Tin Tức -->
                 <div class="section-header justify-content-center">
                     <h2 class="mb-3">Tin Tức Mới Nhất</h2>
-
                 </div>
                 <div class="row">
-                    <c:forEach items="${getListNews}" var="n">
+                    <c:forEach items="${getListNews}" var="n" varStatus="status" end="7">
                         <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <img src="${n.image}" class="card-img-top">
-                                <div class="card-body">
-                                    <c:choose>
-                                        <c:when test="${fn:length(n.title) > 30}">
-                                            ${fn:substring(n.title, 0, 30)}...
-                                        </c:when>
-                                        <c:otherwise>
-                                            ${n.title}
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <c:choose>
-                                        <c:when test="${fn:length(n.content) > 30}">
-                                            ${fn:substring(n.title, 0, 30)}...
-                                        </c:when>
-                                        <c:otherwise>
-                                            ${n.content}
-                                        </c:otherwise>
-                                    </c:choose>
+                            <a href="publicNewsDetails?newsId=${n.newsId}">
+                                <div class="card">
+                                    <img style="width: 349px" height="auto" src="${n.image}" class="card-img-top">
+                                    <div class="card-body">
+                                        <h4>
+                                            <c:choose>
+                                                <c:when test="${fn:length(n.title) > 60}">
+                                                    ${fn:substring(n.title, 0, 60)}...
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${n.title}
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </h4>
+                                        </br>
+                                        <c:choose>
+                                            <c:when test="${fn:length(n.content) > 70}">
+                                                ${fn:substring(n.content, 0, 70)}...
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${n.content}
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </c:forEach>
                 </div>
             </div>
             <div class="text-center mb-5">
-                <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                <a href="publicListNews" class="btn btn-outline-secondary">Xem Thêm</a>
             </div>
         </div>
         <!-- Footer -->
