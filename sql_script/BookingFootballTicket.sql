@@ -253,3 +253,5 @@ CREATE TABLE News (
 	FOREIGN KEY (stateId) REFERENCES NewsState(stateId)
 );
 GO
+ALTER TABLE [HistoryPurchasedTicketMatchSeat]
+ADD orderStatus NVARCHAR(50) DEFAULT 'unPayment';

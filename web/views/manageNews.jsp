@@ -353,28 +353,24 @@ Author     : duong
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Title</label>
+                                <label>Tiêu Đề</label>
                                 <textarea name="title" class="form-control" required rows="2"></textarea>
                             </div>
                             <div class="form-group" style="word-break: break-word">
-                                <label>Content</label>
+                                <label>Nội Dung</label>
                                 <textarea name="content" class="form-control" rows="5" required></textarea>
                             </div>
                             <div class="form-group" style="word-break: break-word">
-                                <label>Conclusion</label>
-                                <textarea name="conclusion" class="form-control" rows="5" required></textarea>
-                            </div>
-                            <div class="form-group" style="word-break: break-word">
-                                <label>Image</label>
+                                <label>Hình Ảnh</label>
                                 <br>
                                 <input type="file" name="image" required=""><br>
                             </div>
                             <div class="form-group" style="word-break: break-word">
-                                <label>Conclusion</label>
+                                <label>Kết Luận</label>
                                 <textarea name="conclusion" class="form-control" rows="5" required></textarea>
                             </div>
                             <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
-                                <label>State</label>
+                                <label>Tình Trạng</label>
                                 <input name="stateId" type="radio" required checked value="2">Show
                                 <input name="stateId" type="radio" required value="1">Hide
                             </div>
@@ -387,60 +383,7 @@ Author     : duong
                 </div>
             </div>
         </div>
-        <!--------------------------------------------------------------------------------------------------------------------------------------------->
-
-        <c:forEach items="${sessionScope.getListNews}" var="n">
-            <div id="viewDetailsNews${n.newsId}" class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">			
-                            <h4 class="modal-title">View Details</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">	
-                            <div class="form-group">
-                                <label>News ID</label>
-                                <input name="newsId" class="form-control" value="${n.newsId}" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Title</label>
-                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.title}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Content</label>
-                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.content}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Image</label><br>
-                                <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
-                            </div>
-                            <div class="form-group">
-                                <label>Conclusion</label>
-                                <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${n.conclusion}</p>
-                            </div>
-                            <div class="form-group">
-                                <label>Create Date</label>
-                                <input type="datetime-local" name="createDate" class="form-control" value="${n.createdDate}" readonly>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Create By</label>
-                                <input name="createBy" class="form-control" value="${n.createBy}" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Last Update Date</label>
-                                <input type="datetime-local" name="lastUpdateDate" class="form-control" style="border: none" value="${n.lastUpdateDate}" readonly>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Update By</label>
-                                <input name="updateBy" class="form-control" value="${n.updateBy}" readonly>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </c:forEach>
+     
         <!--------------------------------------------------------------------------------------------------------------------------------------------->
         <c:forEach items="${sessionScope.getListNews}" var="n">
             <div id="updateNews${n.newsId}" class="modal fade">
@@ -448,26 +391,26 @@ Author     : duong
                     <div class="modal-content">
                         <form action="updateNews" method="post" enctype="multipart/form-data">
                             <div class="modal-header">						
-                                <h4 class="modal-title">Update News</h4>
+                                <h4 class="modal-title">Cập Nhật Tin Tức</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <div class="modal-body">					
                                 <input name="newsId" class="form-control" value="${n.newsId}" type="hidden">
                                 <div class="form-group">
-                                    <label>Title</label>
+                                    <label>Tiêu Đề</label>
                                     <input name="title" class="form-control" value="${n.title}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Content</label>
+                                    <label>Nội Dung</label>
                                     <input name="content" class="form-control" value="${n.content}">
                                 </div>
                                 <div class="form-group">
-                                    <label>Conclusion</label>
-                                    <input name="conclusion" class="form-control" value="${n.conclusion}">
+                                    <label>Hình Ảnh</label><br>
+                                    <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
                                 </div>
                                 <div class="form-group">
-                                    <label>Image</label><br>
-                                    <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
+                                    <label>Kết Luận</label>
+                                    <input name="conclusion" class="form-control" value="${n.conclusion}">
                                 </div>
                                 <div class="form-group" style="word-break: break-word">
                                     <input type="file" name="image">

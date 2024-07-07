@@ -13,12 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.HistoryPurchasedTicketMatchSeat;
 import models.HistoryPurchasedTicketSeasonSeat;
-import models.MatchSeat;
-import models.Season;
-import models.SeasonSeat;
-import models.SeatClass;
 import models.TicketStatus;
-import models.User;
 
 /**
  *
@@ -56,7 +51,7 @@ public class HistoryPurchasedTicketDAO {
     private static final String START_DATE = "startDate";
     private static final String END_DATE = "endDate";
 
-    private HistoryPurchasedTicketDAO() {
+    public HistoryPurchasedTicketDAO() {
         // Private constructor to prevent instantiation
         connect = new DBContext().connect;
     }

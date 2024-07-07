@@ -36,7 +36,7 @@
                     <div class="account-container">
                         <div class="heading-bx left">
                             <h2 class="title-head">Đăng <span>Ký</span></h2>
-                            <p>Login Your Account <a href="./login">Click here</a></p>
+                            <p>Đăng nhập tài khoản của bạn <a href="./login">Ở đây</a></p>
                         </div>
                         <c:if test="${not empty errorMessage}">
                             <p style="color:red">${errorMessage}</p>

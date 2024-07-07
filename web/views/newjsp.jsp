@@ -1,3 +1,9 @@
+<%-- 
+    Document   : newjsp
+    Created on : Jul 5, 2024, 2:46:50 PM
+    Author     : thuat
+--%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -110,22 +116,6 @@
                 z-index: 1; /* Đặt lớp phủ lên trên ảnh */
             }
 
-            .toast {
-                position: fixed;
-                bottom: 20px;
-                right: 20px;
-                min-width: 200px;
-                z-index: 10000;
-            }
-            .toast.success .toast-header {
-                background-color: #28a745;
-                color: white;
-            }
-            .toast.error .toast-header {
-                background-color: #dc3545;
-                color: white;
-            }
-
 
         </style>
     </head>
@@ -183,7 +173,6 @@
                     <h2>Nội dung chữ giữa ảnh</h2>
                 </div>
             </div>
-
             <div class="container mt-5">
                 <!-- Các Đội Bóng Nổi Bật -->
                 <div class="section-header justify-content-center ">
@@ -337,63 +326,30 @@
                 <p>&copy; 2024 Your Website. All rights reserved.</p>
             </div>
         </footer>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
 
-        <!-- Toast Notification -->
-        <div class="toast" id="toastNotification" data-delay="3000" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="mr-auto" id="toastTitle"></strong>
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
-            </div>
-            <div class="toast-body" id="toastMessage"></div>
-        </div>
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+                apiKey: "AIzaSyAauoa0n0rCnSVbYKysrpLde86jfhzOoCs",
+                authDomain: "footballbookingticket-735ff.firebaseapp.com",
+                projectId: "footballbookingticket-735ff",
+                storageBucket: "footballbookingticket-735ff.appspot.com",
+                messagingSenderId: "1064562331293",
+                appId: "1:1064562331293:web:42575a40968f6be34d4e74",
+                measurementId: "G-244XHRKFSK"
+            };
 
-        <script>
-            $(document).ready(function () {
-                var toast = $('#toastNotification');
-
-                // Function to show toast notification
-                function showToast(title, message, type) {
-                    toast.find('#toastTitle').text(title);
-                    toast.find('#toastMessage').text(message);
-                    toast.removeClass('success error').addClass(type);
-
-                    // Show the toast
-                    toast.toast('show');
-                }
-
-                // Check session attributes and show toast if set
-            <% if (session.getAttribute("isRegister") != null && (boolean) session.getAttribute("isRegister")) { %>
-                showToast('Thành công', 'Đăng ký thành công!', 'success');
-                setTimeout(function () {
-                    toast.toast('hide');
-                }, 3000); // 3000 milliseconds = 3 seconds
-            <% session.removeAttribute("isRegister"); %>
-            <% } %>
-
-            <% if (session.getAttribute("changePassword") != null && (boolean) session.getAttribute("changePassword")) { %>
-                showToast('Thành công', 'Đổi mật khẩu thành công!', 'success');
-                setTimeout(function () {
-                    toast.toast('hide');
-                }, 3000); // 3000 milliseconds = 3 seconds
-            <% session.removeAttribute("changePassword"); %>
-            <% } %>
-
-            <% if (session.getAttribute("isFirstLogin") != null && (boolean) session.getAttribute("isFirstLogin")) { %>
-                showToast('Thành công', 'Đăng nhập thành công!', 'success');
-                setTimeout(function () {
-                    toast.toast('hide');
-                }, 3000); // 3000 milliseconds = 3 seconds
-            <% session.removeAttribute("isFirstLogin"); %>
-            <% } %>
-
-            <% if (session.getAttribute("resetPassword") != null && (boolean) session.getAttribute("resetPassword")) { %>
-                showToast('Thành công', 'Đặt lại mật khẩu thành công!', 'success');
-                setTimeout(function () {
-                    toast.toast('hide');
-                }, 3000); // 3000 milliseconds = 3 seconds
-            <% session.removeAttribute("resetPassword"); %>
-            <% }%>
-            });
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
         </script>
     </body>
 </html>
