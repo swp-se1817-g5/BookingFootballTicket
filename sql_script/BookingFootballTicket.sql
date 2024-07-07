@@ -237,7 +237,7 @@ GO
 -- Table News
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
-    title VARCHAR(255),
+    title NVARCHAR(255),
     content NVARCHAR(MAX),
 	image VARCHAR(255),
 	conclusion NVARCHAR(MAX),
@@ -255,3 +255,14 @@ CREATE TABLE News (
 GO
 ALTER TABLE [HistoryPurchasedTicketMatchSeat]
 ADD orderStatus NVARCHAR(50) DEFAULT 'unPayment';
+
+
+CREATE TABLE HoldTicket (
+    id INT PRIMARY KEY IDENTITY (1,1),
+    matchSeatId INT,
+    email VARCHAR(50),
+    holdTimestamp DATETIME,
+    holdQuantity INT,
+    FOREIGN KEY (matchSeatId) REFERENCES MatchSeat(matchSeatId),
+    FOREIGN KEY (email) REFERENCES [User](email)
+);

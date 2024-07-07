@@ -84,11 +84,13 @@ public class vnpayReturn extends HttpServlet {
                 }
                 MatchSeatDAO.INSTANCE.updateStatus(his);
                 request.getSession().setAttribute("transResult", transSuccess);
-                //dieu huong ra trang order thanh cong
-                response.sendRedirect("homePage");
-            } else {
-                //RETURN PAGE ERROR
-                System.out.println("GD KO HOP LE (invalid signature)");
+                if (transSuccess) {
+
+                    response.sendRedirect("homePage");
+                } else {
+
+                    response.sendRedirect("http://localhost:8080/BookingFootballTicket/matchDetail?matchId=1");
+                }
             }
         }
     }

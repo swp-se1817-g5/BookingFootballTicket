@@ -80,26 +80,20 @@ public class CreateNewNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         HttpSession session = request.getSession();
-        PrintWriter out = response.getWriter();
-        String stateId_raw = request.getParameter("stateId");
         try {
-//            User createdByRaw = (User) session.getAttribute("currentUser");
-            User createdByRaw = new User();
-            createdByRaw.setEmail("duongnche173192@fpt.edu.vn");
+            User createdByRaw = (User) session.getAttribute("currentUser");
             String title = request.getParameter("title");
             String content = request.getParameter("content");
             String conclusion = request.getParameter("conclusion");
             NewsStatus newsStatus = new NewsStatus();
             newsStatus.setStatusId(2);
             NewsState newsState = new NewsState();
-            newsState.setStateId(Integer.parseInt(stateId_raw));
+            newsState.setStateId(1);
             Part part = request.getPart("image");
             String imagePath = null;
             if ((part == null) || (part.getSubmittedFileName().trim().isEmpty()) || (part.getSubmittedFileName() == null)) {
                 imagePath = "";
-                out.print("if");
             } else {
                 String path = request.getServletContext().getRealPath("/images/news");
                 File dir = new File(path);
