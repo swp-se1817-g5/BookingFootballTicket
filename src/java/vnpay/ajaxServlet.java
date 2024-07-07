@@ -1,8 +1,7 @@
 package vnpay;
 
 import Config.Config;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import dal.DaoBooking;
 import dal.MatchSeatDAO;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -22,14 +21,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.ByteArrayOutputStream;
-import java.io.PrintWriter;
+import java.awt.print.Book;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import models.BookingTicket;
 import models.HistoryPurchasedTicketMatchSeat;
 import models.User;
-import net.glxn.qrgen.QRCode;
 
 @WebServlet("/ajaxServlet")
 public class ajaxServlet extends HttpServlet {
@@ -37,7 +35,6 @@ public class ajaxServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        //email, seatClassName (hang ve), standName (khan dai), quantity (khu vuc), seatName
         if (session.getAttribute("currentUser") == null) {
             resp.sendRedirect("login");
             return;
@@ -52,20 +49,32 @@ public class ajaxServlet extends HttpServlet {
         String priceStr = req.getParameter("price");
         BigDecimal price = new BigDecimal(priceStr);
         String orderStatus = "unPayment";
-
+        String matchIdStr = req.getParameter("matchId");
+        String matchSeatIdStr = req.getParameter("matchSeatId");
+        
+        
         String qrCode = UUID.randomUUID().toString();
 
-        HistoryPurchasedTicketMatchSeat his = new HistoryPurchasedTicketMatchSeat(
-                quantity, Integer.parseInt(quantity), standName, seatClassName, qrCode, price, orderStatus,
-                LocalDateTime.now());
-        MatchSeatDAO.INSTANCE.addOrderTicket(his);
-        int insertId = MatchSeatDAO.INSTANCE.getNewId();
+//        HistoryPurchasedTicketMatchSeat his = new HistoryPurchasedTicketMatchSeat(
+//                quantity, Integer.parseInt(quantity), standName, seatClassName, qrCode, price,
+//                LocalDateTime.now());
+        
+        BookingTicket booking = new BookingTicket(Integer.parseInt(quantity),
+                Integer.parseInt(matchIdStr), 
+                Integer.parseInt(matchSeatIdStr), 
+                seatName, standName, seatClassName, email, qrCode, price, orderStatus,
+                LocalDateTime.now()
+        );
+        
+        DaoBooking.INSTANCE.addOrderTicket(booking);
+        
+        int insertId = DaoBooking.INSTANCE.getNewId();
         if (insertId < 0) {
             resp.sendRedirect("login");
 //         resp.sendRedirect("orderError");
             return;
         }
-
+ 
         String orderType = "other";
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
@@ -82,8 +91,8 @@ public class ajaxServlet extends HttpServlet {
         vnp_Params.put("vnp_TmnCode", vnp_TmnCode);
         vnp_Params.put("vnp_Amount", String.valueOf(amount));
         vnp_Params.put("vnp_CurrCode", "VND");
-
-        vnp_Params.put("vnp_BankCode", "NCB");
+        
+        vnp_Params.put("vnp_BankCode", "");
         vnp_Params.put("vnp_TxnRef", vnp_TxnRef);
         vnp_Params.put("vnp_OrderInfo", "Thanh toan don hang:" + vnp_TxnRef);
         vnp_Params.put("vnp_OrderType", orderType);
@@ -102,7 +111,7 @@ public class ajaxServlet extends HttpServlet {
         String vnp_CreateDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_CreateDate", vnp_CreateDate);
 
-        cld.add(Calendar.MINUTE, 15);
+        cld.add(Calendar.MINUTE, 1);
         String vnp_ExpireDate = formatter.format(cld.getTime());
         vnp_Params.put("vnp_ExpireDate", vnp_ExpireDate);
 

@@ -187,9 +187,8 @@ public class MatchSeatDAO {
                 + "           ,[email]\n"
                 + "           ,[qrCode]\n"
                 + "           ,[price]\n"
-                + "           ,[createdDate]\n"
-                + "           ,[orderStatus])\n"
-                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "           ,[createdDate])\n"
+                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement st = con.prepareStatement(sql);) {
             st.setString(1, his.getSeatName());
             st.setInt(2, his.getQuantity());
@@ -199,7 +198,6 @@ public class MatchSeatDAO {
             st.setString(6, his.getQrCode());
             st.setBigDecimal(7, his.getPrice());
             st.setTimestamp(8, Timestamp.valueOf(getFormatDate(LocalDateTime.now())));
-            st.setString(9, his.getOrderStatus());
             st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("error here");
@@ -241,20 +239,6 @@ public class MatchSeatDAO {
         DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String formattedDate = myDateObj.format(myFormatObj);
         return formattedDate;
-    }
-
-    public boolean updateStatus(HistoryPurchasedTicketMatchSeat his) {
-        String sql = "UPDATE [dbo].[HistoryPurchasedTicketMatchSeat]\n"
-                + "set [orderStatus] = ?\n"
-                + "where [ticketMatchSeatId] = ?";
-        try (PreparedStatement st = con.prepareStatement(sql);) {
-            st.setString(1, his.getOrderStatus());
-            st.setInt(2, his.getTicketId());
-            return st.executeUpdate() > 0;
-        } catch (SQLException ex) {
-            System.out.println(ex);
-        }
-        return false;
     }
 
     public static void main(String[] args) {

@@ -83,6 +83,9 @@ public class SummaryTicket extends HttpServlet {
         String numberOfTicketString = request.getParameter("numberOfTicket");
         String matchSeatIdString = request.getParameter("matchSeatId");
         String seatIdString = request.getParameter("seatId");
+        String matchId = request.getParameter("mathId");
+        
+        
         int numberOfTicket;
         int matchSeatId;
         int seatId;
@@ -94,7 +97,9 @@ public class SummaryTicket extends HttpServlet {
             request.setAttribute("matchSeatId", matchSeatId);
             request.setAttribute("numberOfTicket", numberOfTicket);
 
-            Match match = MatchDAO.INSTANCE.getMatcheById(MatchSeatDAO.INSTANCE.getMatchSeatbyMatchSeatId(seatId).getMatch() + "");
+            Match match = MatchDAO.INSTANCE.getMatcheById(
+                    MatchSeatDAO.INSTANCE.getMatchSeatbyMatchSeatId(seatId).getMatch()+"");
+            
             String dateTimeString = match.getTime();
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, inputFormatter);
@@ -107,8 +112,10 @@ public class SummaryTicket extends HttpServlet {
             request.setAttribute("date", date);
             request.setAttribute("time", time);
             request.setAttribute("match", match);
+            request.setAttribute("matchId", matchId);
+            request.setAttribute("seatId", seatIdString);
+            
             request.setAttribute("seatByMatch", MatchSeatDAO.INSTANCE.getMatchSeatbyMatch(matchSeatId));
-
             request.getRequestDispatcher("views/ticketSummary.jsp").forward(request, response);
         } catch (Exception e) {
 

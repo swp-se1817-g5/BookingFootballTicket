@@ -253,16 +253,20 @@ CREATE TABLE News (
 	FOREIGN KEY (stateId) REFERENCES NewsState(stateId)
 );
 GO
-ALTER TABLE [HistoryPurchasedTicketMatchSeat]
-ADD orderStatus NVARCHAR(50) DEFAULT 'unPayment';
 
-
-CREATE TABLE HoldTicket (
-    id INT PRIMARY KEY IDENTITY (1,1),
-    matchSeatId INT,
+CREATE TABLE BookingTicket (
+	bookingId INT PRIMARY KEY IDENTITY (1,1),
+	seatName NVARCHAR(50),
+	quantity INT,
+	standName NVARCHAR(50),
+	seatClassName NVARCHAR(50),
     email VARCHAR(50),
-    holdTimestamp DATETIME,
-    holdQuantity INT,
-    FOREIGN KEY (matchSeatId) REFERENCES MatchSeat(matchSeatId),
+	qrCode VARCHAR(255),
+	price DECIMAL(10, 0),
+	status NVARCHAR(255),
+	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
+	matchId INT,
+	matchSeatId INT,
+	FOREIGN KEY (matchId) REFERENCES [Match](matchId),
     FOREIGN KEY (email) REFERENCES [User](email)
 );

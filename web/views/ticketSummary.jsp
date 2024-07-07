@@ -239,7 +239,6 @@
                                         </label>
                                     </div>
                                 </div>
-                                <hr>
                                 <input hidden
                                        name="seatClassName"
                                        value="${seat.seatarea.seatClass.seatClassName}" type="text"
@@ -247,6 +246,16 @@
                                 <input hidden
                                        name="price"
                                        value="${seat.price * numberOfTicket}" type="text" class="form-control">
+                                <input hidden
+                                       name="matchId"
+                                       value="${matchId}"
+                                       type="text" class="form-control">
+                                <input hidden
+                                       name="matchSeatId"
+                                       value="${seat.matchSeatId}"
+                                       type="text" class="form-control">    
+                                <hr>
+                               
                                 <button type="submit" class="btn btn-primary w-100">
                                     THANH TOÁN
                                 </button>

@@ -527,6 +527,7 @@
                                                         </c:choose>
                                                     </select>
                                                 </div>
+                                                <input name="mathId" value="${matchId}" hidden/>
                                                 <button class="btn btn-success w-100" type="submit">Mua ngay</button>
                                             </div>
                                         </div>
