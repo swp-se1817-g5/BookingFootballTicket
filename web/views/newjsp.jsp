@@ -173,7 +173,6 @@
                     <h2>Nội dung chữ giữa ảnh</h2>
                 </div>
             </div>
-
             <div class="container mt-5">
                 <!-- Các Đội Bóng Nổi Bật -->
                 <div class="section-header justify-content-center ">
@@ -327,8 +326,30 @@
                 <p>&copy; 2024 Your Website. All rights reserved.</p>
             </div>
         </footer>
-
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script type="module">
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+                apiKey: "AIzaSyAauoa0n0rCnSVbYKysrpLde86jfhzOoCs",
+                authDomain: "footballbookingticket-735ff.firebaseapp.com",
+                projectId: "footballbookingticket-735ff",
+                storageBucket: "footballbookingticket-735ff.appspot.com",
+                messagingSenderId: "1064562331293",
+                appId: "1:1064562331293:web:42575a40968f6be34d4e74",
+                measurementId: "G-244XHRKFSK"
+            };
+
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+        </script>
     </body>
 </html>
