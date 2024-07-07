@@ -5,6 +5,9 @@
 
 package controllers.common_access;
 
+import dal.FootballClubDAO;
+import dal.MatchDAO;
+import dal.SeasonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,9 +18,9 @@ import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author thuat
+ * @author Vinh
  */
-@WebServlet(name="PublicListMatchServlet", urlPatterns={"/listMatch"})
+@WebServlet(name="PublicListMatchServlet", urlPatterns={"/publicListMatch"})
 public class PublicListMatchServlet extends HttpServlet {
    
     /** 
@@ -55,7 +58,12 @@ public class PublicListMatchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.setAttribute("matches", MatchDAO.INSTANCE.getMatches());
+        request.setAttribute("seasons", SeasonDAO.INSTANCE.getAllseason());
+        request.setAttribute("types", MatchDAO.INSTANCE.getMatchTypes());
+        request.setAttribute("statusList", MatchDAO.INSTANCE.getMatchStatus());
+        request.setAttribute("footballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
+        request.getRequestDispatcher("views/publicListMatch.jsp").forward(request, response);
     } 
 
     /** 

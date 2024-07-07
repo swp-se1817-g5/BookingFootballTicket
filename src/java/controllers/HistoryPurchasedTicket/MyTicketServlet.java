@@ -2,10 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageRole;
+package controllers.HistoryPurchasedTicket;
 
-import dal.RoleDAO;
-import dal.UserDAO;
+import dal.HistoryPurchasedTicketDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,19 +13,20 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import models.Role;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.User;
-import org.apache.tomcat.jni.SSLContext;
 
 /**
  *
- * @author Vinh
+ * @author admin
  */
-@WebServlet(name = "ManageRoleServlet", urlPatterns = {"/manageRole"})
-public class ManageRoleServlet extends HttpServlet {
+@WebServlet(name = "MyTicketServlet", urlPatterns = {"/myTicket"})
+public class MyTicketServlet extends HttpServlet {
 
-    private static final int RECORDS_PER_PAGE = 10;
+    private static final int PAGE_SIZE = 10;
+    private int pageIndex = 1;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +45,10 @@ public class ManageRoleServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageRoleServlet</title>");
+            out.println("<title>Servlet MyTicketServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageRoleServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet MyTicketServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,26 +66,45 @@ public class ManageRoleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int page = 1;
-        if (request.getParameter("page") != null) {
-            page = Integer.parseInt(request.getParameter("page"));
-            if (page < 1) {
-                page = 1;
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("currentUser");
+        String email = user.getEmail();
+        String type = request.getParameter("type");
+        type = type == null ? "match" : type;
+        String startDate = request.getParameter("startDate");
+        startDate = startDate == null ? "" : startDate;
+        String endDate = request.getParameter("endDate");
+        endDate = endDate == null ? "" : endDate;
+        int totalRecords = 0;
+        if (type.equals("match")) {
+            try {
+                totalRecords = HistoryPurchasedTicketDAO.getInstance().getTotalRecords(startDate, endDate, email);
+            } catch (ParseException ex) {
+                Logger.getLogger(MyTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        String search = request.getParameter("search");
-        search = search == null ? "" : search.trim();
-        RoleDAO roleDAO = RoleDAO.getINSTANCE();
-        ArrayList<Role> roles = roleDAO.getRoles((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE);
-        int noOfRecords = roleDAO.getNoOfRecords();
-        int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
-
-        request.setAttribute("roles", roles);
-        request.setAttribute("noOfPages", noOfPages);
-        request.setAttribute("currentPage", page);
-        request.setAttribute("noOfRecords", noOfRecords);
-        request.setAttribute("search", search);
-        request.getRequestDispatcher("views/manageRole.jsp").forward(request, response);
+        int endPage = totalRecords / PAGE_SIZE;
+        if (totalRecords % PAGE_SIZE != 0 || totalRecords == 0) {
+            endPage++;
+        }
+        try {
+            String pageIndexRaw = request.getParameter("pageIndex");
+            if (pageIndexRaw != null) {
+                pageIndex = Integer.parseInt(pageIndexRaw);
+            }
+        } catch (Exception e) {
+        }
+        
+        if (type.equals("match")) {
+            try {
+                request.setAttribute("tickets", HistoryPurchasedTicketDAO.getInstance().paggingTickets(pageIndex, PAGE_SIZE, startDate, endDate, email));
+            } catch (ParseException ex) {
+                Logger.getLogger(MyTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        request.setAttribute("endPage", endPage);
+        request.setAttribute("pageIndex", pageIndex);
+        request.getRequestDispatcher("views/myTicket.jsp").forward(request, response);
     }
 
     /**
@@ -99,7 +118,7 @@ public class ManageRoleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        doGet(request, response);
+        processRequest(request, response);
     }
 
     /**

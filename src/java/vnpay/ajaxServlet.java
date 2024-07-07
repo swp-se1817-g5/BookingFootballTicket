@@ -22,12 +22,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.ByteArrayOutputStream;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import models.HistoryPurchasedTicketMatchSeat;
 import models.User;
+import net.glxn.qrgen.QRCode;
+import net.glxn.qrgen.image.ImageType;
 
 @WebServlet("/ajaxServlet")
 public class ajaxServlet extends HttpServlet {
@@ -35,7 +38,6 @@ public class ajaxServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        //email, seatClassName (hang ve), standName (khan dai), quantity (khu vuc), seatName
         if (session.getAttribute("currentUser") == null) {
             resp.sendRedirect("login");
             return;
@@ -52,6 +54,7 @@ public class ajaxServlet extends HttpServlet {
         String orderStatus = "unPayment";
         String qrCode = UUID.randomUUID().toString();
 
+        // Lưu thông tin mua vé vào cơ sở dữ liệu
         HistoryPurchasedTicketMatchSeat his = new HistoryPurchasedTicketMatchSeat(
                 quantity, Integer.parseInt(quantity), standName, seatClassName, qrCode, price, orderStatus,
                 LocalDateTime.now());
@@ -59,10 +62,10 @@ public class ajaxServlet extends HttpServlet {
         int insertId = MatchSeatDAO.INSTANCE.getNewId();
         if (insertId < 0) {
             resp.sendRedirect("login");
-//         resp.sendRedirect("orderError");
             return;
         }
 
+        // Chuẩn bị thông tin thanh toán VNPay
         String orderType = "other";
         String vnp_Version = "2.1.0";
         String vnp_Command = "pay";
@@ -130,6 +133,40 @@ public class ajaxServlet extends HttpServlet {
         String vnp_SecureHash = Config.hmacSHA512(Config.secretKey, hashData.toString());
         queryUrl += "&vnp_SecureHash=" + vnp_SecureHash;
         String paymentUrl = Config.vnp_PayUrl + "?" + queryUrl;
-        resp.sendRedirect(paymentUrl);
+
+        // Chuẩn bị và gửi email với mã QR đính kèm
+        String ticketId = String.valueOf(insertId);
+        sendEmailWithQRCode(email, qrCode, ticketId);
+
+        // Redirect hoặc trả về kết quả thành công
+        resp.sendRedirect("homePage"); // Ví dụ redirect đến trang thành công
+    }
+
+    // Phương thức để tạo và gửi email với mã QR code đính kèm
+    private void sendEmailWithQRCode(String recipientEmail, String qrCodeData, String ticketId) {
+        try {
+            // Tạo hình ảnh QR code từ qrCodeData
+            byte[] qrCodeBytes = generateQRCodeImage(qrCodeData);
+
+            // Gửi email với mã QR code đính kèm
+            String subject = "Mã QR của bạn cho vé số " + ticketId;
+            String body = "Mã QR của bạn là : " + qrCodeData;
+
+            // Gửi email
+//            EmailService service = new EmailService(); // Thay bằng service gửi email thực tế của bạn
+//            service.sendEmailWithAttachment(recipientEmail, subject, body, qrCodeBytes, "QR_Code.png");
+
+            // Log ghi nhận việc gửi email thành công (nếu cần)
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            // Xử lý lỗi khi gửi email (nếu cần)
+        }
+    }
+
+    // Hàm để chuyển đổi chuỗi QR code thành hình ảnh byte array
+    private byte[] generateQRCodeImage(String qrCodeData) {
+        ByteArrayOutputStream out = QRCode.from(qrCodeData).to(ImageType.PNG).stream();
+        return out.toByteArray();
     }
 }

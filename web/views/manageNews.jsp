@@ -324,7 +324,6 @@ Author     : duong
                                             <td>${n.statusId.statusName}</td>
                                             <td>${n.stateId.stateName}</td>
                                             <td>
-                                                <a href="#viewDetailsNews${n.newsId}" class="view" title="View" data-toggle="modal"><i class="material-icons">&#xE417;</i></a>
                                                 <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
                                                 <a onclick="return confirmDelete(${n.newsId})" href = "deleteNews?newsId=${n.newsId}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                             </td>
@@ -383,7 +382,7 @@ Author     : duong
                 </div>
             </div>
         </div>
-     
+
         <!--------------------------------------------------------------------------------------------------------------------------------------------->
         <c:forEach items="${sessionScope.getListNews}" var="n">
             <div id="updateNews${n.newsId}" class="modal fade">
@@ -405,16 +404,14 @@ Author     : duong
                                     <input name="content" class="form-control" value="${n.content}">
                                 </div>
                                 <div class="form-group">
+                                    <input type="hidden" name="currentImage" value="${n.image}">
                                     <label>Hình Ảnh</label><br>
                                     <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
+                                    <input type="file" name="image">
                                 </div>
                                 <div class="form-group">
                                     <label>Kết Luận</label>
                                     <input name="conclusion" class="form-control" value="${n.conclusion}">
-                                </div>
-                                <div class="form-group" style="word-break: break-word">
-                                    <input type="file" name="image">
-                                    <input type="hidden" name="currentImage" value="${n.image}">
                                 </div>
                                 <div class="form-group">
                                     <label>State</label>
