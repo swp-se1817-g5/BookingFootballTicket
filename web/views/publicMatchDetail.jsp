@@ -498,7 +498,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-8 text-left">
-                                                <input name="matchSeatId" value="${seatMatch.matchSeatId}" style="display: none;">
+                                                <input name="matchSeatIdd" value="${seatMatch.matchSeatId}" style="display: none;">
                                                 <input name="seatId" value="${seatMatch.seatarea.seatId}" style="display: none;">
                                                 <h5 class="card-title fa fa-flag-o"> Vị trí ${seatMatch.seatarea.stand.standName}${seatMatch.seatarea.seatName}</h5>
                                                 <ul class="list-unstyled">
@@ -507,7 +507,7 @@
                                                 </ul>
                                             </div>
                                             <div class="col-md-4 text-end">
-                                                <h5>${seatMatch.price} vnđ</h5>
+                                                <h5>${seatMatch.price} vnđ ${seatMatch.matchSeatId}</h5>
                                                 <p class="text-muted">cho mỗi vé</p>
                                                 <div class="mb-2">
                                                     <select class="form-select" name="numberOfTicket">

@@ -50,7 +50,7 @@ public class ajaxServlet extends HttpServlet {
         BigDecimal price = new BigDecimal(priceStr);
         String orderStatus = "unPayment";
         String matchIdStr = req.getParameter("matchId");
-        String matchSeatIdStr = req.getParameter("matchSeatId");
+        String matchSeatIdStr = req.getParameter("matchSeatIdd");
         
         
         String qrCode = UUID.randomUUID().toString();

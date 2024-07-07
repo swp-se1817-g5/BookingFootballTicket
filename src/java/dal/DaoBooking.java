@@ -34,19 +34,20 @@ public class DaoBooking {
     }
     
     public void addOrderTicket(BookingTicket book) {
-        String sql = "INSERT INTO [dbo].[BookingTicket]\n"
-                + "           ([seatName]\n"
-                + "           ,[quantity]\n"
-                + "           ,[standName]\n"
-                + "           ,[seatClassName]\n"
-                + "           ,[email]\n"
-                + "           ,[qrCode]\n"
-                + "           ,[price]\n"
-                + "           ,[status]\n"
-                + "           ,[createdDate]\n"
-                + "           ,[matchId])\n"
-                + "           ,[matchSeatId])\n"
-                + "     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+        String sql = """
+                     INSERT INTO [dbo].[BookingTicket]
+                                ([seatName]
+                                ,[quantity]
+                                ,[standName]
+                                ,[seatClassName]
+                                ,[email]
+                                ,[qrCode]
+                                ,[price]
+                                ,[status]
+                                ,[createdDate]
+                                ,[matchId]
+                                ,[matchSeatId])
+                          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
         try (PreparedStatement st = con.prepareStatement(sql);) {
             st.setString(1, book.getSeatName());
             st.setInt(2, book.getQuantity());

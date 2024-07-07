@@ -251,8 +251,8 @@
                                        value="${matchId}"
                                        type="text" class="form-control">
                                 <input hidden
-                                       name="matchSeatId"
-                                       value="${seat.matchSeatId}"
+                                       name="matchSeatIdd"
+                                       value="${matchSeatIdd}"
                                        type="text" class="form-control">    
                                 <hr>
                                

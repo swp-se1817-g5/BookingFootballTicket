@@ -81,7 +81,7 @@ public class SummaryTicket extends HttpServlet {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute("currentUser");
         String numberOfTicketString = request.getParameter("numberOfTicket");
-        String matchSeatIdString = request.getParameter("matchSeatId");
+        String matchSeatIdString = request.getParameter("matchSeatIdd");
         String seatIdString = request.getParameter("seatId");
         String matchId = request.getParameter("mathId");
         
@@ -94,7 +94,7 @@ public class SummaryTicket extends HttpServlet {
             matchSeatId = Integer.parseInt(matchSeatIdString);
             seatId = Integer.parseInt(seatIdString);
             request.setAttribute("seat", MatchSeatDAO.INSTANCE.getMatchSeatbyMatchSeatId(seatId));
-            request.setAttribute("matchSeatId", matchSeatId);
+            request.setAttribute("matchSeatIdd", matchSeatId);
             request.setAttribute("numberOfTicket", numberOfTicket);
 
             Match match = MatchDAO.INSTANCE.getMatcheById(
