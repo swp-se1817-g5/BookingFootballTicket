@@ -2,12 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.home_Page;
+package controllers.HistoryPurchasedTicket;
 
-import dal.FootballClubDAO;
-import dal.MatchDAO;
-import dal.NewsDAO;
-import dal.SeasonDAO;
+import dal.HistoryPurchasedTicketDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,13 +12,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import models.User;
 
 /**
  *
- * @author nguye
+ * @author admin
  */
-//@WebServlet(name = "ManageHomePageServlet", urlPatterns = {"/homePage"})
-public class ManageHomePageServlet extends HttpServlet {
+@WebServlet(name = "MyTicketServlet", urlPatterns = {"/myTicket"})
+public class MyTicketServlet extends HttpServlet {
+
+    private static final int PAGE_SIZE = 10;
+    private int pageIndex = 1;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,13 +41,14 @@ public class ManageHomePageServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageHomePageServlet</title>");
+            out.println("<title>Servlet MyTicketServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageHomePageServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet MyTicketServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,12 +66,45 @@ public class ManageHomePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
-        request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
-        request.setAttribute("getListNews", NewsDAO.getInstance().getlistNews(""));
-        request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("currentUser");
+        String email = user.getEmail();
+        String type = request.getParameter("type");
+        type = type == null ? "match" : type;
+        String startDate = request.getParameter("startDate");
+        startDate = startDate == null ? "" : startDate;
+        String endDate = request.getParameter("endDate");
+        endDate = endDate == null ? "" : endDate;
+        int totalRecords = 0;
+        if (type.equals("match")) {
+            try {
+                totalRecords = HistoryPurchasedTicketDAO.getInstance().getTotalRecords(startDate, endDate, email);
+            } catch (ParseException ex) {
+                Logger.getLogger(MyTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        int endPage = totalRecords / PAGE_SIZE;
+        if (totalRecords % PAGE_SIZE != 0 || totalRecords == 0) {
+            endPage++;
+        }
+        try {
+            String pageIndexRaw = request.getParameter("pageIndex");
+            if (pageIndexRaw != null) {
+                pageIndex = Integer.parseInt(pageIndexRaw);
+            }
+        } catch (Exception e) {
+        }
+        
+        if (type.equals("match")) {
+            try {
+                request.setAttribute("tickets", HistoryPurchasedTicketDAO.getInstance().paggingTickets(pageIndex, PAGE_SIZE, startDate, endDate, email));
+            } catch (ParseException ex) {
+                Logger.getLogger(MyTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        request.setAttribute("endPage", endPage);
+        request.setAttribute("pageIndex", pageIndex);
+        request.getRequestDispatcher("views/myTicket.jsp").forward(request, response);
     }
 
     /**
@@ -92,7 +131,4 @@ public class ManageHomePageServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public static void main(String[] args) {
-        System.out.println(MatchDAO.INSTANCE.getMatches());
-    }
 }

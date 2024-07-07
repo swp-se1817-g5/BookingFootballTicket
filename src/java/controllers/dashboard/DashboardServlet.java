@@ -108,22 +108,30 @@ public class DashboardServlet extends HttpServlet {
             LocalDate now = LocalDate.now();
             int yearNow = now.getYear();
             List<Integer> years = new ArrayList<>();
-            List<String> matchTickets = new ArrayList<>();
-            List<String> seasonTickets = new ArrayList<>();
-            List<String> totalRevenue = new ArrayList<>();
-            List<String> totalTickets = new ArrayList<>();
+            List<Integer> matchTickets = new ArrayList<>();
+            List<Integer> seasonTickets = new ArrayList<>();
+            List<BigDecimal> totalRevenue = new ArrayList<>();
+            List<Integer> totalTickets = new ArrayList<>();
+            List<Integer> ticketYear = new ArrayList<>();
+            List<BigDecimal> revenueYear = new ArrayList<>();
             for (int i = yearNow - NUMBER_OF_YEAR; i <= yearNow; i++) {
                 years.add(i);
-                matchTickets.add(String.valueOf((DashboardDAO.getInstance().getTotalTicketsSold(0, i) - DashboardDAO.getInstance().countSeasonTickets(0, i))));
-                seasonTickets.add(String.valueOf(DashboardDAO.getInstance().countSeasonTickets(0, i)));
-                totalTickets.add(String.valueOf(DashboardDAO.getInstance().getTotalTicketsSold(0, i)));
-                totalRevenue.add(String.valueOf(DashboardDAO.getInstance().getTotalRevenue(0, i)));
+                matchTickets.add((DashboardDAO.getInstance().getTotalTicketsSold(0, i) - DashboardDAO.getInstance().countSeasonTickets(0, i)));
+                seasonTickets.add(DashboardDAO.getInstance().countSeasonTickets(0, i));
+                totalTickets.add(DashboardDAO.getInstance().getTotalTicketsSold(0, i));
+                totalRevenue.add(DashboardDAO.getInstance().getTotalRevenue(0, i));
+            }
+            for (int i = 1; i <= 12; i++) {
+                ticketYear.add(DashboardDAO.getInstance().getTotalTicketsSold(i, yearNow));
+                revenueYear.add(DashboardDAO.getInstance().getTotalRevenue(i, yearNow));
             }
             ticketData.put("years", years);
             ticketData.put("matchTickets", matchTickets);
             ticketData.put("seasonTickets", seasonTickets);
             ticketData.put("totalRevenue", totalRevenue);
             ticketData.put("totalTickets", totalTickets);
+            ticketData.put("ticketYear", ticketYear);
+            ticketData.put("revenueYear", revenueYear);
             String json = new Gson().toJson(ticketData);
             PrintWriter out = response.getWriter();
             out.print(json);

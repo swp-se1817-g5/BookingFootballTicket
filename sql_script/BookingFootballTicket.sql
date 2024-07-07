@@ -93,7 +93,7 @@ CREATE TABLE Match (
 	team2 INT,
 	seasonId INT,
 	[startTime] DATETIME2,
-	statusId INT,
+	statusId INT default 1,
 	matchTypeId INT,
 	createdBy VARCHAR(50),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
@@ -253,3 +253,5 @@ CREATE TABLE News (
 	FOREIGN KEY (stateId) REFERENCES NewsState(stateId)
 );
 GO
+ALTER TABLE [HistoryPurchasedTicketMatchSeat]
+ADD orderStatus NVARCHAR(50) DEFAULT 'unPayment';

@@ -1,756 +1,570 @@
 <%-- 
-    Document   : matchDetail
-    Created on : May 22, 2024, 11:17:28 PM
+    Document   : newjsp
+    Created on : Jul 5, 2024, 2:46:50 PM
     Author     : thuat
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!doctype html>
-<html class="no-js" lang="en-GB">
+
+<!DOCTYPE html>
+<html lang="en">
     <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="google-site-verification" content="9V9Q5hFOJM5zHXaAYTZSx0b42V3BgxEFb931mguTcJY" />
-        <link rel="canonical" href="https://www.footballticketpad.com/uefa-euro-2024/germany-v-scotland" />
-        <link rel="alternate" hreflang="x-default" href="https://www.footballticketpad.com/uefa-euro-2024/germany-v-scotland" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Germany v Scotland Tickets | Euro 2024 | Ticket Pad</title>
-        <meta name="description" content="Secure your Germany v Scotland match tickets today! Five Star Service, 100% Guarantee!">
-        <meta name="keywords" content>
-        <meta name="author" content>
-        <meta property="og:image" content="https://www.footballticketpad.com/assets/ftp-logo.png" />
-        <meta name="google-site-verification" content="O7lp3hSrStK1vKzEa9v7j3rzLLYzUpjqsSwBuQXMjNg" />
-        <link rel="stylesheet" href="https://www.footballticketpad.com/assets/frontend/2018/css/pages/team-page.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Homepage Bán Vé Đá Bóng</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-        <!-- Bootstrap CSS -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <!-- jQuery và Bootstrap JavaScript -->
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-        <style type="text/css">
-            .availability {
-                z-index: 6 !important;
+        <style>
+            .section-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 2rem;
             }
-            .showIcons {
-                margin-left:  10px;
-                display: inline-block;
+            .section-header h2 {
+                margin-bottom: 0;
             }
-            .icons {
-                position: relative;
+            @media (max-width: 768px) {
+                .section-header {
+                    flex-direction: column;
+                    align-items: flex-start;
+                }
             }
-            .toolTipText {
-                font-size: 14px;
-                visibility: hidden;
-                width: 120px;
-                background-color: black;
-                color: #fff;
+            .card {
+                margin-bottom: 1rem;
+            }
+            .footer {
+                background-color: #f8f9fa;
+                padding: 2rem 0;
                 text-align: center;
-                border-radius: 6px;
-                position: absolute !important;
-                top: 0;
-                z-index: 7;
-                left: 29px;
-                padding: 8px 4px;
             }
-            .icons:hover .toolTipText, .icons:focus .toolTipText {
-                visibility: visible;
+            .card {
+                border-radius: 15px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             }
-            .arrow-left {
-                visibility: hidden;
-                width: 0;
-                height: 0;
-                border-top: 10px solid transparent;
-                border-bottom: 10px solid transparent;
-                position: absolute;
-                top: 6px;
-                left: 22px;
-                border-right:10px solid #000;
-            }
-            .icons:hover .arrow-left {
-                visibility: visible;
-            }
-
-            /* Mobile more */
-            .more-info {
-                margin-top: 10px;
-            }
-
-            .more-info abbr {
-                text-decoration: none;
-                color: #22b639;
-                font-size: 14px;
-                transition: 0.3s;
-            }
-
-            .more-info abbr:hover {
-                color: #01930c;
-            }
-            .info-icon {
-                display: inline-block;
-                border-radius: 60px;
-                border: 1px solid #42c14b;
-                padding: 2px 8px;
-            }
-            .tooltip
-            {
-                position:absolute;
-                background-color: #EBEBEB;
-                font-size: smaller;
-                padding: 18px 19px 14px 26px;
-                width: 100%;
-                border-radius: 16px;
-            }
-            .tooltip:before{
-                content: "";
-                position: absolute;
-                top: 50%;
-                left: -7px;
-                width: 0;
-                border-top: 20px solid transparent;
-                border-left: 20px solid #EBEBEB;
-                border-right: 20px solid transparent;
-                transform: rotate(45deg);
-                ;
-            }
-            /* Mobile more */
-
-            .force{
-                margin-top:50px;
-            }
-            @media  screen and (min-width: 1114px) {
-                .force {
-                    display: none!important;
-                }
-            }
-            .waiting-class{
-                position:absolute;
-                top:0;
-                left:0;
-                right:0;
-                bottom:0;
-                background: rgba(128, 128, 128, .3);
+            .card-header {
                 display: flex;
+                justify-content: space-between;
                 align-items: center;
+                border-bottom: none;
+            }
+            .card-body {
+                text-align: center;
+            }
+            .team-logos {
+                display: flex;
                 justify-content: center;
+                align-items: center;
+                margin-bottom: 1rem;
+            }
+            .team-logos img {
+                width: 50px;
+                height: 50px;
+                margin: 0 10px;
+            }
+            .book-now-btn {
+                background-color: #007bff;
+                color: white;
+                border-radius: 5px;
+                padding: 0.5rem 1rem;
+                text-decoration: none;
+            }
+            .book-now-btn:hover {
+                background-color: #0056b3;
+                color: white;
+                text-decoration: none;
+            }
+            .stadium-map {
+                background-color: #f8f9fa;
+                padding: 20px;
+                margin-bottom: 20px;
+            }
 
-            }
-            .right{
-                position: relative;
-            }
-            .wrapper{
+
+            .ticket-row {
                 display: flex;
                 align-items: center;
+                margin-bottom: 10px;
+                border: 1px solid #dee2e6;
+                border-radius: 4px;
+                padding: 10px;
+            }
+            .color-bar {
+                width: 5px;
+                height: 100%;
+                margin-right: 10px;
+            }
+            .color-bar-standard {
+                background-color: dodgerblue;
+            }
+            .vip-seat {
+                background-color: cyan;
+            }
+            .color-bar-longside-upper {
+                background-color: orange;
+            }
+            .ticket-info {
+                display: flex;
                 flex-direction: column;
-                row-gap:20px;
-
             }
-            .lds-dual-ring {
-                display: inline-block;
-                width: 80px;
-                height: 80px;
+            .ticket-status {
+                color: red;
             }
-            .lds-dual-ring:after {
-                content: " ";
-                display: block;
-                width: 64px;
-                height: 64px;
-                margin: 8px;
-                border-radius: 50%;
-                border: 6px solid #fff;
-                border-color: #fff transparent #fff transparent;
-                animation: lds-dual-ring 1.2s linear infinite;
+            .view-type {
+                color: green;
             }
-            @keyframes  lds-dual-ring {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(360deg);
-                }
+            .book-now {
+                color: blue;
+            }
+            .scroll-container {
+                max-height: 660px; /* Chiều cao tối đa của khung cuộn */
+                overflow-y: auto; /* Kích hoạt thanh cuộn dọc */
+                padding-right: 10px; /* Đệm phải để tránh đè lên thanh cuộn */
             }
 
-            .desk-only{
-                display: none;
-            }
 
-            @media (min-width: 800px) {
-                .desk-only{
-                    display: block;
-                }
-            }
 
-            .match-details .left {
-                font-weight: 600;
-                margin-bottom: 5px;
-                font-size: 16px;
-                line-height: 20px;
-                display: inline-block;
-                padding-right: 25px;
-                vertical-align: top;
-                width: calc(50% - 25px);
-            }
-            .match-details .right {
-                font-weight: 600;
-                margin-bottom: 5px;
-                font-size: 16px;
-                line-height: 20px;
-                display: inline-block;
-                padding-right: 25px;
-                vertical-align: top;
-                width: calc(50% - 25px);
-            }
 
+            .alert-custom {
+                background-color: #ffe5e5;
+                border: 1px solid #ffcccc;
+            }
+            .border-custom {
+                border-bottom: 2px solid #d1d5db;
+            }
+            .match-title {
+                font-size: 1.5rem; /* Giảm kích thước chữ */
+            }
+            .team-logos {
+                display: flex;
+                align-items: flex-start; /* Căn top */
+                height: 100%;
+            }
+            .team-logos img {
+                height: 50px; /* Điều chỉnh chiều cao logo tùy ý */
+                margin-right: 10px;
+            }
         </style>
-        <link rel="stylesheet" type="text/css" href="/map/167/style.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:400,500,600,700&display=swap">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
-        <link rel="stylesheet" href="https://www.footballticketpad.com/assets/frontend/2018/css/app9.css?v=1.4">
-        <link rel="stylesheet" href="https://www.footballticketpad.com/assets/frontend/2018/css/pikaday.css">
-        <link rel="stylesheet" href="https://www.footballticketpad.com/assets/frontend/2018/css/chartist.css">
-        <link rel="stylesheet" href="https://www.footballticketpad.com/assets/frontend/2018/css/jquery-ui.min.css">
-        <link rel="stylesheet" href="https://www.footballticketpad.com/assets/frontend/2018/css/bootstrap-multiselect.css">
-        <link rel="stylesheet" href="https://www.footballticketpad.com/assets/frontend/2018/css/style-fix-v0.css?v=1.4">
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/vendor/jquery-3.3.1.min.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/vendor/jquery-ui.min.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/vendor/jquery.inViewport.min.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/jquery-validator/jquery.validate.min.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/jquery-form.min.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/bootstrap-multiselect.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/hotel.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script src="https://www.google.com/recaptcha/api.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app.js?v=1.4" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <link rel="stylesheet" type="text/css" href="/assets/frontend/2018/css/cookieconsent.min.css" />
-        <script src="/assets/frontend/2018/js/cookieconsent.min.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script type="ed1cf3913d91592aa786b287-text/javascript"> window.addEventListener("load", function() {window.cookieconsent.initialise({"palette": {"popup": {"background": "#000000B2"}, "button": {"background": "#133ABD"} }, "content": {"message": "This website uses cookies to ensure you get the best experience on our website.", "dismiss": "Got it!", "link": "Learn more", "href": "/privacy-policy"} }) }); </script>
     </head>
-    <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=388758328741664&ev=PageView&noscript=1"/></noscript>
-
-    <body class="template-fixture buy">
-        <%@include file="header1.jsp" %>
-        <div class="container-fluid">
-            <input type="hidden" name="ticketMultiCap" id="ticketMultiCap" value="Ticket(s)">
-            <div class="content" id="test">
-                <div class="team-page fixture">
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="ticketSummary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document" style="top: 50px; max-width: 750px; width: 100%; margin: 0 auto; padding: 10px;">
-                            <form class="modal-content" method="post" onsubmit="return checkout()">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Ticket summary</h5>
-                                    <div onchange="cancel()" data-dismiss="modal" aria-label="Close" data-close-search class="close">
-                                        <span onclick="cancel()" class="ftp-close"></span>
-                                    </div>
-                                </div>
-                                <div class="modal-body" style="margin: 0 54px 0 54px;">
-                                    <div class="match-details">
-                                        <div class="left">
-                                            <div class="bold">${match.team1.clubName} vs ${match.team2.clubName}</div>
-                                            <div class="grey" style="color: gray;">in</div>
-                                            <div class="item">${match.season.seasonName}</div>
-                                            <div class="grey" style="color: gray;">at</div>
-                                            <div class="item">My Dinh</div>
-                                            <div class="grey" style="color: gray;">on</div>
-                                            <div class="item">${date} : ${time}</div>
-                                        </div>
-                                        <div class="right">
-                                            <div class="item ticketType" id="ticketSeatStand"></div>
-                                            <div class="item ticketBlock"></div>
-                                            <div class="bold ticketIndiv">
-                                                <span id="qty"></span> tickets at <span id="priceIndiv"></span>&#8363; each
-                                            </div>
-                                            <div class="bold ticketSum">Sub Total price &#8363;<span id="sum"></span></div>
-                                            <div class="bold ticketAtt">
-                                                <span id="seatClassView"></span>
-                                            </div>
-                                            <div class="features" id="restrictions"></div>
-                                        </div>
-                                    </div>
-                                    <div class="number-of-tickets">
-                                        <div class="heading">Number of tickets</div>
-                                        <div class="info">Please review the number of tickets selected</div>
-                                        <select name="number_of_tickets" id="number_of_tickets" onchange="changeTotalPrice()">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                        </select>
-                                    </div>
-                                    <div class="whyDisabled text grey"></div>
-                                    <input type="hidden" class="checkout_product" id="checkout_product">
-                                    <input type="hidden" class="checkout_eventId" id="checkout_eventId">
-                                </div>
-                                <div class="modal-footer">
-                                    <input type="submit" class="c2a_btn" id="checkout" value="Checkout">
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-
-
-                    <div class="team-header" style="border-color:#a2a2a2">
-                        <div class="inner">
-                            <div class="left">
-                                <div class="badge">
-                                    <img src="${match.team1.img}" alt="${match.team1.clubName}" />
-                                    <img src="${match.team2.img}" alt="${match.team2.clubName}" />
-                                </div><div class="details">
-                                    <h1>${match.team1.clubName} vs ${match.team2.clubName}</h1>
-                                    <nav class="breadcrumb hidden-s-view">
-                                        <ul>
-                                            <li><a href="./">Home</a></li>
-                                            <li><a href="/group/league/uefa-euro-2024">${match.season.seasonName}</a></li>
-
-                                            <li>
-                                                ${match.team1.clubName} v ${match.team2.clubName} Tickets
-                                            </li>
-                                        </ul>
-                                </div>
-                            </div><div class="right">
-                                <div class="heading">${date}</div>
-                                <div class="recently-bought">
-                                    <div>Kick off: ${time} </div>
-                                    <div>My Dinh stadium
-                                    </div>
-                                    <div>${match.season.seasonName}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <style type="text/css">
-                        #website {
-                            display: none;
-                        }
-                    </style>
-                    <div class="fixture-listings disabled">
-                        <div class="inner">
-                            <div class="left">
-                                <div class="stadium-map-heading hidden-mobile">
-                                    <div class="label">Stadium Map</div>
-                                </div>
-                                <div class="stadium-map">
-                                    <svg id="svgStadium" viewBox="0 0 1247 1136" data-section="" data-block="" data-tags="" >
-                                    <defs>
-                                    <style>
-                                        path {
-                                            fill: #cccccc;
-                                            stroke: #cccccc;
-                                            stroke-width: 3;
-                                        }
-
-                                        .maptext {
-                                            font-size: 45.833px;
-                                            fill: #fff;
-                                            font-family: "Myriad Pro";
-                                            font-weight: 700;
-                                            pointer-events: none;
-                                        }
-                                        [data-block] {
-                                            transition: fill 0.3s ease; /* Transition để làm mượt việc thay đổi màu */
-                                        }
-
-                                        /* Định nghĩa màu riêng cho từng section khi hover và click */
-                                        .fans-side,
-                                        .fans-side.hovered,
-                                        .fans-side.clicked {
-                                            fill: #F1D446; /* Màu vang cho fans-side */
-                                            transition: fill 0.3s ease;
-                                        }
-
-                                        .standard,
-                                        .standard.hovered,
-                                        .standard.clicked {
-                                            fill: #E99C8A; /* Màu xanh lá cho standard */
-                                            transition: fill 0.3s ease;
-                                        }
-
-                                        .vip-stand,
-                                        .vip-stand.hovered,
-                                        .vip-stand.clicked {
-                                            fill: #5b5a82; /* Màu xanh dương cho vip-stand */
-                                            transition: fill 0.3s ease;
-                                        }
-
-                                        .under-roof,
-                                        .under-roof.hovered,
-                                        .under-roof.clicked {
-                                            fill: #A96EBB; /* Màu vàng cho under-roof */
-                                            transition: fill 0.3s ease;
-                                        }
-
-                                        .on-roof,
-                                        .on-roof.hovered,
-                                        .on-roof.clicked {
-                                            fill: #85E1D5; /* Màu hồng cho on-roof */
-                                            transition: fill 0.3s ease;
-                                        }
-
-
-                                        .cls-1 {
-                                            fill: #bb6767;
-                                        }
-                                        .cls-2 {
-                                            fill: #b8ce94;
-                                        }
-                                        .cls-2, .cls-3, .cls-4 {
-                                            stroke: #fdffff;
-                                            stroke-width: 3px;
-                                        }
-                                        .cls-2, .cls-3 {
-                                            fill-rule: evenodd;
-                                        }
-                                        .cls-3, .cls-4 {
-                                            fill: none;
-                                        }
-                                        .cls-5 {
-                                            font-size: 45.833px;
-                                            fill: white;
-                                            font-family: "Myriad Pro";
-                                            font-weight: 800;
-                                        }
-                                    </style>
-                                    <script>
-                                        document.addEventListener('DOMContentLoaded', function () {
-                                            const svg = document.getElementById('svgStadium');
-                                            const paths = svg.querySelectorAll('path');
-                                            const items = document.querySelectorAll('.item');
-
-
-                                            // Add initial classes to all paths
-                                            paths.forEach(function (path) {
-                                                var sectionName = path.getAttribute('data-section');
-                                                path.classList.add(sectionName, 'clicked');
-                                            });
-
-                                            // Add event listeners to all paths
-                                            paths.forEach(function (path) {
-                                                path.addEventListener('mouseenter', function () {
-                                                    var sectionName = this.getAttribute('data-section');
-                                                    document.querySelectorAll('path[data-section="' + sectionName + '"]')
-                                                            .forEach(item => item.classList.add('hovered', sectionName));
-                                                });
-
-                                                path.addEventListener('mouseleave', function () {
-                                                    var sectionName = this.getAttribute('data-section');
-                                                    document.querySelectorAll('path[data-section="' + sectionName + '"]')
-                                                            .forEach(item => {
-                                                                if (!item.classList.contains('clicked')) {
-                                                                    item.classList.remove('hovered', sectionName);
-                                                                }
-                                                            });
-                                                });
-
-                                                path.addEventListener('click', function () {
-                                                    var sectionName = this.getAttribute('data-section');
-                                                    document.querySelectorAll('path[data-section="' + sectionName + '"]')
-                                                            .forEach(item => {
-                                                                item.classList.toggle('clicked');
-
-                                                                // Check if the path has the class 'clicked' and log a message
-                                                                if (item.classList.contains('clicked')) {
-                                                                    items.forEach(item => {
-                                                                        const itemTicketType = item.getAttribute('data-ticket-type');
-                                                                        if (itemTicketType === sectionName) {
-                                                                            item.style.display = 'block';
-                                                                        }
-                                                                    });
-                                                                } else {
-                                                                    items.forEach(item => {
-                                                                        const itemTicketType = item.getAttribute('data-ticket-type');
-                                                                        if (itemTicketType === sectionName) {
-                                                                            item.style.display = 'none';
-                                                                        }
-                                                                    });
-                                                                }
-                                                            });
-                                                });
-                                            });
-                                        });
-
-                                        var pricePerTicketString = '';
-                                        function Summary(price, className, standName, seatName) {
-                                            document.getElementById('priceIndiv').innerText =  parseInt(price.replace(/,/g, ''), 0);
-                                            document.getElementById('sum').innerText = parseInt(price.replace(/,/g, ''), 0);
-                                            document.getElementById('ticketSeatStand').innerText = standName + seatName;
-                                            document.getElementById('seatClassView').innerText = className;
-                                            pricePerTicketString = price;
-                                        }
-
-                                        function changeTotalPrice() {
-                                            var pricePerTicket = parseInt(pricePerTicketString.replace(/,/g, ''), 0);
-                                            var quantity = document.getElementById('number_of_tickets').value;
-                                            document.getElementById('sum').innerText = quantity * pricePerTicket;
-                                        }
-
-                                        function cancel() {
-                                            document.getElementById('number_of_tickets').value = 1;
-                                        }
-                                    </script>
-                                    
-                                    <!--vnPay-->
-                                    <script>
-                                        async function checkout() {
-                                            const amount = 130000; // Số tiền cần thanh toán (có thể lấy từ input hoặc tính toán từ giỏ hàng)
-                                            const bankCode = "NCB"; // Mã ngân hàng (tùy chỉnh theo yêu cầu)
-
-                                            const formData = new FormData();
-                                            formData.append("amount", amount);
-                                            formData.append("bankCode", bankCode);
-
-                                            try {
-                                                const response = await fetch("ajaxServlet", {
-                                                    method: "POST",
-                                                    body: formData
-                                                });
-
-                                                if (response.ok) {
-                                                    const jsonResponse = await response.json();
-                                                    if (jsonResponse.code === "00") {
-                                                        window.location.href = jsonResponse.data;
-                                                    } else {
-                                                        console.error("Error:", jsonResponse.message);
-                                                    }
-                                                } else {
-                                                    console.error("Network response was not ok.");
-                                                }
-                                            } catch (error) {
-                                                console.error("There has been a problem with your fetch operation:", error);
-                                            }
-                                        }
-
-                                        window.onload = function () {
-                                            document.getElementById("checkout").addEventListener("click", checkout);
-                                        }
-                                    </script>
-
-                                    </defs>
-                                    <%--Stand C--%>
-                                    <path data-section="fans-side" data-block="4" data-tags="" d="M294,405s-43.585,33.376-66.465,76.174l-81.853-34.1S175,395.162,251.139,344.783Z"/>
-                                    <path data-section="standard" data-block="5" data-tags="" d="M246.139,343.783s-71.127,46.322-105.457,102.286L57.986,404s42.049-65.858,141.67-123.373Z"/>
-                                    <path data-section="fans-side" data-block="3" data-tags="" d="M223.535,482.174s-22.88,35.12-22.88,83.826H106.328s-5.088-52.684,35.354-117.931Z"/>
-                                    <path data-section="standard" data-block="6" data-tags="" d="M137.682,448.069S102.328,500.572,102.328,566H0.463s-5.081-75.469,54.523-160Z"/>
-                                    <path data-section="fans-side" data-block="1" data-tags="" d="M293,733s-43.585-33.376-66.465-76.174l-81.853,34.105S174,742.838,250.139,793.217Z"/>
-                                    <path data-section="standard" data-block="8" data-tags="" d="M247.139,793.217S176.012,746.9,141.682,690.931L58.986,733s42.049,65.858,141.67,123.373Z"/>
-                                    <path data-section="fans-side" data-block="2" data-tags="" d="M224.535,653.826s-22.88-35.12-22.88-83.826H107.328s-5.088,52.683,35.354,117.931Z"/>
-                                    <path data-section="standard" data-block="7" data-tags="" d="M138.682,688.931S103.328,636.428,103.328,571H1.463s-5.081,75.469,54.523,160Z"/>
-                                    <%--Stand D--%>
-                                    <path data-section="fans-side" data-block="4" data-tags="" d="M953,403s43.585,33.376,66.46,76.174l81.86-34.1S1072,393.162,995.861,342.783Z"/>
-                                    <path data-section="standard" data-block="5" data-tags="" d="M999.861,340.783s71.129,46.322,105.459,102.286L1188.01,401s-42.04-65.858-141.67-123.373Z"/>
-                                    <path data-section="fans-side" data-block="3" data-tags="" d="M1022.46,482.174s22.88,35.12,22.88,83.826h94.33s5.09-52.684-35.35-117.931Z"/>
-                                    <path data-section="standard" data-block="6" data-tags="" d="M1107.32,448.069s35.35,52.5,35.35,117.931h101.87s5.08-75.469-54.53-160Z"/>
-                                    <path data-section="fans-side" data-block="1" data-tags="" d="M953,732s43.585-33.376,66.46-76.174l81.86,34.105S1072,741.838,995.861,792.217Z"/>
-                                    <path data-section="standard" data-block="8" data-tags="" d="M999.861,792.217S1070.99,745.9,1105.32,689.931L1188.01,732s-42.04,65.858-141.67,123.373Z"/>
-                                    <path data-section="fans-side" data-block="2" data-tags="" d="M1023.46,653.826s22.88-35.12,22.88-83.826h94.33s5.09,52.683-35.35,117.931Z"/>
-                                    <path data-section="standard" data-block="7" data-tags="" d="M1109.32,687.931s35.35-52.5,35.35-117.931h101.87s5.08,75.469-54.53,160Z"/>
-                                    <%--Stand B--%>
-                                    <path data-section="fans-side" data-block="1" data-tags="" d="M441.256,339.7S393.907,353.931,334,396l-42.861-60.217s60.753-37.4,121.224-54.963Z"/>
-                                    <path data-section="standard" data-block="12" data-tags="" d="M410.364,276.82s-74.741,23.456-121.225,54.963l-46.484-63.158s78.536-41.444,137.569-57.513Z"/>
-                                    <path data-section="vip-stand" data-block="2" data-tags="" d="M524.909,318s-21.621,2.448-80.653,20.7L415.364,279.82s51.512-16.421,101.054-23.606Z"/>
-                                    <path data-section="under-roof" data-block="11" data-tags="" d="M516.418,253.214s-56.568,7.848-101.055,23.606l-30.139-65.708s68.964-19.393,122.412-25.656Z"/>
-                                    <path data-section="vip-stand" data-block="3" data-tags="" d="M623,309.469s-76.818,2.322-94.091,7.532l-8.491-61.787A731.946,731.946,0,0,1,623,248.028v61.441Z"/>
-                                    <path data-section="under-roof" data-block="10" data-tags="" d="M623,244.028s-63.93.333-102.582,7.186l-8.782-67.758s68.08-7.888,111.364-7.888v68.46Z"/>
-                                    <path data-section="fans-side" data-block="6" data-tags="" d="M808.744,339.7S856.093,353.931,916,396l42.861-60.217s-60.754-37.4-121.225-54.963Z"/>
-                                    <path data-section="standard" data-block="7" data-tags="" d="M837.636,276.82s74.741,23.456,121.225,54.963l46.479-63.158s-78.532-41.444-137.564-57.513Z"/>
-                                    <path data-section="vip-stand" data-block="5" data-tags="" d="M724.091,318s21.62,2.448,80.653,20.7l28.892-58.876S782.124,263.4,732.581,256.214Z"/>
-                                    <path data-section="under-roof" data-block="8" data-tags="" d="M732.581,253.214s56.569,7.848,101.055,23.606l30.14-65.708s-68.965-19.393-122.413-25.656Z"/>
-                                    <path data-section="vip-stand" data-block="4" data-tags="" d="M626,309.469s76.818,2.322,94.091,7.532l8.49-61.787A731.921,731.921,0,0,0,626,248.028v61.441Z"/>
-                                    <path data-section="under-roof" data-block="9" data-tags="" d="M626,244.028s63.93,0.333,102.581,7.186l8.783-67.758s-68.08-7.888-111.364-7.888v68.46Z"/>
-                                    <path data-section="on-roof" data-block="13" data-tags="" d="M471.289,145.64H335L292.139,86.361s63.3-37.493,121.225-55.2Z"/>
-                                    <path data-section="on-roof" data-block="14" data-tags="" d="M623,145.64H477.289L419.364,31.163S510.078-.342,623-0.342V145.64Z"/>
-                                    <path data-section="on-roof" data-block="16" data-tags="" d="M776.711,145.64H913l42.861-59.279s-63.3-37.493-121.225-55.2Z"/>
-                                    <path data-section="on-roof" data-block="15" data-tags="" d="M626,145.64H771.711L829.636,31.163S738.922-.342,626-0.342V145.64Z"/>
-                                    <%--Stand A--%>
-                                    <path data-section="fans-side" data-block="1" data-tags="" d="M440.256,795.3S392.907,781.069,333,739l-42.861,60.217s60.753,37.4,121.224,54.963Z"/>
-                                    <path data-section="standard" data-block="12" data-tags="" d="M408.364,857.18s-74.741-23.456-121.225-54.963l-46.484,63.158s78.536,41.444,137.569,57.513Z"/>
-                                    <path data-section="vip-stand" data-block="2" data-tags="" d="M524.909,817s-21.621-2.447-80.653-20.694L415.364,855.18s51.512,16.421,101.054,23.606Z"/>
-                                    <path data-section="under-roof" data-block="11" data-tags="" d="M515.418,881.786s-56.568-7.848-101.055-23.606l-30.139,65.708s68.964,19.393,122.412,25.656Z"/>
-                                    <path data-section="vip-stand" data-block="3" data-tags="" d="M622,824.531s-76.818-2.322-94.091-7.533l-8.491,61.788A731.946,731.946,0,0,0,622,885.972V824.531Z"/>
-                                    <path data-section="under-roof" data-block="10" data-tags="" d="M622,888.972s-63.93-.333-102.582-7.186l-8.782,67.758s68.08,7.888,111.364,7.888v-68.46Z"/>
-                                    <path data-section="fans-side" data-block="6" data-tags="" d="M808.744,794.3S856.093,780.069,916,738l42.861,60.217s-60.754,37.4-121.225,54.963Z"/>
-                                    <path data-section="standard" data-block="7" data-tags="" d="M838.636,859.18s74.741-23.456,121.225-54.963l46.479,63.158s-78.532,41.444-137.564,57.513Z"/>
-                                    <path data-section="vip-stand" data-block="5" data-tags="" d="M725.091,817s21.62-2.447,80.653-20.694l28.892,58.876S783.124,871.6,733.581,878.786Z"/>
-                                    <path data-section="under-roof" data-block="8" data-tags="" d="M733.581,882.786s56.569-7.848,101.055-23.606l30.14,65.708s-68.965,19.393-122.413,25.656Z"/>
-                                    <path data-section="vip-stand" data-block="4" data-tags="" d="M627,824.531s76.818-2.322,94.091-7.533l8.49,61.788A731.921,731.921,0,0,1,627,885.972V824.531Z"/>
-                                    <path data-section="under-roof" data-block="9" data-tags="" d="M627,889.972s63.93-.333,102.581-7.186l8.783,67.758s-68.08,7.888-111.364,7.888v-68.46Z"/>
-                                    <path data-section="on-roof" data-block="13" data-tags="" d="M471.289,990.36H335l-42.861,59.28s63.3,37.49,121.225,55.2Z"/>
-                                    <path data-section="on-roof" data-block="14" data-tags="" d="M622,990.36H476.289l-57.925,114.48s90.714,31.5,203.636,31.5V990.36Z"/>
-                                    <path data-section="on-roof" data-block="16" data-tags="" d="M777.711,990.36H914l42.861,59.28s-63.3,37.49-121.225,55.2Z"/>
-                                    <path data-section="on-roof" data-block="15" data-tags="" d="M626,990.36H771.711l57.925,114.48s-90.714,31.5-203.636,31.5V990.36Z"/>
-                                    <%--<path data-section="" data-block="" data-tags="" d="M422.11,451.308H833.1V691.527H422.11V451.308Z"/>--%>
-
-                                    <path class="cls-1" d="M253.625 569a371.375 244.531 0 1 0 742.75 0a371.375 244.531 0 1 0 -742.75 0" />
-                                    <path class="cls-2" d="M422.11,451.308H833.1V691.527H422.11V451.308Z" />
-                                    <path class="cls-3" d="M625,450.875V691.531" />
-                                    <path class="cls-3" d="M423.614,530.116h34.618v78.5H423.614" />
-                                    <path class="cls-3" d="M423.614,647.872H499v-154.7H423.614" />
-                                    <path id="Shape_16_copy" data-name="Shape 16 copy" class="cls-3" d="M830.386,530.116H795.768v78.5h34.618" />
-                                    <path id="Shape_17_copy" data-name="Shape 17 copy" class="cls-3" d="M830.386,647.872H755v-154.7h75.389" />
-                                    <path class="cls-4" d="M592 569a32 32 0 1 0 64 0a32 32 0 1 0 -64 0" />
-
-
-                                    <text class="maptext" x="360.125" y="820.219">1</text>
-                                    <text class="maptext" x="468.125" y="852.219">2</text>
-                                    <text class="maptext" x="563.125" y="870.219">3</text>
-                                    <text class="maptext" x="666.125" y="868.219">4</text>
-                                    <text class="maptext" x="765.126" y="855.218">5</text>
-                                    <text class="maptext" x="871.126" y="818.219">6</text>
-                                    <text class="maptext" x="305.125" y="885.219">12</text>
-                                    <text class="maptext" x="430.125" y="921.219">11</text>
-                                    <text class="maptext" x="544.125" y="939.219">10</text>
-                                    <text class="maptext" x="669.125" y="941.219">9</text>
-                                    <text class="maptext" x="787.125" y="925.219">8</text>
-                                    <text class="maptext" x="910.125" y="888.219">7</text>
-                                    <text class="maptext" x="356.124" y="1053.219">13</text>
-                                    <text class="maptext" x="511.125" y="1075.218">14</text>
-                                    <text class="maptext" x="687.124" y="1075.218">15</text>
-                                    <text class="maptext" x="850.125" y="1047.218">16</text>
-                                    <text class="maptext" x="1016.125" y="736.219">1</text>
-                                    <text class="maptext" x="1073.125" y="635.218">2</text>
-                                    <text class="maptext" x="1075.125" y="533.219">3</text>
-                                    <text class="maptext" x="1010.125" y="426.219">4</text>
-                                    <text class="maptext" font-size="25" x="1080.125" y="373.219">5</text>
-                                    <text class="maptext" x="1166.125" y="505.219">6</text>
-                                    <text class="maptext" x="1172.125" y="659.219">7</text>
-                                    <text class="maptext" x="1082.125" y="791.218">8</text>
-                                    <text class="maptext" x="213.125" y="736.219">1</text>
-                                    <text class="maptext" x="156.124" y="635.218">2</text>
-                                    <text class="maptext" x="151.125" y="531.219">3</text>
-                                    <text class="maptext" x="218.125" y="434.219">4</text>
-                                    <text class="maptext" x="147.125" y="380.219">5</text>
-                                    <text class="maptext" x="58.125" y="513.219">6</text>
-                                    <text class="maptext" x="62.125" y="661.219">7</text>
-                                    <text class="maptext" x="143.124" y="790.219">8</text>
-                                    <text class="maptext" x="360.125" y="352.219">1</text>
-                                    <text class="maptext" x="468.125" y="313.219">2</text>
-                                    <text class="maptext" x="564.125" y="297.218">3</text>
-                                    <text class="maptext" x="665.125" y="297.218">4</text>
-                                    <text class="maptext" x="762.125" y="313.219">5</text>
-                                    <text class="maptext" x="872.126" y="350.219">6</text>
-                                    <text class="maptext" x="907.125" y="287.218">7</text>
-                                    <text class="maptext" x="784.125" y="246.219">8</text>
-                                    <text class="maptext" x="665.125" y="231.219">9</text>
-                                    <text class="maptext" x="549.125" y="229.219">10</text>
-                                    <text class="maptext" x="361.125" y="115.219">13</text>
-                                    <text class="maptext" x="511.125" y="94.219">14</text>
-                                    <text class="maptext" x="678.125" y="94.219">15</text>
-                                    <text class="maptext" x="841.125" y="115.219">16</text>
-                                    <text class="maptext" x="434.126" y="246.219">11</text>
-                                    <text class="maptext" x="305.125" y="284.219">12</text>
-
-
-                                    <text id="Stand_A" data-name="Stand A" class="cls-5" x="537.274" y="759.644">Stand A</text>
-                                    <text id="Stand_B" data-name="Stand B" class="cls-5" x="536.274" y="414.643">Stand B</text>
-                                    <text id="Stand_C" data-name="Stand C" class="cls-5" transform="translate(890.745 474.636) rotate(90)">Stand C</text>
-                                    <text id="Stand_D" data-name="Stand D" class="cls-5" transform="translate(358.627 667.019) rotate(-90)">Stand D</text>
-                                    </svg>
-
-
-                                    <div class="section-toolTip">
-                                        <div class="block">Block: <span></span></div>
-                                        <div class="availability"><span></span> tickets remaining</div>
-                                        <div class="price"></div>
-                                    </div>
-
-
-                                </div>
-                                <div class="seating hidden-s-view">
-                                    <div class="heading">Explain Selected above</div>
-                                    <div class="column" id="all-seating">
-                                        <div class="item active" data-type="standard">
-                                            <div class="key" style="border-color:#E99C8A" "></div><div class="text">
-                                                Standard
-                                            </div>
-                                        </div>
-                                        <div class="item active" data-type="fans-side">
-                                            <div class="key" style="border-color:#F1D446" "></div><div class="text">
-                                                Fans side
-                                            </div>
-                                        </div>
-                                        <div class="item active" data-type="no-select">
-                                            <div class="key" style="border-color:#cccccc" "></div><div class="text">
-                                                No Select
-                                            </div>
-                                        </div>
-                                        <div class="item active" data-type="under-roof">
-                                            <div class="key" style="border-color:#A96EBB" "></div><div class="text">
-                                                Under the Roof
-                                            </div>
-                                        </div>
-                                        <div class="item active" data-type="vip-stand">
-                                            <div class="key" style="border-color:#5b5a82" "></div><div class="text">
-                                                Vip Seat
-                                            </div>
-                                        </div>
-                                        <div class="item active" data-type="on-roof">
-                                            <div class="key" style="border-color:#85E1D5" "></div><div class="text">
-                                                On the Roof
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="right waiting-listing">
-
-                                <div class="listing-holder hidden-s-view">
-                                    <c:forEach items="${seatByMatch}" var="seatMatch">
-                                        <div class="listing-inner">
-                                            <div class="item trigger_category-3" 
-                                                 data-section="${seatMatch.seatarea.seatClass.seatClassName}" 
-                                                 data-sort-original="1" 
-                                                 data-sort-section="1" 
-                                                 data-sort-price="${seatMatch.price}" 
-                                                 data-sort-availability="${seatMatch.availability}" 
-                                                 data-delivery="0" 
-                                                 data-ticket-type="${seatMatch.seatarea.seatClass.seatClassName}" 
-                                                 data-preference="0" 
-                                                 data-product="282867" 
-                                                 data-event_id="10019"
-                                                 style="border-color:#86A8BF">
-                                                <div class="overlay" style="background-color:#86A8BF;"></div>
-                                                <div class="seat">
-                                                    <div class="div_ticket-type">
-                                                        ${seatMatch.seatarea.stand.standName}${seatMatch.seatarea.seatName}
-                                                    </div>
-                                                    <div></div>
-                                                </div><div class="availability">
-                                                    <div class="quantity" style="color:red">
-                                                        only <span>${seatMatch.availability}</span>
-                                                        ticket(s) availability
-                                                    </div>
-                                                    <div class="info">
-                                                        <div>Others</div>
-                                                    </div>
-                                                </div><div class="price">${seatMatch.price}&#8363;</div><div class="book" data-ripple="true" data-alert-text="Selling Fast!" data-type="hot">
-                                                    <a onclick="Summary('${seatMatch.price}', '${seatMatch.seatarea.seatClass.seatClassName}', '${seatMatch.seatarea.stand.standName}', '${seatMatch.seatarea.seatName}')" href="#ticketSummary" data-toggle="modal">Book now</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </c:forEach>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <body>
+        <jsp:include page="header.jsp" />
+        <div class="container mt-5">
+            <div class="row border-custom pb-3 mb-3">
+                <div class="col-md-2 text-center team-logos badge">
+                    <img src="${match.team1.img}" alt="${match.team1.clubName}" />
+                    <img src="${match.team2.img}" alt="${match.team2.clubName}" />
+                </div>
+                <div class="col-md-7 text-left">
+                    <h2 class="match-title">${match.team1.clubName} vs ${match.team2.clubName}</h2>
+                    <p><a href="./">Home</a> / <a href="#">${match.season.seasonName}</a> / <a href="#">${match.team1.clubName} vs ${match.team2.clubName} Tickets</a></p>
+                </div>
+                <div class="col-md-3 text-right">
+                    <p>${date}</p>
+                    <p>Kick off: ${time}</p>
+                    <p>Tottenham Hotspur Stadium, 748 High Road, London, N17 0BX</p>
+                    <p>${match.type.name}</p>
                 </div>
             </div>
         </div>
-        <script async type="ed1cf3913d91592aa786b287-text/javascript" src="//widget.trustpilot.com/bootstrap/v5/tp.widget.bootstrap.min.js"></script>
-        <%@include file="footer.jsp" %>
-        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/slider.min.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/common_v1-1.js?v=1.4" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script src="https://www.footballticketpad.com/assets/frontend/2018/js/app-mods.js?v=1.4" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.css">
-        <script async defer src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script async defer src="https://www.footballticketpad.com/assets/frontend/2018/js/fixtureV4-4.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script async defer src="https://www.footballticketpad.com/assets/frontend/2018/js/fixture-ajax.js" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-KWDJ87" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-57128660-1" type="ed1cf3913d91592aa786b287-text/javascript"></script>
-        <script src="/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="ed1cf3913d91592aa786b287-|49" defer></script>
 
+
+        <div class="alert alert-custom text-center" role="alert">
+            <strong>Popular game, price rise expected</strong><br>
+            Tip: Buy now and avoid paying a higher price
+        </div>
+
+        <div class="container mt-5">
+            <div class="row">
+                <!-- Stadium Map Section -->
+                <div class="col-md-6">
+                    <div class="stadium-map">
+                        <h5 class="text-center">Stadium Map</h5>
+                        <div class="left">
+                            <div class="stadium-map">
+                                <svg id="svgStadium" viewBox="0 0 1247 1136" data-section="" data-block="" data-tags="" >
+                                <defs>
+                                <style>
+                                    path {
+                                        fill: #cccccc;
+                                        stroke: #cccccc;
+                                        stroke-width: 3;
+                                    }
+
+                                    .maptext {
+                                        font-size: 45.833px;
+                                        fill: #fff;
+                                        font-family: "Myriad Pro";
+                                        font-weight: 700;
+                                        pointer-events: none;
+                                    }
+                                    [data-block] {
+                                        transition: fill 0.3s ease; /* Transition để làm mượt việc thay đổi màu */
+                                    }
+
+                                    /* Định nghĩa màu riêng cho từng section khi hover và click */
+                                    .fans-side,
+                                    .fans-side.hovered,
+                                    .fans-side.clicked {
+                                        fill: #dc3645; /* Màu vang cho fans-side */
+                                        transition: fill 0.3s ease;
+                                    }
+
+                                    .standard,
+                                    .standard.hovered,
+                                    .standard.clicked {
+                                        fill: #0f6dfd;
+                                        transition: fill 0.3s ease;
+                                    }
+
+                                    .vip-stand,
+                                    .vip-stand.hovered,
+                                    .vip-stand.clicked {
+                                        fill: #198754;
+                                        transition: fill 0.3s ease;
+                                    }
+
+                                    .under-roof,
+                                    .under-roof.hovered,
+                                    .under-roof.clicked {
+                                        fill: #ffc118; /* Màu vàng cho under-roof */
+                                        transition: fill 0.3s ease;
+                                    }
+
+                                    .on-roof,
+                                    .on-roof.hovered,
+                                    .on-roof.clicked {
+                                        fill: #0fcaf0; /* Màu hồng cho on-roof */
+                                        transition: fill 0.3s ease;
+                                    }
+
+
+                                    .cls-1 {
+                                        fill: #bb6767;
+                                    }
+                                    .cls-2 {
+                                        fill: #b8ce94;
+                                    }
+                                    .cls-2, .cls-3, .cls-4 {
+                                        stroke: #fdffff;
+                                        stroke-width: 3px;
+                                    }
+                                    .cls-2, .cls-3 {
+                                        fill-rule: evenodd;
+                                    }
+                                    .cls-3, .cls-4 {
+                                        fill: none;
+                                    }
+                                    .cls-5 {
+                                        font-size: 45.833px;
+                                        fill: white;
+                                        font-family: "Myriad Pro";
+                                        font-weight: 800;
+                                    }
+                                </style>
+                                <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        const svg = document.getElementById('svgStadium');
+                                        const paths = svg.querySelectorAll('path');
+                                        const items = document.querySelectorAll('.item');
+
+
+                                        // Add initial classes to all paths
+                                        paths.forEach(function (path) {
+                                            var sectionName = path.getAttribute('data-section');
+                                            path.classList.add(sectionName, 'clicked');
+                                        });
+
+                                        // Add event listeners to all paths
+                                        paths.forEach(function (path) {
+                                            path.addEventListener('mouseenter', function () {
+                                                var sectionName = this.getAttribute('data-section');
+                                                document.querySelectorAll('path[data-section="' + sectionName + '"]')
+                                                        .forEach(item => item.classList.add('hovered', sectionName));
+                                            });
+
+                                            path.addEventListener('mouseleave', function () {
+                                                var sectionName = this.getAttribute('data-section');
+                                                document.querySelectorAll('path[data-section="' + sectionName + '"]')
+                                                        .forEach(item => {
+                                                            if (!item.classList.contains('clicked')) {
+                                                                item.classList.remove('hovered', sectionName);
+                                                            }
+                                                        });
+                                            });
+
+                                            path.addEventListener('click', function () {
+                                                var sectionName = this.getAttribute('data-section');
+                                                document.querySelectorAll('path[data-section="' + sectionName + '"]')
+                                                        .forEach(item => {
+                                                            item.classList.toggle('clicked');
+
+                                                            // Check if the path has the class 'clicked' and log a message
+                                                            if (item.classList.contains('clicked')) {
+                                                                items.forEach(item => {
+                                                                    const itemTicketType = item.getAttribute('data-ticket-type');
+                                                                    if (itemTicketType === sectionName) {
+                                                                        item.style.display = 'block';
+                                                                    }
+                                                                });
+                                                            } else {
+                                                                items.forEach(item => {
+                                                                    const itemTicketType = item.getAttribute('data-ticket-type');
+                                                                    if (itemTicketType === sectionName) {
+                                                                        item.style.display = 'none';
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+                                            });
+                                        });
+                                    });
+
+                                    var pricePerTicketString = '';
+                                    function Summary(price, className, standName, seatName) {
+                                        document.getElementById('priceIndiv').innerText = parseInt(price.replace(/,/g, ''), 0);
+                                        document.getElementById('sum').innerText = parseInt(price.replace(/,/g, ''), 0);
+                                        document.getElementById('ticketSeatStand').innerText = standName + seatName;
+                                        document.getElementById('seatClassView').innerText = className;
+                                        pricePerTicketString = price;
+                                    }
+
+                                    function changeTotalPrice() {
+                                        var pricePerTicket = parseInt(pricePerTicketString.replace(/,/g, ''), 0);
+                                        var quantity = document.getElementById('number_of_tickets').value;
+                                        document.getElementById('sum').innerText = quantity * pricePerTicket;
+                                    }
+
+                                    function cancel() {
+                                        document.getElementById('number_of_tickets').value = 1;
+                                    }
+                                </script>
+
+                                </defs>
+                                <%--Stand C--%>
+                                <path data-section="fans-side" data-block="4" data-tags="" d="M294,405s-43.585,33.376-66.465,76.174l-81.853-34.1S175,395.162,251.139,344.783Z"/>
+                                <path data-section="standard" data-block="5" data-tags="" d="M246.139,343.783s-71.127,46.322-105.457,102.286L57.986,404s42.049-65.858,141.67-123.373Z"/>
+                                <path data-section="fans-side" data-block="3" data-tags="" d="M223.535,482.174s-22.88,35.12-22.88,83.826H106.328s-5.088-52.684,35.354-117.931Z"/>
+                                <path data-section="standard" data-block="6" data-tags="" d="M137.682,448.069S102.328,500.572,102.328,566H0.463s-5.081-75.469,54.523-160Z"/>
+                                <path data-section="fans-side" data-block="1" data-tags="" d="M293,733s-43.585-33.376-66.465-76.174l-81.853,34.105S174,742.838,250.139,793.217Z"/>
+                                <path data-section="standard" data-block="8" data-tags="" d="M247.139,793.217S176.012,746.9,141.682,690.931L58.986,733s42.049,65.858,141.67,123.373Z"/>
+                                <path data-section="fans-side" data-block="2" data-tags="" d="M224.535,653.826s-22.88-35.12-22.88-83.826H107.328s-5.088,52.683,35.354,117.931Z"/>
+                                <path data-section="standard" data-block="7" data-tags="" d="M138.682,688.931S103.328,636.428,103.328,571H1.463s-5.081,75.469,54.523,160Z"/>
+                                <%--Stand D--%>
+                                <path data-section="fans-side" data-block="4" data-tags="" d="M953,403s43.585,33.376,66.46,76.174l81.86-34.1S1072,393.162,995.861,342.783Z"/>
+                                <path data-section="standard" data-block="5" data-tags="" d="M999.861,340.783s71.129,46.322,105.459,102.286L1188.01,401s-42.04-65.858-141.67-123.373Z"/>
+                                <path data-section="fans-side" data-block="3" data-tags="" d="M1022.46,482.174s22.88,35.12,22.88,83.826h94.33s5.09-52.684-35.35-117.931Z"/>
+                                <path data-section="standard" data-block="6" data-tags="" d="M1107.32,448.069s35.35,52.5,35.35,117.931h101.87s5.08-75.469-54.53-160Z"/>
+                                <path data-section="fans-side" data-block="1" data-tags="" d="M953,732s43.585-33.376,66.46-76.174l81.86,34.105S1072,741.838,995.861,792.217Z"/>
+                                <path data-section="standard" data-block="8" data-tags="" d="M999.861,792.217S1070.99,745.9,1105.32,689.931L1188.01,732s-42.04,65.858-141.67,123.373Z"/>
+                                <path data-section="fans-side" data-block="2" data-tags="" d="M1023.46,653.826s22.88-35.12,22.88-83.826h94.33s5.09,52.683-35.35,117.931Z"/>
+                                <path data-section="standard" data-block="7" data-tags="" d="M1109.32,687.931s35.35-52.5,35.35-117.931h101.87s5.08,75.469-54.53,160Z"/>
+                                <%--Stand B--%>
+                                <path data-section="fans-side" data-block="1" data-tags="" d="M441.256,339.7S393.907,353.931,334,396l-42.861-60.217s60.753-37.4,121.224-54.963Z"/>
+                                <path data-section="standard" data-block="12" data-tags="" d="M410.364,276.82s-74.741,23.456-121.225,54.963l-46.484-63.158s78.536-41.444,137.569-57.513Z"/>
+                                <path data-section="vip-stand" data-block="2" data-tags="" d="M524.909,318s-21.621,2.448-80.653,20.7L415.364,279.82s51.512-16.421,101.054-23.606Z"/>
+                                <path data-section="under-roof" data-block="11" data-tags="" d="M516.418,253.214s-56.568,7.848-101.055,23.606l-30.139-65.708s68.964-19.393,122.412-25.656Z"/>
+                                <path data-section="vip-stand" data-block="3" data-tags="" d="M623,309.469s-76.818,2.322-94.091,7.532l-8.491-61.787A731.946,731.946,0,0,1,623,248.028v61.441Z"/>
+                                <path data-section="under-roof" data-block="10" data-tags="" d="M623,244.028s-63.93.333-102.582,7.186l-8.782-67.758s68.08-7.888,111.364-7.888v68.46Z"/>
+                                <path data-section="fans-side" data-block="6" data-tags="" d="M808.744,339.7S856.093,353.931,916,396l42.861-60.217s-60.754-37.4-121.225-54.963Z"/>
+                                <path data-section="standard" data-block="7" data-tags="" d="M837.636,276.82s74.741,23.456,121.225,54.963l46.479-63.158s-78.532-41.444-137.564-57.513Z"/>
+                                <path data-section="vip-stand" data-block="5" data-tags="" d="M724.091,318s21.62,2.448,80.653,20.7l28.892-58.876S782.124,263.4,732.581,256.214Z"/>
+                                <path data-section="under-roof" data-block="8" data-tags="" d="M732.581,253.214s56.569,7.848,101.055,23.606l30.14-65.708s-68.965-19.393-122.413-25.656Z"/>
+                                <path data-section="vip-stand" data-block="4" data-tags="" d="M626,309.469s76.818,2.322,94.091,7.532l8.49-61.787A731.921,731.921,0,0,0,626,248.028v61.441Z"/>
+                                <path data-section="under-roof" data-block="9" data-tags="" d="M626,244.028s63.93,0.333,102.581,7.186l8.783-67.758s-68.08-7.888-111.364-7.888v68.46Z"/>
+                                <path data-section="on-roof" data-block="13" data-tags="" d="M471.289,145.64H335L292.139,86.361s63.3-37.493,121.225-55.2Z"/>
+                                <path data-section="on-roof" data-block="14" data-tags="" d="M623,145.64H477.289L419.364,31.163S510.078-.342,623-0.342V145.64Z"/>
+                                <path data-section="on-roof" data-block="16" data-tags="" d="M776.711,145.64H913l42.861-59.279s-63.3-37.493-121.225-55.2Z"/>
+                                <path data-section="on-roof" data-block="15" data-tags="" d="M626,145.64H771.711L829.636,31.163S738.922-.342,626-0.342V145.64Z"/>
+                                <%--Stand A--%>
+                                <path data-section="fans-side" data-block="1" data-tags="" d="M440.256,795.3S392.907,781.069,333,739l-42.861,60.217s60.753,37.4,121.224,54.963Z"/>
+                                <path data-section="standard" data-block="12" data-tags="" d="M408.364,857.18s-74.741-23.456-121.225-54.963l-46.484,63.158s78.536,41.444,137.569,57.513Z"/>
+                                <path data-section="vip-stand" data-block="2" data-tags="" d="M524.909,817s-21.621-2.447-80.653-20.694L415.364,855.18s51.512,16.421,101.054,23.606Z"/>
+                                <path data-section="under-roof" data-block="11" data-tags="" d="M515.418,881.786s-56.568-7.848-101.055-23.606l-30.139,65.708s68.964,19.393,122.412,25.656Z"/>
+                                <path data-section="vip-stand" data-block="3" data-tags="" d="M622,824.531s-76.818-2.322-94.091-7.533l-8.491,61.788A731.946,731.946,0,0,0,622,885.972V824.531Z"/>
+                                <path data-section="under-roof" data-block="10" data-tags="" d="M622,888.972s-63.93-.333-102.582-7.186l-8.782,67.758s68.08,7.888,111.364,7.888v-68.46Z"/>
+                                <path data-section="fans-side" data-block="6" data-tags="" d="M808.744,794.3S856.093,780.069,916,738l42.861,60.217s-60.754,37.4-121.225,54.963Z"/>
+                                <path data-section="standard" data-block="7" data-tags="" d="M838.636,859.18s74.741-23.456,121.225-54.963l46.479,63.158s-78.532,41.444-137.564,57.513Z"/>
+                                <path data-section="vip-stand" data-block="5" data-tags="" d="M725.091,817s21.62-2.447,80.653-20.694l28.892,58.876S783.124,871.6,733.581,878.786Z"/>
+                                <path data-section="under-roof" data-block="8" data-tags="" d="M733.581,882.786s56.569-7.848,101.055-23.606l30.14,65.708s-68.965,19.393-122.413,25.656Z"/>
+                                <path data-section="vip-stand" data-block="4" data-tags="" d="M627,824.531s76.818-2.322,94.091-7.533l8.49,61.788A731.921,731.921,0,0,1,627,885.972V824.531Z"/>
+                                <path data-section="under-roof" data-block="9" data-tags="" d="M627,889.972s63.93-.333,102.581-7.186l8.783,67.758s-68.08,7.888-111.364,7.888v-68.46Z"/>
+                                <path data-section="on-roof" data-block="13" data-tags="" d="M471.289,990.36H335l-42.861,59.28s63.3,37.49,121.225,55.2Z"/>
+                                <path data-section="on-roof" data-block="14" data-tags="" d="M622,990.36H476.289l-57.925,114.48s90.714,31.5,203.636,31.5V990.36Z"/>
+                                <path data-section="on-roof" data-block="16" data-tags="" d="M777.711,990.36H914l42.861,59.28s-63.3,37.49-121.225,55.2Z"/>
+                                <path data-section="on-roof" data-block="15" data-tags="" d="M626,990.36H771.711l57.925,114.48s-90.714,31.5-203.636,31.5V990.36Z"/>
+                                <%--<path data-section="" data-block="" data-tags="" d="M422.11,451.308H833.1V691.527H422.11V451.308Z"/>--%>
+
+                                <path class="cls-1" d="M253.625 569a371.375 244.531 0 1 0 742.75 0a371.375 244.531 0 1 0 -742.75 0" />
+                                <path class="cls-2" d="M422.11,451.308H833.1V691.527H422.11V451.308Z" />
+                                <path class="cls-3" d="M625,450.875V691.531" />
+                                <path class="cls-3" d="M423.614,530.116h34.618v78.5H423.614" />
+                                <path class="cls-3" d="M423.614,647.872H499v-154.7H423.614" />
+                                <path id="Shape_16_copy" data-name="Shape 16 copy" class="cls-3" d="M830.386,530.116H795.768v78.5h34.618" />
+                                <path id="Shape_17_copy" data-name="Shape 17 copy" class="cls-3" d="M830.386,647.872H755v-154.7h75.389" />
+                                <path class="cls-4" d="M592 569a32 32 0 1 0 64 0a32 32 0 1 0 -64 0" />
+
+
+                                <text class="maptext" x="360.125" y="820.219">1</text>
+                                <text class="maptext" x="468.125" y="852.219">2</text>
+                                <text class="maptext" x="563.125" y="870.219">3</text>
+                                <text class="maptext" x="666.125" y="868.219">4</text>
+                                <text class="maptext" x="765.126" y="855.218">5</text>
+                                <text class="maptext" x="871.126" y="818.219">6</text>
+                                <text class="maptext" x="305.125" y="885.219">12</text>
+                                <text class="maptext" x="430.125" y="921.219">11</text>
+                                <text class="maptext" x="544.125" y="939.219">10</text>
+                                <text class="maptext" x="669.125" y="941.219">9</text>
+                                <text class="maptext" x="787.125" y="925.219">8</text>
+                                <text class="maptext" x="910.125" y="888.219">7</text>
+                                <text class="maptext" x="356.124" y="1053.219">13</text>
+                                <text class="maptext" x="511.125" y="1075.218">14</text>
+                                <text class="maptext" x="687.124" y="1075.218">15</text>
+                                <text class="maptext" x="850.125" y="1047.218">16</text>
+                                <text class="maptext" x="1016.125" y="736.219">1</text>
+                                <text class="maptext" x="1073.125" y="635.218">2</text>
+                                <text class="maptext" x="1075.125" y="533.219">3</text>
+                                <text class="maptext" x="1010.125" y="426.219">4</text>
+                                <text class="maptext" font-size="25" x="1080.125" y="373.219">5</text>
+                                <text class="maptext" x="1166.125" y="505.219">6</text>
+                                <text class="maptext" x="1172.125" y="659.219">7</text>
+                                <text class="maptext" x="1082.125" y="791.218">8</text>
+                                <text class="maptext" x="213.125" y="736.219">1</text>
+                                <text class="maptext" x="156.124" y="635.218">2</text>
+                                <text class="maptext" x="151.125" y="531.219">3</text>
+                                <text class="maptext" x="218.125" y="434.219">4</text>
+                                <text class="maptext" x="147.125" y="380.219">5</text>
+                                <text class="maptext" x="58.125" y="513.219">6</text>
+                                <text class="maptext" x="62.125" y="661.219">7</text>
+                                <text class="maptext" x="143.124" y="790.219">8</text>
+                                <text class="maptext" x="360.125" y="352.219">1</text>
+                                <text class="maptext" x="468.125" y="313.219">2</text>
+                                <text class="maptext" x="564.125" y="297.218">3</text>
+                                <text class="maptext" x="665.125" y="297.218">4</text>
+                                <text class="maptext" x="762.125" y="313.219">5</text>
+                                <text class="maptext" x="872.126" y="350.219">6</text>
+                                <text class="maptext" x="907.125" y="287.218">7</text>
+                                <text class="maptext" x="784.125" y="246.219">8</text>
+                                <text class="maptext" x="665.125" y="231.219">9</text>
+                                <text class="maptext" x="549.125" y="229.219">10</text>
+                                <text class="maptext" x="361.125" y="115.219">13</text>
+                                <text class="maptext" x="511.125" y="94.219">14</text>
+                                <text class="maptext" x="678.125" y="94.219">15</text>
+                                <text class="maptext" x="841.125" y="115.219">16</text>
+                                <text class="maptext" x="434.126" y="246.219">11</text>
+                                <text class="maptext" x="305.125" y="284.219">12</text>
+
+
+                                <text id="Stand_A" data-name="Stand A" class="cls-5" x="537.274" y="759.644">Stand A</text>
+                                <text id="Stand_B" data-name="Stand B" class="cls-5" x="536.274" y="414.643">Stand B</text>
+                                <text id="Stand_C" data-name="Stand C" class="cls-5" transform="translate(890.745 474.636) rotate(90)">Stand C</text>
+                                <text id="Stand_D" data-name="Stand D" class="cls-5" transform="translate(358.627 667.019) rotate(-90)">Stand D</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <p class="text-center"><strong>Explain Selected above</strong></p>
+                        <ul class="list-inline text-center">
+                            <li class="list-inline-item"><span class="badge badge-secondary">No Select</span></li>
+                            <li class="list-inline-item"><span class="badge badge-primary">standard</span></li>
+                            <li class="list-inline-item"><span class="badge badge-success">vip-stand</span></li>
+                            <li class="list-inline-item"><span class="badge badge-danger">fans-side</span></li>
+                            <li class="list-inline-item"><span class="badge badge-warning">under-roof</span></li>
+                            <li class="list-inline-item"><span class="badge badge-info">on-roof</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Ticket Info Section -->
+                <div class="col-md-6">
+                    <ul class="scroll-container list-group">
+                        <c:forEach items="${seatByMatch}" var="seatMatch">
+                            <c:if test="${seatMatch.availability > 0}">
+                                <form class="item card" data-section="${seatMatch.seatarea.seatClass.seatClassName}"
+                                      data-sort-price="${seatMatch.price}"
+                                      data-sort-availability="${seatMatch.availability}"
+                                      data-ticket-type="${seatMatch.seatarea.seatClass.seatClassName}"
+                                      action="summaryTicket" method="post">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-8 text-left">
+                                                <input name="matchSeatId" value="${seatMatch.matchSeatId}" style="display: none;">
+                                                <input name="seatId" value="${seatMatch.seatarea.seatId}" style="display: none;">
+                                                <h5 class="card-title fa fa-flag-o"> Vị trí ${seatMatch.seatarea.stand.standName}${seatMatch.seatarea.seatName}</h5>
+                                                <ul class="list-unstyled">
+                                                    <li><i class="badge ${seatMatch.seatarea.seatClass.seatClassName}">${seatMatch.seatarea.seatClass.seatClassName}</i></li>
+                                                    <li><i class="fa fa-circle-thin active"></i> Còn ${seatMatch.availability} vé</li>
+                                                </ul>
+                                            </div>
+                                            <div class="col-md-4 text-end">
+                                                <h5>${seatMatch.price} vnđ</h5>
+                                                <p class="text-muted">cho mỗi vé</p>
+                                                <div class="mb-2">
+                                                    <select class="form-select" name="numberOfTicket">
+                                                        <c:choose>
+                                                            <c:when test="${seatMatch.availability >= 5}">
+                                                                <option value="1">1 ticket</option>
+                                                                <option value="2">2 tickets</option>
+                                                                <option value="3">3 tickets</option>
+                                                                <option value="4">4 tickets</option>
+                                                                <option value="5">5 tickets</option>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:forEach var="i" begin="1" end="${seatMatch.availability}">
+                                                                    <option value="${i}">${i} ticket</option>
+                                                                </c:forEach>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </select>
+                                                </div>
+                                                <button class="btn btn-success w-100" type="submit">Mua ngay</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+
+                            </c:if>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 Your Website. All rights reserved.</p>
+            </div>
+        </footer>
+        <style>
+            .standard {
+                color:#fff;
+                background-color:#007bff
+            }
+            .under-roof {
+                color:#fff;
+                background-color:#ffc118
+            }
+            .on-roof {
+                color:#fff;
+                background-color:#17a2b8
+            }
+            .vip-stand {
+                color:#fff;
+                background-color:#28a745
+            }
+            .fans-side {
+                color:#fff;
+                background-color:#dc3545
+            }
+        </style>
+
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     </body>
 </html>

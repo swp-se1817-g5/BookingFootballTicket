@@ -83,7 +83,7 @@ public class PublicMatchDetailServlet extends HttpServlet {
         request.setAttribute("time", time);
         request.setAttribute("match", match);
         request.setAttribute("seatByMatch", MatchSeatDAO.INSTANCE.getMatchSeatbyMatch(id));
-        request.getRequestDispatcher("views/newjsp1.jsp").forward(request, response);
+        request.getRequestDispatcher("views/publicMatchDetail.jsp").forward(request, response);
     }
 
     /**

@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">  
+    <servlet>
+        <servlet-name>ManageHomePageServlet</servlet-name>
+        <servlet-class>controllers.home_Page.ManageHomePageServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ManageHomePageServlet</servlet-name>
+        <url-pattern>/homePage</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>homePage</welcome-file>
     </welcome-file-list>
@@ -9,16 +17,20 @@
         <filter-name>AuthenticationFilter</filter-name>
     </filter>
     <filter-mapping>
-        <filter-name>AuthenticationAdminFilter</filter-name>
-        <url-pattern>/manageStand</url-pattern>
-        <url-pattern>/deleteStand</url-pattern>
-        <url-pattern>/manageFootballClub</url-pattern>
-        <url-pattern>/deleteFootballClub</url-pattern>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/myTicket</url-pattern>
     </filter-mapping>
     
     <filter>
         <filter-class>filters.AuthenticationAdminFilter</filter-class>
         <filter-name>AuthenticationAdminFilter</filter-name>
     </filter>
-    
+    <filter-mapping>
+        <filter-name>AuthenticationAdminFilter</filter-name>
+        <url-pattern>/manageStand</url-pattern>
+        <url-pattern>/deleteStand</url-pattern>
+        <url-pattern>/manageFootballClub</url-pattern>
+        <url-pattern>/deleteFootballClub</url-pattern>
+    </filter-mapping>
 </web-app>
+

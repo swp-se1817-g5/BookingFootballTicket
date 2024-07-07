@@ -2,12 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.home_Page;
+package controllers.user_access;
 
-import dal.FootballClubDAO;
 import dal.MatchDAO;
-import dal.NewsDAO;
-import dal.SeasonDAO;
+import dal.MatchSeatDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,13 +13,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import models.Match;
 
 /**
  *
- * @author nguye
+ * @author thuat
  */
-//@WebServlet(name = "ManageHomePageServlet", urlPatterns = {"/homePage"})
-public class ManageHomePageServlet extends HttpServlet {
+@WebServlet(name = "SummaryTicket", urlPatterns = {"/summaryTicket"})
+public class SummaryTicket extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,13 +37,14 @@ public class ManageHomePageServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageHomePageServlet</title>");
+            out.println("<title>Servlet SummaryTicket</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageHomePageServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SummaryTicket at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,12 +62,7 @@ public class ManageHomePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
-        request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
-        request.setAttribute("getListNews", NewsDAO.getInstance().getlistNews(""));
-        request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -79,7 +76,38 @@ public class ManageHomePageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String numberOfTicketString = request.getParameter("numberOfTicket");
+        String matchSeatIdString = request.getParameter("matchSeatId");
+        String seatIdString = request.getParameter("seatId");
+        int numberOfTicket;
+        int matchSeatId;
+        int seatId;
+        try {
+            numberOfTicket = Integer.parseInt(numberOfTicketString);
+            matchSeatId = Integer.parseInt(matchSeatIdString);
+            seatId = Integer.parseInt(seatIdString);
+            request.setAttribute("seat", MatchSeatDAO.INSTANCE.getMatchSeatbyMatchSeatId(seatId));
+            request.setAttribute("matchSeatId", matchSeatId);
+            request.setAttribute("numberOfTicket", numberOfTicket);
+
+            Match match = MatchDAO.INSTANCE.getMatcheById(MatchSeatDAO.INSTANCE.getMatchSeatbyMatchSeatId(seatId).getMatch() + "");
+            String dateTimeString = match.getTime();
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, inputFormatter);
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            String date = dateTime.toLocalDate().format(dateFormatter);
+            String time = dateTime.toLocalTime().format(timeFormatter);
+
+            request.setAttribute("date", date);
+            request.setAttribute("time", time);
+            request.setAttribute("match", match);
+            request.setAttribute("seatByMatch", MatchSeatDAO.INSTANCE.getMatchSeatbyMatch(matchSeatId));
+
+            request.getRequestDispatcher("views/ticketSummary.jsp").forward(request, response);
+        } catch (Exception e) {
+
+        }
     }
 
     /**
@@ -92,7 +120,4 @@ public class ManageHomePageServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public static void main(String[] args) {
-        System.out.println(MatchDAO.INSTANCE.getMatches());
-    }
 }
