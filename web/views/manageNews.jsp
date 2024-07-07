@@ -62,6 +62,19 @@ Author     : duong
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/chart/chart.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
         <style>
             body {
                 color: #566787;
@@ -261,30 +274,30 @@ Author     : duong
                                     </div>
                                 </div>
                             </div>
-                            <table class="table table-striped table-hover table-bordered">
+                            <table class="table table-striped table-hover table-bordered ">
                                 <thead>
                                     <tr class="text-center">
-                                        <th>#</th>
-                                        <th>Title</th>
-                                        <th>Content</th>
-                                        <th>Conclusion</th>
+                                        <th style="font-weight: bold; font-size: 14px;">#</th>
+                                        <th style="font-weight: bold; font-size: 14px;">Tiêu Đề</th>
+                                        <th style="font-weight: bold; font-size: 14px;">Nội Dung</th>
+                                        <th style="font-weight: bold; font-size: 14px;">Kết Luận</th>
                                         <th>
-                                            <select class="form-select border-0" id="statusSelect" onchange="filterTable()">
-                                                <option selected value="All">All Status</option>
+                                            <select style="font-weight: bold; font-size: 14px;" class="form-select border-0" id="statusSelect" onchange="filterTable()">
+                                                <option selected value="All">Trạng Thái</option>
                                                 <c:forEach items="${sessionScope.getListStatus}" var="listStatus">
                                                     <option>${listStatus.statusName}</option>
                                                 </c:forEach>
                                             </select>
                                         </th>
                                         <th>  
-                                            <select class="form-select border-0" id="stateSelect" onchange="filterTable()">
-                                                <option selected value="All">All State</option>
+                                            <select style="font-weight: bold; font-size: 14px;" class="form-select border-0" id="stateSelect" onchange="filterTable()">
+                                                <option selected value="All">Tình Trạng</option>
                                                 <c:forEach items="${sessionScope.getListState}" var="listState">
                                                     <option>${listState.stateName}</option>
                                                 </c:forEach>
                                             </select>
                                         </th>
-                                        <th>Action</th>
+                                        <th>Hành Động</th>
                                     </tr>
                                 </thead>
                                 <tbody id="newsTableBody">
@@ -368,11 +381,6 @@ Author     : duong
                                 <label>Kết Luận</label>
                                 <textarea name="conclusion" class="form-control" rows="5" required></textarea>
                             </div>
-                            <div class="form-group" style="display: flex; align-items: center; gap: 10px;">
-                                <label>Tình Trạng</label>
-                                <input name="stateId" type="radio" required checked value="2">Show
-                                <input name="stateId" type="radio" required value="1">Hide
-                            </div>
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
@@ -413,19 +421,25 @@ Author     : duong
                                     <label>Kết Luận</label>
                                     <input name="conclusion" class="form-control" value="${n.conclusion}">
                                 </div>
+
+                                <!--<h3>${sessionScope.currentUser}</h3>-->
                                 <div class="form-group">
-                                    <label>State</label>
-                                    <select name="stateId">
-                                        <c:forEach items="${sessionScope.getListState}" var="listState">
-                                            <option value="${listState.stateId}" ${ listState.stateName eq n.stateId.stateName ? "selected" : ""}>${listState.stateName}</option>
+                                    <label>Trạng Thái</label>
+                                    <select name="statusId" id="getStatusId${n.newsId}" onchange="changeStatus(this)">
+                                        <c:forEach items="${sessionScope.getListStatus}" var="listStatus">
+                                            <option value="${listStatus.statusId}" 
+                                                    <c:if test="${listStatus.statusId == n.statusId.statusId}">selected</c:if>
+                                                    >${listStatus.statusName}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label>Status</label>
-                                    <select name="statusId">
-                                        <c:forEach items="${sessionScope.getListStatus}" var="listStatus">
-                                            <option value="${listStatus.statusId}" ${listStatus.statusName eq n.statusId.statusName ? "selected" : ""}>${listStatus.statusName}</option>
+                                <div class="form-group" id="state${n.newsId}" style="display: none;">
+                                    <label>Tình Trạng</label>
+                                    <select name="stateId">
+                                        <c:forEach items="${sessionScope.getListState}" var="listState">
+                                            <option value="${listState.stateId}" 
+                                                    <c:if test="${listState.stateName eq n.stateId.stateName}">selected</c:if>
+                                                    >${listState.stateName}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -439,16 +453,48 @@ Author     : duong
                 </div>
             </div>
         </c:forEach>
+
+        <script>
+            function changeStatus(selectElement) {
+                var statusId = parseInt(selectElement.value, 10);
+                var stateDiv = selectElement.closest('.modal-body').querySelector('.form-group[id^="state"]');
+                console.log(statusId);
+                if (statusId === 3) {
+                    stateDiv.style.display = "block";
+                } else {
+                    stateDiv.style.display = "none";
+                }
+            }
+
+            function initializeModals() {
+                var statusSelects = document.querySelectorAll('select[name="statusId"]');
+                statusSelects.forEach(function (selectElement) {
+                    changeStatus(selectElement);
+                    selectElement.addEventListener('change', function () {
+                        changeStatus(selectElement);
+                    });
+                });
+            }
+
+            window.onload = function () {
+                initializeModals();
+            };
+        </script>
+
+
+        <!--//---------------------------------------Hiển thị thông báo---------------------------------------------------------->
+        <!-- toast notification -->
         <div class="toast" id="toastNotification" data-delay="3000">
             <div class="toast-header">
                 <strong class="mr-auto" id="toastTitle"></strong>
+                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
             </div>
             <div class="toast-body" id="toastMessage"></div>
         </div>
         <script>
             $(document).ready(function () {
                 var statusValue = 'All'; // Giá trị mặc định cho dropdown status
-                var stateValue = 'All';  // Giá trị mặc định cho dropdown state
+                var stateValue = 'All'; // Giá trị mặc định cho dropdown state
 
                 // Sự kiện input cho ô tìm kiếm
                 $('#valueSearch').on('input', function () {
@@ -456,7 +502,6 @@ Author     : duong
                     // Gọi hàm thực hiện AJAX để tìm kiếm và cập nhật bảng tin tức
                     updateNewsTable(valueSearch, statusValue, stateValue);
                 });
-
                 // Sự kiện change cho dropdown filter
                 $('#statusSelect, #stateSelect').change(function () {
                     statusValue = $('#statusSelect').val();
@@ -464,16 +509,13 @@ Author     : duong
                     // Gọi hàm filter table để lọc và hiển thị dòng phù hợp trong bảng
                     filterTable();
                 });
-
                 // Hàm filter table
                 function filterTable() {
                     $('#newsTableBody tr').each(function () {
                         var statusText = $(this).find('td:eq(4)').text().trim(); // Lấy text của cột Status (index 3)
-                        var stateText = $(this).find('td:eq(5)').text().trim();  // Lấy text của cột State (index 4)
+                        var stateText = $(this).find('td:eq(5)').text().trim(); // Lấy text của cột State (index 4)
 
-                        var showRow = (statusValue === "All" || statusText === statusValue) &&
-                                (stateValue === "All" || stateText === stateValue);
-
+                        var showRow = (statusValue === "All" || statusText === statusValue) && (stateValue === "All" || stateText === stateValue);
                         $(this).toggle(showRow);
                     });
                 }
@@ -514,14 +556,15 @@ Author     : duong
                             toast.find('#toastTitle').text('Success');
                             toast.find('#toastMessage').text('News updated successfully.');
                             toast.addClass('success').removeClass('error');
+                            toast.toast('show'); // Hiển thị toast
                         } else if (updated === "false") {
                             toast.find('#toastTitle').text('Error');
                             toast.find('#toastMessage').text('Failed to update News!');
                             toast.addClass('error').removeClass('success');
+                            toast.toast('show'); // Hiển thị toast
                         }
                     }
                 });
-
                 //create
                 $(document).ready(function () {
                     var created = '<%= request.getAttribute("created")%>';
@@ -531,15 +574,16 @@ Author     : duong
                             toast.find('#toastTitle').text('Success');
                             toast.find('#toastMessage').text('News created successfully.');
                             toast.addClass('success').removeClass('error');
+                            toast.toast('show');
                         } else if (created === "false") {
                             toast.find('#toastTitle').text('Error');
                             toast.find('#toastMessage').text('Failed to create News!');
                             toast.addClass('error').removeClass('success');
+                            toast.toast('show');
                         }
-                        toast.toast('show');
+
                     }
                 });
-
                 //delete
                 $(document).ready(function () {
                     var deleted = '<%= request.getAttribute("deleted")%>';
@@ -549,30 +593,20 @@ Author     : duong
                             toast.find('#toastTitle').text('Success');
                             toast.find('#toastMessage').text('News deleted successfully.');
                             toast.addClass('success').removeClass('error');
+                            toast.toast('show');
                         } else if (deleted === "false") {
                             toast.find('#toastTitle').text('Error');
                             toast.find('#toastMessage').text('Failed to delete News!');
                             toast.addClass('error').removeClass('success');
+                            toast.toast('show');
                         }
-                        toast.toast('show');
                     }
                 });
-            });
+            })
+                    ;
 
         </script>
 
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/chart/chart.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/tempusdominus/js/moment.min.js"></script>
-        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
     </body>
 </html>

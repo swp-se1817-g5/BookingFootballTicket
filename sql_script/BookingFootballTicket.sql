@@ -237,7 +237,7 @@ GO
 -- Table News
 CREATE TABLE News (
     newsId INT PRIMARY KEY IDENTITY (1,1),
-    title VARCHAR(255),
+    title NVARCHAR(255),
     content NVARCHAR(MAX),
 	image VARCHAR(255),
 	conclusion NVARCHAR(MAX),

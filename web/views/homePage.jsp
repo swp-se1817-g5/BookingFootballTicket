@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -292,43 +292,43 @@
                 <!-- Tin Tức -->
                 <div class="section-header justify-content-center">
                     <h2 class="mb-3">Tin Tức Mới Nhất</h2>
-
                 </div>
                 <div class="row">
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 1">
-                            <div class="card-body">
-                                <h5 class="card-title">News 1</h5>
-                                <p class="card-text">Description of News 1.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
+                    <c:forEach items="${getListNews}" var="n" varStatus="status" end="7">
+                        <div class="col-md-4 mb-4">
+                            <a href="publicNewsDetails?newsId=${n.newsId}">
+                                <div class="card">
+                                    <img style="width: 349px" height="auto" src="${n.image}" class="card-img-top">
+                                    <div class="card-body">
+                                        <h4>
+                                            <c:choose>
+                                                <c:when test="${fn:length(n.title) > 60}">
+                                                    ${fn:substring(n.title, 0, 60)}...
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${n.title}
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </h4>
+                                        </br>
+                                        <c:choose>
+                                            <c:when test="${fn:length(n.content) > 70}">
+                                                ${fn:substring(n.content, 0, 70)}...
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${n.content}
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 2">
-                            <div class="card-body">
-                                <h5 class="card-title">News 2</h5>
-                                <p class="card-text">Description of News 2.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 3">
-                            <div class="card-body">
-                                <h5 class="card-title">News 3</h5>
-                                <p class="card-text">Description of News 3.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
+                    </c:forEach>
                     </div>
                 </div>
             </div>
             <div class="text-center mb-5">
-                <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                <a href="publicListNews" class="btn btn-outline-secondary">Xem Thêm</a>
             </div>
         </div>
         <!-- Footer -->
@@ -393,19 +393,19 @@
                 }, 3000); // 3000 milliseconds = 3 seconds
             <% session.removeAttribute("resetPassword"); %>
             <% }%>
-                
-            <% if (session.getAttribute("transResult") != null) { %>
-            var transResult = <%= session.getAttribute("transResult") %>;
-            if (transResult) {
-                showToast('Thành công', 'Giao dịch thành công! Vui lòng kiểm tra Email để nhận mã QR!', 'success');
-            } else {
-                showToast('Thất bại', 'Giao dịch thất bại!', 'error');
-            }
-            setTimeout(function () {
-                toast.toast('hide');
-            }, 5000); // 3000 milliseconds = 3 seconds
+
+            <% if (session.getAttribute("transResult") != null) {%>
+                var transResult = <%= session.getAttribute("transResult")%>;
+                if (transResult) {
+                    showToast('Thành công', 'Giao dịch thành công! Vui lòng kiểm tra Email để nhận mã QR!', 'success');
+                } else {
+                    showToast('Thất bại', 'Giao dịch thất bại!', 'error');
+                }
+                setTimeout(function () {
+                    toast.toast('hide');
+                }, 5000); // 3000 milliseconds = 3 seconds
             <% session.removeAttribute("transResult"); %>
-        <% } %>      
+            <% }%>
             });
         </script>
     </body>

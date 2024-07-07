@@ -8,26 +8,17 @@ import dal.NewsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
-import java.io.File;
-import models.News;
-import models.NewsState;
-import models.NewsStatus;
-import models.User;
 
 /**
  *
  * @author nguye
  */
-@WebServlet(name = "CreateNewNewsServlet", urlPatterns = {"/createNewNews"})
-@MultipartConfig
-public class CreateNewNewsServlet extends HttpServlet {
+@WebServlet(name = "publicNewsDetailsServlet", urlPatterns = {"/publicNewsDetails"})
+public class publicNewsDetailsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,13 +33,14 @@ public class CreateNewNewsServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateNewNewsServlet</title>");
+            out.println("<title>Servlet publicNewsDetailsServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateNewNewsServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet publicNewsDetailsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,7 +58,18 @@ public class CreateNewNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String newsId_raw;
+        try {
+            newsId_raw = request.getParameter("newsId");
+            if (newsId_raw != null) {
+                int newsId = Integer.parseInt(newsId_raw);
+                request.setAttribute("newsDetails", NewsDAO.getInstance().getNewsByNewsId(newsId));
+                request.setAttribute("getListNews", NewsDAO.getInstance().getlistNewsInHomePage(""));
+                request.getRequestDispatcher("views/publicNewsDetails.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+
+        }
     }
 
     /**
@@ -80,42 +83,7 @@ public class CreateNewNewsServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        HttpSession session = request.getSession();
-        PrintWriter out = response.getWriter();
-        String stateId_raw = request.getParameter("stateId");
-        try {
-//            User createdByRaw = (User) session.getAttribute("currentUser");
-            User createdByRaw = new User();
-            createdByRaw.setEmail("duongnche173192@fpt.edu.vn");
-            String title = request.getParameter("title");
-            String content = request.getParameter("content");
-            String conclusion = request.getParameter("conclusion");
-            NewsStatus newsStatus = new NewsStatus();
-            newsStatus.setStatusId(2);
-            NewsState newsState = new NewsState();
-            newsState.setStateId(1);
-            Part part = request.getPart("image");
-            String imagePath = null;
-            if ((part == null) || (part.getSubmittedFileName().trim().isEmpty()) || (part.getSubmittedFileName() == null)) {
-                imagePath = "";
-                out.print("if");
-            } else {
-                String path = request.getServletContext().getRealPath("/images/news");
-                File dir = new File(path);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                File image = new File(dir, part.getSubmittedFileName());
-                part.write(image.getAbsolutePath());
-                imagePath = request.getContextPath() + "/images/news/" + image.getName();
-                News news = new News(title, content, imagePath, conclusion, createdByRaw.getEmail(), newsStatus, newsState);
-                session.setAttribute("newsCreated", NewsDAO.getInstance().createNews(news));
-            }
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-        response.sendRedirect("manageNews");
+        processRequest(request, response);
     }
 
     /**
