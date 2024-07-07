@@ -135,19 +135,12 @@
                     <h2 class="mb-3">Trận Đấu Sắp Diễn Ra</h2>
                 </div>
                 <div class="row">
-                    <c:forEach items="${getListMatches}" var="lm" varStatus="lmStatus">
+                    <c:forEach items="${getListMatches}" begin="0" end="2" var="lm" varStatus="lmStatus">
                         <c:set var="m" value="${getMatches[lmStatus.index]}" />
                         <c:set var="s" value="${getAllseason[lmStatus.index]}" />
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header">
-                                    <div>
-                                        <small>TICKETS SOLD</small>
-                                        <span><p>79</p></span>
-                                    </div>
-                                    <div>
-                                        <i class="far fa-heart"></i>
-                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="team-logos">
@@ -157,17 +150,17 @@
                                     </div>
                                     <h5 class="card-title">Europa League Final Tickets</h5>
                                     <p class="card-text">Football Club A vs Football Club B</p>
-                                    <p class="card-text">Mỹ Đình Stadium</p>
+                                    <p class="card-text">Sân vận động Mỹ Đình</p>
                                     <input type="datetime-local" value="${m.time}" readonly style="border: none; background: none">
                                     <p class="card-text">Europa League</p>
-                                    <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Book now</a>
+                                    <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Xem Vé</a>
                                 </div>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
                 <div class="text-center mb-5">
-                    <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                    <a href="publicListMatch" class="btn btn-outline-secondary">Xem Thêm</a>
                 </div>
             </div>
             <div class="con_img">

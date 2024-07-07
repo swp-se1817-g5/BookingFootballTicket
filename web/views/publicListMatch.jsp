@@ -3,7 +3,6 @@
     Created on : Jul 7, 2024, 2:12:59 PM
     Author     : Vinh
 --%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -56,6 +55,11 @@
                 height: 50px;
                 margin: 0 10px;
             }
+            .product-card .team-logos img {
+                width: 50px;
+                height: 50px;
+                margin: 0 10px;
+            }
             .sidebar {
                 position: sticky;
                 top: 20px;
@@ -63,10 +67,24 @@
             .pagination {
                 justify-content: center;
             }
+            .book-now-btn {
+                background-color: #007bff;
+                color: white;
+                border-radius: 5px;
+                padding: 0.5rem 1rem;
+                text-decoration: none;
+            }
+            .book-now-btn:hover {
+                background-color: #0056b3;
+                color: white;
+                text-decoration: none;
+            }
         </style>
     </head>
     <body>
-
+        <div style="margin-bottom: 160px">
+            <jsp:include page="header.jsp" />
+        </div>
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
@@ -77,28 +95,45 @@
                         <div class="form-group">
                             <label for="season">Mùa giải</label>
                             <select id="season" class="form-control">
-                                <option value="">Tất cả các mùa</option>
+                                <option value="All">Tất cả các mùa</option>
                                 <c:forEach items="${requestScope.seasons}" var="s">
                                     <option value="${s.seasonId}">${s.seasonName}</option>
                                 </c:forEach>
                             </select>
                         </div>
                         <div class="form-group">
-                            <div class="form-group">
-                                <label for="dateFrom">Từ ngày</label>
-                                <input type="date" id="dateFrom" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="dateTo">Đến ngày</label>
-                                <input type="date" id="dateTo" class="form-control">
-                            </div>
-
+                            <label for="dateFrom">Từ ngày</label>
+                            <input type="date" id="dateFrom" class="form-control">
                         </div>
-                        <button id="filterBtn" class="btn btn-primary">Lọc</button>
+                        <div class="form-group">
+                            <label for="dateTo">Đến ngày</label>
+                            <input type="date" id="dateTo" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="matchType">Thể loại trận đấu</label>
+                            <select id="matchType" class="form-control">
+                                <option value="All">Tất cả các thể loại</option>
+                                <c:forEach items="${requestScope.types}" var="t">
+                                    <option value="${t.typeId}">${t.name}</option>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="matchStatus">Trạng thái trận đấu</label>
+                            <select id="matchStatus" class="form-control">
+                                <option value="All">Tất cả các trạng thái</option>
+                                <c:forEach items="${requestScope.statusList}" var="status">
+                                    <c:if test="${status.matchStatusId eq 1 or status.matchStatusId eq 2}">
+                                        <option value="${status.matchStatusId}">${status.matchStatusName}</option>
+                                    </c:if>
+                                </c:forEach>
+                            </select>
+                        </div>
+                        <button id="filterBtn" class="btn btn-primary" style="margin: auto;display : flex">Lọc</button>
                         <div class="best-seller mt-4">
                             <h5>Trận đấu hot</h5>
                             <c:forEach items="${requestScope.matches}" var="o" begin="0" end="0">
-                                <div class="product-card">
+                                <div class="product-card" >
                                     <div class="team-logos">
                                         <img src="${o.team1.img}" alt="${o.team1.clubName}">
                                         <span class="vs">vs</span>
@@ -109,21 +144,21 @@
                                     <p><i class="fa fa-clock"></i>${o.time}</p>
                                     <p><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</p>
                                     <p>Vé Đã Bán: 79</p>
-                                    <a href="matchDetail?id=${o.matchId}" class=" button btn btn-custom btn-block">Xem Vé</a>
+                                    <a href="matchDetail?matchId=${o.matchId}" class="book-now-btn btn btn-custom btn-block">Xem Vé</a>
                                 </div>
                             </c:forEach>
-                        </div>  
+                        </div>
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="row">
+                    <div class="row" id="matchList">
                         <c:forEach items="${requestScope.matches}" var="o">
                             <c:set var="dateTime" value="${o.time}" />
                             <c:set var="date" value="${fn:split(dateTime, 'T')[0]}" />
                             <c:set var="time" value="${fn:split(dateTime, 'T')[1]}" />
-                            <div class="col-md-4 mb-4">
+                            <div class="col-md-4 mb-4 match" >
                                 <div class="ticket-card">
-                                    <div class="date">${date}</div>
+                                    <input type="date" class="date" value="${date}" style="border: none; background: none;text-align: center" readonly>
                                     <div class="competition">${o.season.seasonName}</div>
                                     <div class="team-logos">
                                         <img src="${o.team1.img}" alt="${o.team1.clubName}">
@@ -132,28 +167,103 @@
                                     </div>
                                     <div class="match-teams">${o.team1.clubName} vs ${o.team2.clubName}</div>
                                     <div class="location"><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</div>
-                                    <div class="time"><i class="fa fa-clock"></i>${time}.</div>
+                                    <i class="fa fa-clock"></i><input type="time" class="time" readonly value="${time}" style="border: none; background: none;text-align: center">
                                     <div class="tickets-sold">Vé Đã Bán: 79 </div>
                                     <div class="button-container">
-                                        <a type="button" href="matchDetail?id=${o.matchId}" class="btn btn-custom btn-block">Xem Vé</a>
+                                        <a type="button" href="matchDetail?matchId=${o.matchId}" class="btn btn-custom btn-block book-now-btn">Xem Vé</a>
                                     </div>
                                 </div>
                             </div>
                         </c:forEach>
                     </div>
-                    <nav>
-                        <ul class="pagination">
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        </ul>
-                    </nav>
+                </div>
+                <div class="clearfix col-12 ">
+                    <ul class="pagination">
+                        <%-- Previous Page Button --%>
+                        <c:if test="${currentPage > 1}">
+                            <li class="page-item">
+                                <a class="page-link" href="?page=${currentPage - 1}&size=${pageSize}" style="font-size: 20px"><</a>
+                            </li>
+                        </c:if>
+
+                        <%-- Page Numbers --%>
+                        <c:forEach var="pageNum" begin="1" end="${numberOfPages}" step="1">
+                            <li class="page-item ${pageNum == currentPage ? 'active' : ''}">
+                                <c:choose>
+                                    <c:when test="${pageNum == currentPage}">
+                                        <span class="page-link">${pageNum}</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="page-link" href="?page=${pageNum}&size=${pageSize}">${pageNum}</a>
+                                    </c:otherwise>
+                                </c:choose>
+                            </li>
+                        </c:forEach>
+
+                        <%-- Next Page Button --%>
+                        <c:if test="${currentPage < numberOfPages}">
+                            <li class="page-item">
+                                <a class="page-link" href="?page=${currentPage + 1}&size=${pageSize}" style="font-size: 20px">></a>
+                            </li>
+                        </c:if>
+                    </ul>
                 </div>
             </div>
         </div>
+        <!--Footer -->
+        <footer class="footer"> 
+            <div class="container">
+                <p style="text-align: center">&copy; 2024 Your Website. All rights reserved.</p>
+            </div>
+        </footer>
+        <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <!-- Popper.js for Bootstrap -->
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+        <!-- Bootstrap JS -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+
+        <!-- Your Custom JavaScript -->
+        <script>
+            $(document).ready(function () {
+                // Function to handle filter button click
+                $('#filterBtn').click(function (e) {
+                    e.preventDefault();
+
+                    var seasonId = $('#season').val();
+                    var matchStatusId = $('#matchStatus').val();
+                    var dateFrom = $('#dateFrom').val().trim();
+                    var dateTo = $('#dateTo').val().trim();
+                    var searchInput = $('#searchInput').val().trim();
+                    var typeId = $('#matchType').val().trim(); // Bắt đầu với giá trị là 'All'
+
+                    // Kiểm tra nếu typeId là 'All' hoặc rỗng thì set giá trị là null
+                    if (typeId === 'All' || typeId === '') {
+                        typeId = null;
+                    }
+
+                    // AJAX request
+                    $.ajax({
+                        type: 'POST',
+                        url: 'publicListMatch',
+                        data: {
+                            seasonId: (seasonId !== 'All' && seasonId !== '') ? seasonId : null,
+                            matchStatusId: (matchStatusId !== 'All' && matchStatusId !== '') ? matchStatusId : null,
+                            dateFrom: (dateFrom !== '') ? dateFrom : null,
+                            dateTo: (dateTo !== '') ? dateTo : null,
+                            searchInput: (searchInput !== '') ? searchInput : null,
+                            typeId: typeId
+                        },
+                        success: function (response) {
+                            // Replace content of matchList with new data
+                            $('#matchList').html(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                });
+            });
+        </script>
     </body>
 </html>
