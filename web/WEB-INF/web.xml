@@ -31,6 +31,9 @@
         <url-pattern>/deleteStand</url-pattern>
         <url-pattern>/manageFootballClub</url-pattern>
         <url-pattern>/deleteFootballClub</url-pattern>
+        <url-pattern>/manageNews</url-pattern>
+        <url-pattern>/updateNews</url-pattern>
+        <url-pattern>/deleteNews</url-pattern>
     </filter-mapping>
 </web-app>
 
