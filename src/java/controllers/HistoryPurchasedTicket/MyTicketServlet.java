@@ -13,6 +13,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.User;
 
 /**
@@ -74,7 +77,11 @@ public class MyTicketServlet extends HttpServlet {
         endDate = endDate == null ? "" : endDate;
         int totalRecords = 0;
         if (type.equals("match")) {
-            totalRecords = HistoryPurchasedTicketDAO.getInstance().getTotalRecords(startDate, endDate, email);
+            try {
+                totalRecords = HistoryPurchasedTicketDAO.getInstance().getTotalRecords(startDate, endDate, email);
+            } catch (ParseException ex) {
+                Logger.getLogger(MyTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         int endPage = totalRecords / PAGE_SIZE;
         if (totalRecords % PAGE_SIZE != 0 || totalRecords == 0) {
@@ -89,7 +96,11 @@ public class MyTicketServlet extends HttpServlet {
         }
         
         if (type.equals("match")) {
-            request.setAttribute("tickets", HistoryPurchasedTicketDAO.getInstance().paggingTickets(pageIndex, PAGE_SIZE, startDate, endDate, email));
+            try {
+                request.setAttribute("tickets", HistoryPurchasedTicketDAO.getInstance().paggingTickets(pageIndex, PAGE_SIZE, startDate, endDate, email));
+            } catch (ParseException ex) {
+                Logger.getLogger(MyTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         request.setAttribute("endPage", endPage);
         request.setAttribute("pageIndex", pageIndex);
