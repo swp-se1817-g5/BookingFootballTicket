@@ -1,15 +1,10 @@
-<%-- 
-    Document   : manageRole
-    Created on : May 26, 2024, 10:53:13 AM
-    Author     : Vinh
---%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Manage User</title>
+        <title>Quản Lý</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -54,6 +49,7 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
         <!-- Template Stylesheet -->
         <link href="css/style.css" rel="stylesheet">
@@ -184,6 +180,9 @@
                 display: flex;
                 justify-content: right;
             }
+            table.table tbody tr:hover {
+                background-color: #f2f2f2;
+            }
             .toast {
                 position: fixed;
                 bottom: 20px;
@@ -199,10 +198,19 @@
                 background-color: #dc3545;
                 color: white;
             }
-            table.table tbody tr:hover {
-                background-color: #f2f2f2;
+            #seasonTable th {
+                font-weight: bold;
+            }
+            .table thead th {
+                vertical-align: middle;
+                border-bottom: 2px solid #dee2e6;
             }
         </style>
+        <script>
+            $(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
     </head>
     <body>
         <div class="container-fluid position-relative bg-white d-flex p-0">
@@ -228,16 +236,16 @@
                         <div class="table-wrapper">
                             <div class="table-title">
                                 <div class="row">
-                                    <div class="col-sm-4"><h2>Manage <b>Role</b></h2></div>
-
-                                    <div class="col-sm-4 searchh">
-                                        <div class="search-box">
-                                            <i class="material-icons">&#xE8B6;</i>
-                                            <input type="text" class="form-control" placeholder="Search by name&hellip;">
-                                        </div>
+                                    <div class="col-md-4">
+                                        <form action="manageRole" method="get" id="searchForm">
+                                            <div class="d-flex">
+                                            <input id="searchInputForm" value="${requestScope.search}" type="text" name="search" class="form-control radius-md" placeholder="Tìm theo tên&hellip;">
+                                                <input type="submit" class="btn btn-success" value="Tìm kiếm">
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="col-sm-4 createe">
-                                        <a href="#createRoleModal" class="btn btn-success"  data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Role</span></a>
+                                    <div class="col-md-8">
+                                        <a type="button" href="#createRoleModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Thêm Vai Trò Mới</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -250,43 +258,34 @@
                             <table class="table table-striped table-hover table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Role ID</th>
-                                        <th>Role Name</th>
-                                        <th>Created By</th>
-                                        <th>Created Date</th>
-                                        <th>Last Updated By<i class="fa "></i></th>
-                                        <th>Last Updated Date<i class="fa "></i></th>
-                                        <th>Actions</th>
+                                        <th>ID</th>
+                                        <th>Tên Vai Trò</th>
+                                        <th>Hành Động</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="roles">
                                     <c:forEach items="${requestScope.roles}" var="r">
                                         <tr>
                                             <td>${r.roleId}</td>
                                             <td>${r.roleName}</td>
-                                            <td>${r.createBy}</td>
-                                            <td>${r.createdDate}</td>
-                                            <td>${r.updatedBy}</td>
-                                            <td>${r.lastUpdatedDate}</td>
                                             <td>
-                                                <a href="editRole.jsp?roleId=${r.roleId}" class="edit" title="Edit" data-toggle="tooltip">
-                                                    <i class="material-icons">&#xE254;</i>
+                                                <a href="#updateRole${r.roleId}" class="edit" title="Sửa" data-toggle="modal">
+                                                    <i class="fa fa-eye" style="color: gray"></i>
                                                 </a>
-                                                <a href="deleteRole?roleId=${r.roleId}" class="delete" title="Delete" data-toggle="tooltip">
-                                                    <i class="material-icons">&#xE872;</i>
-
+                                                <a onclick="doDelete(${r.roleId})" class="delete" title="Xóa" data-toggle="tooltip">
+                                                    <i class="fa fa-times-circle"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
+
                             <div class="clearfix">
-                                <div class="hint-text">Showing <strong>${requestScope.roles.size()}</strong> out of <strong>${noOfRecords}</strong> entries</div>
-                                <ul class="pagination">
+                                <ul class="pagination float-left">
                                     <c:if test="${page > 1}">
                                         <li class="page-item"><a href="manageRole?page=${page - 1}" class="page-link"><</a></li>
-                                        </c:if>  
+                                        </c:if>
                                         <c:forEach begin="1" end="${noOfPages}" var="pageNumber">
                                         <li class="page-item ${pageNumber eq currentPage ? 'active' : ''}">
                                             <a href="manageRole?page=${pageNumber}" class="page-link">${pageNumber}</a>
@@ -297,35 +296,87 @@
                                         </c:if>
                                 </ul>
                             </div>
-                        </div>
 
-                        <div id="createRoleModal" class="modal fade">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form action="createRole" method="post">
-                                        <div class="modal-header">						
-                                            <h4 class="modal-title">Create Role</h4>
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        </div>
-                                        <div class="modal-body">					
-                                            <div class="form-group">
-                                                <label>Role Name</label>
-                                                <input name="roleName" type="text" class="form-control" required>
+                            <div id="createRoleModal" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <form action="createRole" method="post" onsubmit="return validateRoleForm()">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Tạo Vai Trò</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                             </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                            <input type="submit" class="btn btn-success" value="Add">
-                                        </div>
-                                    </form>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label>Tên Vai Trò</label>
+                                                    <input id="roleName" name="roleName" type="text" class="form-control" required>
+                                                    <small id="roleNameError" class="form-text text-danger"></small>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                                                <input type="submit" class="btn btn-success" value="Thêm">
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>  
+
+                            <c:forEach items="${requestScope.roles}" var="r">
+                                <div id="updateRole${r.roleId}" class="modal fade">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <form action="updateRole" method="post">
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Cập Nhật Vai Trò</h4>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <input type="hidden" name="roleId" value="${r.roleId}">
+                                                    <div class="form-group">
+                                                        <label>Tên Vai Trò</label>
+                                                        <input id="newRoleName" name="roleNameInput" type="text" class="form-control" value="${r.roleName}" required>
+                                                        <small id="editRoleNameError" class="form-text text-danger"></small>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                                                    <input type="submit" class="btn btn-success" value="Cập Nhật">
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+                        </div>  
+                    </div>
                 </div>
             </div>
-        </div>
     </body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('form[action="updateRole"]').forEach(function (form) {
+                form.addEventListener("submit", function (event) {
+                    var roleNameInput = form.querySelector('input[name="roleNameInput"]');
+                    var roleName = roleNameInput.value.trim();
+                    var roleNameError = form.querySelector('#editRoleNameError');
+
+                    // Check if the role name is not empty
+                    if (roleName === '') {
+                        event.preventDefault(); // Prevent form submission
+                        roleNameError.textContent = "Tên vai trò không được để trống.";
+                    } else {
+                        roleNameError.textContent = ""; // Clear error message if any
+                    }
+                });
+                form.addEventListener("reset", function () {
+                    var roleNameError = form.querySelector('#editRoleNameError');
+                    roleNameError.textContent = ""; // Clear error message on form reset
+                });
+            });
+        });
+    </script>
+
+
     <!-- toast notification -->
     <div class="toast" id="toastNotification" data-delay="3000">
         <div class="toast-header">
@@ -334,195 +385,135 @@
         </div>
         <div class="toast-body" id="toastMessage"></div>
     </div>
-
     <!-- script for toast notification -->
     <script>
-        //update
+
         $(document).ready(function () {
-            var updated = '<%= request.getAttribute("updated") %>';
+            var updated = '<%= request.getAttribute("updated")%>';
             if (updated !== 'null' && updated !== '') {
                 var toast = $('#toastNotification');
                 if (updated === "true") {
-                    toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Stand updated successfully.');
+                    toast.find('#toastTitle').text('Thành Công');
+                    toast.find('#toastMessage').text('Vai trò được cập nhật thành công.');
                     toast.addClass('success').removeClass('error');
                 } else if (updated === "false") {
-                    toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to update stand.');
+                    toast.find('#toastTitle').text('Lỗi');
+                    toast.find('#toastMessage').text('Cập nhật vai trò thất bại.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
             }
         });
 
-        //create
         $(document).ready(function () {
-            var created = '<%= request.getAttribute("created") %>';
+            var created = '<%= request.getAttribute("created")%>';
             if (created !== 'null' && created !== '') {
                 var toast = $('#toastNotification');
                 if (created === "true") {
-                    toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Football Club created successfully.');
+                    toast.find('#toastTitle').text('Thành Công');
+                    toast.find('#toastMessage').text('Vai trò được tạo thành công.');
                     toast.addClass('success').removeClass('error');
                 } else if (created === "false") {
-                    toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to create Football Club.');
+                    toast.find('#toastTitle').text('Lỗi');
+                    toast.find('#toastMessage').text('Tạo vai trò thất bại.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
             }
         });
 
-        //delete
         $(document).ready(function () {
-            var deleted = '<%= request.getAttribute("deleted") %>';
+            var deleted = '<%= request.getAttribute("deleted")%>';
             if (deleted !== 'null' && deleted !== '') {
                 var toast = $('#toastNotification');
                 if (deleted === "true") {
-                    toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Stand deleted successfully.');
+                    toast.find('#toastTitle').text('Thành Công');
+                    toast.find('#toastMessage').text('Vai trò được xóa thành công.');
                     toast.addClass('success').removeClass('error');
                 } else if (deleted === "false") {
-                    toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Failed to delete stand.');
+                    toast.find('#toastTitle').text('Lỗi');
+                    toast.find('#toastMessage').text('Xóa vai trò thất bại.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');
             }
         });
-
     </script>
+
+    <script>
+        function doDelete(roleId) {
+            if (confirm("Bạn có muốn xóa vai trò có mã là " + roleId + " không?")) {
+                location.href = 'deleteRole?roleId=' + roleId;
+            }
+        }
+    </script>
+
+
     <!--script for create and update-->
     <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
+        function validateRoleForm() {
+            var roleNameInput = document.getElementById("roleName");
+            var roleName = roleNameInput.value.trim(); // Lấy giá trị và loại bỏ khoảng trắng đầu cuối
 
-            // Convert the stands list from JSP to a JavaScript array
-            var clubs = [];
-        <c:forEach items="${footballClubs}" var="club">
-            clubs.push({clubId: "${club.clubId}", clubName: "${club.clubName}"});
+            var valid = true;
+
+            // Kiểm tra nếu roleName chỉ chứa khoảng trắng
+            if (roleName === "") {
+                document.getElementById("roleNameError").innerText = "Tên vai trò không được để trống.";
+                valid = false;
+            }
+
+            // Kiểm tra nếu roleName đã tồn tại
+            var existingRoleNames = [
+        <c:forEach items="${requestScope.roles}" var="r" varStatus="loop">
+            "${r.roleName}"<c:if test="${!loop.last}">,</c:if>
         </c:forEach>
+            ];
 
-            // Check for duplicate stand name before submitting the create form
-            $('#createUserForm').submit(function (event) {
-                var clubName = $('#clubNameInput').val().trim();
-                var duplicate = clubs.some(club => club.clubName === clubName);
-
-                if (duplicate) {
-                    $('#clubNameInputError').text('Club already exists. Please choose a different name.');
-                    event.preventDefault();
-                } else {
-                    $('#clubNameInputError').text('');
+            for (var i = 0; i < existingRoleNames.length; i++) {
+                if (existingRoleNames[i].toLowerCase() === roleName.toLowerCase()) {
+                    document.getElementById("roleNameError").innerText = "Tên vai trò đã tồn tại. Hãy chọn cái tên khác.";
+                    valid = false;
                 }
-            });
+            }
 
-            // Check for duplicate club name before submitting the update form
-            $('#updateFootballClubForm').submit(function (event) {
-                var clubId = $('#clubId').val();
-                var clubName = $('#clubName').val().trim();
+            // Reset error message if validation passes
+            if (valid) {
+                document.getElementById("roleNameError").innerText = "";
+            }
 
-                var originalClub = clubs.find(club => club.clubId == clubId);
-
-                var duplicate = clubs.some(club => club.clubName === clubName && club.clubId != clubId);
-                console.log(duplicate);
-
-                if (clubName !== originalClub.clubName && duplicate) {
-                    $('#clubNameError').text('Club already exists. Please choose a different name');
-                    event.preventDefault();
-                } else {
-                    $('#clubNameError').text('');
-                }
-            });
-
-
-        });
-
-        function deleteUser(userId) {
-            if (confirm("Do you want to delete user with ID = " + userId))
-                location.href = 'deleteUser?userId=' + userId;
-        }
-
-        function updateUser(userId, userName) {
-            document.getElementById('clubId').value = clubId;
-            document.getElementById('clubName').value = clubName;
-
-
-            $('#clubNameError').text('');
+            return valid;
         }
     </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-        // Hàm validateSearchForm để kiểm tra giá trị nhập vào ô search
-        function validateSearchForm() {
-            const searchType = document.getElementById("searchType").value;
-            const keyword = document.getElementById("searchKeyword").value;
-            let isValid = true;
-            let errorMessage = "";
-
-            switch (searchType) {
-                case "userId":
-                    if (!/^\d+$/.test(keyword)) {
-                        isValid = false;
-                        errorMessage = "User ID must be a positive integer.";
+            function loadPage(currentPage, searchValue) {
+                $.ajax({
+                    url: "manageRole", // URL của Servlet xử lý Ajax
+                    type: "GET",
+                    data: {
+                        currentPage: currentPage,
+                        search: searchValue
+                    },
+                    success: function (data) {
+                        $("#roles").html($(data).find('#roles').html());
+                        $("#pagination").html($(data).find('#pagination').html());
                     }
-                    break;
+                });
             }
-            const errorMessageElement = document.getElementById("error-message");
-            if (!isValid) {
-                errorMessageElement.textContent = errorMessage;
-                document.getElementById("searchKeyword").value = "";
-                document.getElementById("searchKeyword").focus();
-            } else {
-                errorMessageElement.textContent = "";
-            }
-            return isValid;
-        }
-        document.getElementById("searchKeyword").addEventListener("input", function () {
-            validateSearchForm();
-        });
-
-        document.getElementById("searchType").addEventListener("change", function () {
-            var searchType = this.value;
-            var keywordInput = document.getElementById("searchKeyword");
-            var keywordSelect = document.getElementById("roleIdSelect");
-
-            if (searchType === "roleId") {
-                keywordInput.style.display = "none";
-                keywordInput.removeAttribute("required");
-                keywordSelect.style.display = "block";
-                keywordInput.setAttribute("name", "key");
-                keywordSelect.setAttribute("name", "keyword");
-            } else {
-                keywordInput.style.display = "block";
-                keywordInput.setAttribute("required", "required");
-                keywordSelect.style.display = "none";
-                keywordInput.setAttribute("name", "keyword");
-            }
-        });
-    </script>
-    <script>
-        // Function to preview image from URL
-        function previewImage(input) {
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#avatarPreview').attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]); // Convert image to base64 string
-            }
-        }
-
-        // Event listener for file input change
-        $(document).ready(function () {
-            $('input[name="avatar"]').change(function () {
-                previewImage(this);
+            $(document).on("click", ".page-link", function (e) {
+                e.preventDefault();
+                var currentPage = $(this).attr("data-page");
+                var searchValue = $("#searchInputForm").val().trim();
+                loadPage(currentPage, searchValue);
             });
+            // Bắt sự kiện khi người dùng nhập liệu vào ô search
+
         });
     </script>
+
+
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -537,6 +528,4 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </html>
-
-
 
