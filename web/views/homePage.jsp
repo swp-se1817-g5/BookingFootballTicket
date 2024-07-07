@@ -1,12 +1,6 @@
-<%-- 
-    Document   : newjsp
-    Created on : Jul 5, 2024, 2:46:50 PM
-    Author     : thuat
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -18,8 +12,6 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <style>
             .section-header {
                 display: flex;
@@ -117,16 +109,30 @@
                 background-color: rgba(255, 0, 0, 0.5); /* Màu đỏ với độ mờ 0.5 */
                 z-index: 1; /* Đặt lớp phủ lên trên ảnh */
             }
-            .img_banner_header{
-                margin-top: 8rem;
+
+            .toast {
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                min-width: 200px;
+                z-index: 10000;
             }
+            .toast.success .toast-header {
+                background-color: #28a745;
+                color: white;
+            }
+            .toast.error .toast-header {
+                background-color: #dc3545;
+                color: white;
+            }
+
 
         </style>
     </head>
     <body>
         <jsp:include page="header.jsp" />
         <div>
-            <img class="img-responsive img-fluid img_banner_header" src="images/banner/svd.jpg" alt="alt"/>
+            <img class="img-responsive img-fluid" src="images/banner/svd.jpg" alt="alt"/>
         </div>
         <div class="container-fluid">
             <div class="container mt-5">
@@ -160,6 +166,7 @@
                                     <p class="card-text">Mỹ Đình Stadium</p>
                                     <input type="datetime-local" value="${m.time}" readonly style="border: none; background: none">
                                     <p class="card-text">Europa League</p>
+                                    <p class="card-text">Tickets from</p>
                                     <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Book now</a>
                                 </div>
                             </div>
@@ -176,6 +183,7 @@
                     <h2>Nội dung chữ giữa ảnh</h2>
                 </div>
             </div>
+
             <div class="container mt-5">
                 <!-- Các Đội Bóng Nổi Bật -->
                 <div class="section-header justify-content-center ">
@@ -227,13 +235,8 @@
                     <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
                 </div>
             </div>
-            <div class="con_img">
-                <img src="images/banner/b7834a87d1f84cf4aab912a3e48dde7f.jpg" alt="Ảnh của bạn">
-                <div class="centered">
-                    <h2>Nội dung chữ giữa ảnh</h2>
-                </div>
-            </div>
             <div class="container mt-5">
+
                 <!-- Các Tournament -->
                 <div class="section-header justify-content-center">
                     <h2 class="mb-3">Các Giải Đấu</h2>
@@ -284,12 +287,6 @@
                     <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
                 </div>
             </div>
-            <div class="con_img">
-                <img src="images/banner/b7834a87d1f84cf4aab912a3e48dde7f.jpg" alt="Ảnh của bạn">
-                <div class="centered">
-                    <h2>Nội dung chữ giữa ảnh</h2>
-                </div>
-            </div>
             <div class="container mt-5">
 
                 <!-- Tin Tức -->
@@ -298,31 +295,36 @@
 
                 </div>
                 <div class="row">
-                    <c:forEach items="${getListNews}" var="n">
-                        <div class="col-md-4 mb-4">
-                            <div class="card">
-                                <img src="${n.image}" class="card-img-top">
-                                <div class="card-body">
-                                    <c:choose>
-                                        <c:when test="${fn:length(n.title) > 30}">
-                                            ${fn:substring(n.title, 0, 30)}...
-                                        </c:when>
-                                        <c:otherwise>
-                                            ${n.title}
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <c:choose>
-                                        <c:when test="${fn:length(n.content) > 30}">
-                                            ${fn:substring(n.title, 0, 30)}...
-                                        </c:when>
-                                        <c:otherwise>
-                                            ${n.content}
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 1">
+                            <div class="card-body">
+                                <h5 class="card-title">News 1</h5>
+                                <p class="card-text">Description of News 1.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
                             </div>
                         </div>
-                    </c:forEach>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 2">
+                            <div class="card-body">
+                                <h5 class="card-title">News 2</h5>
+                                <p class="card-text">Description of News 2.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 3">
+                            <div class="card-body">
+                                <h5 class="card-title">News 3</h5>
+                                <p class="card-text">Description of News 3.</p>
+                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="text-center mb-5">
@@ -344,6 +346,7 @@
             </div>
             <div class="toast-body" id="toastMessage"></div>
         </div>
+
         <script>
             $(document).ready(function () {
                 var toast = $('#toastNotification');
@@ -390,20 +393,19 @@
                 }, 3000); // 3000 milliseconds = 3 seconds
             <% session.removeAttribute("resetPassword"); %>
             <% }%>
-
-            <% if (session.getAttribute("transResult") != null) {%>
-                var transResult = <%= session.getAttribute("transResult")%>;
-                if (transResult) {
-                    showToast('Thành công', 'Giao dịch thành công! Vui lòng kiểm tra Email để nhận mã QR!', 'success');
-                } else {
-                    showToast('Thất bại', 'Giao dịch thất bại!', 'error');
-                }
-                setTimeout(function () {
-                    toast.toast('hide');
-                }, 5000); // 3000 milliseconds = 3 seconds
+                
+            <% if (session.getAttribute("transResult") != null) { %>
+            var transResult = <%= session.getAttribute("transResult") %>;
+            if (transResult) {
+                showToast('Thành công', 'Giao dịch thành công! Vui lòng kiểm tra Email để nhận mã QR!', 'success');
+            } else {
+                showToast('Thất bại', 'Giao dịch thất bại!', 'error');
+            }
+            setTimeout(function () {
+                toast.toast('hide');
+            }, 5000); // 3000 milliseconds = 3 seconds
             <% session.removeAttribute("transResult"); %>
-            <% }%>
+        <% } %>      
             });
         </script>
     </body>
-</html>
