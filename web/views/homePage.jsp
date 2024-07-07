@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -141,19 +141,12 @@
                     <h2 class="mb-3">Trận Đấu Sắp Diễn Ra</h2>
                 </div>
                 <div class="row">
-                    <c:forEach items="${getListMatches}" var="lm" varStatus="lmStatus">
+                    <c:forEach items="${getListMatches}" begin="0" end="2" var="lm" varStatus="lmStatus">
                         <c:set var="m" value="${getMatches[lmStatus.index]}" />
                         <c:set var="s" value="${getAllseason[lmStatus.index]}" />
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header">
-                                    <div>
-                                        <small>TICKETS SOLD</small>
-                                        <span><p>79</p></span>
-                                    </div>
-                                    <div>
-                                        <i class="far fa-heart"></i>
-                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="team-logos">
@@ -163,18 +156,17 @@
                                     </div>
                                     <h5 class="card-title">Europa League Final Tickets</h5>
                                     <p class="card-text">Football Club A vs Football Club B</p>
-                                    <p class="card-text">Mỹ Đình Stadium</p>
+                                    <p class="card-text">Sân vận động Mỹ Đình</p>
                                     <input type="datetime-local" value="${m.time}" readonly style="border: none; background: none">
                                     <p class="card-text">Europa League</p>
-                                    <p class="card-text">Tickets from</p>
-                                    <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Book now</a>
+                                    <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Xem Vé</a>
                                 </div>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
                 <div class="text-center mb-5">
-                    <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                    <a href="publicListMatch" class="btn btn-outline-secondary">Xem Thêm</a>
                 </div>
             </div>
             <div class="con_img">
@@ -190,212 +182,160 @@
                     <h2 class="mb-3">Các Đội Bóng Nổi Bật</h2>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 1">
-                            <div class="card-body">
-                                <h5 class="card-title">Team 1</h5>
-                                <p class="card-text">Description of Team 1.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                    <c:forEach items="${getFootballClubs}" var="fb" end="3">
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="text-center mt-1"><img src="${fb.img}" style="width: 65%; height: auto;" alt="Team"></div>
+                                <div class="card-body">
+                                    <h5 class="card-title">${fb.clubName}</h5>
+                                    <a href="publicFootballClub?fcId=${fb.clubId}" class="btn btn-primary">Chi tiết</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 2">
-                            <div class="card-body">
-                                <h5 class="card-title">Team 2</h5>
-                                <p class="card-text">Description of Team 2.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 3">
-                            <div class="card-body">
-                                <h5 class="card-title">Team 3</h5>
-                                <p class="card-text">Description of Team 3.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Team 4">
-                            <div class="card-body">
-                                <h5 class="card-title">Team 4</h5>
-                                <p class="card-text">Description of Team 4.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
                 <div class="text-center mb-5">
                     <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
                 </div>
             </div>
+            <div class="con_img">
+                <img src="images/banner/bannerMua.jpg" alt="Ảnh của bạn">
+                <div class="centered">
+                    <h2>Cùng đón chờ một mùa giải mới thật bùng nổ và đầy hấp dẫn</h2>
+                </div>
+            </div>
             <div class="container mt-5">
-
                 <!-- Các Tournament -->
                 <div class="section-header justify-content-center">
-                    <h2 class="mb-3">Các Giải Đấu</h2>
+                    <h2 class="mb-3">Các Mùa Giải</h2>
                 </div>
                 <div class="row">
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 1">
-                            <div class="card-body">
-                                <h5 class="card-title">Tournament 1</h5>
-                                <p class="card-text">Description of Tournament 1.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
+                    <c:forEach items="${getAllseason}" var="s">
+                        <div class="col-md-3 col-sm-6 mb-4">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">${s.seasonName}</h5>
+                                    <p class="card-text">Thời gian bắt đầu : ${s.startDate}</p>
+                                    <p class="card-text">Thời gian kết thúc : ${s.endDate}</p>
+                                    <a href="#" class="btn btn-primary">Xem Thêm</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 2">
-                            <div class="card-body">
-                                <h5 class="card-title">Tournament 2</h5>
-                                <p class="card-text">Description of Tournament 2.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 3">
-                            <div class="card-body">
-                                <h5 class="card-title">Tournament 3</h5>
-                                <p class="card-text">Description of Tournament 3.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="Tournament 4">
-                            <div class="card-body">
-                                <h5 class="card-title">Tournament 4</h5>
-                                <p class="card-text">Description of Tournament 4.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
                 <div class="text-center mb-5">
                     <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
                 </div>
             </div>
+            <div class="con_img">
+                <img src="images/banner/bannerTinTuc.jpg" alt="Ảnh của bạn">
+                <div class="centered">
+                    <h2>Tin tức hấp dẫn về các trận bóng đang chờ đón bạn</h2>
+                </div>
+            </div>
             <div class="container mt-5">
-
                 <!-- Tin Tức -->
                 <div class="section-header justify-content-center">
                     <h2 class="mb-3">Tin Tức Mới Nhất</h2>
-
                 </div>
                 <div class="row">
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 1">
-                            <div class="card-body">
-                                <h5 class="card-title">News 1</h5>
-                                <p class="card-text">Description of News 1.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
+                    <c:forEach items="${getListNews}" var="n" varStatus="status" end="7">
+                        <div class="col-md-4 mb-4">
+                            <a href="publicNewsDetails?newsId=${n.newsId}">
+                                <div class="card">
+                                    <img style="width: 414px" height="auto" src="${n.image}" class="card-img-top">
+                                    <div class="card-body">
+                                        <h4>
+                                            <c:choose>
+                                                <c:when test="${fn:length(n.title) > 60}">
+                                                    ${fn:substring(n.title, 0, 60)}...
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${n.title}
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </h4>
+                                        </br>
+                                        <c:choose>
+                                            <c:when test="${fn:length(n.content) > 70}">
+                                                ${fn:substring(n.content, 0, 70)}...
+                                            </c:when>
+                                            <c:otherwise>
+                                                ${n.content}
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
+                                </div>
+                            </a>
                         </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 2">
-                            <div class="card-body">
-                                <h5 class="card-title">News 2</h5>
-                                <p class="card-text">Description of News 2.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 3">
-                            <div class="card-body">
-                                <h5 class="card-title">News 3</h5>
-                                <p class="card-text">Description of News 3.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
             </div>
-            <div class="text-center mb-5">
-                <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
-            </div>
         </div>
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                <p>&copy; 2024 Your Website. All rights reserved.</p>
-            </div>
-        </footer>
-
-        <!-- Toast Notification -->
-        <div class="toast" id="toastNotification" data-delay="3000" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="mr-auto" id="toastTitle"></strong>
-                <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
-            </div>
-            <div class="toast-body" id="toastMessage"></div>
+        <div class="text-center mb-5">
+            <a href="publicListNews" class="btn btn-outline-secondary">Xem Thêm</a>
         </div>
+    </div>
+    <!-- Footer -->
+    <footer class="footer">
+        <jsp:include page="footer.jsp"/>
+    </footer>
 
-        <script>
-            $(document).ready(function () {
-                var toast = $('#toastNotification');
+    <!-- Toast Notification -->
+    <div class="toast" id="toastNotification" data-delay="3000" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+            <strong class="mr-auto" id="toastTitle"></strong>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast">&times;</button>
+        </div>
+        <div class="toast-body" id="toastMessage"></div>
+    </div>
 
-                // Function to show toast notification
-                function showToast(title, message, type) {
-                    toast.find('#toastTitle').text(title);
-                    toast.find('#toastMessage').text(message);
-                    toast.removeClass('success error').addClass(type);
+    <script>
+        $(document).ready(function () {
+            var toast = $('#toastNotification');
+            // Function to show toast notification
+            function showToast(title, message, type) {
+                toast.find('#toastTitle').text(title);
+                toast.find('#toastMessage').text(message);
+                toast.removeClass('success error').addClass(type);
+                // Show the toast
+                toast.toast('show');
+            }
+            // Check session attributes and show toast if set
+        <% if (session.getAttribute("isRegister") != null && (boolean) session.getAttribute("isRegister")) { %>
+            showToast('Thành công', 'Đăng ký thành công!', 'success');
+            setTimeout(function () {
+                toast.toast('hide');
+            }, 3000); // 3000 milliseconds = 3 seconds
+        <% session.removeAttribute("isRegister"); %>
+        <% } %>
 
-                    // Show the toast
-                    toast.toast('show');
-                }
+        <% if (session.getAttribute("changePassword") != null && (boolean) session.getAttribute("changePassword")) { %>
+            showToast('Thành công', 'Đổi mật khẩu thành công!', 'success');
+            setTimeout(function () {
+                toast.toast('hide');
+            }, 3000); // 3000 milliseconds = 3 seconds
+        <% session.removeAttribute("changePassword"); %>
+        <% } %>
 
-                // Check session attributes and show toast if set
-            <% if (session.getAttribute("isRegister") != null && (boolean) session.getAttribute("isRegister")) { %>
-                showToast('Thành công', 'Đăng ký thành công!', 'success');
-                setTimeout(function () {
-                    toast.toast('hide');
-                }, 3000); // 3000 milliseconds = 3 seconds
-            <% session.removeAttribute("isRegister"); %>
-            <% } %>
+        <% if (session.getAttribute("isFirstLogin") != null && (boolean) session.getAttribute("isFirstLogin")) { %>
+            showToast('Thành công', 'Đăng nhập thành công!', 'success');
+            setTimeout(function () {
+                toast.toast('hide');
+            }, 3000); // 3000 milliseconds = 3 seconds
+        <% session.removeAttribute("isFirstLogin"); %>
+        <% } %>
 
-            <% if (session.getAttribute("changePassword") != null && (boolean) session.getAttribute("changePassword")) { %>
-                showToast('Thành công', 'Đổi mật khẩu thành công!', 'success');
-                setTimeout(function () {
-                    toast.toast('hide');
-                }, 3000); // 3000 milliseconds = 3 seconds
-            <% session.removeAttribute("changePassword"); %>
-            <% } %>
+        <% if (session.getAttribute("resetPassword") != null && (boolean) session.getAttribute("resetPassword")) { %>
+            showToast('Thành công', 'Đặt lại mật khẩu thành công!', 'success');
+            setTimeout(function () {
+                toast.toast('hide');
+            }, 3000); // 3000 milliseconds = 3 seconds
+        <% session.removeAttribute("resetPassword"); %>
+        <% }%>
 
-            <% if (session.getAttribute("isFirstLogin") != null && (boolean) session.getAttribute("isFirstLogin")) { %>
-                showToast('Thành công', 'Đăng nhập thành công!', 'success');
-                setTimeout(function () {
-                    toast.toast('hide');
-                }, 3000); // 3000 milliseconds = 3 seconds
-            <% session.removeAttribute("isFirstLogin"); %>
-            <% } %>
-
-            <% if (session.getAttribute("resetPassword") != null && (boolean) session.getAttribute("resetPassword")) { %>
-                showToast('Thành công', 'Đặt lại mật khẩu thành công!', 'success');
-                setTimeout(function () {
-                    toast.toast('hide');
-                }, 3000); // 3000 milliseconds = 3 seconds
-            <% session.removeAttribute("resetPassword"); %>
-            <% }%>
-                
-            <% if (session.getAttribute("transResult") != null) { %>
-            var transResult = <%= session.getAttribute("transResult") %>;
+        <% if (session.getAttribute("transResult") != null) {%>
+            var transResult = <%= session.getAttribute("transResult")%>;
             if (transResult) {
                 showToast('Thành công', 'Giao dịch thành công!', 'success');
             } else {
@@ -404,8 +344,8 @@
             setTimeout(function () {
                 toast.toast('hide');
             }, 5000); // 3000 milliseconds = 3 seconds
-            <% session.removeAttribute("transResult"); %>
-        <% } %>      
-            });
-        </script>
-    </body>
+        <% session.removeAttribute("transResult"); %>
+        <% }%>
+        });
+    </script>
+</body>

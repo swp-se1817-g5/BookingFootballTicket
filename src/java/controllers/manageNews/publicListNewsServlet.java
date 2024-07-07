@@ -2,12 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.home_Page;
+package controllers.manageNews;
 
-import dal.FootballClubDAO;
-import dal.MatchDAO;
 import dal.NewsDAO;
-import dal.SeasonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,13 +12,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author nguye
  */
-@WebServlet(name = "ManageHomePageServlet", urlPatterns = {"/homePage"})
-public class ManageHomePageServlet extends HttpServlet {
+@WebServlet(name = "publicListNewsServlet", urlPatterns = {"/publicListNews"})
+public class publicListNewsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,13 +35,14 @@ public class ManageHomePageServlet extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ManageHomePageServlet</title>");
+            out.println("<title>Servlet publicListNewsServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ManageHomePageServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet publicListNewsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,12 +60,23 @@ public class ManageHomePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
-        request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
-        request.setAttribute("getListNews", NewsDAO.getInstance().getlistNewsInHomePage(""));
-        request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
+        String valueSearch;
+        String valueFilterPostOn;
+        try {
+            valueSearch = request.getParameter("valueSearch");
+            valueSearch = valueSearch == null ? "" : valueSearch.trim();
+            valueFilterPostOn = request.getParameter("valueFilterPostOn");
+            if (valueFilterPostOn != null) {
+                request.setAttribute("valuePostOn", valueFilterPostOn);
+                request.setAttribute("getListNews", NewsDAO.getInstance().filterPostOn(valueFilterPostOn));
+            } else {
+                request.setAttribute("valueSearch", valueSearch);
+                request.setAttribute("getListNews", NewsDAO.getInstance().getlistNewsInHomePage(valueSearch));
+            }
+            request.getRequestDispatcher("views/publicListNews.jsp").forward(request, response);
+        } catch (ServletException | IOException e) {
+
+        }
     }
 
     /**
@@ -92,7 +103,4 @@ public class ManageHomePageServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    public static void main(String[] args) {
-        System.out.println(MatchDAO.INSTANCE.getMatches());
-    }
 }

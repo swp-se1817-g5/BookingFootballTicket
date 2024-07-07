@@ -117,9 +117,8 @@ public class UpdateNewsServlet extends HttpServlet {
             newsState.setStateId(stateId);
             news.setStateId(newsState);
             news.setNewsId(newsId);
-//            User createdBy_raw = (User) session.getAttribute("currentUser");
-//            news.setUpdateBy(createdBy_raw.getEmail());
-            news.setUpdateBy("duongnche173192@fpt.edu.vn");
+            User createdBy_raw = (User) session.getAttribute("currentUser");
+            news.setUpdateBy(createdBy_raw.getEmail());
             session.setAttribute("newsUpdated", NewsDAO.getInstance().updateNews(news));
         } catch (IllegalArgumentException e) {
             e.printStackTrace();

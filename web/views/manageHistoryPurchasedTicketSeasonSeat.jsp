@@ -246,7 +246,7 @@
                                         <input id="valueSearch" type="text" class="form-control" placeholder="Search by email&hellip;">
                                     </div>
                                     <div class="col-sm-8 d-flex justify-content-end">
-                                        <button id="toggleButton" class="btn btn-primary btn-custom d-flex align-items-center">
+                                        <button id="toggleButton" class="btn btn-success m-2 align-items-center">
                                             Ticket Match Seat <i class="btn-icon fas fa-caret-right"></i>
                                         </button>
                                         <a type="button" href="/BookingFootballTicket/ExportExcelSeasonSeat?service=export" class="btn btn-success m-2 float-right">
