@@ -149,13 +149,15 @@
                 height: 50px; /* Điều chỉnh chiều cao logo tùy ý */
                 margin-right: 10px;
             }
+            .headerr {
+                margin-bottom: 160px;
+            }
         </style>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
-
-
-
+        <div class="headerr">
+            <jsp:include page="header.jsp" />
+        </div>
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-8">
@@ -169,7 +171,7 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label class="float-left" for="fullName">Họ và Tên*</label>
-                                        <input type="text" class="form-control" id="fullName" required>
+                                        <input value="${currentUser.name}" type="text" class="form-control" id="fullName" required>
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="float-left" for="telephone">Số điện thoại*</label>
@@ -177,7 +179,7 @@
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">+84</span>
                                             </div>
-                                            <input type="tel" class="form-control" id="telephone" required>
+                                            <input value="${currentUser.phoneNumber}" type="tel" class="form-control" id="telephone" required>
                                         </div>
                                     </div>
                                 </div>
@@ -237,14 +239,14 @@
                                         </label>
                                     </div>
                                 </div>
-                        <hr>
-                                    <input hidden
-                                            name="seatClassName"
-                                            value="${seat.seatarea.seatClass.seatClassName}" type="text"
-                                            class="form-control">
-                                    <input hidden
-                                            name="price"
-                                            value="${seat.price * numberOfTicket}" type="text" class="form-control">
+                                <hr>
+                                <input hidden
+                                       name="seatClassName"
+                                       value="${seat.seatarea.seatClass.seatClassName}" type="text"
+                                       class="form-control">
+                                <input hidden
+                                       name="price"
+                                       value="${seat.price * numberOfTicket}" type="text" class="form-control">
                                 <button type="submit" class="btn btn-primary w-100">
                                     THANH TOÁN
                                 </button>

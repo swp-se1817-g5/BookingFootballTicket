@@ -393,19 +393,7 @@
                 }, 3000); // 3000 milliseconds = 3 seconds
             <% session.removeAttribute("resetPassword"); %>
             <% }%>
-                
-            <% if (session.getAttribute("transResult") != null) { %>
-            var transResult = <%= session.getAttribute("transResult") %>;
-            if (transResult) {
-                showToast('Thành công', 'Giao dịch thành công! Vui lòng kiểm tra Email để nhận mã QR!', 'success');
-            } else {
-                showToast('Thất bại', 'Giao dịch thất bại!', 'error');
-            }
-            setTimeout(function () {
-                toast.toast('hide');
-            }, 5000); // 3000 milliseconds = 3 seconds
-            <% session.removeAttribute("transResult"); %>
-        <% } %>      
             });
         </script>
     </body>
+</html>

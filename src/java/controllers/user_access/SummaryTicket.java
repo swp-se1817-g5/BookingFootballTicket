@@ -13,9 +13,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import models.Match;
+import models.User;
 
 /**
  *
@@ -76,6 +78,8 @@ public class SummaryTicket extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User currentUser = (User) session.getAttribute("currentUser");
         String numberOfTicketString = request.getParameter("numberOfTicket");
         String matchSeatIdString = request.getParameter("matchSeatId");
         String seatIdString = request.getParameter("seatId");
@@ -99,6 +103,7 @@ public class SummaryTicket extends HttpServlet {
             String date = dateTime.toLocalDate().format(dateFormatter);
             String time = dateTime.toLocalTime().format(timeFormatter);
 
+            request.setAttribute("user", currentUser);
             request.setAttribute("date", date);
             request.setAttribute("time", time);
             request.setAttribute("match", match);

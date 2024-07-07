@@ -255,3 +255,14 @@ CREATE TABLE News (
 GO
 ALTER TABLE [HistoryPurchasedTicketMatchSeat]
 ADD orderStatus NVARCHAR(50) DEFAULT 'unPayment';
+
+
+CREATE TABLE HoldTicket (
+    id INT PRIMARY KEY IDENTITY (1,1),
+    matchSeatId INT,
+    email VARCHAR(50),
+    holdTimestamp DATETIME,
+    holdQuantity INT,
+    FOREIGN KEY (matchSeatId) REFERENCES MatchSeat(matchSeatId),
+    FOREIGN KEY (email) REFERENCES [User](email)
+);

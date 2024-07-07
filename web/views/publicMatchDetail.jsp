@@ -151,11 +151,16 @@
                 height: 50px; /* Điều chỉnh chiều cao logo tùy ý */
                 margin-right: 10px;
             }
+            .headerr {
+                margin-bottom: 160px;
+            }
         </style>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
-        <div class="container mt-5">
+        <div class="headerr">
+            <jsp:include page="header.jsp" />
+        </div>
+        <div class="container">
             <div class="row border-custom pb-3 mb-3">
                 <div class="col-md-2 text-center team-logos badge">
                     <img src="${match.team1.img}" alt="${match.team1.clubName}" />
@@ -163,12 +168,12 @@
                 </div>
                 <div class="col-md-7 text-left">
                     <h2 class="match-title">${match.team1.clubName} vs ${match.team2.clubName}</h2>
-                    <p><a href="./">Home</a> / <a href="#">${match.season.seasonName}</a> / <a href="#">${match.team1.clubName} vs ${match.team2.clubName} Tickets</a></p>
+                    <p><a href="./">Trang chủ</a> / <a href="#">${match.season.seasonName}</a> / <a href="">${match.team1.clubName} vs ${match.team2.clubName} Tickets</a></p>
                 </div>
                 <div class="col-md-3 text-right">
                     <p>${date}</p>
-                    <p>Kick off: ${time}</p>
-                    <p>Tottenham Hotspur Stadium, 748 High Road, London, N17 0BX</p>
+                    <p>Khai mạc: ${time}</p>
+                    <p>Sân vận động Quốc Gia Mỹ Đình</p>
                     <p>${match.type.name}</p>
                 </div>
             </div>

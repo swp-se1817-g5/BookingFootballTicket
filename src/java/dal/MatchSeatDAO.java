@@ -8,11 +8,11 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import models.HistoryPurchasedTicketMatchSeat;
 import models.MatchSeat;
-import models.SeatArea;
-import models.SeatClass;
-import models.Stand;
+import models.*;
 
 /**
  *
@@ -25,6 +25,7 @@ public class MatchSeatDAO {
      */
     public static MatchSeatDAO INSTANCE = new MatchSeatDAO();
     private Connection con;
+    private static final Logger LOGGER = Logger.getLogger(MatchSeatDAO.class.getName());
 
     private MatchSeatDAO() {
         if (INSTANCE == null) {
@@ -32,6 +33,30 @@ public class MatchSeatDAO {
         } else {
             INSTANCE = this;
         }
+    }
+
+    public boolean holdTicket(TicketHold ticket) {
+        boolean status = false;
+        String sql = """
+                     INSERT INTO HoldTicket (matchSeatId, email, holdTimestamp, holdQuantity)
+                     VALUES (?, ?, NOW(), ?);
+                     UPDATE MatchSeat
+                     SET availability = availability - ?
+                     WHERE matchSeatId = ? AND availability >= ?;
+                     """;
+        try (PreparedStatement st = con.prepareStatement(sql);) {
+            st.setInt(1, ticket.getMatchSeatId());
+            st.setString(2, ticket.getEmail());
+            st.setInt(3, ticket.getHoldQuantity());
+            st.setInt(4, ticket.getHoldQuantity());
+            st.setInt(5, ticket.getHoldQuantity());
+            st.setInt(6, ticket.getHoldQuantity());
+            st.setInt(7, ticket.getHoldQuantity());
+            status = st.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, "Error getting match status by ID", ex);
+        }
+        return status;
     }
 
     public ArrayList<MatchSeat> getMatchSeatbyMatch(int matchId) {
@@ -165,7 +190,7 @@ public class MatchSeatDAO {
                 + "           ,[createdDate]\n"
                 + "           ,[orderStatus])\n"
                 + "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
-         try (PreparedStatement st = con.prepareStatement(sql);) {
+        try (PreparedStatement st = con.prepareStatement(sql);) {
             st.setString(1, his.getSeatName());
             st.setInt(2, his.getQuantity());
             st.setString(3, his.getStandName());
@@ -177,58 +202,61 @@ public class MatchSeatDAO {
             st.setString(9, his.getOrderStatus());
             st.executeUpdate();
         } catch (SQLException ex) {
-             System.out.println("error here");
+            System.out.println("error here");
             System.out.println(ex);
         }
     }
+
     public int getNewId() {
         String sql = "SELECT TOP 1 ticketMatchSeatId\n"
                 + "FROM HistoryPurchasedTicketMatchSeat\n"
                 + "ORDER BY ticketMatchSeatId DESC;";
-         try (PreparedStatement st = con.prepareStatement(sql);) {
+        try (PreparedStatement st = con.prepareStatement(sql);) {
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-            return rs.getInt("ticketMatchSeatId");
-          }
+                return rs.getInt("ticketMatchSeatId");
+            }
         } catch (SQLException ex) {
-             System.out.println("error here");
+            System.out.println("error here");
             System.out.println(ex);
         }
-         return -1;
+        return -1;
     }
-    
+
     public String getTicketById(int id) {
         String sql = "SELECT * FROM HistoryPurchasedTicketMatchSeat where ticketMatchSeatId = ?";
-         try (PreparedStatement st = con.prepareStatement(sql);) {
+        try (PreparedStatement st = con.prepareStatement(sql);) {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
             if (rs.next()) {
-             return rs.getString("qrCode");
+                return rs.getString("qrCode");
             }
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-         return null;
+        return null;
     }
-public String getFormatDate(LocalDateTime myDateObj) {
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");  
-        String formattedDate = myDateObj.format(myFormatObj);  
+
+    public String getFormatDate(LocalDateTime myDateObj) {
+        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = myDateObj.format(myFormatObj);
         return formattedDate;
-     }
+    }
 
     public boolean updateStatus(HistoryPurchasedTicketMatchSeat his) {
         String sql = "UPDATE [dbo].[HistoryPurchasedTicketMatchSeat]\n"
                 + "set [orderStatus] = ?\n"
                 + "where [ticketMatchSeatId] = ?";
-         try (PreparedStatement st = con.prepareStatement(sql);) {
+        try (PreparedStatement st = con.prepareStatement(sql);) {
             st.setString(1, his.getOrderStatus());
-           st.setInt(2, his.getTicketId());
-           return st.executeUpdate() > 0;
+            st.setInt(2, his.getTicketId());
+            return st.executeUpdate() > 0;
         } catch (SQLException ex) {
             System.out.println(ex);
         }
-        return false; 
+        return false;
     }
+
     public static void main(String[] args) {
         System.out.println(INSTANCE.getMatchSeatbyMatch(3).toString());
     }
