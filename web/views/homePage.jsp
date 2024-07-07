@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -323,26 +323,7 @@
                                 </div>
                             </a>
                         </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 2">
-                            <div class="card-body">
-                                <h5 class="card-title">News 2</h5>
-                                <p class="card-text">Description of News 2.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/300" class="card-img-top" alt="News 3">
-                            <div class="card-body">
-                                <h5 class="card-title">News 3</h5>
-                                <p class="card-text">Description of News 3.</p>
-                                <a href="#" class="btn btn-primary">Xem Thêm</a>
-                            </div>
-                        </div>
+                    </c:forEach>
                     </div>
                 </div>
             </div>
@@ -412,19 +393,19 @@
                 }, 3000); // 3000 milliseconds = 3 seconds
             <% session.removeAttribute("resetPassword"); %>
             <% }%>
-                
-            <% if (session.getAttribute("transResult") != null) { %>
-            var transResult = <%= session.getAttribute("transResult") %>;
-            if (transResult) {
-                showToast('Thành công', 'Giao dịch thành công! Vui lòng kiểm tra Email để nhận mã QR!', 'success');
-            } else {
-                showToast('Thất bại', 'Giao dịch thất bại!', 'error');
-            }
-            setTimeout(function () {
-                toast.toast('hide');
-            }, 5000); // 3000 milliseconds = 3 seconds
+
+            <% if (session.getAttribute("transResult") != null) {%>
+                var transResult = <%= session.getAttribute("transResult")%>;
+                if (transResult) {
+                    showToast('Thành công', 'Giao dịch thành công! Vui lòng kiểm tra Email để nhận mã QR!', 'success');
+                } else {
+                    showToast('Thất bại', 'Giao dịch thất bại!', 'error');
+                }
+                setTimeout(function () {
+                    toast.toast('hide');
+                }, 5000); // 3000 milliseconds = 3 seconds
             <% session.removeAttribute("transResult"); %>
-        <% } %>      
+            <% }%>
             });
         </script>
     </body>
