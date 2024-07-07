@@ -152,79 +152,7 @@
         </style>
     </head>
     <body>
-        <nav class="navbar navbar-expand-md navbar-light bg-light container">
-            <a class="navbar-brand" href="#">Logo</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="tournamentsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Tournaments
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="tournamentsDropdown">
-                            <a class="dropdown-item" href="#">Tournament 1</a>
-                            <a class="dropdown-item" href="#">Tournament 2</a>
-                            <a class="dropdown-item" href="#">Tournament 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="teamsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Đội bóng
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="teamsDropdown">
-                            <a class="dropdown-item" href="#">Team 1</a>
-                            <a class="dropdown-item" href="#">Team 2</a>
-                            <a class="dropdown-item" href="#">Team 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="newsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Tin Tức
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="newsDropdown">
-                            <a class="dropdown-item" href="#">News 1</a>
-                            <a class="dropdown-item" href="#">News 2</a>
-                            <a class="dropdown-item" href="#">News 3</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="matchesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Trận đấu
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="matchesDropdown">
-                            <a class="dropdown-item" href="#">Match 1</a>
-                            <a class="dropdown-item" href="#">Match 2</a>
-                            <a class="dropdown-item" href="#">Match 3</a>
-                        </div>
-                    </li>
-                </ul>
-                <form class="form-inline my-2 my-lg-0 mr-3">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-                <ul class="navbar-nav">
-                    <li class="nav-item" id="login-register">
-                        <a class="nav-link" href="#">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Register</a>
-                    </li>
-                    <li class="nav-item dropdown d-none" id="user-menu">
-                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="https://via.placeholder.com/30" class="rounded-circle" alt="User Avatar">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                            <a class="dropdown-item" href="#">Profile</a>
-                            <a class="dropdown-item" href="#">History</a>
-                            <a class="dropdown-item" href="#">Logout</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-
+        <jsp:include page="header.jsp" />
         <div class="container mt-5">
             <div class="row border-custom pb-3 mb-3">
                 <div class="col-md-2 text-center team-logos badge">
@@ -649,7 +577,7 @@
             }
             .under-roof {
                 color:#fff;
-                background-color:#28a745
+                background-color:#ffc118
             }
             .on-roof {
                 color:#fff;

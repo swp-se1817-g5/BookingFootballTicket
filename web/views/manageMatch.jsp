@@ -11,7 +11,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Bootstrap Simple Data Table</title>
+        <title>Quản Lý trận đấu</title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -178,10 +178,10 @@
                 width: 5%;
             }
             th:nth-child(2), td:nth-child(2) {
-                width: 15%;
+                width: 12%;
             }
             th:nth-child(3), td:nth-child(3) {
-                width: 15%;
+                width: 12%;
             }
             th:nth-child(4), td:nth-child(4) {
                 width: 15%;
@@ -193,7 +193,7 @@
                 width: 15%;
             }
             th:nth-child(7), td:nth-child(7) {
-                width: 10%;
+                width: 16%;
             }
             th:nth-child(8), td:nth-child(8) {
                 width: 10%;
@@ -229,10 +229,10 @@
                                 <div class="row">
 
                                     <div class="col-md-4">
-                                        <input class="form-control radius-md" type="search" id="myInput" onkeyup="filterTable()" placeholder="Search for name of football club..." title="Type in a name">
+                                        <input class="form-control radius-md" type="search" id="myInput" onkeyup="filterTable()" placeholder="Tìm kiếm theo tên đội bóng..." title="Điền tên đôi bóng">
                                     </div>
                                     <div class="col-md-8">
-                                        <a type="button" href="#createMatchModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i>Create Match</a>
+                                        <a type="button" href="#createMatchModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i>Thêm trận đấu</a>
                                     </div>
                                 </div>
                             </div>
@@ -240,12 +240,12 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>FC-1</th>
-                                        <th>FC-2</th>
-                                        <th>Start time</th>
+                                        <th>Đội bóng 1</th>
+                                        <th>Đội bóng 2</th>
+                                        <th>Thời gian bắt đầu</th>
                                         <th>
                                             <select class="form-select border-0" id="seasonSelect" onchange="filterTable()">
-                                                <option selected value="All">All season</option>
+                                                <option selected value="All">Tất cả mùa</option>
                                                 <c:forEach items="${requestScope.seasons}" var="s">
                                                     <option value="${s.seasonName}">${s.seasonName}</option>
                                                 </c:forEach>
@@ -253,7 +253,7 @@
                                         </th>
                                         <th>
                                             <select class="form-select border-0" id="statusSelect" onchange="filterTable()">
-                                                <option selected value="All">All status</option>
+                                                <option selected value="All">Tất cả trạng thái</option>
                                                 <c:forEach items="${requestScope.statusList}" var="s">
                                                     <option value="${s.matchStatusName}">${s.matchStatusName}</option>
                                                 </c:forEach>
@@ -261,13 +261,13 @@
                                         </th>
                                         <th>
                                             <select class="form-select border-0" id="typeSelect" onchange="filterTable()">
-                                                <option selected value="All">All type</option>
+                                                <option selected value="All">Tất cả loại trận đấu</option>
                                                 <c:forEach items="${requestScope.types}" var="t">
                                                     <option value="${t.name}">${t.name}</option>
                                                 </c:forEach>
                                             </select>
                                         </th>
-                                        <th>Actions</th>
+                                        <th>Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody id="matches">

@@ -2,12 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.common_access;
+package controllers.user_access;
 
-import dal.FootballClubDAO;
 import dal.MatchDAO;
 import dal.MatchSeatDAO;
-import dal.SeasonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,16 +13,16 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import models.Match;
-import java.time.LocalDateTime;
 
 /**
  *
  * @author thuat
  */
-@WebServlet(name = "PublicMatchDetailServlet", urlPatterns = {"/matchDetail"})
-public class PublicMatchDetailServlet extends HttpServlet {
+@WebServlet(name = "SummaryTicket", urlPatterns = {"/summaryTicket"})
+public class SummaryTicket extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,10 +41,10 @@ public class PublicMatchDetailServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PublicMatchDetailServlet</title>");
+            out.println("<title>Servlet SummaryTicket</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet PublicMatchDetailServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SummaryTicket at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,26 +62,7 @@ public class PublicMatchDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id_string = request.getParameter("matchId");
-        int id = 1;
-        try {
-            id = Integer.parseInt(id_string);
-        } catch (Exception e) {
-        }
-        Match match = MatchDAO.INSTANCE.getMatcheById(id_string);
-        String dateTimeString = match.getTime();
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, inputFormatter);
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-        String date = dateTime.toLocalDate().format(dateFormatter);
-        String time = dateTime.toLocalTime().format(timeFormatter);
-
-        request.setAttribute("date", date);
-        request.setAttribute("time", time);
-        request.setAttribute("match", match);
-        request.setAttribute("seatByMatch", MatchSeatDAO.INSTANCE.getMatchSeatbyMatch(id));
-        request.getRequestDispatcher("views/publicMatchDetail.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -97,7 +76,38 @@ public class PublicMatchDetailServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String numberOfTicketString = request.getParameter("numberOfTicket");
+        String matchSeatIdString = request.getParameter("matchSeatId");
+        String seatIdString = request.getParameter("seatId");
+        int numberOfTicket;
+        int matchSeatId;
+        int seatId;
+        try {
+            numberOfTicket = Integer.parseInt(numberOfTicketString);
+            matchSeatId = Integer.parseInt(matchSeatIdString);
+            seatId = Integer.parseInt(seatIdString);
+            request.setAttribute("seat", MatchSeatDAO.INSTANCE.getMatchSeatbyMatchSeatId(seatId));
+            request.setAttribute("matchSeatId", matchSeatId);
+            request.setAttribute("numberOfTicket", numberOfTicket);
+
+            Match match = MatchDAO.INSTANCE.getMatcheById(MatchSeatDAO.INSTANCE.getMatchSeatbyMatchSeatId(seatId).getMatch() + "");
+            String dateTimeString = match.getTime();
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, inputFormatter);
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            String date = dateTime.toLocalDate().format(dateFormatter);
+            String time = dateTime.toLocalTime().format(timeFormatter);
+
+            request.setAttribute("date", date);
+            request.setAttribute("time", time);
+            request.setAttribute("match", match);
+            request.setAttribute("seatByMatch", MatchSeatDAO.INSTANCE.getMatchSeatbyMatch(matchSeatId));
+
+            request.getRequestDispatcher("views/ticketSummary.jsp").forward(request, response);
+        } catch (Exception e) {
+
+        }
     }
 
     /**

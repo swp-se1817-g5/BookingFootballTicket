@@ -4,6 +4,7 @@
  */
 package controllers.dashboard;
 
+import com.google.gson.Gson;
 import dal.DashboardDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,8 +14,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.apache.commons.collections4.list.AbstractLinkedList;
+
 
 /**
  *
@@ -22,6 +30,8 @@ import java.time.LocalDate;
  */
 @WebServlet(name = "DashboardServlet", urlPatterns = {"/dashboard"})
 public class DashboardServlet extends HttpServlet {
+
+    private static final int NUMBER_OF_YEAR = 5;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -64,9 +74,9 @@ public class DashboardServlet extends HttpServlet {
         LocalDate now = LocalDate.now();
         int monthNow = now.getMonthValue();
         int yearNow = now.getYear();
-    
+
         request.setAttribute("totalRevenueThisMonth", convertNumber(DashboardDAO.getInstance().getTotalRevenue(monthNow, yearNow)));
-        request.setAttribute("totalRevenue",convertNumber(DashboardDAO.getInstance().getTotalRevenue()));
+        request.setAttribute("totalRevenue", convertNumber(DashboardDAO.getInstance().getTotalRevenue()));
         request.setAttribute("totalTicketsSoldThisMonth", convertNumber(new BigDecimal(DashboardDAO.getInstance().getTotalTicketsSold(monthNow, yearNow))));
         request.setAttribute("totalTicketsSold", convertNumber(new BigDecimal(DashboardDAO.getInstance().getTotalTicketsSold())));
         request.setAttribute("url", "dashboard");
@@ -77,8 +87,6 @@ public class DashboardServlet extends HttpServlet {
         DecimalFormat formatter = new DecimalFormat("#,###");
         return formatter.format(number);
     }
-    
-    
 
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -91,7 +99,46 @@ public class DashboardServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        try {
+            Map<String, Object> ticketData = new HashMap<>();
+            LocalDate now = LocalDate.now();
+            int yearNow = now.getYear();
+            List<Integer> years = new ArrayList<>();
+            List<Integer> matchTickets = new ArrayList<>();
+            List<Integer> seasonTickets = new ArrayList<>();
+            List<BigDecimal> totalRevenue = new ArrayList<>();
+            List<Integer> totalTickets = new ArrayList<>();
+            List<Integer> ticketYear = new ArrayList<>();
+            List<BigDecimal> revenueYear = new ArrayList<>();
+            for (int i = yearNow - NUMBER_OF_YEAR; i <= yearNow; i++) {
+                years.add(i);
+                matchTickets.add((DashboardDAO.getInstance().getTotalTicketsSold(0, i) - DashboardDAO.getInstance().countSeasonTickets(0, i)));
+                seasonTickets.add(DashboardDAO.getInstance().countSeasonTickets(0, i));
+                totalTickets.add(DashboardDAO.getInstance().getTotalTicketsSold(0, i));
+                totalRevenue.add(DashboardDAO.getInstance().getTotalRevenue(0, i));
+            }
+            for (int i = 1; i <= 12; i++) {
+                ticketYear.add(DashboardDAO.getInstance().getTotalTicketsSold(i, yearNow));
+                revenueYear.add(DashboardDAO.getInstance().getTotalRevenue(i, yearNow));
+            }
+            ticketData.put("years", years);
+            ticketData.put("matchTickets", matchTickets);
+            ticketData.put("seasonTickets", seasonTickets);
+            ticketData.put("totalRevenue", totalRevenue);
+            ticketData.put("totalTickets", totalTickets);
+            ticketData.put("ticketYear", ticketYear);
+            ticketData.put("revenueYear", revenueYear);
+            String json = new Gson().toJson(ticketData);
+            PrintWriter out = response.getWriter();
+            out.print(json);
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
