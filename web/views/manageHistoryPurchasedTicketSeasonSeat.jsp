@@ -249,7 +249,7 @@
                                         <button id="toggleButton" class="btn btn-primary btn-custom d-flex align-items-center">
                                             Ticket Match Seat <i class="btn-icon fas fa-caret-right"></i>
                                         </button>
-                                        <a type="button" href="/BookingFootballTicket/ExportExcel?service=export" class="btn btn-success m-2 float-right">
+                                        <a type="button" href="/BookingFootballTicket/ExportExcelSeasonSeat?service=export" class="btn btn-success m-2 float-right">
                                             <i class="bi bi-file-earmark-spreadsheet"></i> 
                                             <span>Xuất file Excel</span>
                                         </a>

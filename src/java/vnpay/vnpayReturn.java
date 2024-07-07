@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package vnpay;
 
 import java.io.IOException;
@@ -23,15 +22,18 @@ import dal.MatchSeatDAO;
 import jakarta.servlet.http.HttpSession;
 import models.HistoryPurchasedTicketMatchSeat;
 import models.User;
+
 /**
  *
  * @author AD
  */
-@WebServlet(name="vnpayReturn", urlPatterns={"/vnpayReturn"})
+@WebServlet(name = "vnpayReturn", urlPatterns = {"/vnpayReturn"})
 public class vnpayReturn extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -40,7 +42,7 @@ public class vnpayReturn extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             Map fields = new HashMap();
             for (Enumeration params = request.getParameterNames(); params.hasMoreElements();) {
                 String fieldName = URLEncoder.encode((String) params.nextElement(), StandardCharsets.US_ASCII.toString());
@@ -70,20 +72,20 @@ public class vnpayReturn extends HttpServlet {
                     transSuccess = true;
                     resetService service = new resetService();
                     HttpSession session = request.getSession();
-                    User user = (User)session.getAttribute("currentUser");
-                    
+                    User user = (User) session.getAttribute("currentUser");
+
                     String email = user.getEmail();
-                    service.sendEmail(email,
-                            "your code: "+MatchSeatDAO.INSTANCE.getTicketById(Integer.parseInt(ticketId)), 
+                    service.sendEmailQr(email,
+                            "Mã QR của bạn là : " + MatchSeatDAO.INSTANCE.getTicketById(Integer.parseInt(ticketId)),
                             email);
                 } else {
                     his = new HistoryPurchasedTicketMatchSeat(Integer.parseInt(ticketId),
                             "cancelPayment");
                 }
                 MatchSeatDAO.INSTANCE.updateStatus(his);
-                request.setAttribute("transResult", transSuccess);
+                request.getSession().setAttribute("transResult", transSuccess);
                 //dieu huong ra trang order thanh cong
-                request.getRequestDispatcher("views/orderResult.jsp").forward(request, response);
+                response.sendRedirect("homePage");
             } else {
                 //RETURN PAGE ERROR
                 System.out.println("GD KO HOP LE (invalid signature)");
@@ -92,8 +94,9 @@ public class vnpayReturn extends HttpServlet {
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -101,12 +104,13 @@ public class vnpayReturn extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -114,12 +118,13 @@ public class vnpayReturn extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
