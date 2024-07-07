@@ -73,7 +73,7 @@
                     <a class="nav-link pt-3" href="./about">Về chúng tôi</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle pt-3" href="#" id="loginDropdown" role="button"
+                    <a class="nav-link dropdown-toggle pt-3" href="userProfile" id="loginDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Tài khoản
                     </a>
@@ -83,7 +83,7 @@
                                 <a class="dropdown-item" data-auth="login" href="./login">Đăng nhập</a>
                             </c:when>
                             <c:when test="${sessionScope.currentUser != null}">
-                                <a class="dropdown-item" data-auth="profile" href="#">Thông tin tài khoản</a>
+                                <a class="dropdown-item" data-auth="profile" href="userProfile">Thông tin tài khoản</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="./changepass">Đổi mật khẩu</a>
                                 <div class="dropdown-divider"></div>

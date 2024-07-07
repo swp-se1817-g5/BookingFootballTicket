@@ -163,12 +163,12 @@
                 </div>
                 <div class="col-md-7 text-left">
                     <h2 class="match-title">${match.team1.clubName} vs ${match.team2.clubName}</h2>
-                    <p><a href="./">Home</a> / <a href="#">${match.season.seasonName}</a> / <a href="#">${match.team1.clubName} vs ${match.team2.clubName} Tickets</a></p>
+                    <p><a href="./">Trang chủ</a> / <a href="#">${match.season.seasonName}</a> / <a href="">${match.team1.clubName} vs ${match.team2.clubName} Tickets</a></p>
                 </div>
                 <div class="col-md-3 text-right">
                     <p>${date}</p>
-                    <p>Kick off: ${time}</p>
-                    <p>Tottenham Hotspur Stadium, 748 High Road, London, N17 0BX</p>
+                    <p>Khai mạc: ${time}</p>
+                    <p>Sân vận động Quốc Gia Mỹ Đình</p>
                     <p>${match.type.name}</p>
                 </div>
             </div>
