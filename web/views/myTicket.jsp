@@ -55,7 +55,10 @@
             <div id="tickets">
                 <!-- Ticket Card -->
                 <c:forEach items="${requestScope.tickets}" var="t" >
-                    <div class="card mb-3 ticket-card" onclick="location.href = 'homePage'">
+                    <form style="display: none" id="${t.ticketId}" action="myTicket" method="post">
+                        <input name="ticketId" readonly="" value="${t.ticketId}">
+                    </form>
+                    <div class="card mb-3 ticket-card" onclick="viewDetail('${t.ticketId}')">
                         <div class="card-body">
                             <h5 class="card-title">${t.seasonName}</h5>
                             <div class="d-flex justify-content-center">
@@ -63,7 +66,7 @@
                             </div>
                             <div class="d-flex justify-content-between flex-wrap">
                                 <p class="card-text">Thời gian: ${t.getStartTimeConverted()}</p>
-                                <p class="card-text">Địa điểm: SVD Mỹ Đình</p>
+                                <p class="card-text">Địa điểm: SVĐ Mỹ Đình</p>
                             </div>
                             <div class="d-flex justify-content-between flex-wrap">
                                 <p class="card-text">Khán đài: ${t.standName}</p>
@@ -82,7 +85,7 @@
             <nav aria-label="Page navigation example" id="pagination">
                 <ul class="pagination justify-content-start" >
                     <c:forEach var="i" begin="1" end="${requestScope.endPage}" >
-                        <li  class="page-item ${i == requestScope.pageIndex ? "active" : ''}"><a data-page="${i}" class="page-link" href="#">${i}</a></li>
+                        <li  class="page-item ${i == requestScope.pageIndex ? "active" : ''}"><a data-page="${i}" class="page-link" href="#tickets">${i}</a></li>
                         </c:forEach>    
                 </ul>
             </nav>
@@ -131,6 +134,12 @@
                             // Initial load
                             loadPage(1, 'match', '', '');
                         });
+        </script>
+        <script>
+            function viewDetail(ticketId){
+                
+                document.getElementById(ticketId).submit();
+            }
         </script>
     </body>
 </html>

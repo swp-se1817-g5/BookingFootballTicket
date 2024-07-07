@@ -4,6 +4,11 @@
  */
 package controllers.HistoryPurchasedTicket;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import dal.HistoryPurchasedTicketDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,9 +18,14 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import models.HistoryPurchasedTicketMatchSeat;
 import models.User;
 
 /**
@@ -94,7 +104,7 @@ public class MyTicketServlet extends HttpServlet {
             }
         } catch (Exception e) {
         }
-        
+
         if (type.equals("match")) {
             try {
                 request.setAttribute("tickets", HistoryPurchasedTicketDAO.getInstance().paggingTickets(pageIndex, PAGE_SIZE, startDate, endDate, email));
@@ -118,7 +128,52 @@ public class MyTicketServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String ticketId = request.getParameter("ticketId");
+        List<HistoryPurchasedTicketMatchSeat> tickets = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
+        HistoryPurchasedTicketMatchSeat ticket = null;
+        for (HistoryPurchasedTicketMatchSeat t : tickets) {
+            if (String.valueOf(t.getTicketId()).equals(ticketId)) {
+                ticket = t;
+                break;
+            }
+        }
+
+        if (ticket != null) {
+            try {
+                String qrContent = ticket.getQrCode();
+                String relativeQrFilePath = generateQRCodeImage(request.getContextPath(), qrContent, 350, 350, getServletContext().getRealPath(QR_CODE_DIRECTORY));
+                request.setAttribute("qrCode", relativeQrFilePath);
+                request.setAttribute("ticket", ticket);
+                request.getRequestDispatcher("views/myTicketDetail.jsp").forward(request, response);
+            } catch (WriterException ex) {
+                Logger.getLogger(MyTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            response.getWriter().write("Ticket not found");
+        }
+    }
+
+    private static final String QR_CODE_DIRECTORY = "/images/qrCodes/";
+
+    private String generateQRCodeImage(String contextPath, String qrContent, int width, int height, String qrCodeDirectory)
+            throws WriterException, IOException {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, width, height);
+
+        // Tạo đường dẫn tuyệt đối của file QR
+        String filePath = qrCodeDirectory + qrContent + ".png";
+
+        // Tạo đường dẫn tương đối từ thư mục gốc của dự án
+        Path path = Paths.get(filePath);
+
+        // Kiểm tra nếu thư mục không tồn tại, tạo mới
+        Files.createDirectories(path.getParent());
+
+        // Ghi BitMatrix vào file PNG
+        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+
+        // Trả về đường dẫn tương đối từ thư mục gốc của dự án
+        return contextPath + QR_CODE_DIRECTORY + qrContent + ".png";
     }
 
     /**
