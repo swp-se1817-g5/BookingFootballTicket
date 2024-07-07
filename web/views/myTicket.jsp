@@ -15,14 +15,26 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-     
+        <style>
+            .ticket-card {
+                cursor: pointer;
+                transition: background-color 0.5s;
+            }
+
+    
+           
+
+            .ticket-card:hover {
+                background-color: #eeeeee; /* Màu nền khi hover */
+            }
+        </style>
 
     </head>
     <body>
         <div style="margin-bottom: 160px">
-               <%@include file="header.jsp" %>
+            <%@include file="header.jsp" %>
         </div>
-     
+
         <div  class="container my-5">
             <!-- Form Section -->
             <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
