@@ -21,12 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import models.HistoryPurchasedTicketMatchSeat;
 import models.HistoryPurchasedTicketSeasonSeat;
-import models.MatchSeat;
-import models.Season;
-import models.SeasonSeat;
-import models.SeatClass;
 import models.TicketStatus;
-import models.User;
 
 /**
  *

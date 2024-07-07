@@ -29,11 +29,30 @@ public class HistoryPurchasedTicketMatchSeat {
     private BigDecimal price;
     private TicketStatus statusId;
     private String createdBy;
+    private String orderStatus;
     private LocalDateTime createdDate;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yy");
 
     public HistoryPurchasedTicketMatchSeat() {
+    }
+
+    public HistoryPurchasedTicketMatchSeat(int ticketId, String orderStatus) {
+        this.ticketId = ticketId;
+        this.orderStatus = orderStatus;
+    }
+
+    public HistoryPurchasedTicketMatchSeat(String seatName, int quantity, String standName,
+            String seatClassName, String qrCode, BigDecimal price, String orderStatus,
+            LocalDateTime createdDate) {
+        this.seatName = seatName;
+        this.quantity = quantity;
+        this.standName = standName;
+        this.seatClassName = seatClassName;
+        this.qrCode = qrCode;
+        this.price = price;
+        this.orderStatus = orderStatus;
+        this.createdDate = createdDate;
     }
 
     public HistoryPurchasedTicketMatchSeat(int ticketId, String team1, String team2, LocalDateTime startTime, String seasonName, String seatName, int quantity, String standName, String seatClassName, String email, String qrCode, BigDecimal price, TicketStatus statusId, String createdBy, LocalDateTime createdDate) {
@@ -52,6 +71,10 @@ public class HistoryPurchasedTicketMatchSeat {
         this.statusId = statusId;
         this.createdBy = createdBy;
         this.createdDate = createdDate;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
     public int getTicketId() {
