@@ -6,6 +6,7 @@ package controllers.home_Page;
 
 import dal.FootballClubDAO;
 import dal.MatchDAO;
+import dal.NewsDAO;
 import dal.SeasonDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -63,7 +64,8 @@ public class ManageHomePageServlet extends HttpServlet {
         request.setAttribute("getFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
         request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
         request.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
-        request.getRequestDispatcher("views/newjsp.jsp").forward(request, response);
+        request.setAttribute("getListNews", NewsDAO.getInstance().getlistNews(""));
+        request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
     }
 
     /**
