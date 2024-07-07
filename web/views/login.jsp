@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 
     <head>
 
@@ -25,7 +25,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.png" />
 
         <!-- PAGE TITLE HERE ============================================= -->
-        <title>Booking Football Ticket </title>
+        <title>Booking Football Ticket</title>
 
         <!-- MOBILE SPECIFIC ============================================= -->
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -58,8 +58,8 @@
                 <div class="account-form-inner">
                     <div class="account-container">
                         <div class="heading-bx left">
-                            <h2 class="title-head">Login <span>Now</span></h2>
-                            <p>Register Your Account <a href="./register">Click here</a></p>
+                            <h2 class="title-head">Đăng<span>Nhập</span></h2>
+                            <p>Đăng ký tài khoản của bạn<a href=" ./register">Ở đây</a></p>
                         </div>    
                         <c:if test="${not empty errorMessage}">
                             <p style="color:red">${errorMessage}</p>
@@ -78,7 +78,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Password</label>
+                                            <label>Mật khẩu</label>
                                             <input id="password" name="password" type="password" value="${passValid}" required class="form-control">                                   
                                             <i id="togglePassword" class="fa fa-eye-slash" aria-hidden="true" style="cursor: pointer;"></i>  
                                         </div>
@@ -91,18 +91,18 @@
                                                name="remember_me"  id="remember_me">
                                         <label class="form-check-label text-secondary fs-3" 
                                                style="margin-left: 5px; font-weight: 400;" for="remember_me">
-                                            Remember me!
+                                            Ghi nhớ đăng nhập!
                                         </label>
-                                        <a href="requestPassword" class="ml-auto">Forgot Password?</a>
+                                        <a href="requestPassword" class="ml-auto">Quên mật khẩu?</a>
 
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-b30 mt-4">
-                                    <button name="submit" type="submit" value="Submit" class="btn button-md">Login</button>
+                                    <button name="submit" type="submit" value="Submit" class="btn button-md">Đăng nhập</button>
                                 </div>
 
                                 <div class="col-lg-12">
-                                    <h6>Login with Social media</h6>
+                                    <h6>Đăng nhập với</h6>
                                     <div class="d-flex">
                                         <a class="btn flex-fill m-r5 facebook" href="https://www.facebook.com/v19.0/dialog/oauth?fields=id,name,email&client_id=2789778564531786&redirect_uri=http://localhost:8080/BookingFootballTicket/loginFB"><i class="fa fa-facebook"></i>Facebook</a>
                                         <a class="btn flex-fill m-l5 google-plus" href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/BookingFootballTicket/gmail&response_type=code&client_id=710226049781-g37fdin0lmq797dniqao07fsr27oj20j.apps.googleusercontent.com&approval_prompt=force"><i class="fa fa-google"></i>Google</a>
