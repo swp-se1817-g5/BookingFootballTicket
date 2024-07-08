@@ -26,8 +26,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author AD
  */
-@WebServlet(name = "ExportExcel", urlPatterns = {"/ExportExcel"})
-public class ExportExcel extends HttpServlet {
+@WebServlet(name = "ExportExcelUser", urlPatterns = {"/ExportExcelUser"})
+public class ExportExcelUser extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
