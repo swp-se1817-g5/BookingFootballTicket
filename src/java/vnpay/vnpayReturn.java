@@ -19,11 +19,14 @@ import java.util.Map;
 import Config.Config;
 import controllers.Auth.resetService;
 import dal.DaoBooking;
+import dal.MatchDAO;
 import dal.MatchSeatDAO;
 import jakarta.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import models.BookingTicket;
 import models.HistoryPurchasedTicketMatchSeat;
+import models.Match;
 import models.User;
 
 /**
@@ -67,26 +70,29 @@ public class vnpayReturn extends HttpServlet {
                 String paymentCode = request.getParameter("vnp_TransactionNo");
                 String ticketIdStr = request.getParameter("vnp_TxnRef");
                 boolean transSuccess = false;
-                BookingTicket booking = new BookingTicket();
+                int ticketId = Integer.parseInt(ticketIdStr);
+                BookingTicket booking = DaoBooking.INSTANCE.getBookingTicketById(ticketId);
+                Match match = MatchDAO.INSTANCE.getMatcheById(booking.getMatchId() + "");
                 if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
                     //update banking system
-                    int ticketId = Integer.parseInt(ticketIdStr);
 
-                    booking = DaoBooking.INSTANCE.getBookingTicketById(ticketId);
-                HttpSession session = request.getSession();
-                if (session.getAttribute("currentUser") == null) {
-                    response.sendRedirect("homePage");
-                    return;
-                }
-                User user = (User) session.getAttribute("currentUser");
+                    HttpSession session = request.getSession();
+                    if (session.getAttribute("currentUser") == null) {
+                        response.sendRedirect("homePage");
+                        return;
+                    }
+                    User user = (User) session.getAttribute("currentUser");
 
-                String email = user.getEmail();
-                booking.setEmail(email);
-                    HistoryPurchasedTicketMatchSeat his = new HistoryPurchasedTicketMatchSeat(
-                            booking.getSeatName(), booking.getQuantity(), booking.getStandName(),
-                            booking.getSeatClassName(), booking.getQrCode(), booking.getPrice(),
-                            booking.getCreatedDate(), email
-                    );
+                    String email = user.getEmail();
+                    booking.setEmail(email);
+                    HistoryPurchasedTicketMatchSeat his = new HistoryPurchasedTicketMatchSeat(match.getTeam1().getClubName(), match.getTeam2().getClubName(),
+                            match.getLocalDateTime(), match.getSeason().getSeasonName(), booking.getSeatName(), booking.getQuantity(),
+                            booking.getStandName(), booking.getSeatClassName(), email, booking.getQrCode(), booking.getPrice(), email, LocalDateTime.now(), booking.getMatchSeatId());
+//                    HistoryPurchasedTicketMatchSeat his = new HistoryPurchasedTicketMatchSeat(
+//                            booking.getSeatName(), booking.getQuantity(), booking.getStandName(),
+//                            booking.getSeatClassName(), booking.getQrCode(), booking.getPrice(),
+//                            booking.getCreatedDate(), email
+//                    );
 
                     MatchSeatDAO.INSTANCE.addOrderTicket(his);
                     booking.setStatus("done");
@@ -94,9 +100,10 @@ public class vnpayReturn extends HttpServlet {
                     transSuccess = true;
                     resetService service = new resetService();
                 } else {
+                    MatchSeatDAO.INSTANCE.returnAvailability(booking);
                     booking.setStatus("cancel");
                 }
-               
+
                 DaoBooking.INSTANCE.updateBookingStatus(booking);
 
                 request.getSession().setAttribute("transResult", transSuccess);
@@ -105,7 +112,7 @@ public class vnpayReturn extends HttpServlet {
                     response.sendRedirect("homePage");
                 } else {
 
-                    response.sendRedirect("http://localhost:8080/BookingFootballTicket/matchDetail?matchId=1");
+                    response.sendRedirect("./matchDetail?matchId=" + booking.getMatchId());
                 }
             }
         }
