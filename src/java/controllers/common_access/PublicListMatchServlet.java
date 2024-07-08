@@ -133,7 +133,7 @@ public class PublicListMatchServlet extends HttpServlet {
         
         // Check if matches is null or empty
         if (matches == null || matches.isEmpty()) {
-            String emptyMessage = "<div style=\"padding: 10px; background-color: #f1f1f1; border: 1px solid #ddd; margin-bottom: 10px; margin: auto ; color: red;\">Không có trận đấu nào!</div>";
+            String emptyMessage = "<div style=\"padding: 10px; background-color: #f1f1f1; border: 1px solid #ddd; margin-bottom: 10px; margin: auto ; color: red;\">Không có trận đấu nào phù hợp!</div>";
             response.getWriter().write(emptyMessage);
             return;
         }
