@@ -14,6 +14,7 @@
         <title>Vé Trận Đấu Bóng Đá Sắp Diễn Ra</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         <style>
             body {
                 background-color: #f4f4f4;
@@ -21,13 +22,23 @@
             .container {
                 margin-top: 20px;
             }
-            .product-card, .ticket-card {
+            .product-card{
                 background: #fff;
                 border-radius: 10px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                 padding: 15px;
                 text-align: center;
                 margin-bottom: 20px;
+            }
+            .ticket-card {
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                padding: 15px;
+                text-align: center;
+                margin-bottom: 20px;
+                width: 250px;
+                height: 315px;
             }
             .product-card img, .ticket-card img {
                 width: 100%;
@@ -137,11 +148,11 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc</button>
-                        <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset</button>
+                        <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc<i class="bi bi-filter btn-icon"></i></button>
+                        <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                         <div class="best-seller mt-4">
                             <h5>Trận đấu hot<i class="bi bi-fire text-danger"></i></h5>
-                            <c:forEach items="${requestScope.matches}" var="o" begin="0" end="0">
+                                <c:forEach items="${requestScope.matches}" var="o" begin="0" end="0">
                                 <div class="product-card" >
                                     <div class="team-logos">
                                         <img src="${o.team1.img}" alt="${o.team1.clubName}">
@@ -153,20 +164,20 @@
                                     <p><i class="fa fa-clock"></i>${o.time}</p>
                                     <p><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</p>
                                     <p>Vé Đã Bán: 79</p>
-                                    <a href="matchDetail?matchId=${o.matchId}" class="book-now-btn btn btn-custom btn-block">Xem Vé</a>
+                                    <a href="matchDetail?matchId=${o.matchId}" class="btn btn-primary book-now-btn">Xem Vé</a>
                                 </div>
                             </c:forEach>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="row" id="matchList">
+                    <div class="row" id="matchList" style="text-align: center">
                         <c:forEach items="${requestScope.matches}" var="o">
                             <c:set var="dateTime" value="${o.time}" />
                             <c:set var="date" value="${fn:split(dateTime, 'T')[0]}" />
                             <c:set var="time" value="${fn:split(dateTime, 'T')[1]}" />
                             <div class="col-md-4 mb-4 match" >
-                                <div class="ticket-card">
+                                <div class=" card ticket-card">
                                     <input type="date" class="date" value="${date}" style="border: none; background: none;text-align: center" readonly>
                                     <div class="competition">${o.season.seasonName}</div>
                                     <div class="team-logos">
@@ -179,7 +190,7 @@
                                     <i class="fa fa-clock"></i><input type="time" class="time" readonly value="${time}" style="border: none; background: none;text-align: center">
                                     <div class="tickets-sold">Vé Đã Bán: 79 </div>
                                     <div class="button-container">
-                                        <a type="button" href="matchDetail?matchId=${o.matchId}" class="btn btn-custom btn-block book-now-btn">Xem Vé</a>
+                                        <a type="button" href="matchDetail?matchId=${o.matchId}" class="btn btn-primary book-now-btn">Xem Vé</a>
                                     </div>
                                 </div>
                             </div>
@@ -219,11 +230,9 @@
                 </div>
             </div>
         </div>
-        <!--Footer -->
-        <footer class="footer"> 
-            <div class="container">
-                <p style="text-align: center">&copy; 2024 Your Website. All rights reserved.</p>
-            </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <jsp:include page="footer.jsp"/>
         </footer>
         <!-- jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -238,6 +247,10 @@
                 document.getElementById('searchInput').value = '';
                 document.getElementById('dateFrom').value = '';
                 document.getElementById('dateTo').value = '';
+
+                document.getElementById('season').value = 'All';
+                document.getElementById('matchType').value = 'All';
+                document.getElementById('matchStatus').value = 'All';
             });
         </script>
         <script>

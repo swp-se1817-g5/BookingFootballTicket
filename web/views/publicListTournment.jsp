@@ -96,7 +96,10 @@
                 color: white;
             }
             .row{
-                justify-content: space-around;
+                text-align: center;
+            }
+            .card-body{
+                text-align: center;
             }
         </style>
     </head>
@@ -119,8 +122,8 @@
                             <label for="dateTo">Đến ngày</label>
                             <input type="date" id="dateTo" class="form-control">
                         </div>
-                        <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc</button>
-                        <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset</button>
+                        <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc<i class="bi bi-filter btn-icon"></i></button>
+                        <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                         <div class="best-seller mt-4">
                             <h5>Giải đấu hot <i class="bi bi-fire text-danger"></i></h5>
                                 <c:forEach items="${requestScope.seasons}" var="s" begin="0" end="0">
@@ -140,7 +143,7 @@
                     <div class="row" id="tournmentList">
                         <c:forEach items="${seasons}" var="s">
                             <div class="col-md-4">
-                                <div class="card ticket-card">
+                                <div class="ticket-card card">
                                     <div class="card-body">
                                         <h5 class="card-title">${s.seasonName}</h5>
                                         <p class="card-text">Thời gian bắt đầu: ${s.startDate}</p>
@@ -180,6 +183,10 @@
                 </div>
             </div>
         </div>
+        <!-- Footer -->
+        <footer class="footer">
+            <jsp:include page="footer.jsp"/>
+        </footer>
         <!-- Include jQuery -->
         <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
         <!-- Include Popper.js for Bootstrap -->

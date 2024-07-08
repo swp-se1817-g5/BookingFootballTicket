@@ -166,7 +166,7 @@ public class PublicListMatchServlet extends HttpServlet {
                     .append("<i class=\"fa fa-clock\"></i><input type=\"time\" class=\"time\" readonly value=\"").append(time).append("\" style=\"border: none; background: none;text-align: center\">")
                     .append("<div class=\"tickets-sold\">Vé Đã Bán: 79 </div>")
                     .append("<div class=\"button-container\">")
-                    .append("<a type=\"button\" href=\"matchDetail?matchId=").append(o.getMatchId()).append("\" class=\"btn btn-custom btn-block book-now-btn\">Xem Vé</a>")
+                    .append("<a type=\"button\" href=\"matchDetail?matchId=").append(o.getMatchId()).append("\" class=\"btn btn-primary book-now-btn\">Xem Vé</a>")
                     .append("</div>")
                     .append("</div>")
                     .append("</div>");
