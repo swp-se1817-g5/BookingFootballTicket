@@ -86,7 +86,10 @@ public class PublicListMatchServlet extends HttpServlet {
         if (sizeParam != null && !sizeParam.isEmpty()) {
             pageSize = Integer.parseInt(sizeParam);
         }
-
+        String seasonId = request.getParameter("seasonId");
+        if(seasonId != null && !seasonId.isEmpty()){
+            request.setAttribute("seasonId", seasonId);
+        }
         List<Match> matches = MatchDAO.INSTANCE.getMatchesUpcomming(pageNumber, pageSize);
         int totalCount = MatchDAO.INSTANCE.countMatches();
 
@@ -117,20 +120,24 @@ public class PublicListMatchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        // Get parameters and handle null values
         String seasonIdParam = request.getParameter("seasonId");
         String matchStatusIdParam = request.getParameter("matchStatusId");
-        String dateFrom = request.getParameter("dateFrom").trim();
-        String dateTo = request.getParameter("dateTo").trim();
-        String searchInput = request.getParameter("searchInput").trim();
+        String dateFromParam = request.getParameter("dateFrom");
+        String dateToParam = request.getParameter("dateTo");
+        String searchInputParam = request.getParameter("searchInput");
         String typeIdParam = request.getParameter("typeId");
 
-        // Handle null parameters by defaulting them to ""
+        // Use empty string if the parameter is null, otherwise trim the value
+        String dateFrom = dateFromParam != null ? dateFromParam.trim() : "";
+        String dateTo = dateToParam != null ? dateToParam.trim() : "";
+        String searchInput = searchInputParam != null ? searchInputParam.trim() : "";
         String seasonId = seasonIdParam != null ? seasonIdParam : "";
         String matchStatusId = matchStatusIdParam != null ? matchStatusIdParam : "";
         String typeId = typeIdParam != null ? typeIdParam : "";
-
-        List<Match> matches = MatchDAO.INSTANCE.getFilteredMatches(searchInput, seasonId, dateFrom, dateTo, matchStatusId, typeId);
         
+        List<Match> matches = MatchDAO.INSTANCE.getFilteredMatches(searchInput, seasonId, dateFrom, dateTo, matchStatusId, typeId);
+
         // Check if matches is null or empty
         if (matches == null || matches.isEmpty()) {
             String emptyMessage = "<div style=\"padding: 10px; background-color: #f1f1f1; border: 1px solid #ddd; margin-bottom: 10px; margin: auto ; color: red;\">Không có trận đấu nào phù hợp!</div>";
@@ -168,6 +175,7 @@ public class PublicListMatchServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(htmlContent.toString());
     }
+
     /**
      * Returns a short description of the servlet.
      *

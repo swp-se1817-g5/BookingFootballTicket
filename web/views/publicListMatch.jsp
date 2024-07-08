@@ -79,6 +79,14 @@
                 color: white;
                 text-decoration: none;
             }
+            .sidebar {
+                position: sticky;
+                top: 20px;
+                padding: 15px;
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
         </style>
     </head>
     <body>
@@ -129,9 +137,10 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <button id="filterBtn" class="btn btn-primary" style="margin: auto;display : flex">Lọc</button>
+                        <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc</button>
+                        <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset</button>
                         <div class="best-seller mt-4">
-                            <h5>Trận đấu hot</h5>
+                            <h5>Trận đấu hot<i class="bi bi-fire text-danger"></i></h5>
                             <c:forEach items="${requestScope.matches}" var="o" begin="0" end="0">
                                 <div class="product-card" >
                                     <div class="team-logos">
@@ -225,6 +234,13 @@
 
         <!-- Your Custom JavaScript -->
         <script>
+            document.getElementById('resetBtn').addEventListener('click', function () {
+                document.getElementById('searchInput').value = '';
+                document.getElementById('dateFrom').value = '';
+                document.getElementById('dateTo').value = '';
+            });
+        </script>
+        <script>
             $(document).ready(function () {
                 // Function to handle filter button click
                 $('#filterBtn').click(function (e) {
@@ -263,6 +279,34 @@
                         }
                     });
                 });
+
+                // Check if there's a seasonId attribute on page load
+                var initialSeasonId = '${seasonId}';
+                if (initialSeasonId !== '') {
+                    // Set the season dropdown to the initial seasonId value
+                    $('#season').val(initialSeasonId);
+
+                    // Trigger the AJAX request
+                    $.ajax({
+                        type: 'POST',
+                        url: 'publicListMatch',
+                        data: {
+                            seasonId: initialSeasonId,
+                            matchStatusId: null,
+                            dateFrom: null,
+                            dateTo: null,
+                            searchInput: null,
+                            typeId: null
+                        },
+                        success: function (response) {
+                            // Replace content of matchList with new data
+                            $('#matchList').html(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                        }
+                    });
+                }
             });
         </script>
     </body>

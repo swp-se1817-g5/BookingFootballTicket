@@ -120,6 +120,7 @@
                             <input type="date" id="dateTo" class="form-control">
                         </div>
                         <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc</button>
+                        <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset</button>
                         <div class="best-seller mt-4">
                             <h5>Giải đấu hot <i class="bi bi-fire text-danger"></i></h5>
                                 <c:forEach items="${requestScope.seasons}" var="s" begin="0" end="0">
@@ -128,7 +129,7 @@
                                         <h5 class="card-title">${s.seasonName}</h5>
                                         <p class="card-text">Thời gian bắt đầu : ${s.startDate}</p>
                                         <p class="card-text">Thời gian kết thúc : ${s.endDate}</p>
-                                        <a href="#" class="btn btn-primary">Xem Thêm <i class="bi bi-arrow-right"></i></a>
+                                        <a href="publicListMatch?seasonId=${s.seasonId}" class="btn btn-primary">Xem Các Trận Đấu</a>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -144,7 +145,7 @@
                                         <h5 class="card-title">${s.seasonName}</h5>
                                         <p class="card-text">Thời gian bắt đầu: ${s.startDate}</p>
                                         <p class="card-text">Thời gian kết thúc: ${s.endDate}</p>
-                                        <a href="#" class="btn btn-primary">Xem Thêm <i class="bi bi-arrow-right"></i></a>
+                                        <a href="publicListMatch?seasonId=${s.seasonId}" class="btn btn-primary">Xem Các Trận Đấu</a>
                                     </div>
                                 </div>
                             </div>
@@ -186,6 +187,13 @@
         <!-- Include Bootstrap JS -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <!-- Custom JavaScript -->
+        <script>
+            document.getElementById('resetBtn').addEventListener('click', function () {
+                document.getElementById('searchInput').value = '';
+                document.getElementById('dateFrom').value = '';
+                document.getElementById('dateTo').value = '';
+            });
+        </script>
         <script>
             $(document).ready(function () {
                 $('#filterBtn').click(function (e) {

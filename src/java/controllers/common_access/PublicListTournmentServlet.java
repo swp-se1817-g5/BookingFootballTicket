@@ -153,7 +153,7 @@ public class PublicListTournmentServlet extends HttpServlet {
                         .append("<h5 class=\"card-title\">").append(s.getSeasonName()).append("</h5>")
                         .append("<p class=\"card-text\">Thời gian bắt đầu: ").append(s.getStartDate()).append("</p>")
                         .append("<p class=\"card-text\">Thời gian kết thúc: ").append(s.getEndDate()).append("</p>")
-                        .append("<a href=\"#\" class=\"btn btn-primary\">Xem Thêm <i class=\"bi bi-arrow-right\"></i></a>")
+                        .append("<a href=\"publicListMatch?seasonId=").append(s.getSeasonId()).append("\" class=\"btn btn-primary\">Xem Các Trận Đấu</a>")
                         .append("</div>") // Close card-body
                         .append("</div>") // Close card
                         .append("</div>"); // Close col-md-4
