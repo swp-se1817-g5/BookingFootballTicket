@@ -34,6 +34,8 @@
         <url-pattern>/manageNews</url-pattern>
         <url-pattern>/updateNews</url-pattern>
         <url-pattern>/deleteNews</url-pattern>
+        <url-pattern>/manageSeason</url-pattern>
+        <url-pattern>/createSeason</url-pattern>
     </filter-mapping>
 </web-app>
 

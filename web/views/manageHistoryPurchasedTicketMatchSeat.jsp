@@ -250,7 +250,7 @@ Author     : duong
                                             Ticket Season Seat
                                             <i class="btn-icon fas fa-caret-right"></i>
                                         </button>
-                                        <a type="button" href="/BookingFootballTicket/ExportExcel?service=export" class="btn btn-success m-2 float-right">
+                                        <a type="button" href="/BookingFootballTicket/ExportExcelMatchSeat?service=export" class="btn btn-success m-2 float-right">
                                             <i class="bi bi-file-earmark-spreadsheet"></i> 
                                             <span>Xuất file Excel</span>
                                         </a>
