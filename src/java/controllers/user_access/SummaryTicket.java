@@ -81,8 +81,11 @@ public class SummaryTicket extends HttpServlet {
         HttpSession session = request.getSession();
         User currentUser = (User) session.getAttribute("currentUser");
         String numberOfTicketString = request.getParameter("numberOfTicket");
-        String matchSeatIdString = request.getParameter("matchSeatId");
+        String matchSeatIdString = request.getParameter("matchSeatIdd");
         String seatIdString = request.getParameter("seatId");
+        String matchId = request.getParameter("mathId");
+        
+        
         int numberOfTicket;
         int matchSeatId;
         int seatId;
@@ -91,10 +94,12 @@ public class SummaryTicket extends HttpServlet {
             matchSeatId = Integer.parseInt(matchSeatIdString);
             seatId = Integer.parseInt(seatIdString);
             request.setAttribute("seat", MatchSeatDAO.INSTANCE.getMatchSeatbyMatchSeatId(seatId));
-            request.setAttribute("matchSeatId", matchSeatId);
+            request.setAttribute("matchSeatIdd", matchSeatId);
             request.setAttribute("numberOfTicket", numberOfTicket);
 
-            Match match = MatchDAO.INSTANCE.getMatcheById(MatchSeatDAO.INSTANCE.getMatchSeatbyMatchSeatId(seatId).getMatch() + "");
+            Match match = MatchDAO.INSTANCE.getMatcheById(
+                    MatchSeatDAO.INSTANCE.getMatchSeatbyMatchSeatId(seatId).getMatch()+"");
+            
             String dateTimeString = match.getTime();
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, inputFormatter);
@@ -107,8 +112,10 @@ public class SummaryTicket extends HttpServlet {
             request.setAttribute("date", date);
             request.setAttribute("time", time);
             request.setAttribute("match", match);
+            request.setAttribute("matchId", matchId);
+            request.setAttribute("seatId", seatIdString);
+            
             request.setAttribute("seatByMatch", MatchSeatDAO.INSTANCE.getMatchSeatbyMatch(matchSeatId));
-
             request.getRequestDispatcher("views/ticketSummary.jsp").forward(request, response);
         } catch (Exception e) {
 

@@ -228,7 +228,7 @@
                                     </div>
                                     <div class="col-md-8 createe d-flex align-items-center justify-content-end">
                                         <a type="button" href="#createUserModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Tạo người dùng</span></a>
-                                        <a type="button" href="/BookingFootballTicket/ExportExcel?service=export" class="btn btn-success m-2 float-right">
+                                        <a type="button" href="/BookingFootballTicket/ExportExcelUser?service=export" class="btn btn-success m-2 float-right">
                                             <i class="bi bi-file-earmark-spreadsheet"></i> 
                                             <span>Xuất file Excel</span>
                                         </a>

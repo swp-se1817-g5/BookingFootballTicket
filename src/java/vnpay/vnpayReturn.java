@@ -18,8 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 import Config.Config;
 import controllers.Auth.resetService;
+import dal.DaoBooking;
 import dal.MatchSeatDAO;
 import jakarta.servlet.http.HttpSession;
+import java.time.LocalDateTime;
+import models.BookingTicket;
 import models.HistoryPurchasedTicketMatchSeat;
 import models.User;
 
@@ -62,27 +65,40 @@ public class vnpayReturn extends HttpServlet {
             String signValue = Config.hashAllFields(fields);
             if (signValue.equals(vnp_SecureHash)) {
                 String paymentCode = request.getParameter("vnp_TransactionNo");
-                String ticketId = request.getParameter("vnp_TxnRef");
-                HistoryPurchasedTicketMatchSeat his = new HistoryPurchasedTicketMatchSeat();
+                String ticketIdStr = request.getParameter("vnp_TxnRef");
                 boolean transSuccess = false;
+                BookingTicket booking = new BookingTicket();
                 if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
                     //update banking system
-                    his = new HistoryPurchasedTicketMatchSeat(Integer.parseInt(ticketId),
-                            "payment");
+                    int ticketId = Integer.parseInt(ticketIdStr);
+
+                    booking = DaoBooking.INSTANCE.getBookingTicketById(ticketId);
+                HttpSession session = request.getSession();
+                if (session.getAttribute("currentUser") == null) {
+                    response.sendRedirect("homePage");
+                    return;
+                }
+                User user = (User) session.getAttribute("currentUser");
+
+                String email = user.getEmail();
+                booking.setEmail(email);
+                    HistoryPurchasedTicketMatchSeat his = new HistoryPurchasedTicketMatchSeat(
+                            booking.getSeatName(), booking.getQuantity(), booking.getStandName(),
+                            booking.getSeatClassName(), booking.getQrCode(), booking.getPrice(),
+                            booking.getCreatedDate(), email
+                    );
+
+                    MatchSeatDAO.INSTANCE.addOrderTicket(his);
+                    booking.setStatus("done");
+
                     transSuccess = true;
                     resetService service = new resetService();
-                    HttpSession session = request.getSession();
-                    User user = (User) session.getAttribute("currentUser");
-
-                    String email = user.getEmail();
-                    service.sendEmailQr(email,
-                            "Mã QR của bạn là : " + MatchSeatDAO.INSTANCE.getTicketById(Integer.parseInt(ticketId)),
-                            email);
                 } else {
-                    his = new HistoryPurchasedTicketMatchSeat(Integer.parseInt(ticketId),
-                            "cancelPayment");
+                    booking.setStatus("cancel");
                 }
-                MatchSeatDAO.INSTANCE.updateStatus(his);
+               
+                DaoBooking.INSTANCE.updateBookingStatus(booking);
+
                 request.getSession().setAttribute("transResult", transSuccess);
                 if (transSuccess) {
 

@@ -1,17 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">  
-    <servlet>
-        <servlet-name>ManageHomePageServlet</servlet-name>
-        <servlet-class>controllers.home_Page.ManageHomePageServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>ManageHomePageServlet</servlet-name>
-        <url-pattern>/homePage</url-pattern>
-    </servlet-mapping>
     <welcome-file-list>
         <welcome-file>homePage</welcome-file>
     </welcome-file-list>
-    
     <filter>
         <filter-class>filters.AuthenticationFilter</filter-class>
         <filter-name>AuthenticationFilter</filter-name>
@@ -34,6 +25,9 @@
         <url-pattern>/manageNews</url-pattern>
         <url-pattern>/updateNews</url-pattern>
         <url-pattern>/deleteNews</url-pattern>
+        <url-pattern>/manageSeason</url-pattern>
+        <url-pattern>/createSeason</url-pattern>
     </filter-mapping>
+    
 </web-app>
 

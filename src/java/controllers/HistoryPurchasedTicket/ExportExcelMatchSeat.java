@@ -28,7 +28,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author AD
  */
-@WebServlet(name = "ExportExcel", urlPatterns = {"/ExportExcel"})
+@WebServlet(name = "ExportExcelMatchSeat", urlPatterns = {"/ExportExcelMatchSeat"})
 public class ExportExcelMatchSeat extends HttpServlet {
 
     /**

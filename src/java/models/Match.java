@@ -22,6 +22,8 @@ public class Match {
     private MatchType type;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public Match() {
     }
@@ -90,6 +92,14 @@ public class Match {
 
     public void setType(MatchType type) {
         this.type = type;
+    }
+
+    public String getDate() {
+        return time != null ? time.format(dateFormatter) : null;
+    }
+
+    public String getDateTime() {
+        return time != null ? time.format(timeFormatter) : null;
     }
 
     @Override
