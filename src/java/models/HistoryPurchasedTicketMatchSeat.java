@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-
 /**
  *
  * @author admin
@@ -30,14 +29,32 @@ public class HistoryPurchasedTicketMatchSeat {
     private TicketStatus statusId;
     private String createdBy;
     private LocalDateTime createdDate;
+    private int matchSeatId;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yy");
 
     public HistoryPurchasedTicketMatchSeat() {
     }
 
+    public HistoryPurchasedTicketMatchSeat(String team1, String team2, LocalDateTime startTime, String seasonName, String seatName, int quantity, String standName, String seatClassName, String email, String qrCode, BigDecimal price, String createdBy, LocalDateTime createdDate, int matchSeatId) {
+        this.team1 = team1;
+        this.team2 = team2;
+        this.startTime = startTime;
+        this.seasonName = seasonName;
+        this.seatName = seatName;
+        this.quantity = quantity;
+        this.standName = standName;
+        this.seatClassName = seatClassName;
+        this.email = email;
+        this.qrCode = qrCode;
+        this.price = price;
+        this.createdBy = createdBy;
+        this.createdDate = createdDate;
+        this.matchSeatId = matchSeatId;
+    }
+
     public HistoryPurchasedTicketMatchSeat(String seatName, int quantity, String standName,
-            String seatClassName, String qrCode, BigDecimal price, 
+            String seatClassName, String qrCode, BigDecimal price,
             LocalDateTime createdDate, String email) {
         this.seatName = seatName;
         this.quantity = quantity;
@@ -67,6 +84,13 @@ public class HistoryPurchasedTicketMatchSeat {
         this.createdDate = createdDate;
     }
 
+    public int getMatchSeatId() {
+        return matchSeatId;
+    }
+
+    public void setMatchSeatId(int matchSeatId) {
+        this.matchSeatId = matchSeatId;
+    }
 
     public int getTicketId() {
         return ticketId;
@@ -99,7 +123,8 @@ public class HistoryPurchasedTicketMatchSeat {
     public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
-    public String getStartTimeConverted(){
+
+    public String getStartTimeConverted() {
         return startTime != null ? timeFormatter.format(startTime) : null;
     }
 

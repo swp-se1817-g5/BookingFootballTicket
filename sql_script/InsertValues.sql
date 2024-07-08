@@ -138,8 +138,9 @@ GO
 
 INSERT INTO TicketStatus (statusName) 
 VALUES 
-('Still validated'),
-('Expire');
+('Chưa quét'),
+('Đã quét'),
+('Hết hiệu lực');
 GO
 -- Insert values into HistoryPurchasedTicketMatchSeat table
 INSERT INTO HistoryPurchasedTicketMatchSeat (team1, team2, startTime, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy)

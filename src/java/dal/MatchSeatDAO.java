@@ -59,6 +59,41 @@ public class MatchSeatDAO {
         return status;
     }
 
+    public boolean subtractAvailability(BookingTicket booking) {
+        boolean status = false;
+        String sql = """
+                     UPDATE MatchSeat
+                     SET availability = availability - ?
+                     WHERE matchSeatId = ? AND availability >= ?;
+                     """;
+        try (PreparedStatement st = con.prepareStatement(sql);) {
+            st.setInt(1, booking.getQuantity());
+            st.setInt(2, booking.getMatchSeatId());
+            st.setInt(3, booking.getQuantity());
+            status = st.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, "Error subtraction availability ", ex);
+        }
+        return status;
+    }
+
+    public boolean returnAvailability(BookingTicket booking) {
+        boolean status = false;
+        String sql = """
+                     UPDATE MatchSeat
+                     SET availability = availability + ?
+                     WHERE matchSeatId = ?;
+                     """;
+        try (PreparedStatement st = con.prepareStatement(sql);) {
+            st.setInt(1, booking.getQuantity());
+            st.setInt(2, booking.getMatchSeatId());
+            status = st.executeUpdate() > 0;
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, "Error return availability ", ex);
+        }
+        return status;
+    }
+
     public ArrayList<MatchSeat> getMatchSeatbyMatch(int matchId) {
         ArrayList<MatchSeat> matchSeats = new ArrayList<>();
         String sql = """
@@ -179,25 +214,38 @@ public class MatchSeatDAO {
     }
 
     public void addOrderTicket(HistoryPurchasedTicketMatchSeat his) {
-        String sql = "INSERT INTO [dbo].[HistoryPurchasedTicketMatchSeat]\n"
-                + "           ([seatName]\n"
-                + "           ,[quantity]\n"
-                + "           ,[standName]\n"
-                + "           ,[seatClassName]\n"
-                + "           ,[email]\n"
-                + "           ,[qrCode]\n"
-                + "           ,[price]\n"
-                + "           ,[createdDate])\n"
-                + "VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = """
+                     INSERT INTO [dbo].[HistoryPurchasedTicketMatchSeat]
+                                ([team1]
+                                ,[team2]
+                                ,[startTime]
+                                ,[seasonName]
+                                ,[seatName]
+                                ,[quantity]
+                                ,[standName]
+                                ,[seatClassName]
+                                ,[email]
+                                ,[qrCode]
+                                ,[price]
+                                ,[createdBy]
+                                ,[createdDate]
+                                ,[matchSeatId])
+                     VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""";
         try (PreparedStatement st = con.prepareStatement(sql);) {
-            st.setString(1, his.getSeatName());
-            st.setInt(2, his.getQuantity());
-            st.setString(3, his.getStandName());
-            st.setString(4, his.getSeatClassName());
-            st.setString(5, his.getEmail());
-            st.setString(6, his.getQrCode());
-            st.setBigDecimal(7, his.getPrice());
-            st.setTimestamp(8, Timestamp.valueOf(getFormatDate(LocalDateTime.now())));
+            st.setString(1, his.getTeam1());
+            st.setString(2, his.getTeam2());
+            st.setTimestamp(3, Timestamp.valueOf(getFormatDate(his.getStartTime())));
+            st.setString(4, his.getSeasonName());
+            st.setString(5, his.getSeatName());
+            st.setInt(6, his.getQuantity());
+            st.setString(7, his.getStandName());
+            st.setString(8, his.getSeatClassName());
+            st.setString(9, his.getEmail());
+            st.setString(10, his.getQrCode());
+            st.setBigDecimal(11, his.getPrice());
+            st.setString(12, his.getEmail());
+            st.setTimestamp(13, Timestamp.valueOf(getFormatDate(LocalDateTime.now())));
+            st.setInt(14, his.getMatchSeatId());
             st.executeUpdate();
         } catch (SQLException ex) {
             System.out.println("error here");

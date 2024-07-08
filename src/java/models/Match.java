@@ -101,6 +101,10 @@ public class Match {
     public String getDateTime() {
         return time != null ? time.format(timeFormatter) : null;
     }
+    
+    public LocalDateTime getLocalDateTime(){
+        return this.time;
+    }
 
     @Override
     public String toString() {
