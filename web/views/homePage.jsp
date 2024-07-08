@@ -161,12 +161,11 @@
                                         <span>VS</span>
                                         <img src="${lm.team2.img}" alt="${lm.team2.clubName}">
                                     </div>
-                                    <h5 class="card-title">Europa League Final Tickets</h5>
-                                    <p class="card-text">Football Club A vs Football Club B</p>
-                                    <p class="card-text">Mỹ Đình Stadium</p>
-                                    <input type="datetime-local" value="${m.time}" readonly style="border: none; background: none">
+                                    <h5 class="card-title text-center">Europa League Final Tickets</h5>
+                                    <p class="card-text text-center">Football Club A vs Football Club B</p>
+                                    <p class="card-text text-center">Mỹ Đình Stadium</p>
+                                    <input class="text-center" type="datetime-local" value="${m.time}" readonly style="border: none; background: none">
                                     <p class="card-text">Europa League</p>
-                                    <p class="card-text">Tickets from</p>
                                     <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Book now</a>
                                 </div>
                             </div>
@@ -178,9 +177,9 @@
                 </div>
             </div>
             <div class="con_img">
-                <img src="images/banner/b7834a87d1f84cf4aab912a3e48dde7f.jpg" alt="Ảnh của bạn">
+                <img src="images/banner/bannerDoi.jpg" alt="">
                 <div class="centered">
-                    <h2>Nội dung chữ giữa ảnh</h2>
+                    <h2>Tuyển tập các đội hình "Mạnh mẽ nhất"</h2>
                 </div>
             </div>
 

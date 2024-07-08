@@ -90,21 +90,10 @@ public class UpdateNewsServlet extends HttpServlet {
             String conclusion = request.getParameter("conclusion");
             int statusId = Integer.parseInt(statusId_raw);
             int stateId = Integer.parseInt(stateId_raw);
-            Part part = request.getPart("image");
             String currentImage = request.getParameter("currentImage");
-            String imagePath = null;
-            if ((part == null) || (part.getSubmittedFileName().trim().isEmpty()) || (part.getSubmittedFileName() == null)) {
-                imagePath = currentImage;
-            } else {
-                String path = request.getServletContext().getRealPath("/images/news");
-                File dir = new File(path);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                File image = new File(dir, part.getSubmittedFileName());
-                part.write(image.getAbsolutePath());
-                imagePath = request.getContextPath() + "/images/news/" + image.getName();
-            }
+            Part part = request.getPart("image");
+            String imagePath;
+            imagePath = getImagePath(request, response, part, currentImage);
             News news = NewsDAO.getInstance().getNewsByNewsId(newsId);
             news.setTitle(title);
             news.setContent(content);
@@ -125,6 +114,23 @@ public class UpdateNewsServlet extends HttpServlet {
         }
 
         response.sendRedirect("manageNews");
+    }
+
+    public String getImagePath(HttpServletRequest request, HttpServletResponse response, Part part, String currentImage) throws ServletException, IOException {
+        String imagePath = null;
+        if ((part == null) || (part.getSubmittedFileName().trim().isEmpty()) || (part.getSubmittedFileName() == null)) {
+            imagePath = currentImage;
+        } else {
+            String path = request.getServletContext().getRealPath("/images/news");
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            File image = new File(dir, part.getSubmittedFileName());
+            part.write(image.getAbsolutePath());
+            imagePath = request.getContextPath() + "/images/news/" + image.getName();
+        }
+        return imagePath;
     }
 
     /**
