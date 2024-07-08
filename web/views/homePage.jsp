@@ -170,9 +170,9 @@
                 </div>
             </div>
             <div class="con_img">
-                <img src="images/banner/b7834a87d1f84cf4aab912a3e48dde7f.jpg" alt="Ảnh của bạn">
+                <img src="images/banner/bannerDoi.jpg" alt="">
                 <div class="centered">
-                    <h2>Nội dung chữ giữa ảnh</h2>
+                    <h2>Tuyển tập các đội hình "Mạnh mẽ nhất"</h2>
                 </div>
             </div>
 

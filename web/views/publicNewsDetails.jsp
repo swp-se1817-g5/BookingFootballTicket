@@ -99,7 +99,9 @@
                 </div>
             </div>
         </div>
-
+        <footer class="footer">
+            <jsp:include page="footer.jsp"/>
+        </footer>
         <!-- Script của Bootstrap -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
