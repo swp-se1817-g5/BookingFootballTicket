@@ -14,6 +14,7 @@ import com.google.zxing.Reader;
 import com.google.zxing.Result;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import dal.HistoryPurchasedTicketDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -22,15 +23,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import models.HistoryPurchasedTicketMatchSeat;
 
 /**
  *
@@ -59,57 +63,22 @@ public class inspectTicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("views/inspectTicket.jsp").forward(request, response);
-    }
-
-    public String getTextQRCode(String path) throws IOException {
-        File file = new File(path);
-        if (!file.exists()) {
-            throw new FileNotFoundException("File not found: " + path);
-        }
-        try (InputStream barCodeInputStream = new FileInputStream(file)) {
-            BufferedImage bufferedImage = ImageIO.read(barCodeInputStream);
-            LuminanceSource source = new BufferedImageLuminanceSource(bufferedImage);
-            BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
-            Reader reader = new MultiFormatReader();
-            try {
-                Result result = reader.decode(bitmap);
-                return result.getText();
-            } catch (NotFoundException | ChecksumException | FormatException ex) {
-                Logger.getLogger(inspectTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
+        PrintWriter out = response.getWriter();
+        String qrcode = request.getParameter("qrcode");
+        out.print(qrcode);
+        ArrayList<HistoryPurchasedTicketMatchSeat> listHistoryPurchasedTicket = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
+        for (HistoryPurchasedTicketMatchSeat historyPurchasedTicketMatchSeat : listHistoryPurchasedTicket) {
+            if (qrcode.equals(historyPurchasedTicketMatchSeat.getQrCode())) {
+                request.setAttribute("checkQRCode", HistoryPurchasedTicketDAO.getInstance().updateListHistoryPurchasedTicketMatchSeat(qrcode));
             }
         }
-        return null;
-    }
-
-    public String getImagePath(HttpServletRequest request, HttpServletResponse response, Part part) throws ServletException, IOException {
-        if (part == null || part.getSubmittedFileName().trim().isEmpty()) {
-            return null;
-        }
-        String path = request.getServletContext().getRealPath("/images/qrcode");
-        File dir = new File(path);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        File image = new File(dir, part.getSubmittedFileName());
-        part.write(image.getAbsolutePath());
-        return image.getAbsolutePath();
+        request.setAttribute("getListHistoryPurchasedTicketMatchSeat", HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat());
+        request.getRequestDispatcher("views/inspectTicket.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            Part part = request.getPart("qrcode");
-            String imagePath = getImagePath(request, response, part);
-            if (imagePath != null) {
-                String resultQRCode = getTextQRCode(imagePath);
-                out.print(resultQRCode);
-            } else {
-                out.print("No QR code file uploaded.");
-            }
-        }
     }
 
     @Override

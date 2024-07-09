@@ -126,55 +126,60 @@ public class MyTicketServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String ticketId = request.getParameter("ticketId");
-        List<HistoryPurchasedTicketMatchSeat> tickets = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
-        HistoryPurchasedTicketMatchSeat ticket = null;
-        for (HistoryPurchasedTicketMatchSeat t : tickets) {
-            if (String.valueOf(t.getTicketId()).equals(ticketId)) {
-                ticket = t;
-                break;
-            }
-        }
-
-        if (ticket != null) {
-            try {
-                String qrContent = ticket.getQrCode();
-                String relativeQrFilePath = generateQRCodeImage(request.getContextPath(), qrContent, 350, 350, getServletContext().getRealPath(QR_CODE_DIRECTORY));
-                request.setAttribute("qrCode", relativeQrFilePath);
-                request.setAttribute("ticket", ticket);
-                request.getRequestDispatcher("views/myTicketDetail.jsp").forward(request, response);
-            } catch (WriterException ex) {
-                Logger.getLogger(MyTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            response.getWriter().write("Ticket not found");
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+        throws ServletException, IOException {
+    String ticketId = request.getParameter("ticketId");
+    List<HistoryPurchasedTicketMatchSeat> tickets = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
+    HistoryPurchasedTicketMatchSeat ticket = null;
+    for (HistoryPurchasedTicketMatchSeat t : tickets) {
+        if (String.valueOf(t.getTicketId()).equals(ticketId)) {
+            ticket = t;
+            break;
         }
     }
+
+    if (ticket != null) {
+        try {
+            String qrContent = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath() +"/inspectTicket?qrcode=" + ticket.getQrCode();
+            String relativeQrFilePath = generateQRCodeImage(request.getContextPath(), qrContent, 350, 350, getServletContext().getRealPath(QR_CODE_DIRECTORY));
+            request.setAttribute("qrCode", relativeQrFilePath);
+            request.setAttribute("ticket", ticket);
+            request.getRequestDispatcher("views/myTicketDetail.jsp").forward(request, response);
+        } catch (WriterException ex) {
+            Logger.getLogger(MyTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    } else {
+        response.getWriter().write("Ticket not found");
+    }
+}
+
 
     private static final String QR_CODE_DIRECTORY = "/images/qrCodes/";
 
     private String generateQRCodeImage(String contextPath, String qrContent, int width, int height, String qrCodeDirectory)
-            throws WriterException, IOException {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, width, height);
+        throws WriterException, IOException {
+    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+    BitMatrix bitMatrix = qrCodeWriter.encode(qrContent, BarcodeFormat.QR_CODE, width, height);
 
-        // Tạo đường dẫn tuyệt đối của file QR
-        String filePath = qrCodeDirectory + qrContent + ".png";
+    // Sử dụng mã băm để tạo tên tệp hợp lệ
+    String fileName = Integer.toHexString(qrContent.hashCode()) + ".png";
 
-        // Tạo đường dẫn tương đối từ thư mục gốc của dự án
-        Path path = Paths.get(filePath);
+    // Tạo đường dẫn tuyệt đối của file QR
+    String filePath = qrCodeDirectory + fileName;
 
-        // Kiểm tra nếu thư mục không tồn tại, tạo mới
-        Files.createDirectories(path.getParent());
+    // Tạo đường dẫn tương đối từ thư mục gốc của dự án
+    Path path = Paths.get(filePath);
 
-        // Ghi BitMatrix vào file PNG
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+    // Kiểm tra nếu thư mục không tồn tại, tạo mới
+    Files.createDirectories(path.getParent());
 
-        // Trả về đường dẫn tương đối từ thư mục gốc của dự án
-        return contextPath + QR_CODE_DIRECTORY + qrContent + ".png";
-    }
+    // Ghi BitMatrix vào file PNG
+    MatrixToImageWriter.writeToPath(bitMatrix, "PNG", path);
+
+    // Trả về đường dẫn tương đối từ thư mục gốc của dự án
+    return contextPath + QR_CODE_DIRECTORY + fileName;
+}
+
 
     /**
      * Returns a short description of the servlet.

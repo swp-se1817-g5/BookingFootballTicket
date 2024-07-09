@@ -138,8 +138,9 @@ GO
 
 INSERT INTO TicketStatus (statusName) 
 VALUES 
-('Still validated'),
-('Expire');
+(N'Chưa quét'),
+(N'Đã quét'),
+(N'Hết hiệu lực');
 GO
 -- Insert values into HistoryPurchasedTicketMatchSeat table
 INSERT INTO HistoryPurchasedTicketMatchSeat (team1, team2, startTime, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy)
@@ -169,23 +170,17 @@ VALUES
 ('2024-12-20 23:00:00', '2024-12-21 01:00:00', 'Spring 2024', '9', 1, 'A', 'on-roof', 'user1@example.com', 'QRCode9', 80.00, 1, 'admin@example.com'),
 ('2024-12-21 00:00:00', '2024-12-21 02:00:00', 'Summer 2024', '10', 6, 'B', 'under-roof', 'user2@example.com', 'QRCode10', 300.00, 1, 'admin@example.com');
 
--- Insert values into HistoryPurchasedTicketSeasonSeat table
-/*INSERT INTO HistoryPurchasedTicketSeasonSeat (seasonSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
-(1, 'user1@example.com', 'QRCode1', 500000, 1, 1, 'admin@example.com'),
-(2, 'user2@example.com', 'QRCode2', 400000, 2, 1, 'admin@example.com');
-GO
-*/
 -- Insert values into News table
 
 INSERT INTO NewsStatus(statusName) VALUES
-('Rejected'),
-('Pending'),
-('Approved');
+(N'Từ chối'),
+(N'Chờ đợi'),
+(N'Chấp nhận');
 GO
 -- Insert values into News table
 INSERT INTO NewsState(stateName) VALUES
-('Hide'),
-('Show');
+(N'Ẩn'),
+(N'Hiện');
 GO
 -- Insert values into News table
 INSERT INTO News (title, content,conclusion,stateId,statusId, createdBy) VALUES
