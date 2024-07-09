@@ -5,6 +5,7 @@
 package models;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -31,7 +32,8 @@ public class HistoryPurchasedTicketMatchSeat {
     private LocalDateTime createdDate;
     private int matchSeatId;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yy");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
+    private final DecimalFormat priceFormatter = new DecimalFormat("#,###");
 
     public HistoryPurchasedTicketMatchSeat() {
     }
@@ -186,6 +188,10 @@ public class HistoryPurchasedTicketMatchSeat {
 
     public BigDecimal getPrice() {
         return price;
+    }
+    
+    public String getPriceFormatter(){
+        return priceFormatter.format(price);
     }
 
     public void setPrice(BigDecimal price) {

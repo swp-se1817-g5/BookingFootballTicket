@@ -28,7 +28,7 @@ import models.TicketStatus;
  * @author nguye
  */
 public class HistoryPurchasedTicketDAO {
-    
+
     private static volatile HistoryPurchasedTicketDAO INSTANCE;
     private final Connection connect;
     // Define constants for the string literals
@@ -58,12 +58,12 @@ public class HistoryPurchasedTicketDAO {
     private static final String TICKET_STATUS_NAME = "statusName";
     private static final String START_DATE = "startDate";
     private static final String END_DATE = "endDate";
-    
+
     public HistoryPurchasedTicketDAO() {
         // Private constructor to prevent instantiation
         connect = new DBContext().connect;
     }
-    
+
     public static HistoryPurchasedTicketDAO getInstance() {
         if (INSTANCE == null) {
             synchronized (HistoryPurchasedTicketDAO.class) {
@@ -123,7 +123,7 @@ public class HistoryPurchasedTicketDAO {
                 + "OR hptms.team2 LIKE '%" + value + "%' "
                 + "OR hptms.email LIKE '%" + value + "%' "
                 + "OR hptms.standName LIKE '%" + value + "%'";
-        
+
         try {
             ps = connect.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -206,7 +206,7 @@ public class HistoryPurchasedTicketDAO {
                 + "OR hptss.email LIKE '%" + value + "%' "
                 + "OR hptss.createdBy LIKE '%" + value + "%' "
                 + "OR hptss.standName LIKE '%" + value + "%'";
-        
+
         try {
             ps = connect.prepareStatement(sql);
             rs = ps.executeQuery();
@@ -236,7 +236,7 @@ public class HistoryPurchasedTicketDAO {
         }
         return list;
     }
-    
+
     public ArrayList<TicketStatus> getListTicketStatus() {
         ArrayList<TicketStatus> list = new ArrayList<>();
         try {
@@ -253,13 +253,13 @@ public class HistoryPurchasedTicketDAO {
         }
         return list;
     }
-    
+
     private Timestamp getTimestamp(String time) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date parsedDate = dateFormat.parse(time);
         return new Timestamp(parsedDate.getTime());
     }
-    
+
     public List<HistoryPurchasedTicketMatchSeat> paggingTickets(int pageIndex, int pageSize, String startDate, String endDate, String email) throws ParseException {
         List<HistoryPurchasedTicketMatchSeat> tickets = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT hptms.*, ts.statusName "
@@ -270,12 +270,17 @@ public class HistoryPurchasedTicketDAO {
         // Add date conditions only if both dates are provided
         if (!startDate.isEmpty() && !endDate.isEmpty()) {
             sql.append("AND startTime BETWEEN ? AND ? ");
+        } else if (!startDate.isEmpty() && endDate.isEmpty()) {
+            sql.append("AND startTime >= ? ");
+        } else if (startDate.isEmpty() && !endDate.isEmpty()) {
+            sql.append("AND startTime <= ? ");
         }
-        
+
         sql.append("ORDER BY createdDate DESC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY ");
-        
-        try (PreparedStatement ps = connect.prepareStatement(sql.toString())) {
+
+        try {
+            ps = connect.prepareStatement(sql.toString());
             int paramIndex = 1;
             ps.setString(paramIndex++, email);
 
@@ -283,10 +288,14 @@ public class HistoryPurchasedTicketDAO {
             if (!startDate.isEmpty() && !endDate.isEmpty()) {
                 ps.setTimestamp(paramIndex++, getTimestamp(startDate));
                 ps.setTimestamp(paramIndex++, getTimestamp(endDate));
+            } else if (!startDate.isEmpty() && endDate.isEmpty()) {
+                ps.setTimestamp(paramIndex++, getTimestamp(startDate));
+            } else if (startDate.isEmpty() && !endDate.isEmpty()) {
+            ps.setTimestamp(paramIndex++, getTimestamp(endDate));
             }
-            
+
             ps.setInt(paramIndex++, (pageIndex - 1) * pageSize);
-            ps.setInt(paramIndex++, pageSize);
+            ps.setInt(paramIndex, pageSize);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 HistoryPurchasedTicketMatchSeat ticket = new HistoryPurchasedTicketMatchSeat();
@@ -312,23 +321,34 @@ public class HistoryPurchasedTicketDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
+
         return tickets;
     }
-    
+
     public int getTotalRecords(String startDate, String endDate, String email) throws ParseException {
         int count = 0;
-        
+
         String sql = "SELECT COUNT(*) FROM HistoryPurchasedTicketMatchSeat WHERE email = ? ";
         if (!startDate.isEmpty() && !endDate.isEmpty()) {
             sql += "AND startTime BETWEEN ? AND ?";
+        } else if (!startDate.isEmpty() && endDate.isEmpty()) {
+            sql += ("AND startTime >= ? ");
+        } else if (startDate.isEmpty() && !endDate.isEmpty()) {
+            sql += ("AND startTime <= ? ");
         }
+        
+        
         try {
+            int paramIndex = 1;
             ps = connect.prepareStatement(sql);
-            ps.setString(1, email);
+            ps.setString(paramIndex ++, email);
             if (!startDate.isEmpty() && !endDate.isEmpty()) {
-                ps.setTimestamp(2, getTimestamp(startDate));
-                ps.setTimestamp(3, getTimestamp(endDate));
+                ps.setTimestamp(paramIndex ++, getTimestamp(startDate));
+                ps.setTimestamp(paramIndex,getTimestamp(endDate));
+            } else if (!startDate.isEmpty() && endDate.isEmpty()) {
+                ps.setTimestamp(paramIndex, getTimestamp(startDate));
+            } else if (startDate.isEmpty() && !endDate.isEmpty()) {
+            ps.setTimestamp(paramIndex, getTimestamp(endDate));
             }
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
@@ -339,15 +359,15 @@ public class HistoryPurchasedTicketDAO {
         }
         return count;
     }
-    
-    public Boolean updateListHistoryPurchasedTicketMatchSeat(String qrCode, int statusId) {
+
+    public Boolean updateListHistoryPurchasedTicketMatchSeat(String qrCode) {
         boolean m = false;
         String sql = "UPDATE [HistoryPurchasedTicketMatchSeat]"
                 + "   SET [statusId] = ?"
                 + " WHERE qrCode = ?";
         try {
             ps = connect.prepareStatement(sql);
-            ps.setInt(1, statusId);
+            ps.setInt(1, 2);
             ps.setString(2, qrCode);
             m = ps.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -355,13 +375,8 @@ public class HistoryPurchasedTicketDAO {
         }
         return m;
     }
-    
+
     public static void main(String[] args) {
-        ArrayList<HistoryPurchasedTicketMatchSeat> listHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
-        for (HistoryPurchasedTicketMatchSeat historyPurchasedTicketMatchSeat : listHistoryPurchasedTicketMatchSeat) {
-            if (LocalDateTime.now().isAfter(historyPurchasedTicketMatchSeat.getStartTime())) {
-                System.out.println(historyPurchasedTicketMatchSeat.getTicketId());
-            }
-        }
+        System.out.println(HistoryPurchasedTicketDAO.getInstance().updateListHistoryPurchasedTicketMatchSeat("QRCode1"));
     }
 }
