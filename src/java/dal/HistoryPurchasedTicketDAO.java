@@ -270,12 +270,17 @@ public class HistoryPurchasedTicketDAO {
         // Add date conditions only if both dates are provided
         if (!startDate.isEmpty() && !endDate.isEmpty()) {
             sql.append("AND startTime BETWEEN ? AND ? ");
+        } else if (!startDate.isEmpty() && endDate.isEmpty()) {
+            sql.append("AND startTime >= ? ");
+        } else if (startDate.isEmpty() && !endDate.isEmpty()) {
+            sql.append("AND startTime <= ? ");
         }
 
         sql.append("ORDER BY createdDate DESC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY ");
 
-        try (PreparedStatement ps = connect.prepareStatement(sql.toString())) {
+        try {
+            ps = connect.prepareStatement(sql.toString());
             int paramIndex = 1;
             ps.setString(paramIndex++, email);
 
@@ -283,10 +288,14 @@ public class HistoryPurchasedTicketDAO {
             if (!startDate.isEmpty() && !endDate.isEmpty()) {
                 ps.setTimestamp(paramIndex++, getTimestamp(startDate));
                 ps.setTimestamp(paramIndex++, getTimestamp(endDate));
+            } else if (!startDate.isEmpty() && endDate.isEmpty()) {
+                ps.setTimestamp(paramIndex++, getTimestamp(startDate));
+            } else if (startDate.isEmpty() && !endDate.isEmpty()) {
+            ps.setTimestamp(paramIndex++, getTimestamp(endDate));
             }
 
             ps.setInt(paramIndex++, (pageIndex - 1) * pageSize);
-            ps.setInt(paramIndex++, pageSize);
+            ps.setInt(paramIndex, pageSize);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 HistoryPurchasedTicketMatchSeat ticket = new HistoryPurchasedTicketMatchSeat();
@@ -322,13 +331,24 @@ public class HistoryPurchasedTicketDAO {
         String sql = "SELECT COUNT(*) FROM HistoryPurchasedTicketMatchSeat WHERE email = ? ";
         if (!startDate.isEmpty() && !endDate.isEmpty()) {
             sql += "AND startTime BETWEEN ? AND ?";
+        } else if (!startDate.isEmpty() && endDate.isEmpty()) {
+            sql += ("AND startTime >= ? ");
+        } else if (startDate.isEmpty() && !endDate.isEmpty()) {
+            sql += ("AND startTime <= ? ");
         }
+        
+        
         try {
+            int paramIndex = 1;
             ps = connect.prepareStatement(sql);
-            ps.setString(1, email);
+            ps.setString(paramIndex ++, email);
             if (!startDate.isEmpty() && !endDate.isEmpty()) {
-                ps.setTimestamp(2, getTimestamp(startDate));
-                ps.setTimestamp(3, getTimestamp(endDate));
+                ps.setTimestamp(paramIndex ++, getTimestamp(startDate));
+                ps.setTimestamp(paramIndex,getTimestamp(endDate));
+            } else if (!startDate.isEmpty() && endDate.isEmpty()) {
+                ps.setTimestamp(paramIndex, getTimestamp(startDate));
+            } else if (startDate.isEmpty() && !endDate.isEmpty()) {
+            ps.setTimestamp(paramIndex, getTimestamp(endDate));
             }
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
