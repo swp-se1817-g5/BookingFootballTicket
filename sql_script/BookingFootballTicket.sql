@@ -185,7 +185,7 @@ CREATE TABLE HistoryPurchasedTicketMatchSeat (
     email VARCHAR(50),
 	qrCode VARCHAR(255),
 	price DECIMAL(10, 0),
-	statusId INT,
+	statusId INT default 1,
 	createdBy VARCHAR(50),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
 	matchSeatId INT,

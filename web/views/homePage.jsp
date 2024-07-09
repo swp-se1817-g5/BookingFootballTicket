@@ -210,7 +210,7 @@
                     <h2 class="mb-3">Các Mùa Giải</h2>
                 </div>
                 <div class="row">
-                    <c:forEach items="${getAllseason}" var="s">
+                    <c:forEach items="${getAllseason}" var="s" begin="0" end="3">
                         <div class="col-md-3 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
@@ -224,7 +224,7 @@
                     </c:forEach>
                 </div>
                 <div class="text-center mb-5">
-                    <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                    <a href="publicListTournment" class="btn btn-outline-secondary">Xem Thêm</a>
                 </div>
             </div>
             <div class="con_img">
