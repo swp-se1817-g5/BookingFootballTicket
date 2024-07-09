@@ -217,7 +217,7 @@
                                     <h5 class="card-title">${s.seasonName}</h5>
                                     <p class="card-text">Thời gian bắt đầu : ${s.startDate}</p>
                                     <p class="card-text">Thời gian kết thúc : ${s.endDate}</p>
-                                    <a href="#" class="btn btn-primary">Xem Thêm</a>
+                                    <a href="publicListMatch?seasonId=${s.seasonId}" class="btn btn-primary">Xem Các Trận Đấu<i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
