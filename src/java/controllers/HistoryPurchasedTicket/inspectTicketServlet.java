@@ -30,6 +30,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,18 +61,45 @@ public class inspectTicketServlet extends HttpServlet {
         }
     }
 
+    public boolean isNullOrBlank(String str) {
+        return str == null || str.trim().isEmpty();
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
         String qrcode = request.getParameter("qrcode");
-        out.print(qrcode);
-        ArrayList<HistoryPurchasedTicketMatchSeat> listHistoryPurchasedTicket = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
-        for (HistoryPurchasedTicketMatchSeat historyPurchasedTicketMatchSeat : listHistoryPurchasedTicket) {
-            if (qrcode.equals(historyPurchasedTicketMatchSeat.getQrCode())) {
-                request.setAttribute("checkQRCode", HistoryPurchasedTicketDAO.getInstance().updateListHistoryPurchasedTicketMatchSeat(qrcode));
+        String checkQRCode = "notFound"; // Default to not found
+        ArrayList<HistoryPurchasedTicketMatchSeat> listHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
+        for (HistoryPurchasedTicketMatchSeat historyPurchasedTicketMatchSeat : listHistoryPurchasedTicketMatchSeat) {
+            if (LocalDateTime.now().isAfter(historyPurchasedTicketMatchSeat.getStartTime())) {
+                HistoryPurchasedTicketDAO.getInstance().updateListHistoryPurchasedTicketMatchSeat(historyPurchasedTicketMatchSeat.getQrCode(), 3);
             }
         }
+        if (!isNullOrBlank(qrcode)) {
+            ArrayList<HistoryPurchasedTicketMatchSeat> listHistoryPurchasedTicket = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
+            for (HistoryPurchasedTicketMatchSeat historyPurchasedTicketMatchSeat : listHistoryPurchasedTicket) {
+                if (qrcode.equals(historyPurchasedTicketMatchSeat.getQrCode())) {
+                    switch (historyPurchasedTicketMatchSeat.getStatusId().getStatusId()) {
+
+                        case 1:
+                            checkQRCode = "unchecked";
+                            HistoryPurchasedTicketDAO.getInstance().updateListHistoryPurchasedTicketMatchSeat(qrcode, 2);
+                            break;
+                        case 2:
+                            checkQRCode = "checked";
+                            break;
+                        case 3:
+                            checkQRCode = "timeOut";
+                            break;
+
+                    }
+                    break; // Exit the loop once a matching QR code is found
+                }
+            }
+        }
+
+        request.setAttribute("checkQRCode", checkQRCode);
         request.setAttribute("getListHistoryPurchasedTicketMatchSeat", HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat());
         request.getRequestDispatcher("views/inspectTicket.jsp").forward(request, response);
     }

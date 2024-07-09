@@ -145,7 +145,7 @@ GO
 -- Insert values into HistoryPurchasedTicketMatchSeat table
 INSERT INTO HistoryPurchasedTicketMatchSeat (team1, team2, startTime, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy)
 VALUES 
-('Chelsea', 'Arsenal', '2024-12-12 15:00:00', 'Spring 2024', '1', 2, 'A', 'fans-side', 'user1@example.com', 'QRCode1', 100.00, 1, 'admin@example.com'),
+('Chelsea', 'Arsenal', '2024-7-9 18:06:00', 'Spring 2024', '1', 2, 'A', 'fans-side', 'user2@example.com', 'QRCode1', 100.00, 1, 'admin@example.com'),
 ('Manchester United', 'Tottenham Hotspur', '2024-12-13 16:00:00', 'Summer 2024', '2', 1, 'B', 'standard', 'user2@example.com', 'QRCode2', 80.00, 1, 'admin@example.com'),
 ('Liverpool', 'Manchester City', '2024-12-14 17:00:00', 'Spring 2024', '3', 4, 'C', 'vip-stand', 'user1@example.com', 'QRCode3', 200.00, 1, 'admin@example.com'),
 ('Leicester City', 'Everton', '2024-12-15 18:00:00', 'Summer 2024', '4', 3, 'D', 'on-roof', 'user2@example.com', 'QRCode4', 150.00, 1, 'admin@example.com'),
