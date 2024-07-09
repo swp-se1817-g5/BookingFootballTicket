@@ -26,7 +26,7 @@
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
             .ticket-header {
-                background-color: #343a40;
+                background-color: #e58000;
                 color: #fff;
                 padding: 10px;
                 text-align: center;
@@ -47,11 +47,11 @@
             }
             .team-names {
                 font-size: 1.5em;
-                color: #d9534f;
+                color: #7e0505;
                 font-weight: bold;
             }
             .highlight-price {
-                color: #d9534f;
+                color: #30970a;
                 font-weight: bold;
             }
             .filter-section {

@@ -29,16 +29,7 @@
             .ticket:hover {
                 transform: scale(1.02);
             }
-            .ticket-header {
-                text-align: center;
-                margin-bottom: 20px;
-                color: #d9534f; /* Change header color */
-            }
-            .ticket-header h5 {
-                margin: 0;
-                font-weight: bold;
-                color: #d9534f;
-            }
+           
             .ticket-body {
                 padding: 20px; /* Add padding to body */
             }
@@ -60,7 +51,7 @@
             }
             .badge-danger {
                 width: 100%;
-                background-color: #343a40;
+                background-color: #e58000;
                 color: #fff;
                 padding: 10px;
                 box-sizing: border-box;
@@ -68,11 +59,11 @@
             }
             .team-names {
                 font-size: 1.5em;
-                color: #d9534f; /* Change team name color */
+                color: #7e0505; /* Change team name color */
                 font-weight: bold;
             }
-             .highlight-price {
-                color: #d9534f;
+            .highlight-price {
+                color: #30970a;
                 font-weight: bold;
             }
         </style>
@@ -86,7 +77,7 @@
             <div class="badge-danger">
                 <h5><span>${ticket.seasonName}</span></h5>
             </div>    
-            <div class="ticket-header mt-2">
+            <div class="ticket-header text-center mt-2">
                 <h5 class="team-names">${ticket.team1} - ${ticket.team2}</h5>
             </div>
             <div class="ticket-body">
