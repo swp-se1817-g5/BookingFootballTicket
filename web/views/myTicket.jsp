@@ -17,8 +17,9 @@
                 border: 1px solid #ddd;
                 border-radius: 10px;
                 overflow: hidden;
-                max-width: 600px; /* Giảm chiều rộng của thẻ vé */
-                margin: 0 auto; /* Căn giữa thẻ vé */
+                max-width: 600px;
+                margin: 0 auto;
+                max-width: 100%;
             }
             .ticket-card:hover {
                 background-color: #f8f9fa;
@@ -45,13 +46,13 @@
                 color: #fff;
             }
             .team-names {
-                font-size: 1.5em; /* Tăng kích thước chữ của tên đội bóng */
-                color: #d9534f; /* Đổi màu chữ để nổi bật hơn */
-                font-weight: bold; /* Làm đậm chữ */
+                font-size: 1.5em;
+                color: #d9534f;
+                font-weight: bold;
             }
             .highlight-price {
-                color: #d9534f; /* Màu đỏ nổi bật */
-                font-weight: bold; /* Làm đậm chữ */
+                color: #d9534f;
+                font-weight: bold;
             }
             .filter-section {
                 background-color: #f8f9fa;
@@ -62,6 +63,13 @@
             .pagination {
                 margin-top: 20px;
             }
+            @media(max-width: 575px){
+                .btn{
+                    margin-top: .2rem;
+                }
+              
+            }
+            
         </style>
     </head>
     <body>
@@ -69,19 +77,21 @@
             <%@include file="header.jsp" %>
         </div>
 
-        <div class="container my-5" style="background-color: #f8f9fa">
+        <div class="container my-5">
             <!-- Form Section -->
-            <div class="filter-section d-flex justify-content-center align-items-center mb-4 flex-wrap">
-                <select id="ticketType" class="form-control w-auto">
-                    <option value="match">Vé trận</option>
-                    <option value="season">Vé mùa</option>
-                </select>
+            <div class="filter-section d-flex justify-content-between align-items-center mb-4 flex-wrap">
+                <div class="mr-2">
+                    <select id="ticketType" class="form-control w-auto">
+                        <option value="match">Vé trận</option>
+                        <option value="season">Vé mùa</option>
+                    </select>
+                </div>
                 <div class="form-inline">
                     <label for="startDate" class="mr-2">Từ</label>
-                    <input type="date" id="startDate" class="form-control mr-3 mb-2 mb-md-0">
+                    <input type="date" id="startDate" class="form-control">
                     <label for="endDate" class="mr-2">Đến</label>
                     <input type="date" id="endDate" class="form-control">
-                    <button class="btn btn-primary ml-2" id="filterButton">Lọc</button>
+                    <button class="btn btn-primary" id="filterButton">Lọc</button>
                 </div>
             </div>
 
@@ -126,7 +136,7 @@
                 </ul>
             </nav>
         </div>
-        
+
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
             $(document).ready(function () {

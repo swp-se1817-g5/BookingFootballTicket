@@ -10,7 +10,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Ticket Detail</title>
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <style>
             body {
                 background-color: #f4f6f9;
@@ -65,10 +68,10 @@
         </style>
     </head>
     <body>
-        <div style="margin-bottom: 150px">
+        <div style="margin-bottom: 160px">
             <%@include file="header.jsp"%>
         </div>
-    
+
         <div class="ticket">
             <div class="d-flex justify-content-center mb-3">
                 <span class="badge badge-danger"><h6 class="mb-0">${ticket.seasonName}</h6></span>
@@ -102,8 +105,5 @@
             </div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>
