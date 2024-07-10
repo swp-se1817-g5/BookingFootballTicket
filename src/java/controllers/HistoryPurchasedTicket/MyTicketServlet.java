@@ -80,7 +80,7 @@ public class MyTicketServlet extends HttpServlet {
         User user = (User) session.getAttribute("currentUser");
         String email = user.getEmail();
         String type = request.getParameter("type");
-        type = type == null ? "match" : type;
+        type = (type == null || type.isEmpty()) ? "match" : type;
         int status = request.getParameter("status") == null ? 1 : Integer.parseInt(request.getParameter("status"));
         String startDate = request.getParameter("startDate");
         startDate = startDate == null ? "" : startDate;
