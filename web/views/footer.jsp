@@ -1,9 +1,3 @@
-<%-- 
-    Document   : footer
-    Created on : May 22, 2024, 11:25:37 PM
-    Author     : thuat
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="vi">
@@ -37,15 +31,15 @@
 <body>
     <footer class="footer">
         <div class="container">
-            <div class="row align-items-center">
-                <div class="col-md-7 text-center text-md-start">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 text-center text-md-start">
                     <h5>CÔNG TY CỔ PHẦN THỂ THAO MỸ ĐÌNH</h5>
                     <p>MST: 2902103060</p>
                     <p>Địa chỉ: Số 6, Đường Đào Tấn, Phường Cửa Nam, Thành phố Vinh, Nghệ An</p>
                     <p>Điện thoại: 0974.72.3581</p>
                     <p>Email: footballbookingticket.com</p>
                 </div>
-                <div class="col-md-5 text-center text-md-start">
+                <div class="col-lg-5 col-md-6 text-center text-md-start">
                     <h5>Liên kết</h5>
                     <ul class="list-unstyled">
                         <li><a href="#" class="text-white text-decoration-none">Đội hình</a></li>

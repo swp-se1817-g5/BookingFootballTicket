@@ -1,16 +1,15 @@
-<%-- 
-    Document   : myTicketDetail
-    Created on : Jul 7, 2024, 7:27:36 PM
-    Author     : admin
---%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Ticket Detail</title>
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>QR Code Reader from Image</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <style>
             body {
                 background-color: #f4f6f9;
@@ -20,26 +19,19 @@
                 max-width: 450px;
                 border: 1px solid #ccc;
                 border-radius: 15px;
-                padding: 20px;
+                padding: 0; /* Remove padding to allow full-width header */
                 margin: 40px auto;
                 background-color: #ffffff;
                 box-shadow: 0 4px 8px rgba(0,0,0,0.1);
                 transition: transform 0.2s;
+                overflow: hidden; /* Ensure full-width header is within the border-radius */
             }
             .ticket:hover {
                 transform: scale(1.02);
             }
-            .ticket-header {
-                text-align: center;
-                margin-bottom: 20px;
-                color: #333;
-            }
-            .ticket-header h4 {
-                margin: 0;
-                font-weight: bold;
-            }
+           
             .ticket-body {
-                margin-bottom: 20px;
+                padding: 20px; /* Add padding to body */
             }
             .ticket-body .row {
                 margin-bottom: 10px;
@@ -51,30 +43,42 @@
                 text-align: center;
             }
             .ticket-footer img {
-                width: 200px;
+                width: 250px;
                 height: auto;
-                margin-bottom: 10px;
             }
             .ticket-footer p {
                 color: #777;
             }
             .badge-danger {
-                background-color: #dc3545;
-                font-size: 16px;
+                width: 100%;
+                background-color: #e58000;
+                color: #fff;
+                padding: 10px;
+                box-sizing: border-box;
+                text-align: center;
+            }
+            .team-names {
+                font-size: 1.5em;
+                color: #7e0505; /* Change team name color */
+                font-weight: bold;
+            }
+            .highlight-price {
+                color: #30970a;
+                font-weight: bold;
             }
         </style>
     </head>
     <body>
-        <div style="margin-bottom: 150px">
+        <div style="margin-bottom: 160px">
             <%@include file="header.jsp"%>
         </div>
-    
+
         <div class="ticket">
-            <div class="d-flex justify-content-center mb-3">
-                <span class="badge badge-danger"><h6 class="mb-0">${ticket.seasonName}</h6></span>
+            <div class="badge-danger">
+                <h5><span>${ticket.seasonName}</span></h5>
             </div>    
-            <div class="ticket-header">
-                <h5><strong>${ticket.team1} - ${ticket.team2}</strong></5>
+            <div class="ticket-header text-center mt-2">
+                <h5 class="team-names">${ticket.team1} - ${ticket.team2}</h5>
             </div>
             <div class="ticket-body">
                 <div class="row">
@@ -90,11 +94,11 @@
                     <div class="col-6"><strong>Số lượng:</strong> ${ticket.quantity}</div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-6"><strong>Giá tiền:</strong> ${ticket.price}</div>
+                    <div class="col-6"><strong>Giá tiền:</strong><span class="highlight-price"> ${ticket.getPriceFormatter()}</span> <span style="color: #a89a00">VNĐ</span></div>
                 </div>
             </div>
             <div class="ticket-footer">
-                <div class="qr-code mb-3">
+                <div class="qr-code">
                     <img class="img-responsive" src="${requestScope.qrCode}" alt="QR Code">
                 </div>
                 <div><strong>Mã vé:</strong> ${ticket.qrCode}</div>
@@ -102,8 +106,5 @@
             </div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>

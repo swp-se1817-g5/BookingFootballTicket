@@ -69,7 +69,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link pt-3" href="#">Tin Tức</a>
+                                <a class="nav-link pt-3" href="publicListNews">Tin Tức</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link pt-3" href="./InstructionsForBuyTickets">Hướng dẫn mua vé</a>

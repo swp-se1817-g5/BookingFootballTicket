@@ -138,13 +138,14 @@ GO
 
 INSERT INTO TicketStatus (statusName) 
 VALUES 
-('Still validated'),
-('Expire');
+(N'Chưa quét'),
+(N'Đã quét'),
+(N'Hết hiệu lực');
 GO
 -- Insert values into HistoryPurchasedTicketMatchSeat table
 INSERT INTO HistoryPurchasedTicketMatchSeat (team1, team2, startTime, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy)
 VALUES 
-('Chelsea', 'Arsenal', '2024-12-12 15:00:00', 'Spring 2024', '1', 2, 'A', 'fans-side', 'user1@example.com', 'QRCode1', 100.00, 1, 'admin@example.com'),
+('Chelsea', 'Arsenal', '2024-7-9 18:06:00', 'Spring 2024', '1', 2, 'A', 'fans-side', 'user2@example.com', 'QRCode1', 100.00, 1, 'admin@example.com'),
 ('Manchester United', 'Tottenham Hotspur', '2024-12-13 16:00:00', 'Summer 2024', '2', 1, 'B', 'standard', 'user2@example.com', 'QRCode2', 80.00, 1, 'admin@example.com'),
 ('Liverpool', 'Manchester City', '2024-12-14 17:00:00', 'Spring 2024', '3', 4, 'C', 'vip-stand', 'user1@example.com', 'QRCode3', 200.00, 1, 'admin@example.com'),
 ('Leicester City', 'Everton', '2024-12-15 18:00:00', 'Summer 2024', '4', 3, 'D', 'on-roof', 'user2@example.com', 'QRCode4', 150.00, 1, 'admin@example.com'),
@@ -169,23 +170,17 @@ VALUES
 ('2024-12-20 23:00:00', '2024-12-21 01:00:00', 'Spring 2024', '9', 1, 'A', 'on-roof', 'user1@example.com', 'QRCode9', 80.00, 1, 'admin@example.com'),
 ('2024-12-21 00:00:00', '2024-12-21 02:00:00', 'Summer 2024', '10', 6, 'B', 'under-roof', 'user2@example.com', 'QRCode10', 300.00, 1, 'admin@example.com');
 
--- Insert values into HistoryPurchasedTicketSeasonSeat table
-/*INSERT INTO HistoryPurchasedTicketSeasonSeat (seasonSeatId, email, qrCode, price, quantity, [status], createdBy) VALUES
-(1, 'user1@example.com', 'QRCode1', 500000, 1, 1, 'admin@example.com'),
-(2, 'user2@example.com', 'QRCode2', 400000, 2, 1, 'admin@example.com');
-GO
-*/
 -- Insert values into News table
 
 INSERT INTO NewsStatus(statusName) VALUES
-('Rejected'),
-('Pending'),
-('Approved');
+(N'Từ chối'),
+(N'Chờ đợi'),
+(N'Chấp nhận');
 GO
 -- Insert values into News table
 INSERT INTO NewsState(stateName) VALUES
-('Hide'),
-('Show');
+(N'Ẩn'),
+(N'Hiện');
 GO
 -- Insert values into News table
 INSERT INTO News (title, content,conclusion,stateId,statusId, createdBy) VALUES

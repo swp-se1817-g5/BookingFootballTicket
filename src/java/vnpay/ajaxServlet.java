@@ -64,6 +64,7 @@ public class ajaxServlet extends HttpServlet {
         );
         
         DaoBooking.INSTANCE.addOrderTicket(booking);
+        MatchSeatDAO.INSTANCE.subtractAvailability(booking);
         
         int insertId = DaoBooking.INSTANCE.getNewId();
         if (insertId < 0) {

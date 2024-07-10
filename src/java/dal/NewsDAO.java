@@ -178,6 +178,9 @@ public class NewsDAO {
         }
         return list;
 }
+    public static void main(String[] args) {
+        System.out.println(NewsDAO.getInstance().getlistNews(""));
+    }
     public ArrayList<News> filterPostOn(String postOn) {
          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         LocalDateTime localDateTime = LocalDateTime.parse(postOn+"T00:00", formatter);
@@ -335,9 +338,9 @@ public class NewsDAO {
         }
         return null;
     }
-    public static void main(String[] args) {
-        System.out.println(NewsDAO.getInstance().getNewsByNewsId(5));
-    }
+//    public static void main(String[] args) {
+//        System.out.println(NewsDAO.getInstance().getNewsByNewsId(5));
+//    }
 
     public ArrayList<NewsState> getListState() {
         ArrayList<NewsState> list = new ArrayList<>();

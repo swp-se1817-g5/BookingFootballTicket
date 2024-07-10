@@ -170,9 +170,9 @@
                 </div>
             </div>
             <div class="con_img">
-                <img src="images/banner/b7834a87d1f84cf4aab912a3e48dde7f.jpg" alt="Ảnh của bạn">
+                <img src="images/banner/bannerDoi.jpg" alt="">
                 <div class="centered">
-                    <h2>Nội dung chữ giữa ảnh</h2>
+                    <h2>Tuyển tập các đội hình "Mạnh mẽ nhất"</h2>
                 </div>
             </div>
 
@@ -210,21 +210,21 @@
                     <h2 class="mb-3">Các Mùa Giải</h2>
                 </div>
                 <div class="row">
-                    <c:forEach items="${getAllseason}" var="s">
+                    <c:forEach items="${getAllseason}" var="s" begin="0" end="3">
                         <div class="col-md-3 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
                                     <h5 class="card-title">${s.seasonName}</h5>
                                     <p class="card-text">Thời gian bắt đầu : ${s.startDate}</p>
                                     <p class="card-text">Thời gian kết thúc : ${s.endDate}</p>
-                                    <a href="#" class="btn btn-primary">Xem Thêm</a>
+                                    <a href="publicListMatch?seasonId=${s.seasonId}" class="btn btn-primary">Xem Các Trận Đấu<i class="bi bi-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
                 <div class="text-center mb-5">
-                    <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                    <a href="publicListTournment" class="btn btn-outline-secondary">Xem Thêm</a>
                 </div>
             </div>
             <div class="con_img">

@@ -209,6 +209,117 @@ public class SeasonDAO {
         return n;
     }
 
+    public ArrayList<Season> getFilterofTournment(int offset, int noOfRecords, String search, Date startDate, Date endDate) {
+        ArrayList<Season> seasons = new ArrayList<>();
+        StringBuilder queryBuilder = new StringBuilder("SELECT * FROM [dbo].[Season] WHERE [isDeleted] = 0");
+
+        // Add search by seasonName (case insensitive)
+        if (search != null && !search.isEmpty()) {
+            queryBuilder.append(" AND LOWER([seasonName]) LIKE ?");
+        }
+
+        // Add search by startDate and endDate
+        if (startDate != null) {
+            queryBuilder.append(" AND [startDate] >= ?");
+        }
+        if (endDate != null) {
+            queryBuilder.append(" AND [endDate] <= ?");
+        }
+
+        queryBuilder.append(" ORDER BY seasonId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
+
+        String query = queryBuilder.toString();
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            int parameterIndex = 1;
+
+            // Set search by seasonName
+            if (search != null && !search.isEmpty()) {
+                ps.setString(parameterIndex++, "%" + search.toLowerCase() + "%");
+            }
+
+            // Set search by startDate
+            if (startDate != null) {
+                ps.setDate(parameterIndex++, startDate);
+            }
+
+            // Set search by endDate
+            if (endDate != null) {
+                ps.setDate(parameterIndex++, endDate);
+            }
+
+            ps.setInt(parameterIndex++, offset);
+            ps.setInt(parameterIndex++, noOfRecords);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Season s = new Season();
+                    s.setSeasonId(rs.getInt(1));
+                    s.setSeasonName(rs.getString(2));
+                    s.setStartDate(rs.getDate(3));
+                    s.setEndDate(rs.getDate(4));
+                    s.setCreatedBy(rs.getString(5));
+                    s.setCreatedDate(rs.getTimestamp(6).toLocalDateTime());
+                    s.setUpdatedBy(rs.getString(7));
+                    Timestamp updatedTimestamp = rs.getTimestamp(8);
+                    s.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+                    s.setIsDeleted(rs.getBoolean(9));
+                    seasons.add(s);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seasons;
+    }
+
+    public int getNoOfRecordsWithConditions(String search, Date startDate, Date endDate) {
+        StringBuilder queryBuilder = new StringBuilder("SELECT COUNT(*) FROM [Season] WHERE [isDeleted] = 0");
+
+        // Add search by seasonName (case insensitive)
+        if (search != null && !search.isEmpty()) {
+            queryBuilder.append(" AND LOWER([seasonName]) LIKE ?");
+        }
+
+        // Add search by startDate and endDate
+        if (startDate != null) {
+            queryBuilder.append(" AND [startDate] >= ?");
+        }
+        if (endDate != null) {
+            queryBuilder.append(" AND [endDate] <= ?");
+        }
+
+        String query = queryBuilder.toString();
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            int parameterIndex = 1;
+
+            // Set search by seasonName
+            if (search != null && !search.isEmpty()) {
+                ps.setString(parameterIndex++, "%" + search.toLowerCase() + "%");
+            }
+
+            // Set search by startDate
+            if (startDate != null) {
+                ps.setDate(parameterIndex++, startDate);
+            }
+
+            // Set search by endDate
+            if (endDate != null) {
+                ps.setDate(parameterIndex++, endDate);
+            }
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static void main(String[] args) {
 //        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons(0, 5);
 //        for (Season season : seasons) {
