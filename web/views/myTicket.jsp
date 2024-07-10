@@ -21,12 +21,16 @@
                 max-width: 600px;
                 position: relative; /* Added for watermark positioning */
             }
+            .card:hover {
+                transform: scale(1.05);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            }
             .ticket-card:hover {
                 background-color: #f8f9fa;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
             .ticket-header {
-                background-color: #e58000;
+                background-color: #07509F;
                 color: #fff;
                 padding: 10px;
                 text-align: center;
@@ -58,6 +62,9 @@
                 padding: 15px;
                 border-radius: 10px;
                 margin-bottom: 20px;
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             }
             .pagination {
                 margin-top: 20px;
@@ -89,7 +96,7 @@
             <div class="row">
                 <!-- Filter Section -->
                 <div class="col-lg-3 mb-4">
-                    <div class="filter-section bg-light p-3 rounded">
+                    <div class="filter-section p-3 rounded">
                         <div class="form-group">
                             <label for="ticketType">Loại vé</label>
                             <select id="ticketType" class="form-control">
@@ -101,7 +108,7 @@
                             <label for="ticketStatus">Trạng thái</label>
                             <select id="ticketStatus" class="form-control">
                                 <c:forEach items="${requestScope.ticketStatuses}" var="s">
-                                           <option value="${s.statusId}">${s.statusName}</option>
+                                    <option value="${s.statusId}">${s.statusName}</option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -123,23 +130,23 @@
                         <form style="display: none" id="${t.ticketId}" action="myTicket" method="post">
                             <input name="ticketId" readonly value="${t.ticketId}">
                         </form>
-                            <div class="card mb-3 ticket-card" <c:if test="${t.statusId.statusId == 1}">onclick="viewDetail('${t.ticketId}')"</c:if>>
-                            <div class="ticket-header">
-                                <h5>${t.seasonName}</h5>
+                        <div class="card mb-3 ticket-card" <c:if test="${t.statusId.statusId == 1}">onclick="viewDetail('${t.ticketId}')"</c:if>>
+                                <div class="ticket-header">
+                                    <h5>${t.seasonName}</h5>
                             </div>
                             <div class="card-body ticket-body">
-                                
+
                                 <div class="d-flex justify-content-center mb-2">
                                     <h5 class="card-title team-names">${t.team1} - ${t.team2}</h5>
                                 </div>
-                                
+
                                 <div class="d-flex justify-content-between flex-wrap">
                                     <p class="card-text"><strong>Thời gian:</strong> ${t.getStartTimeConverted()}</p>
                                     <p class="card-text"><strong>Địa điểm:</strong> SVĐ Mỹ Đình</p>
                                 </div>
-                                    <c:if test="${t.statusId.statusId == 2 || t.statusId.statusId == 3}">
-                                          <div class="watermark">${t.statusId.statusId == 2 ? "Đã sử dụng" : "Hết hiệu lực"}</div> <!-- Added watermark -->
-                                    </c:if>
+                                <c:if test="${t.statusId.statusId == 2 || t.statusId.statusId == 3}">
+                                    <div class="watermark">${t.statusId.statusId == 2 ? "Đã sử dụng" : "Hết hiệu lực"}</div> <!-- Added watermark -->
+                                </c:if>
                                 <div class="d-flex justify-content-between flex-wrap">
                                     <p class="card-text"><strong>Khán đài:</strong> ${t.standName}</p>
                                     <p class="card-text"><strong>Khu vực:</strong> ${t.seatName}</p>
@@ -168,51 +175,51 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-            $(document).ready(function () {
-                function loadPage(pageIndex, type, startDate, endDate, status) {
-                    $.ajax({
-                        url: "myTicket",
-                        type: "GET",
-                        data: {
-                            pageIndex: pageIndex,
-                            type: type,
-                            startDate: startDate,
-                            endDate: endDate,
-                            status: status
-                        },
-                        success: function (data) {
-                            $("#tickets").html($(data).find('#tickets').html());
-                            $("#pagination").html($(data).find('#pagination').html());
-                        }
-                    });
-                }
+                            $(document).ready(function () {
+                                function loadPage(pageIndex, type, startDate, endDate, status) {
+                                    $.ajax({
+                                        url: "myTicket",
+                                        type: "GET",
+                                        data: {
+                                            pageIndex: pageIndex,
+                                            type: type,
+                                            startDate: startDate,
+                                            endDate: endDate,
+                                            status: status
+                                        },
+                                        success: function (data) {
+                                            $("#tickets").html($(data).find('#tickets').html());
+                                            $("#pagination").html($(data).find('#pagination').html());
+                                        }
+                                    });
+                                }
 
-                $(document).on("click", ".page-link", function (e) {
-                    e.preventDefault();
-                    var pageIndex = $(this).attr("data-page");
-                    var type = $('#ticketType').val();
-                    var status = $('#ticketStatus').val();
-                    var startDate = $('#startDate').val();
-                    var endDate = $('#endDate').val();
-                    console.log(status);
-                    loadPage(pageIndex, type, startDate, endDate, status);
-                });
+                                $(document).on("click", ".page-link", function (e) {
+                                    e.preventDefault();
+                                    var pageIndex = $(this).attr("data-page");
+                                    var type = $('#ticketType').val();
+                                    var status = $('#ticketStatus').val();
+                                    var startDate = $('#startDate').val();
+                                    var endDate = $('#endDate').val();
+                                    console.log(status);
+                                    loadPage(pageIndex, type, startDate, endDate, status);
+                                });
 
-                $("#ticketType, #ticketStatus, #startDate, #endDate").on("change", function () {
-                    var type = $('#ticketType').val();
-                    var startDate = $('#startDate').val();
-                    var endDate = $('#endDate').val();
-                    var status = $('#ticketStatus').val();
-                    loadPage(1, type, startDate, endDate, status);
-                });
-                // Initial load
-                loadPage(1, 'match', '', '');
-            });
+                                $("#ticketType, #ticketStatus, #startDate, #endDate").on("change", function () {
+                                    var type = $('#ticketType').val();
+                                    var startDate = $('#startDate').val();
+                                    var endDate = $('#endDate').val();
+                                    var status = $('#ticketStatus').val();
+                                    loadPage(1, type, startDate, endDate, status);
+                                });
+                                // Initial load
+                                loadPage(1, 'match', '', '');
+                            });
 
-            function viewDetail(ticketId) {
-                
-                document.getElementById(ticketId).submit();
-            }
+                            function viewDetail(ticketId) {
+
+                                document.getElementById(ticketId).submit();
+                            }
         </script>
     </body>
 </html>
