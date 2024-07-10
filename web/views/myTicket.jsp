@@ -10,6 +10,7 @@
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         <style>
             .ticket-card {
                 cursor: pointer;
@@ -120,6 +121,7 @@
                             <label for="endDate">Đến</label>
                             <input type="date" id="endDate" class="form-control">
                         </div>
+                        <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                     </div>
                 </div>
 
@@ -175,51 +177,65 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-                            $(document).ready(function () {
-                                function loadPage(pageIndex, type, startDate, endDate, status) {
-                                    $.ajax({
-                                        url: "myTicket",
-                                        type: "GET",
-                                        data: {
-                                            pageIndex: pageIndex,
-                                            type: type,
-                                            startDate: startDate,
-                                            endDate: endDate,
-                                            status: status
-                                        },
-                                        success: function (data) {
-                                            $("#tickets").html($(data).find('#tickets').html());
-                                            $("#pagination").html($(data).find('#pagination').html());
-                                        }
-                                    });
-                                }
+                            document.getElementById('resetBtn').addEventListener('click', function () {
 
-                                $(document).on("click", ".page-link", function (e) {
-                                    e.preventDefault();
-                                    var pageIndex = $(this).attr("data-page");
-                                    var type = $('#ticketType').val();
-                                    var status = $('#ticketStatus').val();
-                                    var startDate = $('#startDate').val();
-                                    var endDate = $('#endDate').val();
-                                    console.log(status);
-                                    loadPage(pageIndex, type, startDate, endDate, status);
-                                });
-
-                                $("#ticketType, #ticketStatus, #startDate, #endDate").on("change", function () {
-                                    var type = $('#ticketType').val();
-                                    var startDate = $('#startDate').val();
-                                    var endDate = $('#endDate').val();
-                                    var status = $('#ticketStatus').val();
-                                    loadPage(1, type, startDate, endDate, status);
-                                });
-                                // Initial load
-                                loadPage(1, 'match', '', '');
                             });
+        </script>
+        <script>
+            $(document).ready(function () {
+                function loadPage(pageIndex, type, startDate, endDate, status) {
+                    $.ajax({
+                        url: "myTicket",
+                        type: "GET",
+                        data: {
+                            pageIndex: pageIndex,
+                            type: type,
+                            startDate: startDate,
+                            endDate: endDate,
+                            status: status
+                        },
+                        success: function (data) {
+                            $("#tickets").html($(data).find('#tickets').html());
+                            $("#pagination").html($(data).find('#pagination').html());
+                        }
+                    });
+                }
 
-                            function viewDetail(ticketId) {
+                $(document).on("click", ".page-link", function (e) {
+                    e.preventDefault();
+                    var pageIndex = $(this).attr("data-page");
+                    var type = $('#ticketType').val();
+                    var status = $('#ticketStatus').val();
+                    var startDate = $('#startDate').val();
+                    var endDate = $('#endDate').val();
+                    console.log(status);
+                    loadPage(pageIndex, type, startDate, endDate, status);
+                });
 
-                                document.getElementById(ticketId).submit();
-                            }
+                $("#ticketType, #ticketStatus, #startDate, #endDate").on("change", function () {
+                    var type = $('#ticketType').val();
+                    var startDate = $('#startDate').val();
+                    var endDate = $('#endDate').val();
+                    var status = $('#ticketStatus').val();
+                    loadPage(1, type, startDate, endDate, status);
+                });
+
+                $("#resetBtn").on("click", function () {
+                    document.getElementById('ticketType').selectedIndex = 0;
+                    document.getElementById('ticketStatus').selectedIndex = 0;
+                    document.getElementById('startDate').value = '';
+                    document.getElementById('endDate').value = '';
+                    loadPage(1, '', '', ''); // Gọi loadPage để tải lại dữ liệu
+                });
+
+                // Initial load
+                loadPage(1, '', '', '');
+            });
+
+            function viewDetail(ticketId) {
+
+                document.getElementById(ticketId).submit();
+            }
         </script>
     </body>
 </html>
