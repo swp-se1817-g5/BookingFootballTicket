@@ -6,15 +6,48 @@
         <!-- Include necessary meta tags, title, and CSS files here -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <style>
-            .nav-item.dropdown:hover .dropdown-menu {
-                display: block;
-                margin-top: 0; /* optional: adjust margin top to align dropdown menu correctly */
+            .marquee-container {
+                width: 50%; /* Adjust the width to constrain the animation area */
+                margin: 0 auto; /* Center the container */
+                overflow: hidden;
+                background-color: white; /* Background color to match the theme */
+                padding: 10px; /* Padding for better visibility */
+            }
+
+            .marquee {
+                display: inline-block;
+                white-space: nowrap;
+                color: #07509F; /* Set the text color */
+                font-size: 24px; /* Increase font size */
+                font-weight: bold; /* Make text bold */
+                animation: marquee 20s linear infinite; /* Slow down the animation */
+            }
+
+            .marquee img {
+                vertical-align: middle; /* Align the icons with the text */
+                margin: 0 10px; /* Space between the icons and the text */
+            }
+
+            @keyframes marquee {
+                from {
+                    transform: translateX(100%);
+                }
+                to {
+                    transform: translateX(-100%);
+                }
             }
         </style>
     </head>
     <body>
         <div class="fixed-top">
-            <div class="text-center bg-dark text-white p-3">Trang web bán vé đá bóng số một trực tuyến của sân vận động Mỹ Đình</div>
+            <div class="marquee-container text-center">
+                <div class="marquee">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/320px-Flag_of_Vietnam.svg.png" alt="Vietnam Flag" width="30" height="20">
+                    Trang WEB bán vé đá bóng số một trực tuyến của sân vận động Mỹ Đình
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/320px-Flag_of_Vietnam.svg.png" alt="Vietnam Flag" width="30" height="20">
+                </div>
+            </div>
+
             <nav class="navbar navbar-expand-md navbar-light bg-light container-fluid border-bottom">
                 <div class="container">
                     <!-- Logo -->
