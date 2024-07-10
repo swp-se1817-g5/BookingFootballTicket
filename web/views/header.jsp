@@ -4,6 +4,13 @@
 <html lang="en">
     <head>
         <!-- Include necessary meta tags, title, and CSS files here -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .nav-item.dropdown:hover .dropdown-menu {
+                display: block;
+                margin-top: 0; /* optional: adjust margin top to align dropdown menu correctly */
+            }
+        </style>
     </head>
     <body>
         <div class="fixed-top">
@@ -26,25 +33,25 @@
                     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle pt-3" href="#" id="tournamentsDropdown" role="button"
+                                <a class="nav-link dropdown-toggle pt-3" href="publicListTournment" id="tournamentsDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Giải đấu
+                                    Mùa giải
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="tournamentsDropdown">
-                                    <a class="dropdown-item" href="#">Giải đấu 1</a>
-                                    <a class="dropdown-item" href="#">Giải đấu 2</a>
-                                    <a class="dropdown-item" href="#">Giải đấu 3</a>
+                                    <c:forEach items="${sessionScope.getAllseason}" var="s">
+                                        <a class="dropdown-item" href="publicListMatch?seasonId=${s.seasonId}">${s.seasonName}</a>
+                                    </c:forEach>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle pt-3" href="#" id="teamsDropdown" role="button"
+                                <a class="nav-link dropdown-toggle pt-3" href="" id="teamsDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Đội bóng
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="teamsDropdown">
-                                    <a class="dropdown-item" href="#">Team 1</a>
-                                    <a class="dropdown-item" href="#">Team 2</a>
-                                    <a class="dropdown-item" href="#">Team 3</a>
+                                    <c:forEach items="${sessionScope.getFootballClubs}" var="fb">
+                                        <a class="dropdown-item" href="publicFootballClub?fcId=${fb.clubId}">${fb.clubName}</a>
+                                    </c:forEach>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -53,9 +60,9 @@
                                     Trận đấu
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="matchesDropdown">
-                                    <a class="dropdown-item" href="#">Match 1</a>
-                                    <a class="dropdown-item" href="#">Match 2</a>
-                                    <a class="dropdown-item" href="#">Match 3</a>
+                                    <c:forEach items="${sessionScope.getListMatches}" var="lm">
+                                        <a class="dropdown-item" href="matchDetail?matchId=${lm.matchId}">${lm.team1.clubName} - ${lm.team2.clubName}</a>
+                                    </c:forEach>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -110,5 +117,7 @@
                 </div>
             </nav>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>

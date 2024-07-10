@@ -104,7 +104,6 @@ public class NewsDAO {
 //    public static void main(String[] args) {
 //        System.out.println(NewsDAO.getInstance().getlistNews());
 //    }
-
     //Search by 
     public ArrayList<News> getlistNews(String value) {
         ArrayList<News> list = new ArrayList<>();
@@ -141,6 +140,7 @@ public class NewsDAO {
         }
         return list;
     }
+
     //Search by 
     public ArrayList<News> getlistNewsInHomePage(String value) {
         ArrayList<News> list = new ArrayList<>();
@@ -177,23 +177,46 @@ public class NewsDAO {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
-}
-    public static void main(String[] args) {
-        System.out.println(NewsDAO.getInstance().getlistNews(""));
     }
-    public ArrayList<News> filterPostOn(String postOn) {
-         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        LocalDateTime localDateTime = LocalDateTime.parse(postOn+"T00:00", formatter);
-        Timestamp timestamp = Timestamp.valueOf(localDateTime);
+
+    public ArrayList<News> filterPostOn(String startDateValue, String endDateValue, String valueSearch) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
         ArrayList<News> list = new ArrayList<>();
-        String SQL_QUERY_SEARCH_NEWS = "SELECT news.*, newsState.stateName, newsStatus.statusName "
+        StringBuilder sql_builder = new StringBuilder("SELECT news.*, newsState.stateName, newsStatus.statusName "
                 + "FROM News news "
                 + "JOIN NewsStatus newsStatus ON newsStatus.statusId = news.statusId "
                 + "JOIN NewsState newsState ON newsState.stateId = news.stateId "
-                + "WHERE postOn >= ? AND news.isDeleted = 0 AND news.stateId = '2'";
+                + "WHERE news.isDeleted = 0 AND news.stateId = '2'");
+
+        if (startDateValue != null && !startDateValue.isBlank()) {
+            sql_builder.append(" AND postOn >= ?"); // Thêm khoảng trắng ở đầu chuỗi điều kiện
+        }
+        if (endDateValue != null && !endDateValue.isBlank()) {
+            sql_builder.append(" AND postOn <= ?"); // Thêm khoảng trắng ở đầu chuỗi điều kiện
+        }
+        if (valueSearch != null && !valueSearch.isBlank()) {
+            sql_builder.append(" AND (title LIKE ? OR content LIKE ?)"); // Thêm khoảng trắng ở đầu chuỗi điều kiện
+        }
+        String sql = sql_builder.toString();
         try {
-            ps = connect.prepareStatement(SQL_QUERY_SEARCH_NEWS);
-            ps.setTimestamp(1, timestamp);
+            ps = connect.prepareStatement(sql);
+
+            int parameterIndex = 1;
+            if (startDateValue != null && !startDateValue.isBlank()) {
+                LocalDateTime localDateTime_startDate = LocalDateTime.parse(startDateValue + "T00:00", formatter);
+                Timestamp startTime = Timestamp.valueOf(localDateTime_startDate);
+                ps.setTimestamp(parameterIndex++, startTime);
+            }
+            if (endDateValue != null && !endDateValue.isBlank()) {
+                LocalDateTime localDateTime_endDate = LocalDateTime.parse(endDateValue + "T00:00", formatter);
+                Timestamp endTime = Timestamp.valueOf(localDateTime_endDate);
+                ps.setTimestamp(parameterIndex++, endTime);
+            }
+            if (valueSearch != null && !valueSearch.isBlank()) {
+                String searchPattern = "%" + valueSearch + "%";
+                ps.setString(parameterIndex++, searchPattern);
+                ps.setString(parameterIndex++, searchPattern);
+            }
             rs = ps.executeQuery();
             while (rs.next()) {
                 News news = new News();
@@ -219,9 +242,9 @@ public class NewsDAO {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
-}
-//  Create a news
+    }
 
+//  Create a news
     public boolean createNews(News news) {
         boolean n = false;
         String sql = "INSERT INTO [News] ([title],[content],[image],[conclusion],[statusId],[stateId],[createdBy]) VALUES(?,?,?,?,?,?,?)";

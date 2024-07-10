@@ -15,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -60,11 +61,12 @@ public class ManageHomePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
-        request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
-        request.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
-        request.setAttribute("getListNews", NewsDAO.getInstance().getlistNewsInHomePage(""));
+        HttpSession session = request.getSession();
+        session.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
+        session.setAttribute("getFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
+        session.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
+        session.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
+        session.setAttribute("getListNews", NewsDAO.getInstance().getlistNewsInHomePage(""));
         request.getRequestDispatcher("views/homePage.jsp").forward(request, response);
     }
 

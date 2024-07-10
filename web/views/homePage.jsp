@@ -56,8 +56,8 @@
                 margin-bottom: 1rem;
             }
             .team-logos img {
-                width: 50px;
-                height: 50px;
+                width: 100px;
+                height: 100px;
                 margin: 0 10px;
             }
             .book-now-btn {
@@ -130,7 +130,8 @@
         </style>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
+
+        <div style="margin: 120px"><jsp:include page="header.jsp" /></div>
         <div>
             <img class="img-responsive img-fluid" src="images/banner/svd.jpg" alt="alt"/>
         </div>
@@ -141,7 +142,7 @@
                     <h2 class="mb-3">Trận Đấu Sắp Diễn Ra</h2>
                 </div>
                 <div class="row">
-                    <c:forEach items="${getListMatches}" begin="0" end="2" var="lm" varStatus="lmStatus">
+                    <c:forEach items="${sessionScope.getListMatches}" begin="0" end="2" var="lm" varStatus="lmStatus">
                         <c:set var="m" value="${getMatches[lmStatus.index]}" />
                         <c:set var="s" value="${getAllseason[lmStatus.index]}" />
                         <div class="col-md-4">
@@ -149,15 +150,15 @@
                                 <div class="card-header">
                                 </div>
                                 <div class="card-body">
-                                    <div class="team-logos">
-                                        <img src="${lm.team1.img}" alt="${lm.team1.clubName}">
+                                    <div class="team-logos justify-content-around">
+                                        <img style=""  src="${lm.team1.img}" alt="${lm.team1.clubName}">
                                         <span>VS</span>
                                         <img src="${lm.team2.img}" alt="${lm.team2.clubName}">
                                     </div>
                                     <h5 class="card-title">Europa League Final Tickets</h5>
                                     <p class="card-text">Football Club A vs Football Club B</p>
                                     <p class="card-text">Sân vận động Mỹ Đình</p>
-                                    <input type="datetime-local" value="${m.time}" readonly style="border: none; background: none">
+                                    <input type="datetime-local" value="${m.time}" readonly style="border: none; background: none; text-align: center">
                                     <p class="card-text">Europa League</p>
                                     <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Xem Vé</a>
                                 </div>
@@ -182,10 +183,10 @@
                     <h2 class="mb-3">Các Đội Bóng Nổi Bật</h2>
                 </div>
                 <div class="row">
-                    <c:forEach items="${getFootballClubs}" var="fb" end="3">
+                    <c:forEach items="${sessionScope.getFootballClubs}" var="fb" end="3">
                         <div class="col-md-3 col-sm-6 mb-4">
                             <div class="card">
-                                <div class="text-center mt-1"><img src="${fb.img}" style="width: 65%; height: auto;" alt="Team"></div>
+                                <div class="text-center mt-1"><img src="${fb.img}" style="width: 40%; height: auto;" alt="Team"></div>
                                 <div class="card-body">
                                     <h5 class="card-title">${fb.clubName}</h5>
                                     <a href="publicFootballClub?fcId=${fb.clubId}" class="btn btn-primary">Chi tiết</a>
@@ -199,7 +200,7 @@
                 </div>
             </div>
             <div class="con_img">
-                <img src="images/banner/bannerMua.jpg" alt="Ảnh của bạn">
+                <img src="images/banner/bannerMuaGiai.jpg" alt="Ảnh của bạn">
                 <div class="centered">
                     <h2>Cùng đón chờ một mùa giải mới thật bùng nổ và đầy hấp dẫn</h2>
                 </div>
@@ -210,7 +211,7 @@
                     <h2 class="mb-3">Các Mùa Giải</h2>
                 </div>
                 <div class="row">
-                    <c:forEach items="${getAllseason}" var="s" begin="0" end="3">
+                    <c:forEach items="${sessionScope.getAllseason}" var="s" begin="0" end="3">
                         <div class="col-md-3 col-sm-6 mb-4">
                             <div class="card">
                                 <div class="card-body">
@@ -228,9 +229,9 @@
                 </div>
             </div>
             <div class="con_img">
-                <img src="images/banner/bannerTinTuc.jpg" alt="Ảnh của bạn">
+                <img src="images/banner/bannerTinTucMoi.jpg" alt="Ảnh của bạn">
                 <div class="centered">
-                    <h2>Tin tức hấp dẫn về các trận bóng đang chờ đón bạn</h2>
+                    <h2>Tin tức về các trận bóng hấp dẫn đang chờ đón bạn</h2>
                 </div>
             </div>
             <div class="container mt-5">
@@ -239,9 +240,9 @@
                     <h2 class="mb-3">Tin Tức Mới Nhất</h2>
                 </div>
                 <div class="row">
-                    <c:forEach items="${getListNews}" var="n" varStatus="status" end="7">
+                    <c:forEach items="${sessionScope.getListNews}" var="n" varStatus="status" end="7">
                         <div class="col-md-4 mb-4">
-                            <a href="publicNewsDetails?newsId=${n.newsId}">
+                            <a href="publicNewsDetails?newsId=${n.newsId}" class="text-decoration-none">
                                 <div class="card">
                                     <img style="width: 414px" height="auto" src="${n.image}" class="card-img-top">
                                     <div class="card-body">

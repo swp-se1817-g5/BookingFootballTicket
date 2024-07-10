@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageNews;
+package controllers.common_access;
 
 import dal.NewsDAO;
 import java.io.IOException;
@@ -12,15 +12,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 /**
  *
  * @author nguye
  */
-@WebServlet(name = "publicListNewsServlet", urlPatterns = {"/publicListNews"})
-public class publicListNewsServlet extends HttpServlet {
+@WebServlet(name = "publicNewsDetailsServlet", urlPatterns = {"/publicNewsDetails"})
+public class publicNewsDetailsServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +37,10 @@ public class publicListNewsServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet publicListNewsServlet</title>");
+            out.println("<title>Servlet publicNewsDetailsServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet publicListNewsServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet publicNewsDetailsServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,21 +58,16 @@ public class publicListNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String valueSearch;
-        String valueFilterPostOn;
+        String newsId_raw;
         try {
-            valueSearch = request.getParameter("valueSearch");
-            valueSearch = valueSearch == null ? "" : valueSearch.trim();
-            valueFilterPostOn = request.getParameter("valueFilterPostOn");
-            if (valueFilterPostOn != null) {
-                request.setAttribute("valuePostOn", valueFilterPostOn);
-                request.setAttribute("getListNews", NewsDAO.getInstance().filterPostOn(valueFilterPostOn));
-            } else {
-                request.setAttribute("valueSearch", valueSearch);
-                request.setAttribute("getListNews", NewsDAO.getInstance().getlistNewsInHomePage(valueSearch));
+            newsId_raw = request.getParameter("newsId");
+            if (newsId_raw != null) {
+                int newsId = Integer.parseInt(newsId_raw);
+                request.setAttribute("newsDetails", NewsDAO.getInstance().getNewsByNewsId(newsId));
+                request.setAttribute("getListNews", NewsDAO.getInstance().getlistNewsInHomePage(""));
+                request.getRequestDispatcher("views/publicNewsDetails.jsp").forward(request, response);
             }
-            request.getRequestDispatcher("views/publicListNews.jsp").forward(request, response);
-        } catch (ServletException | IOException e) {
+        } catch (Exception e) {
 
         }
     }

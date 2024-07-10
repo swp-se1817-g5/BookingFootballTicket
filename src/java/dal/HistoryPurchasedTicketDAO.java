@@ -360,23 +360,19 @@ public class HistoryPurchasedTicketDAO {
         return count;
     }
 
-    public Boolean updateListHistoryPurchasedTicketMatchSeat(String qrCode) {
+    public Boolean updateListHistoryPurchasedTicketMatchSeat(String qrCode, int statusId) {
         boolean m = false;
         String sql = "UPDATE [HistoryPurchasedTicketMatchSeat]"
                 + "   SET [statusId] = ?"
                 + " WHERE qrCode = ?";
         try {
             ps = connect.prepareStatement(sql);
-            ps.setInt(1, 2);
+            ps.setInt(1, statusId);
             ps.setString(2, qrCode);
             m = ps.executeUpdate() > 0;
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return m;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(HistoryPurchasedTicketDAO.getInstance().updateListHistoryPurchasedTicketMatchSeat("QRCode1"));
     }
 }
