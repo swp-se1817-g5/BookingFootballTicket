@@ -263,7 +263,7 @@ Author     : duong
                                         <th>#</th>
                                         <th>
                                             <select class="form-select border-0" id="seasonSelect">
-                                                <option selected value="All">All Season</option>
+                                                <option selected value="All">Mùa giải</option>
                                                 <c:forEach items="${getListSeason}" var="season">
                                                     <option value="${season.seasonName}">${season.seasonName}</option>
                                                 </c:forEach>
@@ -271,7 +271,7 @@ Author     : duong
                                         </th>
                                         <th>
                                             <select class="form-select border-0" id="standSelect">
-                                                <option selected value="All">All Stand</option>
+                                                <option selected value="All">Khán đài</option>
                                                 <c:forEach items="${getListStand}" var="stand">
                                                     <option value="${stand.standName}">${stand.standName}</option>
                                                 </c:forEach>
@@ -279,28 +279,28 @@ Author     : duong
                                         </th>
                                         <th>
                                             <select class="form-select border-0" id="seatClassSelect">
-                                                <option selected value="All">All Seat Class</option>
+                                                <option selected value="All">Hạng ghế</option>
                                                 <c:forEach items="${getListSeatClass}" var="seatClass">
                                                     <option value="${seatClass.seatClassName}">${seatClass.seatClassName}</option>
                                                 </c:forEach>
                                             </select>
                                         </th>
                                         <th>
-                                            Seat Area
+                                            Khu vực ngồi
                                             <i class="fa fa-sort" id="sortSeat" data-column="4" data-order="asc"></i>
                                         </th>
                                         <th>
-                                            Quantity
+                                            Số lượng
                                             <i class="fa fa-sort" id="sortQuantity" data-column="5" data-order="asc"></i>
                                         </th>
                                         <th>
-                                            Price
+                                            Giá tiền(VNĐ)
                                             <i class="fa fa-sort" id="sortPrice" data-column="6" data-order="asc"></i>
                                         </th>
 
                                         <th>
                                             <select class="form-select border-0" id="statusSelect">
-                                                <option selected value="All">Status</option>
+                                                <option selected value="All">Trạng thái</option>
                                                 <c:forEach items="${getListStatus}" var="status">
                                                     <option value="${status.statusName}">${status.statusName}</option>
                                                 </c:forEach>
@@ -314,7 +314,7 @@ Author     : duong
                                                 </c:forEach>
                                             </select>
                                         </th>
-                                        <th>Action</th>
+                                        <th>Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody>
