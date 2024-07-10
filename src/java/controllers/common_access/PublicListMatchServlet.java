@@ -6,6 +6,7 @@ package controllers.common_access;
 
 import dal.FootballClubDAO;
 import dal.MatchDAO;
+import dal.MatchSeatDAO;
 import dal.SeasonDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -74,28 +75,39 @@ public class PublicListMatchServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int pageNumber = 1; // Default page number
-        int pageSize = 20; // Default page size
+        int pageSize = 6; // Default page size
+
+        // Get parameters and handle null values
+        String seasonIdParam = request.getParameter("seasonId");
+        String matchStatusIdParam = request.getParameter("matchStatusId");
+        String dateFromParam = request.getParameter("dateFrom");
+        String dateToParam = request.getParameter("dateTo");
+        String searchInputParam = request.getParameter("searchInput");
+        String typeIdParam = request.getParameter("typeId");
+
+        // Use empty string if the parameter is null, otherwise trim the value
+        String dateFrom = dateFromParam != null ? dateFromParam.trim() : "";
+        String dateTo = dateToParam != null ? dateToParam.trim() : "";
+        String searchInput = searchInputParam != null ? searchInputParam.trim() : "";
+        String seasonId = seasonIdParam != null ? seasonIdParam : "";
+        String matchStatusId = matchStatusIdParam != null ? matchStatusIdParam : "";
+        String typeId = typeIdParam != null ? typeIdParam : "";
 
         // Parse page number and page size from request parameters if provided
         String pageParam = request.getParameter("page");
-        String sizeParam = request.getParameter("size");
 
         if (pageParam != null && !pageParam.isEmpty()) {
             pageNumber = Integer.parseInt(pageParam);
         }
-        if (sizeParam != null && !sizeParam.isEmpty()) {
-            pageSize = Integer.parseInt(sizeParam);
-        }
-        String seasonId = request.getParameter("seasonId");
-        if(seasonId != null && !seasonId.isEmpty()){
+        if (!seasonId.isEmpty() && seasonId != null) {
             request.setAttribute("seasonId", seasonId);
         }
-        List<Match> matches = MatchDAO.INSTANCE.getMatchesUpcomming(pageNumber, pageSize);
-        int totalCount = MatchDAO.INSTANCE.countMatches();
+        List<Match> matches = MatchDAO.INSTANCE.getFilteredMatches(searchInput, seasonId, dateFrom, dateTo, matchStatusId, typeId, pageNumber, pageSize);
+        int totalCount = MatchDAO.INSTANCE.countFilteredMatches(searchInput, seasonId, dateFrom, dateTo, matchStatusId, typeId);
 
         // Calculate number of pages
         int numberOfPages = (int) Math.ceil((double) totalCount / pageSize);
-
+        request.setAttribute("allticket", MatchSeatDAO.INSTANCE.getAllTicketAvailable());
         request.setAttribute("matches", matches);
         request.setAttribute("totalMatches", totalCount);
         request.setAttribute("currentPage", pageNumber);
@@ -120,6 +132,18 @@ public class PublicListMatchServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        int pageNumber = 1; // Default page number
+        int pageSize = 5; // Default page size
+        // Parse page number and page size from request parameters if provided
+        String pageParam = request.getParameter("page");
+        String sizeParam = request.getParameter("size");
+
+        if (pageParam != null && !pageParam.isEmpty()) {
+            pageNumber = Integer.parseInt(pageParam);
+        }
+        if (sizeParam != null && !sizeParam.isEmpty()) {
+            pageSize = Integer.parseInt(sizeParam);
+        }
         // Get parameters and handle null values
         String seasonIdParam = request.getParameter("seasonId");
         String matchStatusIdParam = request.getParameter("matchStatusId");
@@ -135,8 +159,8 @@ public class PublicListMatchServlet extends HttpServlet {
         String seasonId = seasonIdParam != null ? seasonIdParam : "";
         String matchStatusId = matchStatusIdParam != null ? matchStatusIdParam : "";
         String typeId = typeIdParam != null ? typeIdParam : "";
-        
-        List<Match> matches = MatchDAO.INSTANCE.getFilteredMatches(searchInput, seasonId, dateFrom, dateTo, matchStatusId, typeId);
+
+        List<Match> matches = MatchDAO.INSTANCE.getFilteredMatches(searchInput, seasonId, dateFrom, dateTo, matchStatusId, typeId, pageNumber, pageSize);
 
         // Check if matches is null or empty
         if (matches == null || matches.isEmpty()) {

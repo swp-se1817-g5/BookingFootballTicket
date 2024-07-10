@@ -6,6 +6,7 @@ package controllers.home_Page;
 
 import dal.FootballClubDAO;
 import dal.MatchDAO;
+import dal.MatchSeatDAO;
 import dal.NewsDAO;
 import dal.SeasonDAO;
 import java.io.IOException;
@@ -60,6 +61,7 @@ public class ManageHomePageServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        request.setAttribute("allticket", MatchSeatDAO.INSTANCE.getAllTicketAvailable());
         request.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
         request.setAttribute("getFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
         request.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());

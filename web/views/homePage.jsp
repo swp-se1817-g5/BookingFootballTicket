@@ -147,6 +147,12 @@
                         <div class="col-md-4">
                             <div class="card">
                                 <div class="card-header">
+                                    <c:if test="${requestScope.allticket[lm.matchId - 1].availability > 0}">
+                                        <div class="tickets-sold">Còn vé! Đặt ngay</div>
+                                    </c:if>
+                                    <c:if test="${requestScope.allticket[lm.matchId - 1].availability == 0}">
+                                        <div class="tickets-sold">Hết vé! Vui lòng chọn trận khác</div>
+                                    </c:if>
                                 </div>
                                 <div class="card-body">
                                     <div class="team-logos">
@@ -195,7 +201,7 @@
                     </c:forEach>
                 </div>
                 <div class="text-center mb-5">
-                    <a href="#" class="btn btn-outline-secondary">Xem Thêm</a>
+                    <a href="publicListFootballClub" class="btn btn-outline-secondary">Xem Thêm</a>
                 </div>
             </div>
             <div class="con_img">

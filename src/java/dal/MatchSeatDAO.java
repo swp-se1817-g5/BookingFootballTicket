@@ -289,6 +289,26 @@ public class MatchSeatDAO {
         return formattedDate;
     }
 
+    public ArrayList<MatchSeat> getAllTicketAvailable() {
+        ArrayList<MatchSeat> matchseat = new ArrayList<>();
+        String sql = """
+                     SELECT matchId,SUM(availability) as availability
+                     FROM MatchSeat
+                     GROUP BY matchId""";
+        try (PreparedStatement ps = con.prepareStatement(sql);){
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                MatchSeat ms = new MatchSeat();
+                ms.setMatch(rs.getInt("matchId"));
+                ms.setAvailability(rs.getInt("availability"));
+                matchseat.add(ms);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return matchseat;  
+    }
+
     public static void main(String[] args) {
         System.out.println(INSTANCE.getMatchSeatbyMatch(3).toString());
     }

@@ -1,6 +1,6 @@
 <%-- 
-    Document   : publicListTournment
-    Created on : Jul 8, 2024, 1:54:57 AM
+    Document   : publicListFootballClub
+    Created on : Jul 10, 2024, 11:36:28 AM
     Author     : Vinh
 --%>
 
@@ -31,6 +31,8 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                width: 300px;
+                height: 300px;
             }
             .ticket-card {
                 background: #fff;
@@ -39,8 +41,6 @@
                 padding: 15px;
                 text-align: center;
                 margin-bottom: 20px;
-                width: 325px;
-                height: 350px;
             }
             .card h5 {
                 margin: 15px 0;
@@ -101,7 +101,11 @@
             .card-body{
                 text-align: center;
             }
-            
+            .card {
+                border-radius: 15px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                margin-bottom: 1rem;
+            }
         </style>
     </head>
     <body>
@@ -113,29 +117,18 @@
                 <div class="col-md-3">
                     <div class="sidebar">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên mùa giải">
-                        </div>
-                        <div class="form-group">
-                            <label for="dateFrom">Từ ngày</label><i class="fa fa-calendar"></i>
-                            <div class="date-input">
-                                <input type="date" id="dateFrom" class="form-control">
-                            </div>
-                            <label for="dateTo">Đến ngày</label><i class="fa fa-calendar"></i>
-                            <div class="date-input">
-                                <input type="date" id="dateTo" class="form-control">
-                            </div>
+                            <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên đội bóng">
                         </div>
                         <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc<i class="bi bi-filter btn-icon"></i></button>
                         <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                         <div class="best-seller mt-4">
-                            <h5>Giải đấu nổi bật <i class="bi bi-fire text-danger"></i></h5>
-                                <c:forEach items="${requestScope.seasons}" var="s" begin="0" end="0">
-                                <div class="card product-card">
+                            <h5>Đội bóng nổi bật<i class="bi bi-fire text-danger"></i></h5>
+                                <c:forEach items="${fcs}" var="fcs" end="0">
+                                <div class=" card">
+                                    <div class="text-center mt-1"><img src="${fcs.img}" style="width: 65%; height: auto;" alt="Team"></div>
                                     <div class="card-body">
-                                        <h5 class="card-title">${s.seasonName}</h5>
-                                        <p class="card-text">Thời gian bắt đầu : ${s.startDate}</p>
-                                        <p class="card-text">Thời gian kết thúc : ${s.endDate}</p>
-                                        <a href="publicListMatch?seasonId=${s.seasonId}" style="margin-top: 20px" class="btn btn-primary">Xem Các Trận Đấu</a>
+                                        <h5 class="card-title">${fcs.clubName}</h5>
+                                        <a href="publicFootballClub?fcId=${fcs.clubId}" class="btn btn-primary">Chi tiết</a>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -143,46 +136,45 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="row" id="tournmentList">
-                        <c:forEach items="${seasons}" var="s">
-                            <div class="col-md-4">
-                                <div class="ticket-card card">
+                    <div class="row" id="footballClubList">
+                        <c:forEach items="${fcs}" var="fcs" >
+                            <div class="col-md-3 col-sm-6 mb-4">
+                                <div class="card">
+                                    <div class="text-center mt-1"><img src="${fcs.img}" style="width: 65%; height: auto;" alt="Team"></div>
                                     <div class="card-body">
-                                        <h5 class="card-title">${s.seasonName}</h5>
-                                        <p class="card-text">Thời gian bắt đầu: ${s.startDate}</p>
-                                        <p class="card-text">Thời gian kết thúc: ${s.endDate}</p>
-                                        <a href="publicListMatch?seasonId=${s.seasonId}" style="margin-top: 20px" class="btn btn-primary">Xem Các Trận Đấu</a>
+                                        <h5 class="card-title">${fcs.clubName}</h5>
+                                        <a href="publicFootballClub?fcId=${fcs.clubId}" class="btn btn-primary">Chi tiết</a>
                                     </div>
                                 </div>
                             </div>
                         </c:forEach>
                     </div>
-                </div>
-                <div class="clearfix col-12" id="pagination" >
-                    <ul class="pagination">
-                        <c:if test="${currentPage > 1}">
-                            <li class="page-item">
-                                <a class="page-link" href="publicListTournment?page=${currentPage - 1}" data-page="${currentPage - 1}" ><</a>
-                            </li>
-                        </c:if>
-                        <c:forEach var="page" begin="1" end="${noOfPages}" step="1">
-                            <li class="page-item ${page == currentPage ? 'active' : ''}">
-                                <c:choose>
-                                    <c:when test="${page == currentPage}">
-                                        <span class="page-link" data-page="${currentPage}">${currentPage}</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a class="page-link" href="publicListTournment?page=${page}" data-page="${page}">${page}</a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </li>
-                        </c:forEach>
-                        <c:if test="${currentPage < noOfPages}">
-                            <li class="page-item">
-                                <a class="page-link" href="publicListTournment?page=${currentPage + 1}" data-page="${currentPage + 1}" >></a>
-                            </li>
-                        </c:if>
-                    </ul>
+                    <div class="clearfix col-12" id="pagination" >
+                        <ul class="pagination">
+                            <c:if test="${currentPage > 1}">
+                                <li class="page-item">
+                                    <a class="page-link" href="publicListFootballClub?page=${currentPage - 1}" data-page="${currentPage - 1}" ><</a>
+                                </li>
+                            </c:if>
+                            <c:forEach var="page" begin="1" end="${noOfPages}" step="1">
+                                <li class="page-item ${page == currentPage ? 'active' : ''}">
+                                    <c:choose>
+                                        <c:when test="${page == currentPage}">
+                                            <span class="page-link" data-page="${currentPage}">${currentPage}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="page-link" href="publicListFootballClub?page=${page}" data-page="${page}">${page}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </li>
+                            </c:forEach>
+                            <c:if test="${currentPage < noOfPages}">
+                                <li class="page-item">
+                                    <a class="page-link" href="publicListFootballClub?page=${currentPage + 1}" data-page="${currentPage + 1}" >></a>
+                                </li>
+                            </c:if>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -200,25 +192,21 @@
         <script>
             document.getElementById('resetBtn').addEventListener('click', function () {
                 document.getElementById('searchInput').value = '';
-                document.getElementById('dateFrom').value = '';
-                document.getElementById('dateTo').value = '';
             });
         </script>
         <script>
             $(document).ready(function () {
-                function loadPage(page, searchValue, startDate, endDate) {
+                function loadPage(page, searchValue) {
                     $.ajax({
-                        url: "publicListTournment", // URL của Servlet xử lý Ajax
+                        url: "publicListFootballClub", // URL của Servlet xử lý Ajax
                         type: "GET",
                         data: {
                             page: page,
-                            search: searchValue,
-                            startDate: startDate,
-                            endDate: endDate
+                            search: searchValue
                         },
-                        success: function (response) {
-                            $('#tournmentList').html($(response).find('#tournmentList').html());
-                            $("#pagination").html($(response).find('#pagination').html());
+                        success: function (data) {
+                            $("#footballClubList").html($(data).find('#footballClubList').html());
+                            $("#pagination").html($(data).find('#pagination').html());
                         },
                         error: function (xhr, status, error) {
                             console.error(xhr.responseText);
@@ -230,9 +218,7 @@
                 $('#filterBtn').click(function (e) {
                     e.preventDefault();
                     var searchValue = $('#searchInput').val().trim();
-                    var dateFrom = $('#dateFrom').val();
-                    var dateTo = $('#dateTo').val();
-                    loadPage(1, searchValue, dateFrom, dateTo); // Load trang đầu tiên với các tham số tìm kiếm
+                    loadPage(1, searchValue); // Load trang đầu tiên với giá trị tìm kiếm
                 });
 
                 // Bắt sự kiện khi người dùng nhấp vào các liên kết phân trang
@@ -240,11 +226,10 @@
                     e.preventDefault();
                     var page = $(this).attr("data-page");
                     var searchValue = $('#searchInput').val().trim();
-                    var dateFrom = $('#dateFrom').val();
-                    var dateTo = $('#dateTo').val();
-                    loadPage(page, searchValue, dateFrom, dateTo);
+                    loadPage(page, searchValue);    
                 });
             });
         </script>
     </body>
 </html>
+

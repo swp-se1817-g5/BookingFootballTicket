@@ -23,7 +23,7 @@ import models.Season;
 @WebServlet(name = "PublicListTournmentServlet", urlPatterns = {"/publicListTournment"})
 public class PublicListTournmentServlet extends HttpServlet {
 
-    int RECORDS_PER_PAGE = 20;
+    int RECORDS_PER_PAGE = 6;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
