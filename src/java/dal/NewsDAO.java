@@ -128,11 +128,13 @@ public class NewsDAO {
                 news.setLastUpdateDate(rs.getTimestamp(LAST_UPDATED_DATE) != null ? rs.getTimestamp(LAST_UPDATED_DATE).toLocalDateTime() : null);
                 news.setPostOn(rs.getTimestamp(POST_ON) != null ? rs.getTimestamp(POST_ON).toLocalDateTime() : null);
                 NewsStatus newsStatus = new NewsStatus();
-                newsStatus.setStatusName(rs.getString(STATUS_NAME));
+                newsStatus.setStatusId(rs.getInt(STATUS_ID));
                 news.setStatusId(newsStatus);
+                newsStatus.setStatusName(rs.getString(STATUS_NAME));
                 NewsState newsState = new NewsState();
-                newsState.setStateName(rs.getString(STATE_NAME));
+                newsState.setStateId(rs.getInt(STATE_ID));
                 news.setStateId(newsState);
+                newsState.setStateName(rs.getString(STATE_NAME));
                 list.add(news);
             }
         } catch (SQLException ex) {
@@ -380,6 +382,10 @@ public class NewsDAO {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(NewsDAO.getInstance().getlistNews(""));
     }
 
     public ArrayList<NewsStatus> getListStatus() {
