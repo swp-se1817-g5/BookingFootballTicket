@@ -2,7 +2,6 @@ package vnpay;
 
 import Config.Config;
 import dal.DaoBooking;
-import dal.MatchSeatDAO;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -21,12 +20,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.awt.print.Book;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import models.BookingTicket;
-import models.HistoryPurchasedTicketMatchSeat;
 import models.User;
 
 @WebServlet("/ajaxServlet")

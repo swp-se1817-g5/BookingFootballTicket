@@ -260,12 +260,12 @@ public class HistoryPurchasedTicketDAO {
         return new Timestamp(parsedDate.getTime());
     }
 
-    public List<HistoryPurchasedTicketMatchSeat> paggingTickets(int pageIndex, int pageSize, String startDate, String endDate, String email) throws ParseException {
+    public List<HistoryPurchasedTicketMatchSeat> paggingTickets(int pageIndex, int pageSize, String startDate, String endDate, String email, int statusId) throws ParseException {
         List<HistoryPurchasedTicketMatchSeat> tickets = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT hptms.*, ts.statusName "
                 + "FROM HistoryPurchasedTicketMatchSeat hptms "
                 + "JOIN TicketStatus ts ON ts.statusId = hptms.statusId "
-                + "WHERE email = ? ");
+                + "WHERE email = ? and hptms.statusId = ? ");
 
         // Add date conditions only if both dates are provided
         if (!startDate.isEmpty() && !endDate.isEmpty()) {
@@ -283,6 +283,7 @@ public class HistoryPurchasedTicketDAO {
             ps = connect.prepareStatement(sql.toString());
             int paramIndex = 1;
             ps.setString(paramIndex++, email);
+            ps.setInt(paramIndex++, statusId);
 
             // Set date parameters if provided
             if (!startDate.isEmpty() && !endDate.isEmpty()) {
@@ -325,10 +326,10 @@ public class HistoryPurchasedTicketDAO {
         return tickets;
     }
 
-    public int getTotalRecords(String startDate, String endDate, String email) throws ParseException {
+    public int getTotalRecords(String startDate, String endDate, String email, int statusId) throws ParseException {
         int count = 0;
 
-        String sql = "SELECT COUNT(*) FROM HistoryPurchasedTicketMatchSeat WHERE email = ? ";
+        String sql = "SELECT COUNT(*) FROM HistoryPurchasedTicketMatchSeat WHERE email = ? and statusId = ? ";
         if (!startDate.isEmpty() && !endDate.isEmpty()) {
             sql += "AND startTime BETWEEN ? AND ?";
         } else if (!startDate.isEmpty() && endDate.isEmpty()) {
@@ -342,6 +343,7 @@ public class HistoryPurchasedTicketDAO {
             int paramIndex = 1;
             ps = connect.prepareStatement(sql);
             ps.setString(paramIndex ++, email);
+            ps.setInt(paramIndex ++, statusId);
             if (!startDate.isEmpty() && !endDate.isEmpty()) {
                 ps.setTimestamp(paramIndex ++, getTimestamp(startDate));
                 ps.setTimestamp(paramIndex,getTimestamp(endDate));

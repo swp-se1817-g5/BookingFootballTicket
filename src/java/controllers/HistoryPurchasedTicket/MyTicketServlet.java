@@ -81,6 +81,7 @@ public class MyTicketServlet extends HttpServlet {
         String email = user.getEmail();
         String type = request.getParameter("type");
         type = type == null ? "match" : type;
+        int status = request.getParameter("status") == null ? 1 : Integer.parseInt(request.getParameter("status"));
         String startDate = request.getParameter("startDate");
         startDate = startDate == null ? "" : startDate;
         String endDate = request.getParameter("endDate");
@@ -88,7 +89,7 @@ public class MyTicketServlet extends HttpServlet {
         int totalRecords = 0;
         if (type.equals("match")) {
             try {
-                totalRecords = HistoryPurchasedTicketDAO.getInstance().getTotalRecords(startDate, endDate, email);
+                totalRecords = HistoryPurchasedTicketDAO.getInstance().getTotalRecords(startDate, endDate, email, status);
             } catch (ParseException ex) {
                 Logger.getLogger(MyTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -107,11 +108,12 @@ public class MyTicketServlet extends HttpServlet {
 
         if (type.equals("match")) {
             try {
-                request.setAttribute("tickets", HistoryPurchasedTicketDAO.getInstance().paggingTickets(pageIndex, PAGE_SIZE, startDate, endDate, email));
+                request.setAttribute("tickets", HistoryPurchasedTicketDAO.getInstance().paggingTickets(pageIndex, PAGE_SIZE, startDate, endDate, email, status));
             } catch (ParseException ex) {
                 Logger.getLogger(MyTicketServlet.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        request.setAttribute("ticketStatuses", HistoryPurchasedTicketDAO.getInstance().getListTicketStatus());
         request.setAttribute("endPage", endPage);
         request.setAttribute("pageIndex", pageIndex);
         request.getRequestDispatcher("views/myTicket.jsp").forward(request, response);
