@@ -20,8 +20,8 @@ GO
 
 -- Insert values into FootballClub table
 INSERT INTO FootballClub (clubName, img, Description, createdBy) VALUES
-('Football Club A', 'path/to/image1.jpg', 'Description of Football Club A', 'admin@example.com'),
-('Football Club B', 'path/to/image2.jpg', 'Description of Football Club B', 'admin@example.com');
+('Manchester United', 'path/to/image1.jpg', 'Description of Football Club A', 'admin@example.com'),
+('Manchester City', 'path/to/image2.jpg', 'Description of Football Club B', 'admin@example.com');
 GO
 
 -- Insert values into MatchStatus table
@@ -160,18 +160,18 @@ VALUES
 ('Leeds United', 'Newcastle United', '2024-12-21 00:00:00', 'Summer 2024', '10', 6, 'B', 'under-roof', 'user2@example.com', 'QRCode10', 300.00, 1, 'admin@example.com');
 
 -- Insert values into HistoryPurchasedTicketSeasonSeat table
-INSERT INTO HistoryPurchasedTicketSeasonSeat (startDate, endDate, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy)
-VALUES 
-('2024-12-12 15:00:00', '2024-12-12 17:00:00', 'Spring 2024', '1', 2, 'A', 'fans-side', 'user1@example.com', 'QRCode1', 100.00, 1, 'admin@example.com'),
-('2024-12-13 16:00:00', '2024-12-13 18:00:00', 'Summer 2024', '2', 1, 'B', 'standard', 'user2@example.com', 'QRCode2', 80.00, 1, 'admin@example.com'),
-('2024-12-14 17:00:00', '2024-12-14 19:00:00', 'Spring 2024', '3', 4, 'C', 'vip-stand', 'user1@example.com', 'QRCode3', 200.00, 1, 'admin@example.com'),
-('2024-12-15 18:00:00', '2024-12-15 20:00:00', 'Summer 2024', '4', 3, 'D', 'on-roof', 'user2@example.com', 'QRCode4', 150.00, 1, 'admin@example.com'),
-('2024-12-16 19:00:00', '2024-12-16 21:00:00', 'Spring 2024', '5', 2, 'A', 'under-roof', 'user1@example.com', 'QRCode5', 120.00, 1, 'admin@example.com'),
-('2024-12-17 20:00:00', '2024-12-17 22:00:00', 'Summer 2024', '6', 5, 'B', 'fans-side', 'user2@example.com', 'QRCode6', 250.00, 1, 'admin@example.com'),
-('2024-12-18 21:00:00', '2024-12-18 23:00:00', 'Spring 2024', '7', 3, 'C', 'standard', 'user1@example.com', 'QRCode7', 150.00, 1, 'admin@example.com'),
-('2024-12-19 22:00:00', '2024-12-20 00:00:00', 'Summer 2024', '8', 2, 'D', 'vip-stand', 'user2@example.com', 'QRCode8', 200.00, 1, 'admin@example.com'),
-('2024-12-20 23:00:00', '2024-12-21 01:00:00', 'Spring 2024', '9', 1, 'A', 'on-roof', 'user1@example.com', 'QRCode9', 80.00, 1, 'admin@example.com'),
-('2024-12-21 00:00:00', '2024-12-21 02:00:00', 'Summer 2024', '10', 6, 'B', 'under-roof', 'user2@example.com', 'QRCode10', 300.00, 1, 'admin@example.com');
+--INSERT INTO HistoryPurchasedTicketSeasonSeat (startDate, endDate, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy)
+--VALUES 
+--('2024-12-12 15:00:00', '2024-12-12 17:00:00', 'Spring 2024', '1', 2, 'A', 'fans-side', 'user1@example.com', 'QRCode1', 100.00, 1, 'admin@example.com'),
+--('2024-12-13 16:00:00', '2024-12-13 18:00:00', 'Summer 2024', '2', 1, 'B', 'standard', 'user2@example.com', 'QRCode2', 80.00, 1, 'admin@example.com'),
+--('2024-12-14 17:00:00', '2024-12-14 19:00:00', 'Spring 2024', '3', 4, 'C', 'vip-stand', 'user1@example.com', 'QRCode3', 200.00, 1, 'admin@example.com'),
+--('2024-12-15 18:00:00', '2024-12-15 20:00:00', 'Summer 2024', '4', 3, 'D', 'on-roof', 'user2@example.com', 'QRCode4', 150.00, 1, 'admin@example.com'),
+--('2024-12-16 19:00:00', '2024-12-16 21:00:00', 'Spring 2024', '5', 2, 'A', 'under-roof', 'user1@example.com', 'QRCode5', 120.00, 1, 'admin@example.com'),
+--('2024-12-17 20:00:00', '2024-12-17 22:00:00', 'Summer 2024', '6', 5, 'B', 'fans-side', 'user2@example.com', 'QRCode6', 250.00, 1, 'admin@example.com'),
+--('2024-12-18 21:00:00', '2024-12-18 23:00:00', 'Spring 2024', '7', 3, 'C', 'standard', 'user1@example.com', 'QRCode7', 150.00, 1, 'admin@example.com'),
+--('2024-12-19 22:00:00', '2024-12-20 00:00:00', 'Summer 2024', '8', 2, 'D', 'vip-stand', 'user2@example.com', 'QRCode8', 200.00, 1, 'admin@example.com'),
+--('2024-12-20 23:00:00', '2024-12-21 01:00:00', 'Spring 2024', '9', 1, 'A', 'on-roof', 'user1@example.com', 'QRCode9', 80.00, 1, 'admin@example.com'),
+--('2024-12-21 00:00:00', '2024-12-21 02:00:00', 'Summer 2024', '10', 6, 'B', 'under-roof', 'user2@example.com', 'QRCode10', 300.00, 1, 'admin@example.com');
 
 -- Insert values into News table
 

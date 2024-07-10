@@ -1,6 +1,5 @@
 package controller.ContextListener;
 
-
 import dal.MatchSeatDAO;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -9,8 +8,13 @@ import java.util.concurrent.TimeUnit;
 public class MatchSeatUpdater implements Runnable {
 
     private static MatchSeatUpdater instance;
+    private final ScheduledExecutorService scheduler;
 
-    public static MatchSeatUpdater getInstance() {
+    private MatchSeatUpdater() {
+        scheduler = Executors.newScheduledThreadPool(1);
+    }
+
+    public static synchronized MatchSeatUpdater getInstance() {
         if (instance == null) {
             instance = new MatchSeatUpdater();
         }
@@ -19,11 +23,31 @@ public class MatchSeatUpdater implements Runnable {
 
     @Override
     public void run() {
-        MatchSeatDAO.INSTANCE.updateMatchSeatQuantity();
+        try {
+            MatchSeatDAO.INSTANCE.updateMatchSeatAvailability();
+        } catch (Exception e) {
+            // Log the exception
+            e.printStackTrace();
+        }
     }
 
     public void startScheduler() {
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        scheduler.scheduleAtFixedRate(new MatchSeatUpdater(), 0, 1, TimeUnit.MINUTES);
+        scheduler.scheduleAtFixedRate(this, 0, 1, TimeUnit.MINUTES);
     }
+
+    public void stopScheduler() {
+        scheduler.shutdown();
+        try {
+            if (!scheduler.awaitTermination(60, TimeUnit.SECONDS)) {
+                scheduler.shutdownNow();
+                if (!scheduler.awaitTermination(60, TimeUnit.SECONDS)) {
+                    System.err.println("Scheduler did not terminate");
+                }
+            }
+        } catch (InterruptedException ie) {
+            scheduler.shutdownNow();
+            Thread.currentThread().interrupt();
+        }
+    }
+
 }

@@ -289,8 +289,8 @@ public class MatchSeatDAO {
         return formattedDate;
     }
 
-    public void updateMatchSeatQuantity() {
-        String sql = "{call UpdateMatchSeatQuantity}";
+    public void updateMatchSeatAvailability() {
+        String sql = "{call UpdateMatchSeatAvailability}";
         try (CallableStatement st = con.prepareCall(sql);) {
             st.execute();
         } catch (SQLException ex) {
@@ -299,6 +299,6 @@ public class MatchSeatDAO {
     }
 
     public static void main(String[] args) {
-        INSTANCE.updateMatchSeatQuantity();
+        INSTANCE.updateMatchSeatAvailability();
     }
 }
