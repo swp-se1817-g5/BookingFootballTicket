@@ -30,7 +30,7 @@
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
             .ticket-header {
-                background-color: #e58000;
+                background-color: #07509F;
                 color: #fff;
                 padding: 10px;
                 text-align: center;

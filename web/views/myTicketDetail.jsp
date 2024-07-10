@@ -50,7 +50,7 @@
                 color: #777;
             }
             .badge-season {
-                background-color: #e58000;
+                background-color: #07509F;
                 font-size: 20px;
                 position: absolute;
                 top: 0;
