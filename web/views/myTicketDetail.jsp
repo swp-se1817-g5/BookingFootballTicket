@@ -1,15 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>QR Code Reader from Image</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Ticket Detail</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <style>
             body {
                 background-color: #f4f6f9;
@@ -24,22 +19,20 @@
                 background-color: #ffffff;
                 box-shadow: 0 4px 8px rgba(0,0,0,0.1);
                 transition: transform 0.2s;
+                position: relative;
+                overflow: hidden;
             }
             .ticket:hover {
                 transform: scale(1.02);
             }
             .ticket-header {
+                padding-top: 20px;
                 text-align: center;
-                margin-bottom: 20px;
-                color: #333;
+                margin: 20px 0;
+                color: #7e0505;
             }
-            .ticket-header h4 {
-                margin: 0;
-                font-weight: bold;
-            }
-            .ticket-body {
-                margin-bottom: 20px;
-            }
+           
+            
             .ticket-body .row {
                 margin-bottom: 10px;
             }
@@ -50,30 +43,45 @@
                 text-align: center;
             }
             .ticket-footer img {
-                width: 200px;
+                width: 250px;
                 height: auto;
-                margin-bottom: 10px;
             }
             .ticket-footer p {
                 color: #777;
             }
-            .badge-danger {
-                background-color: #dc3545;
-                font-size: 16px;
+            .badge-season {
+                background-color: #e58000;
+                font-size: 20px;
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                padding: 10px 0;
+                color: #fff;
+                text-align: center;
+            }
+            .highlight-price {
+                color: #30970a;
+                font-weight: bold;
+            }
+
+            /* Media query for screens with max-width of 768px */
+            @media (max-width: 768px) {
+                .ticket {
+                    transform: scale(1.2);
+                }
             }
         </style>
     </head>
     <body>
-        <div style="margin-bottom: 150px">
+        <div style="padding-bottom: 160px">
             <%@include file="header.jsp"%>
         </div>
-    
+
         <div class="ticket">
-            <div class="d-flex justify-content-center mb-3">
-                <span class="badge badge-danger"><h6 class="mb-0">${ticket.seasonName}</h6></span>
-            </div>    
+            <div class="badge-season"><h5 class="mb-0">${ticket.seasonName}</h5></div>
             <div class="ticket-header">
-                <h5><strong>${ticket.team1} - ${ticket.team2}</strong></5>
+                <h5><strong>${ticket.team1} - ${ticket.team2}</strong></h5>
             </div>
             <div class="ticket-body">
                 <div class="row">
@@ -89,17 +97,17 @@
                     <div class="col-6"><strong>Số lượng:</strong> ${ticket.quantity}</div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-6"><strong>Giá tiền:</strong> ${ticket.price}</div>
+                    <div class="col-6"><strong>Giá tiền:</strong> <span class="highlight-price">${ticket.getPriceFormatter()}</span> <span style="color: #a89a00" >VNĐ</span></div>
                 </div>
             </div>
             <div class="ticket-footer">
                 <div class="qr-code mb-3">
                     <img class="img-responsive" src="${requestScope.qrCode}" alt="QR Code">
                 </div>
-                <div><strong>Mã vé:</strong> ${ticket.qrCode}</div>
                 <p>Vui lòng đưa mã vé QR cho nhân viên soát vé để vào sân.</p>
             </div>
         </div>
+
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
