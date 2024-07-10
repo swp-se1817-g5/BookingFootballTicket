@@ -1,15 +1,14 @@
 package controller.ContextListener;
 
 import jakarta.servlet.annotation.WebListener;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 /**
  * Web application lifecycle listener.
  *
  * @author thuat
  */
-@WebListener
 public class FBTServletListener implements ServletContextListener {
 
     @Override

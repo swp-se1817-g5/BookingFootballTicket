@@ -3,6 +3,9 @@
     <welcome-file-list>
         <welcome-file>homePage</welcome-file>
     </welcome-file-list>
+    <listener>
+        <listener-class>controller.ContextListener.FBTServletListener</listener-class>
+    </listener>
     <filter>
         <filter-class>filters.AuthenticationFilter</filter-class>
         <filter-name>AuthenticationFilter</filter-name>
