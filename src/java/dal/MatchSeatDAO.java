@@ -289,7 +289,16 @@ public class MatchSeatDAO {
         return formattedDate;
     }
 
+    public void updateMatchSeatQuantity() {
+        String sql = "{call UpdateMatchSeatQuantity}";
+        try (CallableStatement st = con.prepareCall(sql);) {
+            st.execute();
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, "Error subtraction availability ", ex);
+        }
+    }
+
     public static void main(String[] args) {
-        System.out.println(INSTANCE.getMatchSeatbyMatch(3).toString());
+        INSTANCE.updateMatchSeatQuantity();
     }
 }
