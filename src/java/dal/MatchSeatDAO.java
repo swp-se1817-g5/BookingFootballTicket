@@ -308,8 +308,16 @@ public class MatchSeatDAO {
         }
         return matchseat;  
     }
+    public void updateMatchSeatAvailability() {
+        String sql = "{call UpdateMatchSeatAvailability}";
+        try (CallableStatement st = con.prepareCall(sql);) {
+            st.execute();
+        } catch (SQLException ex) {
+            LOGGER.log(Level.SEVERE, "Error subtraction availability ", ex);
+        }
+    }
 
     public static void main(String[] args) {
-        System.out.println(INSTANCE.getMatchSeatbyMatch(3).toString());
+        INSTANCE.updateMatchSeatAvailability();
     }
 }

@@ -4,16 +4,6 @@
  */
 package controllers.HistoryPurchasedTicket;
 
-import com.google.zxing.BinaryBitmap;
-import com.google.zxing.ChecksumException;
-import com.google.zxing.FormatException;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatReader;
-import com.google.zxing.NotFoundException;
-import com.google.zxing.Reader;
-import com.google.zxing.Result;
-import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
-import com.google.zxing.common.HybridBinarizer;
 import dal.HistoryPurchasedTicketDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -23,18 +13,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 import models.HistoryPurchasedTicketMatchSeat;
 
 /**
@@ -69,7 +49,7 @@ public class inspectTicketServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String qrcode = request.getParameter("qrcode");
-        String checkQRCode = "notFound"; // Default to not found
+        String checkQRCode = ""; 
         ArrayList<HistoryPurchasedTicketMatchSeat> listHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
         for (HistoryPurchasedTicketMatchSeat historyPurchasedTicketMatchSeat : listHistoryPurchasedTicketMatchSeat) {
             if (LocalDateTime.now().isAfter(historyPurchasedTicketMatchSeat.getStartTime())) {
@@ -81,7 +61,6 @@ public class inspectTicketServlet extends HttpServlet {
             for (HistoryPurchasedTicketMatchSeat historyPurchasedTicketMatchSeat : listHistoryPurchasedTicket) {
                 if (qrcode.equals(historyPurchasedTicketMatchSeat.getQrCode())) {
                     switch (historyPurchasedTicketMatchSeat.getStatusId().getStatusId()) {
-
                         case 1:
                             checkQRCode = "unchecked";
                             HistoryPurchasedTicketDAO.getInstance().updateListHistoryPurchasedTicketMatchSeat(qrcode, 2);
@@ -92,9 +71,8 @@ public class inspectTicketServlet extends HttpServlet {
                         case 3:
                             checkQRCode = "timeOut";
                             break;
-
                     }
-                    break; // Exit the loop once a matching QR code is found
+                    break;
                 }
             }
         }

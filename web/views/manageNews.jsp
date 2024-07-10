@@ -358,7 +358,7 @@ Author     : duong
         <div id="createNewsModal" class="modal fade">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <form action="createNewNews" method="post" enctype="multipart/form-data">
+                    <form id="createNewsForm" action="createNewNews" method="post" enctype="multipart/form-data" onsubmit="return validateForm('create')">
                         <div class="modal-header">						
                             <h4 class="modal-title">Create News</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -366,20 +366,20 @@ Author     : duong
                         <div class="modal-body">
                             <div class="form-group">
                                 <label>Tiêu Đề</label>
-                                <textarea name="title" class="form-control" required rows="2"></textarea>
+                                <textarea id="createTitle" name="title" class="form-control" required rows="2"></textarea>
                             </div>
                             <div class="form-group" style="word-break: break-word">
                                 <label>Nội Dung</label>
-                                <textarea name="content" class="form-control" rows="5" required></textarea>
+                                <textarea id="createContent" name="content" class="form-control" rows="5" required></textarea>
                             </div>
                             <div class="form-group" style="word-break: break-word">
                                 <label>Hình Ảnh</label>
                                 <br>
-                                <input type="file" name="image" required=""><br>
+                                <input id="createImage" type="file" name="image" accept="image/*" required><br>
                             </div>
                             <div class="form-group" style="word-break: break-word">
                                 <label>Kết Luận</label>
-                                <textarea name="conclusion" class="form-control" rows="5" required></textarea>
+                                <textarea id="createConclusion" name="conclusion" class="form-control" rows="5" required></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -391,12 +391,13 @@ Author     : duong
             </div>
         </div>
 
+
         <!--------------------------------------------------------------------------------------------------------------------------------------------->
         <c:forEach items="${sessionScope.getListNews}" var="n">
             <div id="updateNews${n.newsId}" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="updateNews" method="post" enctype="multipart/form-data">
+                        <form id="updateNewsForm${n.newsId}" action="updateNews" method="post" enctype="multipart/form-data" onsubmit="return validateForm('update', ${n.newsId})">
                             <div class="modal-header">						
                                 <h4 class="modal-title">Cập Nhật Tin Tức</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -405,31 +406,30 @@ Author     : duong
                                 <input name="newsId" class="form-control" value="${n.newsId}" type="hidden">
                                 <div class="form-group">
                                     <label>Tiêu Đề</label>
-                                    <input name="title" class="form-control" value="${n.title}">
+                                    <textarea id="updateTitle${n.newsId}" name="title" class="form-control" required rows="2">${n.title}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label>Nội Dung</label>
-                                    <input name="content" class="form-control" value="${n.content}">
+                                    <textarea id="updateContent${n.newsId}" name="content" class="form-control" rows="5" required>${n.content}</textarea>
                                 </div>
                                 <div class="form-group">
                                     <input type="hidden" name="currentImage" value="${n.image}">
                                     <label>Hình Ảnh</label><br>
                                     <img src="${n.image}" alt="Image" style="width:100px;height:auto;">
-                                    <input type="file" name="image">
+                                    <input id="updateImage${n.newsId}" type="file" name="image" accept="image/*">
                                 </div>
                                 <div class="form-group">
                                     <label>Kết Luận</label>
-                                    <input name="conclusion" class="form-control" value="${n.conclusion}">
+                                    <textarea id="updateConclusion${n.newsId}" name="conclusion" class="form-control" rows="5" required>${n.conclusion}</textarea>
                                 </div>
-
-                                <!--<h3>${sessionScope.currentUser}</h3>-->
-                                <div class="form-group">
+                                <div class="form-group" id="status${n.newsId}">
                                     <label>Trạng Thái</label>
                                     <select name="statusId" id="getStatusId${n.newsId}" onchange="changeStatus(this)">
                                         <c:forEach items="${sessionScope.getListStatus}" var="listStatus">
                                             <option value="${listStatus.statusId}" 
                                                     <c:if test="${listStatus.statusId == n.statusId.statusId}">selected</c:if>
-                                                    >${listStatus.statusName}</option>
+                                                    >${listStatus.statusName}
+                                            </option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -438,7 +438,7 @@ Author     : duong
                                     <select name="stateId">
                                         <c:forEach items="${sessionScope.getListState}" var="listState">
                                             <option value="${listState.stateId}" 
-                                                    <c:if test="${listState.stateName eq n.stateId.stateName}">selected</c:if>
+                                                    <c:if test="${listState.stateId == n.stateId.stateId}">selected</c:if>
                                                     >${listState.stateName}</option>
                                         </c:forEach>
                                     </select>
@@ -452,14 +452,48 @@ Author     : duong
                     </div>
                 </div>
             </div>
+
         </c:forEach>
+        <script>
+            function validateForm(action, newsId) {
+                let title, content, conclusion, image;
+
+                if (action === 'update') {
+                    title = document.getElementById('updateTitle' + newsId).value.trim();
+                    content = document.getElementById('updateContent' + newsId).value.trim();
+                    conclusion = document.getElementById('updateConclusion' + newsId).value.trim();
+                    image = document.getElementById('updateImage' + newsId).files[0];
+                } else {
+                    title = document.getElementById('createTitle').value.trim();
+                    content = document.getElementById('createContent').value.trim();
+                    conclusion = document.getElementById('createConclusion').value.trim();
+                    image = document.getElementById('createImage').files[0];
+                }
+
+                if (title === "" || content === "" || conclusion === "") {
+                    alert("Vui lòng không được để trống!!!");
+                    return false;
+                }
+
+                if (image) {
+                    const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+                    if (!validImageTypes.includes(image.type)) {
+                        alert("Vui lòng tải những ảnh có đuôi JPEG, PNG, GIF.");
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        </script>
 
         <script>
             function changeStatus(selectElement) {
                 var statusId = parseInt(selectElement.value, 10);
                 var stateDiv = selectElement.closest('.modal-body').querySelector('.form-group[id^="state"]');
-                console.log(statusId);
+                var statusDiv = selectElement.closest('.modal-body').querySelector('.form-group[id^="status"]');
                 if (statusId === 3) {
+                    statusDiv.style.display = "none";
                     stateDiv.style.display = "block";
                 } else {
                     stateDiv.style.display = "none";

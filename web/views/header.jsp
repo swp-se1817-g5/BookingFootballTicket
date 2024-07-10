@@ -4,10 +4,50 @@
 <html lang="en">
     <head>
         <!-- Include necessary meta tags, title, and CSS files here -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            .marquee-container {
+                width: 50%; /* Adjust the width to constrain the animation area */
+                margin: 0 auto; /* Center the container */
+                overflow: hidden;
+                background-color: white; /* Background color to match the theme */
+                padding: 10px; /* Padding for better visibility */
+            }
+
+            .marquee {
+                display: inline-block;
+                white-space: nowrap;
+                color: #07509F; /* Set the text color */
+                font-size: 24px; /* Increase font size */
+                font-weight: bold; /* Make text bold */
+                animation: marquee 20s linear infinite; /* Slow down the animation */
+            }
+
+            .marquee img {
+                vertical-align: middle; /* Align the icons with the text */
+                margin: 0 10px; /* Space between the icons and the text */
+            }
+
+            @keyframes marquee {
+                from {
+                    transform: translateX(100%);
+                }
+                to {
+                    transform: translateX(-100%);
+                }
+            }
+        </style>
     </head>
     <body>
         <div class="fixed-top">
-            <div class="text-center bg-dark text-white p-3">Trang web bán vé đá bóng số một trực tuyến của sân vận động Mỹ Đình</div>
+            <div class="marquee-container text-center">
+                <div class="marquee">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/320px-Flag_of_Vietnam.svg.png" alt="Vietnam Flag" width="30" height="20">
+                    Trang WEB bán vé đá bóng số một trực tuyến của sân vận động Mỹ Đình
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/320px-Flag_of_Vietnam.svg.png" alt="Vietnam Flag" width="30" height="20">
+                </div>
+            </div>
+
             <nav class="navbar navbar-expand-md navbar-light bg-light container-fluid border-bottom">
                 <div class="container">
                     <!-- Logo -->
@@ -26,25 +66,25 @@
                     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle pt-3" href="#" id="tournamentsDropdown" role="button"
+                                <a class="nav-link dropdown-toggle pt-3" href="publicListTournment" id="tournamentsDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Giải đấu
+                                    Mùa giải
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="tournamentsDropdown">
-                                    <a class="dropdown-item" href="#">Giải đấu 1</a>
-                                    <a class="dropdown-item" href="#">Giải đấu 2</a>
-                                    <a class="dropdown-item" href="#">Giải đấu 3</a>
+                                    <c:forEach items="${sessionScope.getAllseason}" var="s">
+                                        <a class="dropdown-item" href="publicListMatch?seasonId=${s.seasonId}">${s.seasonName}</a>
+                                    </c:forEach>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle pt-3" href="#" id="teamsDropdown" role="button"
+                                <a class="nav-link dropdown-toggle pt-3" href="" id="teamsDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Đội bóng
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="teamsDropdown">
-                                    <a class="dropdown-item" href="#">Team 1</a>
-                                    <a class="dropdown-item" href="#">Team 2</a>
-                                    <a class="dropdown-item" href="#">Team 3</a>
+                                    <c:forEach items="${sessionScope.getFootballClubs}" var="fb">
+                                        <a class="dropdown-item" href="publicFootballClub?fcId=${fb.clubId}">${fb.clubName}</a>
+                                    </c:forEach>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -53,9 +93,9 @@
                                     Trận đấu
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="matchesDropdown">
-                                    <a class="dropdown-item" href="#">Match 1</a>
-                                    <a class="dropdown-item" href="#">Match 2</a>
-                                    <a class="dropdown-item" href="#">Match 3</a>
+                                    <c:forEach items="${sessionScope.getListMatches}" var="lm">
+                                        <a class="dropdown-item" href="matchDetail?matchId=${lm.matchId}">${lm.team1.clubName} - ${lm.team2.clubName}</a>
+                                    </c:forEach>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -110,5 +150,7 @@
                 </div>
             </nav>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>

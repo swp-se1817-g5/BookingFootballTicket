@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageNews;
+package controllers.common_access;
 
 import dal.NewsDAO;
 import java.io.IOException;
@@ -12,8 +12,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -48,6 +48,10 @@ public class publicListNewsServlet extends HttpServlet {
         }
     }
 
+    public boolean isNullOrBlank(String str) {
+        return str == null || str.trim().isEmpty();
+    }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -61,21 +65,24 @@ public class publicListNewsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String valueSearch;
-        String valueFilterPostOn;
+        String valueStartDate;
+        String valueEndDate;
+
         try {
             valueSearch = request.getParameter("valueSearch");
+            request.setAttribute("valueSearch", valueSearch);
             valueSearch = valueSearch == null ? "" : valueSearch.trim();
-            valueFilterPostOn = request.getParameter("valueFilterPostOn");
-            if (valueFilterPostOn != null) {
-                request.setAttribute("valuePostOn", valueFilterPostOn);
-                request.setAttribute("getListNews", NewsDAO.getInstance().filterPostOn(valueFilterPostOn));
-            } else {
-                request.setAttribute("valueSearch", valueSearch);
-                request.setAttribute("getListNews", NewsDAO.getInstance().getlistNewsInHomePage(valueSearch));
+            valueStartDate = request.getParameter("valueStartDate");
+            valueEndDate = request.getParameter("valueEndDate");
+            if (!isNullOrBlank(valueStartDate) || !isNullOrBlank(valueEndDate) || !isNullOrBlank(valueSearch)) {
+                request.setAttribute("valueStartDate", valueStartDate);
+                request.setAttribute("valueEndDate", valueEndDate);
             }
+            valueSearch = valueSearch == null ? "" : valueSearch.trim();
+            request.setAttribute("getListNews", NewsDAO.getInstance().filterPostOn(valueStartDate, valueEndDate, valueSearch));
             request.getRequestDispatcher("views/publicListNews.jsp").forward(request, response);
         } catch (ServletException | IOException e) {
-
+            Logger.getLogger(publicListNewsServlet.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
