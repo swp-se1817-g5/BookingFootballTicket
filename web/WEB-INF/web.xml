@@ -29,6 +29,10 @@
         <url-pattern>/deleteNews</url-pattern>
         <url-pattern>/manageSeason</url-pattern>
         <url-pattern>/createSeason</url-pattern>
+        <url-pattern>/manageHistoryPurchasedTicketMatchSeat</url-pattern>
+        <url-pattern>/ExportExcelSeasonSeat</url-pattern>
+        <url-pattern>/ExportExcelMatchSeat</url-pattern>
+        <url-pattern>/ExportExcelUser</url-pattern>
         <url-pattern>/deleteSeason</url-pattern>
         <url-pattern>/createUser</url-pattern>
         <url-pattern>/manageUser</url-pattern>

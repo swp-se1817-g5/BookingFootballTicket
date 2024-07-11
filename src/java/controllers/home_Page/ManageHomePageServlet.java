@@ -65,7 +65,7 @@ public class ManageHomePageServlet extends HttpServlet {
             throws ServletException, IOException {
         request.setAttribute("allticket", MatchSeatDAO.INSTANCE.getAllTicketAvailable());
         HttpSession session = request.getSession();
-        session.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches());
+        session.setAttribute("getListMatches", MatchDAO.INSTANCE.getMatches_homePage());
         session.setAttribute("getFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
         session.setAttribute("getMatches", MatchDAO.INSTANCE.getMatches());
         session.setAttribute("getAllseason", SeasonDAO.INSTANCE.getAllseason());
