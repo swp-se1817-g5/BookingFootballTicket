@@ -12,7 +12,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Homepage Bán Vé Đá Bóng</title>
+        <title>Thông tin vé</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -85,7 +85,6 @@
                 margin-bottom: 20px;
             }
 
-
             .ticket-row {
                 display: flex;
                 align-items: center;
@@ -126,9 +125,6 @@
                 overflow-y: auto; /* Kích hoạt thanh cuộn dọc */
                 padding-right: 10px; /* Đệm phải để tránh đè lên thanh cuộn */
             }
-
-
-
 
             .alert-custom {
                 background-color: #ffe5e5;
@@ -210,13 +206,13 @@
                                         <input 
                                             name="standName"
                                             value="${seat.seatarea.stand.standName}" type="text" class="form-control"
-                                            id="postcode" >
+                                            id="postcode" readonly >
                                     </div>
                                     <div class="form-group col-md-6">
                                         <label class="float-left" for="city">Khu vực</label>
                                         <input 
                                             name="seatName"
-                                            value="${seat.seatarea.seatName}" type="text" class="form-control" id="city" >
+                                            value="${seat.seatarea.seatName}" type="text" class="form-control" id="city" readonly>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -228,14 +224,14 @@
                                         <label class="float-left" for="city">Số lượng</label>
                                         <input 
                                             name="quantity"
-                                            value="${numberOfTicket}" type="text" class="form-control" id="city" >
+                                            value="${numberOfTicket}" type="text" class="form-control" id="city" readonly>
                                     </div>
                                 </div>
                                 <div class="form-group mt-4">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" id="terms" required>
                                         <label class="form-check-label" for="terms">
-                                            By having an account you are agreeing with our <a href="#">Terms and Conditions</a> and <a href="#">Privacy Statement</a>
+                                            Đồng ý với <a href="term">Điều khoản và Điều lệ</a> 
                                         </label>
                                     </div>
                                 </div>
