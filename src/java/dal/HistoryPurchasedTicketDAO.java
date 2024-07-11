@@ -293,8 +293,12 @@ public class HistoryPurchasedTicketDAO {
         return list;
     }
 
-    private Timestamp getTimestamp(String time) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private Timestamp getTimestamp(String time, boolean isEndDate) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        if(isEndDate)
+            time += " 23:59";
+        else
+            time += " 00:00";
         Date parsedDate = dateFormat.parse(time);
         return new Timestamp(parsedDate.getTime());
     }
@@ -326,12 +330,12 @@ public class HistoryPurchasedTicketDAO {
 
             // Set date parameters if provided
             if (!startDate.isEmpty() && !endDate.isEmpty()) {
-                ps.setTimestamp(paramIndex++, getTimestamp(startDate));
-                ps.setTimestamp(paramIndex++, getTimestamp(endDate));
+                ps.setTimestamp(paramIndex++, getTimestamp(startDate, false));
+                ps.setTimestamp(paramIndex++, getTimestamp(endDate, true));
             } else if (!startDate.isEmpty() && endDate.isEmpty()) {
-                ps.setTimestamp(paramIndex++, getTimestamp(startDate));
+                ps.setTimestamp(paramIndex++, getTimestamp(startDate, false));
             } else if (startDate.isEmpty() && !endDate.isEmpty()) {
-                ps.setTimestamp(paramIndex++, getTimestamp(endDate));
+                ps.setTimestamp(paramIndex++, getTimestamp(endDate, true));
             }
 
             ps.setInt(paramIndex++, (pageIndex - 1) * pageSize);
@@ -383,12 +387,12 @@ public class HistoryPurchasedTicketDAO {
             ps.setString(paramIndex++, email);
             ps.setInt(paramIndex++, statusId);
             if (!startDate.isEmpty() && !endDate.isEmpty()) {
-                ps.setTimestamp(paramIndex++, getTimestamp(startDate));
-                ps.setTimestamp(paramIndex, getTimestamp(endDate));
+                ps.setTimestamp(paramIndex++, getTimestamp(startDate, false));
+                ps.setTimestamp(paramIndex, getTimestamp(endDate, true));
             } else if (!startDate.isEmpty() && endDate.isEmpty()) {
-                ps.setTimestamp(paramIndex, getTimestamp(startDate));
+                ps.setTimestamp(paramIndex, getTimestamp(startDate, false));
             } else if (startDate.isEmpty() && !endDate.isEmpty()) {
-                ps.setTimestamp(paramIndex, getTimestamp(endDate));
+                ps.setTimestamp(paramIndex, getTimestamp(endDate, true));
             }
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
