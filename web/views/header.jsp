@@ -6,6 +6,11 @@
         <!-- Include necessary meta tags, title, and CSS files here -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <style>
+            .nav-item.dropdown:hover .dropdown-menu {
+                display: block;
+                margin-top: 0; /* optional: adjust margin top to align dropdown menu correctly */
+            }
+            
             .marquee-container {
                 width: 50%; /* Adjust the width to constrain the animation area */
                 margin: 0 auto; /* Center the container */
