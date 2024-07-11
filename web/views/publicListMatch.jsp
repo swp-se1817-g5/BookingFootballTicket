@@ -34,10 +34,9 @@
                 background: #fff;
                 border-radius: 10px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                padding: 15px;
                 text-align: center;
                 margin-bottom: 20px;
-                width: 325px; /* Keep as is */
+                width: 315px; /* Keep as is */
                 height: 500px;
             }
             .product-card img, .ticket-card img {
@@ -208,12 +207,12 @@
                     </div>
                 </div>
                 <div class="col-md-9">
-                    <div class="row" id="matchList" style="text-align: center">
+                    <div class="row" id="matchList" style="margin-left: 20px">
                         <c:forEach items="${requestScope.matches}" var="o">
                             <c:set var="dateTime" value="${o.time}" />
                             <c:set var="date" value="${fn:split(dateTime, 'T')[0]}" />
                             <c:set var="time" value="${fn:split(dateTime, 'T')[1]}" />
-                            <div class="col-md-4 mb-4 match" >
+                            <div class="col-md-4 mb-4 match" style="text-align: center" >
                                 <div class=" card ticket-card">
                                     <input type="date" class="date" style="margin-left: 20px" value="${date}" readonly>
                                     <div class="competition">${o.season.seasonName}</div>

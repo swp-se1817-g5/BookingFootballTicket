@@ -39,7 +39,7 @@
                 padding: 15px;
                 text-align: center;
                 margin-bottom: 20px;
-                width: 325px;
+                width: 315px;
                 height: 350px;
             }
             .card h5 {
