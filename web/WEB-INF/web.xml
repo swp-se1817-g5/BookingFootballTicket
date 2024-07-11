@@ -35,5 +35,9 @@
         <url-pattern>/searchUser</url-pattern>
         <url-pattern>/updateUser</url-pattern>
         <url-pattern>/changestatusUser</url-pattern>
+        <url-pattern>/manageMatch</url-pattern>
+        <url-pattern>/updateMatch</url-pattern>
+        <url-pattern>/createMatch</url-pattern>
+        <url-pattern>/deleteMatch</url-pattern>
     </filter-mapping>
 </web-app>
