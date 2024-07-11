@@ -29,5 +29,11 @@
         <url-pattern>/deleteNews</url-pattern>
         <url-pattern>/manageSeason</url-pattern>
         <url-pattern>/createSeason</url-pattern>
+        <url-pattern>/deleteSeason</url-pattern>
+        <url-pattern>/createUser</url-pattern>
+        <url-pattern>/manageUser</url-pattern>
+        <url-pattern>/searchUser</url-pattern>
+        <url-pattern>/updateUser</url-pattern>
+        <url-pattern>/changestatusUser</url-pattern>
     </filter-mapping>
 </web-app>
