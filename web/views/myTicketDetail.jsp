@@ -65,7 +65,7 @@
             @media screen and (max-width: 500px) {
                 
                 .ticket {
-                    max-width: 350px;
+                    max-width: 85%;
                 }
                 
             }
