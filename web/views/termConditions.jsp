@@ -41,7 +41,7 @@
                 <h2>ĐIỀU KHOẢN VÀ ĐIỀU LỆ</h2>
                 <p> 1. BookingFootballTicket không thu bất kỳ khoản phí nào khi thanh toán bằng thẻ tín dụng hoặc thẻ ghi nợ. </p>
                 <p> 2. Ngân hàng hoặc công ty thẻ tín dụng/thẻ ghi nợ của bạn có thể tính thêm phí giao dịch và chúng tôi không chịu trách nhiệm về bất kỳ khoản phí bổ sung nào từ ngân hàng hoặc công ty thẻ tín dụng/thẻ ghi nợ mà bạn nợ. </p> 
-                <p> 3. Sau khi thanh toán thành công, hệ thống sẽ tự động gửi mã QR theo Email đã đăng ký. Nếu bạn đăng ký sai Email sẽ tự chịu hoàn toàn trách nhiệm. </p> 
+                <p> 3. Sau khi thanh toán thành công, thông tin vé đã mua của bạn nằm trong mục "Vé đã mua".</p> 
                 <p> 4. Ngay sau khi nhận được thanh toán của khách hàng qua chuyển khoản, chúng tôi sẽ liên hệ với bạn để xác nhận thông tin và hỗ trợ giao vé theo thỏa thuận trên hợp đồng hoặc thỏa thuận trực tiếp với khách hàng. Nếu đã quá thời gian cam kết giao hàng mà khách hàng chưa nhận được sản phẩm có thể liên hệ tới số hottline: 0819215525 để được hỗ trợ.</p> 
                 <p>&nbsp;</p>
             </div>

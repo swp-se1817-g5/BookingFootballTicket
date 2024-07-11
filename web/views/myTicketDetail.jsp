@@ -22,17 +22,14 @@
                 position: relative;
                 overflow: hidden;
             }
-            .ticket:hover {
-                transform: scale(1.02);
-            }
+           
             .ticket-header {
                 padding-top: 20px;
                 text-align: center;
                 margin: 20px 0;
                 color: #7e0505;
             }
-           
-            
+
             .ticket-body .row {
                 margin-bottom: 10px;
             }
@@ -43,7 +40,7 @@
                 text-align: center;
             }
             .ticket-footer img {
-                width: 250px;
+                width: 200px;
                 height: auto;
             }
             .ticket-footer p {
@@ -66,15 +63,11 @@
             }
 
             /* Media query for screens with max-width of 768px */
-            @media (max-width: 768px) {
-                .ticket {
-                    transform: scale(1.2);
-                }
-            }
+           
         </style>
     </head>
     <body>
-        <div style="padding-bottom: 160px">
+        <div style="padding-bottom: 100px">
             <%@include file="header.jsp"%>
         </div>
 
@@ -107,6 +100,7 @@
                 <p>Vui lòng đưa mã vé QR cho nhân viên soát vé để vào sân.</p>
             </div>
         </div>
+        <%@include file="footer.jsp" %>  
 
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>

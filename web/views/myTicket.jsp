@@ -50,11 +50,7 @@
                 border-color: #343a40;
                 color: #fff;
             }
-            .team-names {
-                font-size: 1.5em;
-                color: #7e0505;
-                font-weight: bold;
-            }
+            
             .highlight-price {
                 color: #30970a;
                 font-weight: bold;
@@ -85,6 +81,10 @@
                 font-weight: bold;
                 pointer-events: none; /* Ensure the watermark doesn't interfere with card interactions */
                 user-select: none; /* Prevent text selection */
+            }
+            .team-names {
+                
+                font-weight: bold;
             }
         </style>
     </head>
@@ -139,7 +139,7 @@
                             <div class="card-body ticket-body">
 
                                 <div class="d-flex justify-content-center mb-2">
-                                    <h5 class="card-title team-names">${t.team1} - ${t.team2}</h5>
+                                    <h5 style="color: #7e0505" class="card-title team-names">${t.team1} - ${t.team2}</h5>
                                 </div>
 
                                 <div class="d-flex justify-content-between flex-wrap">
@@ -174,6 +174,7 @@
                 </ul>
             </nav>
         </div>
+            <%@include file="footer.jsp" %>  
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
