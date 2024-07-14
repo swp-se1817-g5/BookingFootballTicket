@@ -130,12 +130,11 @@
         </style>
     </head>
     <body>
-
         <div style="margin: 120px"><jsp:include page="header.jsp" /></div>
         <div>
             <img class="img-responsive img-fluid" src="images/banner/svd.jpg" alt="alt"/>
         </div>
-        <div class="container-fluid">
+        <div class="container">
             <div class="container mt-5">
                 <!-- Trận Đấu Sắp Diễn Ra -->
                 <div class="section-header justify-content-center">
@@ -252,8 +251,8 @@
                                     <div class="card-body">
                                         <h4>
                                             <c:choose>
-                                                <c:when test="${fn:length(n.title) > 60}">
-                                                    ${fn:substring(n.title, 0, 60)}...
+                                                <c:when test="${fn:length(n.title) > 50}">
+                                                    ${fn:substring(n.title, 0, 50)}...
                                                 </c:when>
                                                 <c:otherwise>
                                                     ${n.title}

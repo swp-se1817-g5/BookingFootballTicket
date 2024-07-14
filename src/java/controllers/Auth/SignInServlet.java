@@ -92,8 +92,6 @@ public class SignInServlet extends HttpServlet {
                 int roleID = UserDAO.INSTANCE.getRoleID(user.getEmail());
                 if (roleID == 1 || roleID == 3) {
                     response.sendRedirect("dashboard");
-                } else if (roleID == 4) {
-                    response.sendRedirect("inspectTicket"); 
                 } else {
                     // Redirect to the original URL or home page
                     if (redirectURL != null && !redirectURL.isEmpty()) {

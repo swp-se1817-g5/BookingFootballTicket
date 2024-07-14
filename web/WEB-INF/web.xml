@@ -14,6 +14,14 @@
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/myTicket</url-pattern>
     </filter-mapping>
+<!--    <filter>
+        <filter-class>filters.AuthenticationInspectorFilter</filter-class>
+        <filter-name>AuthenticationInspectorFilter</filter-name>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationInspectorFilter</filter-name>
+        <url-pattern>/inspectTicket</url-pattern>
+    </filter-mapping>-->
     <filter>
         <filter-class>filters.AuthenticationAdminFilter</filter-class>
         <filter-name>AuthenticationAdminFilter</filter-name>
@@ -44,4 +52,5 @@
         <url-pattern>/createMatch</url-pattern>
         <url-pattern>/deleteMatch</url-pattern>
     </filter-mapping>
+   
 </web-app>

@@ -13,10 +13,12 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import models.HistoryPurchasedTicketMatchSeat;
+import models.User;
 
 /**
  *
@@ -49,13 +51,16 @@ public class inspectTicketServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        User curUser = (User) session.getAttribute("currentUser");
         String qrcode = request.getParameter("qrcode");
-        if (!isNullOrBlank(qrcode)) {
-            request.setAttribute("getTicketInfo", HistoryPurchasedTicketDAO.getInstance().getTicketInfo(qrcode));
-            request.getRequestDispatcher("views/inspectTicket.jsp").forward(request, response);
-
+        if ((!isNullOrBlank(qrcode)) && curUser!= null) {
+            if (curUser.getRoleId() == 4) {
+                request.setAttribute("getTicketInfo", HistoryPurchasedTicketDAO.getInstance().getTicketInfo(qrcode));
+                request.getRequestDispatcher("views/inspectTicket.jsp").forward(request, response);
+            }
         } else {
-            response.sendRedirect("myTicket");
+            response.sendRedirect("homePage");
         }
     }
 
@@ -66,13 +71,13 @@ public class inspectTicketServlet extends HttpServlet {
         String checkQRCode = "";
         ArrayList<HistoryPurchasedTicketMatchSeat> listHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
         for (HistoryPurchasedTicketMatchSeat historyPurchasedTicketMatchSeat : listHistoryPurchasedTicketMatchSeat) {
-            if (LocalDateTime.now().isAfter(historyPurchasedTicketMatchSeat.getStartTime().plus(200,ChronoUnit.MINUTES))) {
+            if (LocalDateTime.now().isAfter(historyPurchasedTicketMatchSeat.getStartTime().plus(200, ChronoUnit.MINUTES))) {
                 HistoryPurchasedTicketDAO.getInstance().updateListHistoryPurchasedTicketMatchSeat(historyPurchasedTicketMatchSeat.getQrCode(), 3);
             }
         }
         if (!isNullOrBlank(qrcode)) {
             HistoryPurchasedTicketMatchSeat listHistoryPurchasedTicket = HistoryPurchasedTicketDAO.getInstance().getTicketInfo(qrcode);
-            if (LocalDateTime.now().plus(180,ChronoUnit.MINUTES).isBefore(listHistoryPurchasedTicket.getStartTime())) {
+            if (LocalDateTime.now().plus(180, ChronoUnit.MINUTES).isBefore(listHistoryPurchasedTicket.getStartTime())) {
                 checkQRCode = "notStart";
             } else {
                 switch (listHistoryPurchasedTicket.getStatusId().getStatusId()) {

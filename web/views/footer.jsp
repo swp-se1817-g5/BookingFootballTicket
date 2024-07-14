@@ -34,7 +34,6 @@
             <div class="row">
                 <div class="col-lg-7 col-md-6 text-center text-md-start">
                     <h5>CÔNG TY CỔ PHẦN THỂ THAO MỸ ĐÌNH</h5>
-                    <p>MST: 2902103060</p>
                     <p>Địa chỉ: Số 6, Đường Đào Tấn, Phường Cửa Nam, Thành phố Vinh, Nghệ An</p>
                     <p>Điện thoại: 0974.72.3581</p>
                     <p>Email: footballbookingticket.com</p>
@@ -52,7 +51,7 @@
         </div>
         <div class="footer-bottom">
             <p>© 2024 - Bản quyền thuộc về Mỹ Đình FC | My Dinh Football Club | Designed by G5</p>
-            <p>Liên hệ hợp tác và truyền thông: Mr. Kiet (0562180607)</p>
+            <p>Liên hệ hợp tác và truyền thông: Mr. Kiet (056.218.0607)</p>
         </div>
     </footer>
     <script src="https://kit.fontawesome.com/a076d05399.js"></script>
