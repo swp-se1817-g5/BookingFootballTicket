@@ -104,7 +104,7 @@
                             <div class="col-lg-12">
                                 <h6>Đăng nhập với</h6>
                                 <div class="d-flex">
-                                    <a class="btn flex-fill m-r5 facebook" href="https://www.facebook.com/v19.0/dialog/oauth?fields=id,name,email&client_id=2789778564531786&redirect_uri=http://localhost:8080/BookingFootballTicket/loginFB"><i class="fa fa-facebook"></i>Facebook</a>
+                                    <a class="btn flex-fill m-r5 facebook" href="https://www.facebook.com/v19.0/dialog/oauth?client_id=2789778564531786&redirect_uri=http://localhost:8080/BookingFootballTicket/loginFB&scope=email&fields=id,name,email"><i class="fa fa-facebook"></i>Facebook</a>
                                     <a class="btn flex-fill m-l5 google-plus" href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/BookingFootballTicket/gmail&response_type=code&client_id=710226049781-g37fdin0lmq797dniqao07fsr27oj20j.apps.googleusercontent.com&approval_prompt=force"><i class="fa fa-google"></i>Google</a>
                                 </div>
                             </div>
