@@ -19,10 +19,21 @@
             body {
                 background-color: #f4f4f4;
             }
+
             .container {
                 margin-top: 20px;
             }
-            .product-card{
+
+            .sidebar {
+                position: sticky;
+                top: 20px;
+                padding: 15px;
+                background: #fff;
+                border-radius: 10px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .product-card, .ticket-card {
                 background: #fff;
                 border-radius: 10px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
@@ -30,94 +41,89 @@
                 text-align: center;
                 margin-bottom: 20px;
             }
+
             .ticket-card {
-                background: #fff;
-                border-radius: 10px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                text-align: center;
-                margin-bottom: 20px;
-                width: 315px; /* Keep as is */
-                height: 500px;
+                width: 100%;
+                height: 400px;
             }
+
             .product-card img, .ticket-card img {
                 width: 100%;
                 height: auto;
                 border-radius: 10px;
             }
+
             .product-card h5, .ticket-card .match-teams {
                 margin: 15px 0;
                 font-size: 1.2em;
                 font-weight: bold;
             }
-            .product-card p,.ticket-card .tickets-sold {
+
+            .product-card p, .ticket-card .tickets-sold {
                 margin: 0;
                 color: #777;
                 font-size: 0.9em;
             }
+
             .ticket-card .team-logos {
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                margin-bottom: 15px; /* Adjusted margin for better alignment */
+                margin-bottom: 15px;
             }
 
             .ticket-card .team-logos img {
-                width: 60px; /* Slightly larger logos */
+                width: 60px;
                 height: 60px;
-                margin: 0 15px; /* Increased margin between logos */
-                border-radius: 50%; /* Rounded corners for logos */
-                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+                margin: 0 15px;
+                border-radius: 50%;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             }
+
             .product-card .team-logos img {
                 width: 50px;
                 height: 50px;
                 margin: 0 10px;
             }
-            .sidebar {
-                position: sticky;
-                top: 20px;
-            }
+
             .pagination {
                 justify-content: center;
             }
+
             .book-now-btn {
                 background-color: #007bff;
                 color: white;
                 border-radius: 5px;
-                padding: 0.5rem 1.2rem; /* Slightly wider padding */
+                padding: 0.5rem 1.2rem;
                 text-decoration: none;
                 display: inline-block;
-                margin-top: 10px; /* Added margin top for spacing */
+                margin-top: 10px;
             }
+
             .book-now-btn:hover {
                 background-color: #0056b3;
                 color: white;
                 text-decoration: none;
             }
-            .sidebar {
-                position: sticky;
-                top: 20px;
-                padding: 15px;
-                background: #fff;
-                border-radius: 10px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            }
+
             .ticket-card .date {
                 border: none;
                 background: none;
                 text-align: center;
-                font-size: 1.1em; /* Increase font size for better visibility */
-                color: #555; /* Darker color for better contrast */
-                margin-bottom: 10px; /* Added margin bottom for spacing */
+                font-size: 1.1em;
+                color: #555;
+                margin-bottom: 10px;
             }
+
             .ticket-card .competition {
                 font-size: 1.2em;
                 font-weight: bold;
-                margin: 10px 0; /* Increased margin for better separation */
-                color: #333; /* Slightly darker color */
+                margin: 10px 0;
+                color: #333;
             }
+
             .ticket-card .location {
-                margin-bottom: 10px; /* Adjusted margin for spacing */
+                margin-bottom: 10px;
                 color: #777;
             }
 
@@ -127,7 +133,26 @@
                 text-align: center;
                 font-size: 1.1em;
                 color: #555;
-                margin-top: 5px; /* Added margin top for spacing */
+                margin-top: 5px;
+            }
+
+            .clearfix {
+                overflow: auto;
+            }
+
+            .page-item.active .page-link {
+                background-color: #007bff;
+                border-color: #007bff;
+                color: white;
+            }
+            .ticket-card {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            .ticket-card .book-now-btn {
+                margin-top: auto;
             }
         </style>
     </head>
@@ -213,7 +238,7 @@
                             <c:set var="date" value="${fn:split(dateTime, 'T')[0]}" />
                             <c:set var="time" value="${fn:split(dateTime, 'T')[1]}" />
                             <div class="col-md-4 mb-4 match" style="text-align: center" >
-                                <div class=" card ticket-card">
+                                <div class=" ticket-card">
                                     <input type="date" class="date" style="margin-left: 20px" value="${date}" readonly>
                                     <div class="competition">${o.season.seasonName}</div>
                                     <div class="team-logos">

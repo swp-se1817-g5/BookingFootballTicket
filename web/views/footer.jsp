@@ -41,7 +41,7 @@
                 <div class="col-lg-5 col-md-6 text-center text-md-start">
                     <h5>Liên kết</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white text-decoration-none">Đội hình</a></li>
+                        <li><a href="term" class="text-white text-decoration-none">Điều khoản và Điều lệ</a></li>
                         <li><a href="#" class="text-white text-decoration-none">Media</a></li>
                         <li><a href="#" class="text-white text-decoration-none">Vé</a></li>
                         <li><a href="#" class="text-white text-decoration-none">Cửa hàng</a></li>
