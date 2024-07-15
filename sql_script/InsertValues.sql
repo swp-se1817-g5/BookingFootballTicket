@@ -153,19 +153,14 @@ VALUES
 (N'Hết hiệu lực');
 GO
 -- Insert values into HistoryPurchasedTicketMatchSeat table
-INSERT INTO HistoryPurchasedTicketMatchSeat (team1, team2, startTime, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy,matchSeatId)
-VALUES 
-('Chelsea', 'Arsenal', '2024-7-9 18:06:00', 'Spring 2024', '1', 2, 'A', 'fans-side', 'user2@example.com', 'QRCode1', 100.00, 1, 'admin@example.com',40),
-('Chelsea ', 'Arsenal', '2024-12-13 16:00:00', 'Summer 2024', '2', 1, 'B', 'standard', 'user2@example.com', 'QRCode2', 80.00, 1, 'admin@example.com',45),
-('Chelsea', 'Arsenal', '2024-12-14 17:00:00', 'Spring 2024', '3', 4, 'C', 'vip-stand', 'user1@example.com', 'QRCode3', 200.00, 1, 'admin@example.com',49),
-('Chelsea ', 'Arsenal', '2024-12-15 18:00:00', 'Summer 2024', '4', 3, 'D', 'on-roof', 'user2@example.com', 'QRCode4', 150.00, 1, 'admin@example.com',50),
-('Southampton', 'Burnley', '2024-12-16 19:00:00', 'Spring 2024', '5', 2, 'A', 'under-roof', 'user1@example.com', 'QRCode5', 120.00, 1, 'admin@example.com',97),
-('Southampton', 'Burnley', '2024-12-17 20:00:00', 'Summer 2024', '6', 5, 'B', 'fans-side', 'user2@example.com', 'QRCode6', 250.00, 1, 'admin@example.com',98),
-('Southampton', 'Burnley', '2024-12-18 21:00:00', 'Spring 2024', '7', 3, 'C', 'standard', 'user1@example.com', 'QRCode7', 150.00, 1, 'admin@example.com',145),
-('Brentford', 'Watford', '2024-12-19 22:00:00', 'Summer 2024', '8', 2, 'D', 'vip-stand', 'user2@example.com', 'QRCode8', 200.00, 1, 'admin@example.com',146),
-('Brentford', 'Watford', '2024-12-20 23:00:00', 'Spring 2024', '9', 1, 'A', 'on-roof', 'user1@example.com', 'QRCode9', 80.00, 1, 'admin@example.com',193),
-('Brentford', 'Watford', '2024-12-21 00:00:00', 'Summer 2024', '10', 6, 'B', 'under-roof', 'user2@example.com', 'QRCode10', 300.00, 1, 'admin@example.com',194);
-
+INSERT INTO HistoryPurchasedTicketMatchSeat (team1, team2, startTime, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy, matchSeatId)
+VALUES
+(N'Chelsea', N'Brentford', '2024-12-12 15:00:00', 'Laliga 2024', N'1', 2, N'A', N'fans-side', 'user1@example.com', 'qrcode1', 300000, 1, 'admin@example.com', 1),
+(N'Arsenal', N'Burnley', '2024-12-12 15:00:00', 'Laliga 2024', N'2', 3, N'B', N'standard', 'user2@example.com', 'qrcode2', 150000, 1, 'admin@example.com', 2),
+(N'Watford', N'Chelsea', '2024-12-12 15:00:00', 'Laliga 2024', N'3', 1, N'C', N'vip-stand', 'inspector@example.com', 'qrcode3', 200000, 1, 'admin@example.com', 3),
+(N'Brentford', N'Arsenal', '2024-12-12 15:00:00', 'Laliga 2024', N'4', 4, N'D', N'on-roof', 'user1@example.com', 'qrcode4', 60000, 1, 'admin@example.com', 4),
+(N'Burnley', N'Watford', '2024-12-12 15:00:00', 'Euro 2025', N'5', 5, N'A', N'under-roof', 'user2@example.com', 'qrcode5', 70000, 1, 'admin@example.com', 5);
+GO
 -- Insert values into HistoryPurchasedTicketSeasonSeat table
 --INSERT INTO HistoryPurchasedTicketSeasonSeat (startDate, endDate, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy)
 --VALUES 

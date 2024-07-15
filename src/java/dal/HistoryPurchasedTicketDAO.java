@@ -33,14 +33,6 @@ public class HistoryPurchasedTicketDAO {
     private final Connection connect;
     // Define constants for the string literals
     private static final String SQL_QUERY_GET_LIST_HISTORY_PURCHASED_TICKET_MATCH_SEAT = "Select hptms.*,ticketStatus.statusName from HistoryPurchasedTicketMatchSeat hptms JOIN TicketStatus ticketStatus ON ticketStatus.statusId = hptms.statusId";
-    private static final String SQL_QUERY_GET_LIST_HISTORY_PURCHASED_TICKET_MATCH_SEAT_inspector = "Select fb1.clubName, fb2.clubName,ms.matchId, s.seasonName\n"
-            + "From HistoryPurchasedTicketMatchSeat hptms\n"
-            + "JOIN MatchSeat ms ON ms.matchSeatId = hptms.matchSeatId\n"
-            + "JOIN Match m ON m.matchId = ms.matchId\n"
-            + "JOIN FootballClub fb1 ON fb1.clubId = m.team1\n"
-            + "JOIN FootballClub fb2 ON fb2.clubId = m.team2\n"
-            + "JOIN Season s ON s.seasonId = m.seasonId\n"
-            + "ORDER BY ms.matchId,fb1.clubName, fb2.clubName, s.seasonName";
     private static final String SQL_QUERY_GET_LIST_HISTORY_PURCHASED_TICKET_SEASON_SEAT = "Select hptss.*,ticketStatus.statusName from HistoryPurchasedTicketSeasonSeat hptss JOIN TicketStatus ticketStatus ON ticketStatus.statusId = hptss.statusId";
     private static final String SQL_QUERY_GET_LIST_TICKET_STATUS = "SELECT * FROM TicketStatus";
     private static final String TICKET_MATCHSEAT_ID = "ticketMatchSeatId";
@@ -118,12 +110,17 @@ public class HistoryPurchasedTicketDAO {
         }
         return list;
     }
-    //--------------------------------------------------------------------------------------------------------------
 
-    public ArrayList<HistoryPurchasedTicketMatchSeat> getlistHistoryPurchasedTicketMatchSeat_inpector() {
-        ArrayList<HistoryPurchasedTicketMatchSeat> list = new ArrayList<>();
+    //--------------------------------------------------------------------------------------------------------------
+// Get list all of HistoryPurchasedTicketMatchSeat
+    public HistoryPurchasedTicketMatchSeat getTicketInfo(String qrCode) {
+        String sql = "Select hptms.*,ticketStatus.statusName\n"
+                + "from HistoryPurchasedTicketMatchSeat hptms\n"
+                + "JOIN TicketStatus ticketStatus ON ticketStatus.statusId = hptms.statusId\n"
+                + "WHERE hptms.qrCode = ?";
         try {
-            ps = connect.prepareStatement(SQL_QUERY_GET_LIST_HISTORY_PURCHASED_TICKET_MATCH_SEAT_inspector);
+            ps = connect.prepareStatement(sql);
+            ps.setString(1, qrCode);
             rs = ps.executeQuery();
             while (rs.next()) {
                 HistoryPurchasedTicketMatchSeat historyPurchasedTicketMatchSeat = new HistoryPurchasedTicketMatchSeat();
@@ -145,13 +142,56 @@ public class HistoryPurchasedTicketDAO {
                 historyPurchasedTicketMatchSeat.setStatusId(ticketStatus);
                 historyPurchasedTicketMatchSeat.setCreatedBy(rs.getString(CREATED_BY));
                 historyPurchasedTicketMatchSeat.setCreatedDate(rs.getTimestamp(CREATED_DATE) != null ? rs.getTimestamp(CREATED_DATE).toLocalDateTime() : null);
-                list.add(historyPurchasedTicketMatchSeat);
+            return historyPurchasedTicketMatchSeat;
             }
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return list;
+        return null;
     }
+    public static void main(String[] args) {
+        System.out.println(HistoryPurchasedTicketDAO.getInstance().getTicketInfo("98698fd2-468a-48ba-b378-54583d40477b"));
+    }
+//    public ArrayList<HistoryPurchasedTicketMatchSeat> getlistHistoryPurchasedTicketMatchSeat_inpector(int matchId) {
+//        ArrayList<HistoryPurchasedTicketMatchSeat> list = new ArrayList<>();
+//        try {
+//            ps = connect.prepareStatement("Select hptms.*,ts.statusName\n"
+//                    + "From HistoryPurchasedTicketMatchSeat hptms\n"
+//                    + "JOIN MatchSeat ms ON ms.matchSeatId = hptms.matchSeatId\n"
+//                    + "JOIN Match m ON m.matchId = ms.matchId\n"
+//                    + "JOIN Season s ON s.seasonId = m.seasonId\n"
+//                    + "JOIN TicketStatus ts ON ts.statusId = hptms.statusId\n"
+//                    + "WHERE ms.matchId = ?");
+//            ps.setInt(1, matchId);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                HistoryPurchasedTicketMatchSeat historyPurchasedTicketMatchSeat = new HistoryPurchasedTicketMatchSeat();
+//                historyPurchasedTicketMatchSeat.setTicketId(rs.getInt(TICKET_MATCHSEAT_ID));
+//                historyPurchasedTicketMatchSeat.setTeam1(rs.getString(TEAM_1));
+//                historyPurchasedTicketMatchSeat.setTeam2(rs.getString(TEAM_2));
+//                historyPurchasedTicketMatchSeat.setStartTime(rs.getTimestamp(START_TIME).toLocalDateTime());
+//                historyPurchasedTicketMatchSeat.setSeasonName(rs.getString(SEASON_NAME));
+//                historyPurchasedTicketMatchSeat.setSeatName(rs.getString(SEAT_NAME));
+//                historyPurchasedTicketMatchSeat.setQuantity(rs.getInt(QUANTITY));
+//                historyPurchasedTicketMatchSeat.setStandName(rs.getString(STAND_NAME));
+//                historyPurchasedTicketMatchSeat.setSeatClassName(rs.getString(SEAT_CLASS_NAME));
+//                historyPurchasedTicketMatchSeat.setEmail(rs.getString(EMAIL));
+//                historyPurchasedTicketMatchSeat.setQrCode(rs.getString(QRCODE));
+//                historyPurchasedTicketMatchSeat.setPrice(rs.getBigDecimal(PRICE));
+//                TicketStatus ticketStatus = new TicketStatus();
+//                ticketStatus.setStatusId(rs.getInt(STATUS_ID));
+//                ticketStatus.setStatusName(rs.getString(STATUS_NAME));
+//                historyPurchasedTicketMatchSeat.setStatusId(ticketStatus);
+//                historyPurchasedTicketMatchSeat.setCreatedBy(rs.getString(CREATED_BY));
+//                historyPurchasedTicketMatchSeat.setCreatedDate(rs.getTimestamp(CREATED_DATE) != null ? rs.getTimestamp(CREATED_DATE).toLocalDateTime() : null);
+//                list.add(historyPurchasedTicketMatchSeat);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return list;
+//    }
+
 
     // Search of HistoryPurchasedTicketMatchSeat
     public ArrayList<HistoryPurchasedTicketMatchSeat> SearchMatchSeat(String value) {

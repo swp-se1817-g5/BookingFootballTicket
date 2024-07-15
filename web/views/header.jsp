@@ -10,7 +10,7 @@
                 display: block;
                 margin-top: 0; /* optional: adjust margin top to align dropdown menu correctly */
             }
-            
+
             .marquee-container {
                 width: 50%; /* Adjust the width to constrain the animation area */
                 margin: 0 auto; /* Center the container */
@@ -45,15 +45,16 @@
     </head>
     <body>
         <div class="fixed-top">
-            <div class="marquee-container text-center">
-                <div class="marquee">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/320px-Flag_of_Vietnam.svg.png" alt="Vietnam Flag" width="30" height="20">
-                    Trang WEB bán vé đá bóng số một trực tuyến của sân vận động Mỹ Đình
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/320px-Flag_of_Vietnam.svg.png" alt="Vietnam Flag" width="30" height="20">
+            <div class="container-fluid bg-white">
+                <div class="marquee-container text-center">
+                    <div class="marquee">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/320px-Flag_of_Vietnam.svg.png" alt="Vietnam Flag" width="30" height="20">
+                        Trang WEB bán vé đá bóng số một trực tuyến của sân vận động Mỹ Đình
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/320px-Flag_of_Vietnam.svg.png" alt="Vietnam Flag" width="30" height="20">
+                    </div>
                 </div>
             </div>
-
-            <nav class="navbar navbar-expand-md navbar-light bg-light container-fluid border-bottom">
+            <nav class="navbar navbar-expand-sm navbar-light bg-light container-fluid border-bottom">
                 <div class="container">
                     <!-- Logo -->
                     <div class="navbar-brand">
@@ -136,8 +137,8 @@
                                             <a class="dropdown-item" data-auth="profile" href="userProfile">Thông tin tài khoản</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="myTicket">Vé đã mua</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="./changepass">Đổi mật khẩu</a>
+<!--                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="./changepass">Đổi mật khẩu</a>-->
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="./logout">Đăng xuất</a>
                                         </c:when>

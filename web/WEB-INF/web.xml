@@ -14,6 +14,14 @@
         <filter-name>AuthenticationFilter</filter-name>
         <url-pattern>/myTicket</url-pattern>
     </filter-mapping>
+<!--    <filter>
+        <filter-class>filters.AuthenticationInspectorFilter</filter-class>
+        <filter-name>AuthenticationInspectorFilter</filter-name>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationInspectorFilter</filter-name>
+        <url-pattern>/inspectTicket</url-pattern>
+    </filter-mapping>-->
     <filter>
         <filter-class>filters.AuthenticationAdminFilter</filter-class>
         <filter-name>AuthenticationAdminFilter</filter-name>
@@ -29,11 +37,20 @@
         <url-pattern>/deleteNews</url-pattern>
         <url-pattern>/manageSeason</url-pattern>
         <url-pattern>/createSeason</url-pattern>
+        <url-pattern>/manageHistoryPurchasedTicketMatchSeat</url-pattern>
+        <url-pattern>/ExportExcelSeasonSeat</url-pattern>
+        <url-pattern>/ExportExcelMatchSeat</url-pattern>
+        <url-pattern>/ExportExcelUser</url-pattern>
         <url-pattern>/deleteSeason</url-pattern>
         <url-pattern>/createUser</url-pattern>
         <url-pattern>/manageUser</url-pattern>
         <url-pattern>/searchUser</url-pattern>
         <url-pattern>/updateUser</url-pattern>
         <url-pattern>/changestatusUser</url-pattern>
+        <url-pattern>/manageMatch</url-pattern>
+        <url-pattern>/updateMatch</url-pattern>
+        <url-pattern>/createMatch</url-pattern>
+        <url-pattern>/deleteMatch</url-pattern>
     </filter-mapping>
+   
 </web-app>

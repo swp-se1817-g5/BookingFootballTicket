@@ -62,6 +62,13 @@
                 font-weight: bold;
             }
 
+            @media screen and (max-width: 500px) {
+                
+                .ticket {
+                    max-width: 85%;
+                }
+                
+            }
             /* Media query for screens with max-width of 768px */
            
         </style>
