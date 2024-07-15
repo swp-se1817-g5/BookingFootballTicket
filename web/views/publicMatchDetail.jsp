@@ -160,31 +160,7 @@
         <div class="headerr">
             <jsp:include page="header.jsp" />
         </div>
-        <div class="container">
-            <div class="row border-custom pb-3 mb-3">
-                <div class="col-md-2 text-center team-logos badge">
-                    <img src="${match.team1.img}" alt="${match.team1.clubName}" />
-                    <img src="${match.team2.img}" alt="${match.team2.clubName}" />
-                </div>
-                <div class="col-md-7 text-left">
-                    <h2 class="match-title">${match.team1.clubName} vs ${match.team2.clubName}</h2>
-                    <p><a href="./">Trang chủ</a> / <a href="#">${match.season.seasonName}</a> / <a href="">${match.team1.clubName} vs ${match.team2.clubName} Tickets</a></p>
-                </div>
-                <div class="col-md-3 text-right">
-                    <p>${date}</p>
-                    <p>Khai mạc: ${time}</p>
-                    <p>Sân vận động Quốc Gia Mỹ Đình</p>
-                    <p>${match.type.name}</p>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="alert alert-custom text-center" role="alert">
-            <strong>Popular game, price rise expected</strong><br>
-            Tip: Buy now and avoid paying a higher price
-        </div>
-
+                
         <div class="container mt-5">
             <div class="row">
                 <!-- Stadium Map Section -->
@@ -271,6 +247,12 @@
                                         fill: white;
                                         font-family: "Myriad Pro";
                                         font-weight: 800;
+                                    }
+                                    .cls-6 {
+                                        font-size: 40px;
+                                        fill: black;
+                                        font-family: "Myriad Pro";
+                                        font-weight: 500;
                                     }
                                 </style>
                                 <script>
@@ -470,6 +452,12 @@
                                 <text id="Stand_B" data-name="Stand B" class="cls-5" x="536.274" y="414.643">Stand B</text>
                                 <text id="Stand_C" data-name="Stand C" class="cls-5" transform="translate(890.745 474.636) rotate(90)">Stand C</text>
                                 <text id="Stand_D" data-name="Stand D" class="cls-5" transform="translate(358.627 667.019) rotate(-90)">Stand D</text>
+                                
+                                <text class="cls-6" x="1" y="60">${match.team1.clubName}</text>
+                                <text class="cls-6" x="1" y="120">${match.team2.clubName}</text>
+                                <text class="cls-6" x="1" y="180">${date}</text>
+                                <text class="cls-6" x="990" y="60">Khai mạc: ${time}</text>
+                                <text class="cls-6" x="1110" y="120">${match.type.name}</text>
                                 </svg>
                             </div>
                         </div>
