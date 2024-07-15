@@ -137,8 +137,8 @@
                                             <a class="dropdown-item" data-auth="profile" href="userProfile">Thông tin tài khoản</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="myTicket">Vé đã mua</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="./changepass">Đổi mật khẩu</a>
+<!--                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="./changepass">Đổi mật khẩu</a>-->
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="./logout">Đăng xuất</a>
                                         </c:when>
