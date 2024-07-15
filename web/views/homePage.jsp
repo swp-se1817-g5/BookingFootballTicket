@@ -192,7 +192,7 @@
                     <c:forEach items="${sessionScope.getFootballClubs}" var="fb" end="3">
                         <div class="col-md-3 col-sm-6 mb-4">
                             <div class="card">
-                                <div class="text-center mt-1"><img src="${fb.img}" style="width: 40%; height: auto;" alt="Team"></div>
+                                <div class="text-center mt-1"><img src="${fb.img}" style="width: auto; height: 100px;" alt="Team"></div>
                                 <div class="card-body">
                                     <h5 class="card-title">${fb.clubName}</h5>
                                     <a href="publicFootballClub?fcId=${fb.clubId}" class="btn btn-primary">Chi tiết</a>

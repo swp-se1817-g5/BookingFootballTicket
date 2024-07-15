@@ -18,93 +18,138 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         <style>
             body {
-                background-color: #f4f4f4;
+                background-color: #eef2f7;
             }
+
             .container {
                 margin-top: 20px;
             }
-            .product-card {
-                background: #fff;
+
+            .product-card, .ticket-card, .sidebar {
+                background: #ffffff;
                 border-radius: 10px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                 transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            }
+
+            .product-card {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                width: 300px;
+                width: 200px;
                 height: 300px;
+                margin-bottom: 20px;
             }
+
             .ticket-card {
-                background: #fff;
-                border-radius: 10px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                 padding: 15px;
                 text-align: center;
                 margin-bottom: 20px;
+                width: 225px;
+                height: 250px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
+
+            .ticket-card img {
+                margin: auto;
+            }
+
             .card h5 {
                 margin: 15px 0;
                 font-size: 1.2em;
                 font-weight: bold;
             }
+
             .card p {
                 margin: 0;
                 color: #777;
                 font-size: 0.9em;
             }
+
             .sidebar {
                 position: sticky;
                 top: 20px;
                 padding: 15px;
-                background: #fff;
-                border-radius: 10px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             }
+
             .form-group label {
                 font-weight: bold;
             }
+
             .btn-primary {
                 background-color: #007bff;
                 border: none;
                 border-radius: 5px;
                 padding: 0.5rem 1rem;
+                transition: background-color 0.3s ease;
             }
+
             .btn-primary:hover {
                 background-color: #0056b3;
             }
+
+            .btn-secondary {
+                border: none;
+                border-radius: 5px;
+                padding: 0.5rem 1rem;
+                background-color: #6c757d;
+                color: white;
+            }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+            }
+
             .card:hover {
                 transform: scale(1.05);
                 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             }
+
             .pagination {
                 justify-content: center;
                 margin-top: 20px;
             }
+
             .pagination .page-item .page-link {
                 border-radius: 50%;
                 color: #007bff;
                 border: none;
                 font-size: 1.2rem;
             }
+
             .pagination .page-item.active .page-link {
                 background-color: #007bff;
                 color: white;
                 border: none;
             }
+
             .pagination .page-item .page-link:hover {
                 background-color: #0056b3;
                 color: white;
             }
-            .row{
+
+            .row {
                 text-align: center;
             }
-            .card-body{
+
+            .card-body {
                 text-align: center;
+                flex-grow: 1;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
+
             .card {
                 border-radius: 15px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 margin-bottom: 1rem;
+            }
+
+            .ticket-card .book-now-btn {
+                margin-top: auto;
             }
         </style>
     </head>
@@ -124,11 +169,11 @@
                         <div class="best-seller mt-4">
                             <h5>Đội bóng nổi bật<i class="bi bi-fire text-danger"></i></h5>
                                 <c:forEach items="${fcs}" var="fcs" end="0">
-                                <div class=" card">
+                                <div class="product-card">
                                     <div class="text-center mt-1"><img src="${fcs.img}" style="width: 65%; height: auto;" alt="Team"></div>
                                     <div class="card-body">
                                         <h5 class="card-title">${fcs.clubName}</h5>
-                                        <a href="publicFootballClub?fcId=${fcs.clubId}" class="btn btn-primary">Chi tiết</a>
+                                        <a href="publicFootballClub?fcId=${fcs.clubId}" class="btn btn-primary" style="margin-top: 10px">Chi tiết</a>
                                     </div>
                                 </div>
                             </c:forEach>
@@ -139,11 +184,11 @@
                     <div class="row" id="footballClubList">
                         <c:forEach items="${fcs}" var="fcs" >
                             <div class="col-md-3 col-sm-6 mb-4">
-                                <div class="card">
-                                    <div class="text-center mt-1"><img src="${fcs.img}" style="width: 65%; height: auto;" alt="Team"></div>
+                                <div class="ticket-card">
+                                    <div class="text-center mt-1"><img src="${fcs.img}" style="width: auto; height: 100px;" alt="Team"></div>
                                     <div class="card-body">
                                         <h5 class="card-title">${fcs.clubName}</h5>
-                                        <a href="publicFootballClub?fcId=${fcs.clubId}" class="btn btn-primary">Chi tiết</a>
+                                        <a href="publicFootballClub?fcId=${fcs.clubId}" class="btn btn-primary book-now-btn" style="margin-bottom: auto" >Chi tiết</a>
                                     </div>
                                 </div>
                             </div>
@@ -226,7 +271,7 @@
                     e.preventDefault();
                     var page = $(this).attr("data-page");
                     var searchValue = $('#searchInput').val().trim();
-                    loadPage(page, searchValue);    
+                    loadPage(page, searchValue);
                 });
             });
         </script>
