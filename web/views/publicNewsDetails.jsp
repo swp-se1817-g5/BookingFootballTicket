@@ -44,6 +44,12 @@
             .related-news a:hover {
                 text-decoration: underline;
             }
+            /* Đảm bảo kích cỡ ảnh không vượt quá kích cỡ gốc */
+            .custom-img {
+                max-width: 65rem; /* Kích cỡ gốc của ảnh */
+                width: 100%; /* Responsive */
+                height: auto;
+            }
         </style>
     </head>
     <body>
@@ -58,9 +64,9 @@
                             <h1 class="card-title">${newsDetails.title}</h1>
                             <p class="card-text">${newsDetails.content}</p>
                             <div style="text-align: center;">
-                                <img style="width: 65rem" src="${newsDetails.image}" class="card-img-top" alt="Image">
+                                <img src="${newsDetails.image}" class="card-img-top custom-img" alt="Image">
                             </div>
-                            </br>
+                            <br/>
                             <p class="card-text">${newsDetails.conclusion}</p>
                         </div>
                     </div>
@@ -107,4 +113,3 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>
-

@@ -177,11 +177,6 @@ GO
 
 -- Insert values into News table
 
-INSERT INTO NewsStatus(statusName) VALUES
-(N'Từ chối'),
-(N'Chờ đợi'),
-(N'Chấp nhận');
-GO
 -- Insert values into News table
 INSERT INTO NewsState(stateName) VALUES
 (N'Ẩn'),

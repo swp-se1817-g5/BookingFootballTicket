@@ -11,6 +11,20 @@
                 margin-top: 0; /* optional: adjust margin top to align dropdown menu correctly */
             }
 
+            .dropdown-submenu {
+                position: relative;
+            }
+
+            .dropdown-submenu > .dropdown-menu {
+                top: 0;
+                left: 100%;
+                margin-top: -1px;
+            }
+
+            .dropdown-submenu:hover > .dropdown-menu {
+                display: block;
+            }
+
             .marquee-container {
                 width: 50%; /* Adjust the width to constrain the animation area */
                 margin: 0 auto; /* Center the container */
@@ -31,6 +45,12 @@
             .marquee img {
                 vertical-align: middle; /* Align the icons with the text */
                 margin: 0 10px; /* Space between the icons and the text */
+            }
+            .content-navabr{
+                justify-content: space-around;
+                font-size: 20px;
+                font-weight: bold;
+                font-family: sans-serif;
             }
 
             @keyframes marquee {
@@ -63,13 +83,13 @@
                         </a>
                     </div>
                     <!-- Button để toggle menu trên các thiết bị nhỏ -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" id="navbarToggler">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <!-- Nội dung của navbar -->
-                    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <div class="collapse navbar-collapse content-navabr" id="navbarNav">
+
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle pt-3" href="publicListTournment" id="tournamentsDropdown" role="button"
@@ -77,29 +97,19 @@
                                     Mùa giải
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="tournamentsDropdown">
-                                    <c:forEach items="${sessionScope.getAllseason}" var="s">
+                                    <c:forEach items="${sessionScope.getAllseason}" var="s" end="4">
                                         <a class="dropdown-item" href="publicListMatch?seasonId=${s.seasonId}">${s.seasonName}</a>
                                     </c:forEach>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle pt-3" href="" id="teamsDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Đội bóng
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="teamsDropdown">
-                                    <c:forEach items="${sessionScope.getFootballClubs}" var="fb">
-                                        <a class="dropdown-item" href="publicFootballClub?fcId=${fb.clubId}">${fb.clubName}</a>
-                                    </c:forEach>
-                                </div>
-                            </li>
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle pt-3" href="#" id="matchesDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Trận đấu
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="matchesDropdown">
-                                    <c:forEach items="${sessionScope.getListMatches}" var="lm">
+                                    <c:forEach items="${sessionScope.getListMatches}" var="lm" end="4">
                                         <a class="dropdown-item" href="matchDetail?matchId=${lm.matchId}">${lm.team1.clubName} - ${lm.team2.clubName}</a>
                                     </c:forEach>
                                 </div>
@@ -114,8 +124,22 @@
                                     <a class="dropdown-item" href="#">Chính sách bảo mật</a>
                                 </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link pt-3" href="publicListNews">Tin Tức</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle pt-3" href="#" id="newsDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Tin Tức
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="newsDropdown">
+                                    <a class="dropdown-item" href="publicListNews">Tin Tức Thường Ngày</a>
+                                    <div class="dropdown-submenu">
+                                        <a class="dropdown-item dropdown-toggle" href="#">Thông tin đội bóng</a>
+                                        <div class="dropdown-menu">
+                                            <c:forEach items="${sessionScope.getFootballClubs}" var="fb" end="4">
+                                                <a class="dropdown-item" href="publicFootballClub?fcId=${fb.clubId}">${fb.clubName}</a>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link pt-3" href="./InstructionsForBuyTickets">Hướng dẫn mua vé</a>
@@ -158,5 +182,28 @@
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var navbarToggler = document.getElementById('navbarToggler');
+                var navbarNav = document.getElementById('navbarNav');
+
+                navbarToggler.addEventListener('click', function () {
+                    // Kiểm tra nếu navbar đã có class 'show', tức là đang mở
+                    if (navbarNav.classList.contains('show')) {
+                        navbarNav.classList.remove('show'); // Đóng navbar
+                    } else {
+                        navbarNav.classList.add('show'); // Mở navbar
+                    }
+                });
+
+                // Đóng navbar khi click ra ngoài
+                document.addEventListener('click', function (e) {
+                    if (!navbarToggler.contains(e.target) && !navbarNav.contains(e.target)) {
+                        navbarNav.classList.remove('show');
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
+                                  

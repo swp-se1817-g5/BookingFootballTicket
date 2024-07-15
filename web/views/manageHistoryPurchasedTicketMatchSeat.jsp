@@ -260,7 +260,7 @@ Author     : duong
                             <table class="table table-striped table-hover table-bordered">
                                 <thead class="text-center">
                                     <tr>
-                                        <th>#</th>
+                                        <th>ID</th>
                                         <th>
                                             <select class="form-select border-0" id="seasonSelect">
                                                 <option selected value="All">Mùa giải</option>

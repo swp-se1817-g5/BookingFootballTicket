@@ -131,8 +131,8 @@
     </head>
     <body>
         <div style="margin: 120px"><jsp:include page="header.jsp" /></div>
-        <div>
-            <img class="img-responsive img-fluid" src="images/banner/svd.jpg" alt="alt"/>
+        <div class="container">
+            <img class="img-fluid" src="images/banner/svd.jpg" alt="alt"/>
         </div>
         <div class="container">
             <div class="container mt-5">
@@ -247,7 +247,7 @@
                         <div class="col-md-4 mb-4">
                             <a href="publicNewsDetails?newsId=${n.newsId}" class="text-decoration-none">
                                 <div class="card">
-                                    <img style="width: 414px" height="auto" src="${n.image}" class="card-img-top">
+                                    <img style="width: 407px" height="auto" src="${n.image}" class="card-img-top">
                                     <div class="card-body">
                                         <h4>
                                             <c:choose>

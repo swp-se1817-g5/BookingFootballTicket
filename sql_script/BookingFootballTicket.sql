@@ -247,9 +247,7 @@ CREATE TABLE News (
     lastUpdatedDate DATETIME2 NULL,
 	postOn DATETIME2 NULL,
     isDeleted BIT DEFAULT 0,
-	statusId INT,
 	stateId INT,
-	FOREIGN KEY (statusId) REFERENCES NewsStatus(statusId),
 	FOREIGN KEY (stateId) REFERENCES NewsState(stateId)
 );
 GO

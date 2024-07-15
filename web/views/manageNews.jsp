@@ -277,7 +277,7 @@ Author     : duong
                             <table class="table table-striped table-hover table-bordered ">
                                 <thead>
                                     <tr class="text-center">
-                                        <th style="font-weight: bold; font-size: 14px;">#</th>
+                                        <th style="font-weight: bold; font-size: 14px;">ID</th>
                                         <th style="font-weight: bold; font-size: 14px;">Tiêu Đề</th>
                                         <th style="font-weight: bold; font-size: 14px;">Nội Dung</th>
                                         <th style="font-weight: bold; font-size: 14px;">Kết Luận</th>
@@ -301,9 +301,9 @@ Author     : duong
                                     </tr>
                                 </thead>
                                 <tbody id="newsTableBody">
-                                    <c:forEach items="${sessionScope.getListNews}" var="n" varStatus="status">
+                                    <c:forEach items="${sessionScope.getListNews}" var="n">
                                         <tr style="word-break: break-word">
-                                            <td>${status.count}</td>
+                                            <td style="text-align: center">${n.newsId}</td>
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${fn:length(n.title) > 30}">
@@ -336,7 +336,7 @@ Author     : duong
                                             </td>
                                             <td>${n.statusId.statusName}</td>
                                             <td>${n.stateId.stateName}</td>
-                                            <td>
+                                            <td style="text-align: center">
                                                 <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
                                                 <a onclick="return confirmDelete(${n.newsId})" href = "deleteNews?newsId=${n.newsId}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i></a>
                                             </td>
