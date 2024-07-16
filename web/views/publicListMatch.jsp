@@ -44,7 +44,7 @@
 
             .ticket-card {
                 width: 100%;
-                height: 400px;
+                height: 440px;
             }
 
             .product-card img, .ticket-card img {
@@ -116,6 +116,12 @@
             }
 
             .ticket-card .competition {
+                font-size: 1.2em;
+                font-weight: bold;
+                margin: 10px 0;
+                color: #333;
+            }
+            .product-card .competition {
                 font-size: 1.2em;
                 font-weight: bold;
                 margin: 10px 0;
@@ -204,19 +210,19 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc<i class="bi bi-filter btn-icon"></i></button>
                         <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                         <div class="best-seller mt-4">
                             <h5>Trận đấu nổi bật<i class="bi bi-fire text-danger"></i></h5>
                                 <c:forEach items="${requestScope.matches}" var="o" begin="0" end="0">
                                 <div class="product-card" >
+                                    <div class="competition">${o.season.seasonName}</div>
+                                    <div style="text-align: center">${o.type.name}</div>
                                     <div class="team-logos">
                                         <img src="${o.team1.img}" alt="${o.team1.clubName}">
                                         <span class="vs">vs</span>
                                         <img src="${o.team2.img}" alt="${o.team2.clubName}">
                                     </div>
                                     <h5>${o.team1.clubName} vs ${o.team2.clubName}</h5>
-                                    <p>${o.season.seasonName}</p>
                                     <p><i class="fa fa-clock"></i>${o.time}</p>
                                     <p><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</p>
                                     <c:if test="${requestScope.allticket[o.matchId - 1].availability > 0}">
@@ -241,6 +247,7 @@
                                 <div class=" ticket-card">
                                     <input type="date" class="date" style="margin-left: 20px" value="${date}" readonly>
                                     <div class="competition">${o.season.seasonName}</div>
+                                    <div style="text-align: center">${o.type.name}</div>
                                     <div class="team-logos">
                                         <img src="${o.team1.img}" alt="${o.team1.clubName}">        
                                         <span class="vs">vs</span>
@@ -342,17 +349,26 @@
                     });
                 }
 
-                // Bắt sự kiện khi người dùng nhấp vào nút lọc
-                $('#filterBtn').click(function (e) {
-                    e.preventDefault();
+                // Hàm để lấy các giá trị lọc và load trang
+                function applyFilters() {
                     var seasonId = $('#season').val();
                     var matchStatusId = $('#matchStatus').val();
                     var dateFrom = $('#dateFrom').val().trim();
                     var dateTo = $('#dateTo').val().trim();
                     var searchInput = $('#searchInput').val().trim();
-                    var typeId = $('#matchType').val().trim(); // Bắt đầu với giá trị là 'All'
+                    var typeId = $('#matchType').val(); // Bắt đầu với giá trị là 'All'
 
                     loadMatches(1, seasonId, matchStatusId, dateFrom, dateTo, searchInput, typeId); // Load trang đầu tiên với các giá trị lọc
+                }
+
+// Bắt sự kiện khi người dùng nhập vào input
+                $('#searchInput, #dateFrom, #dateTo').on('input', function (e) {
+                    applyFilters();
+                });
+
+// Bắt sự kiện khi người dùng thay đổi select
+                $('#season, #matchStatus, #matchType').on('change', function (e) {
+                    applyFilters();
                 });
                 // Bắt sự kiện khi người dùng nhấp vào các liên kết phân trang
                 $(document).on("click", ".page-link", function (e) {
@@ -363,7 +379,7 @@
                     var dateFrom = $('#dateFrom').val().trim();
                     var dateTo = $('#dateTo').val().trim();
                     var searchInput = $('#searchInput').val().trim();
-                    var typeId = $('#matchType').val().trim(); // Bắt đầu với giá trị là 'All'
+                    var typeId = $('#matchType').val(); // Bắt đầu với giá trị là 'All'
 
                     loadMatches(page, seasonId, matchStatusId, dateFrom, dateTo, searchInput, typeId);
                 });

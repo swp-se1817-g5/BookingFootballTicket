@@ -36,8 +36,6 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                width: 200px;
-                height: 300px;
                 margin-bottom: 20px;
             }
 
@@ -45,7 +43,7 @@
                 padding: 15px;
                 text-align: center;
                 margin-bottom: 20px;
-                width: 225px;
+                width: 200px;
                 height: 250px;
                 display: flex;
                 flex-direction: column;
@@ -259,10 +257,9 @@
                     });
                 }
 
-                // Bắt sự kiện khi người dùng nhấp vào nút lọc
-                $('#filterBtn').click(function (e) {
-                    e.preventDefault();
-                    var searchValue = $('#searchInput').val().trim();
+                // Bắt sự kiện khi người dùng nhập vào input
+                $('#searchInput').on('input', function (e) {
+                    var searchValue = $(this).val().trim();
                     loadPage(1, searchValue); // Load trang đầu tiên với giá trị tìm kiếm
                 });
 
