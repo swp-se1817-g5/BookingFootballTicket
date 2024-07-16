@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <welcome-file-list>
+        <welcome-file>homePage</welcome-file>
+    </welcome-file-list>
+    <listener>
+        <listener-class>controller.ContextListener.FBTServletListener</listener-class>
+    </listener>
+    <filter>
+        <filter-class>filters.AuthenticationFilter</filter-class>
+        <filter-name>AuthenticationFilter</filter-name>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationFilter</filter-name>
+        <url-pattern>/myTicket</url-pattern>
+    </filter-mapping>
+<!--    <filter>
+        <filter-class>filters.AuthenticationInspectorFilter</filter-class>
+        <filter-name>AuthenticationInspectorFilter</filter-name>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationInspectorFilter</filter-name>
+        <url-pattern>/inspectTicket</url-pattern>
+    </filter-mapping>-->
+    <filter>
+        <filter-class>filters.AuthenticationAdminFilter</filter-class>
+        <filter-name>AuthenticationAdminFilter</filter-name>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthenticationAdminFilter</filter-name>
+        <url-pattern>/manageStand</url-pattern>
+        <url-pattern>/deleteStand</url-pattern>
+        <url-pattern>/manageFootballClub</url-pattern>
+        <url-pattern>/deleteFootballClub</url-pattern>
+        <url-pattern>/manageNews</url-pattern>
+        <url-pattern>/updateNews</url-pattern>
+        <url-pattern>/deleteNews</url-pattern>
+        <url-pattern>/manageSeason</url-pattern>
+        <url-pattern>/createSeason</url-pattern>
+        <url-pattern>/manageHistoryPurchasedTicketMatchSeat</url-pattern>
+        <url-pattern>/ExportExcelSeasonSeat</url-pattern>
+        <url-pattern>/ExportExcelMatchSeat</url-pattern>
+        <url-pattern>/ExportExcelUser</url-pattern>
+        <url-pattern>/deleteSeason</url-pattern>
+        <url-pattern>/createUser</url-pattern>
+        <url-pattern>/manageUser</url-pattern>
+        <url-pattern>/searchUser</url-pattern>
+        <url-pattern>/updateUser</url-pattern>
+        <url-pattern>/changestatusUser</url-pattern>
+        <url-pattern>/manageMatch</url-pattern>
+        <url-pattern>/updateMatch</url-pattern>
+        <url-pattern>/createMatch</url-pattern>
+        <url-pattern>/deleteMatch</url-pattern>
+    </filter-mapping>
+   
+</web-app>

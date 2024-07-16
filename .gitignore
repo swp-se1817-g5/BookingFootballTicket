@@ -1,0 +1,20 @@
+# Ignore build output directories
+
+/build/**
+
+# Không ignore folder images và tất cả nội dung bên trong nó
+!build/web/images
+!build/web/images/**
+
+/dist/
+/nbbuild/
+/nbdist/
+/nbactions.xml
+/nb-configuration.xml
+
+# Ignore NetBeans specific files
+nbproject/private/
+nbproject/privileges.xml
+/UploadImage/nbproject/private/
+/public/build/
+/public/dist/

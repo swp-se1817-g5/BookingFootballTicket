@@ -1,0 +1,1 @@
+$(document).ready(function(){$(".forminput").autocomplete(searchSettings).data('ui-autocomplete')._renderItem=_renderItem;});
