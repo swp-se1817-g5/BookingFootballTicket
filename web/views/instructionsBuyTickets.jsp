@@ -76,7 +76,7 @@
                 <img src="images/instructions/1.png" alt="Hình ảnh hướng dẫn 1">
             </p>
             <p>
-                2. Tiếp theo hãy chọn ví trí mà bạn mong muốn, mỗi tài khoản chỉ được mua tối đá 5 vé.
+                2. Tiếp theo hãy chọn vị trí mà bạn mong muốn, mỗi tài khoản chỉ được mua tối đá 5 vé.
                 <br>
                 <img src="images/instructions/2.png" alt="Hình ảnh hướng dẫn 2">
             </p>
