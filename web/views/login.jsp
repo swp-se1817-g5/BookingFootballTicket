@@ -64,7 +64,7 @@
                 <div class="account-container">
                     <div class="heading-bx left">
                         <h2 class="title-head">Đăng <span>Nhập</span></h2>
-                        <p>Đăng ký tài khoản của bạn<a href="./register">Ở đây</a></p>
+                        <p>Đăng ký tài khoản của bạn <a href="./register">Ở đây</a></p>
                     </div>
                     <c:if test="${not empty errorMessage}">
                         <p style="color:red">${errorMessage}</p>
