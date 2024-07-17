@@ -17,7 +17,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import Config.Config;
-import controllers.Auth.resetService;
+import SendMail.resetService;
 import dal.DaoBooking;
 import dal.MatchDAO;
 import dal.MatchSeatDAO;
