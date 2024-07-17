@@ -1,5 +1,6 @@
 package controllers.Auth;
 
+import SendMail.sendGmail;
 import dal.UserDAO;
 import java.io.IOException;
 import java.util.Objects;
@@ -30,7 +31,7 @@ public class GmailLoginServlet extends HttpServlet {
         }
 
         // Get access token from Google
-        getGmail gg = new getGmail();
+        sendGmail gg = new sendGmail();
         String accessToken = gg.getToken(code);
         UserGoogle ggUser = gg.getUserInfo(accessToken);
 
