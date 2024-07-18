@@ -88,11 +88,6 @@ public class vnpayReturn extends HttpServlet {
                     HistoryPurchasedTicketMatchSeat his = new HistoryPurchasedTicketMatchSeat(match.getTeam1().getClubName(), match.getTeam2().getClubName(),
                             match.getLocalDateTime(), match.getSeason().getSeasonName(), booking.getSeatName(), booking.getQuantity(),
                             booking.getStandName(), booking.getSeatClassName(), email, booking.getQrCode(), booking.getPrice(), email, LocalDateTime.now(), booking.getMatchSeatId());
-//                    HistoryPurchasedTicketMatchSeat his = new HistoryPurchasedTicketMatchSeat(
-//                            booking.getSeatName(), booking.getQuantity(), booking.getStandName(),
-//                            booking.getSeatClassName(), booking.getQrCode(), booking.getPrice(),
-//                            booking.getCreatedDate(), email
-//                    );
 
                     MatchSeatDAO.INSTANCE.addOrderTicket(his);
                     booking.setStatus("done");
@@ -108,10 +103,8 @@ public class vnpayReturn extends HttpServlet {
 
                 request.getSession().setAttribute("transResult", transSuccess);
                 if (transSuccess) {
-
                     response.sendRedirect("homePage");
                 } else {
-
                     response.sendRedirect("./matchDetail?matchId=" + booking.getMatchId());
                 }
             }
