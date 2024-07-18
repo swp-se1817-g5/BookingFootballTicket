@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage Bán Vé Đá Bóng</title>
+    <title>Bán Vé Đá Bóng</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -24,7 +24,7 @@
             align-items: center;
             min-height: calc(100vh - 200px); /* Chiều cao tối thiểu trừ chiều cao header và footer */
             padding-top: 110px; /* Điều chỉnh giá trị này để phù hợp với chiều cao của header */
-            padding-bottom: 100px; /* Đảm bảo nội dung không tràn vào footer */
+            padding-bottom: 0px; /* Đảm bảo nội dung không tràn vào footer */
         }
 
         .text {
@@ -76,7 +76,7 @@
                 <img src="images/instructions/1.png" alt="Hình ảnh hướng dẫn 1">
             </p>
             <p>
-                2. Tiếp theo hãy chọn ví trí mà bạn mong muốn, mỗi tài khoản chỉ được mua tối đá 5 vé.
+                2. Tiếp theo hãy chọn vị trí mà bạn mong muốn, mỗi tài khoản chỉ được mua tối đá 5 vé.
                 <br>
                 <img src="images/instructions/2.png" alt="Hình ảnh hướng dẫn 2">
             </p>
