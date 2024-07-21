@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import Config.Config;
 import SendMail.resetService;
-import dal.DaoBooking;
+import dal.BookingDAO;
 import dal.MatchDAO;
 import dal.MatchSeatDAO;
 import jakarta.servlet.http.HttpSession;
@@ -71,7 +71,7 @@ public class vnpayReturn extends HttpServlet {
                 String ticketIdStr = request.getParameter("vnp_TxnRef");
                 boolean transSuccess = false;
                 int ticketId = Integer.parseInt(ticketIdStr);
-                BookingTicket booking = DaoBooking.INSTANCE.getBookingTicketById(ticketId);
+                BookingTicket booking = BookingDAO.INSTANCE.getBookingTicketById(ticketId);
                 Match match = MatchDAO.INSTANCE.getMatcheById(booking.getMatchId() + "");
                 if ("00".equals(request.getParameter("vnp_TransactionStatus"))) {
                     //update banking system
@@ -99,7 +99,7 @@ public class vnpayReturn extends HttpServlet {
                     booking.setStatus("cancel");
                 }
 
-                DaoBooking.INSTANCE.updateBookingStatus(booking);
+                BookingDAO.INSTANCE.updateBookingStatus(booking);
 
                 request.getSession().setAttribute("transResult", transSuccess);
                 if (transSuccess) {

@@ -131,15 +131,8 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle pt-3" href="#" id="policiesDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Chính sách
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="policiesDropdown">
-                                    <a class="dropdown-item" href="#">Chính sách bán hàng</a>
-                                    <a class="dropdown-item" href="#">Chính sách bảo mật</a>
-                                </div>
+                            <li class="nav-item">
+                                <a class="nav-link pt-3" href="./Policy">Chính sách</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link pt-3" href="./about">Về chúng tôi</a>

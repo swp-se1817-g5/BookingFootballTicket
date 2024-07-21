@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage Bán Vé Đá Bóng</title>
+    <title>Bán Vé Đá Bóng</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -71,15 +71,15 @@
     </header>
     <div class="inner">
         <div class="text">
-            <h2>Giới Thiệu Về Chúng Tôi</h2>
+            <h2>GIỚI THIỆU VỀ CHÚNG TÔI</h2>
             <p> Chào mừng bạn đến với FootballBookingTicket, điểm đến tuyệt vời nhất để mua vé cho những trận đấu bóng đá sôi động trên SVĐ Mỹ Đình. Được thành lập bởi một đội ngũ đam mê bóng đá, sứ mệnh của chúng tôi là cung cấp cho người hâm mộ một nền tảng đáng tin cậy và dễ dàng để mua vé cho các trận đấu yêu thích.</p>
-            <h2>Câu Chuyện Của Chúng Tôi</h2>
+            <h2>CÂU CHUYỆN CỦA CHÚNG TÔI</h2>
             <p> Tại FootballBookingTicket, chúng tôi tin rằng mỗi người hâm mộ bóng đá đều xứng đáng có cơ hội trải nghiệm không khí cuồng nhiệt của một trận đấu trực tiếp. Hành trình của chúng tôi bắt đầu khi một nhóm bạn bè, chán nản với những khó khăn trong việc mua vé bóng đá trực tuyến, quyết định tạo ra một giải pháp đơn giản và dễ tiếp cận cho tất cả mọi người.</p>
-            <h2>Những Gì Chúng Tôi Cung Cấp</h2>
+            <h2>NHỮNG GÌ CHÚNG TÔI CUNG CẤP</h2>
             <p> <strong>Lựa Chọn Trận Đấu Đa Dạng:</strong> Từ các giải đấu trong nước, chúng tôi phủ sóng một loạt các sự kiện bóng đá, đảm bảo người hâm mộ không bỏ lỡ bất kỳ trận đấu nào.</p>
             <p> <strong>Đặt Vé An Toàn và Dễ Dàng:</strong> Giao diện thân thiện với người dùng và cổng thanh toán an toàn của chúng tôi giúp việc đặt vé trở nên dễ dàng và không gặp rắc rối.</p>
             <p> <strong>Cập Nhật Theo Thời Gian Thực:</strong> Luôn cập nhật thông tin về lịch thi đấu, tình trạng vé và tin tức bóng đá mới nhất.</p>
-            <h2>Cam Kết Của Chúng Tôi</h2>
+            <h2>CAM KẾT CỦA CHÚNG TÔI</h2>
             <p> Chúng tôi cam kết cung cấp dịch vụ khách hàng tốt nhất và hỗ trợ tận tình. Đội ngũ chuyên nghiệp của chúng tôi luôn sẵn sàng giúp đỡ bạn với bất kỳ thắc mắc hay vấn đề nào mà bạn gặp phải. Chúng tôi tự hào về sự minh bạch, độ tin cậy và sự tận tụy trong việc làm cho trải nghiệm mua vé bóng đá của bạn trở nên thú vị nhất.</p>
 <!--            <h2>Tham Gia Cùng Chúng Tôi</h2>
             <p> Hãy tham gia cộng đồng FootballBookingTicket ngay hôm nay và trở thành một phần của mạng lưới người hâm mộ bóng đá đang ngày càng phát triển trên toàn cầu. Dù bạn là người hâm mộ nhiệt thành của đội bóng trong nước hay là fan của các câu lạc bộ quốc tế, chúng tôi luôn đảm bảo bạn không bỏ lỡ bất kỳ khoảnh khắc nào của trận đấu.</p>-->

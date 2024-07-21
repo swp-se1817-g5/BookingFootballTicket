@@ -1,7 +1,7 @@
 package vnpay;
 
 import Config.Config;
-import dal.DaoBooking;
+import dal.BookingDAO;
 import dal.MatchSeatDAO;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -64,16 +64,10 @@ public class ajaxServlet extends HttpServlet {
                 LocalDateTime.now()
         );
         
-        //DaoBooking.INSTANCE.addOrderTicket(booking);
-        //MatchSeatDAO.INSTANCE.subtractAvailability(booking);
+        BookingDAO.INSTANCE.addOrderTicket(booking);
+        MatchSeatDAO.INSTANCE.subtractAvailability(booking);
         
-        if(!DaoBooking.INSTANCE.addOrderTicketWithAvailabilityCheck(booking)) {
-            resp.sendRedirect(req.getContextPath() + "/matchDetail?matchId=" + matchIdStr);
-            return;
-        }
-        
-        
-        int insertId = DaoBooking.INSTANCE.getNewId();
+        int insertId = BookingDAO.INSTANCE.getNewId();
         if (insertId < 0) {
             resp.sendRedirect("login");
 //         resp.sendRedirect("orderError");
