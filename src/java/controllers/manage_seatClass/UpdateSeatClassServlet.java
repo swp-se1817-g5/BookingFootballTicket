@@ -3,9 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.manage_seatArea;
+package controllers.manage_seatClass;
 
-import dal.SeasonDAO;
 import dal.SeatAreaDAO;
 import dal.SeatClassDAO;
 import java.io.IOException;
@@ -16,17 +15,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import models.*;
+import java.math.BigDecimal;
+import models.SeatArea;
+import models.SeatClass;
 
 /**
  *
  * @author thuat
  */
-@WebServlet(name="UpdateSeatAreaServlet", urlPatterns={"/updateSeatArea"})
-public class UpdateSeatAreaServlet extends HttpServlet {
+@WebServlet(name="UpdateSeatClassServlet", urlPatterns={"/updateSeatClass"})
+public class UpdateSeatClassServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -43,10 +41,10 @@ public class UpdateSeatAreaServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateSeatAreaServlet</title>");  
+            out.println("<title>Servlet UpdateSeatClassServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateSeatAreaServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpdateSeatClassServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -76,15 +74,14 @@ public class UpdateSeatAreaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String seatAreaId_raw = request.getParameter("seatId");
-        String quantity_raw = request.getParameter("quantity");
+        String seatClassId_raw = request.getParameter("seatClassId");
+        String price_raw = request.getParameter("price");
         HttpSession session = request.getSession();
         try {
-            
-            SeatArea seat = SeatAreaDAO.INSTANCE.getSeatAreaById(seatAreaId_raw);
-            seat.setQuantity(Integer.parseInt(quantity_raw));
-            session.setAttribute("updated", SeatAreaDAO.INSTANCE.updateSeatArea(seat));
-            response.sendRedirect("manageSeatArea");
+            SeatClass seatClass = SeatClassDAO.getInstance().getSeatClassById(Integer.parseInt(seatClassId_raw));
+            seatClass.setPrice(new BigDecimal(price_raw));
+            session.setAttribute("updated", SeatClassDAO.getInstance().updateSeatClass(seatClass));
+            response.sendRedirect("manageSeatClass");
         } catch (Exception e) {
             e.printStackTrace();
         }

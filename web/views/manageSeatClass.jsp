@@ -246,42 +246,23 @@
                 <div class="container-fluid">
                     <div class="table-responsive">
                         <div class="table-wrapper">
-                            <div class="table-title">
-                                <div class="row">
-                                    <div class="col-md-4 ">
-                                        <input type="search" class="form-control radius-md" id="myInput" onkeyup="filterTable()" placeholder="Tìm kiếm theo tên&hellip;">
-                                    </div>
-                                </div>
-                            </div>
                             <table id="seatAreaTable" class="table table-striped table-hover table-bordered">
                                 <thead class="text-content">
                                     <tr>
                                         <th style="font-size: 14px;">ID </th>
-                                        <th style="font-size: 14px;">Tên vị trí </th>
-                                        <th style="font-size: 14px;">Hạng vé </th>
-                                        <th style="font-size: 14px;">Số lượng mặc định </th>
-
-                                        <th style="font-size: 14px;">
-                                            <select class="form-select border-0 align-middle" id="seatAreaSelect" onchange="filterTable()" style="font-weight: bold; font-size: 14px; margin-top: 0;">
-                                                <option selected value="all">Tất cả khán đài</option>
-                                                <c:forEach items="${requestScope.stands}" var="s">
-                                                    <option value="${s.standName}" style="font-weight: bold; font-size: 14px;">${s.standName}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </th>
+                                        <th style="font-size: 14px;">Tên hạng vé </th>
+                                        <th style="font-size: 14px;">Giá tiền </th>
                                         <th style="font-size: 14px;">Hành Động</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <c:forEach items="${requestScope.seatAreas}" var="s">
+                                    <c:forEach items="${requestScope.seatClass}" var="s">
                                         <tr class="text-content">
-                                            <td>${s.seatId}</td>
-                                            <td>${s.seatName}</td>
-                                            <td>${s.seatClass.seatClassName}</td>
-                                            <td>${s.quantity}</td>
-                                            <td>${s.stand.standName}</td>
+                                            <td>${s.seatClassId}</td>
+                                            <td>${s.seatClassName}</td>
+                                            <td>${s.price}</td>
                                             <td>
-                                                <a onclick="update('${s.seatId}', '${s.seatName}', '${s.quantity}', '${s.stand.standId}', '${s.seatClass.seatClassId}')" href="#updateSeatAreaModal" class="edit" title="Edit" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
+                                                <a onclick="update('${s.seatClassId}', '${s.seatClassName}', '${s.price}')" href="#updateSeatClassModal" class="edit" title="Edit" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -294,42 +275,26 @@
 
 
             <%-- update Modal --%>
-            <div id="updateSeatAreaModal" class="modal fade">
+            <div id="updateSeatClassModal" class="modal fade">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <form action="updateSeatArea" method="post">
+                        <form action="updateSeatClass" method="post">
                             <div class="modal-header">						
-                                <h4 class="modal-title">Cập nhật Chỗ ngồi</h4>
+                                <h4 class="modal-title">Cập nhật Hạng vé</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
                                     <label>ID</label>
-                                    <input id="seatId" name="seatId" readonly type="number" class="form-control" required>
+                                    <input id="seatId" name="seatClassId" readonly type="number" class="form-control" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Tên</label>
                                     <input id="seatName" name="seatName" readonly type="text" class="form-control" required>
                                 </div>
                                 <div class="form-group">
-                                    <label>Số lượng mặc định</label>
-                                    <input id="quantityUpdate" name="quantity" type="number" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Hạng vé</label>
-                                    <select id="seatClassIdUpdate" name="seatClassIdUpdate" placeholder="Chọn 1 hạng vé" class="form-select" required disabled>
-                                        <c:forEach items="${seatClass}" var="sc">
-                                            <option value="${sc.seatClassId}">${sc.seatClassName}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Khán đài</label>
-                                    <select id="standIdUpdate" name="standIdUpdate" placeholder="Chọn 1 khán đài" class="form-select" required disabled>
-                                        <c:forEach items="${stands}" var="st">
-                                            <option value="${st.standId}">${st.standName}</option>
-                                        </c:forEach>
-                                    </select>
+                                    <label>Giá tiền</label>
+                                    <input id="priceUpdate" name="price" type="number" class="form-control" required>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -356,9 +321,7 @@
         function update(seatId, seatName, quantity, standId, seatClassId) {
             document.getElementById('seatId').value = seatId;
             document.getElementById('seatName').value = seatName;
-            document.getElementById('quantityUpdate').value = quantity;
-            setSelectedOption('standIdUpdate', standId);
-            setSelectedOption('seatClassIdUpdate', seatClassId);
+            document.getElementById('priceUpdate').value = quantity;
         }
 
         function setSelectedOption(selectId, valueToSelect) {
@@ -379,11 +342,11 @@
                 var toast = $('#toastNotification');
                 if (updated === "true") {
                     toast.find('#toastTitle').text('Success');
-                    toast.find('#toastMessage').text('Chỗ ngồi cập nhật thành công.');
+                    toast.find('#toastMessage').text('Hạng vé cập nhật thành công.');
                     toast.addClass('success').removeClass('error');
                 } else if (updated === "false") {
                     toast.find('#toastTitle').text('Error');
-                    toast.find('#toastMessage').text('Chỗ ngồi cập nhật thất bại.');
+                    toast.find('#toastMessage').text('Hạng vé cập nhật thất bại.');
                     toast.addClass('error').removeClass('success');
                 }
                 toast.toast('show');

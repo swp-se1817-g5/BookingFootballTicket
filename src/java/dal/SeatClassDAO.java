@@ -46,6 +46,24 @@ public class SeatClassDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
+    public boolean updateSeatClass(SeatClass seatClass) {
+        boolean updated = false;
+        String sql = "update SeatClass set price = ? where seatClassId = ? ";
+        try {
+            ps = connect.prepareStatement(sql);
+            ps.setBigDecimal(1, seatClass.getPrice());
+            ps.setInt(2, seatClass.getSeatClassId());
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                updated = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SeatClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return updated;
+
+    }
+
     public ArrayList<SeatClass> getListSeatClass() {
         ArrayList<SeatClass> list = new ArrayList<>();
         try {

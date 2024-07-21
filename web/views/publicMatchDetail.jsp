@@ -461,9 +461,9 @@
                                 </svg>
                             </div>
                         </div>
-                        <p class="text-center"><strong>Explain Selected above</strong></p>
+                        <p class="text-center"><strong>Giải thích lựa chọn bên trên</strong></p>
                         <ul class="list-inline text-center">
-                            <li class="list-inline-item"><span class="badge badge-secondary">No Select</span></li>
+                            <li class="list-inline-item"><span class="badge badge-secondary">Không chọn</span></li>
                             <li class="list-inline-item"><span class="badge badge-primary">standard</span></li>
                             <li class="list-inline-item"><span class="badge badge-success">vip-stand</span></li>
                             <li class="list-inline-item"><span class="badge badge-danger">fans-side</span></li>
@@ -495,7 +495,7 @@
                                                 </ul>
                                             </div>
                                             <div class="col-md-4 text-end">
-                                                <h5>${seatMatch.price} vnđ ${seatMatch.matchSeatId}</h5>
+                                                <h5>${seatMatch.price} vnđ</h5>
                                                 <p class="text-muted">cho mỗi vé</p>
                                                 <div class="mb-2">
                                                     <select class="form-select" name="numberOfTicket">
@@ -509,7 +509,7 @@
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <c:forEach var="i" begin="1" end="${seatMatch.availability}">
-                                                                    <option value="${i}">${i} ticket</option>
+                                                                    <option value="${i}">${i} vé</option>
                                                                 </c:forEach>
                                                             </c:otherwise>
                                                         </c:choose>

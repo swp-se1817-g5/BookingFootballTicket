@@ -30,6 +30,7 @@
                             <a href="manageFootballClub" class="dropdown-item ${requestScope.url == "manageFootballClub" ? "active" : " "}">Quản Lý Đội Bóng</a>
                             <a href="manageSeason" class="dropdown-item ${requestScope.url == "manageSeason" ? "active" : " "}">Quản Lý Mùa Giải</a>
                             <a href="manageStand" class="dropdown-item ${requestScope.url == "manageStand" ? "active" : " "}">Quản Lý Khán Đài</a>
+                            <a href="manageSeatClass" class="dropdown-item ${requestScope.url == "manageSeatClass" ? "active" : " "}">Quản Lý Hạng Vé</a>
                             <a href="manageSeatArea" class="dropdown-item ${requestScope.url == "manageSeatArea" ? "active" : " "}">Quản Lý Chỗ Ngồi</a>
                             <a href="manageNews" class="dropdown-item ${requestScope.url == "manageNews" ? "active" : " "}">Quản Lý Bài Đăng</a>
                             <a href="manageHistoryPurchasedTicketMatchSeat" class="dropdown-item ${requestScope.url == "manageHistoryPurchasedTicketMatchSeat" ? "active" : " "}">Quản Lý Lịch Sử Bán Vé</a>

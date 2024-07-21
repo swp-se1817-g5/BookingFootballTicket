@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.manage_seatArea;
+package controllers.manage_seatClass;
 
-import dal.SeasonDAO;
 import dal.SeatAreaDAO;
 import dal.SeatClassDAO;
+import dal.StandDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,17 +16,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import models.*;
+import java.util.ArrayList;
+import models.SeatClass;
 
 /**
  *
  * @author thuat
  */
-@WebServlet(name="UpdateSeatAreaServlet", urlPatterns={"/updateSeatArea"})
-public class UpdateSeatAreaServlet extends HttpServlet {
+@WebServlet(name="ManageSeatClassServlet", urlPatterns={"/manageSeatClass"})
+public class ManageSeatClassServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -43,10 +41,10 @@ public class UpdateSeatAreaServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateSeatAreaServlet</title>");  
+            out.println("<title>Servlet ManageSeatClassServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateSeatAreaServlet at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ManageSeatClassServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,7 +61,17 @@ public class UpdateSeatAreaServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+
+        // Handle the "updated" attribute
+        if (session.getAttribute("updated") != null) {
+            request.setAttribute("updated", session.getAttribute("updated"));
+            session.removeAttribute("updated");
+        }
+        
+        request.setAttribute("seatClass", SeatClassDAO.getInstance().getListSeatClass());
+        request.getRequestDispatcher("views/manageSeatClass.jsp").forward(request, response);
+        
     } 
 
     /** 
@@ -76,18 +84,7 @@ public class UpdateSeatAreaServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        String seatAreaId_raw = request.getParameter("seatId");
-        String quantity_raw = request.getParameter("quantity");
-        HttpSession session = request.getSession();
-        try {
-            
-            SeatArea seat = SeatAreaDAO.INSTANCE.getSeatAreaById(seatAreaId_raw);
-            seat.setQuantity(Integer.parseInt(quantity_raw));
-            session.setAttribute("updated", SeatAreaDAO.INSTANCE.updateSeatArea(seat));
-            response.sendRedirect("manageSeatArea");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        processRequest(request, response);
     }
 
     /** 

@@ -64,8 +64,14 @@ public class ajaxServlet extends HttpServlet {
                 LocalDateTime.now()
         );
         
-        DaoBooking.INSTANCE.addOrderTicket(booking);
-        MatchSeatDAO.INSTANCE.subtractAvailability(booking);
+        //DaoBooking.INSTANCE.addOrderTicket(booking);
+        //MatchSeatDAO.INSTANCE.subtractAvailability(booking);
+        
+        if(!DaoBooking.INSTANCE.addOrderTicketWithAvailabilityCheck(booking)) {
+            resp.sendRedirect(req.getContextPath() + "/matchDetail?matchId=" + matchIdStr);
+            return;
+        }
+        
         
         int insertId = DaoBooking.INSTANCE.getNewId();
         if (insertId < 0) {
