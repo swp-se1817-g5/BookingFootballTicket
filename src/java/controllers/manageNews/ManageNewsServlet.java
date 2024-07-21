@@ -16,7 +16,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import models.News;
 import models.NewsState;
-import models.NewsStatus;
 
 /**
  *
@@ -69,17 +68,14 @@ public class ManageNewsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         HttpSession session = request.getSession();
         ArrayList<News> listNews;
-        ArrayList<NewsStatus> listStatus;
         ArrayList<NewsState> listState;
         String valueSearch = request.getParameter("valueSearch");
         valueSearch = valueSearch == null ? "" : valueSearch.trim();
         listNews = NewsDAO.getInstance().getlistNews(valueSearch);
-        listStatus = NewsDAO.getInstance().getListStatus();
         listState = NewsDAO.getInstance().getListState();
-        if (!listNews.isEmpty() || !listState.isEmpty() || !listStatus.isEmpty()) {
+        if (!listNews.isEmpty() || !listState.isEmpty()) {
             session.setAttribute("getListNews", listNews);
             session.setAttribute("getListState", listState);
-            session.setAttribute("getListStatus", listStatus);
         }
         if (session.getAttribute("newsCreated") != null) {
             request.setAttribute("created", session.getAttribute("newsCreated"));

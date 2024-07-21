@@ -18,7 +18,6 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import models.News;
 import models.NewsState;
-import models.NewsStatus;
 import models.User;
 
 /**
@@ -86,8 +85,6 @@ public class CreateNewNewsServlet extends HttpServlet {
             String title = request.getParameter("title");
             String content = request.getParameter("content");
             String conclusion = request.getParameter("conclusion");
-            NewsStatus newsStatus = new NewsStatus();
-            newsStatus.setStatusId(2);
             NewsState newsState = new NewsState();
             newsState.setStateId(1);
             Part part = request.getPart("image");
@@ -103,7 +100,7 @@ public class CreateNewNewsServlet extends HttpServlet {
                 File image = new File(dir, part.getSubmittedFileName());
                 part.write(image.getAbsolutePath());
                 imagePath = request.getContextPath() + "/images/news/" + image.getName();
-                News news = new News(title, content, imagePath, conclusion, createdByRaw.getEmail(), newsStatus, newsState);
+                News news = new News(title, content, imagePath, conclusion, createdByRaw.getEmail(), newsState);
                 session.setAttribute("newsCreated", NewsDAO.getInstance().createNews(news));
             }
         } catch (IllegalArgumentException e) {
