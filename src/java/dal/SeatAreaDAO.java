@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import models.SeatArea;
+import models.SeatClass;
 import models.Stand;
 
 public class SeatAreaDAO {
@@ -51,6 +52,87 @@ public class SeatAreaDAO {
             e.printStackTrace();
         }
         return seats;
+    }
+    public ArrayList<SeatArea> getSeatArea() {
+        ArrayList<SeatArea> seats = new ArrayList<>();
+        String sql = """
+                     SELECT 
+                     sa.seatId,
+                     st.standId as standId,
+                     st.standName as standName,
+                     sa.seatName,
+                     sa.quantity,
+                     sc.seatClassId as seatClassId,
+                     sc.seatClassName as seatClassName,
+                     sc.price as price
+                     FROM [SeatArea] sa
+                     JOIN Stand st on st.standId = sa.standId
+                     JOIN SeatClass sc on sc.seatClassId = sa.seatClassId
+                     WHERE sa.isActive = 1 """;
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                SeatArea seat = new SeatArea();
+                Stand stand = new Stand();
+                SeatClass seatClass = new SeatClass();
+
+                seatClass.setPrice(rs.getBigDecimal("price"));
+                seatClass.setSeatClassId(rs.getInt("seatClassId"));
+                seatClass.setSeatClassName(rs.getString("seatClassName"));
+                stand.setStandId(rs.getInt("standId"));
+                stand.setStandName(rs.getString("standName"));
+                seat.setSeatId(rs.getInt("seatId"));
+                seat.setSeatName(rs.getString("seatName"));
+                seat.setQuantity(rs.getInt("quantity"));
+                seat.setStand(stand);
+                seat.setSeatClass(seatClass);
+                seats.add(seat);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seats;
+    }
+    public SeatArea getSeatAreaById(String id) {
+        SeatArea seat = new SeatArea();
+        String sql = """
+                     SELECT 
+                     sa.seatId,
+                     st.standId as standId,
+                     st.standName as standName,
+                     sa.seatName,
+                     sa.quantity,
+                     sc.seatClassId as seatClassId,
+                     sc.seatClassName as seatClassName,
+                     sc.price as price
+                     FROM [SeatArea] sa
+                     JOIN Stand st on st.standId = sa.standId
+                     JOIN SeatClass sc on sc.seatClassId = sa.seatClassId
+                     WHERE sa.isActive = 1 and sa.seatId = """;
+        sql += id;
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Stand stand = new Stand();
+                SeatClass seatClass = new SeatClass();
+
+                seatClass.setPrice(rs.getBigDecimal("price"));
+                seatClass.setSeatClassId(rs.getInt("seatClassId"));
+                seatClass.setSeatClassName(rs.getString("seatClassName"));
+                stand.setStandId(rs.getInt("standId"));
+                stand.setStandName(rs.getString("standName"));
+                seat.setSeatId(rs.getInt("seatId"));
+                seat.setSeatName(rs.getString("seatName"));
+                seat.setQuantity(rs.getInt("quantity"));
+                seat.setStand(stand);
+                seat.setSeatClass(seatClass);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seat;
     }
 
     public int getTotal(String seatAreaSearch, String standSearch) {
@@ -122,6 +204,27 @@ public class SeatAreaDAO {
             e.printStackTrace();
         }
         return updated;
+    }
+    public boolean updateSeatArea(SeatArea seat) {
+        boolean updated = false;
+        String sql = "update SeatArea set quantity = ?, seatClassId = ? where seatId = ? ";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, seat.getQuantity());
+            ps.setInt(2, seat.getSeatClass().getSeatClassId());
+            ps.setInt(3, seat.getSeatId());
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                updated = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return updated;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(INSTANCE.getSeatAreaById("4"));
     }
 
 }

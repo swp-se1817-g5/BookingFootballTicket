@@ -66,35 +66,28 @@
     </style>
 </head>
 <body>
-    <jsp:include page="header.jsp" />
+    <header>
+        <jsp:include page="header.jsp" />
+    </header>
     <div class="inner">
         <div class="text">
-            <h2>HƯỚNG DẪN MUA VÉ</h2>
-            <p>
-                1. Quý khách vui lòng tham khảo thông tin vé tại mục "Trận đấu sắp diễn ra".
-                <br>
-                <img src="images/instructions/1.png" alt="Hình ảnh hướng dẫn 1">
-            </p>
-            <p>
-                2. Tiếp theo hãy chọn vị trí mà bạn mong muốn, mỗi tài khoản chỉ được mua tối đá 5 vé.
-                <br>
-                <img src="images/instructions/2.png" alt="Hình ảnh hướng dẫn 2">
-            </p>
-            <p>
-                3. Sau đó hãy kiểm tra lại thông tin một lần nữa và chọn mục "Thanh toán".
-                <br>
-                <img src="images/instructions/3.png" alt="Hình ảnh hướng dẫn 3">
-            </p>
-            <p>
-                4. Hãy điền thông tin thanh toán của bạn để thanh toán.
-                <br>
-                <img src="images/instructions/4.png" alt="Hình ảnh hướng dẫn 4">
-            </p>
-            <p>
-                5. Sau khi thanh toán thành công, tại trang HomePage, quý khách vui lòng vào mục "Vé đã mua" ở Tài khoản để chụp lại mã QR.
-                <br>
-                <img src="images/instructions/5.png" alt="Hình ảnh hướng dẫn 5">
-            </p>
+            <h2>CHÍNH SÁCH BÁN HÀNG</h2>
+            <p> 1. Trang web bán vé đá bóng của chúng tôi cam kết cung cấp vé xem các trận đấu bóng đá một cách nhanh chóng, thuận tiện và an toàn.</p>
+            <p> 2. Giá vé được niêm yết rõ ràng trên trang web và bao gồm các khoản phí liên quan.</p>
+            <p> 3. Chúng tôi cam kết không thu thêm bất kỳ khoản phí nào ngoài giá vé đã niêm yết.</p>
+            <p> 4. Chúng tôi chấp nhận phương thức thanh toán như cổng thanh toán điện tử VNPAY.</p>
+            <p> 5. Vé đã mua sẽ không được hoàn tiền trừ khi trận đấu bị hủy bỏ hoặc thay đổi thời gian diễn ra do lỗi từ ban tổ chức.</p>
+            <p> 6. Trong trường hợp hủy vé hợp lệ, khách hàng sẽ nhận được thông báo và hướng dẫn hoàn tiền qua email đã đăng ký.</p>
+            <p> 7. Vé sẽ được hiển thị trong mục "Vé đã mua" dưới dạng vé điện tử (QR code) ngay sau khi thanh toán thành công.</p>
+            <p> 8. Khách hàng cần kiểm tra thông tin vé và tải vé xuống thiết bị của mình để sử dụng khi vào sân.</p>
+            <p> 10. Nếu có bất kỳ vấn đề nào liên quan đến việc mua vé, khách hàng có thể liên hệ với bộ phận hỗ trợ của chúng tôi qua email hoặc số điện thoại được cung cấp trên trang web.</p>
+            <p> 11. Tất cả các giao dịch thanh toán đều được bảo mật đảm bảo an toàn thông tin khách hàng.</p>
+            <h2>CHÍNH SÁCH BẢO MẬT</h2>
+            <p> 1. Chúng tôi thu thập các thông tin cá nhân như tên, email, số điện thoại và thông tin thanh toán khi khách hàng thực hiện giao dịch trên trang web.</p>
+            <p> 2. Thông tin cá nhân của khách hàng được sử dụng để xử lý đơn hàng, giao vé và cung cấp dịch vụ hỗ trợ khách hàng.</p>
+            <p> 3. Tất cả các thông tin cá nhân và thông tin thanh toán đều được bảo mật an toàn.</p>
+            <p> 4. Chúng tôi cam kết không chia sẻ, bán hoặc trao đổi thông tin cá nhân của khách hàng cho bất kỳ bên thứ ba nào trừ khi có sự đồng ý của khách hàng hoặc yêu cầu từ cơ quan pháp luật.</p>
+            <p> 5. Khách hàng có quyền truy cập, chỉnh sửa và xóa thông tin cá nhân của mình bằng cách đăng nhập vào tài khoản trên trang web.</p>
             <p>&nbsp;</p>
         </div>
     </div>
