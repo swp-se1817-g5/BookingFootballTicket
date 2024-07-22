@@ -267,10 +267,10 @@ Author     : duong
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <input id="valueSearch" type="text" class="form-control radius-md"placeholder="Search...">
+                                        <input id="valueSearch" type="text" class="form-control radius-md"placeholder="Tìm Kiếm...">
                                     </div>
                                     <div class="col-sm-8 createe">
-                                        <a href="#createNewsModal" class="btn btn-success d-flex align-items-center" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create News</span></a>
+                                        <a href="#createNewsModal" class="btn btn-success d-flex align-items-center" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Tạo Bài Viết Mới</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -337,7 +337,7 @@ Author     : duong
                             </table>
                             <script>
                                 function confirmDelete(newsId) {
-                                    return confirm("Are you sure want to delete newsId = " + newsId + " ?");
+                                    return confirm("Bạn đang xóa tin tức có ID = " + newsId + " ?");
                                 }
                             </script>
                         </div>
@@ -351,7 +351,7 @@ Author     : duong
                 <div class="modal-content">
                     <form id="createNewsForm" action="createNewNews" method="post" enctype="multipart/form-data" onsubmit="return validateForm('create')">
                         <div class="modal-header">						
-                            <h4 class="modal-title">Create News</h4>
+                            <h4 class="modal-title">Tạo bài viết mới</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
@@ -374,8 +374,8 @@ Author     : duong
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                            <input type="submit" class="btn btn-success" value="Thêm">
                         </div>
                     </form>
                 </div>
@@ -413,7 +413,7 @@ Author     : duong
                                     <label>Kết Luận</label>
                                     <textarea id="updateConclusion${n.newsId}" name="conclusion" class="form-control" rows="5" required>${n.conclusion}</textarea>
                                 </div>
-                                <div class="form-group" id="state${n.newsId}" style="display: none;">
+                                <div class="form-group" id="state${n.newsId}">
                                     <label>Tình Trạng</label>
                                     <select name="stateId">
                                         <c:forEach items="${sessionScope.getListState}" var="listState">
@@ -423,10 +423,30 @@ Author     : duong
                                         </c:forEach>
                                     </select>
                                 </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label>Người Thêm</label>
+                                        <input value="${n.createBy}" readonly="" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label>Ngày Thêm</label>
+                                        <input value="${n.createdDate}" readonly="" class="form-control">
+                                    </div> 
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label>Người Cập Nhật Cuối</label>
+                                        <input value="${n.updateBy}" readonly="" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label>Ngày Cập Nhật Cuối</label>
+                                        <input value="${n.lastUpdateDate}" readonly="" class="form-control">
+                                    </div>    
+                                </div>
                             </div>
                             <div class="modal-footer">
-                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-success" value="Add">
+                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                                <input type="submit" class="btn btn-success" value="Cập Nhật">
                             </div>
                         </form>
                     </div>
@@ -520,7 +540,7 @@ Author     : duong
                             showUpdateToast();
                         },
                         error: function () {
-                            alert("Error occurred while searching for news.");
+                            alert("Xảy ra lỗi trong quá trình tìm kiếm tin tức.");
                         }
                     });
                 }
@@ -533,12 +553,12 @@ Author     : duong
                         var toast = $('#toastNotification');
                         if (updated === "true") {
                             toast.find('#toastTitle').text('Success');
-                            toast.find('#toastMessage').text('News updated successfully.');
+                            toast.find('#toastMessage').text('Cập nhật tin tức thành công.');
                             toast.addClass('success').removeClass('error');
                             toast.toast('show'); // Hiển thị toast
                         } else if (updated === "false") {
                             toast.find('#toastTitle').text('Error');
-                            toast.find('#toastMessage').text('Failed to update News!');
+                            toast.find('#toastMessage').text('Cập nhật tin tức không thành công!');
                             toast.addClass('error').removeClass('success');
                             toast.toast('show'); // Hiển thị toast
                         }
@@ -551,12 +571,12 @@ Author     : duong
                         var toast = $('#toastNotification');
                         if (created === "true") {
                             toast.find('#toastTitle').text('Success');
-                            toast.find('#toastMessage').text('News created successfully.');
+                            toast.find('#toastMessage').text('Tạo tin tức mới thành công.');
                             toast.addClass('success').removeClass('error');
                             toast.toast('show');
                         } else if (created === "false") {
                             toast.find('#toastTitle').text('Error');
-                            toast.find('#toastMessage').text('Failed to create News!');
+                            toast.find('#toastMessage').text('Tạo tin tức không thành công!');
                             toast.addClass('error').removeClass('success');
                             toast.toast('show');
                         }
@@ -570,12 +590,12 @@ Author     : duong
                         var toast = $('#toastNotification');
                         if (deleted === "true") {
                             toast.find('#toastTitle').text('Success');
-                            toast.find('#toastMessage').text('News deleted successfully.');
+                            toast.find('#toastMessage').text('Xóa tin tức thành công.');
                             toast.addClass('success').removeClass('error');
                             toast.toast('show');
                         } else if (deleted === "false") {
                             toast.find('#toastTitle').text('Error');
-                            toast.find('#toastMessage').text('Failed to delete News!');
+                            toast.find('#toastMessage').text('Xóa tin tức không thành công!');
                             toast.addClass('error').removeClass('success');
                             toast.toast('show');
                         }

@@ -218,14 +218,6 @@ CREATE TABLE HistoryPurchasedTicketSeasonSeat (
 );
 GO
 
--- Table StatusNews
-CREATE TABLE NewsStatus (
-   statusId INT PRIMARY KEY IDENTITY(1,1),
-   statusName NVARCHAR(30),
-   isDeleted BIT DEFAULT 0
-);
-GO
-
 -- Table StateNews
 CREATE TABLE NewsState (
    stateId INT PRIMARY KEY IDENTITY(1,1),

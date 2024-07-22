@@ -71,7 +71,7 @@ public class ManageNewsServlet extends HttpServlet {
         ArrayList<NewsState> listState;
         String valueSearch = request.getParameter("valueSearch");
         valueSearch = valueSearch == null ? "" : valueSearch.trim();
-        listNews = NewsDAO.getInstance().getlistNews(valueSearch);
+        listNews = NewsDAO.getInstance().getlistNews(valueSearch.toLowerCase());
         listState = NewsDAO.getInstance().getListState();
         if (!listNews.isEmpty() || !listState.isEmpty()) {
             session.setAttribute("getListNews", listNews);
