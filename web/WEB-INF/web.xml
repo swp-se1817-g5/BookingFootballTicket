@@ -28,6 +28,7 @@
     </filter>
     <filter-mapping>
         <filter-name>AuthenticationAdminFilter</filter-name>
+        <url-pattern>/dashboard</url-pattern>
         <url-pattern>/manageStand</url-pattern>
         <url-pattern>/deleteStand</url-pattern>
         <url-pattern>/manageFootballClub</url-pattern>
