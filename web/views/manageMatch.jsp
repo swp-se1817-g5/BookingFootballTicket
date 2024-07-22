@@ -300,12 +300,12 @@
                 <div class="modal-content">
                     <form action="createMatch" method="post" onsubmit="return validateForm()">
                         <div class="modal-header">
-                            <h4 class="modal-title">Create Match</h4>
+                            <h4 class="modal-title">Tạo mới trận đấu</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>FC-1</label>
+                                <label>Đội bóng thứ nhất</label>
                                 <select id="newFc1Id" name="fc1Id" placeholder="Select 1 club" class="form-select" required>
                                     <c:forEach items="${footballClubs}" var="fc">
                                         <option value="${fc.clubId}">${fc.clubName}</option>
@@ -313,7 +313,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>FC-2 <span id="errorFC" class="error"></span></label>
+                                <label>Đội bóng thứ hai <span id="errorFC" class="error"></span></label>
                                 <select id="newFc2Id" name="fc2Id" placeholder="Select 1 club" class="form-select" required>
                                     <c:forEach items="${footballClubs}" var="fc">
                                         <option value="${fc.clubId}">${fc.clubName}</option>
@@ -321,11 +321,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Start Time <span id="datetimeError" class="error"></span></label>
+                                <label>Thời gian bắt đầu <span id="datetimeError" class="error"></span></label>
                                 <input id="datetimeInput" type="datetime-local" class="form-control" name="startTime" required>
                             </div>
                             <div class="form-group">
-                                <label>Season</label>
+                                <label>Mùa giải</label>
                                 <select name="season" placeholder="Select 1 season" class="form-select" required>
                                     <c:forEach items="${seasons}" var="season">
                                         <option value="${season.seasonId}">${season.seasonName}</option>
@@ -333,7 +333,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Match type</label>
+                                <label>Thể loại trận đấu</label>
                                 <select name="type" placeholder="Select 1 type" class="form-select" required>
                                     <c:forEach items="${types}" var="type">
                                         <option value="${type.typeId}">${type.name}</option>
@@ -342,8 +342,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ">
+                            <input type="submit" class="btn btn-success" value="Thêm">
                         </div>
                     </form>
                 </div>
@@ -357,16 +357,16 @@
                 <div class="modal-content">
                     <form action="updateMatch" method="post" onsubmit="return validateForm2()">
                         <div class="modal-header">						
-                            <h4 class="modal-title">Update Match</h4>
+                            <h4 class="modal-title">Cập nhật trận đấu</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Match ID</label>
+                                <label>ID trận đấu</label>
                                 <input id="matchId" name="matchId" readonly type="number" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>FC-1</label>
+                                <label>Đội bóng thứ nhất</label>
                                 <select id="fc1Id2" name="fc1Id" placeholder="Select 1 club" class="form-select" required>
                                     <c:forEach items="${footballClubs}" var="fc">
                                         <option value="${fc.clubId}">${fc.clubName}</option>
@@ -374,7 +374,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>FC-2 <span id="errorFC2" class="error"></span></label>
+                                <label>Đội bóng thứ hai<span id="errorFC2" class="error"></span></label>
                                 <select id="fc2Id2" name="fc2Id" placeholder="Select 1 club" class="form-select" required>
                                     <c:forEach items="${footballClubs}" var="fc">
                                         <option value="${fc.clubId}">${fc.clubName}</option>
@@ -382,11 +382,11 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Start Time <span id="datetimeError2" class="error"></span></label>
+                                <label>Thời gian bắt đầu<span id="datetimeError2" class="error"></span></label>
                                 <input id="datetimeInput2" type="datetime-local" class="form-control" name="startTime" required>
                             </div>
                             <div class="form-group">
-                                <label>Season</label>
+                                <label>Mùa giải</label>
                                 <select id="seasonId" name="season" placeholder="Select 1 season" class="form-select" required>
                                     <c:forEach items="${seasons}" var="season">
                                         <option value="${season.seasonId}">${season.seasonName}</option>
@@ -394,7 +394,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Match type</label>
+                                <label>Thể loại trận đấu</label>
                                 <select id="typeId" name="type" placeholder="Select 1 type" class="form-select" required>
                                     <c:forEach items="${types}" var="type">
                                         <option value="${type.typeId}">${type.name}</option>
@@ -402,7 +402,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>Match Status</label>
+                                <label>Trạng thái trận đấu</label>
                                 <select id="statusId" name="status" placeholder="Select 1 status" class="form-select" required>
                                     <c:forEach items="${statusList}" var="status">
                                         <option value="${status.matchStatusId}">${status.matchStatusName}</option>
@@ -411,8 +411,8 @@
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Save">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ">
+                            <input type="submit" class="btn btn-success" value="Lưu">
                         </div>
                     </form>
                 </div>

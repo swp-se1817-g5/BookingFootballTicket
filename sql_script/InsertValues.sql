@@ -1,30 +1,30 @@
-﻿USE BookingFootballTicket;
+﻿USE FootballBookingTicket;
 GO
 
 -- Insert values into Role table
 INSERT INTO Role (roleName) VALUES
-('Admin'),
-('User'),
-('Staff'),
-('Inspector Ticket');
+(N'Quản trị viên'),
+(N'Người dùng'),
+(N'Nhân viên'),
+(N'Nhân viên quét vé');
 GO
 
 -- Insert values into User table
 INSERT INTO [User] (email, [name], roleId, [hashedPassword], phoneNumber, avatar, createdBy) VALUES
-('admin@example.com', 'Admin', 1, '$2a$10$xOmO7JLAf1MZx4ase20PreqTFUWA2dwoD0UlRQsfJxaUnUO.YBf7S', '1234567890', 'Images/avatar/avatar1.jpg', 'admin@example.com'),
-('user1@example.com', 'User 1', 2, 'hashed_password_user1', '0987654321', 'Images/avatar/avatar2.jpg', 'admin@example.com'),
-('user2@example.com', 'Staff ', 3, '$2a$10$xOmO7JLAf1MZx4ase20PreqTFUWA2dwoD0UlRQsfJxaUnUO.YBf7S', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com'),
-('inspector@example.com', 'inspector Ticket ', 4, '$2a$10$xOmO7JLAf1MZx4ase20PreqTFUWA2dwoD0UlRQsfJxaUnUO.YBf7S', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com');
+('admin@example.com', N'Quản trị viên', 1, '$2a$10$xOmO7JLAf1MZx4ase20PreqTFUWA2dwoD0UlRQsfJxaUnUO.YBf7S', '1234567890', 'Images/avatar/avatar1.jpg', 'admin@example.com'),
+('user1@example.com', N'Người dùng', 2, 'hashed_password_user1', '0987654321', 'Images/avatar/avatar2.jpg', 'admin@example.com'),
+('user2@example.com', N'Nhân viên', 3, '$2a$10$xOmO7JLAf1MZx4ase20PreqTFUWA2dwoD0UlRQsfJxaUnUO.YBf7S', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com'),
+('inspector@example.com', N'Nhân viên quét vé', 4, '$2a$10$xOmO7JLAf1MZx4ase20PreqTFUWA2dwoD0UlRQsfJxaUnUO.YBf7S', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com');
 GO
 
 
 -- Insert values into FootballClub table
 INSERT INTO FootballClub (clubName, img, Description, createdBy) VALUES
-('Chelsea', 'path/to/image1.jpg', 'Description of Football Club A', 'admin@example.com'),
-('Brentford', 'path/to/image1.jpg', 'Description of Football Club A', 'admin@example.com'),
-('Arsenal', 'path/to/image1.jpg', 'Description of Football Club A', 'admin@example.com'),
-('Burnley', 'path/to/image1.jpg', 'Description of Football Club A', 'admin@example.com'),
-('Watford', 'path/to/image2.jpg', 'Description of Football Club B', 'admin@example.com');
+(N'Hoàng Anh Gia Lai', 'path/to/image1.jpg', 'Description of Football Club A', 'admin@example.com'),
+(N'Hà Nội', 'path/to/image1.jpg', 'Description of Football Club A', 'admin@example.com'),
+(N'Bình Định', 'path/to/image1.jpg', 'Description of Football Club A', 'admin@example.com'),
+(N'Than Quảng Ninh', 'path/to/image1.jpg', 'Description of Football Club A', 'admin@example.com'),
+(N'Viettel', 'path/to/image2.jpg', 'Description of Football Club B', 'admin@example.com');
 GO
 
 -- Insert values into MatchStatus table
@@ -38,16 +38,23 @@ GO
 
 -- Insert values into MatchType table
 INSERT INTO MatchType ([name]) VALUES
-('Friendly'),
-('League'),
-('Finally'),
-('Cup');
+(N'Giao hữu'),
+(N'Vòng loại'),
+(N'Chung kết'),
+(N'Bán kết'),
+(N'Tứ kết'),
+(N'Tranh hạng ba'),
+(N'Loại trực tiếp'),
+(N'Siêu cúp'),
+(N'Lượt đi'),
+(N'Lượt về'),
+(N'Thi đấu vòng tròn');
 GO
 
 -- Insert values into Season table
 INSERT INTO Season (seasonName, startDate, endDate, createdBy) VALUES
-('Laliga 2024', '2024-01-01', '2024-04-30', 'admin@example.com'),
-('Euro 2025', '2024-05-01', '2024-08-31', 'admin@example.com');
+(N'V-League 1', '2024-01-01', '2024-04-30', 'admin@example.com'),
+(N'U19 Quốc gia', '2024-05-01', '2024-08-31', 'admin@example.com');
 GO
 
 -- Insert values into Match table
@@ -155,11 +162,11 @@ GO
 -- Insert values into HistoryPurchasedTicketMatchSeat table
 INSERT INTO HistoryPurchasedTicketMatchSeat (team1, team2, startTime, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy, matchSeatId)
 VALUES
-(N'Chelsea', N'Brentford', '2024-12-12 15:00:00', 'Laliga 2024', N'1', 2, N'A', N'fans-side', 'user1@example.com', 'qrcode1', 300000, 1, 'admin@example.com', 1),
-(N'Arsenal', N'Burnley', '2024-12-12 15:00:00', 'Laliga 2024', N'2', 3, N'B', N'standard', 'user2@example.com', 'qrcode2', 150000, 1, 'admin@example.com', 2),
-(N'Watford', N'Chelsea', '2024-12-12 15:00:00', 'Laliga 2024', N'3', 1, N'C', N'vip-stand', 'inspector@example.com', 'qrcode3', 200000, 1, 'admin@example.com', 3),
-(N'Brentford', N'Arsenal', '2024-12-12 15:00:00', 'Laliga 2024', N'4', 4, N'D', N'on-roof', 'user1@example.com', 'qrcode4', 60000, 1, 'admin@example.com', 4),
-(N'Burnley', N'Watford', '2024-12-12 15:00:00', 'Euro 2025', N'5', 5, N'A', N'under-roof', 'user2@example.com', 'qrcode5', 70000, 1, 'admin@example.com', 5);
+(N'Hoàng Anh Gia Lai', N'Viettel', '2024-12-12 15:00:00', 'V-League 1 - 2024', N'1', 2, N'A', N'fans-side', 'user1@example.com', 'qrcode1', 300000, 1, 'admin@example.com', 1),
+(N'Nam Định', N'Hà Nội', '2024-12-12 15:00:00', 'V-League 2 - 2024', N'2', 3, N'B', N'standard', 'user2@example.com', 'qrcode2', 150000, 1, 'admin@example.com', 2),
+(N'Thanh Hóa', N'Becamex Bình Dương', '2024-12-12 15:00:00', N'Siêu Cúp Quốc Gia', N'3', 1, N'C', N'vip-stand', 'inspector@example.com', 'qrcode3', 200000, 1, 'admin@example.com', 3),
+(N'Bình Định', N'Hải Phòng', '2024-12-12 15:00:00', N'Giải Hạng Ba Quốc Gia', N'4', 4, N'D', N'on-roof', 'user1@example.com', 'qrcode4', 60000, 1, 'admin@example.com', 4),
+(N'Than Quảng Ninh', N'Công An Hà Nội', '2024-12-12 15:00:00', N'Giải Hạng Nhì Quốc Gia', N'5', 5, N'A', N'under-roof', 'user2@example.com', 'qrcode5', 70000, 1, 'admin@example.com', 5);
 GO
 -- Insert values into HistoryPurchasedTicketSeasonSeat table
 --INSERT INTO HistoryPurchasedTicketSeasonSeat (startDate, endDate, seasonName, seatName, quantity, standName, seatClassName, email, qrCode, price, statusId, createdBy)
@@ -184,8 +191,8 @@ INSERT INTO NewsState(stateName) VALUES
 GO
 -- Insert values into News table
 INSERT INTO News (title, content,conclusion,stateId,statusId, createdBy) VALUES
-('Austria and England win their groups', 'As the group stage of Euro 2024 concludes, the tournament has already seen its fair share of drama, surprises, and heartbreaks. Groups C and D, in particular, have delivered intense football action, leaving fans and pundits with much to discuss. Here�s a detailed look at the outcomes and narratives emerging from these groups.','The conclusion of the group stages sets the stage for an intriguing knockout phase. England must address their attacking woes if they are to meet the expectations back home. Denmark will need to improve their finishing to stand a chance against stronger opponents. The Netherlands, despite their shaky form, have the talent to cause upsets, but they must find cohesion quickly. France, still among the favorites, will look to bounce back from their disappointing draw and leverage their star power in the next rounds.',1,1, 'admin@example.com'),
-('Hungary and Italy in waiting room after finishing third', 'The European Championship 2024 group stage came to an electrifying conclusion as the final matches in Groups A and B brought unexpected twists and turns. The outcomes of these matches not only determined the teams advancing to the knockout stages but also showcased some intense football drama.Group A','With the first two groups ended, Hungary is now in a good place to reach the knockout stages. Germany and Switzerland are qualified from Group A. Spain and Italy join them from Group B. This means we now know the first round of 16 tie is going to be Switzerland versus Italy on the 29th of June. Hungary and Croatia are in the waiting room in third place. Hungary is currently close to qualification, since only the worst two numbers 3 drop out of the tournament. The first Euro 2024 tickets for the knockout stages are available now!',1,1, 'admin@example.com'),
-('Portugal third team to win first two matches', 'Portugal joins Germany and Spain as the third team to win their first two matches in Euro 2024. The tournament heats up with intense competition as teams vie for knockout stage spots.','Today is the start of the third round in the group stage. On Wednesday evening we know which 16 teams are qualified for the knockout stages. Euro 2024 tickets are getting more and more popular now the tournament heads towards the most exciting part of the tournament. Book yours now and support your team in its attempt to win the title.',2,2, 'admin@example.com'),
-('Poor performances cost England favourites status', 'Germany and France are the new shared favourites to win the Euro 2024. England dropped a bit below them, while Spain is the real dark horse of the tournament.','It sounds strange to call a huge football nation like Spain the dark horse, but they aren�t amongst the top favourites according to the bookmakers. When you ask any follower of the tournament which team impressed the most, Spain will definitely come to mind. Lamine Yamal and Nico Williams are two top quality youngsters, who make Spain a real force to reckon with!',2,2, 'admin@example.com');
+(N'Kết quả U19 Đông Nam Á 2024 hôm nay 21/07 ', N'Chiều nay (21/7), U19 Việt Nam bước vào loạt trận thứ 2 bảng B giải U19 Đông Nam Á 2024 gặp U19 Australia. Đây là trận đấu mà U19 Việt Nam phải thắng mới mong có cơ hội vào bán kết.',N'HẾT GIỜ !!! U19 Việt Nam thua 2-6 trước U19 Australia.',1,1, 'admin@example.com'),
+(N'U19 Lào xuất sắc lấy điểm của U19 Myanmar, trao cơ hội cho U19 Việt Nam', N'Bị đối thủ dồn ép nhưng U19 Lào đã phản kháng rất tốt để giật lại một trận hòa. Kết quả này giúp U19 Việt Nam sáng cơ hội cán đích ở vị trí nhì bảng, nhưng cánh cửa đi tiếp vẫn là rất mong manh.',N'Nhưng điều đó có lẽ cũng không còn mang ý nghĩa bởi thể thức ở giải đấu năm nay chỉ lấy đội dẫn đầu bảng đi tiếp, trong khi Việt Nam rất khó cạnh tranh vị trí thứ nhì xuất sắc nhất với những đối thủ tiềm năng như Malaysia hay Philippines ở các bảng đấu khác.',1,1, 'admin@example.com'),
+(N'Lịch thi đấu U19 Đông Nam Á 2024 hôm nay 20/7: Chờ thêm bất ngờ', N'Sau khi đánh bại U19 Campuchia trong trận ra quân, U19 Timor Leste được chờ đợi sẽ tạo thêm bất ngờ trong trận đấu với U19 Philippines chiều nay.',N'Với những gì đã thể hiện trước U19 Timor Leste, rất khó cho U19 Campuchia ngăn cản được U19 Indonesia lúc này. Với vị thế đang lên, cộng thêm sự cổ vũ của người hâm mộ nhà, U19 Indonesia hứa hẹn sẽ có thêm trận đấu bùng nổ khác.',2,2, 'admin@example.com'),
+(N'Quang Hải ký hợp đồng mới với CLB Công an Hà Nội, nhận phí lót tay cao kỷ lục Việt Nam', N'Nguyễn Quang Hải chính thức ký hợp đồng mới kéo dài 3 năm với CLB Công an Hà Nội và nhận mức phí lót tay cao kỷ lục Việt Nam.',N'Ký hợp đồng mới 3 năm với CLB Công an Hà Nội, Nguyễn Quang Hải sẽ nhận mức phí lót tay lên đến 27 tỷ đồng (9 tỷ/ mùa). Đây là con số cao kỷ lục của bóng đá Việt Nam, nhưng được đánh giá là xứng đáng với tài năng và tên tuổi của Quang Hải.',2,2, 'admin@example.com');
 GO

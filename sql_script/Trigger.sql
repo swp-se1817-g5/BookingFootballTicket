@@ -1,5 +1,5 @@
 -------------------------------------------------------------------- TriggerAutoInsertMatchSeat-------------------------------------------------------------------- 
-USE BookingFootballTicket;
+USE FootballBookingTicket;
 GO
 CREATE TRIGGER trg_AfterInsertMatch
 ON Match

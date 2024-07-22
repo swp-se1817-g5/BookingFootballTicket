@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package controllers.Auth;
+package SendMail;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -17,7 +17,7 @@ import org.apache.http.client.fluent.Request;
  *
  * @author AD
  */
-public class getGmail {
+public class sendGmail {
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
 

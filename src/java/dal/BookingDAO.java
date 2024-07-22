@@ -20,12 +20,12 @@ import models.HistoryPurchasedTicketMatchSeat;
  *
  * @author AD
  */
-public class DaoBooking {
-    public static DaoBooking INSTANCE = new DaoBooking();
+public class BookingDAO {
+    public static BookingDAO INSTANCE = new BookingDAO();
     private Connection con;
     private static final Logger LOGGER = Logger.getLogger(MatchSeatDAO.class.getName());
 
-    private DaoBooking() {
+    private BookingDAO() {
         if (INSTANCE == null) {
             con = new DBContext().connect;
         } else {

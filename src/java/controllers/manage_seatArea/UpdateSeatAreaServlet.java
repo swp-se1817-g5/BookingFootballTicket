@@ -3,11 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 
-package controllers.Auth;
+package controllers.manage_seatArea;
 
-import SendMail.resetService;
-import dal.TokenForgetDAO;
-import dal.UserDAO;
+import dal.SeasonDAO;
+import dal.SeatAreaDAO;
+import dal.SeatClassDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,15 +15,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import models.TokenForgetPassword;
-import models.User;
+import jakarta.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import models.*;
 
 /**
  *
- * @author AD
+ * @author thuat
  */
-@WebServlet(name="requestPassword", urlPatterns={"/requestPassword"})
-public class requestPassword extends HttpServlet {
+@WebServlet(name="UpdateSeatAreaServlet", urlPatterns={"/updateSeatArea"})
+public class UpdateSeatAreaServlet extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -40,10 +43,10 @@ public class requestPassword extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet requestPassword</title>");  
+            out.println("<title>Servlet UpdateSeatAreaServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet requestPassword at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet UpdateSeatAreaServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,7 +63,7 @@ public class requestPassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -73,40 +76,18 @@ public class requestPassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        UserDAO daoUser = new UserDAO();
-        String email = request.getParameter("email");
-        //
-        User user = daoUser.getUserByEmail(email);
-        if(user == null) {
-            request.setAttribute("messEr", "Bạn chưa đăng ký email này!");
-            request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
-            return;
+        String seatAreaId_raw = request.getParameter("seatId");
+        String quantity_raw = request.getParameter("quantity");
+        HttpSession session = request.getSession();
+        try {
+            
+            SeatArea seat = SeatAreaDAO.INSTANCE.getSeatAreaById(seatAreaId_raw);
+            seat.setQuantity(Integer.parseInt(quantity_raw));
+            session.setAttribute("updated", SeatAreaDAO.INSTANCE.updateSeatArea(seat));
+            response.sendRedirect("manageSeatArea");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        resetService service = new resetService();
-        String token = service.generateToken();
-        
-        String linkReset = "http://localhost:8080/BookingFootballTicket/resetPassword?token="+token;
-        
-        TokenForgetPassword newTokenForget = new TokenForgetPassword(
-                user.getEmail(), false, token, service.expireDateTime());
-        
-        TokenForgetDAO daoToken = new TokenForgetDAO();
-        //
-        boolean isInsert = daoToken.insertTokenForget(newTokenForget);
-        if(!isInsert) {
-            request.setAttribute("mess", "Có lỗi ở máy chủ!");
-            request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
-            return;
-        }
-        //
-        boolean isSend = service.sendEmail(email, linkReset, user.getName());
-        if(!isSend) {
-            request.setAttribute("mess", "Không thể gửi yêu cầu!");
-            request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
-            return;
-        }
-        request.setAttribute("mess", "Kiểm tra Email của bạn !");
-        request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
     }
 
     /** 
