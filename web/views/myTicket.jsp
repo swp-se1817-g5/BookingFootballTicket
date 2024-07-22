@@ -121,7 +121,7 @@
                             <label for="endDate">Đến</label>
                             <input type="date" id="endDate" class="form-control">
                         </div>
-                        <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
+                        <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Đặt lại<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                     </div>
                 </div>
 
