@@ -163,14 +163,14 @@
                                     <p class="card-text">Sân vận động Mỹ Đình</p>
                                     <input type="datetime-local" value="${lm.time}" readonly style="border: none; background: none; text-align: center">
                                     <p class="card-text">${lm.type.name}</p>
-                                    <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Xem Vé</a>
+                                    <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Xem Trận Đấu</a>
                                 </div>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
                 <div class="text-center mb-5">
-                    <a href="publicListMatch" class="btn btn-outline-secondary">Xem Thêm</a>
+                    <a href="publicListMatch" class="btn btn-outline-secondary">Xem Thêm Các Trận Đấu</a>
                 </div>
             </div>
             <div class="con_img">
@@ -192,14 +192,14 @@
                                 <div class="text-center mt-1"><img src="${fb.img}" style="width: auto; height: 100px;" alt="Team"></div>
                                 <div class="card-body">
                                     <h5 class="card-title">${fb.clubName}</h5>
-                                    <a href="publicFootballClub?fcId=${fb.clubId}" class="btn btn-primary">Chi tiết</a>
+                                    <a href="publicFootballClub?fcId=${fb.clubId}" class="btn btn-primary">Chi tiết đội bóng</a>
                                 </div>
                             </div>
                         </div>
                     </c:forEach>
                 </div>
                 <div class="text-center mb-5">
-                    <a href="publicListFootballClub" class="btn btn-outline-secondary">Xem Thêm</a>
+                    <a href="publicListFootballClub" class="btn btn-outline-secondary">Xem Thêm Các Đội Bóng</a>
                 </div>
             </div>
             <div class="con_img">
@@ -228,7 +228,7 @@
                     </c:forEach>
                 </div>
                 <div class="text-center mb-5">
-                    <a href="publicListTournment" class="btn btn-outline-secondary">Xem Thêm</a>
+                    <a href="publicListTournment" class="btn btn-outline-secondary">Xem Thêm Các Mùa Giải</a>
                 </div>
             </div>
             <div class="con_img">
@@ -277,7 +277,7 @@
             </div>
         </div>
         <div class="text-center mb-5">
-            <a href="publicListNews" class="btn btn-outline-secondary">Xem Thêm</a>
+            <a href="publicListNews" class="btn btn-outline-secondary">Xem Thêm Tin Tức</a>
         </div>
     </div>
     <!-- Footer -->
