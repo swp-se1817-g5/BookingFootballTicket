@@ -150,6 +150,7 @@
                                     <c:choose>
                                         <c:when test="${sessionScope.currentUser == null}">
                                             <a class="dropdown-item" data-auth="login" href="./login">Đăng nhập</a>
+                                            <a class="dropdown-item" data-auth="register" href="./register">Đăng ký</a>
                                         </c:when>
                                         <c:when test="${sessionScope.currentUser != null}">
                                             <a class="dropdown-item" data-auth="profile" href="userProfile">Thông tin tài khoản</a>

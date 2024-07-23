@@ -21,14 +21,20 @@
             }
 
             .container {
-                margin-top: 20px;
+                margin-top: 35px;
+            }
+            .bodylist{
+                background-image: url("https://hanoispiritofplace.com/wp-content/uploads/2017/06/hinh-nen-bong-da-dep-2.jpg");
+                background-size: cover; /* Điều chỉnh kích thước hình nền để bao phủ toàn bộ phần tử */
+                background-repeat: no-repeat; /* Không lặp lại hình nền */
+                background-position: center;
             }
 
             .sidebar {
                 position: sticky;
                 top: 20px;
                 padding: 15px;
-                background: #fff;
+                background: #0056b3;
                 border-radius: 10px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             }
@@ -166,138 +172,140 @@
         <div style="margin-bottom: 160px">
             <jsp:include page="header.jsp" />
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="sidebar">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên đội bóng">
-                        </div>
-                        <div class="form-group">
-                            <label for="season">Mùa giải</label>
-                            <select id="season" class="form-control">
-                                <option value="All">Tất cả các mùa</option>
-                                <c:forEach items="${requestScope.seasons}" var="s">
-                                    <option value="${s.seasonId}">${s.seasonName}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="dateFrom">Từ ngày</label><i class="fa fa-calendar"></i>
-                            <input type="date" id="dateFrom" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="dateTo">Đến ngày</label><i class="fa fa-calendar"></i>
-                            <input type="date" id="dateTo" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label for="matchType">Thể loại trận đấu</label>
-                            <select id="matchType" class="form-control">
-                                <option value="All">Tất cả các thể loại</option>
-                                <c:forEach items="${requestScope.types}" var="t">
-                                    <option value="${t.typeId}">${t.name}</option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="matchStatus">Trạng thái trận đấu</label>
-                            <select id="matchStatus" class="form-control">
-                                <option value="All">Tất cả các trạng thái</option>
-                                <c:forEach items="${requestScope.statusList}" var="status">
-                                    <c:if test="${status.matchStatusId eq 1 or status.matchStatusId eq 2}">
-                                        <option value="${status.matchStatusId}">${status.matchStatusName}</option>
-                                    </c:if>
-                                </c:forEach>
-                            </select>
-                        </div>
-                        <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
-                        <div class="best-seller mt-4">
-                            <h5>Trận đấu nổi bật<i class="bi bi-fire text-danger"></i></h5>
-                                <c:forEach items="${requestScope.matches}" var="o" begin="0" end="0">
-                                <div class="product-card" >
-                                    <div class="competition">${o.season.seasonName}</div>
-                                    <div style="text-align: center">${o.type.name}</div>
-                                    <div class="team-logos">
-                                        <img src="${o.team1.img}" alt="${o.team1.clubName}">
-                                        <span class="vs">vs</span>
-                                        <img src="${o.team2.img}" alt="${o.team2.clubName}">
+        <div class="bodylist">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="sidebar">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên đội bóng">
+                            </div>
+                            <div class="form-group">
+                                <label for="season">Mùa giải</label>
+                                <select id="season" class="form-control">
+                                    <option value="All">Tất cả các mùa</option>
+                                    <c:forEach items="${requestScope.seasons}" var="s">
+                                        <option value="${s.seasonId}">${s.seasonName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="dateFrom">Từ ngày</label><i class="fa fa-calendar"></i>
+                                <input type="date" id="dateFrom" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="dateTo">Đến ngày</label><i class="fa fa-calendar"></i>
+                                <input type="date" id="dateTo" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="matchType">Thể loại trận đấu</label>
+                                <select id="matchType" class="form-control">
+                                    <option value="All">Tất cả các thể loại</option>
+                                    <c:forEach items="${requestScope.types}" var="t">
+                                        <option value="${t.typeId}">${t.name}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="matchStatus">Trạng thái trận đấu</label>
+                                <select id="matchStatus" class="form-control">
+                                    <option value="All">Tất cả các trạng thái</option>
+                                    <c:forEach items="${requestScope.statusList}" var="status">
+                                        <c:if test="${status.matchStatusId eq 1 or status.matchStatusId eq 2}">
+                                            <option value="${status.matchStatusId}">${status.matchStatusName}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                            <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
+                            <div class="best-seller mt-4">
+                                <h5>Trận đấu nổi bật<i class="bi bi-fire text-danger"></i></h5>
+                                    <c:forEach items="${requestScope.matches}" var="o" begin="0" end="0">
+                                    <div class="product-card" >
+                                        <div class="competition">${o.season.seasonName}</div>
+                                        <div style="text-align: center">${o.type.name}</div>
+                                        <div class="team-logos">
+                                            <img src="${o.team1.img}" alt="${o.team1.clubName}">
+                                            <span class="vs">vs</span>
+                                            <img src="${o.team2.img}" alt="${o.team2.clubName}">
+                                        </div>
+                                        <h5>${o.team1.clubName} vs ${o.team2.clubName}</h5>
+                                        <p><i class="fa fa-clock"></i>${o.time}</p>
+                                        <p><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</p>
+                                        <c:if test="${requestScope.allticket[o.matchId - 1].availability > 0}">
+                                            <div class="tickets-sold">Còn vé! Đặt ngay</div>
+                                        </c:if>
+                                        <c:if test="${requestScope.allticket[o.matchId - 1].availability == 0}">
+                                            <div class="tickets-sold">Hết vé! Vui lòng chọn trận khác</div>
+                                        </c:if>
+                                        <a href="matchDetail?matchId=${o.matchId}" class="btn btn-primary book-now-btn">Xem Vé</a>
                                     </div>
-                                    <h5>${o.team1.clubName} vs ${o.team2.clubName}</h5>
-                                    <p><i class="fa fa-clock"></i>${o.time}</p>
-                                    <p><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</p>
-                                    <c:if test="${requestScope.allticket[o.matchId - 1].availability > 0}">
-                                        <div class="tickets-sold">Còn vé! Đặt ngay</div>
-                                    </c:if>
-                                    <c:if test="${requestScope.allticket[o.matchId - 1].availability == 0}">
-                                        <div class="tickets-sold">Hết vé! Vui lòng chọn trận khác</div>
-                                    </c:if>
-                                    <a href="matchDetail?matchId=${o.matchId}" class="btn btn-primary book-now-btn">Xem Vé</a>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row" id="matchList" style="margin-left: 20px">
+                            <c:forEach items="${requestScope.matches}" var="o">
+                                <c:set var="dateTime" value="${o.time}" />
+                                <c:set var="date" value="${fn:split(dateTime, 'T')[0]}" />
+                                <c:set var="time" value="${fn:split(dateTime, 'T')[1]}" />
+                                <div class="col-md-4 mb-4 match" style="text-align: center" >
+                                    <div class=" ticket-card">
+                                        <input type="date" class="date" style="margin-left: 20px" value="${date}" readonly>
+                                        <div class="competition">${o.season.seasonName}</div>
+                                        <div style="text-align: center">${o.type.name}</div>
+                                        <div class="team-logos">
+                                            <img src="${o.team1.img}" alt="${o.team1.clubName}">        
+                                            <span class="vs">vs</span>
+                                            <img src="${o.team2.img}" alt="${o.team2.clubName}">
+                                        </div>
+                                        <div class="match-teams">${o.team1.clubName} vs ${o.team2.clubName}</div>
+                                        <div class="location"><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</div>
+                                        <div style="display: flex; justify-content: center;margin-left: 35px;">
+                                            <i class="fa fa-clock" style="margin-top: 10px"></i>
+                                            <input type="time" class="time" readonly value="${time}">
+                                        </div>
+                                        <c:if test="${requestScope.allticket[o.matchId - 1].availability > 0}">
+                                            <div class="tickets-sold">Còn vé! Đặt ngay</div>
+                                        </c:if>
+                                        <c:if test="${requestScope.allticket[o.matchId - 1].availability == 0}">
+                                            <div class="tickets-sold">Hết vé! Vui lòng chọn trận khác</div>
+                                        </c:if>
+                                        <div class="button-container">
+                                            <a type="button" href="matchDetail?matchId=${o.matchId}" class="btn btn-primary book-now-btn">Xem Vé</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </c:forEach>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="row" id="matchList" style="margin-left: 20px">
-                        <c:forEach items="${requestScope.matches}" var="o">
-                            <c:set var="dateTime" value="${o.time}" />
-                            <c:set var="date" value="${fn:split(dateTime, 'T')[0]}" />
-                            <c:set var="time" value="${fn:split(dateTime, 'T')[1]}" />
-                            <div class="col-md-4 mb-4 match" style="text-align: center" >
-                                <div class=" ticket-card">
-                                    <input type="date" class="date" style="margin-left: 20px" value="${date}" readonly>
-                                    <div class="competition">${o.season.seasonName}</div>
-                                    <div style="text-align: center">${o.type.name}</div>
-                                    <div class="team-logos">
-                                        <img src="${o.team1.img}" alt="${o.team1.clubName}">        
-                                        <span class="vs">vs</span>
-                                        <img src="${o.team2.img}" alt="${o.team2.clubName}">
-                                    </div>
-                                    <div class="match-teams">${o.team1.clubName} vs ${o.team2.clubName}</div>
-                                    <div class="location"><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</div>
-                                    <div style="display: flex; justify-content: center;margin-left: 35px;">
-                                        <i class="fa fa-clock" style="margin-top: 10px"></i>
-                                        <input type="time" class="time" readonly value="${time}">
-                                    </div>
-                                    <c:if test="${requestScope.allticket[o.matchId - 1].availability > 0}">
-                                        <div class="tickets-sold">Còn vé! Đặt ngay</div>
-                                    </c:if>
-                                    <c:if test="${requestScope.allticket[o.matchId - 1].availability == 0}">
-                                        <div class="tickets-sold">Hết vé! Vui lòng chọn trận khác</div>
-                                    </c:if>
-                                    <div class="button-container">
-                                        <a type="button" href="matchDetail?matchId=${o.matchId}" class="btn btn-primary book-now-btn">Xem Vé</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
+                    <div class="clearfix col-12" id="pagination" >
+                        <ul class="pagination">
+                            <c:if test="${currentPage > 1}">
+                                <li class="page-item">
+                                    <a class="page-link" href="publicListMatch?page=${currentPage - 1}" data-page="${currentPage - 1}"><</a>
+                                </li>
+                            </c:if>
+                            <c:forEach var="page" begin="1" end="${numberOfPages}" step="1">
+                                <li class="page-item ${page == currentPage ? 'active' : ''}">
+                                    <c:choose>
+                                        <c:when test="${page == currentPage}">
+                                            <span class="page-link" data-page="${currentPage}">${currentPage}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="page-link" href="publicListMatch?page=${page}" data-page="${page}">${page}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </li>
+                            </c:forEach>
+                            <c:if test="${currentPage < numberOfPages}">
+                                <li class="page-item">
+                                    <a class="page-link" href="publicListMatch?page=${currentPage + 1}" data-page="${currentPage + 1}" >></a>
+                                </li>
+                            </c:if>
+                        </ul>
                     </div>
-                </div>
-                <div class="clearfix col-12" id="pagination" >
-                    <ul class="pagination">
-                        <c:if test="${currentPage > 1}">
-                            <li class="page-item">
-                                <a class="page-link" href="publicListMatch?page=${currentPage - 1}" data-page="${currentPage - 1}"><</a>
-                            </li>
-                        </c:if>
-                        <c:forEach var="page" begin="1" end="${numberOfPages}" step="1">
-                            <li class="page-item ${page == currentPage ? 'active' : ''}">
-                                <c:choose>
-                                    <c:when test="${page == currentPage}">
-                                        <span class="page-link" data-page="${currentPage}">${currentPage}</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a class="page-link" href="publicListMatch?page=${page}" data-page="${page}">${page}</a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </li>
-                        </c:forEach>
-                        <c:if test="${currentPage < numberOfPages}">
-                            <li class="page-item">
-                                <a class="page-link" href="publicListMatch?page=${currentPage + 1}" data-page="${currentPage + 1}" >></a>
-                            </li>
-                        </c:if>
-                    </ul>
                 </div>
             </div>
         </div>

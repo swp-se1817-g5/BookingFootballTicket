@@ -37,6 +37,7 @@
                         <div class="heading-bx left">
                             <h2 class="title-head">Đăng <span>Ký</span></h2>
                             <p>Đăng nhập tài khoản của bạn <a href="./login">Ở đây</a></p>
+                            <p>Quay lại <a href="./homePage">Trang chủ</a></p>
                         </div>
                         <c:if test="${not empty errorMessage}">
                             <p style="color:red">${errorMessage}</p>
