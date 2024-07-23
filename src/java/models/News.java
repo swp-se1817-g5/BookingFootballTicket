@@ -23,7 +23,6 @@ public class News {
     private LocalDateTime postOn;
     private String updateBy;
     private LocalDateTime lastUpdateDate;
-    private NewsStatus statusId;
     private NewsState stateId;
     private boolean isDeleted;
 
@@ -32,13 +31,12 @@ public class News {
     public News() {
     }
 
-    public News(String title, String content, String image, String conclusion, String createBy, NewsStatus statusId, NewsState stateId) {
+    public News(String title, String content, String image, String conclusion, String createBy, NewsState stateId) {
         this.title = title;
         this.content = content;
         this.image = image;
         this.conclusion = conclusion;
         this.createBy = createBy;
-        this.statusId = statusId;
         this.stateId = stateId;
     }
     
@@ -122,13 +120,6 @@ public class News {
         this.createBy = createBy;
     }
 
-    public NewsStatus getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(NewsStatus statusId) {
-        this.statusId = statusId;
-    }
 
     public NewsState getStateId() {
         return stateId;
@@ -158,7 +149,6 @@ public class News {
                 + "postOn=" + postOn + ",\n"
                 + "updateBy=" + updateBy + ",\n"
                 + "lastUpdateDate=" + lastUpdateDate + ",\n"
-                + "statusId=" + statusId + ",\n"
                 + "stateId=" + stateId + ",\n"
                 + "isDeleted=" + isDeleted + ",\n"
                 + "formatter=" + formatter + '\n'

@@ -23,6 +23,7 @@ public class SeatClassDAO {
     private final Connection connect;
     // Define constants for the string literals
     private static final String SQL_QUERY_GET_LIST_SEAT_CLASS = "SELECT * FROM SeatClass ";
+    private static final String SQL_QUERY_GET_SEAT_CLASS = "SELECT * FROM SeatClass where seatClassId = ? ";
     private static final String SEAT_CLASS_ID = "seatClassId";
     private static final String SEAT_CLASS_NAME = "seatClassName";
     private static final String PRICE = "price";
@@ -45,6 +46,24 @@ public class SeatClassDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
+    public boolean updateSeatClass(SeatClass seatClass) {
+        boolean updated = false;
+        String sql = "update SeatClass set price = ? where seatClassId = ? ";
+        try {
+            ps = connect.prepareStatement(sql);
+            ps.setBigDecimal(1, seatClass.getPrice());
+            ps.setInt(2, seatClass.getSeatClassId());
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                updated = true;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SeatClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return updated;
+
+    }
+
     public ArrayList<SeatClass> getListSeatClass() {
         ArrayList<SeatClass> list = new ArrayList<>();
         try {
@@ -61,6 +80,23 @@ public class SeatClassDAO {
             Logger.getLogger(SeatClassDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    public SeatClass getSeatClassById(int id) {
+        SeatClass seatClass = new SeatClass();
+        try {
+            ps = connect.prepareStatement(SQL_QUERY_GET_SEAT_CLASS);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                seatClass.setSeatClassId(rs.getInt(SEAT_CLASS_ID));
+                seatClass.setSeatClassName(rs.getString(SEAT_CLASS_NAME));
+                seatClass.setPrice(rs.getBigDecimal(PRICE));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(SeatClassDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return seatClass;
     }
 
 //    public static void main(String[] args) {

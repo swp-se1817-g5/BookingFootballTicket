@@ -49,7 +49,7 @@
                                 <input id="dateEnd" type="date" class="form-control" name="valueEndDate" value="${valueEndDate}">
                             </div>
                             <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc<i class="bi bi-filter btn-icon"></i></button>
-                            <button id="resetBtn" type="button" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
+                            <button id="resetBtn" type="button" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Đặt lại<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                         </div>
                     </form>
                 </div>

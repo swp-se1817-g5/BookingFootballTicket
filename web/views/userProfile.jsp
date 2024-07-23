@@ -12,7 +12,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Homepage Bán Vé Đá Bóng</title>
+        <title>Tài khoản - Bán Vé Đá Bóng</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -36,19 +36,24 @@
                 max-width: 600px;
                 margin: 50px auto;
             }
+            .headerr {
+                margin-bottom: 160px;
+            }
         </style>
     </head>
     <body>
-        <jsp:include page="header.jsp" />
+        <div class="headerr">
+            <jsp:include page="header.jsp" />
+        </div>
         <div class="container profile-container">
-            <div class="card">
+            <div class="card" style="">
                 <div class="card-header">
-                    Edit details
+                    Thông tin người dùng
                 </div>
                 <div class="card-body">
                     <form method="post" id="form_edit_details" action="userProfile" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label>Name*</label><br/>
+                            <label>Tên*</label><br/>
                             <span id="nameError" class="text-danger"></span>
                             <input class="form-control" id="name" type="text" name="name" value="${user.name}" required/>
                             <p class="error"></p>
@@ -59,14 +64,14 @@
                             <p class="error"></p>
                         </div>
                         <div class="form-group">
-                            <label for="tel_no">Mobile Number*</label><br/>
+                            <label for="tel_no">Số điện thoại*</label><br/>
                             <span id="phoneError" class="text-danger"></span>
                             <input class="form-control" id="phoneNumber" type="text" name="mobile" value="${user.phoneNumber}" />
                             <p class="error"></p>
                         </div>
                         <div class="form-group text-center">
                             <img class="img-account-profile rounded-circle mb-2" src="${user.avatar}" alt="">
-                            <label for="profileImage" class="d-block mt-3">JPG or PNG no larger than 5 MB</label>
+                            <label for="profileImage" class="d-block mt-3">JPG hoặc PNG không lớn hơn 5 MB</label>
                             <input id="imageUploadInput" name="avatar" type="file" accept="image/*" class="form-control">
                         </div>
                         <div class="form-group text-center">
@@ -80,9 +85,7 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <div class="container">
-                <p>&copy; 2024 Your Website. All rights reserved.</p>
-            </div>
+            <jsp:include page="footer.jsp"/>
         </footer>
         <script>
             function validateName() {

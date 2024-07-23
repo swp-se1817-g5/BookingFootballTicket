@@ -1,4 +1,4 @@
-﻿USE BookingFootballTicket;
+﻿USE FootballBookingTicket;
 GO
 
 CREATE PROCEDURE UpdateMatchSeatAvailability

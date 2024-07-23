@@ -2,61 +2,59 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers.manageNews;
 
-import dal.NewsDAO;
+package controllers.manage_seatArea;
+
+import dal.SeasonDAO;
+import dal.SeatAreaDAO;
+import dal.SeatClassDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
-import java.io.File;
-import models.News;
-import models.NewsState;
-import models.User;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import models.*;
 
 /**
  *
- * @author nguye
+ * @author thuat
  */
-@WebServlet(name = "CreateNewNewsServlet", urlPatterns = {"/createNewNews"})
-@MultipartConfig
-public class CreateNewNewsServlet extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+@WebServlet(name="UpdateSeatAreaServlet", urlPatterns={"/updateSeatArea"})
+public class UpdateSeatAreaServlet extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateNewNewsServlet</title>");
+            out.println("<title>Servlet UpdateSeatAreaServlet</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateNewNewsServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateSeatAreaServlet at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -64,13 +62,12 @@ public class CreateNewNewsServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -78,40 +75,23 @@ public class CreateNewNewsServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
+        String seatAreaId_raw = request.getParameter("seatId");
+        String quantity_raw = request.getParameter("quantity");
         HttpSession session = request.getSession();
         try {
-            User createdByRaw = (User) session.getAttribute("currentUser");
-            String title = request.getParameter("title");
-            String content = request.getParameter("content");
-            String conclusion = request.getParameter("conclusion");
-            NewsState newsState = new NewsState();
-            newsState.setStateId(1);
-            Part part = request.getPart("image");
-            String imagePath = null;
-            if ((part == null) || (part.getSubmittedFileName().trim().isEmpty()) || (part.getSubmittedFileName() == null)) {
-                imagePath = "";
-            } else {
-                String path = request.getServletContext().getRealPath("/images/news");
-                File dir = new File(path);
-                if (!dir.exists()) {
-                    dir.mkdirs();
-                }
-                File image = new File(dir, part.getSubmittedFileName());
-                part.write(image.getAbsolutePath());
-                imagePath = request.getContextPath() + "/images/news/" + image.getName();
-                News news = new News(title, content, imagePath, conclusion, createdByRaw.getEmail(), newsState);
-                session.setAttribute("newsCreated", NewsDAO.getInstance().createNews(news));
-            }
-        } catch (IllegalArgumentException e) {
+            
+            SeatArea seat = SeatAreaDAO.INSTANCE.getSeatAreaById(seatAreaId_raw);
+            seat.setQuantity(Integer.parseInt(quantity_raw));
+            session.setAttribute("updated", SeatAreaDAO.INSTANCE.updateSeatArea(seat));
+            response.sendRedirect("manageSeatArea");
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        response.sendRedirect("manageNews");
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

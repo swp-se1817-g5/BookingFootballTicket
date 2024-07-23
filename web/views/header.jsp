@@ -103,27 +103,17 @@
                                 </div>
                             </li>
 
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle pt-3" href="#" id="matchesDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Trận đấu
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="matchesDropdown">
-                                    <c:forEach items="${sessionScope.getListMatches}" var="lm" end="4">
-                                        <a class="dropdown-item" href="matchDetail?matchId=${lm.matchId}">${lm.team1.clubName} - ${lm.team2.clubName}</a>
-                                    </c:forEach>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle pt-3" href="#" id="policiesDropdown" role="button"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Chính sách
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="policiesDropdown">
-                                    <a class="dropdown-item" href="#">Chính sách bán hàng</a>
-                                    <a class="dropdown-item" href="#">Chính sách bảo mật</a>
-                                </div>
-                            </li>
+                            <!--                            <li class="nav-item dropdown">
+                                                            <a class="nav-link dropdown-toggle pt-3" href="#" id="matchesDropdown" role="button"
+                                                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                Trận đấu
+                                                            </a>
+                                                            <div class="dropdown-menu" aria-labelledby="matchesDropdown">
+                            <%--<c:forEach items="${sessionScope.getListMatches}" var="lm" end="4">--%>
+                                <a class="dropdown-item" href="matchDetail?matchId=${lm.matchId}">${lm.team1.clubName} - ${lm.team2.clubName}</a>
+                            <%--</c:forEach>--%>
+                        </div>
+                    </li>-->
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle pt-3" href="#" id="newsDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -142,11 +132,15 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link pt-3" href="./InstructionsForBuyTickets">Hướng dẫn mua vé</a>
+                                <a class="nav-link pt-3" href="./Policy">Chính sách</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link pt-3" href="./about">Về chúng tôi</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link pt-3" href="./InstructionsForBuyTickets">Hướng dẫn mua vé</a>
+                            </li>
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle pt-3" href="#" id="loginDropdown" role="button"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -161,8 +155,8 @@
                                             <a class="dropdown-item" data-auth="profile" href="userProfile">Thông tin tài khoản</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="myTicket">Vé đã mua</a>
-<!--                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="./changepass">Đổi mật khẩu</a>-->
+                                            <!--                                            <div class="dropdown-divider"></div>
+                                                                                        <a class="dropdown-item" href="./changepass">Đổi mật khẩu</a>-->
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="./logout">Đăng xuất</a>
                                         </c:when>
@@ -206,4 +200,3 @@
         </script>
     </body>
 </html>
-                                  

@@ -249,7 +249,7 @@ Author     : duong
 
             <!-- Spinner Start -->
             <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;">
                     <span class="sr-only">Loading...</span>
                 </div>
             </div>
@@ -267,10 +267,10 @@ Author     : duong
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <input id="valueSearch" type="text" class="form-control radius-md"placeholder="Search...">
+                                        <input id="valueSearch" type="text" class="form-control radius-md"placeholder="Tìm Kiếm...">
                                     </div>
                                     <div class="col-sm-8 createe">
-                                        <a href="#createNewsModal" class="btn btn-success d-flex align-items-center" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Create News</span></a>
+                                        <a href="#createNewsModal" class="btn btn-success d-flex align-items-center" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Tạo Bài Viết Mới</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -281,14 +281,6 @@ Author     : duong
                                         <th style="font-weight: bold; font-size: 14px;">Tiêu Đề</th>
                                         <th style="font-weight: bold; font-size: 14px;">Nội Dung</th>
                                         <th style="font-weight: bold; font-size: 14px;">Kết Luận</th>
-                                        <th>
-                                            <select style="font-weight: bold; font-size: 14px;" class="form-select border-0" id="statusSelect" onchange="filterTable()">
-                                                <option selected value="All">Trạng Thái</option>
-                                                <c:forEach items="${sessionScope.getListStatus}" var="listStatus">
-                                                    <option>${listStatus.statusName}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </th>
                                         <th>  
                                             <select style="font-weight: bold; font-size: 14px;" class="form-select border-0" id="stateSelect" onchange="filterTable()">
                                                 <option selected value="All">Tình Trạng</option>
@@ -334,7 +326,6 @@ Author     : duong
                                                     </c:otherwise>
                                                 </c:choose>
                                             </td>
-                                            <td>${n.statusId.statusName}</td>
                                             <td>${n.stateId.stateName}</td>
                                             <td style="text-align: center">
                                                 <a href="#updateNews${n.newsId}" class="edit" title="Edit" data-toggle="modal"><i class="material-icons">&#xE254;</i></a>
@@ -346,7 +337,7 @@ Author     : duong
                             </table>
                             <script>
                                 function confirmDelete(newsId) {
-                                    return confirm("Are you sure want to delete newsId = " + newsId + " ?");
+                                    return confirm("Bạn đang xóa tin tức có ID = " + newsId + " ?");
                                 }
                             </script>
                         </div>
@@ -360,7 +351,7 @@ Author     : duong
                 <div class="modal-content">
                     <form id="createNewsForm" action="createNewNews" method="post" enctype="multipart/form-data" onsubmit="return validateForm('create')">
                         <div class="modal-header">						
-                            <h4 class="modal-title">Create News</h4>
+                            <h4 class="modal-title">Tạo bài viết mới</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
@@ -383,8 +374,8 @@ Author     : duong
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                            <input type="submit" class="btn btn-success" value="Add">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                            <input type="submit" class="btn btn-success" value="Thêm">
                         </div>
                     </form>
                 </div>
@@ -422,18 +413,7 @@ Author     : duong
                                     <label>Kết Luận</label>
                                     <textarea id="updateConclusion${n.newsId}" name="conclusion" class="form-control" rows="5" required>${n.conclusion}</textarea>
                                 </div>
-                                <div class="form-group" id="status${n.newsId}">
-                                    <label>Trạng Thái</label>
-                                    <select name="statusId" id="getStatusId${n.newsId}" onchange="changeStatus(this)">
-                                        <c:forEach items="${sessionScope.getListStatus}" var="listStatus">
-                                            <option value="${listStatus.statusId}" 
-                                                    <c:if test="${listStatus.statusId == n.statusId.statusId}">selected</c:if>
-                                                    >${listStatus.statusName}
-                                            </option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                                <div class="form-group" id="state${n.newsId}" style="display: none;">
+                                <div class="form-group" id="state${n.newsId}">
                                     <label>Tình Trạng</label>
                                     <select name="stateId">
                                         <c:forEach items="${sessionScope.getListState}" var="listState">
@@ -443,10 +423,30 @@ Author     : duong
                                         </c:forEach>
                                     </select>
                                 </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label>Người Thêm</label>
+                                        <input value="${n.createBy}" readonly="" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label>Ngày Thêm</label>
+                                        <input value="${n.createdDate}" readonly="" class="form-control">
+                                    </div> 
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-sm-6">
+                                        <label>Người Cập Nhật Cuối</label>
+                                        <input value="${n.updateBy}" readonly="" class="form-control">
+                                    </div>
+                                    <div class="form-group col-sm-6">
+                                        <label>Ngày Cập Nhật Cuối</label>
+                                        <input value="${n.lastUpdateDate}" readonly="" class="form-control">
+                                    </div>    
+                                </div>
                             </div>
                             <div class="modal-footer">
-                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                                <input type="submit" class="btn btn-success" value="Add">
+                                <input type="button" class="btn btn-default" data-dismiss="modal" value="Hủy">
+                                <input type="submit" class="btn btn-success" value="Cập Nhật">
                             </div>
                         </form>
                     </div>
@@ -487,34 +487,6 @@ Author     : duong
             }
         </script>
 
-        <script>
-            function changeStatus(selectElement) {
-                var statusId = parseInt(selectElement.value, 10);
-                var stateDiv = selectElement.closest('.modal-body').querySelector('.form-group[id^="state"]');
-                var statusDiv = selectElement.closest('.modal-body').querySelector('.form-group[id^="status"]');
-                if (statusId === 3) {
-                    statusDiv.style.display = "none";
-                    stateDiv.style.display = "block";
-                } else {
-                    stateDiv.style.display = "none";
-                }
-            }
-
-            function initializeModals() {
-                var statusSelects = document.querySelectorAll('select[name="statusId"]');
-                statusSelects.forEach(function (selectElement) {
-                    changeStatus(selectElement);
-                    selectElement.addEventListener('change', function () {
-                        changeStatus(selectElement);
-                    });
-                });
-            }
-
-            window.onload = function () {
-                initializeModals();
-            };
-        </script>
-
 
         <!--//---------------------------------------Hiển thị thông báo---------------------------------------------------------->
         <!-- toast notification -->
@@ -527,18 +499,16 @@ Author     : duong
         </div>
         <script>
             $(document).ready(function () {
-                var statusValue = 'All'; // Giá trị mặc định cho dropdown status
                 var stateValue = 'All'; // Giá trị mặc định cho dropdown state
 
                 // Sự kiện input cho ô tìm kiếm
                 $('#valueSearch').on('input', function () {
                     var valueSearch = $(this).val();
                     // Gọi hàm thực hiện AJAX để tìm kiếm và cập nhật bảng tin tức
-                    updateNewsTable(valueSearch, statusValue, stateValue);
+                    updateNewsTable(valueSearch, stateValue);
                 });
                 // Sự kiện change cho dropdown filter
-                $('#statusSelect, #stateSelect').change(function () {
-                    statusValue = $('#statusSelect').val();
+                $('#stateSelect').change(function () {
                     stateValue = $('#stateSelect').val();
                     // Gọi hàm filter table để lọc và hiển thị dòng phù hợp trong bảng
                     filterTable();
@@ -546,36 +516,31 @@ Author     : duong
                 // Hàm filter table
                 function filterTable() {
                     $('#newsTableBody tr').each(function () {
-                        var statusText = $(this).find('td:eq(4)').text().trim(); // Lấy text của cột Status (index 3)
-                        var stateText = $(this).find('td:eq(5)').text().trim(); // Lấy text của cột State (index 4)
-
-                        var showRow = (statusValue === "All" || statusText === statusValue) && (stateValue === "All" || stateText === stateValue);
+                        var stateText = $(this).find('td:eq(4)').text().trim(); // Lấy text của cột State (index 4)
                         $(this).toggle(showRow);
                     });
                 }
 
                 // Hàm AJAX để tìm kiếm và cập nhật bảng tin tức
-                function updateNewsTable(valueSearch, statusValue, stateValue) {
+                function updateNewsTable(valueSearch, stateValue) {
                     $.ajax({
                         url: "manageNews",
                         type: "GET",
                         data: {
 //                            go: "search",
                             valueSearch: valueSearch,
-                            status: statusValue,
                             state: stateValue
                         },
                         success: function (data) {
                             // Cập nhật bảng tin tức bằng kết quả từ AJAX
                             $('#newsTableBody').html($(data).find('#newsTableBody').html());
                             // Sau khi cập nhật bảng, cần cập nhật lại giá trị của dropdown
-                            $('#statusSelect').val(statusValue);
                             $('#stateSelect').val(stateValue);
                             // Hiển thị toast thông báo nếu có
                             showUpdateToast();
                         },
                         error: function () {
-                            alert("Error occurred while searching for news.");
+                            alert("Xảy ra lỗi trong quá trình tìm kiếm tin tức.");
                         }
                     });
                 }
@@ -588,12 +553,12 @@ Author     : duong
                         var toast = $('#toastNotification');
                         if (updated === "true") {
                             toast.find('#toastTitle').text('Success');
-                            toast.find('#toastMessage').text('News updated successfully.');
+                            toast.find('#toastMessage').text('Cập nhật tin tức thành công.');
                             toast.addClass('success').removeClass('error');
                             toast.toast('show'); // Hiển thị toast
                         } else if (updated === "false") {
                             toast.find('#toastTitle').text('Error');
-                            toast.find('#toastMessage').text('Failed to update News!');
+                            toast.find('#toastMessage').text('Cập nhật tin tức không thành công!');
                             toast.addClass('error').removeClass('success');
                             toast.toast('show'); // Hiển thị toast
                         }
@@ -606,12 +571,12 @@ Author     : duong
                         var toast = $('#toastNotification');
                         if (created === "true") {
                             toast.find('#toastTitle').text('Success');
-                            toast.find('#toastMessage').text('News created successfully.');
+                            toast.find('#toastMessage').text('Tạo tin tức mới thành công.');
                             toast.addClass('success').removeClass('error');
                             toast.toast('show');
                         } else if (created === "false") {
                             toast.find('#toastTitle').text('Error');
-                            toast.find('#toastMessage').text('Failed to create News!');
+                            toast.find('#toastMessage').text('Tạo tin tức không thành công!');
                             toast.addClass('error').removeClass('success');
                             toast.toast('show');
                         }
@@ -625,12 +590,12 @@ Author     : duong
                         var toast = $('#toastNotification');
                         if (deleted === "true") {
                             toast.find('#toastTitle').text('Success');
-                            toast.find('#toastMessage').text('News deleted successfully.');
+                            toast.find('#toastMessage').text('Xóa tin tức thành công.');
                             toast.addClass('success').removeClass('error');
                             toast.toast('show');
                         } else if (deleted === "false") {
                             toast.find('#toastTitle').text('Error');
-                            toast.find('#toastMessage').text('Failed to delete News!');
+                            toast.find('#toastMessage').text('Xóa tin tức không thành công!');
                             toast.addClass('error').removeClass('success');
                             toast.toast('show');
                         }

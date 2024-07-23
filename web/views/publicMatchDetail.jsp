@@ -335,10 +335,10 @@
 
                                 </defs>
                                 <%--Stand C--%>
-                                <path data-section="fans-side" data-block="4" data-tags="" d="M294,405s-43.585,33.376-66.465,76.174l-81.853-34.1S175,395.162,251.139,344.783Z"/>
-                                <path data-section="standard" data-block="5" data-tags="" d="M246.139,343.783s-71.127,46.322-105.457,102.286L57.986,404s42.049-65.858,141.67-123.373Z"/>
-                                <path data-section="fans-side" data-block="3" data-tags="" d="M223.535,482.174s-22.88,35.12-22.88,83.826H106.328s-5.088-52.684,35.354-117.931Z"/>
-                                <path data-section="standard" data-block="6" data-tags="" d="M137.682,448.069S102.328,500.572,102.328,566H0.463s-5.081-75.469,54.523-160Z"/>
+                                <path data-section="fans-side" d="M294,405s-43.585,33.376-66.465,76.174l-81.853-34.1S175,395.162,251.139,344.783Z"/>
+                                <path data-section="standard" d="M246.139,343.783s-71.127,46.322-105.457,102.286L57.986,404s42.049-65.858,141.67-123.373Z"/>
+                                <path data-section="fans-side" d="M223.535,482.174s-22.88,35.12-22.88,83.826H106.328s-5.088-52.684,35.354-117.931Z"/>
+                                <path data-section="standard" d="M137.682,448.069S102.328,500.572,102.328,566H0.463s-5.081-75.469,54.523-160Z"/>
                                 <path data-section="fans-side" data-block="1" data-tags="" d="M293,733s-43.585-33.376-66.465-76.174l-81.853,34.105S174,742.838,250.139,793.217Z"/>
                                 <path data-section="standard" data-block="8" data-tags="" d="M247.139,793.217S176.012,746.9,141.682,690.931L58.986,733s42.049,65.858,141.67,123.373Z"/>
                                 <path data-section="fans-side" data-block="2" data-tags="" d="M224.535,653.826s-22.88-35.12-22.88-83.826H107.328s-5.088,52.683,35.354,117.931Z"/>
@@ -461,9 +461,9 @@
                                 </svg>
                             </div>
                         </div>
-                        <p class="text-center"><strong>Explain Selected above</strong></p>
+                        <p class="text-center"><strong>Giải thích lựa chọn bên trên</strong></p>
                         <ul class="list-inline text-center">
-                            <li class="list-inline-item"><span class="badge badge-secondary">No Select</span></li>
+                            <li class="list-inline-item"><span class="badge badge-secondary">Không chọn</span></li>
                             <li class="list-inline-item"><span class="badge badge-primary">standard</span></li>
                             <li class="list-inline-item"><span class="badge badge-success">vip-stand</span></li>
                             <li class="list-inline-item"><span class="badge badge-danger">fans-side</span></li>
@@ -495,7 +495,7 @@
                                                 </ul>
                                             </div>
                                             <div class="col-md-4 text-end">
-                                                <h5>${seatMatch.price} vnđ ${seatMatch.matchSeatId}</h5>
+                                                <h5>${seatMatch.price} vnđ</h5>
                                                 <p class="text-muted">cho mỗi vé</p>
                                                 <div class="mb-2">
                                                     <select class="form-select" name="numberOfTicket">
@@ -509,7 +509,7 @@
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <c:forEach var="i" begin="1" end="${seatMatch.availability}">
-                                                                    <option value="${i}">${i} ticket</option>
+                                                                    <option value="${i}">${i} vé</option>
                                                                 </c:forEach>
                                                             </c:otherwise>
                                                         </c:choose>

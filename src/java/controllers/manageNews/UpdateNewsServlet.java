@@ -18,7 +18,6 @@ import jakarta.servlet.http.Part;
 import java.io.File;
 import models.News;
 import models.NewsState;
-import models.NewsStatus;
 import models.User;
 
 /**
@@ -81,23 +80,17 @@ public class UpdateNewsServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        String statusId_raw = request.getParameter("statusId");
         String stateId_raw = request.getParameter("stateId");
         String title;
         String content;
         String conclusion;
-        int statusId;
         int stateId;
         try {
             int newsId = Integer.parseInt(request.getParameter("newsId"));
             title = request.getParameter("title").trim();
             content = request.getParameter("content").trim();
             conclusion = request.getParameter("conclusion").trim();
-            statusId = Integer.parseInt(statusId_raw);
             stateId = Integer.parseInt(stateId_raw);
-            if (statusId == 1 || statusId == 2) {
-                stateId = 1;
-            }
             String currentImage = request.getParameter("currentImage");
             Part part = request.getPart("image");
             String imagePath;
@@ -107,9 +100,6 @@ public class UpdateNewsServlet extends HttpServlet {
             news.setContent(content);
             news.setConclusion(conclusion);
             news.setImage(imagePath);
-            NewsStatus newsStatus = new NewsStatus();
-            newsStatus.setStatusId(statusId);
-            news.setStatusId(newsStatus);
             NewsState newsState = new NewsState();
             newsState.setStateId(stateId);
             news.setStateId(newsState);
