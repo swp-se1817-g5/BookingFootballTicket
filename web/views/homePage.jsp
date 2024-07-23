@@ -205,13 +205,13 @@
             <div class="con_img">
                 <img src="images/banner/bannerMuaGiai.jpg" alt="Ảnh của bạn">
                 <div class="centered">
-                    <h2>Cùng đón chờ một mùa giải mới thật bùng nổ và đầy hấp dẫn</h2>
+                    <h2>Cùng đón chờ các giải đấu mới thật bùng nổ và đầy hấp dẫn</h2>
                 </div>
             </div>
             <div class="container mt-5">
                 <!-- Các Tournament -->
                 <div class="section-header justify-content-center">
-                    <h2 class="mb-3">Các Mùa Giải</h2>
+                    <h2 class="mb-3">Các Giải Đấu</h2>
                 </div>
                 <div class="row">
                     <c:forEach items="${sessionScope.getAllseason}" var="s" begin="0" end="3">
