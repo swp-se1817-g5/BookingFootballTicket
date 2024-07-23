@@ -67,7 +67,6 @@ public class publicListNewsServlet extends HttpServlet {
         String valueSearch;
         String valueStartDate;
         String valueEndDate;
-
         try {
             valueSearch = request.getParameter("valueSearch");
             request.setAttribute("valueSearch", valueSearch);

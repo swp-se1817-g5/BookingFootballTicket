@@ -65,12 +65,14 @@ public class NewsDAO {
     //Search by 
     public ArrayList<News> getlistNews(String value) {
         ArrayList<News> list = new ArrayList<>();
-        String SQL_QUERY_SEARCH_NEWS = "SELECT news.*, newsState.stateName\n"
+        String SQL_QUERY_NEWS = "SELECT news.*, newsState.stateName\n"
                 + "FROM News news\n"
                 + "JOIN NewsState newsState ON newsState.stateId = news.stateId"
-                + " WHERE (title LIKE '%" + value + "%' OR content LIKE '%" + value + "%' )AND news.isDeleted = 0";
+                + " WHERE (title LIKE ? OR [content] LIKE ?) AND news.isDeleted = 0";
         try {
-            ps = connect.prepareStatement(SQL_QUERY_SEARCH_NEWS);
+            ps = connect.prepareStatement(SQL_QUERY_NEWS);
+            ps.setString(1, "%" + value + "%");
+            ps.setString(2, "%" + value + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 News news = new News();
@@ -158,7 +160,7 @@ public class NewsDAO {
                 ps.setTimestamp(parameterIndex++, startTime);
             }
             if (endDateValue != null && !endDateValue.isBlank()) {
-                LocalDateTime localDateTime_endDate = LocalDateTime.parse(endDateValue + "T00:00", formatter);
+                LocalDateTime localDateTime_endDate = LocalDateTime.parse(endDateValue + "T24:00", formatter);
                 Timestamp endTime = Timestamp.valueOf(localDateTime_endDate);
                 ps.setTimestamp(parameterIndex++, endTime);
             }
@@ -210,7 +212,6 @@ public class NewsDAO {
         return n;
     }
 
-
 // Update news
     public boolean updateNews(News news) {
         boolean m = false;
@@ -239,7 +240,6 @@ public class NewsDAO {
     }
 
 //Delete news
-
     public boolean deleteNews(int newsId) {
         boolean m = false;
         String sql = "UPDATE [News]"
@@ -311,6 +311,5 @@ public class NewsDAO {
     public static void main(String[] args) {
         System.out.println(NewsDAO.getInstance().getlistNews(""));
     }
- 
 
 }

@@ -267,7 +267,7 @@ Author     : duong
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <input id="valueSearch" type="text" class="form-control radius-md"placeholder="Tìm Kiếm...">
+                                        <input id="valueSearch" type="text" class="form-control radius-md"placeholder="Tìm kiếm bằng tiêu đề hoặc nội dung...">
                                     </div>
                                     <div class="col-sm-8 createe">
                                         <a href="#createNewsModal" class="btn btn-success d-flex align-items-center" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Tạo Bài Viết Mới</span></a>

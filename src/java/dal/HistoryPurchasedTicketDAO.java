@@ -142,13 +142,14 @@ public class HistoryPurchasedTicketDAO {
                 historyPurchasedTicketMatchSeat.setStatusId(ticketStatus);
                 historyPurchasedTicketMatchSeat.setCreatedBy(rs.getString(CREATED_BY));
                 historyPurchasedTicketMatchSeat.setCreatedDate(rs.getTimestamp(CREATED_DATE) != null ? rs.getTimestamp(CREATED_DATE).toLocalDateTime() : null);
-            return historyPurchasedTicketMatchSeat;
+                return historyPurchasedTicketMatchSeat;
             }
         } catch (SQLException ex) {
             Logger.getLogger(NewsDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
+
     public static void main(String[] args) {
         System.out.println(HistoryPurchasedTicketDAO.getInstance().getTicketInfo("98698fd2-468a-48ba-b378-54583d40477b"));
     }
@@ -192,22 +193,16 @@ public class HistoryPurchasedTicketDAO {
 //        return list;
 //    }
 
-
     // Search of HistoryPurchasedTicketMatchSeat
     public ArrayList<HistoryPurchasedTicketMatchSeat> SearchMatchSeat(String value) {
         ArrayList<HistoryPurchasedTicketMatchSeat> list = new ArrayList<>();
         String sql = "SELECT hptms.*, ticketStatus.statusName "
                 + "FROM HistoryPurchasedTicketMatchSeat hptms "
                 + "JOIN TicketStatus ticketStatus ON ticketStatus.statusId = hptms.statusId "
-                + "WHERE hptms.seasonName LIKE '%" + value + "%' "
-                + "OR hptms.seatClassName LIKE '%" + value + "%' "
-                + "OR hptms.team1 LIKE '%" + value + "%' "
-                + "OR hptms.team2 LIKE '%" + value + "%' "
-                + "OR hptms.email LIKE '%" + value + "%' "
-                + "OR hptms.standName LIKE '%" + value + "%'";
-
+                + "WHERE hptms.seasonName LIKE ?";
         try {
             ps = connect.prepareStatement(sql);
+            ps.setString(1, "%" + value + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 HistoryPurchasedTicketMatchSeat historyPurchasedTicketMatchSeat = new HistoryPurchasedTicketMatchSeat();
@@ -335,10 +330,11 @@ public class HistoryPurchasedTicketDAO {
 
     private Timestamp getTimestamp(String time, boolean isEndDate) throws ParseException {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        if(isEndDate)
+        if (isEndDate) {
             time += " 23:59";
-        else
+        } else {
             time += " 00:00";
+        }
         Date parsedDate = dateFormat.parse(time);
         return new Timestamp(parsedDate.getTime());
     }

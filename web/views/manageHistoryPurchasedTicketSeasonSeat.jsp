@@ -243,11 +243,11 @@
                                 <div class="row">
                                     <div class="col-sm-4 searchh">
                                         <a onclick="searchTickets()" class="d-none"><i class="material-icons">&#xE8B6;</i></a>
-                                        <input id="valueSearch" type="text" class="form-control" placeholder="Search by email&hellip;">
+                                        <input id="valueSearch" type="text" class="form-control" placeholder="Tìm kiếm bằng mùa giải&hellip;">
                                     </div>
                                     <div class="col-sm-8 d-flex justify-content-end">
                                         <button id="toggleButton" class="btn btn-success m-2 align-items-center">
-                                            Ticket Match Seat <i class="btn-icon fas fa-caret-right"></i>
+                                            Vé trận đấu <i class="btn-icon fas fa-caret-right"></i>
                                         </button>
                                         <a type="button" href="/BookingFootballTicket/ExportExcelSeasonSeat?service=export" class="btn btn-success m-2 float-right">
                                             <i class="bi bi-file-earmark-spreadsheet"></i> 
@@ -262,7 +262,7 @@
                                         <th>#</th>
                                         <th>
                                             <select class="form-select border-0" id="seasonSelect">
-                                                <option selected value="All">All Season</option>
+                                                <option selected value="All">Mùa giải</option>
                                                 <c:forEach items="${getListSeason}" var="season">
                                                     <option value="${season.seasonName}">${season.seasonName}</option>
                                                 </c:forEach>
@@ -270,7 +270,7 @@
                                         </th>
                                         <th>
                                             <select class="form-select border-0" id="standSelect">
-                                                <option selected value="All">All Stand</option>
+                                                <option selected value="All">Khán đài</option>
                                                 <c:forEach items="${getListStand}" var="stand">
                                                     <option value="${stand.standName}">${stand.standName}</option>
                                                 </c:forEach>
@@ -278,22 +278,22 @@
                                         </th>
                                         <th>
                                             <select class="form-select border-0" id="seatClassSelect">
-                                                <option selected value="All">All Seat Class</option>
+                                                <option selected value="All">Hạng ghế</option>
                                                 <c:forEach items="${getListSeatClass}" var="seatClass">
                                                     <option value="${seatClass.seatClassName}">${seatClass.seatClassName}</option>
                                                 </c:forEach>
                                             </select>
                                         </th>
                                         <th>
-                                            Seat
+                                            Khu vực chỗ ngồi
                                             <i class="fa fa-sort" id="sortSeat" data-column="4" data-order="asc"></i>
                                         </th>
                                         <th>
-                                            Quantity
+                                            Số lượng
                                             <i class="fa fa-sort" id="sortQuantity" data-column="5" data-order="asc"></i>
                                         </th>
                                         <th>
-                                            Price
+                                            Giá
                                             <i class="fa fa-sort" id="sortPrice" data-column="6" data-order="asc"></i>
                                         </th>
 
@@ -313,7 +313,7 @@
                                                 </c:forEach>
                                             </select>
                                         </th>
-                                        <th>Action</th>
+                                        <th>Hành động</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -346,33 +346,35 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">View Details</h4>
+                            <h4 class="modal-title">Chi tiết vé</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Ticket Id</label>
+                                <label>Id</label>
                                 <input name="newsId" class="form-control" value="${ticketSeasonSeat.ticketId}" readonly>
                             </div>
                             <div class="form-group">
-                                <label>Start Date</label>
+                                <label>Thời gian bắt đầu</label>
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketSeasonSeat.startDate}</p>
                             </div>
                             <div class="form-group">
-                                <label>End Date</label>
+                                <label>Thời gian kết thúc</label>
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketSeasonSeat.endDate}</p>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketSeasonSeat.email}</p>
                             </div>
-                            <div class="form-group">
-                                <label>Create Date</label>
-                                <input type="datetime-local" name="createDate" class="form-control" value="${ticketSeasonSeat.createdDate}" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Create By</label>
-                                <input name="createBy" class="form-control" value="${ticketSeasonSeat.createdBy}" readonly>
+                            <div class="form-group row" >
+                                <div class="form-group col-sm-6">
+                                    <label>Ngày tạo</label>
+                                    <input type="datetime-local" name="createDate" class="form-control" value="${ticketSeasonSeat.createdDate}" readonly>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label>Tạo bởi</label>
+                                    <input name="createBy" class="form-control" value="${ticketSeasonSeat.createdBy}" readonly>
+                                </div>
                             </div>
                         </div>
                     </div>

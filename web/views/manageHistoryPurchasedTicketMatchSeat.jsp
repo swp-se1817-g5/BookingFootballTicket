@@ -243,11 +243,11 @@ Author     : duong
                                 <div class="row">
                                     <div class="col-sm-4 searchh">
                                         <a onclick="searchTickets()" class="d-none"><i class="material-icons">&#xE8B6;</i></a>
-                                        <input id="valueSearch" type="text" class="form-control" placeholder="Search&hellip;">
+                                        <input id="valueSearch" type="text" class="form-control" placeholder=" Tìm kiếm bằng mùa giải &hellip;">
                                     </div>
                                     <div class="col-sm-8 d-flex justify-content-end">
                                         <button id="toggleButton" class="btn btn-success m-2 align-items-center">
-                                            Ticket Season Seat
+                                            Vé Mùa
                                             <i class="btn-icon fas fa-caret-right"></i>
                                         </button>
                                         <a type="button" href="/BookingFootballTicket/ExportExcelMatchSeat?service=export" class="btn btn-success m-2 float-right">
@@ -347,37 +347,39 @@ Author     : duong
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">View Details</h4>
+                            <h4 class="modal-title">Chi tiết vé</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         </div>
                         <div class="modal-body">
                             <div class="form-group">
-                                <label>Ticket Id</label>
+                                <label>Id</label>
                                 <input name="newsId" class="form-control" value="${ticketMatchSeat.ticketId}" readonly>
                             </div>
                             <div class="form-group">
-                                <label>Team 1</label>
+                                <label>Đội 1</label>
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.team1}</p>
                             </div>
                             <div class="form-group">
-                                <label>Team 2</label>
+                                <label>Đội 2</label>
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.team2}</p>
                             </div>
                             <div class="form-group">
-                                <label>Start Time</label>
+                                <label>Thời gian bắt đầu</label>
                                 <input type="datetime-local" class="form-control" value="${ticketMatchSeat.startTime}" readonly>
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
                                 <p style="border: 1px solid #ccc; padding: 10px; background-color: #e9ecef; border-radius: 9px">${ticketMatchSeat.email}</p>
                             </div>
-                            <div class="form-group">
-                                <label>Create Date</label>
-                                <input type="datetime-local" name="createDate" class="form-control" value="${ticketMatchSeat.createdDate}" readonly>
-                            </div>
-                            <div class="form-group">
-                                <label>Create By</label>
-                                <input name="createBy" class="form-control" value="${ticketMatchSeat.createdBy}" readonly>
+                            <div class="form-group row" >
+                                <div class="form-group col-sm-6">
+                                    <label>Ngày tạo</label>
+                                    <input type="datetime-local" name="createDate" class="form-control" value="${ticketMatchSeat.createdDate}" readonly>
+                                </div>
+                                 <div class="form-group col-sm-6">
+                                    <label>Tạo bởi</label>
+                                    <input name="createBy" class="form-control" value="${ticketMatchSeat.createdBy}" readonly>
+                                </div>
                             </div>
                         </div>
                     </div>
