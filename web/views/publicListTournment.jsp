@@ -21,7 +21,13 @@
                 background-color: #f4f4f4;
             }
             .container {
-                margin-top: 20px;
+                margin-top: 35px;
+            }
+            .bodylist{
+                background-image: url("https://hanoispiritofplace.com/wp-content/uploads/2017/06/hinh-nen-bong-da-dep-2.jpg");
+                background-size: cover; /* Điều chỉnh kích thước hình nền để bao phủ toàn bộ phần tử */
+                background-repeat: no-repeat; /* Không lặp lại hình nền */
+                background-position: center;
             }
             .product-card {
                 background: #fff;
@@ -101,88 +107,90 @@
             .card-body{
                 text-align: center;
             }
-            
+
         </style>
     </head>
     <body>
         <div style="margin-bottom: 160px">
             <jsp:include page="header.jsp" />
         </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="sidebar">
-                        <div class="form-group">
-                            <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên mùa giải">
-                        </div>
-                        <div class="form-group">
-                            <label for="dateFrom">Từ ngày</label><i class="fa fa-calendar"></i>
-                            <div class="date-input">
-                                <input type="date" id="dateFrom" class="form-control">
+        <div class="bodylist">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="sidebar">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên mùa giải">
                             </div>
-                            <label for="dateTo">Đến ngày</label><i class="fa fa-calendar"></i>
-                            <div class="date-input">
-                                <input type="date" id="dateTo" class="form-control">
+                            <div class="form-group">
+                                <label for="dateFrom">Từ ngày</label><i class="fa fa-calendar"></i>
+                                <div class="date-input">
+                                    <input type="date" id="dateFrom" class="form-control">
+                                </div>
+                                <label for="dateTo">Đến ngày</label><i class="fa fa-calendar"></i>
+                                <div class="date-input">
+                                    <input type="date" id="dateTo" class="form-control">
+                                </div>
+                            </div>
+                            <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc<i class="bi bi-filter btn-icon"></i></button>
+                            <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
+                            <div class="best-seller mt-4">
+                                <h5>Giải đấu nổi bật <i class="bi bi-fire text-danger"></i></h5>
+                                    <c:forEach items="${requestScope.seasons}" var="s" begin="0" end="0">
+                                    <div class="card product-card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${s.seasonName}</h5>
+                                            <p class="card-text">Thời gian bắt đầu : ${s.startDate}</p>
+                                            <p class="card-text">Thời gian kết thúc : ${s.endDate}</p>
+                                            <a href="publicListMatch?seasonId=${s.seasonId}" style="margin-top: 20px" class="btn btn-primary">Xem Các Trận Đấu</a>
+                                        </div>
+                                    </div>
+                                </c:forEach>
                             </div>
                         </div>
-                        <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc<i class="bi bi-filter btn-icon"></i></button>
-                        <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
-                        <div class="best-seller mt-4">
-                            <h5>Giải đấu nổi bật <i class="bi bi-fire text-danger"></i></h5>
-                                <c:forEach items="${requestScope.seasons}" var="s" begin="0" end="0">
-                                <div class="card product-card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${s.seasonName}</h5>
-                                        <p class="card-text">Thời gian bắt đầu : ${s.startDate}</p>
-                                        <p class="card-text">Thời gian kết thúc : ${s.endDate}</p>
-                                        <a href="publicListMatch?seasonId=${s.seasonId}" style="margin-top: 20px" class="btn btn-primary">Xem Các Trận Đấu</a>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row" id="tournmentList">
+                            <c:forEach items="${seasons}" var="s">
+                                <div class="col-md-4">
+                                    <div class="ticket-card card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${s.seasonName}</h5>
+                                            <p class="card-text">Thời gian bắt đầu: ${s.startDate}</p>
+                                            <p class="card-text">Thời gian kết thúc: ${s.endDate}</p>
+                                            <a href="publicListMatch?seasonId=${s.seasonId}" style="margin-top: 20px" class="btn btn-primary">Xem Các Trận Đấu</a>
+                                        </div>
                                     </div>
                                 </div>
                             </c:forEach>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="row" id="tournmentList">
-                        <c:forEach items="${seasons}" var="s">
-                            <div class="col-md-4">
-                                <div class="ticket-card card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${s.seasonName}</h5>
-                                        <p class="card-text">Thời gian bắt đầu: ${s.startDate}</p>
-                                        <p class="card-text">Thời gian kết thúc: ${s.endDate}</p>
-                                        <a href="publicListMatch?seasonId=${s.seasonId}" style="margin-top: 20px" class="btn btn-primary">Xem Các Trận Đấu</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:forEach>
+                    <div class="clearfix col-12" id="pagination" >
+                        <ul class="pagination">
+                            <c:if test="${currentPage > 1}">
+                                <li class="page-item">
+                                    <a class="page-link" href="publicListTournment?page=${currentPage - 1}" data-page="${currentPage - 1}" ><</a>
+                                </li>
+                            </c:if>
+                            <c:forEach var="page" begin="1" end="${noOfPages}" step="1">
+                                <li class="page-item ${page == currentPage ? 'active' : ''}">
+                                    <c:choose>
+                                        <c:when test="${page == currentPage}">
+                                            <span class="page-link" data-page="${currentPage}">${currentPage}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="page-link" href="publicListTournment?page=${page}" data-page="${page}">${page}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </li>
+                            </c:forEach>
+                            <c:if test="${currentPage < noOfPages}">
+                                <li class="page-item">
+                                    <a class="page-link" href="publicListTournment?page=${currentPage + 1}" data-page="${currentPage + 1}" >></a>
+                                </li>
+                            </c:if>
+                        </ul>
                     </div>
-                </div>
-                <div class="clearfix col-12" id="pagination" >
-                    <ul class="pagination">
-                        <c:if test="${currentPage > 1}">
-                            <li class="page-item">
-                                <a class="page-link" href="publicListTournment?page=${currentPage - 1}" data-page="${currentPage - 1}" ><</a>
-                            </li>
-                        </c:if>
-                        <c:forEach var="page" begin="1" end="${noOfPages}" step="1">
-                            <li class="page-item ${page == currentPage ? 'active' : ''}">
-                                <c:choose>
-                                    <c:when test="${page == currentPage}">
-                                        <span class="page-link" data-page="${currentPage}">${currentPage}</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a class="page-link" href="publicListTournment?page=${page}" data-page="${page}">${page}</a>
-                                    </c:otherwise>
-                                </c:choose>
-                            </li>
-                        </c:forEach>
-                        <c:if test="${currentPage < noOfPages}">
-                            <li class="page-item">
-                                <a class="page-link" href="publicListTournment?page=${currentPage + 1}" data-page="${currentPage + 1}" >></a>
-                            </li>
-                        </c:if>
-                    </ul>
                 </div>
             </div>
         </div>
