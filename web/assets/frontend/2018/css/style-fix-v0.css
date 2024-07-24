@@ -3929,7 +3929,7 @@ button[disabled], button[disabled]:hover {background: grey;}
 		margin-bottom: 6px;
 	  }
 
-	  .price-split {
+/*	  .price-split {
 		  display: flex;
 		  justify-content: space-between;
 		  border-bottom: 1px solid #dcdcdc;
@@ -3939,7 +3939,7 @@ button[disabled], button[disabled]:hover {background: grey;}
 		  @media(max-width: 1149px) {
 			  border: unset;
 			  margin-bottom: unset;
-		  }
+		  }*/
 
 	  
           
