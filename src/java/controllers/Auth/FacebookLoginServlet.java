@@ -38,7 +38,7 @@ public class FacebookLoginServlet extends HttpServlet {
         String code = request.getParameter("code");
         System.out.println(code);
 
-        getFacebook FB = new getFacebook();
+        GetFacebook FB = new GetFacebook();
         String accessToken = FB.getToken(code);
         System.out.println(accessToken);
 

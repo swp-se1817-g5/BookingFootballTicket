@@ -17,7 +17,7 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import Config.Config;
-import SendMail.resetService;
+import SendMail.ResetService;
 import dal.BookingDAO;
 import dal.MatchDAO;
 import dal.MatchSeatDAO;
@@ -93,7 +93,7 @@ public class vnpayReturn extends HttpServlet {
                     booking.setStatus("done");
 
                     transSuccess = true;
-                    resetService service = new resetService();
+                    ResetService service = new ResetService();
                 } else {
                     MatchSeatDAO.INSTANCE.returnAvailability(booking);
                     booking.setStatus("cancel");

@@ -13,7 +13,7 @@ public class IconstantGmail {
 
     public static final String GMAIL_CLIENT_SECRET = "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";
 
-    public static final String GMAIL_REDIRECT_URI = "http://localhost:8080/BookingFootballTicket/gmail";
+    public static final String GMAIL_REDIRECT_URI = "http://localhost:8080/FootballBookingTicket/gmail";
 
     public static final String GMAIL_GRANT_TYPE = "authorization_code";
 

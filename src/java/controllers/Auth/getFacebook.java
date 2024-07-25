@@ -18,7 +18,7 @@ import org.apache.http.client.fluent.Request;
  *
  * @author AD
  */
-public class getFacebook {
+public class GetFacebook {
 
     public static String getToken(String code) throws ClientProtocolException, IOException {
         String response = Request.Post(IconstantFB.FACEBOOK_LINK_GET_TOKEN)

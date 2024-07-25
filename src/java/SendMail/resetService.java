@@ -19,7 +19,7 @@ import javax.mail.internet.MimeMessage;
  *
  * @author AD
  */
-public class resetService {
+public class ResetService {
     private final int LIMIT_MINUS = 5;
     static final String from = "quantahe170941@fpt.edu.vn";
     static final String password = "amke bnae ynsy knmg";
@@ -60,7 +60,7 @@ public class resetService {
             msg.addHeader("Content-type", "text/html; charset=UTF-8");
             msg.setFrom(from);
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
-            msg.setSubject("BookingFootballTicket", "UTF-8");
+            msg.setSubject("FootballBookingTicket", "UTF-8");
             String content = "<h1>Xin chào "+ name +" , </h1>"+"<p>Vui lòng bấm vào đường link để đặt lại mật khẩu của bạn."
                     + "<a href="+link+">Ở đây</a></p>";
             msg.setContent(content, "text/html; charset=UTF-8");

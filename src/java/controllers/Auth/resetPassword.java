@@ -4,7 +4,7 @@
  */
 package controllers.Auth;
 
-import SendMail.resetService;
+import SendMail.ResetService;
 import dal.TokenForgetDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -26,8 +26,8 @@ import org.mindrot.jbcrypt.BCrypt;
  *
  * @author AD
  */
-@WebServlet(name = "resetPassword", urlPatterns = {"/resetPassword"})
-public class resetPassword extends HttpServlet {
+@WebServlet(name = "ResetPassword", urlPatterns = {"/resetPassword"})
+public class ResetPassword extends HttpServlet {
 
     TokenForgetDAO DAOToken = new TokenForgetDAO();
     UserDAO DAOUser = new UserDAO();
@@ -75,7 +75,7 @@ public class resetPassword extends HttpServlet {
         if (token != null) {
             //
             TokenForgetPassword tokenForgetPassword = DAOToken.getTokenPassword(token);
-            resetService service = new resetService();
+            ResetService service = new ResetService();
             if (tokenForgetPassword == null) {
                 request.setAttribute("messEr", "Token không hợp lệ !");
                 request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
@@ -120,7 +120,7 @@ public class resetPassword extends HttpServlet {
         //
         TokenForgetPassword tokenForgetPassword = DAOToken.getTokenPassword(tokenStr);
         //check token is valid, of time, of used
-        resetService service = new resetService();
+        ResetService service = new ResetService();
         if (tokenForgetPassword == null) {
             request.setAttribute("messEr", "Token không hợp lệ !");
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
@@ -146,7 +146,7 @@ public class resetPassword extends HttpServlet {
             //
             DAOUser.changePass(email, hashedPassword);
         } catch (SQLException ex) {
-            Logger.getLogger(resetPassword.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
             request.setAttribute("messEr", "Lỗi khi đổi mật khẩu!");
             request.getRequestDispatcher("views/changePassReset.jsp").forward(request, response);
             return;

@@ -25,6 +25,25 @@
         <link rel="stylesheet" type="text/css" href="./assets/css/shortcodes/shortcodes.css">
         <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
         <link class="skin" rel="stylesheet" type="text/css" href="./assets/css/color/color-1.css">
+        <style>
+            body {
+                font-family: 'Helvetica', sans-serif;
+            }
+            .title-head {
+                font-family: 'Helvetica', sans-serif;
+            }
+            .title-under {
+                font-family: 'Helvetica', sans-serif;
+            }
+            .btn {
+                font-family: 'Helvetica', sans-serif;
+            }
+
+            .button-md {
+                font-family: 'Helvetica', sans-serif;
+            }
+
+        </style>
     </head>
     <body id="bg">
         <div class="page-wraper">
@@ -121,7 +140,7 @@
                                     <button name="submit" type="submit" value="Submit" class="btn button-md">Đăng ký</button>
                                 </div>
                                 <div class="col-lg-12">
-                                    <h6>Đăng ký với</h6>
+                                    <h6 class="title-under">Đăng ký với</h6>
                                     <div class="d-flex">
                                         <a class="btn flex-fill m-r5 facebook" href="https://www.facebook.com/v19.0/dialog/oauth?fields=id,name,email&client_id=2789778564531786&redirect_uri=http://localhost:8080/BookingFootballTicket/loginFB"><i class="fa fa-facebook"></i>Facebook</a>
                                         <a class="btn flex-fill m-l5 google-plus" href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/BookingFootballTicket/gmail&response_type=code&client_id=710226049781-g37fdin0lmq797dniqao07fsr27oj20j.apps.googleusercontent.com&approval_prompt=force"><i class="fa fa-google"></i>Google</a>
