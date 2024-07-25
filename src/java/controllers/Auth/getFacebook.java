@@ -6,7 +6,6 @@ package controllers.Auth;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import constant.IConstant;
 import constant.IconstantFB;
 import java.io.IOException;
 import models.FacebookUser;

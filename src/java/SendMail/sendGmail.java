@@ -36,7 +36,6 @@ public class SendGmail {
         String accessToken = jobj.get("access_token").toString().replaceAll("\"", "");
 
         return accessToken;
-
     }
 
     public static UserGoogle getUserInfo(final String accessToken) throws ClientProtocolException, IOException {

@@ -147,7 +147,7 @@ public class ResetPassword extends HttpServlet {
             DAOUser.changePass(email, hashedPassword);
         } catch (SQLException ex) {
             Logger.getLogger(ResetPassword.class.getName()).log(Level.SEVERE, null, ex);
-            request.setAttribute("messEr", "Lỗi khi đổi mật khẩu!");
+            request.setAttribute("messEr", "Lỗi khi đổi mật khẩu !");
             request.getRequestDispatcher("views/changePassReset.jsp").forward(request, response);
             return;
         }

@@ -61,7 +61,7 @@ public class ResetService {
             msg.setFrom(from);
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to, false));
             msg.setSubject("FootballBookingTicket", "UTF-8");
-            String content = "<h1>Xin chào "+ name +" , </h1>"+"<p>Vui lòng bấm vào đường link để đặt lại mật khẩu của bạn."
+            String content = "<h1>Xin chào "+ name +" , </h1>"+"<p>Vui lòng bấm vào đường link để đặt lại mật khẩu của bạn !"
                     + "<a href="+link+">Ở đây</a></p>";
             msg.setContent(content, "text/html; charset=UTF-8");
             Transport.send(msg);

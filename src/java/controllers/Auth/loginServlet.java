@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 
         if (!emailExists) {
             // Email does not exist in the database
-            request.setAttribute("errorMessage", "Email chưa được đăng ký!");
+            request.setAttribute("errorMessage", "Email chưa được đăng ký !");
             returnValueBefore(request, response, email, null); // Set email value
             request.getRequestDispatcher("views/login.jsp").forward(request, response);
         } else {
