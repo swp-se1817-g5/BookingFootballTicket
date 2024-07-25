@@ -282,7 +282,9 @@
                                             <td>${o.type.name}</td>
                                             <td>
                                                 <a onclick="update('${o.matchId}', '${o.team1.clubId}', '${o.team2.clubId}', '${o.time}', '${o.season.seasonId}', '${o.status.matchStatusId}', '${o.type.typeId}')" href="#updateMatchModal" class="edit" title="Edit" data-toggle="modal"><i class="fa fa-eye" style="color: gray;"></i></a>
-                                                <a onclick="doDelete(${o.matchId})" href="#" class="delete" title="Cancel" data-toggle="tooltip"><i class="fa fa-times-circle"></i></a>
+                                                    <c:if test="${o.status.matchStatusId == 1}">
+                                                    <a onclick="doDelete(${o.matchId})" href="#" class="delete" title="Cancel" data-toggle="tooltip"><i class="fa fa-times-circle"></i></a>
+                                                    </c:if>
                                             </td>
                                         </tr>
                                     </c:forEach>
@@ -412,7 +414,7 @@
                         </div>
                         <div class="modal-footer">
                             <input type="button" class="btn btn-default" data-dismiss="modal" value="Huỷ">
-                            <input type="submit" class="btn btn-success" value="Lưu">
+                            <input id="saveUpdate" type="submit" class="btn btn-success" value="Lưu">
                         </div>
                     </form>
                 </div>
@@ -652,6 +654,8 @@
                 setSelectedOption('typeId', typeId);
                 document.getElementById('datetimeInput2').value = time;
                 excludeId = matchId;
+                validateStatusChange(statusId);
+                checkStatus(statusId);
             }
 
             function setSelectedOption(selectId, valueToSelect) {
@@ -662,6 +666,37 @@
                         options[i].selected = true;
                         break;
                     }
+                }
+            }
+
+            function checkStatus(currentStatusId) {
+                const statusSelect = document.getElementById('statusId');
+                const statusOptions = statusSelect.options;
+
+                if (currentStatusId === '3' || currentStatusId === '4') {
+                    document.getElementById('fc1Id2').disabled = true;
+                    document.getElementById('fc2Id2').disabled = true;
+                    document.getElementById('seasonId').disabled = true;
+                    document.getElementById('statusId').disabled = true;
+                    document.getElementById('typeId').disabled = true;
+                    document.getElementById('datetimeInput2').disabled = true;
+                    document.getElementById('saveUpdate').style.display = 'none';
+                }
+            }
+            function validateStatusChange(currentStatusId) {
+                const statusSelect = document.getElementById('statusId');
+                const statusOptions = statusSelect.options;
+
+                for (let i = 0; i < statusOptions.length; i++) {
+                    const option = statusOptions[i];
+                    if (currentStatusId === '3' && option.value !== '3') {
+                        option.style.display = 'none';
+                    } else if (currentStatusId === '4' && option.value !== '4') {
+                        option.style.display = 'none';
+                    } else {
+                        option.style.display = 'block';
+                    }
+
                 }
             }
 

@@ -1,5 +1,6 @@
 package dal;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -124,7 +125,7 @@ public class MatchDAO {
     }
 
     public List<Match> getMatches() {
-        updateMatchStatus();
+        //updateMatchStatus();
         List<Match> matches = new ArrayList<>();
         String sql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
@@ -196,7 +197,7 @@ public class MatchDAO {
                 + "JOIN Season s ON m.seasonId = s.seasonId "
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
-                + "WHERE m.isDeleted = 0 "
+                + "WHERE m.statusId = 2 "
                 + "ORDER BY m.matchId DESC";
         try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -256,7 +257,7 @@ public class MatchDAO {
                 + "JOIN Season s ON m.seasonId = s.seasonId "
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
-                + "WHERE m.isDeleted = 0 and "
+                + "WHERE m.statusId = 2 and "
                 + "fc1.clubId = " + fcId
                 + " or fc2.clubId = " + fcId;
         try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
@@ -397,12 +398,12 @@ public class MatchDAO {
         return deleted;
     }
 
-    private void updateMatchStatus() {
-        String sql = "UPDATE Match SET statusId = 2 WHERE [startTime] <= CURRENT_TIMESTAMP AND statusId <> 2";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.executeUpdate();
+    public void updateMatchStatus() {
+        String sql = "{call UpdateMatchStatus()}";
+        try (CallableStatement cs = con.prepareCall(sql)) {
+            cs.execute();
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error updating match status", e);
+            LOGGER.log(Level.SEVERE, "Error updating match status using stored procedure", e);
         }
     }
 
@@ -420,7 +421,7 @@ public class MatchDAO {
                 + "JOIN Season s ON m.seasonId = s.seasonId "
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
-                + "WHERE m.isDeleted = 0 AND (m.statusId = 1 OR m.statusId = 2)"
+                + "WHERE m.isDeleted = 0 AND (m.statusId = 2)"
                 + "ORDER BY m.startTime ASC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try (PreparedStatement fetchPs = con.prepareStatement(fetchSql)) {
@@ -509,7 +510,7 @@ public class MatchDAO {
                 + "JOIN Season s ON m.seasonId = s.seasonId "
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
-                + "WHERE m.isDeleted = 0 ";
+                + "WHERE m.statusId = 2 ";
 
         // Xây dựng các điều kiện lọc nếu có
         List<String> conditions = new ArrayList<>();
@@ -621,7 +622,7 @@ public class MatchDAO {
                 + "JOIN Season s ON m.seasonId = s.seasonId "
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
-                + "WHERE m.isDeleted = 0 ";
+                + "WHERE m.statusId = 2 ";
 
         // Xây dựng các điều kiện lọc nếu có
         List<String> conditions = new ArrayList<>();

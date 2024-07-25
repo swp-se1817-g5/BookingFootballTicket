@@ -23,3 +23,13 @@ BEGIN
     AND status = 'unPayment';
 END;
 GO
+
+CREATE PROCEDURE UpdateMatchStatus
+AS
+BEGIN
+    UPDATE Match
+    SET statusId = 3
+    WHERE [startTime] >= DATEADD(HOUR, -10, CURRENT_TIMESTAMP)
+      AND statusId <> 3
+      AND statusId <> 4;
+END

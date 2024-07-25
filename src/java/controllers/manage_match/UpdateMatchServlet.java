@@ -69,6 +69,7 @@ public class UpdateMatchServlet extends HttpServlet {
         int fc1Id;
         int fc2Id;
         int matchId;
+        int matchStatus;
         time = LocalDateTime.parse(startTimeString, formatter);
 
         try {
@@ -78,7 +79,7 @@ public class UpdateMatchServlet extends HttpServlet {
             Match match = new Match();
             match.setMatchId(matchId);
             match.setType(MatchDAO.INSTANCE.getMatchTypeById(typeString));
-            match.setStatus(MatchDAO.INSTANCE.getMatchStatusById("1"));
+            match.setStatus(MatchDAO.INSTANCE.getMatchStatusById(statusString));
             match.setTeam1(FootballClubDAO.getInstance().getFootballClubbyID(fc1Id));
             match.setTeam2(FootballClubDAO.getInstance().getFootballClubbyID(fc2Id));
             match.setTime(time);

@@ -71,20 +71,25 @@ public class PublicMatchDetailServlet extends HttpServlet {
         } catch (Exception e) {
         }
         Match match = MatchDAO.INSTANCE.getMatcheById(id_string);
-        String dateTimeString = match.getTime();
-        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, inputFormatter);
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-        String date = dateTime.toLocalDate().format(dateFormatter);
-        String time = dateTime.toLocalTime().format(timeFormatter);
+        if (match.getStatus().getMatchStatusId() == 2) {
 
-        request.setAttribute("date", date);
-        request.setAttribute("time", time);
-        request.setAttribute("match", match);
-        request.setAttribute("matchId", id);
-        request.setAttribute("seatByMatch", MatchSeatDAO.INSTANCE.getMatchSeatbyMatch(id));
-        request.getRequestDispatcher("views/publicMatchDetail.jsp").forward(request, response);
+            String dateTimeString = match.getTime();
+            DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+            LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, inputFormatter);
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+            String date = dateTime.toLocalDate().format(dateFormatter);
+            String time = dateTime.toLocalTime().format(timeFormatter);
+
+            request.setAttribute("date", date);
+            request.setAttribute("time", time);
+            request.setAttribute("match", match);
+            request.setAttribute("matchId", id);
+            request.setAttribute("seatByMatch", MatchSeatDAO.INSTANCE.getMatchSeatbyMatch(id));
+            request.getRequestDispatcher("views/publicMatchDetail.jsp").forward(request, response);
+        }
+        response.sendRedirect("homePage");
+
     }
 
     /**
