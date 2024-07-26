@@ -57,13 +57,13 @@ INSERT INTO Season (seasonName, startDate, endDate, createdBy) VALUES
 GO
 
 -- Insert values into Match table
-INSERT INTO Match (team1, team2, seasonId, [startTime], statusId, matchTypeId, createdBy) VALUES
-(1, 2, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
-(3, 4, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
-(5, 3, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
-(1, 3, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
-(3, 2, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com');
-GO
+--INSERT INTO Match (team1, team2, seasonId, [startTime], statusId, matchTypeId, createdBy) VALUES
+--(1, 2, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
+--(3, 4, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
+--(5, 3, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
+--(1, 3, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
+--(3, 2, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com');
+--GO
 
 -- Insert values into Stand table
 INSERT INTO Stand (standName, createdBy) VALUES
