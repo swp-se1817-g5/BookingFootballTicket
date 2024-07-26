@@ -37,12 +37,19 @@ BEGIN
 END
 
 GO
+
+
 CREATE PROCEDURE UpdateTicketStatus
+	@TimeOffsetInHours INT
 AS
 BEGIN
     UPDATE HistoryPurchasedTicketMatchSeat
     SET statusId = 3
-    WHERE [startTime] <= DATEADD(HOUR, -10, CURRENT_TIMESTAMP)
+    WHERE [startTime] <= DATEADD(HOUR, -@TimeOffsetInHours, CURRENT_TIMESTAMP)
     AND statusId <> 2;
     
 END
+
+GO
+Exec UpdateTicketStatus
+
