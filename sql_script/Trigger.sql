@@ -24,18 +24,19 @@ GO
 
 CREATE TRIGGER trg_AfterUpdateMatchTime
 ON Match
-AFTER Update
+AFTER UPDATE
 AS
 BEGIN
-     SET NOCOUNT ON;
-
-    -- Update HistoryPurchasedTicketMatchSeat startTime for the updated matches
-    UPDATE hptms
-    SET hptms.startTime = m.startTime
-    FROM HistoryPurchasedTicketMatchSeat hptms
-    JOIN inserted i ON i.matchId = hptms.matchSeatId
-    JOIN Match m ON m.matchId = i.matchId
-    WHERE m.startTime <> i.startTime;
+    -- Check if the startTime has been updated
+    IF UPDATE(startTime)
+    BEGIN
+        UPDATE h
+        SET h.startTime = m.startTime
+        FROM HistoryPurchasedTicketMatchSeat h
+        INNER JOIN MatchSeat ms ON h.matchSeatId = ms.matchSeatId
+        INNER JOIN Match m ON ms.matchId = m.matchId
+        WHERE m.matchId IN (SELECT matchId FROM inserted);
+    END
 END;
 
 GO
