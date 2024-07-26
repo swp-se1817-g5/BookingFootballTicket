@@ -38,18 +38,21 @@ END
 
 GO
 
-
+Drop procedure UpdateTicketStatus;
+GO
 CREATE PROCEDURE UpdateTicketStatus
+	@NewStatus INT,
 	@TimeOffsetInHours INT
+	
 AS
 BEGIN
     UPDATE HistoryPurchasedTicketMatchSeat
-    SET statusId = 3
+    SET statusId = @NewStatus
     WHERE [startTime] <= DATEADD(HOUR, -@TimeOffsetInHours, CURRENT_TIMESTAMP)
     AND statusId <> 2;
     
 END
-
 GO
-Exec UpdateTicketStatus
+
+
 
