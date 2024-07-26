@@ -23,7 +23,8 @@
             .container {
                 margin-top: 35px;
             }
-            .bodylist{
+
+            .bodylist {
                 background-image: url("https://hanoispiritofplace.com/wp-content/uploads/2017/06/hinh-nen-bong-da-dep-2.jpg");
                 background-size: cover; /* Điều chỉnh kích thước hình nền để bao phủ toàn bộ phần tử */
                 background-repeat: no-repeat; /* Không lặp lại hình nền */
@@ -51,6 +52,9 @@
             .ticket-card {
                 width: 100%;
                 height: 440px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
             }
 
             .product-card img, .ticket-card img {
@@ -127,6 +131,7 @@
                 margin: 10px 0;
                 color: #333;
             }
+
             .product-card .competition {
                 font-size: 1.2em;
                 font-weight: bold;
@@ -157,14 +162,29 @@
                 border-color: #007bff;
                 color: white;
             }
-            .ticket-card {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-            }
 
-            .ticket-card .book-now-btn {
-                margin-top: auto;
+            /* Responsive styles */
+            @media (max-width: 767px) {
+                .sidebar {
+                    position: static;
+                    margin-bottom: 20px;
+                }
+
+                .ticket-card {
+                    height: auto;
+                    width: 90%; /* Đảm bảo thẻ không quá rộng */
+                    margin: 0 auto; /* Căn giữa thẻ */
+                }
+
+                .pagination {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .pagination .page-item {
+                    margin: 5px 0;
+                }
             }
         </style>
     </head>
@@ -203,17 +223,6 @@
                                     <option value="All">Tất cả các thể loại</option>
                                     <c:forEach items="${requestScope.types}" var="t">
                                         <option value="${t.typeId}">${t.name}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="matchStatus">Trạng thái trận đấu</label>
-                                <select id="matchStatus" class="form-control">
-                                    <option value="All">Tất cả các trạng thái</option>
-                                    <c:forEach items="${requestScope.statusList}" var="status">
-                                        <c:if test="${status.matchStatusId eq 1 or status.matchStatusId eq 2}">
-                                            <option value="${status.matchStatusId}">${status.matchStatusName}</option>
-                                        </c:if>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -340,11 +349,11 @@
                         data: {
                             page: page,
                             seasonId: (seasonId !== 'All' && seasonId !== '') ? seasonId : null,
-                            matchStatusId: (matchStatusId !== 'All' && matchStatusId !== '') ? matchStatusId : null,
+                            typeId: (typeId !== 'All' && typeId !== '') ? typeId : null,
                             dateFrom: (dateFrom !== '') ? dateFrom : null,
                             dateTo: (dateTo !== '') ? dateTo : null,
                             searchInput: (searchInput !== '') ? searchInput : null,
-                            typeId: (typeId !== 'All' && typeId !== '') ? typeId : null
+                            matchStatusId: (matchStatusId !== 'All' && matchStatusId !== '') ? matchStatusId : null
                         },
                         success: function (response) {
                             // Replace content of matchList with new data

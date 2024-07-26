@@ -66,14 +66,14 @@
                 position: relative;
                 float: right;
             }
-            .search-box input {
+            .search-box input{
                 height: 34px;
                 border-radius: 20px;
                 padding-left: 35px;
                 border-color: #ddd;
                 box-shadow: none;
             }
-            .search-box input:focus {
+            .search-box input :focus  {
                 border-color: #3FBAE4;
             }
             .search-box i {
@@ -179,6 +179,13 @@
                 vertical-align: middle;
                 border-bottom: 2px solid #dee2e6;
             }
+            .search-button {
+                white-space: nowrap; /* Prevent text wrapping */
+                width: auto; /* Allow the button to adjust based on text width */
+                padding: 5px 10px; /* Adjust padding to fit the text */
+                font-size: 16px; /* Adjust font size if needed */
+                display: inline-block; /* Ensure the button takes only the necessary width */
+            }
         </style>
     </head>
     <body>
@@ -216,7 +223,7 @@
                                                             <input id="valueSearch" name="valueSearch" type="text" class="form-control" placeholder="Tìm kiếm bằng email, tên, ...">
                                                         </div>
                                                         <div class="form-group col-md-1 align-self-end">
-                                                            <input type="submit" class="btn btn-success" value="Tìm kiếm">
+                                                            <button id="searchButton" type="button" class="btn btn-success search-button " >Tìm kiếm</button>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -466,26 +473,52 @@
             function filterByStatus() {
                 var statusSelect, filterStatus, table, tr, td, i;
                 statusSelect = document.getElementById("statusFilterHeader");
-                filterStatus = statusSelect.value.toUpperCase();
+                filterStatus = statusSelect.value.toLowerCase();
                 table = document.getElementById("userTable");
                 tr = table.getElementsByTagName("tr");
 
-                for (i = 1; i < tr.length; i++) { // Bắt đầu từ 1 để bỏ qua hàng tiêu đề
-                    tr[i].style.display = "none"; // Ẩn hàng theo mặc định
+                for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+                    tr[i].style.display = "none"; // Hide rows by default
 
                     td = tr[i].getElementsByTagName("td");
                     if (td.length > 0) {
-                        var status = td[4].textContent.toUpperCase();
+                        var status = td[4].textContent.trim().toLowerCase(); // Adjust index if needed
 
-                        if (filterStatus === "0" || // Chọn "Tất cả trạng thái"
-                                (filterStatus === "TRUE" && status === "KÍCH HOẠT") ||
-                                (filterStatus === "FALSE" && status === "KHÔNG KÍCH HOẠT")) {
+                        if (filterStatus === "0" || // Show all statuses
+                                (filterStatus === "true" && status === "kích hoạt") ||
+                                (filterStatus === "false" && status === "không kích hoạt")) {
                             tr[i].style.display = "";
                         }
                     }
                 }
             }
+
+            function filterByRole() {
+                var roleSelect, filterRole, table, tr, td, i;
+                roleSelect = document.getElementById("roleFilterHeader");
+                filterRole = roleSelect.value.toLowerCase();
+                table = document.getElementById("userTable");
+                tr = table.getElementsByTagName("tr");
+
+                for (i = 1; i < tr.length; i++) { // Start from 1 to skip the header row
+                    tr[i].style.display = "none"; // Hide rows by default
+
+                    td = tr[i].getElementsByTagName("td");
+                    if (td.length > 0) {
+                        var role = td[3].textContent.trim().toLowerCase(); // Adjust index if needed
+
+                        if (filterRole === "0" || filterRole === "2" && role === "người dùng" || filterRole === "3" && role === "nhân viên" || filterRole === "4" && role === "nhân viên quét vé") {
+                            tr[i].style.display = "";
+                        }
+                    }
+                }
+            }
+
+            // Bind the filter functions to the onchange event of the select filters
+            document.getElementById("statusFilterHeader").addEventListener("change", filterByStatus);
+            document.getElementById("roleFilterHeader").addEventListener("change", filterByRole);
         </script>
+
 
         <!-- script for toast notification -->
         <script>
@@ -583,50 +616,36 @@
                 });
             });
         </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script>
             $(document).ready(function () {
-                $('#searchForm').on('submit', function (event) {
-                    event.preventDefault(); // Ngăn chặn gửi biểu mẫu mặc định
-
-                    var searchValue = $('#valueSearch').val().trim();
-                    if (searchValue === '') {
-                        $('#error-message').text("Trường tìm kiếm không được để trống.");
-                        return;
-                    } else {
-                        $('#error-message').text(""); // Xóa thông báo lỗi trước đó
-                    }
-
+                function loadPage(pageIndex, searchValue) {
                     $.ajax({
-                        type: 'POST',
-                        url: $(this).attr('action'),
-                        data: $(this).serialize(),
-                        success: function (data) {
-                            $('#searchUserModal').modal('hide');
-                            $('#userTable tbody').html(data.html);
-                            $('.pagination').html(data.pagination);
-                            $('.hint-text strong').text(data.usersCount);
+                        url: "searchUser", // URL of the servlet handling the Ajax request
+                        type: "Post",
+                        data: {
+                            page: pageIndex,
+                            search: searchValue
                         },
-                        error: function (xhr, status, error) {
-                            $('#error-message').text("Lỗi: " + xhr.responseText);
+                        success: function (data) {
+                            // Assuming the response data contains the updated HTML for the table and pagination
+                            $("#userTable").html($(data).find('#userTable').html());
+                            $(".pagination").html($(data).find('.pagination').html());
                         }
                     });
-                });
-            });
+                }
 
-            $('#roleFilterHeader').change(function () {
-                var roleId = $(this).val();
-                $.ajax({
-                    type: 'POST',
-                    url: 'manageUser',
-                    data: {roleId: roleId},
-                    success: function (data) {
-                        $('#userTable tbody').html(data.html);
-                        $('.pagination').html(data.pagination);
-                        $('.hint-text strong').text(data.usersCount);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                    }
+                $(document).on("click", ".page-link", function (e) {
+                    var pageIndex = $(this).attr("data-page");
+                    var searchValue = $("#valueSearch");
+                    loadPage(pageIndex, searchValue);
+                });
+
+                // Function to be called when the search button is clicked
+                $("#searchButton").on("click", function () {
+                    var pageIndex = 1; // Reset to the first page on new search
+                    var searchValue = $("#valueSearch").val().trim(); // Get the search value as a string
+                    loadPage(pageIndex, searchValue);
                 });
             });
         </script>

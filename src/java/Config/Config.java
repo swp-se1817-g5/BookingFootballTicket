@@ -1,5 +1,6 @@
 package Config;
 
+import controllers.Auth.requestPassword;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -19,8 +20,9 @@ import jakarta.servlet.http.HttpServletRequest;
  * @author CTT VNPAY
  */
 public class Config {
+    private static HttpServletRequest req;
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static String vnp_ReturnUrl = "http://localhost:8080/BookingFootballTicket/vnpayReturn";
+    public static String vnp_ReturnUrl = "http://localhost:8080/FootballBookingTicket/vnpayReturn";
     public static String vnp_TmnCode = "OHBXYXQN";
     public static String secretKey = "QC956ZLQCSLKZDOWGTQ0R8HN20YUJO4X";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";

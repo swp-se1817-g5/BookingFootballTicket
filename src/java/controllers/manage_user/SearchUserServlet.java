@@ -76,7 +76,8 @@ public class SearchUserServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String valueSearch = request.getParameter("valueSearch").trim().toLowerCase();
+        String valueSearch = request.getParameter("search");
+        valueSearch = (valueSearch == null) ? "" : valueSearch.trim().toLowerCase();
 
         int page = 1;
         if (request.getParameter("page") != null) {
@@ -91,79 +92,93 @@ public class SearchUserServlet extends HttpServlet {
         int totalPages = (int) Math.ceil((double) totalUsers / pageSize);
         ArrayList<User> paginatedUsers = UserDAO.getINSTANCE().getPaginatedUsers(users, page, pageSize);
 
-        StringBuilder htmlResponse = new StringBuilder();
-        for (User user : paginatedUsers) {
-            String roleName = getRoleName(user.getRoleId());
-            String status = user.isStatus() ?  "Không Kích Hoạt": "Kích Hoạt";
-
-                htmlResponse.append("<tr>");
-                htmlResponse.append("<td>").append(user.getEmail()).append("</td>");
-                htmlResponse.append("<td>").append(user.getName()).append("</td>");
-                htmlResponse.append("<td>").append(user.getPhoneNumber()).append("</td>");
-                htmlResponse.append("<td>").append(roleName).append("</td>");
-                htmlResponse.append("<td>").append(status).append("</td>");
-                htmlResponse.append("<td>");
-                htmlResponse.append("<a href=\"#userDetailModal\" class=\"view\" title=\"View\" ")
-                        .append("onclick=\"update('")
-                        .append(user.getEmail()).append("', '")
-                        .append(user.getName()).append("', '")
-                        .append(user.getPhoneNumber()).append("', '")
-                        .append(user.getAvatar()).append("', '")
-                        .append(user.getRoleId()).append("', '")
-                        .append(user.isStatus()).append("')\" ")
-                        .append("data-toggle=\"modal\"><i class=\"fa fa-eye\" style=\"color: gray;\"></i></a>");
-                if (!user.isStatus()) {
-                    htmlResponse.append("<a href=\"#\" class=\"inactive\" title=\"InActive\" data-toggle=\"tooltip\" ")
-                            .append("onclick=\"changeStatus('").append(user.getEmail()).append("', event)\">")
-                            .append("<i class=\"fas fa-toggle-on status-icon active\" style=\"color: green;\"></i></a>");
-                } else {
-                    htmlResponse.append("<a href=\"#\" class=\"active\" title=\"Active\" data-toggle=\"tooltip\" ")
-                            .append("onclick=\"changeStatus('").append(user.getEmail()).append("', event)\">")
-                            .append("<i class=\"fas fa-toggle-off status-icon active\"></i></a>");
-                }
-                htmlResponse.append("</td>");
-                htmlResponse.append("</tr>");
-            }
-        /// Build pagination HTML
-        StringBuilder pagination = new StringBuilder();
-        pagination.append("<ul class='pagination'>");
-        if (page > 1) {
-            pagination.append("<li class='page-item'><a href='manageUser?page=1' data-page='1' class='page-link'>First</a></li>");
-            pagination.append("<li class='page-item'><a href='manageUser?page=${page - 1}' data-page='").append(page - 1).append("' class='page-link'>Previous</a></li>");
-        }
-        for (int i = 1; i <= totalPages; i++) {
-            if (i == page) {
-                pagination.append("<li class='page-item active'><a href='manageUser?page=${pageNumber}' data-page='").append(i).append("' class='page-link'>").append(i).append("</a></li>");
-            } else {
-                pagination.append("<li class='page-item'><a href='manageUser?page=${pageNumber}' data-page='").append(i).append("' class='page-link'>").append(i).append("</a></li>");
-            }
-        }
-        if (page < totalPages) {
-            pagination.append("<li class='page-item'><a href='manageUser?page=${page + 1}' data-page='").append(page).append(1).append("' class='page-link'>Next</a></li>");
-            pagination.append("<li class='page-item'><a href='manageUser?page=${noOfPages}' data-page='").append(totalPages).append("' class='page-link'>Last</a></li>");
-        }
-        pagination.append("</ul>");
-        response.setContentType("application/json");
-        JsonObject jsonResponse = new JsonObject();
-        jsonResponse.addProperty("html", htmlResponse.toString());
-        jsonResponse.addProperty("pagination", pagination.toString());
-        jsonResponse.addProperty("usersCount", users.size()); // Số lượng người dùng trong trang hiện tại
-        try (PrintWriter out = response.getWriter()) {
-            out.println(jsonResponse.toString());
-        }
-    }
-
-    private String getRoleName(int roleId) {
-        String roleName = "";
+        // Get roles to be used in the JSP
         ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
-        for (Role role : roles) {
-            if (role.getRoleId() == roleId) {
-                roleName = role.getRoleName();
-                break;
-            }
-        }
-        return roleName;
+
+        // Set attributes to be forwarded to the JSP
+        request.setAttribute("users", paginatedUsers);
+        request.setAttribute("roles", roles);
+        request.setAttribute("noOfPages", totalPages);
+        request.setAttribute("currentPage", page);
+        request.setAttribute("noOfRecords", totalUsers);
+        request.setAttribute("url", "manageUser");
+
+        // Forward to the JSP page
+        request.getRequestDispatcher("views/manageUser.jsp").forward(request, response);
     }
+//        StringBuilder htmlResponse = new StringBuilder();
+//        for (User user : paginatedUsers) {
+//            String roleName = getRoleName(user.getRoleId());
+//            String status = user.isStatus() ?  "Không Kích Hoạt": "Kích Hoạt";
+//
+//                htmlResponse.append("<tr>");
+//                htmlResponse.append("<td>").append(user.getEmail()).append("</td>");
+//                htmlResponse.append("<td>").append(user.getName()).append("</td>");
+//                htmlResponse.append("<td>").append(user.getPhoneNumber()).append("</td>");
+//                htmlResponse.append("<td>").append(roleName).append("</td>");
+//                htmlResponse.append("<td>").append(status).append("</td>");
+//                htmlResponse.append("<td>");
+//                htmlResponse.append("<a href=\"#userDetailModal\" class=\"view\" title=\"View\" ")
+//                        .append("onclick=\"update('")
+//                        .append(user.getEmail()).append("', '")
+//                        .append(user.getName()).append("', '")
+//                        .append(user.getPhoneNumber()).append("', '")
+//                        .append(user.getAvatar()).append("', '")
+//                        .append(user.getRoleId()).append("', '")
+//                        .append(user.isStatus()).append("')\" ")
+//                        .append("data-toggle=\"modal\"><i class=\"fa fa-eye\" style=\"color: gray;\"></i></a>");
+//                if (!user.isStatus()) {
+//                    htmlResponse.append("<a href=\"#\" class=\"inactive\" title=\"InActive\" data-toggle=\"tooltip\" ")
+//                            .append("onclick=\"changeStatus('").append(user.getEmail()).append("', event)\">")
+//                            .append("<i class=\"fas fa-toggle-on status-icon active\" style=\"color: green;\"></i></a>");
+//                } else {
+//                    htmlResponse.append("<a href=\"#\" class=\"active\" title=\"Active\" data-toggle=\"tooltip\" ")
+//                            .append("onclick=\"changeStatus('").append(user.getEmail()).append("', event)\">")
+//                            .append("<i class=\"fas fa-toggle-off status-icon active\"></i></a>");
+//                }
+//                htmlResponse.append("</td>");
+//                htmlResponse.append("</tr>");
+//            }
+//        /// Build pagination HTML
+//        StringBuilder pagination = new StringBuilder();
+//        pagination.append("<ul class='pagination'>");
+//        if (page > 1) {
+//            pagination.append("<li class='page-item'><a href='manageUser?page=1' data-page='1' class='page-link'>First</a></li>");
+//            pagination.append("<li class='page-item'><a href='manageUser?page=${page - 1}' data-page='").append(page - 1).append("' class='page-link'>Previous</a></li>");
+//        }
+//        for (int i = 1; i <= totalPages; i++) {
+//            if (i == page) {
+//                pagination.append("<li class='page-item active'><a href='manageUser?page=${pageNumber}' data-page='").append(i).append("' class='page-link'>").append(i).append("</a></li>");
+//            } else {
+//                pagination.append("<li class='page-item'><a href='manageUser?page=${pageNumber}' data-page='").append(i).append("' class='page-link'>").append(i).append("</a></li>");
+//            }
+//        }
+//        if (page < totalPages) {
+//            pagination.append("<li class='page-item'><a href='manageUser?page=${page + 1}' data-page='").append(page).append(1).append("' class='page-link'>Next</a></li>");
+//            pagination.append("<li class='page-item'><a href='manageUser?page=${noOfPages}' data-page='").append(totalPages).append("' class='page-link'>Last</a></li>");
+//        }
+//        pagination.append("</ul>");
+//        response.setContentType("application/json");
+//        JsonObject jsonResponse = new JsonObject();
+//        jsonResponse.addProperty("html", htmlResponse.toString());
+//        jsonResponse.addProperty("pagination", pagination.toString());
+//        jsonResponse.addProperty("usersCount", users.size()); // Số lượng người dùng trong trang hiện tại
+//        try (PrintWriter out = response.getWriter()) {
+//            out.println(jsonResponse.toString());
+//        }
+//    }
+//
+//    private String getRoleName(int roleId) {
+//        String roleName = "";
+//        ArrayList<Role> roles = RoleDAO.getINSTANCE().getAllRole();
+//        for (Role role : roles) {
+//            if (role.getRoleId() == roleId) {
+//                roleName = role.getRoleName();
+//                break;
+//            }
+//        }
+//        return roleName;
+//    }
 
     @Override
     public String getServletInfo() {
