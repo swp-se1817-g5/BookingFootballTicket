@@ -13,11 +13,11 @@ public class FBTServletListener implements ServletContextListener {
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
-        MatchSeatUpdater.getInstance().startScheduler();
+        MatchUpdater.getInstance().startScheduler();
     }
 
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
-        MatchSeatUpdater.getInstance().stopScheduler();
+        MatchUpdater.getInstance().stopScheduler();
     }
 }

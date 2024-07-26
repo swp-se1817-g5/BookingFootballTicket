@@ -1,5 +1,6 @@
 package dal;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -124,7 +125,7 @@ public class MatchDAO {
     }
 
     public List<Match> getMatches() {
-        updateMatchStatus();
+        //updateMatchStatus();
         List<Match> matches = new ArrayList<>();
         String sql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
@@ -183,7 +184,7 @@ public class MatchDAO {
     }
 
     public List<Match> getMatches_homePage() {
-        updateMatchStatus();
+        //updateMatchStatus();
         List<Match> matches = new ArrayList<>();
         String sql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
@@ -196,7 +197,7 @@ public class MatchDAO {
                 + "JOIN Season s ON m.seasonId = s.seasonId "
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
-                + "WHERE m.isDeleted = 0 "
+                + "WHERE m.isDeleted = 0 AND m.statusId = 2 "
                 + "ORDER BY  m.[startTime] DESC";
         try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
@@ -243,7 +244,7 @@ public class MatchDAO {
     }
 
     public List<Match> getMatchesByFc(String fcId) {
-        updateMatchStatus();
+        //updateMatchStatus();
         List<Match> matches = new ArrayList<>();
         String sql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
@@ -256,7 +257,7 @@ public class MatchDAO {
                 + "JOIN Season s ON m.seasonId = s.seasonId "
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
-                + "WHERE m.isDeleted = 0 and "
+                + "WHERE m.statusId = 2 and "
                 + "fc1.clubId = " + fcId
                 + " or fc2.clubId = " + fcId;
         try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
@@ -304,7 +305,7 @@ public class MatchDAO {
     }
 
     public Match getMatcheById(String matchId) {
-        updateMatchStatus();
+        //updateMatchStatus();
         Match match = new Match();
         String sql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
@@ -397,17 +398,19 @@ public class MatchDAO {
         return deleted;
     }
 
-    private void updateMatchStatus() {
-        String sql = "UPDATE Match SET statusId = 2 WHERE [startTime] <= CURRENT_TIMESTAMP AND statusId <> 2";
-        try (PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.executeUpdate();
+    public void updateMatchStatus(int newStatusId, int timeOffsetInHours) {
+        String sql = "{call UpdateMatchStatus(?, ?)}";
+        try (CallableStatement cs = con.prepareCall(sql)) {
+            cs.setInt(1, newStatusId);
+            cs.setInt(2, timeOffsetInHours);
+            cs.execute();
         } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Error updating match status", e);
+            LOGGER.log(Level.SEVERE, "Error updating match status using stored procedure", e);
         }
     }
 
     public List<Match> getMatchesUpcomming(int pageNumber, int pageSize) {
-        updateMatchStatus();
+        //updateMatchStatus();
         List<Match> matches = new ArrayList<>();
         String fetchSql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
@@ -498,7 +501,7 @@ public class MatchDAO {
 
     public List<Match> getFilteredMatches(String searchInput, String seasonId, String dateFrom, String dateTo,
             String matchStatusId, String matchTypeId, int page, int pageSize) {
-        updateMatchStatus();
+//        updateMatchStatus();
         List<Match> matches = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, "
@@ -617,7 +620,7 @@ public class MatchDAO {
     }
 
     public int countFilteredMatches(String searchInput, String seasonId, String dateFrom, String dateTo, String matchStatusId, String matchTypeId) {
-        updateMatchStatus();
+//        updateMatchStatus();
         int count = 0;
         String sql = "SELECT COUNT(*) AS totalMatches "
                 + "FROM Match m "
@@ -626,7 +629,7 @@ public class MatchDAO {
                 + "JOIN Season s ON m.seasonId = s.seasonId "
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
-                + "WHERE m.isDeleted = 0 ";
+                + "WHERE m.statusId = 2 AND m.isDeleted = 0 ";
 
         // Xây dựng các điều kiện lọc nếu có
         List<String> conditions = new ArrayList<>();
@@ -690,7 +693,7 @@ public class MatchDAO {
     }
 
     public List<Match> getListMatches_inspector() {
-        updateMatchStatus();
+        //updateMatchStatus();
         List<Match> matches = new ArrayList<>();
         String sql = "SELECT DISTINCT m.matchId, fb1.clubName as fb1, fb2.clubName as fb2, s.seasonName,m.startTime\n"
                 + "FROM Match m\n"
@@ -724,59 +727,59 @@ public class MatchDAO {
     }
 
     public List<Match> getMatchHotByTicketSold() {
-    updateMatchStatus(); // Giả định phương thức này cập nhật trạng thái trận đấu nếu cần
-    List<Match> matches = new ArrayList<>();
-    String sql = "SELECT\n"
-            + "    ms.matchId,\n"
-            + "    SUM(hp.quantity) AS totalTicketsSold,\n"
-            + "    m.startTime,\n"
-            + "    fc1.clubName AS team1Name,\n"
-            + "    fc2.clubName AS team2Name,\n"
-            + "    s.seasonName\n"
-            + "FROM\n"
-            + "    HistoryPurchasedTicketMatchSeat hp\n"
-            + "JOIN\n"
-            + "    MatchSeat ms ON hp.matchSeatId = ms.matchSeatId\n"
-            + "JOIN\n"
-            + "    Match m ON ms.matchId = m.matchId\n"
-            + "JOIN\n"
-            + "    FootballClub fc1 ON m.team1 = fc1.clubId\n"
-            + "JOIN\n"
-            + "    FootballClub fc2 ON m.team2 = fc2.clubId\n"
-            + "JOIN\n"
-            + "    Season s ON m.seasonId = s.seasonId\n"
-            + "WHERE\n"
-            + "    m.statusId = 2\n"
-            + "GROUP BY\n"
-            + "    ms.matchId, m.startTime, fc1.clubName, fc2.clubName, s.seasonName\n"
-            + "ORDER BY\n"
-            + "    totalTicketsSold DESC";
-    try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
-        while (rs.next()) {
-            Match match = new Match();
-            match.setMatchId(rs.getInt("matchId"));
-            match.setTime(rs.getTimestamp("startTime").toLocalDateTime());
+//    updateMatchStatus(); 
+        List<Match> matches = new ArrayList<>();
+        String sql = "SELECT\n"
+                + "    ms.matchId,\n"
+                + "    SUM(hp.quantity) AS totalTicketsSold,\n"
+                + "    m.startTime,\n"
+                + "    fc1.clubName AS team1Name,\n"
+                + "    fc2.clubName AS team2Name,\n"
+                + "    s.seasonName\n"
+                + "FROM\n"
+                + "    HistoryPurchasedTicketMatchSeat hp\n"
+                + "JOIN\n"
+                + "    MatchSeat ms ON hp.matchSeatId = ms.matchSeatId\n"
+                + "JOIN\n"
+                + "    Match m ON ms.matchId = m.matchId\n"
+                + "JOIN\n"
+                + "    FootballClub fc1 ON m.team1 = fc1.clubId\n"
+                + "JOIN\n"
+                + "    FootballClub fc2 ON m.team2 = fc2.clubId\n"
+                + "JOIN\n"
+                + "    Season s ON m.seasonId = s.seasonId\n"
+                + "WHERE\n"
+                + "    m.statusId = 2\n"
+                + "GROUP BY\n"
+                + "    ms.matchId, m.startTime, fc1.clubName, fc2.clubName, s.seasonName\n"
+                + "ORDER BY\n"
+                + "    totalTicketsSold DESC";
+        try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Match match = new Match();
+                match.setMatchId(rs.getInt("matchId"));
+                match.setTime(rs.getTimestamp("startTime").toLocalDateTime());
 
-            // Tạo các đối tượng FootballClub và Season từ ResultSet
-            FootballClub team1 = new FootballClub();
-            team1.setClubName(rs.getString("team1Name"));
-            match.setTeam1(team1);
+                // Tạo các đối tượng FootballClub và Season từ ResultSet
+                FootballClub team1 = new FootballClub();
+                team1.setClubName(rs.getString("team1Name"));
+                match.setTeam1(team1);
 
-            FootballClub team2 = new FootballClub();
-            team2.setClubName(rs.getString("team2Name"));
-            match.setTeam2(team2);
+                FootballClub team2 = new FootballClub();
+                team2.setClubName(rs.getString("team2Name"));
+                match.setTeam2(team2);
 
-            Season season = new Season();
-            season.setSeasonName(rs.getString("seasonName"));
-            match.setSeason(season);
+                Season season = new Season();
+                season.setSeasonName(rs.getString("seasonName"));
+                match.setSeason(season);
 
-            matches.add(match);
+                matches.add(match);
+            }
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error getting matches", e);
         }
-    } catch (SQLException e) {
-        LOGGER.log(Level.SEVERE, "Error getting matches", e);
+        return matches;
     }
-    return matches;
-}
 
     public static void main(String[] args) {
     }

@@ -46,6 +46,25 @@
         <!-- STYLESHEETS ============================================= -->
         <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
         <link class="skin" rel="stylesheet" type="text/css" href="assets/css/color/color-1.css">
+        <style>
+            body {
+                font-family: 'Helvetica', sans-serif;
+            }
+            .title-head {
+                font-family: 'Helvetica', sans-serif;
+            }
+            .btn {
+                font-family: 'Helvetica', sans-serif;
+            }
+
+            .button-md {
+                font-family: 'Helvetica', sans-serif;
+            }
+            .swal2-title {
+                font-family: 'Helvetica', sans-serif;
+            }
+
+        </style>
 
     </head>
     <body id="bg">
@@ -58,7 +77,8 @@
                     <div class="account-container">
                         <div class="heading-bx left">
                             <h2 class="title-head">Quên <span>Mật Khẩu</span></h2>
-                            <p>Đăng nhập tài khoản của bạn <a href="http://localhost:8080/BookingFootballTicket/login">Ở đây</a></p>
+                            <!--                            <p>Đăng nhập tài khoản của bạn <a href="./login">Ở đây</a></p>-->
+                            <p>Quay lại <a href="./homePage">Trang chủ</a></p>
                         </div>
 
                         <form action="requestPassword" method="post" class="contact-bx">
@@ -67,9 +87,9 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <label>Địa chỉ Email của bạn</label>
-                                                <input type="email" class="form-control"
-                                                       name="email" 
-                                                       id="email" required>
+                                            <input type="email" class="form-control"
+                                                   name="email" 
+                                                   id="email" required>
                                         </div>
                                     </div>
                                 </div>
@@ -104,7 +124,7 @@
                                             var email = document.querySelector('input[name="emailInputReset"]').value;
                                             var emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
                                             if (!emailRegex.test(email)) {
-                                                showErrorPopup("Please enter a valid email addres!");
+//                                                showErrorPopup("Please enter a valid email addres!");
                                                 return false;
                                             }
                                             return true;
@@ -112,14 +132,14 @@
 
         </script>
         <%
-    String mess = (String) request.getAttribute("mess");
-    String messEr = (String) request.getAttribute("messEr");
-    if (mess != null || messEr != null) {
+            String mess = (String) request.getAttribute("mess");
+            String messEr = (String) request.getAttribute("messEr");
+            if (mess != null || messEr != null) {
         %>  
         <script type="text/javascript">
             window.onload = function () {
-                var message = '<%= mess != null ? mess.replace("'", "\\'") : "" %>';
-                var errorMessage = '<%= messEr != null ? messEr.replace("'", "\\'") : "" %>';
+                var message = '<%= mess != null ? mess.replace("'", "\\'") : ""%>';
+                var errorMessage = '<%= messEr != null ? messEr.replace("'", "\\'") : ""%>';
                 if (message) {
                     showLoginPopup(message);
                 }
@@ -146,8 +166,6 @@
                 });
             }
         </script>
-
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </body>
 
 </html>

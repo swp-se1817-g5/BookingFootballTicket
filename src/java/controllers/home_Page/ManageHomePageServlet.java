@@ -4,7 +4,7 @@
  */
 package controllers.home_Page;
 
-import controller.ContextListener.MatchSeatUpdater;
+import controller.ContextListener.MatchUpdater;
 import dal.FootballClubDAO;
 import dal.MatchDAO;
 import dal.MatchSeatDAO;

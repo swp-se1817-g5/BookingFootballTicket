@@ -106,7 +106,7 @@ public class RegisterServlet extends HttpServlet {
         }
 
         if (!Validate.isValidPassword(password)) {
-            request.setAttribute("errorMessage", "Mật khẩu cần ít nhất 8 kí tự, 1 kí tự thường, 1 kí tự in hoa, 1 kí tự số!");
+            request.setAttribute("errorMessage", "Mật khẩu cần ít nhất 8 kí tự bao gồm: ký tự chữ thường, ít nhất 1 ký tự viết hoa và 1 ký tự số!");
             returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;

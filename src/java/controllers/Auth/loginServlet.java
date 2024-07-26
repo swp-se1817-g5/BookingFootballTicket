@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(name = "SignInServlet", urlPatterns = {"/login"})
-public class SignInServlet extends HttpServlet {
+@WebServlet(name = "loginServlet", urlPatterns = {"/login"})
+public class loginServlet extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -66,7 +66,7 @@ public class SignInServlet extends HttpServlet {
 
         if (!emailExists) {
             // Email does not exist in the database
-            request.setAttribute("errorMessage", "Email chưa được đăng ký!");
+            request.setAttribute("errorMessage", "Email chưa được đăng ký !");
             returnValueBefore(request, response, email, null); // Set email value
             request.getRequestDispatcher("views/login.jsp").forward(request, response);
         } else {

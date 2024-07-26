@@ -92,7 +92,7 @@
                 var name = document.getElementById("name").value;
                 var nameError = document.getElementById("nameError");
                 if (name.trim() === "") {
-                    nameError.textContent = "Name cannot be null or empty.";
+                    nameError.textContent = "Tên không thể để trống";
                     nameError.classList.remove("valid");
                     nameError.classList.add("error");
                 } else {
@@ -107,7 +107,7 @@
                 var phoneError = document.getElementById("phoneError");
                 var phoneRegex = /^0[3-9][0-9]{8}$/;
                 if (!phoneRegex.test(phoneNumber)) {
-                    phoneError.textContent = "Invalid phone number format. It should follow VN phone number format.";
+                    phoneError.textContent = "Số điện thoại không hợp lệ. Số điện thoại phải là định dạng Việt Nam.";
                     phoneError.classList.remove("valid");
                     phoneError.classList.add("error");
                 } else {

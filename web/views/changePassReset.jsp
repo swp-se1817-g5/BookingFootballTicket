@@ -47,6 +47,28 @@
         <!-- STYLESHEETS ============================================= -->
         <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
         <link class="skin" rel="stylesheet" type="text/css" href="assets/css/color/color-1.css">
+        <style>
+            body {
+                font-family: 'Helvetica', sans-serif;
+            }
+            .title-head {
+                font-family: 'Helvetica', sans-serif;
+            }
+            .title-under {
+                font-family: 'Helvetica', sans-serif;
+            }
+            .btn {
+                font-family: 'Helvetica', sans-serif;
+            }
+
+            .button-md {
+                font-family: 'Helvetica', sans-serif;
+            }
+            .swal2-title {
+                font-family: 'Helvetica', sans-serif;
+            }
+
+        </style>
 
     </head>
     <body id="bg">
@@ -59,6 +81,7 @@
                     <div class="account-container">
                         <div class="heading-bx left">
                             <h2 class="title-head">Đặt Lại <span>Mật Khẩu</span></h2>
+                            <p>Quay lại <a href="./homePage">Trang chủ</a></p>
                         </div>
 
                         <form action="resetPassword" method="post" class="contact-bx">
@@ -122,7 +145,7 @@
                                         function validatePassword() {
                                             var passwordValue = password.value;
                                             if (!new RegExp(regexPassword).test(passwordValue)) {
-                                                password.setCustomValidity("Password needs at least 8 characters, 1 lowercase character, 1 uppercase character, and 1 numeric character.");
+                                                password.setCustomValidity("Mật khẩu cần ít nhất 8 kí tự bao gồm: ký tự chữ thường, ít nhất 1 ký tự viết hoa và 1 ký tự số.");
                                                 return false;
                                             } else {
                                                 password.setCustomValidity('');
@@ -132,7 +155,7 @@
 
                                         function validateConfirmPassword() {
                                             if (password.value !== confirm_password.value) {
-                                                confirm_password.setCustomValidity("Passwords must match!");
+                                                confirm_password.setCustomValidity("Mật khẩu phải trùng khớp !");
                                                 return false;
                                             } else {
                                                 confirm_password.setCustomValidity('');
@@ -148,7 +171,7 @@
 
                                             for (var i = 0; i < form.elements.length; i++) {
                                                 if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')) {
-                                                    console.log('There are some required fields!');
+                                                    console.log('Có một số trường bắt buộc!');
                                                     return false;
                                                 }
                                             }

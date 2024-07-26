@@ -22,7 +22,6 @@ import dal.BookingDAO;
 import dal.MatchDAO;
 import dal.MatchSeatDAO;
 import jakarta.servlet.http.HttpSession;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import models.BookingTicket;
 import models.HistoryPurchasedTicketMatchSeat;

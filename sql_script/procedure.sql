@@ -1,4 +1,5 @@
-﻿USE FootballBookingTicket;
+﻿
+USE FootballBookingTicket;
 GO
 
 CREATE PROCEDURE UpdateMatchSeatAvailability
@@ -23,3 +24,26 @@ BEGIN
     AND status = 'unPayment';
 END;
 GO
+
+CREATE PROCEDURE UpdateMatchStatus
+    @NewStatusId INT,
+    @TimeOffsetInHours INT
+AS
+BEGIN
+    UPDATE Match
+    SET statusId = @NewStatusId
+    WHERE [startTime] <= DATEADD(HOUR, -@TimeOffsetInHours, CURRENT_TIMESTAMP)
+      AND statusId NOT IN (3, 4);
+END
+drop procedure UpdateMatchStatus
+
+GO
+CREATE PROCEDURE UpdateTicketStatus
+AS
+BEGIN
+    UPDATE HistoryPurchasedTicketMatchSeat
+    SET statusId = 3
+    WHERE [startTime] <= DATEADD(HOUR, -10, CURRENT_TIMESTAMP)
+    AND statusId <> 2;
+    
+END

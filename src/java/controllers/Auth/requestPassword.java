@@ -78,14 +78,14 @@ public class requestPassword extends HttpServlet {
         //
         User user = daoUser.getUserByEmail(email);
         if(user == null) {
-            request.setAttribute("messEr", "Bạn chưa đăng ký email này!");
+            request.setAttribute("messEr", "Bạn chưa đăng ký email này !");
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             return;
         }
         resetService service = new resetService();
         String token = service.generateToken();
         
-        String linkReset = "http://localhost:8080/BookingFootballTicket/resetPassword?token="+token;
+        String linkReset = "http://localhost:8080/FootballBookingTicket/resetPassword?token="+token;
         
         TokenForgetPassword newTokenForget = new TokenForgetPassword(
                 user.getEmail(), false, token, service.expireDateTime());
@@ -94,14 +94,14 @@ public class requestPassword extends HttpServlet {
         //
         boolean isInsert = daoToken.insertTokenForget(newTokenForget);
         if(!isInsert) {
-            request.setAttribute("mess", "Có lỗi ở máy chủ!");
+            request.setAttribute("mess", "Có lỗi ở máy chủ !");
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             return;
         }
         //
         boolean isSend = service.sendEmail(email, linkReset, user.getName());
         if(!isSend) {
-            request.setAttribute("mess", "Không thể gửi yêu cầu!");
+            request.setAttribute("mess", "Không thể gửi yêu cầu !");
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             return;
         }
