@@ -1,5 +1,6 @@
 package controller.ContextListener;
 
+import dal.HistoryPurchasedTicketDAO;
 import dal.MatchDAO;
 import dal.MatchSeatDAO;
 import java.util.concurrent.Executors;
@@ -27,6 +28,7 @@ public class MatchUpdater implements Runnable {
         try {
             MatchSeatDAO.INSTANCE.updateMatchSeatAvailability();
             MatchDAO.INSTANCE.updateMatchStatus(3, 1);
+            HistoryPurchasedTicketDAO.getInstance().updateTicketStatus(3, 5);
         } catch (Exception e) {
             // Log the exception
             e.printStackTrace();

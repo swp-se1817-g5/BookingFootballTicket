@@ -159,6 +159,10 @@
                                             <!--                                            <div class="dropdown-divider"></div>
                                                                                         <a class="dropdown-item" href="./changepass">Đổi mật khẩu</a>-->
                                             <div class="dropdown-divider"></div>
+                                            <c:if test="${sessionScope.currentUser.roleId == 1}">
+                                                <a class="dropdown-item" data-auth="profile" href="dashboard">Bảng điều khiển</a>
+                                            </c:if>
+                                            <div class="dropdown-divider"></div>
                                             <a class="dropdown-item" href="./logout">Đăng xuất</a>
                                         </c:when>
                                     </c:choose>

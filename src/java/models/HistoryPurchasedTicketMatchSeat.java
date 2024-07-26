@@ -129,6 +129,7 @@ public class HistoryPurchasedTicketMatchSeat {
     public String getStartTimeConverted() {
         return startTime != null ? timeFormatter.format(startTime) : null;
     }
+    
 
     public String getSeasonName() {
         return seasonName;
@@ -216,6 +217,10 @@ public class HistoryPurchasedTicketMatchSeat {
 
     public String getCreatedDate() {
         return createdDate != null ? createdDate.format(formatter) : null;
+    }
+    
+    public String getPurchasedTime() {
+         return createdDate != null ? createdDate.format(timeFormatter) : null;
     }
 
     public void setCreatedDate(LocalDateTime createdDate) {

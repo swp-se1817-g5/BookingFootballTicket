@@ -4,6 +4,7 @@
  */
 package dal;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,6 +30,8 @@ import models.TicketStatus;
  */
 public class HistoryPurchasedTicketDAO {
 
+    private static final Logger LOGGER = Logger.getLogger(HistoryPurchasedTicketDAO.class.getName());
+    
     private static volatile HistoryPurchasedTicketDAO INSTANCE;
     private final Connection connect;
     // Define constants for the string literals
@@ -77,6 +80,17 @@ public class HistoryPurchasedTicketDAO {
     PreparedStatement ps = null;
     ResultSet rs = null;
 
+    public void updateTicketStatus(int newStatusId, int timeOffsetInHours) {
+        String sql = "{call UpdateTicketStatus(?, ?)}";
+        try (CallableStatement cs = connect.prepareCall(sql)) {
+            cs.setInt(1, newStatusId);
+            cs.setInt(2, timeOffsetInHours);
+            cs.execute();
+        } catch (SQLException e) {
+            LOGGER.log(Level.SEVERE, "Error updating ticket status using stored procedure", e);
+        }
+    }
+    
 // Get list all of HistoryPurchasedTicketMatchSeat
     public ArrayList<HistoryPurchasedTicketMatchSeat> getlistHistoryPurchasedTicketMatchSeat() {
         ArrayList<HistoryPurchasedTicketMatchSeat> list = new ArrayList<>();
