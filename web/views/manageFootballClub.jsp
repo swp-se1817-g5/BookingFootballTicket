@@ -533,14 +533,7 @@ Author     : admin
 
             });
 
-            $(document).ready(function () {
-                $('#searchInput').keypress(function (event) {
-                    if (event.keyCode === 13) { // 13 is the Enter key
-                        event.preventDefault();  // Prevent the default form submission
-                        $('#searchForm').submit(); // Manually submit the form
-                    }
-                });
-            });
+          
 
             function doDelete(clubId) {
                 if (confirm("Do you want to delete Football Club with id = " + clubId))
