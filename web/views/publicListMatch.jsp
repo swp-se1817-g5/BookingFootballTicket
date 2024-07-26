@@ -51,7 +51,7 @@
 
             .ticket-card {
                 width: 100%;
-                height: 440px;
+                height: 450px;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -161,30 +161,6 @@
                 background-color: #007bff;
                 border-color: #007bff;
                 color: white;
-            }
-
-            /* Responsive styles */
-            @media (max-width: 767px) {
-                .sidebar {
-                    position: static;
-                    margin-bottom: 20px;
-                }
-
-                .ticket-card {
-                    height: auto;
-                    width: 90%; /* Đảm bảo thẻ không quá rộng */
-                    margin: 0 auto; /* Căn giữa thẻ */
-                }
-
-                .pagination {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                }
-
-                .pagination .page-item {
-                    margin: 5px 0;
-                }
             }
         </style>
     </head>
