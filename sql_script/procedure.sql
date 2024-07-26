@@ -33,3 +33,14 @@ BEGIN
       AND statusId <> 3
       AND statusId <> 4;
 END
+
+GO
+CREATE PROCEDURE UpdateTicketStatus
+AS
+BEGIN
+    UPDATE HistoryPurchasedTicketMatchSeat
+    SET statusId = 3
+    WHERE [startTime] <= DATEADD(HOUR, -10, CURRENT_TIMESTAMP)
+    AND statusId <> 2;
+    
+END

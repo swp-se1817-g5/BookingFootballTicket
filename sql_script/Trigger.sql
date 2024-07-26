@@ -22,9 +22,23 @@ BEGIN
 END;
 GO
 
+CREATE TRIGGER trg_AfterUpdateMatchTime
+ON Match
+AFTER Update
+AS
+BEGIN
+     SET NOCOUNT ON;
 
+    -- Update HistoryPurchasedTicketMatchSeat startTime for the updated matches
+    UPDATE hptms
+    SET hptms.startTime = m.startTime
+    FROM HistoryPurchasedTicketMatchSeat hptms
+    JOIN inserted i ON i.matchId = hptms.matchSeatId
+    JOIN Match m ON m.matchId = i.matchId
+    WHERE m.startTime <> i.startTime;
+END;
 
-
+GO
 -------------------------------------------------------------------- TriggerNews-------------------------------------------------------------------- 
 -- Trigger update lastUpdatedDate in table News
 CREATE TRIGGER trg_UpdateLastUpdatedDateNews
