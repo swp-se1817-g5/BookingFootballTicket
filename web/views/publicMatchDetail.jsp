@@ -501,11 +501,11 @@
                                                     <select class="form-select" name="numberOfTicket">
                                                         <c:choose>
                                                             <c:when test="${seatMatch.availability >= 5}">
-                                                                <option value="1">1 ticket</option>
-                                                                <option value="2">2 tickets</option>
-                                                                <option value="3">3 tickets</option>
-                                                                <option value="4">4 tickets</option>
-                                                                <option value="5">5 tickets</option>
+                                                                <option value="1">1 vé</option>
+                                                                <option value="2">2 vé</option>
+                                                                <option value="3">3 vé</option>
+                                                                <option value="4">4 vé</option>
+                                                                <option value="5">5 vé</option>
                                                             </c:when>
                                                             <c:otherwise>
                                                                 <c:forEach var="i" begin="1" end="${seatMatch.availability}">

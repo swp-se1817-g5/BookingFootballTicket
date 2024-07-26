@@ -33,6 +33,70 @@ public class BookingDAO {
         }
     }
     
+    public boolean addOrderTicketWithAvailabilityCheck(BookingTicket book) {
+        String subtractSql = "UPDATE MatchSeat SET availability = availability - ? WHERE matchSeatId = ? AND availability >= ?";
+        String insertSql = "INSERT INTO [dbo].[BookingTicket] ([seatName], [quantity], [standName], [seatClassName], [email], [qrCode], [price], [status], [createdDate], [matchId], [matchSeatId]) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement subtractSt = con.prepareStatement(subtractSql); PreparedStatement insertSt = con.prepareStatement(insertSql)) {
+
+            // Bắt đầu giao dịch
+            con.setAutoCommit(false);
+
+            // Cập nhật số lượng khả dụng
+            subtractSt.setInt(1, book.getQuantity());
+            subtractSt.setInt(2, book.getMatchSeatId());
+            subtractSt.setInt(3, book.getQuantity());
+
+            int rowsUpdated = subtractSt.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                // Thêm vé vào bảng BookingTicket
+                insertSt.setString(1, book.getSeatName());
+                insertSt.setInt(2, book.getQuantity());
+                insertSt.setString(3, book.getStandName());
+                insertSt.setString(4, book.getSeatClassName());
+                insertSt.setString(5, book.getEmail());
+                insertSt.setString(6, book.getQrCode());
+                insertSt.setBigDecimal(7, book.getPrice());
+                insertSt.setString(8, book.getStatus());
+                insertSt.setTimestamp(9, Timestamp.valueOf(LocalDateTime.now()));
+                insertSt.setInt(10, book.getMatchId());
+                insertSt.setInt(11, book.getMatchSeatId());
+
+                insertSt.executeUpdate();
+
+                // Cam kết giao dịch
+                con.commit();
+                return true;
+            } else {
+                // Nếu không cập nhật được số lượng khả dụng thì rollback
+                con.rollback();
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            try {
+                // Rollback giao dịch nếu có lỗi
+                if (con != null) {
+                    con.rollback();
+                }
+            } catch (SQLException rollbackEx) {
+                // Xử lý lỗi rollback (nếu cần)
+            }
+            // Ghi log hoặc thông báo lỗi (nếu cần)
+            return false;
+        } finally {
+            try {
+                // Thiết lập lại AutoCommit sau khi giao dịch kết thúc
+                if (con != null) {
+                    con.setAutoCommit(true);
+                }
+            } catch (SQLException ex) {
+                // Xử lý lỗi thiết lập AutoCommit (nếu cần)
+            }
+        }
+    }
+    
     public void addOrderTicket(BookingTicket book) {
         String sql = """
                      INSERT INTO [dbo].[BookingTicket]

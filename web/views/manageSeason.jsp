@@ -243,7 +243,7 @@
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-md-4 ">
-                                        <input type="search" class="form-control radius-md" id="myInput" onkeyup="filterTable()" placeholder="Tìm kiếm theo tên&hellip;">
+                                        <input type="search" class="form-control radius-md" value="${requestScope.search}" id="myInput" onkeyup="filterTable()" placeholder="Tìm kiếm theo tên&hellip;">
                                     </div>
                                     <div class="col-md-8">
                                         <a type="button" href="#createSeasonModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Tạo Mùa Giải Mới</span></a>
@@ -273,7 +273,7 @@
                                         <th style="font-size: 14px;">Hành Động</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="seasonName">
                                     <c:forEach items="${requestScope.seasons}" var="s">
                                         <c:set var="startDateStr" value="${s.startDate}" />
                                         <c:set var="endDateStr" value="${s.endDate}" />
@@ -635,49 +635,6 @@
             }
         }
 
-        function filterCreatedBy() {
-            var select = document.getElementById("createdBySelect");
-            var selectedValue = select.value.toLowerCase(); // Lấy giá trị được chọn và chuyển về chữ thường
-
-            var table = document.getElementById("seasonTable");
-            var rows = table.getElementsByTagName("tr");
-
-            // Lặp qua từng hàng của bảng để ẩn hoặc hiển thị dựa trên giá trị đã chọn
-            for (var i = 1; i < rows.length; i++) {
-                var createdByCell = rows[i].getElementsByTagName("td")[4]; // Cột Created By (vị trí 4 trong mảng các td)
-                if (createdByCell) {
-                    var createdBy = createdByCell.textContent || createdByCell.innerText;
-                    if (selectedValue === "all" || createdBy.toLowerCase().indexOf(selectedValue) > -1) {
-                        rows[i].style.display = ""; // Hiển thị hàng nếu giá trị được chọn là "All" hoặc Created By phù hợp
-                    } else {
-                        rows[i].style.display = "none"; // Ẩn hàng nếu không phù hợp với giá trị được chọn
-                    }
-                }
-            }
-        }
-
-        function filterUpdatedBy() {
-            var select = document.getElementById("updatedBySelect");
-            var selectedValue = select.value.toLowerCase(); // Lấy giá trị được chọn và chuyển về chữ thường
-
-            var table = document.getElementById("seasonTable");
-            var rows = table.getElementsByTagName("tr");
-
-            // Lặp qua từng hàng của bảng để ẩn hoặc hiển thị dựa trên giá trị đã chọn
-            for (var i = 1; i < rows.length; i++) {
-                var updatedByCell = rows[i].getElementsByTagName("td")[6]; // Cột Last Updated By (vị trí 6 trong mảng các td)
-                if (updatedByCell) {
-                    var updatedBy = updatedByCell.textContent || updatedByCell.innerText;
-                    if (selectedValue === "all" || updatedBy.toLowerCase().indexOf(selectedValue) > -1) {
-                        rows[i].style.display = ""; // Hiển thị hàng nếu giá trị được chọn là "All" hoặc Last Updated By phù hợp
-                    } else {
-                        rows[i].style.display = "none"; // Ẩn hàng nếu không phù hợp với giá trị được chọn
-                    }
-                }
-            }
-        }
-
-
     </script>
 
     <script>
@@ -794,119 +751,34 @@
                 }
             });
         });
+        
     </script>
-
     <script>
-        $(document).ready(function () {
-            $('[data-toggle="tooltip"]').tooltip();
-        });
-
-        // Hàm validateSearchForm để kiểm tra giá trị nhập vào ô search
-        function validateSearchForm() {
-            const searchType = document.getElementById("searchType").value;
-            const keyword = document.getElementById("searchKeyword").value.trim(); // Lấy giá trị và loại bỏ khoảng trắng đầu cuối
-            let isValid = true;
-            let errorMessage = "";
-
-            // Validate based on search type
-            switch (searchType) {
-                case "seasonName":
-                    // No specific validation needed for season name
-                    break;
-                case "startDate":
-                case "endDate":
-                case "createdBy":
-                case "updatedBy":
-                    // Validate if keyword is empty for date and string fields
-                    if (keyword === "") {
-                        isValid = false;
-                        errorMessage = "Hãy điền từ khóa để tìm kiếm.";
-                    }
-                    break;
-                case "createdDate":
-                case "lastUpdatedDate":
-                    // Validate if keyword is a valid date (YYYY-MM-DD format)
-                    if (!isValidDate(keyword)) {
-                        isValid = false;
-                        errorMessage = "Hãy nhập ngày đúng với cấu trúc YYYY-MM-DD.";
-                    }
-                    break;
-                default:
-                    // Handle default case or additional search types
-                    break;
-            }
-
-            // Display error message if validation fails
-            const errorMessageElement = document.getElementById("error-message");
-            if (!isValid) {
-                errorMessageElement.textContent = errorMessage;
-                // Không cần xóa giá trị khi không hợp lệ để người dùng có thể tiếp tục nhập liệu
-                // document.getElementById("searchKeyword").value = "";
-                // document.getElementById("searchKeyword").focus();
-            } else {
-                errorMessageElement.textContent = "";
-            }
-
-            // Thực hiện hàm tìm kiếm (điều này có thể là gọi hàm khác để xử lý dữ liệu tìm kiếm)
-            performSearch();
-        }
-
-        // Hàm kiểm tra ngày hợp lệ (YYYY-MM-DD)
-        function isValidDate(dateString) {
-            // Regex pattern for YYYY-MM-DD date format
-            const pattern = /^\d{4}-\d{2}-\d{2}$/;
-            return pattern.test(dateString);
-        }
-
-        // Xử lý sự kiện khi thay đổi loại tìm kiếm
-        document.getElementById("searchType").addEventListener("input", function () {
-            var searchType = this.value;
-            var keywordInput = document.getElementById("searchKeyword");
-
-            // Ẩn hiện ô nhập keyword hoặc dropdown select dựa trên loại tìm kiếm được chọn
-            switch (searchType) {
-                case "seasonName":
-                case "startDate":
-                case "endDate":
-                case "createdBy":
-                case "updatedBy":
-                    keywordInput.style.display = "block";
-                    keywordInput.setAttribute("type", "text");
-                    keywordInput.setAttribute("required", "required");
-                    break;
-                case "createdDate":
-                case "lastUpdatedDate":
-                    keywordInput.style.display = "block";
-                    keywordInput.setAttribute("type", "date");
-                    keywordInput.setAttribute("required", "required");
-                    break;
-                default:
-                    keywordInput.style.display = "block"; // Có thể điều chỉnh cho phù hợp với yêu cầu cụ thể
-                    keywordInput.setAttribute("type", "text");
-                    keywordInput.removeAttribute("required");
-                    break;
-            }
-
-            // Gọi hàm validateSearchForm() ngay khi thay đổi loại tìm kiếm
-            validateSearchForm();
-        });
-
-        // Sự kiện khi người dùng nhập liệu vào ô tìm kiếm
-        document.getElementById("searchKeyword").addEventListener("input", function () {
-            // Gọi hàm validateSearchForm() khi người dùng nhập liệu vào ô tìm kiếm
-            validateSearchForm();
-        });
-
-        // Hàm thực hiện tìm kiếm (thay bằng hàm của bạn để xử lý dữ liệu tìm kiếm)
-        function performSearch() {
-            // Đây là nơi bạn có thể gọi hàm hoặc xử lý dữ liệu tìm kiếm
-            // Ví dụ:
-            console.log("Performing search with keyword: ", document.getElementById("searchKeyword").value.trim());
-            // Sau đó bạn có thể thực hiện các hành động khác như gửi request lên server, cập nhật giao diện, vv...
-        }
-
-
-    </script>
+            $(document).ready(function () {
+                function loadPage(pageIndex, searchValue) {
+                    $.ajax({
+                        url: "manageSeason", // URL của Servlet xử lý Ajax
+                        type: "GET",
+                        data: {
+                            pageIndex: pageIndex,
+                            search: searchValue
+                        },
+                        success: function (data) {
+                            $("#seasonName").html($(data).find('#seasonName').html());
+                            $("#pagination").html($(data).find('#pagination').html());
+                        }
+                    });
+                }
+                $(document).on("click", ".page-link", function (e) {
+                    e.preventDefault();
+                    var pageIndex = $(this).attr("data-page");
+                    var searchValue = $("#myInput").val().trim();
+                    loadPage(pageIndex, searchValue);
+                });
+                // Bắt sự kiện khi người dùng nhập liệu vào ô search
+             
+            });
+        </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
