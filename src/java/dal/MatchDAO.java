@@ -198,7 +198,7 @@ public class MatchDAO {
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
                 + "WHERE m.isDeleted = 0 AND m.statusId = 2 "
-                + "ORDER BY  m.[startTime] DESC";
+                + "ORDER BY ABS(DATEDIFF(second, m.startTime, GETDATE()))";
         try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Match match = new Match();
@@ -560,11 +560,10 @@ public class MatchDAO {
             sql.append(" AND ").append(String.join(" AND ", conditions));
         }
 
-        // Add pagination
-        int offset = (page - 1) * pageSize;
-        sql.append(" ORDER BY m.startTime ")
+        // Add ordering by start time, closest to current time
+        sql.append(" ORDER BY ABS(DATEDIFF(second, m.startTime, GETDATE())) ")
                 .append("OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
-        params.add(offset);
+        params.add((page - 1) * pageSize);
         params.add(pageSize);
 
         try (PreparedStatement ps = con.prepareStatement(sql.toString())) {

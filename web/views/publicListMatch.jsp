@@ -26,9 +26,10 @@
 
             .bodylist {
                 background-image: url("https://hanoispiritofplace.com/wp-content/uploads/2017/06/hinh-nen-bong-da-dep-2.jpg");
-                background-size: cover; /* Điều chỉnh kích thước hình nền để bao phủ toàn bộ phần tử */
-                background-repeat: no-repeat; /* Không lặp lại hình nền */
+                background-size: cover;
+                background-repeat: no-repeat;
                 background-position: center;
+                padding-bottom: 50px;
             }
 
             .sidebar {
@@ -38,6 +39,7 @@
                 background: #0056b3;
                 border-radius: 10px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                color: white;
             }
 
             .product-card, .ticket-card {
@@ -47,31 +49,47 @@
                 padding: 15px;
                 text-align: center;
                 margin-bottom: 20px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+            }
+
+            .product-card:hover, .ticket-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             }
 
             .ticket-card {
-                width: 100%;
-                height: 450px;
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                height: 100%;
             }
 
             .product-card img, .ticket-card img {
                 width: 100%;
                 height: auto;
                 border-radius: 10px;
+                transition: transform 0.3s ease;
+            }
+
+            .product-card img:hover, .ticket-card img:hover {
+                transform: scale(1.05);
             }
 
             .product-card h5, .ticket-card .match-teams {
                 margin: 15px 0;
                 font-size: 1.2em;
                 font-weight: bold;
+                color: #000;
+                display: flex;
             }
 
-            .product-card p, .ticket-card .tickets-sold {
+            .product-card p, .ticket-card {
                 margin: 0;
-                color: #777;
+                color: #000;
+                font-size: 0.9em;
+            }
+            .tickets-sold{
+                margin: 0;
                 font-size: 0.9em;
             }
 
@@ -108,6 +126,7 @@
                 text-decoration: none;
                 display: inline-block;
                 margin-top: 10px;
+                transition: background-color 0.3s ease;
             }
 
             .book-now-btn:hover {
@@ -116,23 +135,16 @@
                 text-decoration: none;
             }
 
-            .ticket-card .date {
+            .ticket-card .date, .ticket-card .time {
                 border: none;
                 background: none;
                 text-align: center;
                 font-size: 1.1em;
-                color: #555;
+                color: #000;
                 margin-bottom: 10px;
             }
 
-            .ticket-card .competition {
-                font-size: 1.2em;
-                font-weight: bold;
-                margin: 10px 0;
-                color: #333;
-            }
-
-            .product-card .competition {
+            .ticket-card .competition, .product-card .competition {
                 font-size: 1.2em;
                 font-weight: bold;
                 margin: 10px 0;
@@ -141,16 +153,7 @@
 
             .ticket-card .location {
                 margin-bottom: 10px;
-                color: #777;
-            }
-
-            .ticket-card .time {
-                border: none;
-                background: none;
-                text-align: center;
-                font-size: 1.1em;
-                color: #555;
-                margin-top: 5px;
+                color: #000;
             }
 
             .clearfix {
@@ -162,6 +165,55 @@
                 border-color: #007bff;
                 color: white;
             }
+
+            .btn-icon {
+                margin-left: 5px;
+            }
+
+            .btn:hover .btn-icon {
+                transform: rotate(360deg);
+                transition: transform 0.5s ease;
+            }
+            /* Ticket Availability Styles */
+            .tickets-available {
+                color: #28a745; /* Green for available tickets */
+                font-weight: bold;
+            }
+
+            .tickets-sold-out {
+                color: #dc3545; /* Red for sold-out tickets */
+                font-weight: bold;
+            }
+            .row1{
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            }
+            #matchList{
+                margin-left: 20px;
+            }
+            .tournament{
+                color: #000;
+                text-align: center;
+            }
+            .vs{
+                color: #000;
+            }
+            
+
+            @media screen and (max-width: 768px) {
+                #matchList{
+                    margin-left: 0;
+                }
+                .sidebar{
+                    max-width: 500px;
+                    margin-left:  11px;
+                }
+                .ticket-card{
+                    max-width: 500px;
+                }
+            }
+
         </style>
     </head>
     <body>
@@ -202,26 +254,26 @@
                                     </c:forEach>
                                 </select>
                             </div>
-                            <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
+                            <button id="resetBtn" class="btn btn-secondary w-100 mt-3">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                             <div class="best-seller mt-4">
                                 <h5>Trận đấu nổi bật<i class="bi bi-fire text-danger"></i></h5>
                                     <c:forEach items="${requestScope.matches}" var="o" begin="0" end="0">
-                                    <div class="product-card" >
+                                    <div class="product-card">
                                         <div class="competition">${o.season.seasonName}</div>
-                                        <div style="text-align: center">${o.type.name}</div>
+                                        <div class="tournament">${o.type.name}</div>
                                         <div class="team-logos">
                                             <img src="${o.team1.img}" alt="${o.team1.clubName}">
                                             <span class="vs">vs</span>
                                             <img src="${o.team2.img}" alt="${o.team2.clubName}">
                                         </div>
-                                        <h5>${o.team1.clubName} vs ${o.team2.clubName}</h5>
+                                            <h5>${o.team1.clubName} vs ${o.team2.clubName}</h5>
                                         <p><i class="fa fa-clock"></i>${o.time}</p>
                                         <p><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</p>
                                         <c:if test="${requestScope.allticket[o.matchId - 1].availability > 0}">
-                                            <div class="tickets-sold">Còn vé! Đặt ngay</div>
+                                            <div class="tickets-sold tickets-available ">Còn vé! Đặt ngay</div>
                                         </c:if>
                                         <c:if test="${requestScope.allticket[o.matchId - 1].availability == 0}">
-                                            <div class="tickets-sold">Hết vé! Vui lòng chọn trận khác</div>
+                                            <div class="tickets-sold tickets-sold-out">Hết vé! Vui lòng chọn trận khác</div>
                                         </c:if>
                                         <a href="matchDetail?matchId=${o.matchId}" class="btn btn-primary book-now-btn">Xem Vé</a>
                                     </div>
@@ -230,16 +282,16 @@
                         </div>
                     </div>
                     <div class="col-md-9">
-                        <div class="row" id="matchList" style="margin-left: 20px">
+                        <div class="row1" id="matchList">
                             <c:forEach items="${requestScope.matches}" var="o">
                                 <c:set var="dateTime" value="${o.time}" />
                                 <c:set var="date" value="${fn:split(dateTime, 'T')[0]}" />
                                 <c:set var="time" value="${fn:split(dateTime, 'T')[1]}" />
-                                <div class="col-md-4 mb-4 match" style="text-align: center" >
-                                    <div class=" ticket-card">
-                                        <input type="date" class="date" style="margin-left: 20px" value="${date}" readonly>
+                                <div class="col-md-4 mb-4 match" style="text-align: center">
+                                    <div class="ticket-card">
+
                                         <div class="competition">${o.season.seasonName}</div>
-                                        <div style="text-align: center">${o.type.name}</div>
+                                        <div class="tournament" >${o.type.name}</div>
                                         <div class="team-logos">
                                             <img src="${o.team1.img}" alt="${o.team1.clubName}">        
                                             <span class="vs">vs</span>
@@ -247,25 +299,25 @@
                                         </div>
                                         <div class="match-teams">${o.team1.clubName} vs ${o.team2.clubName}</div>
                                         <div class="location"><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</div>
-                                        <div style="display: flex; justify-content: center;margin-left: 35px;">
-                                            <i class="fa fa-clock" style="margin-top: 10px"></i>
-                                            <input type="time" class="time" readonly value="${time}">
+                                        <div style="display: flex; justify-content: center; align-items: center;">
+                                            <p><input type="date" class="date" style="margin-left: 20px" value="${date}" readonly></p>
+                                            <p>
+                                                <i class="fa fa-clock mr-2"></i><input type="time" class="time" readonly value="${time}">
+                                            </p>
                                         </div>
                                         <c:if test="${requestScope.allticket[o.matchId - 1].availability > 0}">
-                                            <div class="tickets-sold">Còn vé! Đặt ngay</div>
+                                            <div class="tickets-sold tickets-available">Còn vé! Đặt ngay</div>
                                         </c:if>
                                         <c:if test="${requestScope.allticket[o.matchId - 1].availability == 0}">
-                                            <div class="tickets-sold">Hết vé! Vui lòng chọn trận khác</div>
+                                            <div class="tickets-sold tickets-sold-out">Hết vé! Vui lòng chọn trận khác</div>
                                         </c:if>
-                                        <div class="button-container">
-                                            <a type="button" href="matchDetail?matchId=${o.matchId}" class="btn btn-primary book-now-btn">Xem Vé</a>
-                                        </div>
+                                        <a href="matchDetail?matchId=${o.matchId}" class="btn btn-primary book-now-btn">Xem Vé</a>
                                     </div>
                                 </div>
                             </c:forEach>
                         </div>
                     </div>
-                    <div class="clearfix col-12" id="pagination" >
+                    <div class="clearfix col-12" id="pagination">
                         <ul class="pagination">
                             <c:if test="${currentPage > 1}">
                                 <li class="page-item">
@@ -286,7 +338,7 @@
                             </c:forEach>
                             <c:if test="${currentPage < numberOfPages}">
                                 <li class="page-item">
-                                    <a class="page-link" href="publicListMatch?page=${currentPage + 1}" data-page="${currentPage + 1}" >></a>
+                                    <a class="page-link" href="publicListMatch?page=${currentPage + 1}" data-page="${currentPage + 1}">></a>
                                 </li>
                             </c:if>
                         </ul>
@@ -320,7 +372,7 @@
             $(document).ready(function () {
                 function loadMatches(page, seasonId, matchStatusId, dateFrom, dateTo, searchInput, typeId) {
                     $.ajax({
-                        url: "publicListMatch", // URL của Servlet xử lý Ajax
+                        url: "publicListMatch",
                         type: "GET",
                         data: {
                             page: page,
@@ -332,7 +384,6 @@
                             matchStatusId: (matchStatusId !== 'All' && matchStatusId !== '') ? matchStatusId : null
                         },
                         success: function (response) {
-                            // Replace content of matchList with new data
                             $('#matchList').html($(response).find('#matchList').html());
                             $('#pagination').html($(response).find('#pagination').html());
                         },
@@ -342,28 +393,25 @@
                     });
                 }
 
-                // Hàm để lấy các giá trị lọc và load trang
                 function applyFilters() {
                     var seasonId = $('#season').val();
                     var matchStatusId = $('#matchStatus').val();
                     var dateFrom = $('#dateFrom').val().trim();
                     var dateTo = $('#dateTo').val().trim();
                     var searchInput = $('#searchInput').val().trim();
-                    var typeId = $('#matchType').val(); // Bắt đầu với giá trị là 'All'
+                    var typeId = $('#matchType').val();
 
-                    loadMatches(1, seasonId, matchStatusId, dateFrom, dateTo, searchInput, typeId); // Load trang đầu tiên với các giá trị lọc
+                    loadMatches(1, seasonId, matchStatusId, dateFrom, dateTo, searchInput, typeId);
                 }
 
-// Bắt sự kiện khi người dùng nhập vào input
                 $('#searchInput, #dateFrom, #dateTo').on('input', function (e) {
                     applyFilters();
                 });
 
-// Bắt sự kiện khi người dùng thay đổi select
                 $('#season, #matchStatus, #matchType').on('change', function (e) {
                     applyFilters();
                 });
-                // Bắt sự kiện khi người dùng nhấp vào các liên kết phân trang
+
                 $(document).on("click", ".page-link", function (e) {
                     e.preventDefault();
                     var page = $(this).attr("data-page");
@@ -372,7 +420,7 @@
                     var dateFrom = $('#dateFrom').val().trim();
                     var dateTo = $('#dateTo').val().trim();
                     var searchInput = $('#searchInput').val().trim();
-                    var typeId = $('#matchType').val(); // Bắt đầu với giá trị là 'All'
+                    var typeId = $('#matchType').val();
 
                     loadMatches(page, seasonId, matchStatusId, dateFrom, dateTo, searchInput, typeId);
                 });
@@ -380,12 +428,9 @@
         </script>
         <script>
             $(document).ready(function () {
-                // Check if there's a seasonId attribute on page load
                 var initialSeasonId = '${requestScope.seasonId}';
                 if (initialSeasonId !== '') {
-                    // Set the season dropdown to the initial seasonId value
                     $('#season').val(initialSeasonId);
-                    // Trigger the AJAX request
                     loadMatches(1, initialSeasonId, null, null, null, null, null);
                 }
             });
