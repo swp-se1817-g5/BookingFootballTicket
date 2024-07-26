@@ -98,7 +98,11 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
                 // So sánh mật khẩu đã băm từ cơ sở dữ liệu với mật khẩu băm từ mật khẩu cũ nhập vào từ người dùng
                 if (!BCrypt.checkpw(oldpass, hashedPasswordFromDB)) { 
                     request.setAttribute("messEr", "Sai mật khẩu cũ !");
+                } else if (BCrypt.checkpw(password, hashedPasswordFromDB)) {
+                    // Mật khẩu mới trùng với mật khẩu cũ
+                    request.setAttribute("messEr", "Mật khẩu mới không được trùng mật khẩu cũ !");
                 } else {
+                    // Mật khẩu mới không trùng mật khẩu cũ
                     String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
                     dao.changePass(email, hashedPassword);
                     session.setAttribute("changePassword", true);
@@ -114,10 +118,11 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
         }
     }
 
-        // Xử lý trường hợp session hoặc user là null
-        // Ví dụ: chuyển hướng đến trang đăng nhập
-        response.sendRedirect("login");
-    }
+    // Xử lý trường hợp session hoặc user là null
+    // Ví dụ: chuyển hướng đến trang đăng nhập
+    response.sendRedirect("login");
+}
+
 
 
     /**
