@@ -132,7 +132,7 @@
                         <form style="display: none" id="${t.ticketId}" action="myTicket" method="post">
                             <input name="ticketId" readonly value="${t.ticketId}">
                         </form>
-                        <div class="card mb-3 ticket-card" <c:if test="${t.statusId.statusId == 1}">onclick="viewDetail('${t.ticketId}')"</c:if>>
+                        <div class="card mb-3 ticket-card" onclick="viewDetail('${t.ticketId}')">
                                 <div class="ticket-header">
                                     <h5>${t.seasonName}</h5>
                             </div>
