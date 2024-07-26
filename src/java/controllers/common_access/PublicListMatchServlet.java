@@ -99,7 +99,7 @@ public class PublicListMatchServlet extends HttpServlet {
         if (pageParam != null && !pageParam.isEmpty()) {
             pageNumber = Integer.parseInt(pageParam);
         }
-        if (!seasonId.isEmpty() && seasonId != null) {
+        if (!seasonId.isEmpty() && !seasonId.isBlank()) {
             request.setAttribute("seasonId", seasonId);
         }
         List<Match> matches = MatchDAO.INSTANCE.getFilteredMatches(searchInput, seasonId, dateFrom, dateTo, matchStatusId, typeId, pageNumber, pageSize);
