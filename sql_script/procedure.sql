@@ -38,7 +38,6 @@ END
 
 GO
 
-Drop procedure UpdateTicketStatus;
 GO
 CREATE PROCEDURE UpdateTicketStatus
 	@NewStatus INT,
