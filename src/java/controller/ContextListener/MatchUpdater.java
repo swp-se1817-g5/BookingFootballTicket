@@ -26,7 +26,7 @@ public class MatchUpdater implements Runnable {
     public void run() {
         try {
             MatchSeatDAO.INSTANCE.updateMatchSeatAvailability();
-            MatchDAO.INSTANCE.updateMatchStatus();
+            MatchDAO.INSTANCE.updateMatchStatus(3, 1);
         } catch (Exception e) {
             // Log the exception
             e.printStackTrace();
