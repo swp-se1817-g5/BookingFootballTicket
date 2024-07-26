@@ -60,7 +60,9 @@
             .button-md {
                 font-family: 'Helvetica', sans-serif;
             }
-            
+            .swal2-title {
+                font-family: 'Helvetica', sans-serif;
+            }
 
         </style>
 

@@ -23,8 +23,8 @@ import org.mindrot.jbcrypt.BCrypt;
  *
  * @author AD
  */
-@WebServlet(name = "ChangePassServlet", urlPatterns = {"/changepass"})
-public class ChangePasswordServlet extends HttpServlet {
+@WebServlet(name = "changePassServlet", urlPatterns = {"/changepass"})
+public class changePasswordServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -106,7 +106,7 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
                     return; 
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(ChangePasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(changePasswordServlet.class.getName()).log(Level.SEVERE, null, ex);
                 request.setAttribute("mess", password);
             }
             request.getRequestDispatcher("views/changePassword.jsp").forward(request, response);

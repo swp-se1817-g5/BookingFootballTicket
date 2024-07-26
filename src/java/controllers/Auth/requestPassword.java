@@ -5,7 +5,7 @@
 
 package controllers.Auth;
 
-import SendMail.ResetService;
+import SendMail.resetService;
 import dal.TokenForgetDAO;
 import dal.UserDAO;
 import java.io.IOException;
@@ -22,8 +22,8 @@ import models.User;
  *
  * @author AD
  */
-@WebServlet(name="RequestPassword", urlPatterns={"/requestPassword"})
-public class RequestPassword extends HttpServlet {
+@WebServlet(name="requestPassword", urlPatterns={"/requestPassword"})
+public class requestPassword extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -82,7 +82,7 @@ public class RequestPassword extends HttpServlet {
             request.getRequestDispatcher("views/forgetPassword.jsp").forward(request, response);
             return;
         }
-        ResetService service = new ResetService();
+        resetService service = new resetService();
         String token = service.generateToken();
         
         String linkReset = "http://localhost:8080/FootballBookingTicket/resetPassword?token="+token;

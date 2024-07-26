@@ -17,12 +17,11 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import Config.Config;
-import SendMail.ResetService;
+import SendMail.resetService;
 import dal.BookingDAO;
 import dal.MatchDAO;
 import dal.MatchSeatDAO;
 import jakarta.servlet.http.HttpSession;
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import models.BookingTicket;
 import models.HistoryPurchasedTicketMatchSeat;
@@ -93,7 +92,7 @@ public class vnpayReturn extends HttpServlet {
                     booking.setStatus("done");
 
                     transSuccess = true;
-                    ResetService service = new ResetService();
+                    resetService service = new resetService();
                 } else {
                     MatchSeatDAO.INSTANCE.returnAvailability(booking);
                     booking.setStatus("cancel");
