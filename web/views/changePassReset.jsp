@@ -64,6 +64,9 @@
             .button-md {
                 font-family: 'Helvetica', sans-serif;
             }
+            .swal2-title {
+                font-family: 'Helvetica', sans-serif;
+            }
 
         </style>
 
@@ -152,7 +155,7 @@
 
                                         function validateConfirmPassword() {
                                             if (password.value !== confirm_password.value) {
-                                                confirm_password.setCustomValidity(" ");
+                                                confirm_password.setCustomValidity("Mật khẩu phải trùng khớp !");
                                                 return false;
                                             } else {
                                                 confirm_password.setCustomValidity('');
