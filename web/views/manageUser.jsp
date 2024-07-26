@@ -218,12 +218,9 @@
                                             <form id="searchForm" name="searchForm" action="searchUser" method="post">
                                                 <div class="body">					
                                                     <div class="form-row">
-                                                        <div class="form-group col-md-11">
+                                                        <div class="form-group col-md-12">
                                                             <!--                                                            <a><i class="material-icons">&#xE8B6;</i></a>-->
                                                             <input id="valueSearch" name="valueSearch" type="text" class="form-control" placeholder="Tìm kiếm bằng email, tên, ...">
-                                                        </div>
-                                                        <div class="form-group col-md-1 align-self-end">
-                                                            <button id="searchButton" type="button" class="btn btn-success search-button " >Tìm kiếm</button>
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
@@ -641,11 +638,14 @@
                     loadPage(pageIndex, searchValue);
                 });
 
-                // Function to be called when the search button is clicked
-                $("#searchButton").on("click", function () {
-                    var pageIndex = 1; // Reset to the first page on new search
-                    var searchValue = $("#valueSearch").val().trim(); // Get the search value as a string
-                    loadPage(pageIndex, searchValue);
+                // Function to handle Enter key press in the search input field
+                $("#valueSearch").on("keypress", function (e) {
+                    if (e.which === 13) { // Check if the pressed key is Enter
+                        e.preventDefault(); // Prevent the default action (form submission)
+                        var pageIndex = 1; // Reset to the first page on new search
+                        var searchValue = $(this).val().trim(); // Get the search value as a string
+                        loadPage(pageIndex, searchValue);
+                    }
                 });
             });
         </script>
