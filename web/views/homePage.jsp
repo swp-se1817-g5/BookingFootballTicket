@@ -305,12 +305,21 @@
                 // Show the toast
                 toast.toast('show');
             }
+
             // Check session attributes and show toast if set
         <% if (session.getAttribute("isRegister") != null && (boolean) session.getAttribute("isRegister")) { %>
             showToast('Thành công', 'Đăng ký thành công!', 'success');
             setTimeout(function () {
                 toast.toast('hide');
-            }, 3000); // 3000 milliseconds = 3 seconds
+                $.ajax({
+                    url: 'removeSessionAttribute',
+                    type: 'POST',
+                    data: {attributeName: 'isRegister'},
+                    success: function (response) {
+                        console.log('Session attribute isRegister removed.');
+                    }
+                });
+            }, 3000); 
         <% session.removeAttribute("isRegister"); %>
         <% } %>
 
@@ -318,7 +327,15 @@
             showToast('Thành công', 'Đổi mật khẩu thành công!', 'success');
             setTimeout(function () {
                 toast.toast('hide');
-            }, 3000); // 3000 milliseconds = 3 seconds
+                $.ajax({
+                    url: 'removeSessionAttribute',
+                    type: 'POST',
+                    data: {attributeName: 'changePassword'},
+                    success: function (response) {
+                        console.log('Session attribute changePassword removed.');
+                    }
+                });
+            }, 3000); 
         <% session.removeAttribute("changePassword"); %>
         <% } %>
 
@@ -326,7 +343,15 @@
             showToast('Thành công', 'Đăng nhập thành công!', 'success');
             setTimeout(function () {
                 toast.toast('hide');
-            }, 3000); // 3000 milliseconds = 3 seconds
+                $.ajax({
+                    url: 'removeSessionAttribute',
+                    type: 'POST',
+                    data: {attributeName: 'isFirstLogin'},
+                    success: function (response) {
+                        console.log('Session attribute isFirstLogin removed.');
+                    }
+                });
+            }, 3000); 
         <% session.removeAttribute("isFirstLogin"); %>
         <% } %>
 
@@ -334,12 +359,20 @@
             showToast('Thành công', 'Đặt lại mật khẩu thành công!', 'success');
             setTimeout(function () {
                 toast.toast('hide');
-            }, 3000); // 3000 milliseconds = 3 seconds
+                $.ajax({
+                    url: 'removeSessionAttribute',
+                    type: 'POST',
+                    data: {attributeName: 'resetPassword'},
+                    success: function (response) {
+                        console.log('Session attribute resetPassword removed.');
+                    }
+                });
+            }, 3000);
         <% session.removeAttribute("resetPassword"); %>
-        <% }%>
+        <% } %>
 
-        <% if (session.getAttribute("transResult") != null) {%>
-            var transResult = <%= session.getAttribute("transResult")%>;
+        <% if (session.getAttribute("transResult") != null) { %>
+            var transResult = <%= session.getAttribute("transResult") %>;
             if (transResult) {
                 showToast('Thành công', 'Giao dịch thành công!', 'success');
             } else {
@@ -347,9 +380,18 @@
             }
             setTimeout(function () {
                 toast.toast('hide');
-            }, 5000); // 3000 milliseconds = 3 seconds
+                $.ajax({
+                    url: 'removeSessionAttribute',
+                    type: 'POST',
+                    data: {attributeName: 'transResult'},
+                    success: function (response) {
+                        console.log('Session attribute transResult removed.');
+                    }
+                });
+            }, 3000); 
         <% session.removeAttribute("transResult"); %>
-        <% }%>
+        <% } %>
         });
+
     </script>
 </body>
