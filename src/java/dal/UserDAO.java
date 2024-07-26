@@ -396,34 +396,47 @@ public class UserDAO {
 
     public ArrayList<User> searchUsers(String valueSearch) {
         ArrayList<User> users = new ArrayList<>();
-        String sql = "SELECT * FROM [User] WHERE status = 1";
-        sql += " AND email LIKE ?";
-        sql += " OR name LIKE ?";
-        sql += " OR phoneNumber LIKE ?";
-        try {
-            ps = con.prepareStatement(sql);
-            ps.setString(1, "%" + valueSearch + "%");
-            ps.setString(2, "%" + valueSearch + "%");
-            ps.setString(3, "%" + valueSearch + "%");
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                User u = new User();
-                u.setEmail(rs.getString(1));
-                u.setName(rs.getString(2));
-                u.setRoleId(rs.getInt(3));
-                u.setHashedPassword(rs.getString(4));
-                u.setPhoneNumber(rs.getString(5));
-                u.setAvatar(rs.getString(6));
-                u.setCreatedBy(rs.getString(7));
-                u.setCreatedDate(rs.getTimestamp(8).toLocalDateTime());
-                u.setUpdatedBy(rs.getString(9));
-                Timestamp updatedTimestamp = rs.getTimestamp(10);
-                u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
-                users.add(u);
+
+        // Base SQL query
+        String sql = "SELECT * FROM [User]";
+
+        // Add WHERE clause if valueSearch is not empty or blank
+        if (!valueSearch.isBlank() && !valueSearch.trim().isEmpty()) {
+            sql += " WHERE email LIKE ? OR name LIKE ? OR phoneNumber LIKE ?";
+        }
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            // Set parameters if valueSearch is not empty
+            if (!valueSearch.isBlank() && !valueSearch.trim().isEmpty()) {
+                String searchPattern = "%" + valueSearch.trim().toLowerCase() + "%";
+                ps.setString(1, searchPattern);
+                ps.setString(2, searchPattern);
+                ps.setString(3, searchPattern);
             }
-        } catch (Exception e) {
+
+            // Execute query
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    User u = new User();
+                    u.setEmail(rs.getString("email")); // Use column names for clarity
+                    u.setName(rs.getString("name"));
+                    u.setRoleId(rs.getInt("roleId"));
+                    u.setHashedPassword(rs.getString("hashedPassword"));
+                    u.setPhoneNumber(rs.getString("phoneNumber"));
+                    u.setAvatar(rs.getString("avatar"));
+                    u.setCreatedBy(rs.getString("createdBy"));
+                    u.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                    u.setUpdatedBy(rs.getString("updatedBy"));
+                    Timestamp updatedTimestamp = rs.getTimestamp("lastUpdatedDate");
+                    u.setLastUpdatedDate(updatedTimestamp != null ? updatedTimestamp.toLocalDateTime() : null);
+                    u.setStatus(rs.getBoolean("status"));
+                    users.add(u);
+                }
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return users;
     }
 
