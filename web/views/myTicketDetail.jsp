@@ -94,9 +94,10 @@
                 </div>
                 <div class="row">
                     <div class="col-6"><strong>Hạng vé:</strong> ${ticket.seatClassName}</div>
-                    <div class="col-6"><strong>Số lượng:</strong> ${ticket.quantity}</div>
+                    <div class="col-6"><strong>Ngày mua:</strong> ${ticket.getPurchasedTime()}</div>
                 </div>
                 <div class="row mt-3">
+                      <div class="col-6"><strong>Số lượng:</strong> ${ticket.quantity}</div>
                     <div class="col-6"><strong>Giá tiền:</strong> <span class="highlight-price">${ticket.getPriceFormatter()}</span> <span style="color: #a89a00" >VNĐ</span></div>
                 </div>
             </div>
