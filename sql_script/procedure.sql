@@ -32,10 +32,9 @@ AS
 BEGIN
     UPDATE Match
     SET statusId = @NewStatusId
-    WHERE [startTime] <= DATEADD(HOUR, -@TimeOffsetInHours, CURRENT_TIMESTAMP)
+    WHERE [startTime] < DATEADD(HOUR, @TimeOffsetInHours, CURRENT_TIMESTAMP)
       AND statusId NOT IN (3, 4);
 END
-drop procedure UpdateMatchStatus
 
 GO
 CREATE PROCEDURE UpdateTicketStatus
