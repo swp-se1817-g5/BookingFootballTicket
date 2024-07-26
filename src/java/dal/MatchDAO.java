@@ -184,7 +184,7 @@ public class MatchDAO {
     }
 
     public List<Match> getMatches_homePage() {
-        updateMatchStatus();
+        //updateMatchStatus();
         List<Match> matches = new ArrayList<>();
         String sql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
@@ -244,7 +244,7 @@ public class MatchDAO {
     }
 
     public List<Match> getMatchesByFc(String fcId) {
-        updateMatchStatus();
+        //updateMatchStatus();
         List<Match> matches = new ArrayList<>();
         String sql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
@@ -305,7 +305,7 @@ public class MatchDAO {
     }
 
     public Match getMatcheById(String matchId) {
-        updateMatchStatus();
+        //updateMatchStatus();
         Match match = new Match();
         String sql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
@@ -398,9 +398,11 @@ public class MatchDAO {
         return deleted;
     }
 
-    public void updateMatchStatus() {
-        String sql = "{call UpdateMatchStatus()}";
+    public void updateMatchStatus(int newStatusId, int timeOffsetInHours) {
+        String sql = "{call UpdateMatchStatus(?, ?)}";
         try (CallableStatement cs = con.prepareCall(sql)) {
+            cs.setInt(1, newStatusId);
+            cs.setInt(2, timeOffsetInHours);
             cs.execute();
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Error updating match status using stored procedure", e);
@@ -408,7 +410,7 @@ public class MatchDAO {
     }
 
     public List<Match> getMatchesUpcomming(int pageNumber, int pageSize) {
-        updateMatchStatus();
+        //updateMatchStatus();
         List<Match> matches = new ArrayList<>();
         String fetchSql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
@@ -686,7 +688,7 @@ public class MatchDAO {
     }
 
     public List<Match> getListMatches_inspector() {
-        updateMatchStatus();
+        //updateMatchStatus();
         List<Match> matches = new ArrayList<>();
         String sql = "SELECT DISTINCT m.matchId, fb1.clubName as fb1, fb2.clubName as fb2, s.seasonName,m.startTime\n"
                 + "FROM Match m\n"
