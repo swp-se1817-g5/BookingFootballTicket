@@ -181,27 +181,6 @@
 
                                             onSignup();
                                         }
-
-//                                        function onSignup() {
-//                                            var xhttp = new XMLHttpRequest();
-//                                            xhttp.onreadystatechange = function () {
-//
-//                                                disableSubmitButton();
-//
-//                                                if (this.readyState == 4 && this.status == 200) {
-//                                                    enableSubmitButton();
-//                                                } else {
-//                                                    console.log('AJAX call failed!');
-//                                                    setTimeout(function () {
-//                                                        enableSubmitButton();
-//                                                    }, 1000);
-//                                                }
-//
-//                                            };
-//
-//                                            xhttp.open("GET", "ajax_info.txt", true);
-//                                            xhttp.send();
-//                                        }
         </script>
         <%
     String mess = (String) request.getAttribute("mess");

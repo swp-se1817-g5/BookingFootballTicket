@@ -42,6 +42,14 @@
             .button-md {
                 font-family: 'Helvetica', sans-serif;
             }
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover,
+            input:-webkit-autofill:focus,
+            input:-webkit-autofill:active {
+                -webkit-box-shadow: 0 0 0 1000px white inset !important;
+                box-shadow: 0 0 0 1000px white inset !important;
+                -webkit-text-fill-color: black !important;
+            }
 
         </style>
     </head>
@@ -128,7 +136,7 @@
                                                id="iAgree" required>
                                         <label class="form-check-label text-secondary fs-5" for="iAgree" style="font-weight: 400;">
                                             Đồng ý với <a href="./term"
-                                                              class="link-primary text-decoration-none text-info">
+                                                          class="link-primary text-decoration-none text-info">
                                                 điều khoản và điều lệ!
                                             </a>
                                         </label>
@@ -137,7 +145,7 @@
                                 <div class="col-lg-12 m-b30">
                                     <div class="g-recaptcha" data-sitekey="6LewHgEqAAAAAM2B3lhHY6yT54lRyRRTL2fwZLqV"></div>
                                     <div style="color: red" id="error"></div>
-                                    <button name="submit" type="submit" value="Submit" class="btn button-md">Đăng ký</button>
+                                    <button name="submit" type="submit" onclick="validateSignupForm()" value="Submit" class="btn button-md">Đăng ký</button>
                                 </div>
                                 <div class="col-lg-12">
                                     <h6 class="title-under">Đăng ký với</h6>
@@ -168,6 +176,68 @@
         <script src="assets/js/functions.js"></script>
         <script src="assets/js/contact.js"></script>
         <script src='assets/vendors/switcher/switcher.js'></script>
+        <script>
+                                        var regexPassword = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$';
+                                        var regexEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$';
+
+                                        var password = document.getElementById("password"),
+                                                confirm_password = document.getElementById("confirmPassword"),
+                                                email = document.getElementById("email");
+
+                                        function validatePassword() {
+                                            var passwordValue = password.value;
+                                            if (!new RegExp(regexPassword).test(passwordValue)) {
+                                                password.setCustomValidity("Mật khẩu cần ít nhất 8 kí tự bao gồm: ký tự chữ thường, ít nhất 1 ký tự viết hoa và 1 ký tự số.");
+                                                return false;
+                                            } else {
+                                                password.setCustomValidity('');
+                                                return true;
+                                            }
+                                        }
+
+                                        function validateConfirmPassword() {
+                                            if (password.value !== confirm_password.value) {
+                                                confirm_password.setCustomValidity("Mật khẩu phải trùng khớp!");
+                                                return false;
+                                            } else {
+                                                confirm_password.setCustomValidity('');
+                                                return true;
+                                            }
+                                        }
+
+                                        function validateEmail() {
+                                            var emailValue = email.value;
+                                            if (!new RegExp(regexEmail).test(emailValue)) {
+                                                email.setCustomValidity("Địa chỉ email không hợp lệ.");
+                                                return false;
+                                            } else {
+                                                email.setCustomValidity('');
+                                                return true;
+                                            }
+                                        }
+
+                                        password.onchange = validatePassword;
+                                        confirm_password.onkeyup = validateConfirmPassword;
+                                        email.onchange = validateEmail;
+
+                                        function validateSignupForm() {
+                                            var form = document.getElementById('signupForm');
+
+                                            for (var i = 0; i < form.elements.length; i++) {
+                                                if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')) {
+                                                    console.log('Có một số trường bắt buộc!');
+                                                    return false;
+                                                }
+                                            }
+
+                                            if (!validatePassword() || !validateConfirmPassword() || !validateEmail()) {
+                                                return false;
+                                            }
+
+                                            onSignup(); // Ensure this function exists and is defined elsewhere in your script
+                                        }
+        </script>
+
         <script type="text/javascript">
             function checkcaptcha() {
                 var form = document.getElementById("login-form");
