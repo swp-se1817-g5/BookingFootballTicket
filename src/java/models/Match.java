@@ -6,6 +6,7 @@ package models;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 /**
  *
@@ -23,6 +24,7 @@ public class Match {
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+    private final DateTimeFormatter dateFormatter_2 = DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy", new Locale("vi", "VN"));
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
     private final DateTimeFormatter timeFormatter_1 = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
 
@@ -96,7 +98,7 @@ public class Match {
     }
 
     public String getDate() {
-        return time != null ? time.format(dateFormatter) : null;
+        return time != null ? time.format(dateFormatter_2) : null;
     }
 
     public String getDateTime() {
