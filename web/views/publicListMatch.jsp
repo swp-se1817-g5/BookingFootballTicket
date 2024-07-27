@@ -179,6 +179,7 @@
             .tickets-available {
                 color: #28a745; /* Green for available tickets */
                 font-weight: bold;
+                animation: blink 1.3s infinite;
             }
 
             .tickets-sold-out {
@@ -216,8 +217,17 @@
             .date-time-item i {
                 margin-right: 5px; /* Khoảng cách giữa icon và văn bản */
             }
-
-
+            @keyframes blink {
+                0% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
 
             @media screen and (max-width: 768px) {
                 #matchList{
