@@ -121,14 +121,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="newsDropdown">
                                     <a class="dropdown-item" href="publicListNews">Tin Tức Thường Ngày</a>
-                                    <div class="dropdown-submenu">
-                                        <a class="dropdown-item dropdown-toggle" href="#">Thông tin đội bóng</a>
-                                        <div class="dropdown-menu">
-                                            <c:forEach items="${sessionScope.getFootballClubs}" var="fb" end="4">
-                                                <a class="dropdown-item" href="publicFootballClub?fcId=${fb.clubId}">${fb.clubName}</a>
-                                            </c:forEach>
-                                        </div>
-                                    </div>
+                                    <a class="dropdown-item" href="publicListFootballClub">Thông tin đội bóng</a>
                                 </div>
                             </li>
                             <li class="nav-item">
@@ -163,7 +156,7 @@
                                                 <a class="dropdown-item" data-auth="profile" href="dashboard">Bảng điều khiển</a>
                                                 <div class="dropdown-divider"></div>
                                             </c:if>
-                                            
+
                                             <a class="dropdown-item" href="./logout">Đăng xuất</a>
                                         </c:when>
                                     </c:choose>
