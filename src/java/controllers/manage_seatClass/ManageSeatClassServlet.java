@@ -70,6 +70,7 @@ public class ManageSeatClassServlet extends HttpServlet {
         }
         
         request.setAttribute("seatClass", SeatClassDAO.getInstance().getListSeatClass());
+        request.setAttribute("url", "manageSeatClass");
         request.getRequestDispatcher("views/manageSeatClass.jsp").forward(request, response);
         
     } 

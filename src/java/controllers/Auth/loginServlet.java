@@ -5,6 +5,7 @@ import models.User;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,31 +22,45 @@ public class loginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User currentUser = (User) session.getAttribute("currentUser");
+        HttpSession session = request.getSession(false);
+        User currentUser = (User) (session != null ? session.getAttribute("currentUser") : null);
 
-        // Check if the user is already logged in
-        if (currentUser != null) {
-            // Redirect to the home page or another appropriate page
+        // Redirect to login page if the user is not logged in
+        if (currentUser == null) {
+            String email = null;
+            String password = null;
+
+            // Get cookies from the request
+            Cookie[] cookies = request.getCookies();
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("emailSave".equals(cookie.getName())) {
+                        email = cookie.getValue();
+                    } else if ("passSave".equals(cookie.getName())) {
+                        password = cookie.getValue();
+                    }
+                }
+            }
+
+            // Set attributes to pre-fill login form
+            if (email != null) {
+                request.setAttribute("emailValid", email);
+            }
+            if (password != null) {
+                request.setAttribute("passValid", password);
+            }
+
+            String redirectURL = request.getParameter("redirectURL");
+            if (redirectURL == null || redirectURL.isEmpty()) {
+                redirectURL = request.getHeader("Referer");
+            }
+
+            request.setAttribute("redirectURL", redirectURL);
+            request.getRequestDispatcher("views/login.jsp").forward(request, response);
+        } else {
+            // If the user is already logged in, redirect to the home page or another appropriate page
             response.sendRedirect("homePage");
-            return;
         }
-
-        String email = (String) session.getAttribute("emailSave");
-        String password = (String) session.getAttribute("passSave");
-        String redirectURL = request.getParameter("redirectURL");
-
-        if (email != null && password != null) {
-            request.setAttribute("emailValid", email);
-            request.setAttribute("passValid", password);
-        }
-
-        if (redirectURL == null || redirectURL.isEmpty()) {
-            redirectURL = request.getHeader("Referer");
-        }
-
-        request.setAttribute("redirectURL", redirectURL);
-        request.getRequestDispatcher("views/login.jsp").forward(request, response);
     }
 
     @Override
@@ -62,12 +77,17 @@ public class loginServlet extends HttpServlet {
         // Set session timeout to 24 hours
         session.setMaxInactiveInterval(88230);
 
-        boolean emailExists = userDAO.checkEmailExist(email);
+        User userByEmail = userDAO.getAllUserInDB(email);
 
-        if (!emailExists) {
+        if (userByEmail == null) {
             // Email does not exist in the database
             request.setAttribute("errorMessage", "Email chưa được đăng ký !");
-            returnValueBefore(request, response, email, null); // Set email value
+            returnValueBefore(request, response, email, null);
+            request.getRequestDispatcher("views/login.jsp").forward(request, response);
+        } else if (!userByEmail.isStatus()) {
+            // Account is locked
+            request.setAttribute("errorMessage", "Tài khoản của bạn đã bị cấm do vi phạm điều khoản và điều lệ của chúng tôi !");
+            returnValueBefore(request, response, email, null);
             request.getRequestDispatcher("views/login.jsp").forward(request, response);
         } else {
             // Authenticate user by email and plaintext password
@@ -78,11 +98,29 @@ public class loginServlet extends HttpServlet {
                 session.setAttribute("currentUser", user);
 
                 if (remember != null && remember.equals("on")) {
-                    session.setAttribute("emailSave", email);
-                    session.setAttribute("passSave", password);
+                    // Create cookies for email and password
+                    Cookie emailCookie = new Cookie("emailSave", email);
+                    Cookie passwordCookie = new Cookie("passSave", password);
+
+                    // Set cookie lifespan to 30 days
+                    emailCookie.setMaxAge(30 * 24 * 60 * 60);
+                    passwordCookie.setMaxAge(30 * 24 * 60 * 60);
+
+                    // Add cookies to response
+                    response.addCookie(emailCookie);
+                    response.addCookie(passwordCookie);
                 } else {
-                    session.removeAttribute("emailSave");
-                    session.removeAttribute("passSave");
+                    // Remove cookies if "remember me" is not checked
+                    Cookie emailCookie = new Cookie("emailSave", "");
+                    Cookie passwordCookie = new Cookie("passSave", "");
+
+                    // Set cookies expiry time to 0 to delete them
+                    emailCookie.setMaxAge(0);
+                    passwordCookie.setMaxAge(0);
+
+                    // Add cookies to response
+                    response.addCookie(emailCookie);
+                    response.addCookie(passwordCookie);
                 }
 
                 // Popup

@@ -71,14 +71,15 @@ public class ManageSeatAreaServlet extends HttpServlet {
             request.setAttribute("updated", session.getAttribute("updated"));
             session.removeAttribute("updated");
         }
-        
+
         ArrayList<SeatArea> seatAreas = SeatAreaDAO.INSTANCE.getSeatArea();
-        
+
         request.setAttribute("stands", StandDAO.getInstance().getStands(""));
         request.setAttribute("seatClass", SeatClassDAO.getInstance().getListSeatClass());
         request.setAttribute("seatAreas", seatAreas);
+        request.setAttribute("url", "manageSeatArea");
         request.getRequestDispatcher("views/manageSeatArea.jsp").forward(request, response);
-        
+
     }
 
     /**
