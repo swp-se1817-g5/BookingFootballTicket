@@ -20,8 +20,8 @@ import models.Season;
  *
  * @author Vinh
  */
-@WebServlet(name = "PublicListTournmentServlet", urlPatterns = {"/publicListTournment"})
-public class PublicListTournmentServlet extends HttpServlet {
+@WebServlet(name = "PublicListSeasonServlet", urlPatterns = {"/publicListSeason"})
+public class PublicListSeasonServlet extends HttpServlet {
 
     int RECORDS_PER_PAGE = 6;
 
@@ -90,7 +90,7 @@ public class PublicListTournmentServlet extends HttpServlet {
         request.setAttribute("currentPage", page);
         request.setAttribute("noOfRecords", noOfRecords);
         request.setAttribute("search", search);
-        request.getRequestDispatcher("views/publicListTournment.jsp").forward(request, response);
+        request.getRequestDispatcher("views/publicListSeason.jsp").forward(request, response);
     }
 
     /**

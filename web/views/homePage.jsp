@@ -211,7 +211,7 @@
             <div class="container mt-5">
                 <!-- Các Tournament -->
                 <div class="section-header justify-content-center">
-                    <h2 class="mb-3">Các Giải Đấu</h2>
+                    <h2 class="mb-3">Các Mùa Giải</h2>
                 </div>
                 <div class="row">
                     <c:forEach items="${sessionScope.getAllseason}" var="s" begin="0" end="3">
@@ -228,7 +228,7 @@
                     </c:forEach>
                 </div>
                 <div class="text-center mb-5">
-                    <a href="publicListTournment" class="btn btn-outline-secondary">Xem Thêm Các Mùa Giải</a>
+                    <a href="publicListSeason" class="btn btn-outline-secondary">Xem Thêm Các Mùa Giải</a>
                 </div>
             </div>
             <div class="con_img">
