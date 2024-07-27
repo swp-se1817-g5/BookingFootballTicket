@@ -19,9 +19,9 @@
             <a href="#" class="sidebar-toggler flex-shrink-0">
                 <i class="fa fa-bars"></i>
             </a>
-<!--            <form class="d-none d-md-flex ms-4">
-                <input class="form-control border-0" type="search" placeholder="Search">
-            </form>-->
+            <!--            <form class="d-none d-md-flex ms-4">
+                            <input class="form-control border-0" type="search" placeholder="Search">
+                        </form>-->
             <div class="navbar-nav align-items-center ms-auto">
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -30,7 +30,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                         <a href="userProfile" class="dropdown-item">Tài Khoản</a>
-                        
+                        <a href="homePage" class="dropdown-item">Trang chủ</a>
                         <a href="logout" class="dropdown-item">Đăng Xuất</a>
                     </div>
                 </div>
