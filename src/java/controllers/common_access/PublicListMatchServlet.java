@@ -108,6 +108,7 @@ public class PublicListMatchServlet extends HttpServlet {
         // Calculate number of pages
         int numberOfPages = (int) Math.ceil((double) totalCount / pageSize);
         request.setAttribute("allticket", MatchSeatDAO.INSTANCE.getAllTicketAvailable());
+        request.setAttribute("hotMatches", MatchDAO.INSTANCE.getMatchHotByTicketSold());
         request.setAttribute("matches", matches);
         request.setAttribute("totalMatches", totalCount);
         request.setAttribute("currentPage", pageNumber);

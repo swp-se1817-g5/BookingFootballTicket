@@ -84,6 +84,7 @@ public class PublicListTournmentServlet extends HttpServlet {
         ArrayList<Season> seasons = SeasonDAO.getINSTANCE().getFilterofTournment((page - 1) * RECORDS_PER_PAGE, RECORDS_PER_PAGE, search, startDate, endDate);
         int noOfRecords = SeasonDAO.getINSTANCE().getNoOfRecordsWithConditions(search, startDate, endDate);
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
+        request.setAttribute("hotTournament", SeasonDAO.getINSTANCE().getHotSeasons());
         request.setAttribute("seasons", seasons);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);

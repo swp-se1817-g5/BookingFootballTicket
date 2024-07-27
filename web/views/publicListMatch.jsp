@@ -81,6 +81,7 @@
                 font-weight: bold;
                 color: #000;
                 display: flex;
+                justify-content: center
             }
 
             .product-card p, .ticket-card {
@@ -199,7 +200,24 @@
             .vs{
                 color: #000;
             }
-            
+            .date-time-container {
+                display: flex;
+                justify-content: center; /* Căn giữa các phần tử trong dòng */
+                align-items: center; /* Căn giữa theo chiều dọc */
+                gap: 20px; /* Khoảng cách giữa các phần tử */
+                margin-top: 10px;
+            }
+
+            .date-time-item {
+                font-size: 1em; /* Điều chỉnh kích thước chữ */
+                color: #000; /* Màu chữ */
+            }
+
+            .date-time-item i {
+                margin-right: 5px; /* Khoảng cách giữa icon và văn bản */
+            }
+
+
 
             @media screen and (max-width: 768px) {
                 #matchList{
@@ -257,26 +275,40 @@
                             <button id="resetBtn" class="btn btn-secondary w-100 mt-3">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                             <div class="best-seller mt-4">
                                 <h5>Trận đấu nổi bật<i class="bi bi-fire text-danger"></i></h5>
-                                    <c:forEach items="${requestScope.matches}" var="o" begin="0" end="0">
-                                    <div class="product-card">
-                                        <div class="competition">${o.season.seasonName}</div>
-                                        <div class="tournament">${o.type.name}</div>
-                                        <div class="team-logos">
-                                            <img src="${o.team1.img}" alt="${o.team1.clubName}">
-                                            <span class="vs">vs</span>
-                                            <img src="${o.team2.img}" alt="${o.team2.clubName}">
-                                        </div>
-                                            <h5>${o.team1.clubName} vs ${o.team2.clubName}</h5>
-                                        <p><i class="fa fa-clock"></i>${o.time}</p>
-                                        <p><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</p>
-                                        <c:if test="${requestScope.allticket[o.matchId - 1].availability > 0}">
-                                            <div class="tickets-sold tickets-available ">Còn vé! Đặt ngay</div>
+                                    <c:forEach items="${requestScope.matches}" var="o" >
+                                        <c:forEach items="${hotMatches}" var="hot" begin="0" end="0">
+                                            <c:if test="${hot.matchId eq o.matchId}" >
+                                                <c:set var="dateTime" value="${o.time}" />
+                                                <c:set var="date" value="${fn:split(dateTime, 'T')[0]}" />
+                                                <c:set var="time" value="${fn:split(dateTime, 'T')[1]}" />
+                                            <div class="product-card">
+                                                <div class="competition">${o.season.seasonName}</div>
+                                                <div class="tournament">${o.type.name}</div>
+                                                <div class="team-logos">
+                                                    <img src="${o.team1.img}" alt="${o.team1.clubName}">
+                                                    <span class="vs">vs</span>
+                                                    <img src="${o.team2.img}" alt="${o.team2.clubName}">
+                                                </div>
+                                                <h5>${o.team1.clubName} vs ${o.team2.clubName}</h5>
+                                                <div class="date-time-container">
+                                                    <p class="date-time-item">
+                                                        <i class="fa fa-calendar-alt"></i> <span class="formatted-date">${date}</span>
+                                                    </p>
+                                                    <p class="date-time-item">
+                                                        <i class="fa fa-clock"></i> ${time}
+                                                    </p>
+                                                </div>
+                                                <p><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</p>
+                                                <c:if test="${requestScope.allticket[o.matchId - 1].availability > 0}">
+                                                    <div class="tickets-sold tickets-available ">Còn vé! Đặt ngay</div>
+                                                </c:if>
+                                                <c:if test="${requestScope.allticket[o.matchId - 1].availability == 0}">
+                                                    <div class="tickets-sold tickets-sold-out">Hết vé! Vui lòng chọn trận khác</div>
+                                                </c:if>
+                                                <a href="matchDetail?matchId=${o.matchId}" class="btn btn-primary book-now-btn">Xem Vé</a>
+                                            </div>
                                         </c:if>
-                                        <c:if test="${requestScope.allticket[o.matchId - 1].availability == 0}">
-                                            <div class="tickets-sold tickets-sold-out">Hết vé! Vui lòng chọn trận khác</div>
-                                        </c:if>
-                                        <a href="matchDetail?matchId=${o.matchId}" class="btn btn-primary book-now-btn">Xem Vé</a>
-                                    </div>
+                                    </c:forEach>
                                 </c:forEach>
                             </div>
                         </div>
@@ -299,10 +331,12 @@
                                         </div>
                                         <div class="match-teams">${o.team1.clubName} vs ${o.team2.clubName}</div>
                                         <div class="location"><i class="fa fa-map-marker-alt"></i> Sân vận động Mỹ Đình, Hà Nội</div>
-                                        <div style="display: flex; justify-content: center; align-items: center;">
-                                            <p><input type="date" class="date" style="margin-left: 20px" value="${date}" readonly></p>
-                                            <p>
-                                                <i class="fa fa-clock mr-2"></i><input type="time" class="time" readonly value="${time}">
+                                        <div class="date-time-container">
+                                            <p class="date-time-item">
+                                                <i class="fa fa-calendar-alt"></i> <span class="formatted-date">${date}</span>
+                                            </p>
+                                            <p class="date-time-item">
+                                                <i class="fa fa-clock"></i> ${time}
                                             </p>
                                         </div>
                                         <c:if test="${requestScope.allticket[o.matchId - 1].availability > 0}">
@@ -433,6 +467,26 @@
                     $('#season').val(initialSeasonId);
                     loadMatches(1, initialSeasonId, null, null, null, null, null);
                 }
+            });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var dateElements = document.querySelectorAll('.formatted-date');
+
+                dateElements.forEach(function (element) {
+                    var dateString = element.textContent.trim();
+                    var dateParts = dateString.split('-'); // Assuming date in 'YYYY-MM-DD' format
+
+                    if (dateParts.length === 3) {
+                        var year = dateParts[0];
+                        var month = dateParts[1];
+                        var day = dateParts[2];
+
+                        // Format date as 'DD/MM/YYYY'
+                        var formattedDate = day + '/' + month + '/' + year;
+                        element.textContent = formattedDate;
+                    }
+                });
             });
         </script>
     </body>
