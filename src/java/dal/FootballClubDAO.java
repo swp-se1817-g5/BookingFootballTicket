@@ -24,10 +24,11 @@ public class FootballClubDAO {
     private FootballClubDAO() {
         con = new DBContext().connect;
     }
-    
+
     public static FootballClubDAO getInstance() {
-        if(instance == null)
+        if (instance == null) {
             instance = new FootballClubDAO();
+        }
         return instance;
     }
 
@@ -100,7 +101,7 @@ public class FootballClubDAO {
     public boolean updateFootballClub(FootballClub fc) {
         boolean updated = false;
         String sql = "update FootballClub set [img] = ?, clubName = ?, [description] = ?, updatedBy = ?  where clubId = ?";
-        try{
+        try {
             ps = con.prepareStatement(sql);
             ps.setString(1, fc.getImg());
             ps.setString(2, fc.getClubName());
@@ -108,9 +109,10 @@ public class FootballClubDAO {
             ps.setString(4, fc.getUpdatedBy());
             ps.setInt(5, fc.getClubId());
             int rowsAffected = ps.executeUpdate();
-            if(rowsAffected > 0) 
+            if (rowsAffected > 0) {
                 updated = true;
-            
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -190,6 +192,43 @@ public class FootballClubDAO {
             e.printStackTrace();
         }
         return quantity;
+    }
+
+    public List<FootballClub> getHotFootballClubs() {
+        ArrayList<FootballClub> fcs = new ArrayList<>();
+        String sql = "SELECT\n"
+                + "    fc1.clubName,\n"
+                + "    SUM(hp.quantity) AS totalTicketsSold\n"
+                + "FROM\n"
+                + "    HistoryPurchasedTicketMatchSeat hp\n"
+                + "JOIN\n"
+                + "    MatchSeat ms ON hp.matchSeatId = ms.matchSeatId\n"
+                + "JOIN\n"
+                + "    Match m ON ms.matchId = m.matchId\n"
+                + "JOIN\n"
+                + "    FootballClub fc1 ON hp.team1 = fc1.clubName OR  hp.team2 = fc1.clubName\n"
+                + "JOIN\n"
+                + "    Season s ON m.seasonId = s.seasonId\n"
+                + "WHERE\n"
+                + "    m.isDeleted = 0\n"
+                + "GROUP BY\n"
+                + "    fc1.clubName\n"
+                + "ORDER BY\n"
+                + "    totalTicketsSold DESC;";
+
+        try {
+            ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                FootballClub fc = new FootballClub();
+                fc.setClubName(rs.getString("clubName"));
+                fcs.add(fc);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return fcs;
     }
 
     public static void main(String[] args) {

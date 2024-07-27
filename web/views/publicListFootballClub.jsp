@@ -12,7 +12,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Các Giải Đấu Bóng Đá</title>
+        <title>Các Đội Bóng Đá</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
@@ -54,6 +54,8 @@
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
+                margin-left: 10px;
+                margin-right: 10px;
             }
 
             .ticket-card img {
@@ -155,6 +157,24 @@
             .ticket-card .book-now-btn {
                 margin-top: auto;
             }
+            .row1{
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            }
+            @media screen and (max-width: 768px) {
+                #footballClubList{
+                    margin-left: 0;
+                    display: flex;
+                    justify-content: center;
+                }
+                .sidebar{
+                    max-width: 400px;
+                }
+                .ticket-card{
+                    max-width: 200px;
+                }
+            }
         </style>
     </head>
     <body>
@@ -169,62 +189,63 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên đội bóng">
                             </div>
-                            <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc<i class="bi bi-filter btn-icon"></i></button>
-                            <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
+                            <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Đặt lại<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                             <div class="best-seller mt-4">
                                 <h5>Đội bóng nổi bật<i class="bi bi-fire text-danger"></i></h5>
-                                    <c:forEach items="${fcs}" var="fcs" end="0">
-                                    <div class="product-card">
-                                        <div class="text-center mt-1"><img src="${fcs.img}" style="width: auto; height: 100px;" alt="Team"></div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">${fcs.clubName}</h5>
-                                            <a href="publicFootballClub?fcId=${fcs.clubId}" class="btn btn-primary" style="margin-top: 10px">Chi tiết</a>
-                                        </div>
-                                    </div>
+                                    <c:forEach items="${fcs}" var="o" >
+                                        <c:forEach items="${hotFcs}" var="h" begin="0" end="0">
+                                            <c:if test="${o.clubName eq h.clubName}">
+                                            <div class="product-card">
+                                                <div class="text-center mt-1"><img src="${o.img}" style="width: auto; height: 100px;" alt="Team"></div>
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${o.clubName}</h5>
+                                                    <a href="publicFootballClub?fcId=${o.clubId}" class="btn btn-primary" style="margin-top: 10px">Chi tiết</a>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                    </c:forEach>
                                 </c:forEach>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-9">
-                        <div class="row" id="footballClubList">
+                        <div class="row1" id="footballClubList">
                             <c:forEach items="${fcs}" var="fcs" >
-                                <div class="col-md-3 col-sm-6 mb-4">
-                                    <div class="ticket-card">
-                                        <div class="text-center mt-1"><img src="${fcs.img}" style="width: auto; height: 100px;" alt="Team"></div>
-                                        <div class="card-body">
-                                            <h5 class="card-title">${fcs.clubName}</h5>
-                                            <a href="publicFootballClub?fcId=${fcs.clubId}" class="btn btn-primary book-now-btn" style="margin-bottom: 20px" >Chi tiết</a>
-                                        </div>
+                                <div class="ticket-card">
+                                    <div class="text-center mt-1"><img src="${fcs.img}" style="width: auto; height: 100px;" alt="Team"></div>
+                                    <div class="card-body">
+                                        <h5 class="card-title">${fcs.clubName}</h5>
+                                        <a href="publicFootballClub?fcId=${fcs.clubId}" class="btn btn-primary book-now-btn" style="margin-bottom: 20px" >Chi tiết</a>
                                     </div>
                                 </div>
                             </c:forEach>
                         </div>
-                        <div class="clearfix col-12" id="pagination" >
-                            <ul class="pagination">
-                                <c:if test="${currentPage > 1}">
-                                    <li class="page-item">
-                                        <a class="page-link" href="publicListFootballClub?page=${currentPage - 1}" data-page="${currentPage - 1}" ><</a>
-                                    </li>
-                                </c:if>
-                                <c:forEach var="page" begin="1" end="${noOfPages}" step="1">
-                                    <li class="page-item ${page == currentPage ? 'active' : ''}">
-                                        <c:choose>
-                                            <c:when test="${page == currentPage}">
-                                                <span class="page-link" data-page="${currentPage}">${currentPage}</span>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <a class="page-link" href="publicListFootballClub?page=${page}" data-page="${page}">${page}</a>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </li>
-                                </c:forEach>
-                                <c:if test="${currentPage < noOfPages}">
-                                    <li class="page-item">
-                                        <a class="page-link" href="publicListFootballClub?page=${currentPage + 1}" data-page="${currentPage + 1}" >></a>
-                                    </li>
-                                </c:if>
-                            </ul>
-                        </div>
+                    </div>
+                    <div class="clearfix col-12" id="pagination" >
+                        <ul class="pagination">
+                            <c:if test="${currentPage > 1}">
+                                <li class="page-item">
+                                    <a class="page-link" href="publicListFootballClub?page=${currentPage - 1}" data-page="${currentPage - 1}" ><</a>
+                                </li>
+                            </c:if>
+                            <c:forEach var="page" begin="1" end="${noOfPages}" step="1">
+                                <li class="page-item ${page == currentPage ? 'active' : ''}">
+                                    <c:choose>
+                                        <c:when test="${page == currentPage}">
+                                            <span class="page-link" data-page="${currentPage}">${currentPage}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="page-link" href="publicListFootballClub?page=${page}" data-page="${page}">${page}</a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </li>
+                            </c:forEach>
+                            <c:if test="${currentPage < noOfPages}">
+                                <li class="page-item">
+                                    <a class="page-link" href="publicListFootballClub?page=${currentPage + 1}" data-page="${currentPage + 1}" >></a>
+                                </li>
+                            </c:if>
+                        </ul>
                     </div>
                 </div>
             </div>

@@ -243,7 +243,12 @@
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-md-4 ">
-                                        <input type="search" class="form-control radius-md" value="${requestScope.search}" id="myInput" onkeyup="filterTable()" placeholder="Tìm kiếm theo tên&hellip;">
+                                        <form action="manageFootballClub" method="get" id="searchForm">
+
+
+                                            <input id="searchInputForm" value="${requestScope.search}" type="text" name="search" class="form-control radius-md" placeholder="Tìm theo tên&hellip;">
+
+                                        </form>
                                     </div>
                                     <div class="col-md-8">
                                         <a type="button" href="#createSeasonModal" class="btn btn-success m-2 float-right" data-toggle="modal"><i class="fa fa-plus-circle me-2"></i> <span>Tạo Mùa Giải Mới</span></a>
@@ -273,7 +278,7 @@
                                         <th style="font-size: 14px;">Hành Động</th>
                                     </tr>
                                 </thead>
-                                <tbody id="seasonName">
+                                <tbody id="seasonList">
                                     <c:forEach items="${requestScope.seasons}" var="s">
                                         <c:set var="startDateStr" value="${s.startDate}" />
                                         <c:set var="endDateStr" value="${s.endDate}" />
@@ -751,34 +756,40 @@
                 }
             });
         });
-        
+
     </script>
     <script>
-            $(document).ready(function () {
-                function loadPage(pageIndex, searchValue) {
-                    $.ajax({
-                        url: "manageSeason", // URL của Servlet xử lý Ajax
-                        type: "GET",
-                        data: {
-                            pageIndex: pageIndex,
-                            search: searchValue
-                        },
-                        success: function (data) {
-                            $("#seasonName").html($(data).find('#seasonName').html());
-                            $("#pagination").html($(data).find('#pagination').html());
-                        }
-                    });
-                }
-                $(document).on("click", ".page-link", function (e) {
-                    e.preventDefault();
-                    var pageIndex = $(this).attr("data-page");
-                    var searchValue = $("#myInput").val().trim();
-                    loadPage(pageIndex, searchValue);
+        $(document).ready(function () {
+            function loadPage(pageIndex, searchValue) {
+                $.ajax({
+                    url: "manageSeason", // URL của Servlet xử lý Ajax
+                    type: "GET",
+                    data: {
+                        pageIndex: pageIndex,
+                        search: searchValue
+                    },
+                    success: function (data) {
+                        $("#seasonList").html($(data).find('#seasonList').html());
+                        $("#pagination").html($(data).find('#pagination').html());
+                    }
                 });
-                // Bắt sự kiện khi người dùng nhập liệu vào ô search
-             
+            }
+            $(document).on("click", ".page-link", function (e) {
+                e.preventDefault();
+                var pageIndex = $(this).attr("data-page");
+                var searchValue = $("#searchInputForm").val().trim();
+                loadPage(pageIndex, searchValue);
             });
-        </script>
+            // Bắt sự kiện khi người dùng nhấn phím Enter trong ô tìm kiếm
+            $('#searchInputForm').on('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Ngăn chặn hành động mặc định của Enter (nếu có)
+                    var searchValue = $(this).val().trim();
+                    loadPage(1, searchValue); // Load trang đầu tiên với giá trị tìm kiếm mới
+                }
+            });
+        });
+    </script>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

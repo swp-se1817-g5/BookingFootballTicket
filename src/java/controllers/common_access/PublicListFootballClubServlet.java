@@ -75,6 +75,7 @@ public class PublicListFootballClubServlet extends HttpServlet {
         int noOfRecords = FootballClubDAO.getInstance().gettotalRecords(search);
         int noOfPages = (int) Math.ceil(noOfRecords * 1.0 / RECORDS_PER_PAGE);
         request.setAttribute("allFootballClubs", FootballClubDAO.getInstance().getFootballClubs(""));
+        request.setAttribute("hotFcs", FootballClubDAO.getInstance().getHotFootballClubs());
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
         request.setAttribute("noOfRecords", noOfRecords);

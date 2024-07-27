@@ -320,6 +320,41 @@ public class SeasonDAO {
         return 0;
     }
 
+    public ArrayList<Season> getHotSeasons() {
+        ArrayList<Season> seasons = new ArrayList<>();
+        String query = "SELECT\n"
+                + "    s.seasonId,s.seasonName,\n"
+                + "    SUM(hp.quantity) AS totalTicketsSold\n"
+                + "FROM\n"
+                + "    HistoryPurchasedTicketMatchSeat hp\n"
+                + "JOIN\n"
+                + "    MatchSeat ms ON hp.matchSeatId = ms.matchSeatId\n"
+                + "JOIN\n"
+                + "    Match m ON ms.matchId = m.matchId\n"
+                + "JOIN\n"
+                + "    Season s ON m.seasonId = s.seasonId\n"
+                + "WHERE\n"
+                + "    m.isDeleted = 0\n"
+                + "GROUP BY\n"
+                + "    s.seasonId,s.seasonName\n"
+                + "ORDER BY\n"
+                + "    totalTicketsSold DESC";
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    Season s = new Season();
+                    s.setSeasonId(rs.getInt(1));
+                    s.setSeasonName(rs.getString(2));
+                    seasons.add(s);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seasons;
+    }
+
     public static void main(String[] args) {
 //        ArrayList<Season> seasons = SeasonDAO.INSTANCE.getSeasons(0, 5);
 //        for (Season season : seasons) {

@@ -23,91 +23,185 @@
             .container {
                 margin-top: 35px;
             }
-            .bodylist{
+            .bodylist {
                 background-image: url("https://hanoispiritofplace.com/wp-content/uploads/2017/06/hinh-nen-bong-da-dep-2.jpg");
-                background-size: cover; /* Điều chỉnh kích thước hình nền để bao phủ toàn bộ phần tử */
-                background-repeat: no-repeat; /* Không lặp lại hình nền */
+                background-size: cover;
+                background-repeat: no-repeat;
                 background-position: center;
+                padding-bottom: 50px;
             }
-            .product-card {
-                background: #fff;
+            .sidebar {
+                position: sticky;
+                top: 20px;
+                padding: 15px;
+                background: #0056b3;
                 border-radius: 10px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-                transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
+                color: white;
             }
-            .ticket-card {
+            .product-card, .ticket-card {
                 background: #fff;
                 border-radius: 10px;
                 box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
                 padding: 15px;
                 text-align: center;
                 margin-bottom: 20px;
-                width: 315px;
-                height: 350px;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
             }
-            .card h5 {
+            .product-card:hover, .ticket-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            }
+            .ticket-card {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                height: 100%;
+            }
+            .product-card img, .ticket-card img {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+                transition: transform 0.3s ease;
+            }
+            .product-card img:hover, .ticket-card img:hover {
+                transform: scale(1.05);
+            }
+            .product-card h5, .ticket-card .match-teams {
                 margin: 15px 0;
                 font-size: 1.2em;
                 font-weight: bold;
+                color: #000;
+                display: flex;
+                justify-content: center
             }
-            .card p {
+            .product-card p, .ticket-card {
                 margin: 0;
-                color: #777;
+                color: #000;
                 font-size: 0.9em;
             }
-            .sidebar {
-                position: sticky;
-                top: 20px;
-                padding: 15px;
-                background: #fff;
-                border-radius: 10px;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            .tickets-sold {
+                margin: 0;
+                font-size: 0.9em;
             }
-            .form-group label {
-                font-weight: bold;
+            .ticket-card .team-logos {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-bottom: 15px;
             }
-            .btn-primary {
-                background-color: #007bff;
-                border: none;
-                border-radius: 5px;
-                padding: 0.5rem 1rem;
+            .ticket-card .team-logos img {
+                width: 60px;
+                height: 60px;
+                margin: 0 15px;
+                border-radius: 50%;
+                box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
             }
-            .btn-primary:hover {
-                background-color: #0056b3;
-            }
-            .card:hover {
-                transform: scale(1.05);
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            .product-card .team-logos img {
+                width: 50px;
+                height: 50px;
+                margin: 0 10px;
             }
             .pagination {
                 justify-content: center;
-                margin-top: 20px;
             }
-            .pagination .page-item .page-link {
-                border-radius: 50%;
-                color: #007bff;
-                border: none;
-                font-size: 1.2rem;
-            }
-            .pagination .page-item.active .page-link {
+            .book-now-btn {
                 background-color: #007bff;
                 color: white;
-                border: none;
+                border-radius: 5px;
+                padding: 0.5rem 1.2rem;
+                text-decoration: none;
+                display: inline-block;
+                margin-top: 10px;
+                transition: background-color 0.3s ease;
             }
-            .pagination .page-item .page-link:hover {
+            .book-now-btn:hover {
                 background-color: #0056b3;
                 color: white;
+                text-decoration: none;
             }
-            .row{
+            .ticket-card .date, .ticket-card .time {
+                border: none;
+                background: none;
+                text-align: center;
+                font-size: 1.1em;
+                color: #000;
+                margin-bottom: 10px;
+            }
+            .ticket-card .competition, .product-card .competition {
+                font-size: 1.2em;
+                font-weight: bold;
+                margin: 10px 0;
+                color: #333;
+            }
+            .ticket-card .location {
+                margin-bottom: 10px;
+                color: #000;
+            }
+            .clearfix {
+                overflow: auto;
+            }
+            .page-item.active .page-link {
+                background-color: #007bff;
+                border-color: #007bff;
+                color: white;
+            }
+            .btn-icon {
+                margin-left: 5px;
+            }
+            .btn:hover .btn-icon {
+                transform: rotate(360deg);
+                transition: transform 0.5s ease;
+            }
+            .tickets-available {
+                color: #28a745;
+                font-weight: bold;
+            }
+            .tickets-sold-out {
+                color: #dc3545;
+                font-weight: bold;
+            }
+            .row1 {
+                display: flex;
+                -ms-flex-wrap: wrap;
+                flex-wrap: wrap;
+            }
+            #tournmentList {
+                margin-left: 20px;
+            }
+            .tournament {
+                color: #000;
                 text-align: center;
             }
-            .card-body{
-                text-align: center;
+            .vs {
+                color: #000;
             }
-
+            .date-time-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 20px;
+                margin-top: 10px;
+            }
+            .date-time-item {
+                font-size: 1em;
+                color: #000;
+            }
+            .date-time-item i {
+                margin-right: 5px;
+            }
+            @media screen and (max-width: 768px) {
+                #tournmentList {
+                    margin-left: 0;
+                }
+                .sidebar {
+                    max-width: 500px;
+                    margin-left: 11px;
+                }
+                .ticket-card {
+                    max-width: 500px;
+                }
+            }
         </style>
     </head>
     <body>
@@ -123,60 +217,65 @@
                                 <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên mùa giải">
                             </div>
                             <div class="form-group">
-                                <label for="dateFrom">Từ ngày</label><i class="fa fa-calendar"></i>
+                                <label for="dateFrom">Từ ngày</label>
+                                <i class="fa fa-calendar"></i>
                                 <div class="date-input">
                                     <input type="date" id="dateFrom" class="form-control">
                                 </div>
-                                <label for="dateTo">Đến ngày</label><i class="fa fa-calendar"></i>
+                                <label for="dateTo">Đến ngày</label>
+                                <i class="fa fa-calendar"></i>
                                 <div class="date-input">
                                     <input type="date" id="dateTo" class="form-control">
                                 </div>
                             </div>
-                            <button id="filterBtn" class="btn btn-primary" style="width: 100%">Lọc<i class="bi bi-filter btn-icon"></i></button>
-                            <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
+                            <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Đặt lại<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                             <div class="best-seller mt-4">
                                 <h5>Giải đấu nổi bật <i class="bi bi-fire text-danger"></i></h5>
-                                    <c:forEach items="${requestScope.seasons}" var="s" begin="0" end="0">
-                                    <div class="card product-card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">${s.seasonName}</h5>
-                                            <p class="card-text">Thời gian bắt đầu : ${s.startDate}</p>
-                                            <p class="card-text">Thời gian kết thúc : ${s.endDate}</p>
-                                            <a href="publicListMatch?seasonId=${s.seasonId}" style="margin-top: 20px" class="btn btn-primary">Xem Các Trận Đấu</a>
-                                        </div>
-                                    </div>
+                                    <c:forEach items="${requestScope.seasons}" var="s">
+                                        <c:forEach items="${hotTournament}" var="h" end="0">
+                                            <c:if test="${s.seasonId eq h.seasonId}">
+                                            <div class="card product-card">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">${s.seasonName}</h5>
+                                                    <p class="card-text">Thời gian bắt đầu: ${s.startDate}</p>
+                                                    <p class="card-text">Thời gian kết thúc: ${s.endDate}</p>
+                                                    <a href="publicListMatch?seasonId=${s.seasonId}" class="btn btn-primary">Xem Các Trận Đấu</a>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                    </c:forEach>
                                 </c:forEach>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-9">
-                        <div class="row" id="tournmentList">
+                        <div class="row1" id="tournmentList">
                             <c:forEach items="${seasons}" var="s">
                                 <div class="col-md-4">
-                                    <div class="ticket-card card">
+                                    <div class="card ticket-card">
                                         <div class="card-body">
                                             <h5 class="card-title">${s.seasonName}</h5>
                                             <p class="card-text">Thời gian bắt đầu: ${s.startDate}</p>
                                             <p class="card-text">Thời gian kết thúc: ${s.endDate}</p>
-                                            <a href="publicListMatch?seasonId=${s.seasonId}" style="margin-top: 20px" class="btn btn-primary">Xem Các Trận Đấu</a>
+                                            <a href="publicListMatch?seasonId=${s.seasonId}" class="btn btn-primary">Xem Các Trận Đấu</a>
                                         </div>
                                     </div>
                                 </div>
                             </c:forEach>
                         </div>
                     </div>
-                    <div class="clearfix col-12" id="pagination" >
+                    <div class="clearfix col-12" id="pagination">
                         <ul class="pagination">
                             <c:if test="${currentPage > 1}">
                                 <li class="page-item">
-                                    <a class="page-link" href="publicListTournment?page=${currentPage - 1}" data-page="${currentPage - 1}" ><</a>
+                                    <a class="page-link" href="publicListTournment?page=${currentPage - 1}" data-page="${currentPage - 1}">&lt;</a>
                                 </li>
                             </c:if>
-                            <c:forEach var="page" begin="1" end="${noOfPages}" step="1">
+                            <c:forEach var="page" begin="1" end="${noOfPages}">
                                 <li class="page-item ${page == currentPage ? 'active' : ''}">
                                     <c:choose>
                                         <c:when test="${page == currentPage}">
-                                            <span class="page-link" data-page="${currentPage}">${currentPage}</span>
+                                            <span class="page-link">${currentPage}</span>
                                         </c:when>
                                         <c:otherwise>
                                             <a class="page-link" href="publicListTournment?page=${page}" data-page="${page}">${page}</a>
@@ -186,7 +285,7 @@
                             </c:forEach>
                             <c:if test="${currentPage < noOfPages}">
                                 <li class="page-item">
-                                    <a class="page-link" href="publicListTournment?page=${currentPage + 1}" data-page="${currentPage + 1}" >></a>
+                                    <a class="page-link" href="publicListTournment?page=${currentPage + 1}" data-page="${currentPage + 1}">&gt;</a>
                                 </li>
                             </c:if>
                         </ul>
@@ -204,7 +303,7 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
         <!-- Include Bootstrap JS -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <!-- Custom JavaScript -->
+        <!-- Custom JS -->
         <script>
             document.getElementById('resetBtn').addEventListener('click', function () {
                 document.getElementById('searchInput').value = '';
@@ -234,9 +333,8 @@
                     });
                 }
 
-                // Bắt sự kiện khi người dùng nhấp vào nút lọc
-                $('#filterBtn').click(function (e) {
-                    e.preventDefault();
+// Bắt sự kiện khi người dùng nhập vào ô tìm kiếm hoặc chọn ngày
+                $('#searchInput, #dateFrom, #dateTo').on('input change', function () {
                     var searchValue = $('#searchInput').val().trim();
                     var dateFrom = $('#dateFrom').val();
                     var dateTo = $('#dateTo').val();

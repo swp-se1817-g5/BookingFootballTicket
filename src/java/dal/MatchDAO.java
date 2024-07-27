@@ -186,19 +186,59 @@ public class MatchDAO {
     public List<Match> getMatches_homePage() {
         //updateMatchStatus();
         List<Match> matches = new ArrayList<>();
-        String sql = "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
-                + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, s.seasonId, s.seasonName, "
-                + "s.startDate AS seasonStartDate, s.endDate AS seasonEndDate, m.[startTime] AS matchTime, ms.statusId AS matchStatusId, "
-                + "ms.statusName AS matchStatusName, mt.TypeId AS typeId, mt.[name] AS typeName, "
-                + "m.isDeleted "
-                + "FROM Match m "
-                + "JOIN FootballClub fc1 ON m.team1 = fc1.clubId "
-                + "JOIN FootballClub fc2 ON m.team2 = fc2.clubId "
-                + "JOIN Season s ON m.seasonId = s.seasonId "
-                + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
-                + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
-                + "WHERE m.isDeleted = 0 AND m.statusId = 2 "
-                + "ORDER BY  m.[startTime] DESC";
+        String sql = " SELECT \n"
+                + "    m.matchId, \n"
+                + "    fc1.clubId AS team1Id, \n"
+                + "    fc1.clubName AS team1Name, \n"
+                + "    fc1.img AS team1Img, \n"
+                + "    fc2.clubId AS team2Id, \n"
+                + "    fc2.clubName AS team2Name, \n"
+                + "    fc2.img AS team2Img, \n"
+                + "    s.seasonId, \n"
+                + "    s.seasonName, \n"
+                + "    s.startDate AS seasonStartDate, \n"
+                + "    s.endDate AS seasonEndDate, \n"
+                + "    m.startTime AS matchTime, \n"
+                + "    ms.statusId AS matchStatusId, \n"
+                + "    ms.statusName AS matchStatusName, \n"
+                + "    mt.TypeId AS typeId, \n"
+                + "    mt.name AS typeName, \n"
+                + "    SUM(ms2.availability) AS totalAvailability\n"
+                + "FROM \n"
+                + "    Match m\n"
+                + "JOIN \n"
+                + "    FootballClub fc1 ON m.team1 = fc1.clubId\n"
+                + "JOIN \n"
+                + "    FootballClub fc2 ON m.team2 = fc2.clubId\n"
+                + "JOIN \n"
+                + "    Season s ON m.seasonId = s.seasonId\n"
+                + "JOIN \n"
+                + "    MatchStatus ms ON m.statusId = ms.statusId\n"
+                + "JOIN \n"
+                + "    MatchType mt ON m.matchTypeId = mt.TypeId\n"
+                + "JOIN \n"
+                + "    MatchSeat ms2 ON m.matchId = ms2.matchId\n"
+                + "WHERE \n"
+                + "    m.isDeleted = 0\n"
+                + "GROUP BY \n"
+                + "    m.matchId, \n"
+                + "    fc1.clubId, \n"
+                + "    fc1.clubName, \n"
+                + "    fc1.img, \n"
+                + "    fc2.clubId, \n"
+                + "    fc2.clubName, \n"
+                + "    fc2.img, \n"
+                + "    s.seasonId, \n"
+                + "    s.seasonName, \n"
+                + "    s.startDate, \n"
+                + "    s.endDate, \n"
+                + "    m.startTime, \n"
+                + "    ms.statusId, \n"
+                + "    ms.statusName, \n"
+                + "    mt.TypeId, \n"
+                + "    mt.name"
+                + "  ORDER BY CASE WHEN SUM(ms2.availability) = 0 THEN 1 ELSE 0 END,"
+                + " ABS(DATEDIFF(second, m.startTime, GETDATE()))";
         try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Match match = new Match();
@@ -424,7 +464,7 @@ public class MatchDAO {
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
                 + "WHERE m.isDeleted = 0 AND m.statusId = 2"
-                + "ORDER BY m.startTime ASC "
+                + "ORDER BY m.startTime DESC "
                 + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY";
         try (PreparedStatement fetchPs = con.prepareStatement(fetchSql)) {
             int offset = (pageNumber - 1) * pageSize;
@@ -501,9 +541,11 @@ public class MatchDAO {
 
     public List<Match> getFilteredMatches(String searchInput, String seasonId, String dateFrom, String dateTo,
             String matchStatusId, String matchTypeId, int page, int pageSize) {
-//        updateMatchStatus();
         List<Match> matches = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
+
+        // Base SQL query
+        StringBuilder sql = new StringBuilder(
+                "SELECT m.matchId, fc1.clubId AS team1Id, fc1.clubName AS team1Name, fc1.img AS team1Img, "
                 + "fc2.clubId AS team2Id, fc2.clubName AS team2Name, fc2.img AS team2Img, "
                 + "s.seasonId, s.seasonName, s.startDate AS seasonStartDate, s.endDate AS seasonEndDate, "
                 + "m.startTime AS matchTime, ms.statusId AS matchStatusId, ms.statusName AS matchStatusName, "
@@ -514,59 +556,43 @@ public class MatchDAO {
                 + "JOIN Season s ON m.seasonId = s.seasonId "
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
-                + "WHERE m.isDeleted = 0 ");
+                + "JOIN MatchSeat ms2 ON m.matchId = ms2.matchId "
+                + "WHERE m.isDeleted = 0 "
+        );
 
         // Build conditions and parameters
         List<Object> params = new ArrayList<>();
-        List<String> conditions = new ArrayList<>();
+        String conditions = buildConditions(searchInput, seasonId, dateFrom, dateTo, matchStatusId, matchTypeId, params);
 
-        if (searchInput != null && !searchInput.trim().isEmpty()) {
-            String searchPattern = "%" + searchInput.toLowerCase().trim() + "%";
-            conditions.add("(LOWER(fc1.clubName) LIKE ? OR LOWER(fc2.clubName) LIKE ?)");
-            params.add(searchPattern);
-            params.add(searchPattern);
-        }
-
-        if (seasonId != null && !seasonId.trim().isEmpty()) {
-            conditions.add("s.seasonId = ?");
-            params.add(Integer.parseInt(seasonId));
-        }
-
-        if (dateFrom != null && !dateFrom.trim().isEmpty()) {
-            conditions.add("m.startTime >= ?");
-            params.add(dateFrom);
-        }
-
-        if (dateTo != null && !dateTo.trim().isEmpty()) {
-            conditions.add("m.startTime <= ?");
-            params.add(dateTo);
-        }
-
-        if (matchStatusId != null) {
-            if (matchStatusId.trim().isEmpty()) {
-                conditions.add("ms.statusId = 2");
-            } else {
-                conditions.add("ms.statusId = ?");
-                params.add(Integer.parseInt(matchStatusId));
-            }
-        }
-
-        if (matchTypeId != null && !matchTypeId.trim().isEmpty()) {
-            conditions.add("mt.TypeId = ?");
-            params.add(Integer.parseInt(matchTypeId));
-        }
-
-        if (!conditions.isEmpty()) {
-            sql.append(" AND ").append(String.join(" AND ", conditions));
-        }
-
-        // Add pagination
-        int offset = (page - 1) * pageSize;
-        sql.append(" ORDER BY m.startTime ")
+        // Append conditions and ordering to SQL query
+        sql.append(conditions)
+                .append("GROUP BY \n")
+                .append("    m.matchId, \n")
+                .append("    fc1.clubId, \n")
+                .append("    fc1.clubName, \n")
+                .append("    fc1.img, \n")
+                .append("    fc2.clubId, \n")
+                .append("    fc2.clubName, \n")
+                .append("    fc2.img, \n")
+                .append("    s.seasonId, \n")
+                .append("    s.seasonName, \n")
+                .append("    s.startDate, \n")
+                .append("    s.endDate, \n")
+                .append("    m.startTime, \n")
+                .append("    ms.statusId, \n")
+                .append("    ms.statusName, \n")
+                .append("    mt.TypeId, \n")
+                .append("    mt.name \n")
+                .append("ORDER BY \n")
+                .append("    CASE WHEN SUM(ms2.availability) = 0 THEN 1 ELSE 0 END, \n")
+                .append("    ABS(DATEDIFF(second, m.startTime, GETDATE())) \n")
                 .append("OFFSET ? ROWS FETCH NEXT ? ROWS ONLY");
-        params.add(offset);
+
+        // Add pagination parameters
+        params.add((page - 1) * pageSize);
         params.add(pageSize);
 
+        // Execute query and process results
         try (PreparedStatement ps = con.prepareStatement(sql.toString())) {
             // Set parameters
             for (int i = 0; i < params.size(); i++) {
@@ -617,6 +643,49 @@ public class MatchDAO {
         }
 
         return matches.isEmpty() ? null : matches;
+    }
+
+    private String buildConditions(String searchInput, String seasonId, String dateFrom, String dateTo,
+            String matchStatusId, String matchTypeId, List<Object> params) {
+        StringBuilder conditions = new StringBuilder();
+
+        if (searchInput != null && !searchInput.trim().isEmpty()) {
+            String searchPattern = "%" + searchInput.toLowerCase().trim() + "%";
+            conditions.append("AND (LOWER(fc1.clubName) LIKE ? OR LOWER(fc2.clubName) LIKE ?) ");
+            params.add(searchPattern);
+            params.add(searchPattern);
+        }
+
+        if (seasonId != null && !seasonId.trim().isEmpty()) {
+            conditions.append("AND s.seasonId = ? ");
+            params.add(Integer.parseInt(seasonId));
+        }
+
+        if (dateFrom != null && !dateFrom.trim().isEmpty()) {
+            conditions.append("AND m.startTime >= ? ");
+            params.add(dateFrom);
+        }
+
+        if (dateTo != null && !dateTo.trim().isEmpty()) {
+            conditions.append("AND m.startTime <= ? ");
+            params.add(dateTo);
+        }
+
+        if (matchStatusId != null) {
+            if (matchStatusId.trim().isEmpty()) {
+                conditions.append("AND ms.statusId = 2 ");
+            } else {
+                conditions.append("AND ms.statusId = ? ");
+                params.add(Integer.parseInt(matchStatusId));
+            }
+        }
+
+        if (matchTypeId != null && !matchTypeId.trim().isEmpty()) {
+            conditions.append("AND mt.TypeId = ? ");
+            params.add(Integer.parseInt(matchTypeId));
+        }
+
+        return conditions.toString();
     }
 
     public int countFilteredMatches(String searchInput, String seasonId, String dateFrom, String dateTo, String matchStatusId, String matchTypeId) {
@@ -731,6 +800,7 @@ public class MatchDAO {
         List<Match> matches = new ArrayList<>();
         String sql = "SELECT\n"
                 + "    ms.matchId,\n"
+                + "    SUM(ms.availability) AS totalAvailability,  \n"
                 + "    SUM(hp.quantity) AS totalTicketsSold,\n"
                 + "    m.startTime,\n"
                 + "    fc1.clubName AS team1Name,\n"
@@ -752,6 +822,8 @@ public class MatchDAO {
                 + "    m.statusId = 2\n"
                 + "GROUP BY\n"
                 + "    ms.matchId, m.startTime, fc1.clubName, fc2.clubName, s.seasonName\n"
+                + "HAVING\n"
+                + "    SUM(ms.availability) > 0\n"
                 + "ORDER BY\n"
                 + "    totalTicketsSold DESC";
         try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {

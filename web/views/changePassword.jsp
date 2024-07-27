@@ -81,6 +81,7 @@
                     <div class="account-container">
                         <div class="heading-bx left">
                             <h2 class="title-head">Đổi <span>Mật Khẩu</span></h2>
+                            <p>Quay lại <a href="./homePage">Trang chủ</a></p>
                         </div>
 
                         <form action="changepass" method="post" class="contact-bx">
