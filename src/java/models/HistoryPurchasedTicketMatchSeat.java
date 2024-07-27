@@ -31,6 +31,7 @@ public class HistoryPurchasedTicketMatchSeat {
     private String createdBy;
     private LocalDateTime createdDate;
     private int matchSeatId;
+    private MatchSeat matchSeatid;
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
     private final DecimalFormat priceFormatter = new DecimalFormat("#,###");
@@ -94,6 +95,14 @@ public class HistoryPurchasedTicketMatchSeat {
         this.matchSeatId = matchSeatId;
     }
 
+    public MatchSeat getMatchSeatid() {
+        return matchSeatid;
+    }
+
+    public void setMatchSeatid(MatchSeat matchSeatid) {
+        this.matchSeatid = matchSeatid;
+    }
+
     public int getTicketId() {
         return ticketId;
     }
@@ -129,7 +138,6 @@ public class HistoryPurchasedTicketMatchSeat {
     public String getStartTimeConverted() {
         return startTime != null ? timeFormatter.format(startTime) : null;
     }
-    
 
     public String getSeasonName() {
         return seasonName;
@@ -190,8 +198,8 @@ public class HistoryPurchasedTicketMatchSeat {
     public BigDecimal getPrice() {
         return price;
     }
-    
-    public String getPriceFormatter(){
+
+    public String getPriceFormatter() {
         return priceFormatter.format(price);
     }
 
@@ -218,9 +226,9 @@ public class HistoryPurchasedTicketMatchSeat {
     public String getCreatedDate() {
         return createdDate != null ? createdDate.format(formatter) : null;
     }
-    
+
     public String getPurchasedTime() {
-         return createdDate != null ? createdDate.format(timeFormatter) : null;
+        return createdDate != null ? createdDate.format(timeFormatter) : null;
     }
 
     public void setCreatedDate(LocalDateTime createdDate) {

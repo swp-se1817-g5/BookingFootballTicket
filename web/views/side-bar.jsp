@@ -33,7 +33,7 @@
                             <a href="manageSeatClass" class="dropdown-item ${requestScope.url == "manageSeatClass" ? "active" : " "}">Quản Lý Hạng Vé</a>
                             <a href="manageSeatArea" class="dropdown-item ${requestScope.url == "manageSeatArea" ? "active" : " "}">Quản Lý Chỗ Ngồi</a>
                             <a href="manageNews" class="dropdown-item ${requestScope.url == "manageNews" ? "active" : " "}">Quản Lý Bài Đăng</a>
-                            <a href="manageHistoryPurchasedTicketMatchSeat" class="dropdown-item ${requestScope.url == "manageHistoryPurchasedTicketMatchSeat" ? "active" : " "}">Quản Lý Lịch Sử Bán Vé</a>
+                            <a href="manageListHistoryPurchasedTicketMatchSeat" class="dropdown-item ${requestScope.url == "manageListHistoryPurchasedTicketMatchSeat" ? "active" : " "}">Quản Lý Lịch Sử Bán Vé</a>
                         </div>
                     </div>
 <!--                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Widgets</a>

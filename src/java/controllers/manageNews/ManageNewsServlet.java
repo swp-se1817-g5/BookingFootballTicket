@@ -89,6 +89,7 @@ public class ManageNewsServlet extends HttpServlet {
             request.setAttribute("deleted", session.getAttribute("newsDeleted"));
             session.removeAttribute("newsDeleted");
         }
+        request.setAttribute("url", "manageNews");
         request.getRequestDispatcher("views/manageNews.jsp").forward(request, response);
     }
 

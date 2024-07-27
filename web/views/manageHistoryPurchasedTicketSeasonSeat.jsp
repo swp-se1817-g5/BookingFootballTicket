@@ -501,7 +501,7 @@
 
                 // Kiểm tra và thay đổi URL và icon
                 if (currentUrl.includes('manageHistoryPurchasedTicketSeasonSeat')) {
-                    window.location.href = 'manageHistoryPurchasedTicketMatchSeat';
+                    window.location.href = 'manageListHistoryPurchasedTicketMatchSeat';
                     $('#toggleButton').html('Ticket Match Seat <i class="btn-icon fas fa-caret-right"></i>');
                 } else {
                     window.location.href = 'manageHistoryPurchasedTicketSeasonSeat';
