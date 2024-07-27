@@ -272,7 +272,7 @@
                                     </c:forEach>
                                 </select>
                             </div>
-                            <button id="resetBtn" class="btn btn-secondary w-100 mt-3">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
+                            <button id="resetBtn" class="btn btn-secondary w-100 mt-3">Đặt lại<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                             <div class="best-seller mt-4">
                                 <h5>Trận đấu nổi bật<i class="bi bi-fire text-danger"></i></h5>
                                     <c:forEach items="${requestScope.matches}" var="o" >

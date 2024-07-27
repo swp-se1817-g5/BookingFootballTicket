@@ -228,7 +228,7 @@
                                     <input type="date" id="dateTo" class="form-control">
                                 </div>
                             </div>
-                            <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset <i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
+                            <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Đặt lại<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                             <div class="best-seller mt-4">
                                 <h5>Giải đấu nổi bật <i class="bi bi-fire text-danger"></i></h5>
                                     <c:forEach items="${requestScope.seasons}" var="s">

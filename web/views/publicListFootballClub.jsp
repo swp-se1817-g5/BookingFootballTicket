@@ -189,7 +189,7 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" id="searchInput" placeholder="Tìm kiếm theo tên đội bóng">
                             </div>
-                            <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Reset<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
+                            <button id="resetBtn" class="btn btn-secondary" style="width: 100%; margin-top: 10px;">Đặt lại<i class="bi bi-arrow-counterclockwise btn-icon"></i></button>
                             <div class="best-seller mt-4">
                                 <h5>Đội bóng nổi bật<i class="bi bi-fire text-danger"></i></h5>
                                     <c:forEach items="${fcs}" var="o" >
