@@ -67,6 +67,37 @@
             .swal2-title {
                 font-family: 'Helvetica', sans-serif;
             }
+            /* Thiết lập vị trí tương đối cho input-group để chứa label và input */
+            .input-group {
+                position: relative;
+                margin-bottom: 1.5rem; /* Để tạo khoảng cách giữa các input groups */
+            }
+
+            /* Đảm bảo rằng input có khoảng cách padding để label có thể nhảy lên trên */
+            .input-group input {
+                padding-top: 1.5rem;
+                box-sizing: border-box;
+                width: 100%;
+            }
+
+            /* Thiết lập vị trí ban đầu của label */
+            .input-group label {
+                position: absolute;
+                top: 0; /* Đặt vị trí top là 0 để label nằm sát đầu dòng */
+                left: 0;
+                transition: all 0.2s;
+                pointer-events: none; /* Để label không ảnh hưởng khi nhấp vào input */
+                color: #999;
+            }
+
+            /* Khi input được focus hoặc có giá trị, di chuyển label lên trên */
+            .input-group input:focus + label,
+            .input-group input:not(:placeholder-shown) + label {
+                top: -1rem; /* Điều chỉnh vị trí top để label nhảy lên trên */
+                left: 0;
+                font-size: 0.75rem;
+                color: #5a5a5a;
+            }
 
         </style>
 
@@ -84,34 +115,34 @@
                             <p>Quay lại <a href="./homePage">Trang chủ</a></p>
                         </div>
 
-                        <form action="resetPassword" method="post" class="contact-bx">
+                        <form id="resetPasswordForm" action="resetPassword" method="post" class="contact-bx">
                             <div class="row placeani">
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Email</label>
-                                            <input name="email" value="${email}" type="email" id="email" required="" class="form-control" readonly>
+                                            <input name="email" value="${email}" type="email" id="email" required class="form-control" readonly placeholder=" ">
+                                            <label for="email">Email</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Mật khẩu mới</label>
-                                            <input name="password" type="password" id="password" required="" class="form-control">
+                                            <input name="password" type="password" id="password" required="" class="form-control" placeholder=" ">
+                                            <label for="password">Mật khẩu mới</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Nhập lại mật khẩu mới</label>
-                                            <input name="confirmPassword" type="password" id="confirmPassword" required="" class="form-control">
+                                            <input name="confirmPassword" type="password" id="confirmPassword" required="" class="form-control" placeholder=" ">
+                                            <label for="confirmPassword">Nhập lại mật khẩu mới</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-b30">
-                                    <button name="submit" type="submit" onclick="validateSignupForm()" value="Submit" class="btn button-md">Gửi</button>
+                                    <button name="submit" type="submit" value="Submit" class="btn button-md">Gửi</button>
                                 </div>
                             </div>
                         </form>
@@ -137,86 +168,54 @@
         <script src='assets/vendors/switcher/switcher.js'></script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-                                        var regexPassword = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$';
+            var regexPassword = '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).{8,}$';
 
-                                        var password = document.getElementById("password"),
-                                                confirm_password = document.getElementById("confirmPassword");
+            var password = document.getElementById("password"),
+                    confirm_password = document.getElementById("confirmPassword");
 
-                                        function validatePassword() {
-                                            var passwordValue = password.value;
-                                            if (!new RegExp(regexPassword).test(passwordValue)) {
-                                                password.setCustomValidity("Mật khẩu cần ít nhất 8 kí tự bao gồm: ký tự chữ thường, ít nhất 1 ký tự viết hoa và 1 ký tự số.");
-                                                return false;
-                                            } else {
-                                                password.setCustomValidity('');
-                                                return true;
-                                            }
-                                        }
+            function validatePassword() {
+                var passwordValue = password.value;
+                if (!new RegExp(regexPassword).test(passwordValue)) {
+                    password.setCustomValidity("Mật khẩu cần ít nhất 8 kí tự bao gồm: ký tự chữ thường, ít nhất 1 ký tự viết hoa và 1 ký tự số.");
+                    return false;
+                } else {
+                    password.setCustomValidity('');
+                    return true;
+                }
+            }
 
-                                        function validateConfirmPassword() {
-                                            if (password.value !== confirm_password.value) {
-                                                confirm_password.setCustomValidity("Mật khẩu phải trùng khớp !");
-                                                return false;
-                                            } else {
-                                                confirm_password.setCustomValidity('');
-                                                return true;
-                                            }
-                                        }
+            function validateConfirmPassword() {
+                if (password.value !== confirm_password.value) {
+                    confirm_password.setCustomValidity("Mật khẩu phải trùng khớp!");
+                    return false;
+                } else {
+                    confirm_password.setCustomValidity('');
+                    return true;
+                }
+            }
 
-                                        password.onchange = validatePassword;
-                                        confirm_password.onkeyup = validateConfirmPassword;
+            password.onchange = validatePassword;
+            confirm_password.onkeyup = validateConfirmPassword;
 
-                                        function validateSignupForm() {
-                                            var form = document.getElementById('signupForm');
+            document.getElementById('resetPasswordForm').addEventListener('submit', function (event) {
+                if (!validatePassword() || !validateConfirmPassword()) {
+                    event.preventDefault();
+                }
+            });
 
-                                            for (var i = 0; i < form.elements.length; i++) {
-                                                if (form.elements[i].value === '' && form.elements[i].hasAttribute('required')) {
-                                                    console.log('Có một số trường bắt buộc!');
-                                                    return false;
-                                                }
-                                            }
-
-                                            if (!validatePassword() || !validateConfirmPassword()) {
-                                                return false;
-                                            }
-
-                                            onSignup();
-                                        }
-
-
-//                                        function onSignup() {
-//                                            var xhttp = new XMLHttpRequest();
-//                                            xhttp.onreadystatechange = function () {
-//
-//                                                disableSubmitButton();
-//
-//                                                if (this.readyState == 4 && this.status == 200) {
-//                                                    enableSubmitButton();
-//                                                } else {
-//                                                    console.log('AJAX call failed!');
-//                                                    setTimeout(function () {
-//                                                        enableSubmitButton();
-//                                                    }, 1000);
-//                                                }
-//
-//                                            };
-//
-//                                            xhttp.open("GET", "ajax_info.txt", true);
-//                                            xhttp.send();
-//                                        }
         </script>
         <%
-           String mess = (String) request.getAttribute("mess");
-           if(mess != null) {
+            String mess = (String) request.getAttribute("mess");
+            if (mess != null) {
         %>  
         <script type="text/javascript">
             window.onload = function () {
-                var message = '<%= mess != null ? mess.replace("'", "\\'") : "" %>';
+                var message = '<%= mess != null ? mess.replace("'", "\\'") : ""%>';
                 showLoginPopup(message);
             }
         </script>
         <%
-          }
+            }
         %>
 
         <script type="text/javascript">

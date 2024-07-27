@@ -160,6 +160,34 @@ public class UserDAO {
         }
         return user;
     }
+    
+    public User getAllUserInDB(String email) {
+        String sql = "SELECT * FROM [User] WHERE email = ?";
+        User user = null;
+        try {
+            checkConnection();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                user = new User();
+                user.setEmail(rs.getString("email"));
+                user.setName(rs.getString("name"));
+                user.setRoleId(rs.getInt("roleId"));
+                user.setHashedPassword(rs.getString("hashedPassword"));
+                user.setPhoneNumber(rs.getString("phoneNumber"));
+                user.setAvatar(rs.getString("avatar"));
+                user.setCreatedBy(rs.getString("createdBy"));
+                user.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
+                user.setUpdatedBy(rs.getString("updatedBy"));
+                user.setLastUpdatedDate(rs.getTimestamp("lastUpdatedDate") != null ? rs.getTimestamp("lastUpdatedDate").toLocalDateTime() : null);
+                user.setStatus(rs.getBoolean("status"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
 
     public String getHashedPasswordByEmail(String email) {
         try {
