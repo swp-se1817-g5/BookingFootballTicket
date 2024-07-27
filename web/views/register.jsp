@@ -50,6 +50,46 @@
                 box-shadow: 0 0 0 1000px white inset !important;
                 -webkit-text-fill-color: black !important;
             }
+            /* Thiết lập vị trí tương đối cho input-group để chứa label và input */
+            .input-group {
+                position: relative;
+                margin-bottom: 1.5rem; /* Để tạo khoảng cách giữa các input groups */
+            }
+
+            /* Đảm bảo rằng input có khoảng cách padding để label có thể nhảy lên trên */
+            .input-group input {
+                padding-top: 1.5rem;
+                box-sizing: border-box;
+                width: 100%;
+            }
+
+            /* Thiết lập vị trí ban đầu của label */
+            .input-group label {
+                position: absolute;
+                top: 0; /* Đặt vị trí top là 0 để label nằm sát đầu dòng */
+                left: 0;
+                transition: all 0.2s;
+                pointer-events: none; /* Để label không ảnh hưởng khi nhấp vào input */
+                color: #999;
+            }
+
+            /* Khi input được focus hoặc có giá trị, di chuyển label lên trên */
+            .input-group input:focus + label,
+            .input-group input:not(:placeholder-shown) + label {
+                top: -1rem; /* Điều chỉnh vị trí top để label nhảy lên trên */
+                left: 0;
+                font-size: 0.75rem;
+                color: #5a5a5a;
+            }
+
+            /* Điều chỉnh vị trí của icon để nó nằm đúng chỗ */
+            .input-group i {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
 
         </style>
     </head>
@@ -74,21 +114,23 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label ${registerEmail != null ? "hidden" : ""}>Họ và Tên</label>
+
                                             <input value="${name}" class="form-control"
                                                    ${registerEmail != null ? "hidden" : ""}
-                                                   name="name" id="name" required>
+                                                   name="name" id="name" required class="form-control" placeholder=" ">
+                                            <label for="name" ${registerEmail != null ? "hidden" : ""}>Họ và Tên</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label for="email" class="form-label"
-                                                   ${registerEmail != null ? "hidden" : ""}>Email</label>
+
                                             <input type="email" value="${email}" class="form-control"
                                                    ${registerEmail != null ? "hidden" : ""}
-                                                   name="email" id="email" required>
+                                                   name="email" id="email" required class="form-control" placeholder=" ">
+                                            <label for="email" class="form-label"
+                                                   ${registerEmail != null ? "hidden" : ""}>Email</label>
                                         </div>
                                     </div>
                                 </div>
@@ -103,10 +145,11 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label for="phoneNumber" class="form-label">Số điện thoại</label>
                                             <input type="text" value="${phone}" class="form-control"
                                                    name="phoneNumber" id="phoneNumber"
-                                                   required>
+                                                   required class="form-control" placeholder=" ">
+                                            <label for="phoneNumber" class="form-label">Số điện thoại</label>
+
                                         </div>
                                     </div>
                                 </div>
