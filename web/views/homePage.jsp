@@ -125,6 +125,34 @@
                 background-color: #dc3545;
                 color: white;
             }
+            .tickets-sold {
+                font-weight: bold;
+                font-size: 1em; /* Tăng kích thước chữ */
+                color: red; /* Đổi màu chữ */
+                padding: 10px; /* Thêm khoảng đệm xung quanh chữ */
+                border-radius: 5px; /* Bo tròn các góc */
+                text-align: center; /* Canh giữa chữ */
+            }
+            .tickets-sold-1 {
+                font-weight: bold;
+                font-size: 1em; /* Tăng kích thước chữ */
+                color: green; /* Đổi màu chữ */
+                padding: 10px; /* Thêm khoảng đệm xung quanh chữ */
+                border-radius: 5px; /* Bo tròn các góc */
+                text-align: center; /* Canh giữa chữ */
+                animation: blink 1.3s infinite;
+            }
+            @keyframes blink {
+                0% {
+                    opacity: 1;
+                }
+                50% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
 
 
         </style>
@@ -146,10 +174,10 @@
                             <div class="card">
                                 <div class="card-header">
                                     <c:if test="${requestScope.allticket[lm.matchId - 1].availability > 0}">
-                                        <div class="tickets-sold">Còn vé! Đặt ngay</div>
+                                        <div class="tickets-sold-1">Còn vé! Đặt ngay</div>
                                     </c:if>
                                     <c:if test="${requestScope.allticket[lm.matchId - 1].availability == 0}">
-                                        <div class="tickets-sold">Hết vé! Vui lòng chọn trận khác</div>
+                                        <div class="tickets-sold">Hết vé! Vui lòng chọn trận khác !</div>
                                     </c:if>
                                 </div>
                                 <div class="card-body">
@@ -163,7 +191,7 @@
                                     <p class="card-text">Sân vận động Mỹ Đình</p>
                                     <p>${lm.getTimeConverted()}</p>
                                     <p class="card-text">${lm.type.name}</p>
-                                    <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Xem Trận Đấu</a>
+                                    <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Xem Vé</a>
                                 </div>
                             </div>
                         </div>
@@ -319,7 +347,7 @@
                         console.log('Session attribute isRegister removed.');
                     }
                 });
-            }, 3000); 
+            }, 3000);
         <% session.removeAttribute("isRegister"); %>
         <% } %>
 
@@ -335,7 +363,7 @@
                         console.log('Session attribute changePassword removed.');
                     }
                 });
-            }, 3000); 
+            }, 3000);
         <% session.removeAttribute("changePassword"); %>
         <% } %>
 
@@ -351,7 +379,7 @@
                         console.log('Session attribute isFirstLogin removed.');
                     }
                 });
-            }, 3000); 
+            }, 3000);
         <% session.removeAttribute("isFirstLogin"); %>
         <% } %>
 
@@ -371,8 +399,8 @@
         <% session.removeAttribute("resetPassword"); %>
         <% } %>
 
-        <% if (session.getAttribute("transResult") != null) { %>
-            var transResult = <%= session.getAttribute("transResult") %>;
+        <% if (session.getAttribute("transResult") != null) {%>
+            var transResult = <%= session.getAttribute("transResult")%>;
             if (transResult) {
                 showToast('Thành công', 'Giao dịch thành công!', 'success');
             } else {
@@ -388,9 +416,9 @@
                         console.log('Session attribute transResult removed.');
                     }
                 });
-            }, 3000); 
+            }, 3000);
         <% session.removeAttribute("transResult"); %>
-        <% } %>
+        <% }%>
         });
 
     </script>
