@@ -297,9 +297,7 @@ public class MatchDAO {
                 + "JOIN Season s ON m.seasonId = s.seasonId "
                 + "JOIN MatchStatus ms ON m.statusId = ms.statusId "
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
-                + "WHERE m.statusId = 2 and "
-                + "fc1.clubId = " + fcId
-                + " or fc2.clubId = " + fcId;
+                + "WHERE m.statusId = 2 and (fc1.clubId = " + fcId + " or fc2.clubId = " + fcId + ")";
         try (PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Match match = new Match();

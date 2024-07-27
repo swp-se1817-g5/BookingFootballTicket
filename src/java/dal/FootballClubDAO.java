@@ -100,7 +100,7 @@ public class FootballClubDAO {
 
     public boolean updateFootballClub(FootballClub fc) {
         boolean updated = false;
-        String sql = "update FootballClub set [img] = ?, clubName = ?, [description] = ?, updatedBy = ?  where clubId = ?";
+        String sql = "update FootballClub set [img] = ?, clubName = ?, [Description] = ?, updatedBy = ?  where clubId = ?";
         try {
             ps = con.prepareStatement(sql);
             ps.setString(1, fc.getImg());
@@ -124,6 +124,7 @@ public class FootballClubDAO {
         String sql = "SELECT [clubId]\n"
                 + "      ,[clubName]\n"
                 + "      ,[img]\n"
+                + "      ,[Description]\n"
                 + "      ,[createdBy]\n"
                 + "      ,[createdDate]\n"
                 + "      ,[updatedBy]\n"
@@ -137,6 +138,7 @@ public class FootballClubDAO {
                 fc.setClubId(rs.getInt("clubId"));
                 fc.setClubName(rs.getString("clubName"));
                 fc.setImg(rs.getString("img"));
+                fc.setDescription(rs.getString("Description"));
                 fc.setCreatedBy(rs.getString("createdBy"));
                 fc.setCreatedDate(rs.getTimestamp("createdDate").toLocalDateTime());
                 fc.setUpdatedBy(rs.getString("updatedBy"));
