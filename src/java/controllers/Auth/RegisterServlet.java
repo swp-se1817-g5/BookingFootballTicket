@@ -66,14 +66,14 @@ public class RegisterServlet extends HttpServlet {
         }
 
         if (name.isEmpty() || password.isEmpty() || email.isEmpty() || phoneNumber.isEmpty()) {
-            request.setAttribute("errorMessage", "Tất cả các trường là bắt buộc!");
+            request.setAttribute("errorMessage", "Tất cả các trường là bắt buộc !");
             returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (!Validate.isValidName(name)) {
-            request.setAttribute("errorMessage", "Tên không hợp lệ!");
+            request.setAttribute("errorMessage", "Tên không hợp lệ !");
             returnValueBefore(request, response, null, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
@@ -82,24 +82,24 @@ public class RegisterServlet extends HttpServlet {
         if (!Validate.isValidPhoneNumber(phoneNumber)) {
             String messPhone = "Số điện thoại không hợp lệ!";
             if (!phoneNumber.startsWith("0") && phoneNumber.length() == 10 && Validate.isNumber(phoneNumber)) {
-                messPhone = "Số điện thoại bắt buộc phải bắt đầu bằng 0!";
+                messPhone = "Số điện thoại bắt buộc phải bắt đầu bằng 0 !";
             }
             request.setAttribute("errorMessage", messPhone);
             returnValueBefore(request, response, name, email, null);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
-
-        if (!Validate.isValidEmail(email)) {
-            request.setAttribute("errorMessage", "Email không hợp lệ!");
+        
+        User userExists = userDAO.getAllUserInDB(email);
+        if (userExists != null) {
+            request.setAttribute("errorMessage", "Email đã được đăng ký !");
             returnValueBefore(request, response, name, null, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
-        User userExists = userDAO.getUserByEmail(email);
-        if (userExists != null) {
-            request.setAttribute("errorMessage", "Email đã tồn tại!");
+        if (!Validate.isValidEmail(email)) {
+            request.setAttribute("errorMessage", "Email không hợp lệ !");
             returnValueBefore(request, response, name, null, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
@@ -113,14 +113,14 @@ public class RegisterServlet extends HttpServlet {
         }
 
         if (!password.equals(confirmPassword)) {
-            request.setAttribute("errorMessage", "Mật khẩu nhập lại không khớp!");
+            request.setAttribute("errorMessage", "Mật khẩu nhập lại không khớp !");
             returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
         }
 
         if (termsAndConditions == null) {
-            request.setAttribute("errorMessage", "Vui lòng đồng ý với điều khoản và điều lệ của chúng tôi!");
+            request.setAttribute("errorMessage", "Vui lòng đồng ý với điều khoản và điều lệ của chúng tôi !");
             returnValueBefore(request, response, name, email, phoneNumber);
             dispatch(request, response, "/views/register.jsp");
             return;
@@ -143,7 +143,7 @@ public class RegisterServlet extends HttpServlet {
         newUser.setCreatedDate(now);
 
         status = userDAO.addUser(newUser);
-        successMessage = "Đăng ký thành công!";
+        successMessage = "Đăng ký thành công !";
         HttpSession session = request.getSession();
         session.setAttribute("successMessage", successMessage);
         session.setAttribute("currentUser", userDAO.getUserByEmail(email));
