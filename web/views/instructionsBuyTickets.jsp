@@ -76,7 +76,7 @@
                 <img src="images/instructions/1.png" alt="Hình ảnh hướng dẫn 1">
             </p>
             <p>
-                2. Tiếp theo hãy chọn vị trí mà bạn mong muốn, mỗi tài khoản chỉ được mua tối đá 5 vé.
+                2. Tiếp theo hãy chọn vị trí mà bạn mong muốn, mỗi tài khoản chỉ được mua tối đá 5 vé 1 lần.
                 <br>
                 <img src="images/instructions/2.png" alt="Hình ảnh hướng dẫn 2">
             </p>
@@ -91,9 +91,14 @@
                 <img src="images/instructions/4.png" alt="Hình ảnh hướng dẫn 4">
             </p>
             <p>
-                5. Sau khi thanh toán thành công, tại trang HomePage, quý khách vui lòng vào mục "Vé đã mua" ở Tài khoản để chụp lại mã QR.
+                5. Sau khi thanh toán thành công, tại trang HomePage, quý khách vui lòng vào mục "Vé đã mua" ở Tài khoản.
                 <br>
                 <img src="images/instructions/5.png" alt="Hình ảnh hướng dẫn 5">
+            </p>
+            <p>
+                6. Sau đó chụp lại mã QR.
+                <br>
+                <img src="images/instructions/6.png" alt="Hình ảnh hướng dẫn 6">
             </p>
             <p>&nbsp;</p>
         </div>
