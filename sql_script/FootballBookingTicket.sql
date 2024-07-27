@@ -47,7 +47,7 @@ CREATE TABLE FootballClub (
 	clubId INT PRIMARY KEY IDENTITY (1,1),
 	clubName NVARCHAR(100) NOT NULL,
 	img VARCHAR(255),
-    Description VARCHAR(255),
+    Description NVARCHAR(255),
 	createdBy VARCHAR(50),
 	createdDate DATETIME2 DEFAULT CURRENT_TIMESTAMP,
 	updatedBy VARCHAR(50),
