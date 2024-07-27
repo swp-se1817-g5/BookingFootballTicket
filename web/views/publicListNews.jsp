@@ -82,7 +82,7 @@
                                 </c:choose>
                             </p>
                             <p style="color: black">
-                                <input type="datetime-local" value="${n.postOn}" readonly="" style="border: none">
+                                ${n.getPostOnConverted()}
                             </p>
                         </div>
                     </c:forEach>

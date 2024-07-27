@@ -160,13 +160,13 @@
         <div class="headerr">
             <jsp:include page="header.jsp" />
         </div>
-                
+
         <div class="container mt-5">
             <div class="row">
                 <!-- Stadium Map Section -->
                 <div class="col-md-6">
                     <div class="stadium-map">
-                        <h5 class="text-center">Stadium Map</h5>
+                        <h5 class="text-center">Bản đồ Sân vận động</h5>
                         <div class="left">
                             <div class="stadium-map">
                                 <svg id="svgStadium" viewBox="0 0 1247 1136" data-section="" data-block="" data-tags="" >
@@ -452,12 +452,12 @@
                                 <text id="Stand_B" data-name="Stand B" class="cls-5" x="536.274" y="414.643">Stand B</text>
                                 <text id="Stand_C" data-name="Stand C" class="cls-5" transform="translate(890.745 474.636) rotate(90)">Stand C</text>
                                 <text id="Stand_D" data-name="Stand D" class="cls-5" transform="translate(358.627 667.019) rotate(-90)">Stand D</text>
-                                
+
                                 <text class="cls-6" x="1" y="60">${match.team1.clubName}</text>
                                 <text class="cls-6" x="1" y="120">${match.team2.clubName}</text>
                                 <text class="cls-6" x="1" y="180">${date}</text>
                                 <text class="cls-6" x="990" y="60">Khai mạc: ${time}</text>
-                                <text class="cls-6" x="1110" y="120">${match.type.name}</text>
+                                <text class="cls-6" x="990" y="120">${match.type.name}</text>
                                 </svg>
                             </div>
                         </div>
@@ -529,12 +529,6 @@
             </div>
         </div>
 
-        <!-- Footer -->
-        <footer class="footer">
-            <div class="container">
-                <p>&copy; 2024 Your Website. All rights reserved.</p>
-            </div>
-        </footer>
         <style>
             .standard {
                 color:#fff;

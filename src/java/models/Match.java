@@ -24,6 +24,7 @@ public class Match {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
     private final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
     private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+    private final DateTimeFormatter timeFormatter_1 = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
 
     public Match() {
     }
@@ -105,7 +106,9 @@ public class Match {
     public LocalDateTime getLocalDateTime(){
         return this.time;
     }
-
+ public String getTimeConverted() {
+        return time != null ? timeFormatter_1.format(time) : null;
+    }
     @Override
     public String toString() {
         return "Match{" + "matchId=" + matchId + ", team1=" + team1 + ", team2=" + team2 + ", season=" + season + ", time=" + time + ", status=" + status + ", type=" + type + ", formatter=" + formatter + '}';

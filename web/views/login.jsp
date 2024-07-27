@@ -73,7 +73,47 @@
                 box-shadow: 0 0 0 1000px white inset !important;
                 -webkit-text-fill-color: black !important;
             }
-         
+            /* Thiết lập vị trí tương đối cho input-group để chứa label và input */
+            .input-group {
+                position: relative;
+                margin-bottom: 1.5rem; /* Để tạo khoảng cách giữa các input groups */
+            }
+
+            /* Đảm bảo rằng input có khoảng cách padding để label có thể nhảy lên trên */
+            .input-group input {
+                padding-top: 1.5rem;
+                box-sizing: border-box;
+                width: 100%;
+            }
+
+            /* Thiết lập vị trí ban đầu của label */
+            .input-group label {
+                position: absolute;
+                top: 0; /* Đặt vị trí top là 0 để label nằm sát đầu dòng */
+                left: 0;
+                transition: all 0.2s;
+                pointer-events: none; /* Để label không ảnh hưởng khi nhấp vào input */
+                color: #999;
+            }
+
+            /* Khi input được focus hoặc có giá trị, di chuyển label lên trên */
+            .input-group input:focus + label,
+            .input-group input:not(:placeholder-shown) + label {
+                top: -1rem; /* Điều chỉnh vị trí top để label nhảy lên trên */
+                left: 0;
+                font-size: 0.75rem;
+                color: #5a5a5a;
+            }
+
+            /* Điều chỉnh vị trí của icon để nó nằm đúng chỗ */
+            .input-group i {
+                position: absolute;
+                right: 10px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+            }
+
         </style>
     </head>
 
@@ -99,19 +139,20 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Email</label>
-                                            <input name="email" type="email" value="${emailValid}" required class="form-control">
+                                            <input name="email" id="email" type="email" value="${emailValid}" required class="form-control" placeholder=" ">
+                                            <label for="email">Email</label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <div class="input-group">
-                                            <label>Mật khẩu</label>
-                                            <input id="password" name="password" type="password" value="${passValid}" required class="form-control">
-                                            <i id="togglePassword" class="fa fa-eye-slash" aria-hidden="true" style="cursor: pointer;"></i>
+                                            <input id="password" name="password" type="password" value="${passValid}" required class="form-control" placeholder=" ">
+                                            <label for="password">Mật khẩu</label>
+                                            <i id="togglePassword" class="fa fa-eye-slash" aria-hidden="true" style="cursor: pointer; position: absolute; right: 10px; top: 50%; transform: translateY(-50%);"></i>
                                         </div>
                                     </div>
+
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="d-flex align-items-center">
@@ -160,9 +201,10 @@
                 const passwordInput = document.getElementById('password');
                 const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
                 passwordInput.setAttribute('type', type);
-                this.classList.toggle('fa-eye-slash');
                 this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
             });
+
         </script>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

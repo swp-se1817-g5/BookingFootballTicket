@@ -23,8 +23,8 @@ public class Config {
     private static HttpServletRequest req;
     public static String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
     public static String vnp_ReturnUrl = "http://localhost:8080/FootballBookingTicket/vnpayReturn";
-    public static String vnp_TmnCode = "5XKI2KOO";
-    public static String secretKey = "PGQ7ZPXANO6DL7IHUSH0VWQ07L2K7PM4";
+    public static String vnp_TmnCode = "OHBXYXQN";
+    public static String secretKey = "QC956ZLQCSLKZDOWGTQ0R8HN20YUJO4X";
     public static String vnp_ApiUrl = "https://sandbox.vnpayment.vn/merchant_webapi/api/transaction";
 
     public static String md5(String message) {

@@ -26,7 +26,6 @@ Author     : duong
         <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
         <!-- Icon Font Stylesheet -->
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
         <!-- Libraries Stylesheet -->
@@ -139,7 +138,7 @@ Author     : duong
                 color: #E34724;
             }
             table.table td i {
-                font-size: 19px;
+                font-size: 25px;
             }
             .pagination {
                 float: right;
@@ -213,6 +212,33 @@ Author     : duong
             .btn-custom.active .btn-icon {
                 transform: rotate(90deg);
             }
+            th:nth-child(1), td:nth-child(1) {
+                width: 5%;
+            }
+            th:nth-child(2), td:nth-child(2) {
+                width: 15%;
+            }
+            th:nth-child(3), td:nth-child(3) {
+                width: 10%;
+            }
+            th:nth-child(4), td:nth-child(4) {
+                width: 10%;
+            }
+            th:nth-child(5), td:nth-child(5) {
+                width: 15%;
+            }
+            th:nth-child(6), td:nth-child(6) {
+                width: 10%;
+            }
+            th:nth-child(7), td:nth-child(7) {
+                width: 10%;
+            }
+            th:nth-child(8), td:nth-child(8) {
+                width: 15%;
+            }
+            th:nth-child(9), td:nth-child(9) {
+                width: 20%;
+            }
         </style>
 
 
@@ -234,7 +260,7 @@ Author     : duong
             <!-- Sidebar End -->
 
             <div class="content">
-                <%@include file="dashboardHeader.jsp" %>
+                <%@include file="dashboardHeader.jsp"%>
                 <!-- Navbar End -->
                 <div class="container-fluid">
                     <div class="table-responsive">
@@ -242,14 +268,10 @@ Author     : duong
                             <div class="table-title">
                                 <div class="row">
                                     <div class="col-sm-4 searchh">
-                                        <a onclick="searchTickets()" class="d-none"><i class="material-icons">&#xE8B6;</i></a>
-                                        <input id="valueSearch" type="text" class="form-control" placeholder=" Tìm kiếm bằng mùa giải &hellip;">
+                                        <a  class="d-none"><i class="material-icons">&#xE8B6;</i></a>
+                                        <input id="valueSearch" type="text" class="form-control" placeholder=" Tìm kiếm bằng email &hellip;">
                                     </div>
                                     <div class="col-sm-8 d-flex justify-content-end">
-                                        <button id="toggleButton" class="btn btn-success m-2 align-items-center">
-                                            Vé Mùa
-                                            <i class="btn-icon fas fa-caret-right"></i>
-                                        </button>
                                         <a type="button" href="/BookingFootballTicket/ExportExcelMatchSeat?service=export" class="btn btn-success m-2 float-right">
                                             <i class="bi bi-file-earmark-spreadsheet"></i> 
                                             <span>Xuất file Excel</span>
@@ -261,14 +283,7 @@ Author     : duong
                                 <thead class="text-center">
                                     <tr>
                                         <th>ID</th>
-                                        <th>
-                                            <select class="form-select border-0" id="seasonSelect">
-                                                <option selected value="All">Mùa giải</option>
-                                                <c:forEach items="${getListSeason}" var="season">
-                                                    <option value="${season.seasonName}">${season.seasonName}</option>
-                                                </c:forEach>
-                                            </select>
-                                        </th>
+                                        <th>Email</th>
                                         <th>
                                             <select class="form-select border-0" id="standSelect">
                                                 <option selected value="All">Khán đài</option>
@@ -321,7 +336,7 @@ Author     : duong
                                     <c:forEach items="${getListHistoryPurchasedTicketMatchSeat}" var="ticketMatchSeat" varStatus="status">
                                         <tr class="text-center">
                                             <td>${status.count}</td>
-                                            <td>${ticketMatchSeat.seasonName}</td>
+                                            <td>${ticketMatchSeat.email}</td>
                                             <td>${ticketMatchSeat.standName}</td>
                                             <td>${ticketMatchSeat.seatClassName}</td>
                                             <td>${ticketMatchSeat.seatName}</td>
@@ -376,7 +391,7 @@ Author     : duong
                                     <label>Ngày tạo</label>
                                     <input type="datetime-local" name="createDate" class="form-control" value="${ticketMatchSeat.createdDate}" readonly>
                                 </div>
-                                 <div class="form-group col-sm-6">
+                                <div class="form-group col-sm-6">
                                     <label>Tạo bởi</label>
                                     <input name="createBy" class="form-control" value="${ticketMatchSeat.createdBy}" readonly>
                                 </div>
@@ -388,18 +403,14 @@ Author     : duong
         </c:forEach>
         <script>
             $(document).ready(function () {
-                var seasonValue = 'All'; // Giá trị mặc định cho dropdown season
                 var seatClassValue = 'All'; // Giá trị mặc định cho dropdown seat class
                 var standValue = 'All'; // Giá trị mặc định cho dropdown stand
                 var statusValue = 'All'; // Giá trị mặc định cho dropdown status
-                var emailValue = 'All';
                 // Sự kiện change cho các dropdown filter
                 $('#seasonSelect, #seatClassSelect, #standSelect, #statusSelect, #emailSelect').change(function () {
-                    seasonValue = $('#seasonSelect').val();
                     seatClassValue = $('#seatClassSelect').val();
                     standValue = $('#standSelect').val();
                     statusValue = $('#statusSelect').val();
-                    emailValue = $('#emailSelect').val();
                     filterTable();
                 });
 
@@ -410,12 +421,15 @@ Author     : duong
                 });
 
                 // Sự kiện khi người dùng nhập vào ô tìm kiếm
-                $('#valueSearch').keyup(function () {
-                    var searchText = $(this).val().toLowerCase();
-                    if (searchText.trim().length > 0) {
-                        searchTable(searchText);
-                    } else {
-                        filterTable();
+                document.addEventListener('keydown', function (event) {
+                    if (event.key === 'Enter') {
+                        var searchText = $('#valueSearch').val().toLowerCase();
+                        if (searchText.trim().length > 0) {
+                            searchTable(searchText);
+                        } else {
+                            alert("Vui lòng nhập email cần tìm kiếm.")
+                            filterTable();
+                        }
                     }
                 });
 
@@ -425,9 +439,7 @@ Author     : duong
                         var row = $(this);
                         var show = true;
 
-                        if (seasonValue !== 'All' && row.find('td:eq(1)').text() !== seasonValue) {
-                            show = false;
-                        }
+
                         if (standValue !== 'All' && row.find('td:eq(2)').text() !== standValue) {
                             show = false;
                         }
@@ -435,9 +447,6 @@ Author     : duong
                             show = false;
                         }
                         if (statusValue !== 'All' && row.find('td:eq(7)').text() !== statusValue) {
-                            show = false;
-                        }
-                        if (emailValue !== 'All' && row.find('td:eq(8)').text() !== emailValue) {
                             show = false;
                         }
 

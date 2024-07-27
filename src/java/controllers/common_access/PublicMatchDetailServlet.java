@@ -18,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.time.format.DateTimeFormatter;
 import models.Match;
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 /**
  *
@@ -76,7 +77,7 @@ public class PublicMatchDetailServlet extends HttpServlet {
             String dateTimeString = match.getTime();
             DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
             LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, inputFormatter);
-            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy");
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("EEEE, dd MMMM yyyy", new Locale("vi", "VN"));
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
             String date = dateTime.toLocalDate().format(dateFormatter);
             String time = dateTime.toLocalTime().format(timeFormatter);

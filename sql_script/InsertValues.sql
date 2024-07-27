@@ -12,7 +12,7 @@ GO
 -- Insert values into User table
 INSERT INTO [User] (email, [name], roleId, [hashedPassword], phoneNumber, avatar, createdBy) VALUES
 ('admin@example.com', N'Quản trị viên', 1, '$2a$10$xOmO7JLAf1MZx4ase20PreqTFUWA2dwoD0UlRQsfJxaUnUO.YBf7S', '1234567890', 'Images/avatar/avatar1.jpg', 'admin@example.com'),
-('user1@example.com', N'Người dùng', 2, 'hashed_password_user1', '0987654321', 'Images/avatar/avatar2.jpg', 'admin@example.com'),
+('user1@example.com', N'Người dùng', 2, '$2a$10$xOmO7JLAf1MZx4ase20PreqTFUWA2dwoD0UlRQsfJxaUnUO.YBf7S', '0987654321', 'Images/avatar/avatar2.jpg', 'admin@example.com'),
 ('user2@example.com', N'Nhân viên', 3, '$2a$10$xOmO7JLAf1MZx4ase20PreqTFUWA2dwoD0UlRQsfJxaUnUO.YBf7S', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com'),
 ('inspector@example.com', N'Nhân viên quét vé', 4, '$2a$10$xOmO7JLAf1MZx4ase20PreqTFUWA2dwoD0UlRQsfJxaUnUO.YBf7S', '1122334455', 'Images/avatar/avatar3.jpg', 'admin@example.com');
 GO
@@ -56,18 +56,7 @@ INSERT INTO Season (seasonName, startDate, endDate, createdBy) VALUES
 (N'U19 Quốc gia', '2024-05-01', '2024-08-31', 'admin@example.com');
 GO
 
-<<<<<<< HEAD
--- Insert values into Match table
-=======
----- Insert values into Match table
->>>>>>> 5362bf8baac2423e60554051c82cbc26236822fb
---INSERT INTO Match (team1, team2, seasonId, [startTime], statusId, matchTypeId, createdBy) VALUES
---(1, 2, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
---(3, 4, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
---(5, 3, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
---(1, 3, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com'),
---(3, 2, 1, '2024-12-12 15:00:00', 1, 2, 'admin@example.com');
---GO
+
 
 -- Insert values into Stand table
 INSERT INTO Stand (standName, createdBy) VALUES
