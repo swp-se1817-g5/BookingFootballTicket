@@ -70,23 +70,29 @@ public class ManageHistoryPurchasedTicketMatchSeatServlet extends HttpServlet {
             throws ServletException, IOException {
         ArrayList<HistoryPurchasedTicketMatchSeat> getListHistoryPurchasedTicketMatchSeat;
         String go = request.getParameter("go");
-        if (!isNullOrBlank(go)) {
-            if (go.equals("search")) {
-                String valueSearch = request.getParameter("valueSearch").trim();
-                getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().SearchMatchSeat(valueSearch);
-                if (!getListHistoryPurchasedTicketMatchSeat.isEmpty()) {
-                    request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
+        String matchId_raw = request.getParameter("matchId");
+        try {
+            if (!isNullOrBlank(go)) {
+                if (go.equals("search")) {
+                    String valueSearch = request.getParameter("valueSearch").trim();
+                    getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().SearchMatchSeat(valueSearch);
+                    if (!getListHistoryPurchasedTicketMatchSeat.isEmpty()) {
+                        request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
+                    }
                 }
+            } else {
+                int matchId = Integer.parseInt(matchId_raw);
+                getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeatByMatchId(matchId);
+                request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
+                request.setAttribute("getListSeason", SeasonDAO.getINSTANCE().getAllseason());
+                request.setAttribute("getListSeatClass", SeatClassDAO.getInstance().getListSeatClass());
+                request.setAttribute("getListStand", StandDAO.getInstance().getStands(""));
+                request.setAttribute("getListStatus", HistoryPurchasedTicketDAO.getInstance().getListTicketStatus());
             }
-        } else {
-            getListHistoryPurchasedTicketMatchSeat = HistoryPurchasedTicketDAO.getInstance().getlistHistoryPurchasedTicketMatchSeat();
-            request.setAttribute("getListHistoryPurchasedTicketMatchSeat", getListHistoryPurchasedTicketMatchSeat);
-            request.setAttribute("getListSeason", SeasonDAO.getINSTANCE().getAllseason());
-            request.setAttribute("getListSeatClass", SeatClassDAO.getInstance().getListSeatClass());
-            request.setAttribute("getListStand", StandDAO.getInstance().getStands(""));
-            request.setAttribute("getListStatus", HistoryPurchasedTicketDAO.getInstance().getListTicketStatus());
-        }
+        } catch (Exception ex) {
 
+        }
+        request.setAttribute("url", "manageListHistoryPurchasedTicketMatchSeat");
         request.getRequestDispatcher("views/manageHistoryPurchasedTicketMatchSeat.jsp").forward(request, response);
     }
 

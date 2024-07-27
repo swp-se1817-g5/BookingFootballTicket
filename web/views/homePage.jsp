@@ -161,7 +161,7 @@
                                     <h5 class="card-title">${lm.season.seasonName}</h5>
                                     <p class="card-text">${lm.team1.clubName} VS ${lm.team2.clubName}</p>
                                     <p class="card-text">Sân vận động Mỹ Đình</p>
-                                    <input type="datetime-local" value="${lm.time}" readonly style="border: none; background: none; text-align: center">
+                                    <p>${lm.getTimeConverted()}</p>
                                     <p class="card-text">${lm.type.name}</p>
                                     <a href="matchDetail?matchId=${lm.matchId}" class="book-now-btn">Xem Trận Đấu</a>
                                 </div>

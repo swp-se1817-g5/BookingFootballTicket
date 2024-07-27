@@ -3,6 +3,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Ticket Detail</title>
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
         <style>
@@ -11,6 +12,7 @@
                 font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             }
             .ticket {
+                width: 100%;
                 max-width: 450px;
                 border: 1px solid #ccc;
                 border-radius: 15px;
@@ -77,15 +79,13 @@
                 background-color: #dc3545;
                 color: white;
             }
-
-
         </style>
     </head>
     <body>
         <div style="padding-bottom: 160px">
             <%@include file="header.jsp"%>
         </div>
-        <<form action="inspectTicket" method="post">
+        <form action="inspectTicket" method="post">
             <div class="ticket">
                 <div class="badge-season"><h5 class="mb-0">${getTicketInfo.seasonName}</h5></div>
                 <div class="ticket-header">
@@ -105,11 +105,11 @@
                         <div class="col-6"><strong>Số lượng:</strong> ${getTicketInfo.quantity}</div>
                     </div>
                     <div class="row mt-3">
-                        <div class="col-6"><strong>Giá tiền:</strong> <span class="highlight-price">${getTicketInfo.getPriceFormatter()}</span> <span style="color: #a89a00" >VNĐ</span></div>
+                        <div class="col-6"><strong>Giá tiền:</strong> <span class="highlight-price">${getTicketInfo.getPriceFormatter()}</span><span style="color: #a89a00">VNĐ</span></div>
                     </div>
-                    <div class="row mt-3 justify-content-end mr-2" >
+                    <div class="row mt-3 justify-content-end mr-2">
                         <input type="hidden" value="${getTicketInfo.qrCode}" name="qrcode">
-                        <input type="submit" value="Xác nhận" style="    height: 50px;width: 125px;">
+                        <input type="submit" value="Xác nhận" class="btn btn-primary">
                     </div>
                 </div>
             </div>
@@ -161,6 +161,6 @@
                 }
             });
         </script>
-
     </body>
+    <%@include file="footer.jsp" %>  
 </html>

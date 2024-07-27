@@ -54,7 +54,7 @@ public class inspectTicketServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User curUser = (User) session.getAttribute("currentUser");
         String qrcode = request.getParameter("qrcode");
-        if ((!isNullOrBlank(qrcode)) && curUser!= null) {
+        if ((!isNullOrBlank(qrcode)) && curUser != null) {
             if (curUser.getRoleId() == 4) {
                 request.setAttribute("getTicketInfo", HistoryPurchasedTicketDAO.getInstance().getTicketInfo(qrcode));
                 request.getRequestDispatcher("views/inspectTicket.jsp").forward(request, response);
@@ -94,7 +94,11 @@ public class inspectTicketServlet extends HttpServlet {
                 }
             }
         }
-        request.setAttribute("checkQRCode", checkQRCode);
+        if (checkQRCode == null) {
+            request.setAttribute("checkQRCode", checkQRCode);
+        }else{
+            request.setAttribute("checkQRCode", "checked");
+        }
         doGet(request, response);
     }
 

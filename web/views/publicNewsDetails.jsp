@@ -97,7 +97,7 @@
                                     </c:choose>
                                 </p>
                                 <p style="color: black">
-                                    <input type="datetime-local" value="${n.postOn}" readonly="" style="border: none; background: #F8F9FA">
+                                    ${n.getPostOnConverted()}
                                 </p>
                             </div>
                         </a>
@@ -109,7 +109,7 @@
             <jsp:include page="footer.jsp"/>
         </footer>
         <!-- Script của Bootstrap -->
-         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </body>
 </html>

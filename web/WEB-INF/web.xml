@@ -39,6 +39,7 @@
         <url-pattern>/manageSeason</url-pattern>
         <url-pattern>/createSeason</url-pattern>
         <url-pattern>/manageHistoryPurchasedTicketMatchSeat</url-pattern>
+        <url-pattern>/manageListHistoryPurchasedTicketMatchSeat</url-pattern>
         <url-pattern>/ExportExcelSeasonSeat</url-pattern>
         <url-pattern>/ExportExcelMatchSeat</url-pattern>
         <url-pattern>/ExportExcelUser</url-pattern>

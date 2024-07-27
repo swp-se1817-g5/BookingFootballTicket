@@ -27,6 +27,7 @@ public class News {
     private boolean isDeleted;
 
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
 
     public News() {
     }
@@ -39,7 +40,7 @@ public class News {
         this.createBy = createBy;
         this.stateId = stateId;
     }
-    
+
     public String getCreatedDate() {
         return createdDate != null ? createdDate.format(formatter) : null;
     }
@@ -66,6 +67,10 @@ public class News {
 
     public String getPostOn() {
         return postOn != null ? postOn.format(formatter) : null;
+    }
+
+    public String getPostOnConverted() {
+        return postOn != null ? timeFormatter.format(postOn) : null;
     }
 
     public void setPostOn(LocalDateTime postOn) {
@@ -120,7 +125,6 @@ public class News {
         this.createBy = createBy;
     }
 
-
     public NewsState getStateId() {
         return stateId;
     }
@@ -136,6 +140,7 @@ public class News {
     public void setIsDeleted(boolean isDeleted) {
         this.isDeleted = isDeleted;
     }
+
     @Override
     public String toString() {
         return "News{" + "\n"

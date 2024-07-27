@@ -63,7 +63,6 @@ Author     : duong
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
         <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
         <script src="lib/chart/chart.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
@@ -502,10 +501,20 @@ Author     : duong
                 var stateValue = 'All'; // Giá trị mặc định cho dropdown state
 
                 // Sự kiện input cho ô tìm kiếm
-                $('#valueSearch').on('input', function () {
-                    var valueSearch = $(this).val();
-                    // Gọi hàm thực hiện AJAX để tìm kiếm và cập nhật bảng tin tức
-                    updateNewsTable(valueSearch, stateValue);
+//                $('#valueSearch').on('input', function () {
+//                    var valueSearch = $(this).val();
+//                    // Gọi hàm thực hiện AJAX để tìm kiếm và cập nhật bảng tin tức
+//                    updateNewsTable(valueSearch, stateValue);
+//                });
+                document.addEventListener('keydown', function (event) {
+                    if (event.key === 'Enter') {
+                        var searchText = $('#valueSearch').val().toLowerCase();
+                        if (searchText.trim().length > 0) {
+                            updateNewsTable(searchText, stateValue);
+                        } else {
+                            alert("Vui lòng nhập tiêu đề hoặc nội dung cần tìm kiếm.")
+                        }
+                    }
                 });
                 // Sự kiện change cho dropdown filter
                 $('#stateSelect').change(function () {
@@ -515,11 +524,21 @@ Author     : duong
                 });
                 // Hàm filter table
                 function filterTable() {
-                    $('#newsTableBody tr').each(function () {
-                        var stateText = $(this).find('td:eq(4)').text().trim(); // Lấy text của cột State (index 4)
-                        $(this).toggle(showRow);
+                    var select = document.getElementById('stateSelect');
+                    var selectedValue = select.value;
+                    var table = document.querySelector('table.table');
+                    var rows = table.querySelectorAll('tbody tr');
+
+                    rows.forEach(row => {
+                        var stateCell = row.querySelector('td:nth-child(5)');
+                        if (selectedValue === 'All' || stateCell.textContent.includes(selectedValue)) {
+                            row.style.display = '';
+                        } else {
+                            row.style.display = 'none';
+                        }
                     });
                 }
+
 
                 // Hàm AJAX để tìm kiếm và cập nhật bảng tin tức
                 function updateNewsTable(valueSearch, stateValue) {
