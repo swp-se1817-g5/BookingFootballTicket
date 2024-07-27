@@ -219,7 +219,7 @@ public class MatchDAO {
                 + "JOIN \n"
                 + "    MatchSeat ms2 ON m.matchId = ms2.matchId\n"
                 + "WHERE \n"
-                + "    m.isDeleted = 0\n"
+                + "    m.isDeleted = 0 AND ms.statusId = 2\n"
                 + "GROUP BY \n"
                 + "    m.matchId, \n"
                 + "    fc1.clubId, \n"
