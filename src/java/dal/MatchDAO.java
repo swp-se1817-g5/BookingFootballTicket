@@ -558,8 +558,10 @@ public class MatchDAO {
                 + "JOIN MatchType mt ON m.matchTypeId = mt.TypeId "
                 + "JOIN MatchSeat ms2 ON m.matchId = ms2.matchId "
                 + "WHERE m.isDeleted = 0 "
+                + " AND (SELECT SUM(ms2.availability) \n"
+                + "       FROM MatchSeat ms2 \n"
+                + "       WHERE ms2.matchId = m.matchId) > 0"
         );
-
         // Build conditions and parameters
         List<Object> params = new ArrayList<>();
         String conditions = buildConditions(searchInput, seasonId, dateFrom, dateTo, matchStatusId, matchTypeId, params);
