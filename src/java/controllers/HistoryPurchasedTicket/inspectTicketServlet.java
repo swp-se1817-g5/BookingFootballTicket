@@ -94,7 +94,7 @@ public class inspectTicketServlet extends HttpServlet {
                 }
             }
         }
-        if (checkQRCode == null) {
+        if (checkQRCode != null) {
             request.setAttribute("checkQRCode", checkQRCode);
         }else{
             request.setAttribute("checkQRCode", "checked");
