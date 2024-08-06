@@ -509,7 +509,9 @@ public class HistoryPurchasedTicketDAO {
         }
         return m;
     }
-
+    public static void main(String[] args) {
+        System.out.println(HistoryPurchasedTicketDAO.getInstance().updateListHistoryPurchasedTicketMatchSeat("641e2ca7-eb7e-4ed4-a0b0-6159bb63a1d5", 1));
+    }
     public ArrayList<HistoryPurchasedTicketMatchSeat> getListTicketMatchSeat(String valueSearch) {
         ArrayList<HistoryPurchasedTicketMatchSeat> list = new ArrayList<>();
         String sql = "SELECT DISTINCT m.matchId, hptms.team1, hptms.team2, hptms.seasonName, hptms.startTime "
@@ -547,8 +549,5 @@ public class HistoryPurchasedTicketDAO {
         return list;
     }
 
-    public static void main(String[] args) {
-        System.out.println(HistoryPurchasedTicketDAO.getInstance().getListTicketMatchSeat("V1").toString());
-
-    }
+    
 }
